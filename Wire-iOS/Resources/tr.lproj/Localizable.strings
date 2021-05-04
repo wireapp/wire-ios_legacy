@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "Kişiler";
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
 "peoplepicker.header.directory" = "Bağlan";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "Başka bir domain'e bağlan";
 
 "peoplepicker.group.title.singular" = "Katılımcı ekle";
 "peoplepicker.group.title.plural" = "(%d) Katılımcı ekle";
@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Kişi yok.";
 
-"peoplepicker.no_matching_results_title" = "Sonuç yok.";
-"peoplepicker.no_matching_results_message" = "Tam bir e-posta adresi giriniz.";
 "peoplepicker.no_search_results" = "Eşleşen sonuç yok. Başka bir isim girmeyi deneyin.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Davet gönder";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kişileri paylaş";
+"peoplepicker.no_matching_results.action.learn_more" = "Daha fazla bilgi";
+"peoplepicker.no_matching_results.action.manage_services" = "Hizmetleri yönet";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Lütfen geçerli bir e-posta adresi girin";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sonuç yok.";
-"peoplepicker.no_matching_results_services_title" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır. Onları etkinleştirmek için yöneticinize sorun.";
-"peoplepicker.no_matching_results_services_admin_title" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Hizmetleri yönet";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Tam bir e-posta adresi girin veya";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "kişileri paylaş";
-
-"peoplepicker.share_contacts.no_results.title" = "İsim veya e-posta adresiyle insanları bul";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Herkes burada.";
+"peoplepicker.no_matching_results.message.services" = "Sonuç yok.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Davet gönderildi";
 "peoplepicker.send_invitation.dialog.message" = "2 hafta için kullanılabilir. Süresi dolduğunda yenisini gönderebilirsiniz.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Hizmetleri yönet";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Herkes burada.";
 
 "add_participants.alert.title" = "Dolup taşmış";
 "add_participants.alert.message.new_conversation" = "%d kişiye kadar sohbete katılabilinir.";
@@ -163,9 +157,9 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "senden bahsedildi";
 "conversation_list.voiceover.status.reply" = "yanıtla";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "en son";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "Klasörler";
 "conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arşivlendi";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arşivlenmiş konuşmaların listesi";
@@ -233,7 +227,7 @@
 "conversation.voiceover.value.active" = "etkin";
 "conversation.voiceover.value.disabled" = "devre dışı";
 
-"conversation.status.secutity_alert.default" = "New security alert";
+"conversation.status.secutity_alert.default" = "Yeni güvenlik uyarısı";
 
 "conversation.status.typing" = "Bir mesaj yazıyor…";
 "conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "İleti silindi.";
 
-"conversation.guests_present" = "Misafirler mevcut";
-"conversation.services_present" = "Servisler aktif";
-"conversation.guests_services_present" = "Misafirler ve hizmetler mevcut";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Arama";
 
 // Reply message preview
@@ -365,7 +365,7 @@
 "image_confirmer.confirm" = "TAMAM";
 "image_confirmer.cancel" = "İptal";
 "image.add_sketch" = "Çizim ekle";
-"image.add_emoji" = "Add an emoji";
+"image.add_emoji" = "Emoji ekle";
 "image.edit_image" = "Fotoğrafı düzenle";
 
 // Camera access
@@ -559,7 +559,7 @@
 "content.file.upload_cancelled" = "Yükleme iptal edildi";
 "content.file.upload_video" = "Videolar";
 "content.file.take_video" = "Bir video kaydet";
-"content.file.browse" = "Browse";
+"content.file.browse" = "Gözat";
 
 "content.file.save_video" = "Kaydet";
 "content.file.save_audio" = "Kaydet";
@@ -577,7 +577,7 @@
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
 "content.message.open" = "Aç";
-"content.message.sign" = "Sign";
+"content.message.sign" = "Tabela";
 "content.message.copy" = "Kopyala";
 "content.message.download" = "İndir";
 "content.message.details" = "Ayrıntılar";
@@ -680,7 +680,7 @@
 "call.participants.show_all" = "(%@) Tümünü göster";
 "call.participants.list.title" = "Katılımcılar";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.speakers" = "KONUŞMACILAR";
 "call.overlay.switch_to.all" = "TÜMÜ";
 
 "call.grid.no_active_speakers" = "No active video speakers...";
@@ -712,7 +712,7 @@
 "call.alert.ongoing.join.button" = "Yine de katıl";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
-"call.quality.indicator.more_info.button.text" = "More info";
+"call.quality.indicator.more_info.button.text" = "Daha fazla bilgi";
 
 // Call Actions (accessibility)
 
@@ -758,10 +758,10 @@
 "meta.menu.leave" = "Gruptan Ayrıl…";
 "meta.menu.archive" = "Arşivle";
 "meta.menu.unarchive" = "Arşivden kaldır";
-"meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.delete" = "Grubu sil…";
+"meta.menu.clear_content" = "İçeriği sil…";
 "meta.menu.move_to_folder" = "Şuraya Taşı…";
-"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.remove_from_folder" = "%@'dan kaldır";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -777,8 +777,8 @@
 "meta.menu.delete_content.dialog_message" = "Bu, tüm cihazlarınızdaki sohbet geçmişini temizler.";
 "meta.menu.delete_content.leave_as_well_message" = "Konuşmadan da ayrıl";
 "meta.menu.delete_content.button_cancel" = "İptal";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Temizle";
+"meta.menu.delete_content.button_delete_and_leave" = "Temizle ve ayrıl";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Beni haberdar et:";
@@ -793,7 +793,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "İptal";
 "meta.leave_conversation_button_leave" = "Ayrıl";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Ayrıl ve içeriği temizle";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";
@@ -838,7 +838,7 @@
 "conversation.delete_request_dialog.title" = "Grup sohbeti silinsin mi?";
 "conversation.delete_request_dialog.message" = "Bu, tüm cihazlardaki tüm katılımcılar için grubu ve tüm içeriği siler. İçeriği geri yüklemek için bir seçenek yoktur. Tüm katılımcılara bildirilecektir.";
 "conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "Grubu sil";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "İstek iptal edilsin mi?";
@@ -918,8 +918,8 @@
 "group_details.receipt_options_cell.title" = "Okundu bilgisi";
 "group_details.receipt_options_cell.description" = "Bu açıkken, insanlar bu görüşmedeki mesajlarının ne zaman okunduğunu görebilir.";
 
-"group_details.conversation_admins_header.title" = "Group admins";
-"group_details.conversation_members_header.title" = "Group members";
+"group_details.conversation_admins_header.title" = "Grup Yöneticileri";
+"group_details.conversation_members_header.title" = "Grup üyeleri";
 
 
 // Legal hold details
@@ -1025,7 +1025,7 @@
 
 "self.settings.account_personal_information_group.title" = "Kişisel Bilgiler";
 
-"self.settings.account_picture_group.theme" = "Theme";
+"self.settings.account_picture_group.theme" = "Tema";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire her cihaza kendine has bir parmak izi verir. Cihazlarınızı ve konuşmalarınızı doğrulamak için parmak izlerinizi karşılaştırın.";
 "self.settings.device_details.reset_session.subtitle" = "Parmak izleri eşleşmezse, her iki tarafta da yeni şifreleme anahtarları oluşturmak için oturumu sıfırlayın.";
@@ -1134,8 +1134,8 @@
 "self.settings.popular_demand.dark_mode.footer" = "Karanlık ve aydınlık tema arasında geçiş yapın.";
 
 // dark theme
-"dark_theme.option.dark" = "Dark";
-"dark_theme.option.light" = "Light";
+"dark_theme.option.dark" = "Karanlık";
+"dark_theme.option.light" = "Işık";
 "dark_theme.option.system" = "Sync with system settings";
 
 // Open in
@@ -1199,9 +1199,9 @@
 "self.settings.advanced.title" = "Gelişmiş";
 "self.settings.advanced.troubleshooting.title" = "Sorun giderme";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Hata Ayıklama Raporu";
-"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.title" = "hata ayıklama araçları";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
-"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "User ID'mi göster";
 "self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Bu bilgi, Wire Desteği arama sorunlarını tanılamanıza ve genel uygulama deneyimini geliştirmenize yardımcı olur.";
 "self.settings.advanced.reset_push_token.title" = "Bildirim Sıfırlama Belirteci";
@@ -1282,9 +1282,9 @@
 "landing.create_team.subtitle" = "İşletmeler, kurumlar ve profesyoneller için güvenli işbirliği\nprofessional\U00A0organizations";
 "landing.login.hints" = "Zaten bir hesabınız var mı?";
 "landing.login.button.title" = "Giriş yap";
-"landing.login.email.button.title" = "Log in with email";
+"landing.login.email.button.title" = "E-posta ile giriş yap";
 "landing.login.enterprise.button.title" = "Enterprise log in";
-"landing.login.sso.button.title" = "Log in with SSO";
+"landing.login.sso.button.title" = "SSO ile giriş yap";
 
 "landing.custom_backend.title" = "''%@\"'a bağlanıldı";
 "landing.custom_backend.more_info.button.title" = "Daha fazla göster";
@@ -1435,8 +1435,8 @@
 
 "login.sso.error.alert.invalid_code.message" = "Lütfen şirketinizin SSO erişim kodunu doğrulayın ve tekrar deneyin.";
 "login.sso.error.alert.invalid_status.message" = "Lütfen daha sonra tekrar deneyin (Hata %@).";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Lütfen geçerli bir SSO kodu girin.";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Lütfen geçerli bir e-posta veya SSO kodu girin.";
 "login.sso.error.alert.domain_not_registered.message" = "Bu e-posta, kurumsal giriş için kullanılamaz. Devam etmek için lütfen SSO kodunu girin.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
 "login.sso.error.alert.unknown.message" = "Lütfen daha sonra tekrar dene.";
@@ -1631,14 +1631,14 @@
 "force.update.ok_button" = "App Store'a git";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.title" = "Jailbreak(root) algılandı";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
 // Database Loading Failure alert
 "databaseloadingfailure.alert.title" = "Not Enough Storage";
 "databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
 "databaseloadingfailure.alert.settings" = "Ayarlara git";
-"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database" = "Veritabanını sil";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "Devam et";
 
@@ -1809,8 +1809,8 @@
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
-"button_message_cell.state.selected" = "selected";
-"button_message_cell.state.confirmed" = "confirmed";
+"button_message_cell.state.selected" = "seçildi";
+"button_message_cell.state.confirmed" = "doğrulandı";
 
 "button_message_cell.generic_error" = "Yanıtınız gönderilemiyor, lütfen tekrar deneyin.";
 
@@ -1820,24 +1820,24 @@
 
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
-"create_passcode.title_label" = "Create a passcode";
+"create_passcode.title_label" = "Parola oluştur";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
 "create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.create_button.title" = "Parola Oluştur";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
 "create_passcode.validation.no_lowercase_char" = "A lowercase letter";
 "create_passcode.validation.no_uppercase_char" = "An uppercase letter";
-"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_number" = "Sayı";
 "create_passcode.validation.no_special_char" = "A special character";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.textfield.placeholder" = "Parolanızı girin";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
 "unlock.error_label" = "Yanlış Şifre";
-"unlock.submit_button.title" = "unlock";
+"unlock.submit_button.title" = "kilidi aç";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Wire'da bir değişiklik oldu";
@@ -1847,7 +1847,7 @@
 
 // Wipe database
 
-"wipe_database.title_label" = "Access as new device";
+"wipe_database.title_label" = "Yeni cihaza erişim ver";
 "wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
@@ -1855,7 +1855,7 @@
 
 // Wipe database alert
 
-"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.description" = "Veri Tabanını silme işlemini onayla";
 "wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
 "wipe_database.alert.placeholder" = "Type 'Delete'";
 "wipe_database.alert.confirm" = "Sil";
@@ -1863,7 +1863,7 @@
 
 // Wipe database completion
 
-"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.title" = "Veri tabanı silindi";
 "wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
 
 // MARK: - App lock module
@@ -1873,4 +1873,4 @@
 "appLockModule.message.passcode" = "Şifre ile Wire'ın Kilidini Açın";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Kilidi aç";
-"appLockModule.goToSettingsButton.title" = "Go to settings";
+"appLockModule.goToSettingsButton.title" = "Ayarlara git";

@@ -35,8 +35,8 @@
 
 // Custom app lock - unlock
 "share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
-"share_extension.unlock.submit_button.title" = "unlock";
-"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.submit_button.title" = "kilidi aç";
+"share_extension.unlock.textfield.placeholder" = "Parolanızı girin";
 "share_extension.unlock.hint_label" = "Şifre";
 "share_extension.unlock.error_label" = "Yanlış Şifre";
 "share_extension.unlock.alert.message" = "Open Wire to create a passcode";

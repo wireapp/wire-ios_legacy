@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Контактів немає.";
 
-"peoplepicker.no_matching_results_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_message" = "Введіть адресу електронної пошти.";
 "peoplepicker.no_search_results" = "Немає відповідних результатів. Спробуйте ввести інше ім'я.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Надіслати запрошення";
 "peoplepicker.no_matching_results.action.share_contacts" = "Поділитись контактами";
+"peoplepicker.no_matching_results.action.learn_more" = "Дізнатися більше";
+"peoplepicker.no_matching_results.action.manage_services" = "Керування сервісами";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_services_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
-"peoplepicker.no_matching_results_services_admin_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Керування сервісами";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
-
-"peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
+"peoplepicker.no_matching_results.message.users" = "Знайти людей в Wire по імені або @ніку";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Знаходьте людей в Wire по імені або @ніку\n\nЗнаходьте  людей з іншого домену,\nвикористовуючи формат @нік@ім'я_домену";
+"peoplepicker.no_matching_results.message.users_all_added" = "Всі вже тут.";
+"peoplepicker.no_matching_results.message.services" = "Нікого не знайдено.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до IT-адміністратора вашої команди.";
 
 "peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
 "peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Керування сервісами";
 
 "peoplepicker.federation.domain_unvailable" = "Федеративний домен наразі не доступний. [Дізнатися більше](%@)";
-
-"add_participants.all_contacts_added" = "Всі вже тут.";
 
 "add_participants.alert.title" = "Розмова переповнена";
 "add_participants.alert.message.new_conversation" = "До розмови може приєднатися до %d учасників.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
-"conversation.guests_present" = "Присутні гості";
-"conversation.services_present" = "Сервіси активовані";
-"conversation.guests_services_present" = "Присутні гості та сервіси";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Пошук";
 
 // Reply message preview
@@ -685,8 +685,8 @@
 
 "call.grid.no_active_speakers" = "Активні спікери відсутні...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "Торкніться двічі для повноекранного режиму";
+"call.grid.hints.go_back_or_zoom" = "Токніться двічі, щоб повернутись. Розведіть/зведіть пальці для збільшення/зменшення";
 "call.grid.hints.zoom" = "Зведіть або розведіть пальці для зміни масштабу";
 
 "call.video.paused" = "Відео призупинено";

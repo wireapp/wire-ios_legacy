@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "找不到联络人。";
 
-"peoplepicker.no_matching_results_title" = "没有结果。";
-"peoplepicker.no_matching_results_message" = "输入完整的电邮箱地址。";
 "peoplepicker.no_search_results" = "没有匹配结果。请尝试输入不同的名称。";
 
 "peoplepicker.no_matching_results.action.send_invite" = "发送邀请";
 "peoplepicker.no_matching_results.action.share_contacts" = "共享联络人";
+"peoplepicker.no_matching_results.action.learn_more" = "更多信息";
+"peoplepicker.no_matching_results.action.manage_services" = "管理服务";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "请输入有效的电邮箱地址";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
-"peoplepicker.no_matching_results_services_title" = "服务是可以为您的工作流程改善提供帮助。要启用服务，请联系您的管理员。";
-"peoplepicker.no_matching_results_services_admin_title" = "服务是可以为您的工作流程改善提供帮助。";
-"peoplepicker.no_matching_results_services_manage_services_title" = "管理服务";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "请输入完整的电邮箱地址或";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "共享联络人";
-
-"peoplepicker.share_contacts.no_results.title" = "按名称或电邮箱地址搜索";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "没有结果。";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "邀请已送出";
 "peoplepicker.send_invitation.dialog.message" = "邀请两周内有效。如果过期，请发送新的邀请。";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "管理服务";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "所有用户已加入群聊";
 
 "add_participants.alert.title" = "通话人数已达上限";
 "add_participants.alert.message.new_conversation" = "最多 %d 人可以加入同一个群聊。";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "消息已删除。";
 
-"conversation.guests_present" = "访客在对话中";
-"conversation.services_present" = "服务已启动";
-"conversation.guests_services_present" = "包含外部联系人和服务";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "搜索";
 
 // Reply message preview
