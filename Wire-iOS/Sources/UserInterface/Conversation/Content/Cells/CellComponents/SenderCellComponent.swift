@@ -129,8 +129,12 @@ final class SenderCellComponent: UIView {
     private func configureTeamRoleIndicator(for configuration: SenderCellConfiguration) {
         teamRoleIndicator.isHidden = configuration.icon == nil
         if let icon = configuration.icon {
-            teamRoleIndicator.setIcon(icon, size: 16, color: UIColor.from(scheme: .iconGuest))
+            teamRoleIndicator.setIcon(icon, size: iconSize(for: icon), color: UIColor.from(scheme: .iconGuest))
         }
+    }
+
+    private func iconSize(for icon: StyleKitIcon) -> StyleKitIcon.Size {
+        return icon == .externalPartner ? 16 : 14
     }
 
     // MARK: - Tap gesture of avatar
