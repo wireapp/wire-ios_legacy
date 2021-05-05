@@ -102,7 +102,7 @@ final class LabelIndicator: UIView, Themeable {
         titleLabel.text = context.title.localized(uppercased: true)
 
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
-        indicatorIcon.setIcon(context.icon, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        indicatorIcon.setIcon(context.icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
 
         containerView.addSubview(titleLabel)
         containerView.addSubview(indicatorIcon)
