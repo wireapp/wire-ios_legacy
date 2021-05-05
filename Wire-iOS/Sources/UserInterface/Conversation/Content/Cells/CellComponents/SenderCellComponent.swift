@@ -52,6 +52,7 @@ final class SenderCellComponent: UIView {
     let avatarSpacer = UIView()
     let avatar = UserImageView()
     let authorLabel = UILabel()
+    let roleIndicator = UIImageView()
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
@@ -102,9 +103,8 @@ final class SenderCellComponent: UIView {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
 
-        stackView = UIStackView(arrangedSubviews: [avatarSpacer, authorLabel])
+        stackView = UIStackView(arrangedSubviews: [avatarSpacer, authorLabel, roleIndicator])
         stackView.axis = .horizontal
-        stackView.distribution = .fill
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -122,6 +122,9 @@ final class SenderCellComponent: UIView {
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
             avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
             avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
+
+            authorLabel.trailingAnchor.constraint(equalTo: roleIndicator.leadingAnchor, constant: -8),
+
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -139,13 +142,13 @@ final class SenderCellComponent: UIView {
                                                                    .font: UIFont.mediumSemiboldFont])
 
         guard let icon = configuration.icon else {
+            roleIndicator.isHidden = true
             return baseAttributedString
         }
-        let attachment = NSTextAttachment.textAttachment(for: icon,
-                                                         with: UIColor.from(scheme: .iconGuest),
-                                                         iconSize: 12, verticalCorrection: -1.5)
+        roleIndicator.setIcon(icon, size: .tiny, color: UIColor.from(scheme: .iconGuest))
+        roleIndicator.isHidden = false
 
-        return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
+        return baseAttributedString
     }
 
     // MARK: - Tap gesture of avatar
