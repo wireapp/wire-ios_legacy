@@ -20,174 +20,174 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationMessageSenderSnapshotTests: XCTestCase {
-
-    var sut: SenderCellComponent!
-    var teamID = UUID()
-    var groupConversation: SwiftMockConversation!
-    var oneToOneConversation: SwiftMockConversation!
-    var mockUser: MockUserType!
-
-    override func setUp() {
-        super.setUp()
-        mockUser = MockUserType.createUser(name: "Bruno", inTeam: teamID)
-
-        groupConversation = createGroupConversation()
-        oneToOneConversation = createOneOnOneConversation()
-
-        sut = SenderCellComponent(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
-
-        ColorScheme.default.variant = .light
-        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
-    }
-
-    override func tearDown() {
-        sut = nil
-        groupConversation = nil
-        oneToOneConversation = nil
-        mockUser = nil
-        super.tearDown()
-    }
-
-    // MARK: - 1:1
-
-    func test_SenderIsExternal_OneOnOneConversation() {
-        // GIVEN
-        mockUser.teamRole = .partner
-
-        // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsExternal_OneOnOneConversation_DarkMode() {
-        // GIVEN
-        ColorScheme.default.variant = .dark
-        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
-
-        mockUser.teamRole = .partner
-
-        // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsGuest_OneOnOneConversation() {
-        // GIVEN
-        mockUser.isGuestInConversation = true
-
-        // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsBot_OneOnOneConversation() {
-        // GIVEN
-        mockUser.mockedIsServiceUser = true
-
-        // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsTeamMember_OneOnOneConversation() {
-        // GIVEN
-        mockUser.teamRole = .member
-        mockUser.isGuestInConversation = false
-        mockUser.mockedIsServiceUser = false
-
-        // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    // MARK: - Groups
-
-    func test_SenderIsExternal_GroupConversation() {
-        // GIVEN
-        mockUser.teamRole = .partner
-
-        // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsGuest_GroupConversation() {
-        // GIVEN
-        mockUser.isGuestInConversation = true
-
-        // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsGuest_GroupConversation_DarkMode() {
-        // GIVEN
-        ColorScheme.default.variant = .dark
-        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
-
-        mockUser.isGuestInConversation = true
-
-        // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsBot_GroupConversation() {
-        // GIVEN
-        mockUser.mockedIsServiceUser = true
-
-        // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    func test_SenderIsTeamMember_GroupConversation() {
-        // GIVEN
-        mockUser.teamRole = .member
-        mockUser.isGuestInConversation = false
-        mockUser.mockedIsServiceUser = false
-
-        // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
-
-        // THEN
-        verify(matching: sut)
-    }
-
-    // MARK: - Helpers
-
-    private func createGroupConversation() -> SwiftMockConversation {
-        let conversation = SwiftMockConversation()
-        conversation.teamRemoteIdentifier = UUID()
-        conversation.mockLocalParticipantsContain = true
-
-        return conversation
-    }
-
-    private func createOneOnOneConversation() -> SwiftMockConversation {
-        let conversation = SwiftMockConversation()
-        conversation.conversationType = .oneOnOne
-        conversation.mockLocalParticipantsContain = false
-
-        return conversation
-    }
-}
+//final class ConversationMessageSenderSnapshotTests: XCTestCase {
+//
+//    var sut: SenderCellComponent!
+//    var teamID = UUID()
+//    var groupConversation: SwiftMockConversation!
+//    var oneToOneConversation: SwiftMockConversation!
+//    var mockUser: MockUserType!
+//
+//    override func setUp() {
+//        super.setUp()
+//        mockUser = MockUserType.createUser(name: "Bruno", inTeam: teamID)
+//
+//        groupConversation = createGroupConversation()
+//        oneToOneConversation = createOneOnOneConversation()
+//
+//        sut = SenderCellComponent(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
+//
+//        ColorScheme.default.variant = .light
+//        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+//    }
+//
+//    override func tearDown() {
+//        sut = nil
+//        groupConversation = nil
+//        oneToOneConversation = nil
+//        mockUser = nil
+//        super.tearDown()
+//    }
+//
+//    // MARK: - 1:1
+//
+//    func test_SenderIsExternal_OneOnOneConversation() {
+//        // GIVEN
+//        mockUser.teamRole = .partner
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: oneToOneConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsExternal_OneOnOneConversation_DarkMode() {
+//        // GIVEN
+//        ColorScheme.default.variant = .dark
+//        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+//
+//        mockUser.teamRole = .partner
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: oneToOneConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsGuest_OneOnOneConversation() {
+//        // GIVEN
+//        mockUser.isGuestInConversation = true
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: oneToOneConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsBot_OneOnOneConversation() {
+//        // GIVEN
+//        mockUser.mockedIsServiceUser = true
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: oneToOneConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsTeamMember_OneOnOneConversation() {
+//        // GIVEN
+//        mockUser.teamRole = .member
+//        mockUser.isGuestInConversation = false
+//        mockUser.mockedIsServiceUser = false
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: oneToOneConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    // MARK: - Groups
+//
+//    func test_SenderIsExternal_GroupConversation() {
+//        // GIVEN
+//        mockUser.teamRole = .partner
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: groupConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsGuest_GroupConversation() {
+//        // GIVEN
+//        mockUser.isGuestInConversation = true
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: groupConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsGuest_GroupConversation_DarkMode() {
+//        // GIVEN
+//        ColorScheme.default.variant = .dark
+//        sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+//
+//        mockUser.isGuestInConversation = true
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: groupConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsBot_GroupConversation() {
+//        // GIVEN
+//        mockUser.mockedIsServiceUser = true
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: groupConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    func test_SenderIsTeamMember_GroupConversation() {
+//        // GIVEN
+//        mockUser.teamRole = .member
+//        mockUser.isGuestInConversation = false
+//        mockUser.mockedIsServiceUser = false
+//
+//        // WHEN
+//        sut.configure(with: mockUser, in: groupConversation)
+//
+//        // THEN
+//        verify(matching: sut)
+//    }
+//
+//    // MARK: - Helpers
+//
+//    private func createGroupConversation() -> SwiftMockConversation {
+//        let conversation = SwiftMockConversation()
+//        conversation.teamRemoteIdentifier = UUID()
+//        conversation.mockLocalParticipantsContain = true
+//
+//        return conversation
+//    }
+//
+//    private func createOneOnOneConversation() -> SwiftMockConversation {
+//        let conversation = SwiftMockConversation()
+//        conversation.conversationType = .oneOnOne
+//        conversation.mockLocalParticipantsContain = false
+//
+//        return conversation
+//    }
+//}
