@@ -38,7 +38,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     }
 
     fileprivate var collectionView: CallParticipantsView!
-    let allowsScrolling: Bool
+    let showParticipants: Bool
 
     var variant: ColorSchemeVariant = .light {
         didSet {
@@ -47,10 +47,10 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     }
 
     init(participants: CallParticipantsList,
-         allowsScrolling: Bool,
+         showParticipants: Bool,
          selfUser: UserType) {
         self.participants = participants
-        self.allowsScrolling = allowsScrolling
+        self.showParticipants = showParticipants
         self.selfUser = selfUser
         super.init(nibName: nil, bundle: nil)
     }
@@ -58,7 +58,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput,
                      selfUser: UserType = ZMUser.selfUser()) {
         self.init(participants: configuration.accessoryType.participants,
-                  allowsScrolling: true,
+                  showParticipants: true,
                   selfUser: selfUser)
         variant = configuration.effectiveColorVariant
         view.backgroundColor = configuration.overlayBackgroundColor
@@ -94,7 +94,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
 
         let collectionView = CallParticipantsView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.bounces = allowsScrolling
+        collectionView.bounces = showParticipants
         collectionView.delegate = self
         self.collectionView = collectionView
         view.addSubview(collectionView)
@@ -123,20 +123,9 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
     }
 
     private func updateRows() {
-        collectionView?.rows = computeVisibleRows()
-    }
-
-    func computeVisibleRows() -> CallParticipantsList {
-        guard !allowsScrolling else { return participants }
-
-        let visibleRows = Int(collectionView.bounds.height / cellHeight)
-        guard visibleRows > 0 else { return [] }
-
-        if participants.count > visibleRows {
-            return participants[0..<(visibleRows - 1)] + [.showAll(totalCount: participants.count)]
-        } else {
-            return participants
-        }
+        collectionView?.rows = showParticipants
+            ? participants
+            : [.showAll(totalCount: participants.count)]
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

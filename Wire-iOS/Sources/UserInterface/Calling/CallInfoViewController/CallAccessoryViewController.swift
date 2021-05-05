@@ -46,9 +46,11 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     init(configuration: CallInfoViewControllerInput,
          selfUser: UserType) {
         self.configuration = configuration
-        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants,
-                                                                    allowsScrolling: false,
-                                                                    selfUser: selfUser)
+        participantsViewController = CallParticipantsViewController(
+            participants: configuration.accessoryType.participants,
+            showParticipants: false,
+            selfUser: selfUser
+        )
         super.init(nibName: nil, bundle: nil)
         participantsViewController.delegate = self
     }

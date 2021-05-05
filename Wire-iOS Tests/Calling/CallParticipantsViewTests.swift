@@ -57,7 +57,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
 
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers()), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers()), showParticipants: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -68,7 +68,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
 
     func testCallParticipants_Overflowing_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
@@ -81,7 +81,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
 
     func testCallParticipants_Truncated_Light() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
 
         // Then
@@ -90,7 +90,7 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
 
     func testCallParticipants_Truncated_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
