@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Ingen kontakter.";
 
-"peoplepicker.no_matching_results_title" = "Ingen resultater.";
-"peoplepicker.no_matching_results_message" = "Indtast en fuldstændig e-mail adresse.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Send en invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Del kontakter";
+"peoplepicker.no_matching_results.action.learn_more" = "Lær mere";
+"peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Indtast en gyldig e-mailadresse";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ingen resultater.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Indtast en gyldig e-mailadresse eller";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "del kontakter";
-
-"peoplepicker.share_contacts.no_results.title" = "Find personer ved navn eller e-mail adresse";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Ingen resultater.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sendt";
 "peoplepicker.send_invitation.dialog.message" = "Den kan anvendes i 2 uger. Send en ny, hvis den udløber.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Everyone’s here.";
 
 "add_participants.alert.title" = "Fuldt hus";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Gæster er til stede";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Søg";
 
 // Reply message preview

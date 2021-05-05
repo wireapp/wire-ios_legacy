@@ -42,10 +42,16 @@ class URLActionRouter: URLActionRouterProtocol {
     // MARK: - Public Property
     var sessionManager: SessionManager?
     weak var delegate: URLActionRouterDelegete?
+    weak var authenticatedRouter: AuthenticatedRouterProtocol? {
+        didSet {
+            performPendingNavigation()
+        }
+    }
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
     private var url: URL?
+    private var pendingDestination: NavigationDestination?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
@@ -92,6 +98,24 @@ class URLActionRouter: URLActionRouterProtocol {
     private func resetDeepLinkURL() {
         url = nil
     }
+
+    func performPendingNavigation() {
+        guard let destination = pendingDestination else {
+            return
+        }
+
+        pendingDestination = nil
+        navigate(to: destination)
+    }
+
+    func navigate(to destination: NavigationDestination) {
+        guard authenticatedRouter != nil else {
+            pendingDestination = destination
+            return
+        }
+
+        authenticatedRouter?.navigate(to: destination)
+    }
 }
 
 // MARK: - PresentationDelegate
@@ -120,31 +144,19 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConnectionRequest(userId: userId)
+        navigate(to: .connectionRequest(userId))
     }
 
     func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showUserProfile(user: user)
+        navigate(to: .userProfile(user))
     }
 
     func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversation(conversation, at: message)
+        navigate(to: .conversation(conversation, message))
     }
 
     func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversationList()
+        navigate(to: .conversationList)
     }
 
     // MARK: - Private Implementation

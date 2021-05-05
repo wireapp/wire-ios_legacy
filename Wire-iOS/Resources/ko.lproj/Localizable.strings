@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "연락처가 없습니다.";
 
-"peoplepicker.no_matching_results_title" = "결과가 없습니다.";
-"peoplepicker.no_matching_results_message" = "이메일 주소를 입력하세요";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "초대장을 보냅니다.";
 "peoplepicker.no_matching_results.action.share_contacts" = "연락처 공유하기";
+"peoplepicker.no_matching_results.action.learn_more" = "Learn more";
+"peoplepicker.no_matching_results.action.manage_services" = "서비스 관리하기";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "이메일 주소를 다시 확인 후 입력하세요";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "결과가 없습니다.";
-"peoplepicker.no_matching_results_services_title" = "서비스는 작업 흐름을 쉽게 도와주는 기능을 합니다. 해당 기능을 사용하려면, 관리자에게 문의하세요.";
-"peoplepicker.no_matching_results_services_admin_title" = "서비스는 작업 흐름을 쉽게 도와주는 기능을 합니다.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "서비스 관리하기";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "이메일 주소를 입력하거나";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "연락처 공유";
-
-"peoplepicker.share_contacts.no_results.title" = "이름이나 이메일 주소로 사람 찾기";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "결과가 없습니다.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "초대장을 보냈습니다";
 "peoplepicker.send_invitation.dialog.message" = "초대장은 2주동안 유효합니다. 기간이 지난 후에는 새로운 초대장을 보내세요.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "서비스 관리하기";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "모든 사용자가 참가했습니다.";
 
 "add_participants.alert.title" = "그룹에 사용자수가 가득 찼습니다.";
 "add_participants.alert.message.new_conversation" = "대화에 %d명까지 참가 가능합니다.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Search";
 
 // Reply message preview

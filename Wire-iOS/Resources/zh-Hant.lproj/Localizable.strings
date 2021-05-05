@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "沒有連絡人。";
 
-"peoplepicker.no_matching_results_title" = "沒有結果。";
-"peoplepicker.no_matching_results_message" = "請輸入完整的電子郵件地址。";
 "peoplepicker.no_search_results" = "沒有符合的結果。請試試別的名稱。";
 
 "peoplepicker.no_matching_results.action.send_invite" = "發送邀請";
 "peoplepicker.no_matching_results.action.share_contacts" = "分享通訊錄";
+"peoplepicker.no_matching_results.action.learn_more" = "瞭解詳情";
+"peoplepicker.no_matching_results.action.manage_services" = "管理服務";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "請輸入有效電子郵件信箱";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
-"peoplepicker.no_matching_results_services_title" = "服務可改善你的工作流程。要啟用它們, 請詢問您的管理員。";
-"peoplepicker.no_matching_results_services_admin_title" = "服務可改善你的工作流程。";
-"peoplepicker.no_matching_results_services_manage_services_title" = "管理服務";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "請輸入完整的電子郵件地址或";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "分享通訊錄";
-
-"peoplepicker.share_contacts.no_results.title" = "透過名稱或電子郵件搜尋連絡人";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "沒有符合結果。";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "已送出邀請";
 "peoplepicker.send_invitation.dialog.message" = "連結兩週內有效。如逾期請重新發送。";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "管理服務";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "大家都已加入";
 
 "add_participants.alert.title" = "此群組參與者已達上限";
 "add_participants.alert.message.new_conversation" = "最多%d人可以加入對話。";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "此訊息已刪除。";
 
-"conversation.guests_present" = "訪客在對話中";
-"conversation.services_present" = "服務已啟動";
-"conversation.guests_services_present" = "對話中有訪客和服務";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "搜索";
 
 // Reply message preview

@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Нема контаката.";
 
-"peoplepicker.no_matching_results_title" = "Нема резултата.";
-"peoplepicker.no_matching_results_message" = "Унесите адресу е-поште.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Пошаљи позивницу";
 "peoplepicker.no_matching_results.action.share_contacts" = "Дели контакте";
+"peoplepicker.no_matching_results.action.learn_more" = "Сазнајте више";
+"peoplepicker.no_matching_results.action.manage_services" = "Управљање услугама";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Унесите важећу адресу е-поште";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нема резултата.";
-"peoplepicker.no_matching_results_services_title" = "Услуге су помоћ која може побољшати вашу брзину рада. Да бисте их омогућили, питајте свог администратора.";
-"peoplepicker.no_matching_results_services_admin_title" = "Услуге су помоћ која може побољшати ваш рад.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Управљање услугама";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Унесите адресу е-поште или";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "поделите контакте";
-
-"peoplepicker.share_contacts.no_results.title" = "Пронађи људе по имену или адреси е-поште";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Нема резултата.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Позивница је послата";
 "peoplepicker.send_invitation.dialog.message" = "Важи две недеље. Пошаљите нову ако ова истекне.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Управљање услугама";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Everyone’s here.";
 
 "add_participants.alert.title" = "Група је попуњена";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Гости су присутни";
-"conversation.services_present" = "Услуге су активне";
-"conversation.guests_services_present" = "Гости и услуге су присутни";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Претрага";
 
 // Reply message preview

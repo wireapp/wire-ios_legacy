@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Aucun contact.";
 
-"peoplepicker.no_matching_results_title" = "Aucun résultat.";
-"peoplepicker.no_matching_results_message" = "Veuillez saisir une adresse e-mail complète.";
 "peoplepicker.no_search_results" = "Aucun résultat. Essayez avec un nom différent.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Envoyer une invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Partager vos contacts";
+"peoplepicker.no_matching_results.action.learn_more" = "En savoir plus";
+"peoplepicker.no_matching_results.action.manage_services" = "Gérer les Services";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Veuillez saisir une adresse e-mail valide";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Aucun résultat.";
-"peoplepicker.no_matching_results_services_title" = "Les services sont des programmes qui peuvent améliorer votre flux de travail. Pour les activer, contactez votre administrateur.";
-"peoplepicker.no_matching_results_services_admin_title" = "Les services sont des programmes qui peuvent améliorer votre flux de travail.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Gérer les Services";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Veuillez saisir une adresse e-mail complète ou";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "partagez vos contacts";
-
-"peoplepicker.share_contacts.no_results.title" = "Trouvez des contacts grâce à leur nom ou à leur adresse e-mail";
+"peoplepicker.no_matching_results.message.users" = "Trouver des contacts sur Wire par nom ou par @identifiant";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Trouvez des contacts sur Wire par nom ou par @identifiant\n\nTrouvez des contacts sur un autre domaine par @identifiant@nomdedomaine";
+"peoplepicker.no_matching_results.message.users_all_added" = "Tout le monde est là.";
+"peoplepicker.no_matching_results.message.services" = "Aucun résultat.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Les services sont des programmes qui peuvent améliorer votre flux de travail.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Les services sont des programmes qui peuvent améliorer votre flux de travail. Pour les activer, contactez votre administrateur.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation envoyée";
 "peoplepicker.send_invitation.dialog.message" = "Elle peut être utilisée pendant 2 semaines. Envoyez-en une nouvelle si elle expire.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Gérer les Services";
 
 "peoplepicker.federation.domain_unvailable" = "Le domaine fédéré n'est actuellement pas disponible. [En savoir plus](%@)";
-
-"add_participants.all_contacts_added" = "Tout le monde est là.";
 
 "add_participants.alert.title" = "Le groupe est complet";
 "add_participants.alert.message.new_conversation" = "Jusqu'à %d contacts peuvent participer à une conversation.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Le message est supprimé.";
 
-"conversation.guests_present" = "Des contacts externes sont présents";
-"conversation.services_present" = "Les services sont actifs";
-"conversation.guests_services_present" = "Des contacts externes et des services sont présents";
+// Conversation banner
+"conversation.banner.guests_present" = "Des **invités** sont présents";
+"conversation.banner.services_present" = "Des **services** sont actifs";
+"conversation.banner.externals_present" = "Des **contacts externes** sont présents";
+"conversation.banner.guests_services_present" = "Des **invités** et des **services** sont présents";
+"conversation.banner.externals_services_present" = "Des **contacts externes** et des **services** sont présents";
+"conversation.banner.externals_guests_present" = "Des **contacts externes** et des **invités** sont présents";
+"conversation.banner.externals_guests_services_present" = "Des **contacts externes** , des **invités** et des **services** sont présents";
+
 "conversation.action.search" = "Chercher";
 
 // Reply message preview

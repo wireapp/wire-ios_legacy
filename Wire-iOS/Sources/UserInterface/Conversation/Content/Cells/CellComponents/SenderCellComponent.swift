@@ -21,30 +21,30 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-private enum TextKind {
-    case userName(accent: UIColor)
-    case botName
-    case botSuffix
+private struct SenderCellConfiguration {
 
-    var color: UIColor {
-        switch self {
-        case let .userName(accent: accent):
-            return accent
-        case .botName:
-            return .from(scheme: .textForeground)
-        case .botSuffix:
-            return .from(scheme: .textDimmed)
+    let fullName: String
+    let textColor: UIColor
+    let icon: StyleKitIcon?
+
+    init(user: UserType, in conversation: ConversationLike?) {
+        fullName = user.name ?? ""
+        if user.isServiceUser {
+            textColor = .from(scheme: .textForeground)
+            icon = .bot
+        } else if user.isExternalPartner {
+            textColor = user.nameAccentColor
+            icon = .externalPartner
+        } else if let conversation = conversation,
+                  user.isGuest(in: conversation) {
+            textColor = user.nameAccentColor
+            icon = .guest
+        } else {
+            textColor = user.nameAccentColor
+            icon = .none
         }
     }
 
-    var font: UIFont {
-        switch self {
-        case .userName, .botName:
-            return FontSpec(.medium, .semibold).font!
-        case .botSuffix:
-            return FontSpec(.medium, .regular).font!
-        }
-    }
 }
 
 final class SenderCellComponent: UIView {
@@ -56,19 +56,38 @@ final class SenderCellComponent: UIView {
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
 
+    var conversation: ConversationLike?
+
+    // MARK: - Life Cycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setUp()
+        setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        setUp()
+        setup()
     }
 
-    func setUp() {
+    // MARK: - Configuration
+
+    func configure(with user: UserType, in conversation: ConversationLike?) {
+        avatar.user = user
+        self.conversation = conversation
+
+        let configuration = SenderCellConfiguration(user: user, in: conversation)
+        configureNameLabel(for: configuration)
+
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+        }
+    }
+
+    private func setup() {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.font = .normalLightFont
         authorLabel.accessibilityIdentifier = "author.name"
@@ -94,7 +113,7 @@ final class SenderCellComponent: UIView {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
 
@@ -110,43 +129,26 @@ final class SenderCellComponent: UIView {
             ])
     }
 
-    func configure(with user: UserType) {
-        avatar.user = user
+    private func configureNameLabel(for configuration: SenderCellConfiguration) {
+        authorLabel.attributedText = attributedName(for: configuration)
+    }
 
-        configureNameLabel(for: user)
+    private func attributedName(for configuration: SenderCellConfiguration) -> NSAttributedString {
+        let baseAttributedString = NSAttributedString(string: configuration.fullName,
+                                                      attributes: [.foregroundColor: configuration.textColor,
+                                                                   .font: UIFont.mediumSemiboldFont])
 
-        if !ProcessInfo.processInfo.isRunningTests,
-           let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
+        guard let icon = configuration.icon else {
+            return baseAttributedString
         }
+        let attachment = NSTextAttachment.textAttachment(for: icon,
+                                                         with: UIColor.from(scheme: .iconGuest),
+                                                         iconSize: 12, verticalCorrection: -1.5)
+
+        return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
     }
 
-    private func configureNameLabel(for user: UserType) {
-        let fullName =  user.name ?? ""
-
-        var attributedString: NSAttributedString
-        if user.isServiceUser {
-            let attachment = NSTextAttachment()
-            let botIcon = StyleKitIcon.bot.makeImage(size: 12, color: UIColor.from(scheme: .iconGuest))
-            attachment.image = botIcon
-            attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
-            attachment.accessibilityLabel = "general.service".localized
-            let bot = NSAttributedString(attachment: attachment)
-            let name = attributedName(for: .botName, string: fullName)
-            attributedString = name + "  ".attributedString + bot
-        } else {
-            let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
-            attributedString = attributedName(for: .userName(accent: accentColor), string: fullName)
-        }
-
-        authorLabel.attributedText = attributedString
-    }
-
-    private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        return NSAttributedString(string: string, attributes: [.foregroundColor: kind.color, .font: kind.font])
-    }
-
-    // MARK: - tap gesture of avatar
+    // MARK: - Tap gesture of avatar
 
     @objc func tappedOnAvatar() {
         guard let user = avatar.user else { return }
@@ -156,6 +158,8 @@ final class SenderCellComponent: UIView {
 
 }
 
+// MARK: - User change observer
+
 extension SenderCellComponent: ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
@@ -163,7 +167,8 @@ extension SenderCellComponent: ZMUserObserver {
             return
         }
 
-        configureNameLabel(for: changeInfo.user)
+        let configuration = SenderCellConfiguration(user: changeInfo.user, in: conversation)
+        configureNameLabel(for: configuration)
     }
 
 }
