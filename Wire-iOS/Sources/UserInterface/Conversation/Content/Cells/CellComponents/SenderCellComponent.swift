@@ -52,25 +52,13 @@ final class SenderCellComponent: UIView {
     let avatarSpacer = UIView()
     let avatar = UserImageView()
     let authorLabel = UILabel()
+    let teamRoleIndicator = UIImageView()
+    var titleStackView: UIStackView!
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
 
     var conversation: ConversationLike?
-
-    // MARK: - Life Cycle
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        setup()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        setup()
-    }
 
     // MARK: - Configuration
 
@@ -79,7 +67,7 @@ final class SenderCellComponent: UIView {
         self.conversation = conversation
 
         let configuration = SenderCellConfiguration(user: user, in: conversation)
-        configureNameLabel(for: configuration)
+        configureViews(for: configuration)
 
         if !ProcessInfo.processInfo.isRunningTests,
            let userSession = ZMUserSession.shared() {
@@ -87,9 +75,11 @@ final class SenderCellComponent: UIView {
         }
     }
 
-    private func setup() {
+    private func configureViews(for configuration: SenderCellConfiguration) {
+        configureNameLabel(for: configuration)
+        configureTeamRoleIndicator(for: configuration)
+
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
-        authorLabel.font = .normalLightFont
         authorLabel.accessibilityIdentifier = "author.name"
         authorLabel.numberOfLines = 1
 
@@ -102,9 +92,14 @@ final class SenderCellComponent: UIView {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
 
-        stackView = UIStackView(arrangedSubviews: [avatarSpacer, authorLabel])
+        titleStackView = UIStackView(arrangedSubviews: [authorLabel, teamRoleIndicator])
+        titleStackView.axis = .horizontal
+        titleStackView.alignment = .center
+        titleStackView.spacing = 8
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        stackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView])
         stackView.axis = .horizontal
-        stackView.distribution = .fill
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -122,30 +117,29 @@ final class SenderCellComponent: UIView {
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
             avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
             avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
+
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
             ])
     }
 
     private func configureNameLabel(for configuration: SenderCellConfiguration) {
-        authorLabel.attributedText = attributedName(for: configuration)
+        authorLabel.attributedText = NSAttributedString(string: configuration.fullName,
+                                                        attributes: [.foregroundColor: configuration.textColor,
+                                                                     .font: UIFont.mediumSemiboldFont])
     }
 
-    private func attributedName(for configuration: SenderCellConfiguration) -> NSAttributedString {
-        let baseAttributedString = NSAttributedString(string: configuration.fullName,
-                                                      attributes: [.foregroundColor: configuration.textColor,
-                                                                   .font: UIFont.mediumSemiboldFont])
-
-        guard let icon = configuration.icon else {
-            return baseAttributedString
+    private func configureTeamRoleIndicator(for configuration: SenderCellConfiguration) {
+        teamRoleIndicator.isHidden = configuration.icon == nil
+        if let icon = configuration.icon {
+            teamRoleIndicator.setIcon(icon, size: iconSize(for: icon), color: UIColor.from(scheme: .iconGuest))
         }
-        let attachment = NSTextAttachment.textAttachment(for: icon,
-                                                         with: UIColor.from(scheme: .iconGuest),
-                                                         iconSize: 12, verticalCorrection: -1.5)
+    }
 
-        return baseAttributedString + "  ".attributedString + NSAttributedString(attachment: attachment)
+    private func iconSize(for icon: StyleKitIcon) -> StyleKitIcon.Size {
+        return icon == .externalPartner ? 16 : 14
     }
 
     // MARK: - Tap gesture of avatar
