@@ -21,7 +21,7 @@ import WireSyncEngine
 struct VideoConfiguration: VideoGridConfiguration {
 
     fileprivate static let maxActiveSpeakers: Int = 4
-    fileprivate static let maxVideoStreams: Int = 12
+    fileprivate static let maxVideoStreams: Int = 8
 
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]
