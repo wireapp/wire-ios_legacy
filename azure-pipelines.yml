@@ -47,7 +47,7 @@ steps:
   displayName: 'Install Slather'
   
 - script: |
-    slather coverage -x --scheme $(scheme) --output-directory $(coveragePath) $(projectPath)
+    slather coverage -x --scheme $(scheme) --build_directory ./DerivedData --output-directory $(coveragePath) $(projectPath)
   displayName: 'Run slather to convert Code Coverage'
 
 - task: PublishCodeCoverageResults@1
