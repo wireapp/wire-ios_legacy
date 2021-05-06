@@ -53,6 +53,7 @@ final class SenderCellComponent: UIView {
     let avatar = UserImageView()
     let authorLabel = UILabel()
     let teamRoleIndicator = UIImageView()
+    var titleStackView: UIStackView!
     var stackView: UIStackView!
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
@@ -91,7 +92,13 @@ final class SenderCellComponent: UIView {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
 
-        stackView = UIStackView(arrangedSubviews: [avatarSpacer, authorLabel, teamRoleIndicator])
+        titleStackView = UIStackView(arrangedSubviews: [authorLabel, teamRoleIndicator])
+        titleStackView.axis = .horizontal
+        titleStackView.alignment = .center
+        titleStackView.spacing = 8
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        stackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,8 +117,6 @@ final class SenderCellComponent: UIView {
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
             avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
             avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
-
-            authorLabel.trailingAnchor.constraint(equalTo: teamRoleIndicator.leadingAnchor, constant: -8),
 
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
