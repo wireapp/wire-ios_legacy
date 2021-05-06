@@ -11,6 +11,12 @@ pr:
     include:
       - '*'
 
+variables:
+  projectPath: 'Wire-iOS.xcodeproj'
+  scheme: 'Wire-iOS'
+  configuration: 'Debug'
+  coveragePath: '$(agent.buildDirectory)/coverage/'
+  
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_12.4.app
@@ -37,6 +43,18 @@ steps:
     fastlane test
   displayName: "Test"
 
+- script: gem install slather
+  displayName: 'Install Slather'
+  
+- script: |
+    slather coverage -x --scheme $(scheme) --output-directory $(coveragePath) $(projectPath)
+  displayName: 'Run slather to convert Code Coverage'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(coveragePath)/cobertura.xml'
+    
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: 'test/*.junit'
