@@ -21,34 +21,9 @@ import UIKit
 import avs
 import WireSyncEngine
 
-protocol AVSIdentifierProvider {
-    var stream: Stream { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-
-    var stream: Stream {
-        return Stream(
-            streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
-            participantName: nil,
-            microphoneState: .unmuted,
-            videoState: .none,
-            activeSpeakerState: .inactive
-        )
-    }
-}
-
-private extension Stream {
-    var isParticipantUnmutedAndSpeakingNow: Bool {
-        return activeSpeakerState.isSpeakingNow && microphoneState == .unmuted
-    }
-
-    var isParticipantUnmutedAndActive: Bool {
-        return activeSpeakerState != .inactive && microphoneState == .unmuted
-    }
-}
-
 class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
+
+    // MARK: - Public Properties
 
     var stream: Stream {
         didSet {
@@ -70,6 +45,10 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         }
     }
 
+    let userDetailsView = VideoParticipantDetailsView()
+
+    // MARK: - Private Properties
+
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
     private var isCovered: Bool
@@ -82,7 +61,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         isCovered ? 0 : 1
     }
 
-    let userDetailsView = VideoParticipantDetailsView()
+    // MARK: - View Life Cycle
 
     init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
         self.stream = stream
