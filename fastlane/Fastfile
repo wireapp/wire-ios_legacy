@@ -113,6 +113,19 @@ platform :ios do
         )
     end
 
+    desc "Generate Cobertura Code Coverage"
+    lane :codeCoverage do |options|
+        slather(
+            build_directory: "DerivedData",
+            input_format: "profdata",
+            cobertura_xml: true,
+            scheme: "Wire-iOS",
+            proj: "Wire-iOS.xcodeproj",
+            output_directory: "codeCoverage"
+        )
+    end
+
+
     desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
