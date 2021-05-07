@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import avs
+import WireSyncEngine
 
 protocol AVSIdentifierProvider {
     var stream: Stream { get }
