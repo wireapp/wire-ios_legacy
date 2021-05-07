@@ -19,9 +19,17 @@
 import UIKit
 import WireSyncEngine
 
+public enum NavigationDestination {
+    case conversation(ZMConversation, ZMConversationMessage?)
+    case userProfile(UserType)
+    case connectionRequest(UUID)
+    case conversationList
+}
+
 protocol AuthenticatedRouterProtocol: class {
     func updateActiveCallPresentationState()
     func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
+    func navigate(to destination: NavigationDestination)
 }
 
 class AuthenticatedRouter: NSObject {
@@ -68,6 +76,19 @@ extension AuthenticatedRouter: AuthenticatedRouterProtocol {
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         activeCallRouter.minimizeCall(animated: animated, completion: completion)
+    }
+
+    func navigate(to destination: NavigationDestination) {
+        switch destination {
+        case .conversation(let converation, let message):
+            _viewController?.showConversation(converation, at: message)
+        case .connectionRequest(let userId):
+            _viewController?.showConnectionRequest(userId: userId)
+        case .conversationList:
+            _viewController?.showConversationList()
+        case .userProfile(let user):
+            _viewController?.showUserProfile(user: user)
+        }
     }
 }
 

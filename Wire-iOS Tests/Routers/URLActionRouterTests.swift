@@ -59,6 +59,51 @@ final class URLActionRouterTests: XCTestCase {
         // THEN
         XCTAssertFalse(router.wasDeepLinkOpened)
     }
+
+    // MARK: Navigation
+
+    func testThatNavigationPerformed_WhenAuthenticatedRouterIsAvailable() {
+        // GIVEN
+        let authenticatedRouter = MockAuthenticatedRouter()
+        let router = TestableURLActionRouter(viewController: RootViewController())
+        router.authenticatedRouter = authenticatedRouter
+
+        // WHEN
+        router.navigate(to: .conversationList)
+
+        // THEN
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
+        }
+    }
+
+    func testThatNavigationPerformed_WhenAuthenticatedRouterBecomesAvailable() {
+        // GIVEN
+        let authenticatedRouter = MockAuthenticatedRouter()
+        let router = TestableURLActionRouter(viewController: RootViewController())
+        router.navigate(to: .conversationList)
+
+        // WHEN
+        router.authenticatedRouter = authenticatedRouter
+
+        // THEN
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
+        }
+    }
+}
+
+class MockAuthenticatedRouter: AuthenticatedRouterProtocol {
+
+    func updateActiveCallPresentationState() { }
+
+    func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?) { }
+
+    var didNavigateToDestination: NavigationDestination?
+    func navigate(to destination: NavigationDestination) {
+        didNavigateToDestination = destination
+    }
+
 }
 
 class TestableURLActionRouter: URLActionRouter {

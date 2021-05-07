@@ -1040,12 +1040,6 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
-      /// Guests are present
-      internal static let guestsPresent = L10n.tr("Localizable", "conversation.guests_present")
-      /// Guests and services are present
-      internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.guests_services_present")
-      /// Services are active
-      internal static let servicesPresent = L10n.tr("Localizable", "conversation.services_present")
       internal enum Action {
         /// Search
         internal static let search = L10n.tr("Localizable", "conversation.action.search")
@@ -1053,6 +1047,22 @@ internal enum L10n {
       internal enum Alert {
         /// The message is deleted.
         internal static let messageDeleted = L10n.tr("Localizable", "conversation.alert.message_deleted")
+      }
+      internal enum Banner {
+        /// **Externals** and **guests** are present
+        internal static let externalsGuestsPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_present")
+        /// **Externals**, **guests**, and **services** are present
+        internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_services_present")
+        /// **Externals** are present
+        internal static let externalsPresent = L10n.tr("Localizable", "conversation.banner.externals_present")
+        /// **External**s and **services** are present
+        internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_services_present")
+        /// **Guests** are present
+        internal static let guestsPresent = L10n.tr("Localizable", "conversation.banner.guests_present")
+        /// **Guests** and **services** are present
+        internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.banner.guests_services_present")
+        /// **Services** are active
+        internal static let servicesPresent = L10n.tr("Localizable", "conversation.banner.services_present")
       }
       internal enum Call {
         internal enum ManyParticipantsConfirmation {

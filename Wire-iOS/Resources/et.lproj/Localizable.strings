@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Ei ole kontakte.";
 
-"peoplepicker.no_matching_results_title" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results_message" = "Sisesta täielik meiliaadress.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Saada kutse";
 "peoplepicker.no_matching_results.action.share_contacts" = "Jaga kontakte";
+"peoplepicker.no_matching_results.action.learn_more" = "Loe lähemalt";
+"peoplepicker.no_matching_results.action.manage_services" = "Halda teenuseid";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Palun sisesta korrektne e-posti aadress";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results_services_title" = "Teenused on abistajad, mis võivad aidata sul töid teha. Nende lubamiseks pöördu oma administraatori poole.";
-"peoplepicker.no_matching_results_services_admin_title" = "Teenused on abistajad, mis võivad aidata sul töid teha.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Halda teenuseid";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Otsi meiliaadressi järgi või";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "jaga kontakte";
-
-"peoplepicker.share_contacts.no_results.title" = "Otsi inimesi nime või meiliaadressi järgi";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Tulemusi ei leitud.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Kutse saadetud";
 "peoplepicker.send_invitation.dialog.message" = "See kehtib 2 nädalat. Saada kehtivuse lõppedes uus.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Halda teenuseid";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Kõik on siin.";
 
 "add_participants.alert.title" = "Grupp on täis";
 "add_participants.alert.message.new_conversation" = "Vestlusega saab liituda kuni %d inimest.";
@@ -208,7 +202,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "jagas pildi";
-"notifications.pinged" = "pingis";
+"notifications.pinged" = "pingutas";
 "notifications.sent_file" = "jagas faili";
 "notifications.sent_location" = "jagas asukohta";
 "notifications.sent_video" = "jagas videot";
@@ -250,7 +244,7 @@
 "conversation.status.message.audio" = "Jagas häälsõnumit";
 "conversation.status.message.video" = "Jagas videot";
 "conversation.status.message.file" = "Jagas faili";
-"conversation.status.message.knock" = "Pingis";
+"conversation.status.message.knock" = "Pingutas";
 "conversation.status.message.missedcall" = "Vastamata kõne";
 "conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
 "conversation.status.message.mention" = "%@";
@@ -261,8 +255,8 @@
 "conversation.status.message.ephemeral.mention.group" = "Keegi mainis sind";
 "conversation.status.message.ephemeral.reply" = "Replied to your message";
 "conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
-"conversation.status.message.ephemeral.knock" = "Pingis";
-"conversation.status.message.ephemeral.knock.group" = "Keegi pingis";
+"conversation.status.message.ephemeral.knock" = "Pingutas";
+"conversation.status.message.ephemeral.knock.group" = "Keegi pingutas";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Kohal on külalisi";
-"conversation.services_present" = "Kohal on teenuseid";
-"conversation.guests_services_present" = "Kohal on külalisi ja teenuseid";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Otsing";
 
 // Reply message preview
@@ -600,8 +600,8 @@
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
 // Someone pinged
-"content.ping.text" = "%@ pingis";
-"content.ping.text-you" = "%@ pingis";
+"content.ping.text" = "%@ pingutas";
+"content.ping.text-you" = "%@ pingutas";
 
 // Current user pinged
 "content.ping.text.you" = "Sina";

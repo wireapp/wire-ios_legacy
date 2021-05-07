@@ -402,13 +402,22 @@ extension AppRootRouter {
 
         if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
-
+            urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
 
         resetSelfUserProviderIfNeeded(for: appState)
+        resetAuthenticatedRouterIfNeeded(for: appState)
         urlActionRouter.openDeepLink(for: appState)
         appStateTransitionGroup.leave()
+    }
+
+    private func resetAuthenticatedRouterIfNeeded(for appState: AppState) {
+        switch appState {
+        case .authenticated: break
+        default:
+            authenticatedRouter = nil
+        }
     }
 
     private func resetSelfUserProviderIfNeeded(for appState: AppState) {

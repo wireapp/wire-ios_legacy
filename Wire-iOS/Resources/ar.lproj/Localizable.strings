@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "لا توجد جهات اتصال.";
 
-"peoplepicker.no_matching_results_title" = "لا توجد نتائج.";
-"peoplepicker.no_matching_results_message" = "أدخل عنوان البريد الإلكتروني.";
 "peoplepicker.no_search_results" = "لا توجد نتائج مطابقة. حاول إدخال اسم مختلف.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "إرسال دعوة";
 "peoplepicker.no_matching_results.action.share_contacts" = "مشاركة جهات الاتصال";
+"peoplepicker.no_matching_results.action.learn_more" = "معرفة المزيد";
+"peoplepicker.no_matching_results.action.manage_services" = "إدارة الخدمات";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "إدارة الخدمات";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "أدخل عنوان البريد الإلكتروني أو";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "مشاركة جهات الاتصال";
-
-"peoplepicker.share_contacts.no_results.title" = "البحث عن أشخاص باستخدام الاسم أو عنوان البريد الإلكتروني";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "لا توجد نتائج.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "تم إرسال الدعوة";
 "peoplepicker.send_invitation.dialog.message" = "يمكن استخدامها لمدة أسبوعين. حال انتهاء صلاحيتها أرسل واحدة جديدة.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "إدارة الخدمات";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "الجميع حاضرون.";
 
 "add_participants.alert.title" = "المكالمة ممتلئة";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "يتواجد ضيوف";
-"conversation.services_present" = "الخدمات نشطة";
-"conversation.guests_services_present" = "Guests and services are present";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "ابحث";
 
 // Reply message preview

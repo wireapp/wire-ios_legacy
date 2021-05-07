@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Tidak ada kontak";
 
-"peoplepicker.no_matching_results_title" = "Tidak ada hasil.";
-"peoplepicker.no_matching_results_message" = "Masukkan alamat email lengkap.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Kirim undangan";
 "peoplepicker.no_matching_results.action.share_contacts" = "Bagikan kontak";
+"peoplepicker.no_matching_results.action.learn_more" = "Pelajari lebih lanjut";
+"peoplepicker.no_matching_results.action.manage_services" = "Manage Services";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "silakan isi alamat email";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tidak ada hasil.";
-"peoplepicker.no_matching_results_services_title" = "Layanan adalah pembantu yang dapat meningkatkan alur kerja Anda. Untuk mengaktifkannya, tanyakan kepada administrator anda.";
-"peoplepicker.no_matching_results_services_admin_title" = "Layanan adalah pembantu yang dapat meningkatkan alur kerja anda.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Masukkan alamat email lengkap atau";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "berbagi kontak";
-
-"peoplepicker.share_contacts.no_results.title" = "Temukan orang dengan nama atau alamat email";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Tidak ada hasil.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Undangan terkirim";
 "peoplepicker.send_invitation.dialog.message" = "Ini bisa digunakan selama 2 minggu. Kirim yang baru jika kadaluarsa.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Everyone’s here.";
 
 "add_participants.alert.title" = "Penuh";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Pencarian";
 
 // Reply message preview
