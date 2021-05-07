@@ -291,28 +291,3 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         self.snapshotView = snapshotView
     }
 }
-
-private enum VideoKind {
-    case camera
-    case screenshare
-    case none
-
-    init(videoState: VideoState?) {
-        guard let state = videoState else {
-            self = .none
-            return
-        }
-        switch state {
-        case .stopped, .paused:
-            self = .none
-        case .started, .badConnection:
-            self = .camera
-        case .screenSharing:
-            self = .screenshare
-        }
-    }
-
-    var shouldFill: Bool {
-        return self == .camera
-    }
-}
