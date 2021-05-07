@@ -11,6 +11,9 @@ pr:
     include:
       - '*'
 
+variables:
+  coveragePath: './test-reports/'
+
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_12.4.app
@@ -41,7 +44,7 @@ steps:
   displayName: 'Install Slather'
 
 - script: |
-    fastlane code_coverage_convert
+    slather coverage
   displayName: "Run Slather to convert Code Coverage report to Cobertura XML format"
 
 - task: PublishCodeCoverageResults@1
