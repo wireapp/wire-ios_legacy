@@ -54,6 +54,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     let userDetailsView = VideoParticipantDetailsView()
     var scalableView: ScalableView?
+    var videoView: AVSVideoViewProtocol?
 
     // MARK: - Private Properties
 
@@ -155,10 +156,11 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         videoKind = VideoKind(videoState: stream.videoState)
     }
 
-    func updateFillMode() {
-        // no-op
+    private func updateFillMode() {
+        // Reset scale if the view was zoomed in
+        scalableView?.transform = .identity
+        videoView?.shouldFill = shouldFill
     }
-
 
     // MARK: - Active Speaker Frame
 

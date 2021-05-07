@@ -32,6 +32,11 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         }
     }
 
+    override var videoView: AVSVideoViewProtocol? {
+        get { previewView }
+        set { }
+    }
+
     private var videoState: VideoState?
 
     deinit {
@@ -65,10 +70,6 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
             return
         }
         userDetailsView.name = name + "user_cell.title.you_suffix".localized
-    }
-
-    override func updateFillMode() {
-        previewView.shouldFill = shouldFill
     }
 
     override func didMoveToWindow() {

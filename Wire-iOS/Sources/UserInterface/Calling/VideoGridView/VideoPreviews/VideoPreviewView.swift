@@ -30,6 +30,11 @@ final class VideoPreviewView: BaseVideoPreviewView {
         }
     }
 
+    override var videoView: AVSVideoViewProtocol? {
+        get { previewView }
+        set { }
+    }
+
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let pausedLabel = UILabel(
@@ -70,17 +75,6 @@ final class VideoPreviewView: BaseVideoPreviewView {
         blurView.fitInSuperview()
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-    }
-
-
-    // MARK: - Fill mode
-
-    override func updateFillMode() {
-        guard let previewView = previewView, let container = previewContainer else { return }
-
-        // Reset scale if the view was zoomed in
-        container.transform = .identity
-        previewView.shouldFill = shouldFill
     }
 
     // MARK: - Paused state update
