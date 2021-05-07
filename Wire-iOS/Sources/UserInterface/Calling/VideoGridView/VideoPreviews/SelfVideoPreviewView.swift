@@ -60,6 +60,10 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         userDetailsView.name = name + "user_cell.title.you_suffix".localized
     }
 
+    override func updateFillMode() {
+        previewView.shouldFill = shouldFill
+    }
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
 
