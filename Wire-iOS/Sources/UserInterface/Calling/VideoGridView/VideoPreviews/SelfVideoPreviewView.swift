@@ -42,12 +42,19 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.setupViews()
         previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(previewView, belowSubview: userDetailsView)
+
+        let scalableView = ScalableView(isScalingEnabled: shouldEnableScaling)
+        scalableView.addSubview(previewView)
+        insertSubview(scalableView, belowSubview: userDetailsView)
+        self.scalableView = scalableView
     }
 
     override func createConstraints() {
         super.createConstraints()
-        previewView.fitInSuperview()
+        [previewView, scalableView].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+            $0?.fitInSuperview()
+        }
     }
 
     override func updateUserDetails() {

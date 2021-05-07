@@ -44,7 +44,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         didSet {
             updateActiveSpeakerFrame()
             updateFillMode()
-            updateGestureRecognizers()
+            updateScalableView()
         }
     }
 
@@ -53,6 +53,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
 
     let userDetailsView = VideoParticipantDetailsView()
+    var scalableView: ScalableView?
 
     // MARK: - Private Properties
 
@@ -70,10 +71,11 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - View Life Cycle
 
-    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
         self.stream = stream
         self.isCovered = isCovered
         self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+        self.pinchToZoomRule = pinchToZoomRule
 
         super.init(frame: .zero)
 
@@ -117,13 +119,35 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
     }
 
+    // MARK: - Pinch To Zoom
+
+    var pinchToZoomRule: PinchToZoomRule {
+        didSet {
+            guard oldValue != pinchToZoomRule else { return }
+            updateScalableView()
+        }
+    }
+
+    func updateScalableView() {
+        scalableView?.isScalingEnabled = shouldEnableScaling
+    }
+
+    var shouldEnableScaling: Bool {
+        switch pinchToZoomRule {
+        case .enableWhenFitted:
+            return !shouldFill
+        case .enableWhenMaximized:
+            return isMaximized
+        }
+    }
+
     // MARK: - Fill Mode
 
     private var videoKind: VideoKind = .none {
         didSet {
             guard oldValue != videoKind else { return }
             updateFillMode()
-            updateGestureRecognizers()
+            updateScalableView()
         }
     }
 
@@ -135,9 +159,6 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         // no-op
     }
 
-    func updateGestureRecognizers() {
-        // no-op
-    }
 
     // MARK: - Active Speaker Frame
 
