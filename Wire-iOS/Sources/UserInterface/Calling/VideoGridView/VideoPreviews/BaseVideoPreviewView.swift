@@ -29,6 +29,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         didSet {
             updateUserDetails()
             updateActiveSpeakerFrame()
+            updateVideoKind()
         }
     }
 
@@ -42,7 +43,13 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var isMaximized: Bool = false {
         didSet {
             updateActiveSpeakerFrame()
+            updateFillMode()
+            updateGestureRecognizers()
         }
+    }
+
+    var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
     }
 
     let userDetailsView = VideoParticipantDetailsView()
@@ -74,6 +81,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         createConstraints()
         updateUserDetails()
         updateActiveSpeakerFrame()
+        updateVideoKind()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -107,6 +115,28 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         )
 
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
+    }
+
+    // MARK: - Fill Mode
+
+    private var videoKind: VideoKind = .none {
+        didSet {
+            guard oldValue != videoKind else { return }
+            updateFillMode()
+            updateGestureRecognizers()
+        }
+    }
+
+    private func updateVideoKind() {
+        videoKind = VideoKind(videoState: stream.videoState)
+    }
+
+    func updateFillMode() {
+        // no-op
+    }
+
+    func updateGestureRecognizers() {
+        // no-op
     }
 
     // MARK: - Active Speaker Frame

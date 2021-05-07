@@ -30,23 +30,6 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         }
     }
 
-    override var isMaximized: Bool {
-        didSet {
-            updateFillMode()
-            updateGestureRecognizers()
-        }
-    }
-
-    override var stream: Stream {
-        didSet {
-            updateVideoKind()
-        }
-    }
-
-    var shouldFill: Bool {
-        return isMaximized ? false : videoKind.shouldFill
-    }
-
     private var previewContainer: UIView?
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -72,7 +55,6 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         )
 
         updateState()
-        updateVideoKind()
     }
 
     // MARK: - Setup
@@ -168,7 +150,7 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         }
     }
 
-    private func updateGestureRecognizers() {
+    override func updateGestureRecognizers() {
         let enabled = shouldEnableGestureRecognizers
         panGesture.isEnabled = enabled
         pinchGesture.isEnabled = enabled
@@ -185,19 +167,7 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
 
     // MARK: - Fill mode
 
-    private var videoKind: VideoKind = .none {
-        didSet {
-            guard oldValue != videoKind else { return }
-            updateFillMode()
-            updateGestureRecognizers()
-        }
-    }
-
-    private func updateVideoKind() {
-        videoKind = VideoKind(videoState: stream.videoState)
-    }
-
-    private func updateFillMode() {
+    override func updateFillMode() {
         guard let previewView = previewView, let container = previewContainer else { return }
 
         // Reset scale if the view was zoomed in
