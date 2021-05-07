@@ -37,6 +37,18 @@ steps:
     fastlane test
   displayName: "Test"
 
+- script: gem install slather
+  displayName: 'Install Slather'
+
+- script: |
+    fastlane code_coverage_convert
+  displayName: "Run Slather to convert Code Coverage report to Cobertura XML format"
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(coveragePath)/cobertura.xml'
+
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: 'test/*.junit'

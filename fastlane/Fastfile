@@ -113,8 +113,8 @@ platform :ios do
         )
     end
 
-    desc "Generate Cobertura Code Coverage"
-    lane :codeCoverage do |options|
+    desc "Generate Cobertura Code Coverage with Slather"
+    lane :code_coverage_convert
         slather(
             build_directory: "DerivedData",
             input_format: "profdata",
