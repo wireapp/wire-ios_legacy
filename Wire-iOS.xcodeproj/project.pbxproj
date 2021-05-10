@@ -4364,10 +4364,10 @@
 				BF79B0FB20A98B60001BF4FE /* SelfVideoPreviewView.swift */,
 				634497D824A492140000131D /* VideoParticipantDetailView.swift */,
 				6305206124FFEF9600ED295A /* OrientableView.swift */,
-				63421E3626149D7500ADA723 /* PinchToZoomRule.swift */,
-				637387C226443364004FEF79 /* AVSIdentifierProvider.swift */,
-				637387C626443C31004FEF79 /* VideoKind.swift */,
 				637387CC26458EDB004FEF79 /* ScalableView.swift */,
+				63421E3626149D7500ADA723 /* PinchToZoomRule.swift */,
+				637387C626443C31004FEF79 /* VideoKind.swift */,
+				637387C226443364004FEF79 /* AVSIdentifierProvider.swift */,
 				637387D42645B931004FEF79 /* AVSVideoViewProtocol.swift */,
 			);
 			path = VideoPreviews;
