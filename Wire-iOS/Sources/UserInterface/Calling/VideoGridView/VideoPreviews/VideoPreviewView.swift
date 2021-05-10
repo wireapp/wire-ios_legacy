@@ -23,6 +23,8 @@ import WireSyncEngine
 
 final class VideoPreviewView: BaseVideoPreviewView {
 
+    // MARK: - Public Properties
+
     var isPaused = false {
         didSet {
             guard oldValue != isPaused else { return }
@@ -34,6 +36,8 @@ final class VideoPreviewView: BaseVideoPreviewView {
         get { previewView }
         set { }
     }
+
+    // MARK: - Private Properties
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -60,6 +64,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     }
 
     // MARK: - Setup
+
     override func setupViews() {
         super.setupViews()
 
@@ -78,6 +83,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     }
 
     // MARK: - Paused state update
+
     private func updateState(animated: Bool = false) {
         if isPaused {
             createSnapshotView()
@@ -86,45 +92,26 @@ final class VideoPreviewView: BaseVideoPreviewView {
             blurView.isHidden = false
             pausedLabel.isHidden = false
 
-            let animationBlock = { [weak self] in
+            executeAnimations(animated: animated, animationBlock: { [weak self] in
                 self?.blurView.effect = UIBlurEffect(style: .dark)
                 self?.pausedLabel.alpha = 1
-            }
-
-            let completionBlock = { [weak self] (_: Bool) -> Void in
+            }, completionBlock: { [weak self] _ in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
-            }
-
-            if animated {
-                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
-            }
-            else {
-                animationBlock()
-                completionBlock(true)
-            }
+            })
         } else {
             createPreviewView()
-            let animationBlock = { [weak self] in
+
+            executeAnimations(animated: animated, animationBlock: { [weak self] in
                 self?.blurView.effect = nil
                 self?.snapshotView?.alpha = 0
                 self?.pausedLabel.alpha = 0
-            }
-
-            let completionBlock: (Bool) -> Void = { [weak self] _ in
+            }, completionBlock: { [weak self] _ in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
-            }
-
-            if animated {
-                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
-            }
-            else {
-                animationBlock()
-                completionBlock(true)
-            }
+            })
         }
     }
 
@@ -160,5 +147,16 @@ final class VideoPreviewView: BaseVideoPreviewView {
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
         snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
+    }
+
+    private func executeAnimations(animated: Bool,
+                                   animationBlock: @escaping () -> Void,
+                                   completionBlock: @escaping (Bool) -> Void) {
+        if animated {
+            UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
+        } else {
+            animationBlock()
+            completionBlock(true)
+        }
     }
 }
