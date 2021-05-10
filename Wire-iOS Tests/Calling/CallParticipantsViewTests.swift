@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import SnapshotTesting
+import XCTest
 @testable import Wire
 
 final class CallParticipantsListHelper {
@@ -38,14 +40,13 @@ final class CallParticipantsListHelper {
 
 }
 
-final class CallParticipantsViewTests: ZMSnapshotTestCase {
+final class CallParticipantsViewTests: XCTestCase {
 
     var sut: CallParticipantsViewController!
     var mockParticipants: CallParticipantsList!
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .white
         mockParticipants = CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers())
     }
 
@@ -57,46 +58,48 @@ final class CallParticipantsViewTests: ZMSnapshotTestCase {
 
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: CallParticipantsListHelper.participants(count: 10, mockUsers: SwiftMockLoader.mockUsers()), allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
+        sut.view.backgroundColor = .white
 
         // Then
-        verify(view: sut.view)
+        verify(matching: sut.view)
     }
 
     func testCallParticipants_Overflowing_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
-        snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
+        sut.view.backgroundColor = .black
 
         // Then
-        verify(view: sut.view)
+        verify(matching: sut.view)
     }
 
     func testCallParticipants_Truncated_Light() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
+        sut.view.backgroundColor = .white
 
         // Then
-        verify(view: sut.view)
+        verify(matching: sut.view)
     }
 
     func testCallParticipants_Truncated_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, allowsScrolling: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.variant = .dark
-        snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
+        sut.view.backgroundColor = .black
 
         // Then
-        verify(view: sut.view)
+        verify(matching: sut.view)
     }
 
 }
