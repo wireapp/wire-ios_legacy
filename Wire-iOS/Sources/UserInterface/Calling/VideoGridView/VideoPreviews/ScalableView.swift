@@ -24,11 +24,7 @@ class ScalableView: UIView, UIGestureRecognizerDelegate {
     let pinchGesture = UIPinchGestureRecognizer()
     let panGesture = UIPanGestureRecognizer()
 
-    var isScalingEnabled: Bool {
-        didSet {
-            updateGestureRecognizers()
-        }
-    }
+    // MARK: - View Life Cycle
 
     init(isScalingEnabled: Bool) {
         self.isScalingEnabled = isScalingEnabled
@@ -41,7 +37,21 @@ class ScalableView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupViews() {
+    // MARK: Public Interface
+
+    var isScalingEnabled: Bool {
+        didSet {
+            updateGestureRecognizers()
+        }
+    }
+
+    func resetScale() {
+        transform = .identity
+    }
+
+    // MARK: - Setup
+
+    private func setupViews() {
         pinchGesture.addTarget(self, action: #selector(handlePinchGesture(_:)))
         pinchGesture.delegate = self
 

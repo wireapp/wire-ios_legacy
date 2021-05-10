@@ -158,7 +158,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     private func updateFillMode() {
         // Reset scale if the view was zoomed in
-        scalableView?.transform = .identity
+        scalableView?.resetScale()
         videoView?.shouldFill = shouldFill
     }
 
