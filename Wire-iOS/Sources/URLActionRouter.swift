@@ -23,13 +23,15 @@ extension Notification.Name {
 }
 
 // MARK: - URLActionRouterDelegete
-protocol URLActionRouterDelegete: class {
+protocol URLActionRouterDelegate: class {
+
     func urlActionRouterWillShowCompanyLoginError()
+    func urlActionRouterCanDisplayAlerts() -> Bool
+
 }
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink(for appState: AppState)
     func open(url: URL) -> Bool
 }
 
@@ -41,17 +43,13 @@ class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    weak var delegate: URLActionRouterDelegete?
-    weak var authenticatedRouter: AuthenticatedRouterProtocol? {
-        didSet {
-            performPendingNavigation()
-        }
-    }
+    weak var delegate: URLActionRouterDelegate?
+    weak var authenticatedRouter: AuthenticatedRouterProtocol?
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private var url: URL?
     private var pendingDestination: NavigationDestination?
+    private var pendingAlert: UIAlertController?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
@@ -64,7 +62,6 @@ class URLActionRouter: URLActionRouterProtocol {
     @discardableResult
     func open(url: URL) -> Bool {
         do {
-            self.url = url
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
@@ -82,22 +79,12 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink(for appState: AppState) {
-        do {
-            guard let deeplink = url else { return }
-            guard appState.canProcessDeepLinks else { return }
-            guard try (URLAction(url: deeplink) != nil) else { return }
-            open(url: deeplink)
-            resetDeepLinkURL()
-        } catch {
-            zmLog.error("Could not open deepLink for url: \(String(describing: url?.absoluteString))")
-        }
+    func performPendingActions() {
+        performPendingNavigation()
+        presentPendingAlert()
     }
 
     // MARK: - Private Implementation
-    private func resetDeepLinkURL() {
-        url = nil
-    }
 
     func performPendingNavigation() {
         guard let destination = pendingDestination else {
@@ -115,6 +102,28 @@ class URLActionRouter: URLActionRouterProtocol {
         }
 
         authenticatedRouter?.navigate(to: destination)
+    }
+
+    func presentPendingAlert() {
+        guard let alert = pendingAlert else {
+            return
+        }
+
+        pendingAlert = nil
+        presentAlert(alert)
+    }
+
+    func presentAlert(_ alert: UIAlertController) {
+        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
+            pendingAlert = alert
+            return
+        }
+
+        internalPresentAlert(alert)
+    }
+
+    func internalPresentAlert(_ alert: UIAlertController) {
+        rootViewController.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -183,7 +192,7 @@ extension URLActionRouter: PresentationDelegate {
 
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func presentCustomBackendAlert(with configurationURL: URL) {
@@ -200,7 +209,7 @@ extension URLActionRouter: PresentationDelegate {
         let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func switchBackend(with configurationURL: URL) {
@@ -222,13 +231,6 @@ extension URLActionRouter: PresentationDelegate {
         let alertMessage = error.failureReason ?? "error.user.unkown_error".localized
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
-        rootViewController.present(alertController, animated: true)
-    }
-}
-
-extension URLActionRouter {
-    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
-    public func testHelper_setUrl(_ url: URL) {
-        self.url = url
+        presentAlert(alertController)
     }
 }

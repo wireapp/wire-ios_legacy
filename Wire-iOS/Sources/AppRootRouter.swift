@@ -406,9 +406,9 @@ extension AppRootRouter {
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
 
+        urlActionRouter.performPendingActions()
         resetSelfUserProviderIfNeeded(for: appState)
         resetAuthenticatedRouterIfNeeded(for: appState)
-        urlActionRouter.openDeepLink(for: appState)
         appStateTransitionGroup.leave()
     }
 
@@ -474,14 +474,27 @@ extension AppRootRouter {
     }
 }
 
-// MARK: - URLActionRouterDelegete
-extension AppRootRouter: URLActionRouterDelegete {
+// MARK: - URLActionRouterDelegate
+
+extension AppRootRouter: URLActionRouterDelegate {
+
     func urlActionRouterWillShowCompanyLoginError() {
         authenticationCoordinator?.cancelCompanyLogin()
     }
+
+    func urlActionRouterCanDisplayAlerts() -> Bool {
+        switch appStateCalculator.appState {
+        case .authenticated, .unauthenticated:
+            return true
+        default:
+            return false
+        }
+    }
+
 }
 
 // MARK: - ApplicationStateObserving
+
 extension AppRootRouter: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
@@ -511,6 +524,7 @@ extension AppRootRouter: ApplicationStateObserving {
 }
 
 // MARK: - ContentSizeCategoryObserving
+
 extension AppRootRouter: ContentSizeCategoryObserving {
     func contentSizeCategoryDidChange() {
         NSAttributedString.invalidateParagraphStyle()
@@ -532,6 +546,7 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 }
 
 // MARK: - AudioPermissionsObserving
+
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
