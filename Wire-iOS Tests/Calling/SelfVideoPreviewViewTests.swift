@@ -43,7 +43,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         super.setUp()
 
         let stream = stubProvider.videoStream().stream
-        sut = SelfVideoPreviewView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false)
+        sut = SelfVideoPreviewView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false, pinchToZoomRule: .enableWhenFitted)
         sut.previewView = previewViewMock
     }
 
