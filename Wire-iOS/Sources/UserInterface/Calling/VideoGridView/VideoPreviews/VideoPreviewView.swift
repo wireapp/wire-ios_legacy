@@ -21,7 +21,9 @@ import UIKit
 import avs
 import WireSyncEngine
 
-final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate {
+final class VideoPreviewView: BaseVideoPreviewView {
+
+    // MARK: - Public Properties
 
     var isPaused = false {
         didSet {
@@ -30,24 +32,12 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         }
     }
 
-    override var isMaximized: Bool {
-        didSet {
-            updateFillMode()
-            updateGestureRecognizers()
-        }
+    override var videoView: AVSVideoViewProtocol? {
+        previewView
     }
 
-    override var stream: Stream {
-        didSet {
-            updateVideoKind()
-        }
-    }
+    // MARK: - Private Properties
 
-    var shouldFill: Bool {
-        return isMaximized ? false : videoKind.shouldFill
-    }
-
-    private var previewContainer: UIView?
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let pausedLabel = UILabel(
@@ -58,24 +48,22 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         variant: .dark
     )
     private var snapshotView: UIView?
-    let pinchGesture = UIPinchGestureRecognizer()
-    let panGesture = UIPanGestureRecognizer()
 
     // MARK: - Initialization
 
-    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
-        self.pinchToZoomRule = pinchToZoomRule
+    override init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
         super.init(
             stream: stream,
             isCovered: isCovered,
-            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame
+            shouldShowActiveSpeakerFrame: shouldShowActiveSpeakerFrame,
+            pinchToZoomRule: pinchToZoomRule
         )
 
         updateState()
-        updateVideoKind()
     }
 
     // MARK: - Setup
+
     override func setupViews() {
         super.setupViews()
 
@@ -84,16 +72,6 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
             insertSubview($0, belowSubview: userDetailsView)
         }
         pausedLabel.textAlignment = .center
-
-        pinchGesture.addTarget(self, action: #selector(handlePinchGesture(_:)))
-        pinchGesture.delegate = self
-
-        panGesture.addTarget(self, action: #selector(handlePanGesture(_:)))
-        panGesture.delegate = self
-        panGesture.minimumNumberOfTouches = 2
-        panGesture.maximumNumberOfTouches = 2
-
-        updateGestureRecognizers()
     }
 
     override func createConstraints() {
@@ -103,109 +81,8 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
-    // MARK: - Video scaling & panning
-
-    @objc
-    func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
-        guard
-            gestureRecognizer.state == .began
-            || gestureRecognizer.state == .changed
-            || gestureRecognizer.state == .ended
-        else { return }
-
-        guard let view = gestureRecognizer.view else { return }
-
-        // get location of the gesture's centroid
-        var location = gestureRecognizer.location(in: view)
-
-        // offset location relative to center of the view
-        // because transform is done relatively to the view's center
-        location.x -= view.bounds.midX
-        location.y -= view.bounds.midY
-
-        // translate view origin to pinch location, scale, translate view back
-        let transform = view.transform
-            .translatedBy(x: location.x, y: location.y)
-            .scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale)
-            .translatedBy(x: -location.x, y: -location.y)
-
-        // apply transform
-        view.transform = transform
-
-        // reset scale
-        gestureRecognizer.scale = 1
-
-        // reset to identity if the view is scaled smaller than its container
-        if view.frame.size.width < bounds.width {
-            view.transform = .identity
-        }
-    }
-
-    @objc
-    func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
-        guard let view = gestureRecognizer.view else { return }
-
-        // prevent translation if the view transform is identity
-        guard view.transform != .identity else { return }
-
-        let translation = gestureRecognizer.translation(in: view)
-
-        // translate view to gesture's location
-        view.transform = view.transform.translatedBy(x: translation.x, y: translation.y)
-
-        // reset translation
-        gestureRecognizer.setTranslation(.zero, in: view)
-    }
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-
-    var pinchToZoomRule: PinchToZoomRule {
-        didSet {
-            guard oldValue != pinchToZoomRule else { return }
-            updateGestureRecognizers()
-        }
-    }
-
-    private func updateGestureRecognizers() {
-        let enabled = shouldEnableGestureRecognizers
-        panGesture.isEnabled = enabled
-        pinchGesture.isEnabled = enabled
-    }
-
-    private var shouldEnableGestureRecognizers: Bool {
-        switch pinchToZoomRule {
-        case .enableWhenFitted:
-            return !shouldFill
-        case .enableWhenMaximized:
-            return isMaximized
-        }
-    }
-
-    // MARK: - Fill mode
-
-    private var videoKind: VideoKind = .none {
-        didSet {
-            guard oldValue != videoKind else { return }
-            updateFillMode()
-            updateGestureRecognizers()
-        }
-    }
-
-    private func updateVideoKind() {
-        videoKind = VideoKind(videoState: stream.videoState)
-    }
-
-    private func updateFillMode() {
-        guard let previewView = previewView, let container = previewContainer else { return }
-
-        // Reset scale if the view was zoomed in
-        container.transform = .identity
-        previewView.shouldFill = shouldFill
-    }
-
     // MARK: - Paused state update
+
     private func updateState(animated: Bool = false) {
         if isPaused {
             createSnapshotView()
@@ -214,45 +91,26 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
             blurView.isHidden = false
             pausedLabel.isHidden = false
 
-            let animationBlock = { [weak self] in
+            executeAnimations(animated: animated, animationBlock: { [weak self] in
                 self?.blurView.effect = UIBlurEffect(style: .dark)
                 self?.pausedLabel.alpha = 1
-            }
-
-            let completionBlock = { [weak self] (_: Bool) -> Void in
+            }, completionBlock: { [weak self] _ in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
-            }
-
-            if animated {
-                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
-            }
-            else {
-                animationBlock()
-                completionBlock(true)
-            }
+            })
         } else {
             createPreviewView()
-            let animationBlock = { [weak self] in
+
+            executeAnimations(animated: animated, animationBlock: { [weak self] in
                 self?.blurView.effect = nil
                 self?.snapshotView?.alpha = 0
                 self?.pausedLabel.alpha = 0
-            }
-
-            let completionBlock: (Bool) -> Void = { [weak self] _ in
+            }, completionBlock: { [weak self] _ in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
-            }
-
-            if animated {
-                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
-            }
-            else {
-                animationBlock()
-                completionBlock(true)
-            }
+            })
         }
     }
 
@@ -265,19 +123,18 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         previewView = preview
 
         // Adding the preview into a container allows smoother scaling
-        let container = UIView()
-        container.addSubview(preview)
-        container.addGestureRecognizer(pinchGesture)
-        container.addGestureRecognizer(panGesture)
-        previewContainer = container
+        let scalableView = ScalableView(isScalingEnabled: shouldEnableScaling)
+        scalableView.addSubview(preview)
+        self.scalableView?.removeFromSuperview()
+        self.scalableView = scalableView
 
         if let snapshotView = snapshotView {
-            insertSubview(container, belowSubview: snapshotView)
+            insertSubview(scalableView, belowSubview: snapshotView)
         } else {
-            insertSubview(container, belowSubview: userDetailsView)
+            insertSubview(scalableView, belowSubview: userDetailsView)
         }
 
-        [container, preview].forEach {
+        [scalableView, preview].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.fitInSuperview()
         }
@@ -290,29 +147,15 @@ final class VideoPreviewView: BaseVideoPreviewView, UIGestureRecognizerDelegate 
         snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
     }
-}
 
-private enum VideoKind {
-    case camera
-    case screenshare
-    case none
-
-    init(videoState: VideoState?) {
-        guard let state = videoState else {
-            self = .none
-            return
+    private func executeAnimations(animated: Bool,
+                                   animationBlock: @escaping () -> Void,
+                                   completionBlock: @escaping (Bool) -> Void) {
+        if animated {
+            UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
+        } else {
+            animationBlock()
+            completionBlock(true)
         }
-        switch state {
-        case .stopped, .paused:
-            self = .none
-        case .started, .badConnection:
-            self = .camera
-        case .screenSharing:
-            self = .screenshare
-        }
-    }
-
-    var shouldFill: Bool {
-        return self == .camera
     }
 }

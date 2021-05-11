@@ -38,6 +38,10 @@ final class VideoGridViewController: SpinnerCapableViewController {
         return configuration.videoStreams
     }
 
+    private var pinchToZoomRule: PinchToZoomRule {
+        PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
+    }
+
     private var dataSource: [VideoStream] = []
     private var maximizedView: BaseVideoPreviewView?
     private let gridView = GridView()
@@ -273,7 +277,8 @@ final class VideoGridViewController: SpinnerCapableViewController {
             viewCache[selfStreamId] = SelfVideoPreviewView(
                 stream: selfStream,
                 isCovered: isCovered,
-                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                pinchToZoomRule: pinchToZoomRule
             )
         }
     }
@@ -315,7 +320,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
             view?.stream = $0.stream
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
-            view?.pinchToZoomRule = PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
+            view?.pinchToZoomRule = pinchToZoomRule
         }
     }
 
@@ -432,7 +437,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
                 stream: videoStream.stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
-                pinchToZoomRule: PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
+                pinchToZoomRule: pinchToZoomRule
             )
             viewCache[streamId] = view
             return view

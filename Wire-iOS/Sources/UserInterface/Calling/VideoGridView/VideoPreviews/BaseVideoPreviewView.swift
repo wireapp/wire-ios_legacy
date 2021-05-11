@@ -21,39 +21,15 @@ import UIKit
 import avs
 import WireSyncEngine
 
-protocol AVSIdentifierProvider {
-    var stream: Stream { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-
-    var stream: Stream {
-        return Stream(
-            streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
-            participantName: nil,
-            microphoneState: .unmuted,
-            videoState: .none,
-            activeSpeakerState: .inactive
-        )
-    }
-}
-
-private extension Stream {
-    var isParticipantUnmutedAndSpeakingNow: Bool {
-        return activeSpeakerState.isSpeakingNow && microphoneState == .unmuted
-    }
-
-    var isParticipantUnmutedAndActive: Bool {
-        return activeSpeakerState != .inactive && microphoneState == .unmuted
-    }
-}
-
 class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
+
+    // MARK: - Public Properties
 
     var stream: Stream {
         didSet {
             updateUserDetails()
             updateActiveSpeakerFrame()
+            updateVideoKind()
         }
     }
 
@@ -67,8 +43,20 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     var isMaximized: Bool = false {
         didSet {
             updateActiveSpeakerFrame()
+            updateFillMode()
+            updateScalableView()
         }
     }
+
+    var shouldFill: Bool {
+        return isMaximized ? false : videoKind.shouldFill
+    }
+
+    let userDetailsView = VideoParticipantDetailsView()
+    var scalableView: ScalableView?
+    private(set) var videoView: AVSVideoViewProtocol?
+
+    // MARK: - Private Properties
 
     private var delta: OrientationDelta = OrientationDelta()
     private var detailsConstraints: UserDetailsConstraints?
@@ -82,12 +70,13 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         isCovered ? 0 : 1
     }
 
-    let userDetailsView = VideoParticipantDetailsView()
+    // MARK: - View Life Cycle
 
-    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool) {
+    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
         self.stream = stream
         self.isCovered = isCovered
         self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+        self.pinchToZoomRule = pinchToZoomRule
 
         super.init(frame: .zero)
 
@@ -95,6 +84,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         createConstraints()
         updateUserDetails()
         updateActiveSpeakerFrame()
+        updateVideoKind()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -128,6 +118,48 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         )
 
         NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
+    }
+
+    // MARK: - Pinch To Zoom
+
+    var pinchToZoomRule: PinchToZoomRule {
+        didSet {
+            guard oldValue != pinchToZoomRule else { return }
+            updateScalableView()
+        }
+    }
+
+    func updateScalableView() {
+        scalableView?.isScalingEnabled = shouldEnableScaling
+    }
+
+    var shouldEnableScaling: Bool {
+        switch pinchToZoomRule {
+        case .enableWhenFitted:
+            return !shouldFill
+        case .enableWhenMaximized:
+            return isMaximized
+        }
+    }
+
+    // MARK: - Fill Mode
+
+    private var videoKind: VideoKind = .none {
+        didSet {
+            guard oldValue != videoKind else { return }
+            updateFillMode()
+            updateScalableView()
+        }
+    }
+
+    private func updateVideoKind() {
+        videoKind = VideoKind(videoState: stream.videoState)
+    }
+
+    private func updateFillMode() {
+        // Reset scale if the view was zoomed in
+        scalableView?.resetScale()
+        videoView?.shouldFill = shouldFill
     }
 
     // MARK: - Active Speaker Frame

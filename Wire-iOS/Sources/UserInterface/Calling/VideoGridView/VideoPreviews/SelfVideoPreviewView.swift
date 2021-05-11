@@ -32,6 +32,10 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         }
     }
 
+    override var videoView: AVSVideoViewProtocol? {
+        previewView
+    }
+
     private var videoState: VideoState?
 
     deinit {
@@ -42,17 +46,26 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
         super.setupViews()
         previewView.backgroundColor = .clear
         previewView.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(previewView, belowSubview: userDetailsView)
+
+        let scalableView = ScalableView(isScalingEnabled: shouldEnableScaling)
+        scalableView.addSubview(previewView)
+        insertSubview(scalableView, belowSubview: userDetailsView)
+        self.scalableView = scalableView
     }
 
     override func createConstraints() {
         super.createConstraints()
-        previewView.fitInSuperview()
+        [previewView, scalableView].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+            $0?.fitInSuperview()
+        }
     }
 
     override func updateUserDetails() {
-        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState,
-                                                                  shouldPulse: stream.activeSpeakerState.isSpeakingNow)
+        userDetailsView.microphoneIconStyle = MicrophoneIconStyle(
+            state: stream.microphoneState,
+            shouldPulse: stream.activeSpeakerState.isSpeakingNow
+        )
 
         guard let name = stream.participantName else {
             return
