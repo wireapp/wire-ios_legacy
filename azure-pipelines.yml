@@ -52,6 +52,11 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(coveragePath)/cobertura.xml'
 
+- task: codecoveragecomparerbt@1
+  inputs:
+    codecoveragetarget: '60'
+    codecoveragemeasurementmethod: 'Lines'
+    
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: 'test/*.junit'
