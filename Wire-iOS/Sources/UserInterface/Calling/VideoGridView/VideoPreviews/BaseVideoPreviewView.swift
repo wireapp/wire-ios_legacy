@@ -54,7 +54,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     let userDetailsView = VideoParticipantDetailsView()
     var scalableView: ScalableView?
-    var videoView: AVSVideoViewProtocol?
+    private(set) var videoView: AVSVideoViewProtocol?
 
     // MARK: - Private Properties
 

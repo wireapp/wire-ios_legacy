@@ -33,8 +33,7 @@ final class VideoPreviewView: BaseVideoPreviewView {
     }
 
     override var videoView: AVSVideoViewProtocol? {
-        get { previewView }
-        set { }
+        previewView
     }
 
     // MARK: - Private Properties

@@ -33,8 +33,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
     }
 
     override var videoView: AVSVideoViewProtocol? {
-        get { previewView }
-        set { }
+        previewView
     }
 
     private var videoState: VideoState?
