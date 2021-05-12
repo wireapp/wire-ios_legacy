@@ -22,7 +22,7 @@ import XCTest
 class DigitalSignatureVerificationViewControllerTest: XCTestCase {
 
     var sut: DigitalSignatureVerificationViewController!
-    
+
     override func setUp() {
         let mainURL = URL(string: "https://ais-sas.swisscom.com/sas/web/tkeb8ac3f9bf794cfd90ccc7741c11c908tx/otp?lang=en")!
         sut = DigitalSignatureVerificationViewController(url: mainURL)
@@ -46,14 +46,14 @@ class DigitalSignatureVerificationViewControllerTest: XCTestCase {
             return
         }
     }
-    
+
     func testThatParseDigitalSignatureVerificationURLReturnsError() {
         // given
          let failedURL = URL(string: "https://ais-sas.swisscom.com/sas/web/error?lang=en&errorCode=authenticationFailed.numberOfRetryAttemptsExceeded&postCode=sas-error-authentication-failed")!
-        
+
         // when
         let response = sut.parseVerificationURL(failedURL)
-        
+
         // then
         guard case .failure? = response else {
             XCTFail()

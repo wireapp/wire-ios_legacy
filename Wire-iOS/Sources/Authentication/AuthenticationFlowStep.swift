@@ -66,7 +66,6 @@ indirect enum AuthenticationFlowStep: Equatable {
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials?, context: NoHistoryContext)
-    case passcodeSetup
     case clientManagement(clients: [UserClient], credentials: ZMCredentials?)
     case deleteClient(clients: [UserClient], credentials: ZMCredentials?)
     case addEmailAndPassword
@@ -105,7 +104,6 @@ indirect enum AuthenticationFlowStep: Equatable {
 
         // Post Sign-In
         case .noHistory: return true
-        case .passcodeSetup: return true
         case .clientManagement: return true
         case .deleteClient: return true
         case .addEmailAndPassword: return true

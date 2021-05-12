@@ -59,7 +59,7 @@ final class SendController {
     public var sentAllSendables = false
     
 
-    init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
+    init(text: String, attachments: [NSItemProvider], conversation: WireShareEngine.Conversation, sharingSession: SharingSession) {
         
         var linkAttachment : NSItemProvider?
         

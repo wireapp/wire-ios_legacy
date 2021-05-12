@@ -29,6 +29,7 @@ final class CallSystemMessageTests: XCTestCase, CoreDataFixtureTestHelper {
     }
 
     override func tearDown() {
+        _ = waitForGroupsToBeEmpty([coreDataFixture.dispatchGroup])
         coreDataFixture = nil
         super.tearDown()
     }

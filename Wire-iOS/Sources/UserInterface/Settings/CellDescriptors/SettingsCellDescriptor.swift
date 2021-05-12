@@ -48,7 +48,7 @@ protocol SettingsCellDescriptorType: class {
     func featureCell(_: SettingsCellType)
 }
 
-func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> Bool {
+func == (left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> Bool {
     if let leftID = left.identifier,
         let rightID = right.identifier {
             return leftID == rightID
@@ -255,7 +255,9 @@ extension SettingsPropertyName {
             return "self.settings.privacy_security.disable_link_previews.title".localized
 
             // personal information - Analytics
-        case .disableCrashAndAnalyticsSharing:
+        case .disableCrashSharing:
+            return "self.settings.privacy_crash.title".localized
+        case .disableAnalyticsSharing:
             return "self.settings.privacy_analytics.title".localized
         case .receiveNewsAndOffers:
             return "self.settings.receiveNews_and_offers.title".localized
@@ -263,8 +265,8 @@ extension SettingsPropertyName {
             return "self.settings.enable_read_receipts.title".localized
         case .encryptMessagesAtRest:
             return "self.settings.encrypt_messages_at_rest.title".localized
-        case .enableConferenceCallingBeta:
-            return "self.settings.advanced.conference_calling.toggle".localized
+        case .federationEnabled:
+            return "Federate with other domains"
         }
     }
 }

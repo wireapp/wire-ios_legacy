@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ConversationTitleViewTests: ZMSnapshotTestCase {
-    
+
     var sut: ConversationTitleView!
     var conversation: MockConversation!
 
@@ -32,7 +32,7 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
         sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
         snapshotBackgroundColor = UIColor.white
     }
-    
+
     override func tearDown() {
         sut = nil
         conversation = nil
@@ -52,12 +52,12 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
         // then
         verify(view: sut)
     }
-    
+
     func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_PendingApproval() {
         // when
         conversation.legalHoldStatus = .pendingApproval
         sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
-        
+
         // then
         verify(view: sut)
     }
@@ -76,7 +76,7 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
         conversation.securityLevel = .secure
         conversation.legalHoldStatus = .enabled
         sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
-        
+
         // then
         verify(view: sut)
     }
@@ -93,7 +93,7 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
     func testThatItExecutesTheTapHandlerOnTitleTap() {
         // given
         var callCount: Int = 0
-        sut.tapHandler = { button in
+        sut.tapHandler = { _ in
             callCount += 1
         }
 

@@ -26,6 +26,8 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        SelfUser.setupMockSelfUser()
+
         message = MockMessageFactory.textMessage(withText: "Hello")
         message.deliveryState = .sent
         message.conversation = otherUserConversation
@@ -123,10 +125,9 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         readReceipt.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
         message.readReceipts = [readReceipt]
 
-        ///liked after read
+        /// liked after read
         let users = MockUser.mockUsers().first(where: { !$0.isSelfUser })!
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [users]]
-
 
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
@@ -163,8 +164,9 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_NoLikers() {
         // WHEN
         message.conversation = createTeamGroupConversation()
+        message.conversationLike = message.conversation
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
-        
+
         // THEN
         XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
     }
@@ -172,11 +174,12 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItOpensReceipts_WithLikers_ShowingTimestamp() {
         // GIVEN
         message.conversation = createTeamGroupConversation()
+        message.conversationLike = message.conversation
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
-        
+
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: true, animated: false)
-        
+
         // THEN
         XCTAssertEqual(sut.preferredDetailsDisplayMode(), .receipts)
     }
@@ -185,10 +188,10 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         message.conversation = createTeamGroupConversation()
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
-        
+
         // WHEN
         sut.configureForMessage(message, forceShowTimestamp: false, animated: false)
-        
+
         // THEN
         XCTAssertEqual(sut.preferredDetailsDisplayMode(), .reactions)
     }
@@ -220,7 +223,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysTimestamp_Countdown_OtherUser() {
         // GIVEN
         message.conversation = createGroupConversation()
-        message.sender = otherUser
+        message.senderUser = MockUserType.createUser(name: "Bruno")
         message.isEphemeral = true
         message.destructionDate = Date().addingTimeInterval(10)
 
@@ -234,7 +237,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysTimestamp_ReadReceipts_Countdown_SelfUser() {
         // GIVEN
         message.conversation = createGroupConversation()
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
         message.readReceipts = [MockReadReceipt(user: otherUser)]
         message.deliveryState = .read
         message.isEphemeral = true
@@ -252,7 +255,7 @@ final class MessageToolboxViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let conversation = createGroupConversation()
         message.conversation = conversation
-        message.sender = selfUser
+        message.senderUser = MockUserType.createSelfUser(name: "Alice")
 
         let remoteUser = createUser(name: "Esteban Julio Ricardo Montoya de la Rosa Ramírez")
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUser, remoteUser]]

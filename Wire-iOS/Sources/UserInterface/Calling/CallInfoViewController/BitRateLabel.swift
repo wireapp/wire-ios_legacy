@@ -22,15 +22,15 @@ import UIKit
 enum BitRateStatus: String {
     case constant
     case variable
-    
+
     fileprivate var localizedUppercasedText: String {
         return "call.status.\(rawValue)_bitrate".localized(uppercased: true)
     }
-    
+
     fileprivate var accessibilityValue: String {
         return rawValue
     }
-    
+
     init(_ isConstantBitRate: Bool) {
         self = isConstantBitRate ? .constant : .variable
     }
@@ -42,7 +42,7 @@ class BitRateLabel: UILabel {
             updateLabel()
         }
     }
-    
+
     private func updateLabel() {
         text = bitRateStatus?.localizedUppercasedText
         accessibilityValue = bitRateStatus?.accessibilityValue

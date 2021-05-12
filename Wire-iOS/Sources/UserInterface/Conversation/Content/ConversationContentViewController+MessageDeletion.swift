@@ -24,7 +24,8 @@ private extension ZMConversationMessage {
 
     /// Whether the `Delete for everyone` option should be allowed and shown for this message.
     var canBeDeletedForEveryone: Bool {
-        guard let sender = sender, let conversation = conversation else { return false }
+        guard let sender = senderUser,
+              let conversation = conversationLike else { return false }
         return sender.isSelfUser && conversation.isSelfAnActiveMember
     }
 
@@ -59,19 +60,18 @@ extension CollectionCell: SelectableView {
     }
 }
 
-
 final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
-    
+
     func deleteAlert(message: ZMConversationMessage,
                      sourceView: UIView?,
                      completion: ResultHandler? = nil) -> UIAlertController {
         let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
-            
+
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
-                
+
                 ZMUserSession.shared()?.enqueue({
                     switch type {
                     case .local:
@@ -85,10 +85,10 @@ final class DeletionDialogPresenter: NSObject {
             } else {
                 completion?(false)
             }
-            
+
             alert.dismiss(animated: true, completion: nil)
         }
-        
+
         if let presentationController = alert.popoverPresentationController,
             let source = sourceView {
             if let selectableView = source as? SelectableView,
@@ -99,7 +99,7 @@ final class DeletionDialogPresenter: NSObject {
                 alert.configPopover(pointToView: source, popoverPresenter: sourceViewController as? PopoverPresenterViewController)
             }
         }
-        
+
         return alert
     }
 
@@ -132,7 +132,7 @@ private enum AlertAction {
         case local
         case everywhere
     }
-    
+
     case delete(DeletionType), cancel
 }
 

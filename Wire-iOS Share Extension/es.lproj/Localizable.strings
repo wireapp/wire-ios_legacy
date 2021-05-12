@@ -33,6 +33,15 @@
 "share_extension.not_signed_in.title" = "Para compartir contenidos debes registrarte en Wire";
 "share_extension.not_signed_in.close_button" = "Cerrar";
 
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Contraseña";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
 "share_extension.timeout.title" = "La conexión expiró.";
 "share_extension.timeout.message" = "Verifica la conexión a Internet e intenta nuevamente. Los archivos adjuntos se guardaron en la conversación.";
 

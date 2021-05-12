@@ -95,15 +95,15 @@ class TextView: UITextView {
     private var shouldDrawPlaceholder = false
 
     override var accessibilityValue: String? {
-        set {
-            super.accessibilityValue = newValue
-        }
-        
         get {
             return text.isEmpty ? placeholderLabel.accessibilityValue : super.accessibilityValue
         }
+
+        set {
+            super.accessibilityValue = newValue
+        }
     }
-    
+
     override var text: String! {
         didSet {
             showOrHidePlaceholder()

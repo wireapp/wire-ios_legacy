@@ -27,8 +27,8 @@ extension MockMessage {
     }
 }
 
-final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
-    
+final class CollectionsViewControllerTests: XCTestCase {
+
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!
     var videoMessage: ZMConversationMessage!
@@ -41,22 +41,17 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
     var expiredAudioMessage: ZMConversationMessage!
     var expiredFileMessage: ZMConversationMessage!
     var expiredLinkMessage: ZMConversationMessage!
-    
+
     var deletedImageMessage: ZMConversationMessage!
     var deletedVideoMessage: ZMConversationMessage!
     var deletedAudioMessage: ZMConversationMessage!
     var deletedFileMessage: ZMConversationMessage!
     var deletedLinkMessage: ZMConversationMessage!
 
-    var coreDataFixture: CoreDataFixture!
-    
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
-
-        MockUser.mockSelf()?.name = "Tarja Turunen"
-        MockUser.mockSelf()?.accentColorValue = .strongBlue
+        accentColor = .vividRed
 
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
@@ -74,7 +69,7 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
         expiredFileMessage = MockMessageFactory.expiredFileMessage()
         expiredLinkMessage = MockMessageFactory.expiredLinkMessage()
         expiredAudioMessage = MockMessageFactory.expiredAudioMessage()
-        
+
         deletedImageMessage = MockMessageFactory.deletedImageMessage()
         deletedVideoMessage = MockMessageFactory.deletedVideoMessage()
         deletedFileMessage = MockMessageFactory.deletedFileMessage()
@@ -95,28 +90,27 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
         expiredAudioMessage = nil
         expiredFileMessage = nil
         expiredLinkMessage = nil
-        
+
         deletedImageMessage = nil
         deletedVideoMessage = nil
         deletedAudioMessage = nil
         deletedFileMessage = nil
         deletedLinkMessage = nil
 
-        coreDataFixture = nil
         super.tearDown()
     }
-    
+
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: true)
         verifyAllIPhoneSizes(matching: controller)
     }
-    
+
     func testThatLoadingIsShownWhenFetching() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
         controller.view.layer.speed = 0 // Disable animations so that the spinner would always be in the same phase
         verifyAllIPhoneSizes(matching: controller)
     }
-    
+
     func testFilesSectionWhenNotFull() {
         let assetCollection = MockCollection(fileMessages: [fileMessage])
         let controller = createController(showingCollection: assetCollection)
@@ -170,7 +164,7 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
     }
 
     // MARK: - Expiration: Deletion
-    
+
     func testImagesSectionWhenDeleted() {
         let assetCollection = MockCollection(messages: [
             MockCollection.onlyImagesCategory: [deletedImageMessage],
@@ -178,19 +172,19 @@ final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelpe
         let controller = createController(showingCollection: assetCollection)
         verifyAllIPhoneSizes(matching: controller)
     }
-    
+
     func testFilesSectionWhenDeleted() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, deletedFileMessage])
         let controller = createController(showingCollection: assetCollection)
         verifyAllIPhoneSizes(matching: controller)
     }
-    
+
     func testAudioSectionWhenDeleted() {
         let assetCollection = MockCollection(fileMessages: [audioMessage, deletedAudioMessage])
         let controller = createController(showingCollection: assetCollection)
         verifyAllIPhoneSizes(matching: controller)
     }
-    
+
     func testLinksSectionWhenDeleted() {
         let assetCollection = MockCollection(linkMessages: [deletedLinkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)

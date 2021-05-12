@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -60,7 +59,7 @@ final class NetworkConditionHelper {
         }
     }
 
-    func bestQualityType(cellularTypeDict: [String : String]?) -> NetworkQualityType {
+    func bestQualityType(cellularTypeDict: [String: String]?) -> NetworkQualityType {
 
         guard let cellularTypeDict = cellularTypeDict else { return .unknown }
 
@@ -70,23 +69,25 @@ final class NetworkConditionHelper {
 
     private func qualityType(from cellularTypeString: String?) -> NetworkQualityType {
         switch cellularTypeString {
-            case CTRadioAccessTechnologyGPRS,
-                 CTRadioAccessTechnologyEdge,
-                 CTRadioAccessTechnologyCDMA1x:
+        case CTRadioAccessTechnologyGPRS,
+             CTRadioAccessTechnologyEdge,
+             CTRadioAccessTechnologyCDMA1x:
             return .type2G
 
-            case CTRadioAccessTechnologyWCDMA,
-                 CTRadioAccessTechnologyHSDPA,
-                 CTRadioAccessTechnologyHSUPA,
-                 CTRadioAccessTechnologyCDMAEVDORev0,
-                 CTRadioAccessTechnologyCDMAEVDORevA,
-                 CTRadioAccessTechnologyCDMAEVDORevB,
-                 CTRadioAccessTechnologyeHRPD:
-                return .type3G
-            case CTRadioAccessTechnologyLTE:
-                return .type4G
-            default:
-                return .unknown
+        case CTRadioAccessTechnologyWCDMA,
+             CTRadioAccessTechnologyHSDPA,
+             CTRadioAccessTechnologyHSUPA,
+             CTRadioAccessTechnologyCDMAEVDORev0,
+             CTRadioAccessTechnologyCDMAEVDORevA,
+             CTRadioAccessTechnologyCDMAEVDORevB,
+             CTRadioAccessTechnologyeHRPD:
+            return .type3G
+
+        case CTRadioAccessTechnologyLTE:
+            return .type4G
+
+        default:
+            return .unknown
         }
     }
 }

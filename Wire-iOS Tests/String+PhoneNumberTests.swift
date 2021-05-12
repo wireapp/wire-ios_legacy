@@ -79,7 +79,7 @@ final class String_PhoneNumberTests: XCTestCase {
         sut = "+41860792093637"
 
         // WHEN & THEN
-        let presetCountry = Country(iso: "", e164:  49)
+        let presetCountry = Country(iso: "", e164: 49)
 
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country.iso, "ch")
@@ -94,7 +94,7 @@ final class String_PhoneNumberTests: XCTestCase {
         sut = "86 079 209 36 37"
 
         // WHEN & THEN
-        let presetCountry = Country(iso: "", e164:  49)
+        let presetCountry = Country(iso: "", e164: 49)
 
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country.e164, 49)
@@ -109,7 +109,7 @@ final class String_PhoneNumberTests: XCTestCase {
         sut = "860792093637860792093637860792093637"
 
         // WHEN & THEN
-        let presetCountry = Country(iso: "", e164:  49)
+        let presetCountry = Country(iso: "", e164: 49)
 
         let ret = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry)
         XCTAssertNil(ret)

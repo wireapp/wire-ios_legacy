@@ -46,6 +46,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - Views
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .compatibleDarkContent
+    }
+
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: UILabel!
@@ -155,7 +159,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
 
         errorLabel = UILabel()
-        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + AccessoryTextField.ConfirmButtonWidth)
+        let errorInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24 + ValidatedTextField.ConfirmButtonWidth)
         errorLabelContainer = ContentInsetView(errorLabel, inset: errorInsets)
         errorLabel.textAlignment = .left
         errorLabel.numberOfLines = 0
@@ -358,7 +362,7 @@ extension AuthenticationStepController {
     // MARK: - AuthenticationCoordinatedViewController
 
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {

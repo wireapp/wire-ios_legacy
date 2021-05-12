@@ -24,7 +24,7 @@ final private class MockAudioRecordViewControllerDelegate: NSObject, AudioRecord
     var cancelCallCount: UInt = 0
 
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
-        cancelCallCount = cancelCallCount + 1
+        cancelCallCount += 1
     }
 
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}
@@ -123,7 +123,6 @@ final class AudioRecordViewControllerTests: ZMSnapshotTestCase {
 
 }
 
-
 private extension UIViewController {
     @discardableResult func prepareForSnapshot() -> UIView {
         beginAppearanceTransition(true, animated: false)
@@ -133,7 +132,7 @@ private extension UIViewController {
         container.addSubview(view)
         container.translatesAutoresizingMaskIntoConstraints = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 112),
             container.heightAnchor.constraint(equalToConstant: 130),

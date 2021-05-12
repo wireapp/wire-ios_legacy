@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 import UIKit
@@ -36,12 +35,10 @@ fileprivate extension UIView {
 
 }
 
-
 protocol ChangeHandleTableViewCellDelegate: class {
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String)
 }
-
 
 final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
@@ -73,7 +70,6 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         backgroundColor = .clear
     }
 
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -186,7 +182,6 @@ struct HandleChangeState {
 
 }
 
-
 final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     var footerFont: UIFont = .smallFont
@@ -210,7 +205,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
-        
+
         setupViews()
     }
 
@@ -301,7 +296,6 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 }
 
-
 extension ChangeHandleViewController: ChangeHandleTableViewCellDelegate {
 
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool {
@@ -387,5 +381,5 @@ fileprivate extension String {
     var isEqualToUnicodeName: Bool {
         return applyingTransform(.toUnicodeName, reverse: false) == self
     }
-    
+
 }

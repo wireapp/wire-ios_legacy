@@ -33,7 +33,7 @@ extension AlertResultConfiguration {
 }
 
 extension ConversationActionController {
-    
+
     func request<T: AlertResultConfiguration>(_ result: T.Type, handler: @escaping (T) -> Void) {
         present(result.controller(handler))
     }

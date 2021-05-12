@@ -20,13 +20,11 @@ import Foundation
 import WireCommonComponents
 import WireDataModel
 
-
 struct ReadReceiptViewModel {
     let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
     let sender: UserType
-
 
     func image() -> UIImage? {
         return iconColor.map { icon.makeImage(size: .tiny, color: $0) }
@@ -62,9 +60,7 @@ struct ReadReceiptViewModel {
             updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized, attributes: ConversationSystemMessageCell.baseAttributes)
         default:
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
-            break
         }
-
 
         return updateText
     }

@@ -23,11 +23,11 @@ extension XCTestCase {
     static let DeviceSizeIPhone6          = CGSize(width: 375, height: 667)
     static let DeviceSizeIPhone6Plus      = CGSize(width: 414, height: 736)
     static let DeviceSizeIPhoneX          = CGSize(width: 375, height: 812)
-    static let DeviceSizeIPhoneXR         = CGSize(width: 414, height: 896) ///same size as iPhone Xs Max
+    static let DeviceSizeIPhoneXR         = CGSize(width: 414, height: 896) /// same size as iPhone Xs Max
     static let DeviceSizeIPadPortrait     = CGSize(width: 768, height: 1024)
     static let DeviceSizeIPadLandscape    = CGSize(width: 1024, height: 768)
 
-    static let phoneScreenSizes: [String:CGSize] = [
+    static let phoneScreenSizes: [String: CGSize] = [
         "iPhone-4_0_Inch": DeviceSizeIPhone5,
         "iPhone-4_7_Inch": DeviceSizeIPhone6,
         "iPhone-5_5_Inch": DeviceSizeIPhone6Plus,
@@ -36,29 +36,29 @@ extension XCTestCase {
     ]
 
     /// we should add iPad Pro sizes
-    static let tabletScreenSizes: [String:CGSize] = [
-        "iPad-Portrait":  DeviceSizeIPadPortrait,
+    static let tabletScreenSizes: [String: CGSize] = [
+        "iPad-Portrait": DeviceSizeIPadPortrait,
         "iPad-Landscape": DeviceSizeIPadLandscape
     ]
 
-    static var deviceScreenSizes: [String:CGSize] = {
+    static var deviceScreenSizes: [String: CGSize] = {
         return phoneScreenSizes.merging(tabletScreenSizes) { $1 }
     }()
 
     func phoneWidths() -> Set<CGFloat> {
-        return Set(XCTestCase.phoneScreenSizes.map( { size in
+        return Set(XCTestCase.phoneScreenSizes.map({ size in
             return size.value.width
         }))
     }
-    
+
     var smallestWidth: CGFloat {
-        return XCTestCase.phoneScreenSizes.map( { size in
+        return XCTestCase.phoneScreenSizes.map({ size in
             return size.value.width
         }).sorted().first!
     }
 
     func tabletWidths() -> Set<CGFloat> {
-        return Set(XCTestCase.tabletScreenSizes.map( { size in
+        return Set(XCTestCase.tabletScreenSizes.map({ size in
             return size.value.width
         }))
     }

@@ -23,7 +23,7 @@ fileprivate extension TimeInterval {
     var hours: Double {
         return self / 3600
     }
-    
+
     var minutes: Double {
         return self / 60
     }
@@ -36,11 +36,11 @@ final class WirelessExpirationTimeFormatter {
         formatter.maximumFractionDigits = 1
         return formatter
     }()
-    
+
     func string(for user: UserType) -> String? {
         return string(for: user.expiresAfter)
     }
-    
+
     func string(for interval: TimeInterval) -> String? {
         guard interval > 0 else { return nil }
         let (hoursLeft, minutesLeft) = (interval.hours, interval.minutes)
@@ -50,7 +50,7 @@ final class WirelessExpirationTimeFormatter {
             let extraMinutes = minutesLeft - 60
             return localizedHours(extraMinutes > 30 ? 2 : 1.5)
         }
-        
+
         switch minutesLeft {
         case 45...Double.greatestFiniteMagnitude: return localizedHours(1)
         case 30..<45: return localizedMinutes(45)
@@ -58,11 +58,11 @@ final class WirelessExpirationTimeFormatter {
         default: return localizedMinutes(15)
         }
     }
-    
+
     private func localizedMinutes(_ minutes: Double) -> String {
         return "guest_room.expiration.less_than_minutes_left".localized(args: String(format: "%.0f", minutes))
     }
-    
+
     private func localizedHours(_ hours: Double) -> String {
         let localizedHoursString = numberFormatter.string(from: NSNumber(value: hours)) ?? "\(hours)"
         return "guest_room.expiration.hours_left".localized(args: localizedHoursString)
@@ -70,9 +70,9 @@ final class WirelessExpirationTimeFormatter {
 }
 
 extension UserType {
-    
+
     var expirationDisplayString: String? {
         return WirelessExpirationTimeFormatter.shared.string(for: self)
     }
-    
+
 }

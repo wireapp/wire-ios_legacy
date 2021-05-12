@@ -27,7 +27,7 @@ extension IconLabelButton {
             accessibilityIdentifier: "CallSpeakerButton"
         )
     }
-    
+
     static func muteCall() -> IconLabelButton {
         return .init(
             icon: .microphoneWithStrikethrough,
@@ -35,7 +35,7 @@ extension IconLabelButton {
             accessibilityIdentifier: "CallMuteButton"
         )
     }
-    
+
     static func video() -> IconLabelButton {
         return .init(
             icon: .videoCall,
@@ -43,7 +43,7 @@ extension IconLabelButton {
             accessibilityIdentifier: "CallVideoButton"
         )
     }
-    
+
     static func flipCamera() -> IconLabelButton {
         return .init(
             icon: .cameraSwitch,
@@ -51,5 +51,5 @@ extension IconLabelButton {
             accessibilityIdentifier: "CallFlipCameraButton"
         )
     }
-    
+
 }

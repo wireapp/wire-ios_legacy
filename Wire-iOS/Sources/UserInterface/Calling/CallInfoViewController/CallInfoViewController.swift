@@ -44,8 +44,6 @@ extension CallInfoViewControllerInput {
             disableIdleTimer == other.disableIdleTimer &&
             canToggleMediaType == other.canToggleMediaType &&
             isMuted == other.isMuted &&
-            isTerminating == other.isTerminating &&
-            canAccept == other.canAccept &&
             mediaState == other.mediaState &&
             appearance == other.appearance &&
             isVideoCall == other.isVideoCall &&
@@ -55,7 +53,10 @@ extension CallInfoViewControllerInput {
             title == other.title &&
             cameraType == other.cameraType &&
             networkQuality == other.networkQuality &&
-            userEnabledCBR == other.userEnabledCBR
+            userEnabledCBR == other.userEnabledCBR &&
+            callState.isEqual(toCallState: other.callState) &&
+            videoGridPresentationMode == other.videoGridPresentationMode &&
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates
     }
 }
 
@@ -75,11 +76,13 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         }
     }
 
-    init(configuration: CallInfoViewControllerInput) {
+    init(configuration: CallInfoViewControllerInput,
+         selfUser: UserType,
+         userSession: ZMUserSession? = ZMUserSession.shared()) {
         self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
-        accessoryViewController = CallAccessoryViewController(configuration: configuration)
-        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+        accessoryViewController = CallAccessoryViewController(configuration: configuration, selfUser: selfUser)
+        backgroundViewController = BackgroundViewController(user: selfUser, userSession: userSession)
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
         actionsView.delegate = self

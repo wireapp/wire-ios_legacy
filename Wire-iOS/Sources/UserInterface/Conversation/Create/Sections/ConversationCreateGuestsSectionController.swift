@@ -20,11 +20,11 @@ import Foundation
 import UIKit
 
 class ConversationCreateGuestsSectionController: ConversationCreateSectionController {
-    
+
     typealias Cell = ConversationCreateGuestsCell
-    
+
     var toggleAction: ((Bool) -> Void)?
-    
+
     override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView.flatMap(Cell.register)

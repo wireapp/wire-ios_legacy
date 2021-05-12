@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 @testable import Wire
 
 class MockUserType: NSObject, UserType, Decodable {
@@ -35,17 +36,20 @@ class MockUserType: NSObject, UserType, Decodable {
         connectionRequestMessage = try? container.decode(String.self, forKey: .connectionRequestMessage)
 
         if let rawAccentColorValue = try? container.decode(Int16.self, forKey: .accentColorValue),
-           let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue)
-        {
+           let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue) {
             self.accentColorValue = accentColorValue
         }
     }
 
     // MARK: - MockHelpers
+    var hasTeam: Bool = false
+
+    var isTrusted: Bool = true
 
     let legalHoldDataSource = MockLegalHoldDataSource()
 
     var teamIdentifier: UUID?
+
     var canLeaveConversation = false
     var canCreateConversation = true
     var canDeleteConversation = false
@@ -66,15 +70,17 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: Basic Properties
 
-    var name: String? = nil
+    var domain: String?
+
+    var name: String?
 
     var displayName: String = ""
 
-    var initials: String? = nil
+    var initials: String?
 
-    var handle: String? = nil
+    var handle: String?
 
-    var emailAddress: String? = nil
+    var emailAddress: String?
 
     var phoneNumber: String? = "+123456789"
 
@@ -84,13 +90,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var allClients: [UserClientType] = []
 
-    var smallProfileImageCacheKey: String? = nil
+    var smallProfileImageCacheKey: String?
 
-    var mediumProfileImageCacheKey: String? = nil
+    var mediumProfileImageCacheKey: String?
 
-    var previewImageData: Data? = nil
+    var previewImageData: Data?
 
-    var completeImageData: Data? = nil
+    var completeImageData: Data?
 
     var richProfile: [UserRichProfileField] = []
 
@@ -98,16 +104,19 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Conversations
 
-    var oneToOneConversation: ZMConversation? = nil
+    var oneToOneConversation: ZMConversation?
 
     var activeConversations: Set<ZMConversation> = Set()
 
     // MARK: - Querying
 
+    var isFederated: Bool = false
+
     var isSelfUser: Bool = false
 
+    var mockedIsServiceUser: Bool = false
     var isServiceUser: Bool {
-        return false
+        return mockedIsServiceUser
     }
 
     var isVerified: Bool = false
@@ -119,14 +128,14 @@ class MockUserType: NSObject, UserType, Decodable {
     }
 
     var hasDigitalSignatureEnabled: Bool = false
-    
-    var teamName: String? = nil
+
+    var teamName: String?
 
     var teamRole: TeamRole = .none
 
     // MARK: - Connections
 
-    var connectionRequestMessage: String? = nil
+    var connectionRequestMessage: String?
 
     var canBeConnected: Bool = false
 
@@ -134,9 +143,23 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isBlocked: Bool = false
 
+    var isIgnored: Bool = false
+
     var isPendingApprovalBySelfUser: Bool = false
 
     var isPendingApprovalByOtherUser: Bool = false
+
+    func accept() {
+        isBlocked = false
+    }
+
+    func block() {
+        isBlocked = true
+    }
+
+    func ignore() { }
+
+    func cancelConnectionRequest() { }
 
     // MARK: - Wireless
 
@@ -176,7 +199,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    func canAddUser(to conversation: ZMConversation) -> Bool {
+    func canAddUser(to conversation: ConversationLike) -> Bool {
         return canAddUserToConversation
     }
 
@@ -206,27 +229,27 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyOtherMemberInConversation
     }
 
-    func canModifyTitle(in conversation: ZMConversation) -> Bool {
+    func canModifyTitle(in conversation: ConversationLike) -> Bool {
         return canModifyTitleInConversation
     }
 
-    func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyReadReceiptSettings(in conversation: ConversationLike) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
 
-    func canModifyEphemeralSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyEphemeralSettings(in conversation: ConversationLike) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    func canModifyNotificationSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyNotificationSettings(in conversation: ConversationLike) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
+    func canModifyAccessControlSettings(in conversation: ConversationLike) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    func isGroupAdmin(in conversation: ZMConversation) -> Bool {
+    func isGroupAdmin(in conversation: ConversationLike) -> Bool {
         return isGroupAdminInConversation
     }
 
@@ -236,7 +259,7 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-    func isGuest(in conversation: ZMConversation) -> Bool {
+    func isGuest(in conversation: ConversationLike) -> Bool {
         return isGuestInConversation
     }
 
@@ -280,4 +303,9 @@ class MockUserType: NSObject, UserType, Decodable {
         refreshTeamDataCount += 1
     }
 
+    // MARK: - dummy user names
+
+    static let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
+                            "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                            "Brett", "Hannah", "Ana", "Paula"]
 }

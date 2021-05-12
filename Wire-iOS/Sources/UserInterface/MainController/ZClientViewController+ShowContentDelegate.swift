@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-extension ZClientViewController: ShowContentDelegate {
+extension ZClientViewController {
     private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {
         let navWrapperController: UINavigationController = viewController.wrapInNavigationController()
         navWrapperController.modalPresentationStyle = .formSheet
@@ -44,7 +44,6 @@ extension ZClientViewController: ShowContentDelegate {
         wrapInNavigationControllerAndPresent(viewController: profileViewController)
     }
 
-    
     public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
         switch conversation.conversationType {
         case .connection:
@@ -59,10 +58,9 @@ extension ZClientViewController: ShowContentDelegate {
             break
         }
     }
-    
+
     public func showConversationList() {
         transitionToList(animated: true, completion: nil)
     }
-    
-    
+
 }

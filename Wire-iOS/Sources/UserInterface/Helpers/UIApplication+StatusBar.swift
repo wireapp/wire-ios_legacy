@@ -16,17 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 
 extension UIApplication {
-    
+
     static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
     /// return the visible window on the top most which fulfills these conditions:
     /// 1. the windows has rootViewController
-    /// 2. CallWindowRootViewController is in use and voice channel controller is active
-    /// 3. the window's rootViewController is AppRootViewController
+    /// 2. the window's rootViewController is RootViewController
     var topMostVisibleWindow: UIWindow? {
         let orderedWindows = windows.sorted { win1, win2 in
             win1.windowLevel < win2.windowLevel
@@ -37,18 +35,15 @@ extension UIApplication {
                 return false
             }
 
-            if let callWindowRootController = controller as? CallWindowRootViewController {
-                return callWindowRootController.isDisplayingCallOverlay
-            } else if controller is AppRootViewController  {
+            if controller is RootViewController {
                 return true
             }
-            
+
             return false
         }
 
         return visibleWindow.last
     }
-
 
     /// Get the top most view controller
     ///
@@ -60,13 +55,18 @@ extension UIApplication {
             var topController = window.rootViewController else {
                 return .none
         }
-        
+
         while let presentedController = topController.presentedViewController,
             (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
             topController = presentedController
         }
-        
+
         return topController
+    }
+
+    @available(iOS 12.0, *)
+    static var userInterfaceStyle: UIUserInterfaceStyle? {
+            UIApplication.shared.keyWindow?.rootViewController?.traitCollection.userInterfaceStyle
     }
 }
 
@@ -74,7 +74,7 @@ extension UINavigationController {
     override open var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
     override open var childForStatusBarHidden: UIViewController? {
         return topViewController
     }

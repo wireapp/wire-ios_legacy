@@ -69,24 +69,28 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
 
     // Persoanl Information
     // Analytics
-    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
+    case disableCrashSharing = "DisableCrashSharing"
+    case disableAnalyticsSharing = "DisableAnalyticsSharing"
     case receiveNewsAndOffers = "ReceiveNewsAndOffers"
 
     // Debug
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
+    case federationEnabled = "federationEnabled"
 
     case lockApp = "lockApp"
 
     case readReceiptsEnabled = "readReceiptsEnabled"
     
     case encryptMessagesAtRest = "encryptMessagesAtRest"
-    // Conference calling
-    case enableConferenceCallingBeta = "EnableConferenceCallingBeta"
     
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
+    }
+
+    public var notificationName: Notification.Name {
+        return Notification.Name(changeNotificationName)
     }
     
     public var description: String {

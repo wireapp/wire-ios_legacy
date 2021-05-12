@@ -1,0 +1,61 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+
+
+
+"general.ok" = "U redu";
+
+"share_extension.conversation_selection.account" = "Račun:";
+"share_extension.conversation_selection.title" = "Razgovori:";
+"share_extension.send_button.title" = "Pošalji";
+"share_extension.conversation_selection.empty.value" = "Odaberi";
+"share_extension.input.placeholder" = "Upiši poruku";
+"share_extension.sending_progress.title" = "Slanje…";
+"share_extension.preparing.title" = "Priprema…";
+"share_extension.no_internet_connection.title" = "Bez internetske veze";
+"share_extension.not_signed_in.title" = "Trebate se prijaviti u Wire prije nego što možete dijeliti išta";
+"share_extension.not_signed_in.close_button" = "Zatvori";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Šifra";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
+"share_extension.timeout.title" = "Veza je istekla.";
+"share_extension.timeout.message" = "Provjerite Vašu Internet vezu i pokušajte ponovno. Privitci su spremljeni u razgovor.";
+
+"content.file.too_big" = "Možete poslati dokumente veličine do %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
+"share_extension.privacy_security.lock_app.description" = "Otključaj Wire";
+"share_extension.logged_out.title" = "Vi se odjavljeni s ovog računa.";
+"share_extension.logged_out.message" = "Molimo odaberite drugi račun.";
+
+"conversation.displayname.emptygroup" = "Grupni razgovor bez imena";
+"meta.degraded.degradation_reason_message.singular" = "%@ je počeo/ počela koristiti novi uređaj.";
+"meta.degraded.degradation_reason_message.plural" = "%@ je počeo/ počela koristiti nove uređaje.";
+"meta.degraded.dialog_message" = "Još uvijek želite poslati poruku?";
+"meta.degraded.cancel_sending_button" = "Ne šalji";
+"meta.degraded.send_anyway_button" = "Svejedno pošalji";
