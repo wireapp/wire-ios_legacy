@@ -22,9 +22,15 @@ import WireSyncEngine
 struct Stream: Equatable {
 
     let streamId: AVSClient
-    let participantName: String?
+    let user: UserType?
     let microphoneState: MicrophoneState?
     let videoState: VideoState?
     let activeSpeakerState: ActiveSpeakerState
 
+    static func == (lhs: Stream, rhs: Stream) -> Bool {
+        return lhs.streamId == rhs.streamId
+            && lhs.microphoneState == rhs.microphoneState
+            && lhs.videoState == rhs.videoState
+            && lhs.activeSpeakerState == rhs.activeSpeakerState
+    }
 }

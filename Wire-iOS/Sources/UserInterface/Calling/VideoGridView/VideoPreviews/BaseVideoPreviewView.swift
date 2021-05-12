@@ -95,8 +95,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
 
     // MARK: - Setup
+
     func updateUserDetails() {
-        userDetailsView.name = stream.participantName
+        userDetailsView.name = stream.user?.name
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
     }
@@ -209,7 +210,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Accessibility for automation
     override var accessibilityIdentifier: String? {
         get {
-            let name = stream.participantName ?? ""
+            let name = stream.user?.name ?? ""
             let maximizationState = isMaximized ? "maximized" : "minimized"
             let activityState = stream.isParticipantUnmutedAndActive ? "active" : "inactive"
             return "VideoView.\(name).\(maximizationState).\(activityState)"
