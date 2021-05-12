@@ -39,9 +39,8 @@ protocol CBRSettingProvider {
 extension CallStatusViewInputType {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
-        case (false, _): return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
         case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
-        case (true, _): return UIColor.black.withAlphaComponent(0.64)
+        case (true, _), (false, _): return UIColor.black.withAlphaComponent(0.64)
         }
     }
 }

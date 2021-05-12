@@ -468,7 +468,7 @@ extension CallViewController {
 
     fileprivate var canHideOverlay: Bool {
         guard case .established = callInfoConfiguration.state else { return false }
-        return callInfoConfiguration.isVideoCall
+        return true
     }
 
     fileprivate func toggleOverlayVisibility() {
