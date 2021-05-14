@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Geen contacten";
 
-"peoplepicker.no_matching_results_title" = "Geen resultaten.";
-"peoplepicker.no_matching_results_message" = "E-mailadres invoegen.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Uitnodiging sturen";
 "peoplepicker.no_matching_results.action.share_contacts" = "Contacten delen";
+"peoplepicker.no_matching_results.action.learn_more" = "Leer meer";
+"peoplepicker.no_matching_results.action.manage_services" = "Beheer diensten";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
-"peoplepicker.no_matching_results_services_title" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
-"peoplepicker.no_matching_results_services_admin_title" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Beheer diensten";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "Contacten delen";
-
-"peoplepicker.share_contacts.no_results.title" = "Zoek personen op naam of op e-mailadres";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Geen resultaten";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Uitnodiging verstuurd";
 "peoplepicker.send_invitation.dialog.message" = "De uitnodiging kan 2 weken gebruikt worden. Stuur een nieuwe als hij verlopen is.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Beheer diensten";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Iedereen is hier.";
 
 "add_participants.alert.title" = "De groep is vol";
 "add_participants.alert.message.new_conversation" = "Tot %d mensen kunnen deelnemen aan een gesprek.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Het bericht is verwijderd.";
 
-"conversation.guests_present" = "Er zijn gasten in dit geprek";
-"conversation.services_present" = "Diensten zijn actief";
-"conversation.guests_services_present" = "Gasten en diensten zijn aanwezig";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Zoeken";
 
 // Reply message preview

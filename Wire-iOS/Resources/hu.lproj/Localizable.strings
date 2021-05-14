@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Nincsenek Partnerek.";
 
-"peoplepicker.no_matching_results_title" = "Nincs találat.";
-"peoplepicker.no_matching_results_message" = "Adj meg egy teljes e-mail címet.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Meghívó küldése";
 "peoplepicker.no_matching_results.action.share_contacts" = "Névjegyek megosztása";
+"peoplepicker.no_matching_results.action.learn_more" = "További információ";
+"peoplepicker.no_matching_results.action.manage_services" = "Szolgáltatások kezelése";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Kérjük, add meg a valós e-mail címedet";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Nincs találat.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Szolgáltatások kezelése";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Adj meg egy teljes e-mail címet vagy";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "névjegyek megosztása";
-
-"peoplepicker.share_contacts.no_results.title" = "Partnerek keresése név vagy e-mail cím alapján";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Nincs találat.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Meghívó elküldve";
 "peoplepicker.send_invitation.dialog.message" = "2 hétig használható. Küld újat, ha lejárt.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Szolgáltatások kezelése";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Mindenki itt van.";
 
 "add_participants.alert.title" = "Telt ház";
 "add_participants.alert.message.new_conversation" = "Legfeljebb %d ember csatlakozhat egy beszélgetéshez.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Vendégek is vannak itt";
-"conversation.services_present" = "A szolgáltatók aktívak";
-"conversation.guests_services_present" = "A vendégek és a szolgáltatók jelen vannak";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Keresés";
 
 // Reply message preview

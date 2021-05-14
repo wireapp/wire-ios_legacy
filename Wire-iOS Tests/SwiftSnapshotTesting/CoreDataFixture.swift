@@ -94,7 +94,9 @@ final class CoreDataFixture {
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
 
+    let dispatchGroup = DispatchGroup()
     var uiMOC: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
 
     /// The color of the container view in which the view to
     /// be snapshot will be placed, defaults to UIColor.lightGrayColor
@@ -130,24 +132,22 @@ final class CoreDataFixture {
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
 
-        let group = DispatchGroup()
-
-        group.enter()
-
-        StorageStack.reset()
-        StorageStack.shared.createStorageAsInMemory = true
         do {
             documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         } catch {
             XCTAssertNil(error, "Unexpected error \(error)")
         }
 
-        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
-            self.uiMOC = contextDirectory.uiContext
-            group.leave()
-        })
+        let account = Account(userName: "", userIdentifier: UUID())
+        let group = ZMSDispatchGroup(dispatchGroup: dispatchGroup, label: "CoreDataStack")
+        let coreDataStack = CoreDataStack(account: account,
+                                          applicationContainer: documentsDirectory!,
+                                          inMemoryStore: true,
+                                          dispatchGroup: group)
 
-        group.wait()
+        coreDataStack.loadStores(completionHandler: { _ in })
+        self.uiMOC = coreDataStack.viewContext
+        self.coreDataStack = coreDataStack
 
         if needsCaches {
             setUpCaches()

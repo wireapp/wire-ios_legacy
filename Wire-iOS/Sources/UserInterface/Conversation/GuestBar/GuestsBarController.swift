@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import UIKit
+import Down
 
 final class GuestsBarController: UIViewController {
 
@@ -57,11 +58,8 @@ final class GuestsBarController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .clear
-        container.backgroundColor = .lightGraphite
+        container.backgroundColor = UIColor.from(scheme: .utilityNeutral)
         container.clipsToBounds = true
-        label.font = FontSpec(.small, .semibold).font!
-        label.textColor = .white
-        label.textAlignment = .center
         container.addSubview(label)
         view.addSubview(container)
     }
@@ -122,7 +120,10 @@ final class GuestsBarController: UIViewController {
             label.text = nil
             label.accessibilityIdentifier = nil
         case .visible(let labelKey, let accessibilityIdentifier):
-            label.text = labelKey.localized(uppercased: true)
+            let markdownTitle = labelKey.localized
+            label.attributedText = .markdown(from: markdownTitle,
+                                             style: .labelStyle)
+            label.textAlignment = .center
             label.accessibilityIdentifier = accessibilityIdentifier
         }
     }
@@ -135,4 +136,17 @@ extension GuestsBarController: Bar {
     var weight: Float {
         return 1
     }
+}
+
+private extension DownStyle {
+
+    static var labelStyle: DownStyle {
+        let style = DownStyle()
+        style.baseFont = UIFont.systemFont(ofSize: 12, contentSizeCategory: .medium, weight: .light)
+        style.baseFontColor = .white
+        style.baseParagraphStyle = NSParagraphStyle.default
+
+        return style
+    }
+
 }

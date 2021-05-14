@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Keine Kontakte";
 
-"peoplepicker.no_matching_results_title" = "Keine Ergebnisse";
-"peoplepicker.no_matching_results_message" = "Vollständige E-Mail-Adresse eingeben.";
 "peoplepicker.no_search_results" = "Keine passenden Ergebnisse. Bitte einen anderen Namen eingeben.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Einladung versenden";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kontakte teilen";
+"peoplepicker.no_matching_results.action.learn_more" = "Mehr erfahren";
+"peoplepicker.no_matching_results.action.manage_services" = "Dienste verwalten";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Bitte eine gültige E-Mail-Adresse eingeben";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Kein Ergebnis";
-"peoplepicker.no_matching_results_services_title" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
-"peoplepicker.no_matching_results_services_admin_title" = "Dienste sind Helfer, die den Workflow verbessern können.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Dienste verwalten";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Geben Sie eine vollständige E-Mail-Adresse ein oder";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "Kontakte teilen";
-
-"peoplepicker.share_contacts.no_results.title" = "Personen anhand ihres Namens oder ihrer E-Mail-Adresse finden";
+"peoplepicker.no_matching_results.message.users" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen\n\nFinden Sie Personen einer anderen Domain mit @Benutzername@Domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Alle sind hier.";
+"peoplepicker.no_matching_results.message.services" = "Kein Ergebnis";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Dienste sind Helfer, die den Workflow verbessern können.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
 
 "peoplepicker.send_invitation.dialog.title" = "Einladung versendet";
 "peoplepicker.send_invitation.dialog.message" = "Diese Einladung ist 2 Wochen gültig. Senden Sie eine neue, wenn diese abläuft.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Dienste verwalten";
 
 "peoplepicker.federation.domain_unvailable" = "Die föderierte Domain ist derzeit nicht verfügbar. [Mehr erfahren](%@)";
-
-"add_participants.all_contacts_added" = "Alle sind hier.";
 
 "add_participants.alert.title" = "Die Gruppe ist voll";
 "add_participants.alert.message.new_conversation" = "Bis zu %d Personen können an einer Unterhaltung teilnehmen.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
-"conversation.guests_present" = "Gäste anwesend";
-"conversation.services_present" = "Dienste aktiv";
-"conversation.guests_services_present" = "Gäste und Dienste anwesend";
+// Conversation banner
+"conversation.banner.guests_present" = "**Gäste** anwesend";
+"conversation.banner.services_present" = "**Dienste** aktiv";
+"conversation.banner.externals_present" = "**Externe** anwesend";
+"conversation.banner.guests_services_present" = "**Gäste** anwesend, **Dienste** aktiv";
+"conversation.banner.externals_services_present" = "**Externe** anwesend, **Dienste** aktiv";
+"conversation.banner.externals_guests_present" = "**Externe** und **Gäste** anwesend";
+"conversation.banner.externals_guests_services_present" = "**Externe** und **Gäste** anwesend, **Dienste** aktiv";
+
 "conversation.action.search" = "Suche";
 
 // Reply message preview

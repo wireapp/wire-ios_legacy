@@ -41,16 +41,18 @@ protocol CallQualityRouterProtocol: class {
 // MARK: - ActiveCallRouter
 class ActiveCallRouter: NSObject {
 
+    // MARK: - Public Property
+    var isActiveCallShown = false
+
     // MARK: - Private Property
     private let rootViewController: RootViewController
     private let callController: CallController
     private let callQualityController: CallQualityController
     private var transitioningDelegate: CallQualityAnimator
 
-    private var isActiveCallShown = false
     private var isCallQualityShown = false
     private var isCallTopOverlayShown = false
-    private var scheduledPostCallAction: (() -> Void)?
+    private(set) var scheduledPostCallAction: (() -> Void)?
 
     private var zClientViewController: ZClientViewController? {
         return rootViewController.firstChild(ofType: ZClientViewController.self)
@@ -159,8 +161,8 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 
     // MARK: - Helpers
 
-    private func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
-        if isActiveCallShown {
+    func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
+        if !isActiveCallShown {
             action()
         } else {
             scheduledPostCallAction = action
