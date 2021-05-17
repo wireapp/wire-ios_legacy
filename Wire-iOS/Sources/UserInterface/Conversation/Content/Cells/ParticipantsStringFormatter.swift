@@ -141,13 +141,12 @@ final class ParticipantsStringFormatter {
     func title(senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
         let formatKey = message.actionType.formatKey
         let nameSequence = format(names)
-        switch message.actionType {
-        case .removed(reason: .legalHoldPolicyConflict):
-            var result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
-            result = result.adding(font: boldFont, to: nameSequence.string)
-            return result
-        default: return nil
-        }
+
+        guard case .removed(reason: .legalHoldPolicyConflict) = message.actionType else { return nil }
+        var result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
+        result = result.adding(font: boldFont, to: nameSequence.string)
+
+        return result
     }
 
     /// Title when the subject (sender) is performing the action alone.
