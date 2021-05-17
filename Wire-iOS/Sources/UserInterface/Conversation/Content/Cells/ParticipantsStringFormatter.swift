@@ -145,8 +145,12 @@ final class ParticipantsStringFormatter {
         guard case .removed(reason: .legalHoldPolicyConflict) = message.actionType else { return nil }
         var result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
         result = result.adding(font: boldFont, to: nameSequence.string)
+        let moreInfo = NSAttributedString(string: L10n.Localizable.Call.Quality.Indicator.MoreInfo.Button.text,
+                                           attributes: [.font: font,
+                                                        .link: ConversationLegalHoldSystemMessageCell.legalHoldURL as AnyObject,
+                                                        .foregroundColor: UIColor.from(scheme: .textForeground)])
 
-        return result
+        return result += " " + moreInfo
     }
 
     /// Title when the subject (sender) is performing the action alone.
@@ -170,8 +174,7 @@ final class ParticipantsStringFormatter {
 
         switch message.actionType {
         case .removed(reason: .legalHoldPolicyConflict):
-            result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
-            result = result.adding(font: boldFont, to: nameSequence.string)
+            return title(senderIsSelf: senderIsSelf, names: names)
         case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
