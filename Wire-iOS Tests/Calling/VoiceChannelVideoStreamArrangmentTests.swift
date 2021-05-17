@@ -33,6 +33,8 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     var selfUserId = UUID()
     var selfClientId = UUID().transportString()
 
+    var stubProvider = VideoStreamStubProvider()
+
     override func setUp() {
         super.setUp()
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
@@ -73,66 +75,28 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
 
     // MARK: - activeVideoStreams(from participants:)
 
-    func testThatActiveVideoStreams_ReturnsEmpty_ForOneParticipantWithoutVideo() {
-        // GIVEN
-        let participant = participantStub(for: mockUser1, videoEnabled: false)
-
-        // THEN
-        XCTAssert(sut.activeVideoStreams(from: [participant]).isEmpty)
-    }
-
-    func testThatActiveVideoStreams_ReturnsOneParticipantVideoState_ForOneParticipantWithVideo() {
-        // GIVEN
-        let participant = participantStub(for: mockUser1, videoEnabled: true)
-
-        // WHEN
-        let videoStreams = sut.activeVideoStreams(from: [participant])
-
-        // THEN
-        XCTAssert(videoStreams.count == 1)
-        XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId1)
-    }
-
-    func testThatActiveVideoStreams_ReturnsEmpty_ForTwoParticipantsWithoutVideo() {
+    func testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: Bool) {
         // GIVEN
         let participants = [
-            participantStub(for: mockUser1, videoEnabled: false),
-            participantStub(for: mockUser2, videoEnabled: false)
-        ]
-
-        // THEN
-        XCTAssert(sut.activeVideoStreams(from: participants).isEmpty)
-    }
-
-    func testThatActiveVideoStreams_ReturnsOneVideoStream_ForTwoParticipantsWithOneStartedAndOneStoppedVideo() {
-        // GIVEN
-        let participants = [
-            participantStub(for: mockUser1, videoEnabled: false),
-            participantStub(for: mockUser2, videoEnabled: true)
+            participantStub(for: mockUser1, videoEnabled: enabled),
+            participantStub(for: mockUser2, videoEnabled: enabled)
         ]
 
         // WHEN
         let videoStreams = sut.activeVideoStreams(from: participants)
 
         // THEN
-        XCTAssert(videoStreams.count == 1)
-        XCTAssert(videoStreams.first?.stream.streamId.userId == remoteId2)
+        XCTAssertEqual(videoStreams.count, 2)
+        XCTAssertTrue(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId1}))
+        XCTAssertTrue(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId2}))
     }
 
-    func testThatActiveVideoStreams_ReturnsTwoVideoStreams_ForTwoParticipantsWithTwoStartedVideos() {
-        // GIVEN
-        let participants = [
-            participantStub(for: mockUser1, videoEnabled: true),
-            participantStub(for: mockUser2, videoEnabled: true)
-        ]
+    func testThatActiveVideoStreams_ReturnsVideoStreams_ForParticipantsWithVideo() {
+       testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: true)
+    }
 
-        // WHEN
-        let videoStreams = sut.activeVideoStreams(from: participants)
-
-        // THEN
-        XCTAssert(videoStreams.count == 2)
-        XCTAssert(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId1}))
-        XCTAssert(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId2}))
+    func testThatActiveVideoStreams_ReturnsVideoStreams_ForParticipantsWithoutVideo() {
+        testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: false)
     }
 
     // MARK: - participants(for presentationMode:)
@@ -179,16 +143,6 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
 
     // MARK: - arrangeVideoStreams(for selfStream:participantsStreams:)
 
-    func videoStreamStub(userId: UUID = UUID(), clientId: String = UUID().transportString()) -> VideoStream {
-        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
-                            participantName: nil,
-                            microphoneState: .none,
-                            videoState: .none,
-                            activeSpeakerState: .inactive)
-        return VideoStream(stream: stream,
-                           isPaused: false)
-    }
-
     func setMockParticipants(with users: [ZMUser]) {
         sut.mockParticipants = []
         for user in users {
@@ -200,8 +154,8 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockSelfUser])
 
-        let participantVideoStreams = [videoStreamStub()]
-        let selfStream = videoStreamStub(userId: selfUserId, clientId: selfClientId)
+        let participantVideoStreams = [stubProvider.videoStream()]
+        let selfStream = stubProvider.videoStream(client: AVSClient(userId: selfUserId, clientId: selfClientId))
 
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
@@ -215,7 +169,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockSelfUser])
 
-        let participantVideoStreams = [videoStreamStub()]
+        let participantVideoStreams = [stubProvider.videoStream()]
 
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
@@ -229,8 +183,8 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockUser2, mockSelfUser])
 
-        let participantVideoStreams = [videoStreamStub()]
-        let selfStream = videoStreamStub()
+        let participantVideoStreams = [stubProvider.videoStream()]
+        let selfStream = stubProvider.videoStream()
 
         // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
