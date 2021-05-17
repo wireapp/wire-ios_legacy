@@ -22,7 +22,7 @@ import WireDataModel
 
 enum ConversationActionType {
 
-    case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
+    case none, started(withName: String?), added(herself: Bool), removed(reason: ZMParticipantsRemovedReason), left, teamMemberLeave
 
     /// Some actions only involve the sender, others involve other users too.
     var involvesUsersOtherThanSender: Bool {
@@ -57,7 +57,9 @@ extension ZMConversationMessage {
     var actionType: ConversationActionType {
         guard let systemMessage = systemMessageData else { return .none }
         switch systemMessage.systemMessageType {
-        case .participantsRemoved:  return systemMessage.userIsTheSender ? .left : .removed
+        case .participantsRemoved:  return systemMessage.userIsTheSender
+            ? .left
+            : .removed(reason: systemMessage.participantsRemovedReason)
         case .participantsAdded:    return .added(herself: systemMessage.userIsTheSender)
         case .newConversation:      return .started(withName: systemMessage.text)
         case .teamMemberLeave:      return .teamMemberLeave
@@ -212,10 +214,11 @@ class ParticipantsCellViewModel {
     }
 
     func attributedTitle() -> NSAttributedString? {
-        guard
-            let sender = message.senderUser,
-            let formatter = formatter(for: message)
-            else { return nil }
+        guard let formatter = formatter(for: message) else { return nil }
+
+        guard let sender = message.senderUser else {
+            return formatter.title(senderIsSelf: isSelfIncludedInUsers, names: nameList)
+        }
 
         let senderName = name(for: sender).capitalized
 

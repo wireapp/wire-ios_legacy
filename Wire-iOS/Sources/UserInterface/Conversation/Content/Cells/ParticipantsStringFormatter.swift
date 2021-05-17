@@ -27,7 +27,8 @@ private extension ConversationActionType {
         case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
         case .added(herself: true): return "content.system.conversation.guest.joined"
         case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
-        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .removed(reason: .legalHoldPolicyConflict): return (localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser) + ".legalhold")
+        case .removed(reason: .none): return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
         case .teamMemberLeave: return "content.system.conversation.team.member-leave"
@@ -136,6 +137,19 @@ final class ParticipantsStringFormatter {
         return [text, title].joined(separator: "\n".attributedString) && textColor && .lineSpacing(4)
     }
 
+    /// Title when the subject (sender) is nil.
+    func title(senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
+        let formatKey = message.actionType.formatKey
+        let nameSequence = format(names)
+        switch message.actionType {
+        case .removed(reason: .legalHoldPolicyConflict):
+            var result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
+            result = result.adding(font: boldFont, to: nameSequence.string)
+            return result
+        default: return nil
+        }
+    }
+
     /// Title when the subject (sender) is performing the action alone.
     func title(senderName: String, senderIsSelf: Bool) -> NSAttributedString? {
         switch message.actionType {
@@ -156,7 +170,10 @@ final class ParticipantsStringFormatter {
         let nameSequence = format(names)
 
         switch message.actionType {
-        case .removed, .added(herself: false), .started(withName: .none):
+        case .removed(reason: .legalHoldPolicyConflict):
+            result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
+            result = result.adding(font: boldFont, to: nameSequence.string)
+        case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
 

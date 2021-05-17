@@ -77,6 +77,13 @@ final class ConversationSystemMessageTests: XCTestCase {
         verify(message: message, allColorSchemes: true)
     }
 
+    func testRemoveParticipant_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+
+        verify(message: message, allColorSchemes: true)
+    }
+
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
         message.senderUser = SwiftMockLoader.mockUsers().last
