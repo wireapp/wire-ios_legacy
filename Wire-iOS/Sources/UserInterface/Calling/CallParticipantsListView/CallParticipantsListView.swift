@@ -19,15 +19,15 @@
 import Foundation
 import WireSyncEngine
 
-typealias CallParticipantsList = [CallParticipantsCellConfiguration]
+typealias CallParticipantsList = [CallParticipantsListCellConfiguration]
 
-protocol CallParticipantsCellConfigurationConfigurable: Reusable {
-    func configure(with configuration: CallParticipantsCellConfiguration,
+protocol CallParticipantsListCellConfigurable: Reusable {
+    func configure(with configuration: CallParticipantsListCellConfiguration,
                    variant: ColorSchemeVariant,
                    selfUser: UserType)
 }
 
-enum CallParticipantsCellConfiguration: Hashable {
+enum CallParticipantsListCellConfiguration: Hashable {
 
     case callParticipant(
         user: HashBoxUser,
@@ -37,7 +37,7 @@ enum CallParticipantsCellConfiguration: Hashable {
     )
     case showAll(totalCount: Int)
 
-    var cellType: CallParticipantsCellConfigurationConfigurable.Type {
+    var cellType: CallParticipantsListCellConfigurable.Type {
         switch self {
         case .callParticipant: return UserCell.self
         case .showAll: return ShowAllParticipantsCell.self
@@ -60,7 +60,7 @@ enum CallParticipantsCellConfiguration: Hashable {
     }
 }
 
-final class CallParticipantsView: UICollectionView, Themeable {
+final class CallParticipantsListView: UICollectionView, Themeable {
     let selfUser: UserType
 
     var rows = CallParticipantsList() {
@@ -96,7 +96,7 @@ final class CallParticipantsView: UICollectionView, Themeable {
 
 }
 
-extension CallParticipantsView: UICollectionViewDataSource {
+extension CallParticipantsListView: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -110,7 +110,7 @@ extension CallParticipantsView: UICollectionViewDataSource {
         let cellConfiguration = rows[indexPath.row]
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellConfiguration.cellType.reuseIdentifier, for: indexPath)
 
-        if let configurableCell = cell as? CallParticipantsCellConfigurationConfigurable {
+        if let configurableCell = cell as? CallParticipantsListCellConfigurable {
             configurableCell.configure(with: cellConfiguration,
                                        variant: colorSchemeVariant,
                                        selfUser: selfUser)
@@ -121,9 +121,9 @@ extension CallParticipantsView: UICollectionViewDataSource {
 
 }
 
-extension UserCell: CallParticipantsCellConfigurationConfigurable {
+extension UserCell: CallParticipantsListCellConfigurable {
 
-    func configure(with configuration: CallParticipantsCellConfiguration,
+    func configure(with configuration: CallParticipantsListCellConfiguration,
                    variant: ColorSchemeVariant,
                    selfUser: UserType) {
         guard case let .callParticipant(user, videoState, microphoneState, activeSpeakerState) = configuration else { preconditionFailure() }

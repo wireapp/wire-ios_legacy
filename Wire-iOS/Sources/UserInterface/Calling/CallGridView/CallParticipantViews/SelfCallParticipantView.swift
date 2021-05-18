@@ -21,7 +21,7 @@ import UIKit
 import avs
 import WireSyncEngine
 
-final class SelfVideoPreviewView: BaseVideoPreviewView {
+final class SelfCallParticipantView: BaseCallParticipantView {
 
     var previewView = AVSVideoPreview()
 

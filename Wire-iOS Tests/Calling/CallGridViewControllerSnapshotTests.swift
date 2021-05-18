@@ -36,9 +36,9 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var callHasTwoParticipants: Bool = false
 }
 
-final class VideoGridViewControllerSnapshotTests: XCTestCase {
+final class CallGridViewControllerSnapshotTests: XCTestCase {
 
-    var sut: VideoGridViewController!
+    var sut: CallGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockVideoGridConfiguration!
     var selfVideoStream: VideoStream!
@@ -69,7 +69,7 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func createSut(hideHintView: Bool = true) {
-        sut = VideoGridViewController(configuration: configuration,
+        sut = CallGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
 
         sut.isCovered = false

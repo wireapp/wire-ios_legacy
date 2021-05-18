@@ -24,7 +24,7 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
-final class VideoGridViewController: SpinnerCapableViewController {
+final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
@@ -43,18 +43,18 @@ final class VideoGridViewController: SpinnerCapableViewController {
     }
 
     private var dataSource: [VideoStream] = []
-    private var maximizedView: BaseVideoPreviewView?
+    private var maximizedView: BaseCallParticipantView?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
-    private let hintView = VideoGridHintNotificationLabel()
+    private let hintView = CallGridHintNotificationLabel()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
 
     // MARK: - Public Properties
 
-    var configuration: VideoGridConfiguration {
+    var configuration: CallGridViewControllerInput {
         didSet {
             guard !configuration.isEqual(toConfiguration: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
@@ -81,7 +81,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     // MARK: - Initialization
 
-    init(configuration: VideoGridConfiguration,
+    init(configuration: CallGridViewControllerInput,
          mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()) {
 
         self.configuration = configuration
@@ -147,7 +147,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     // MARK: - View maximization
 
-    private func toggleMaximized(view: BaseVideoPreviewView?) {
+    private func toggleMaximized(view: BaseCallParticipantView?) {
         guard let view = view else { return }
         guard allowMaximizationToggling(for: view.stream) else { return }
 
@@ -155,7 +155,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
         maximizedView = shouldMaximize ? view : nil
         view.isMaximized = shouldMaximize
-        updateVideoGrid(with: videoStreams)
+        updateGrid(with: videoStreams)
         updateHint(for: .maximizationChanged(maximized: shouldMaximize))
     }
 
@@ -180,7 +180,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     // MARK: - Hint
 
-    private func updateHint(for event: VideoGridEvent) {
+    private func updateHint(for event: CallGridEvent) {
         switch event {
         case .viewDidLoad:
             hintView.show(hint: .fullscreen)
@@ -219,7 +219,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         NotificationCenter.default.post(
             name: .videoGridVisibilityChanged,
             object: nil,
-            userInfo: [VideoGridViewController.isCoveredKey: isCovered]
+            userInfo: [CallGridViewController.isCoveredKey: isCovered]
         )
     }
 
@@ -238,9 +238,9 @@ final class VideoGridViewController: SpinnerCapableViewController {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
         displaySpinnerIfNeeded()
-        updateSelfPreview()
-        updateFloatingVideo(with: configuration.floatingVideoStream)
-        updateVideoGrid(with: videoStreams)
+        updateSelfCallParticipantView()
+        updateFloatingView(with: configuration.floatingVideoStream)
+        updateGrid(with: videoStreams)
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
@@ -260,21 +260,21 @@ final class VideoGridViewController: SpinnerCapableViewController {
         showLoadingView(title: L10n.Localizable.Call.Grid.noActiveSpeakers)
     }
 
-    private func updateSelfPreview() {
+    private func updateSelfCallParticipantView() {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
 
         // No stream to show. Update the capture state.
         guard let selfStream = stream(with: selfStreamId) else {
             Log.calling.debug("updating capture state to \(configuration.videoState)")
-            selfPreviewView?.updateCaptureState(with: configuration.videoState)
+            selfCallParticipantView?.updateCaptureState(with: configuration.videoState)
             return
         }
 
-        if let view = selfPreviewView {
+        if let view = selfCallParticipantView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(
+            viewCache[selfStreamId] = SelfCallParticipantView(
                 stream: selfStream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
@@ -283,7 +283,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
         }
     }
 
-    private func updateFloatingVideo(with state: VideoStream?) {
+    private func updateFloatingView(with state: VideoStream?) {
         // No stream, remove floating video if there is any.
         guard let state = state else {
             Log.calling.debug("Removing self video from floating preview")
@@ -296,13 +296,13 @@ final class VideoGridViewController: SpinnerCapableViewController {
         }
 
         // We have a stream but don't have a preview view yet.
-        if nil == thumbnailViewController.contentView, let previewView = selfPreviewView {
+        if nil == thumbnailViewController.contentView, let previewView = selfCallParticipantView {
             Log.calling.debug("Adding self video to floating preview")
             thumbnailViewController.setThumbnailContentView(previewView, contentSize: .previewSize(for: traitCollection))
         }
     }
 
-    private func updateVideoGrid(with newVideoStreams: [VideoStream]) {
+    private func updateGrid(with newVideoStreams: [VideoStream]) {
         let changeSet = StagedChangeset(source: dataSource, target: newVideoStreams)
 
         UIView.performWithoutAnimation {
@@ -315,7 +315,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? VideoPreviewView)
+            let view = (streamView(for: $0.stream) as? CallParticipantView)
 
             view?.stream = $0.stream
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
@@ -371,11 +371,11 @@ final class VideoGridViewController: SpinnerCapableViewController {
         return viewCache[stream.streamId]
     }
 
-    private func streamView(at location: CGPoint) -> BaseVideoPreviewView? {
+    private func streamView(at location: CGPoint) -> BaseCallParticipantView? {
         guard let indexPath = gridView.indexPathForItem(at: location) else {
             return nil
         }
-        return streamView(for: dataSource[indexPath.row].stream) as? BaseVideoPreviewView
+        return streamView(for: dataSource[indexPath.row].stream) as? BaseCallParticipantView
     }
 
     private func stream(with streamId: AVSClient) -> Stream? {
@@ -388,16 +388,16 @@ final class VideoGridViewController: SpinnerCapableViewController {
         return stream
     }
 
-    private var selfPreviewView: SelfVideoPreviewView? {
+    private var selfCallParticipantView: SelfCallParticipantView? {
         guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else {
             return nil
         }
-        return viewCache[selfStreamId] as? SelfVideoPreviewView
+        return viewCache[selfStreamId] as? SelfCallParticipantView
     }
 
     private func videoConfigurationDescription() -> String {
         return """
-        showing self preview: \(selfPreviewView != nil)
+        showing self preview: \(selfCallParticipantView != nil)
         videos in grid: [\(dataSource)]\n
         """
     }
@@ -406,7 +406,7 @@ final class VideoGridViewController: SpinnerCapableViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension VideoGridViewController: UICollectionViewDataSource {
+extension CallGridViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -433,7 +433,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(
+            let view = CallParticipantView(
                 stream: videoStream.stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
@@ -447,7 +447,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
 
 // MARK: - Test Helpers
 
-extension VideoGridViewController {
+extension CallGridViewController {
     /// used by snapshot tests
     func hideHintView() {
         hintView.hideAndStopTimer()

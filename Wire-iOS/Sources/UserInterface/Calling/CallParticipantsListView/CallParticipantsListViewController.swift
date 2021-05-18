@@ -20,15 +20,15 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol CallParticipantsViewControllerDelegate: class {
-    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController)
+protocol CallParticipantsListViewControllerDelegate: class {
+    func callParticipantsListViewControllerDidSelectShowMore(viewController: CallParticipantsListViewController)
 }
 
-final class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+final class CallParticipantsListViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?
-    weak var delegate: CallParticipantsViewControllerDelegate?
+    weak var delegate: CallParticipantsListViewControllerDelegate?
     private let selfUser: UserType
 
     var participants: CallParticipantsList {
@@ -37,7 +37,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         }
     }
 
-    fileprivate var collectionView: CallParticipantsView!
+    fileprivate var collectionView: CallParticipantsListView!
     let showParticipants: Bool
 
     var variant: ColorSchemeVariant = .light {
@@ -92,13 +92,13 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
 
-        let collectionView = CallParticipantsView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
+        let collectionView = CallParticipantsListView(collectionViewLayout: collectionViewLayout, selfUser: selfUser)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = showParticipants
         collectionView.delegate = self
         self.collectionView = collectionView
         view.addSubview(collectionView)
-        CallParticipantsCellConfiguration.prepare(collectionView)
+        CallParticipantsListCellConfiguration.prepare(collectionView)
     }
 
     private func createConstraints() {
@@ -144,7 +144,7 @@ final class CallParticipantsViewController: UIViewController, UICollectionViewDe
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        delegate?.callParticipantsViewControllerDidSelectShowMore(viewController: self)
+        delegate?.callParticipantsListViewControllerDidSelectShowMore(viewController: self)
     }
 
     private func updateAppearance() {
