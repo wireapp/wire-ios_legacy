@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
+protocol CallStatusViewInputType: CallTypeProvider, CBRSettingProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
     var title: String { get }
@@ -26,10 +26,6 @@ protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSet
 
 protocol CallTypeProvider {
     var isVideoCall: Bool { get }
-}
-
-protocol ColorVariantProvider {
-    var variant: ColorSchemeVariant { get }
 }
 
 protocol CBRSettingProvider {
@@ -155,8 +151,7 @@ extension CallStatusViewInputType {
     }
 
     var effectiveColorVariant: ColorSchemeVariant {
-        guard !isVideoCall else { return .dark }
-        return variant
+        .dark
     }
 
 }

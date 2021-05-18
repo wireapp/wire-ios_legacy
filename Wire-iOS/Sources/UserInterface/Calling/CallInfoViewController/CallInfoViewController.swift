@@ -47,7 +47,6 @@ extension CallInfoViewControllerInput {
             mediaState == other.mediaState &&
             appearance == other.appearance &&
             isVideoCall == other.isVideoCall &&
-            variant == other.variant &&
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
             title == other.title &&
