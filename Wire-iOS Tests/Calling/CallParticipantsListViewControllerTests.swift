@@ -31,7 +31,7 @@ final class CallParticipantsListHelper {
             .map { mockUsers[$0] }
             .sorted { $0.name < $1.name }
 
-        return sortedParticipants.map { CallParticipantsCellConfiguration.callParticipant(user: HashBox(value: $0),
+        return sortedParticipants.map { CallParticipantsListCellConfiguration.callParticipant(user: HashBox(value: $0),
                                                                                           videoState: videoState,
                                                                                           microphoneState: microphoneState,
                                                                                           activeSpeakerState: .inactive)
@@ -40,9 +40,9 @@ final class CallParticipantsListHelper {
 
 }
 
-final class CallParticipantsViewTests: XCTestCase {
+final class CallParticipantsListViewControllerTests: XCTestCase {
 
-    var sut: CallParticipantsViewController!
+    var sut: CallParticipantsListViewController!
     var mockParticipants: CallParticipantsList!
 
     override func setUp() {
@@ -58,7 +58,7 @@ final class CallParticipantsViewTests: XCTestCase {
 
     func testCallParticipants_Overflowing_Light() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsListViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -70,7 +70,7 @@ final class CallParticipantsViewTests: XCTestCase {
 
     func testCallParticipants_Overflowing_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsListViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
@@ -83,7 +83,7 @@ final class CallParticipantsViewTests: XCTestCase {
 
     func testCallParticipants_Truncated_Light() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsListViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.backgroundColor = .white
 
@@ -93,7 +93,7 @@ final class CallParticipantsViewTests: XCTestCase {
 
     func testCallParticipants_Truncated_Dark() {
         // When
-        sut = CallParticipantsViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
+        sut = CallParticipantsListViewController(participants: mockParticipants, showParticipants: false, selfUser: ZMUser.selfUser())
         sut.variant = .dark
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.backgroundColor = .black

@@ -22,9 +22,9 @@ import SnapshotTesting
 
 @testable import Wire
 
-class VideoPreviewViewTests: XCTestCase {
+class CallParticipantViewTests: XCTestCase {
     var size = XCTestCase.DeviceSizeIPhone5
-    var sut: VideoPreviewView!
+    var sut: CallParticipantView!
     var stubProvider = VideoStreamStubProvider()
     var unmutedStream = VideoStreamStubProvider().videoStream(muted: false).stream
 
@@ -33,8 +33,8 @@ class VideoPreviewViewTests: XCTestCase {
         super.tearDown()
     }
 
-    private func createView(from stream: Wire.Stream, isCovered: Bool, pinchToZoomRule: PinchToZoomRule = .enableWhenMaximized) -> VideoPreviewView {
-        let view = VideoPreviewView(
+    private func createView(from stream: Wire.Stream, isCovered: Bool, pinchToZoomRule: PinchToZoomRule = .enableWhenMaximized) -> CallParticipantView {
+        let view = CallParticipantView(
             stream: stream,
             isCovered: isCovered,
             shouldShowActiveSpeakerFrame: true,

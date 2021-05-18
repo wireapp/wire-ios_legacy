@@ -21,14 +21,14 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-class VideoParticipantDetailsViewTests: XCTestCase {
+class CallParticipantDetailsViewTests: XCTestCase {
 
-    var sut: VideoParticipantDetailsView!
+    var sut: CallParticipantDetailsView!
 
     override func setUp() {
         super.setUp()
 
-        sut = VideoParticipantDetailsView()
+        sut = CallParticipantDetailsView()
         sut.name = "John Doe"
         sut.frame = CGRect(x: 0, y: 0, width: 95, height: 24)
         sut.backgroundColor = .black

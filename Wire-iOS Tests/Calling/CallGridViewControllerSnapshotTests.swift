@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class MockVideoGridConfiguration: VideoGridConfiguration {
+final class MockCallGridViewControllerInput: CallGridViewControllerInput {
     var shouldShowActiveSpeakerFrame: Bool = true
 
     var floatingVideoStream: VideoStream?
@@ -40,14 +40,14 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     var sut: CallGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
-    var configuration: MockVideoGridConfiguration!
+    var configuration: MockCallGridViewControllerInput!
     var selfVideoStream: VideoStream!
     var stubProvider = VideoStreamStubProvider()
 
     override func setUp() {
         super.setUp()
         mediaManager = ZMMockAVSMediaManager()
-        configuration = MockVideoGridConfiguration()
+        configuration = MockCallGridViewControllerInput()
 
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
