@@ -1,5 +1,9 @@
 pool:
+<<<<<<< HEAD
    vmImage: 'macOS-latest'
+=======
+   vmImage: 'macOS-11.0'
+>>>>>>> xcode12_5
    
 trigger:
   branches:
