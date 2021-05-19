@@ -1,4 +1,4 @@
-github "pointfreeco/swift-snapshot-testing" "1.9.0"
+github "wireapp/swift-snapshot-testing" "1.9.0"
 github "wireapp/Cartography" "4.0.0-xcode_12_4"
 github "wireapp/DifferenceKit" "1.1.5_XCode11.4.1"
 github "wireapp/Down" "v2.3.0_Xcode12.4"
