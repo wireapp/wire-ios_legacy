@@ -32,7 +32,8 @@ extension AVSVideoView: AVSIdentifierProvider {
             user: nil,
             microphoneState: .unmuted,
             videoState: .none,
-            activeSpeakerState: .inactive
+            activeSpeakerState: .inactive,
+            isPaused: false
         )
     }
 }

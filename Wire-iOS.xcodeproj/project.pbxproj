@@ -462,7 +462,7 @@
 		6330FCC2249264C900E40B06 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6330FCC1249264C900E40B06 /* GridView.swift */; };
 		633860FE25E93F150077BC05 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633860FD25E93F140077BC05 /* Toast.swift */; };
 		6338610225ED3DED0077BC05 /* ToastViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338610125ED3DEC0077BC05 /* ToastViewTests.swift */; };
-		6340660925B204B100C0B4BA /* VideoStreamStubProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */; };
+		6340660925B204B100C0B4BA /* StreamStubProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340660825B204B100C0B4BA /* StreamStubProvider.swift */; };
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
 		63421E3726149D7500ADA723 /* PinchToZoomRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63421E3626149D7500ADA723 /* PinchToZoomRule.swift */; };
 		63421E4B2614C25700ADA723 /* NotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63421E4A2614C25700ADA723 /* NotificationLabel.swift */; };
@@ -1129,7 +1129,6 @@
 		EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */; };
 		EE373FAB23FBF44B008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */; };
 		EE378E2C24BDE5D50014118A /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2B24BDE5D50014118A /* Stream.swift */; };
-		EE378E2E24BDE5FF0014118A /* VideoStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2D24BDE5FF0014118A /* VideoStream.swift */; };
 		EE378E3024BDE6210014118A /* CallGridViewControllerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE378E2F24BDE6210014118A /* CallGridViewControllerInput.swift */; };
 		EE430EC825C20D080056BDE3 /* ScreenCurtainDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */; };
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
@@ -2117,7 +2116,7 @@
 		6330FCC1249264C900E40B06 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		633860FD25E93F140077BC05 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		6338610125ED3DEC0077BC05 /* ToastViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastViewTests.swift; sourceTree = "<group>"; };
-		6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamStubProvider.swift; sourceTree = "<group>"; };
+		6340660825B204B100C0B4BA /* StreamStubProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamStubProvider.swift; sourceTree = "<group>"; };
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
 		63421E3626149D7500ADA723 /* PinchToZoomRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchToZoomRule.swift; sourceTree = "<group>"; };
 		63421E4A2614C25700ADA723 /* NotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLabel.swift; sourceTree = "<group>"; };
@@ -2911,7 +2910,6 @@
 		EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TeamMetadataRefresherTests.swift; path = "Wire-iOS Tests/TeamMetadataRefresherTests.swift"; sourceTree = SOURCE_ROOT; };
 		EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerDelegateTests.swift; sourceTree = "<group>"; };
 		EE378E2B24BDE5D50014118A /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		EE378E2D24BDE5FF0014118A /* VideoStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStream.swift; sourceTree = "<group>"; };
 		EE378E2F24BDE6210014118A /* CallGridViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridViewControllerInput.swift; sourceTree = "<group>"; };
 		EE430EC725C20D080056BDE3 /* ScreenCurtainDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCurtainDelegate.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
@@ -4358,7 +4356,7 @@
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF6251D521395F7E00943708 /* CallGridViewControllerSnapshotTests.swift */,
 				6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */,
-				6340660825B204B100C0B4BA /* VideoStreamStubProvider.swift */,
+				6340660825B204B100C0B4BA /* StreamStubProvider.swift */,
 				6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */,
 				6372A0F125C8438A000CCB2D /* SelfCallParticipantViewTests.swift */,
 				16A94AF5209B04A5008A5718 /* GridViewTests.swift */,
@@ -4406,7 +4404,6 @@
 			children = (
 				EE378E2B24BDE5D50014118A /* Stream.swift */,
 				637387BC2644331F004FEF79 /* Stream+ActiveSpeaker.swift */,
-				EE378E2D24BDE5FF0014118A /* VideoStream.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -7881,7 +7878,6 @@
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
 				F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */,
 				16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */,
-				EE378E2E24BDE5FF0014118A /* VideoStream.swift in Sources */,
 				163E8C7921E363FE0030BD8D /* ConversationGuestsAllowedCell.swift in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
@@ -8991,7 +8987,7 @@
 				A9DA5084240FFD0900C2F886 /* ButtonTests.swift in Sources */,
 				5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */,
 				8742FB821E8BD23D00D046BC /* ConversationStatusLineTests.swift in Sources */,
-				6340660925B204B100C0B4BA /* VideoStreamStubProvider.swift in Sources */,
+				6340660925B204B100C0B4BA /* StreamStubProvider.swift in Sources */,
 				EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */,
 				636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */,
 				06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */,

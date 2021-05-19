@@ -23,9 +23,9 @@ import SnapshotTesting
 final class MockCallGridViewControllerInput: CallGridViewControllerInput {
     var shouldShowActiveSpeakerFrame: Bool = true
 
-    var floatingVideoStream: VideoStream?
+    var floatingStream: Wire.Stream?
 
-    var videoStreams: [VideoStream] = []
+    var streams: [Wire.Stream] = []
 
     var videoState: VideoState = .stopped
 
@@ -41,8 +41,8 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     var sut: CallGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockCallGridViewControllerInput!
-    var selfVideoStream: VideoStream!
-    var stubProvider = VideoStreamStubProvider()
+    var selfStream: Wire.Stream!
+    var stubProvider = StreamStubProvider()
 
     override func setUp() {
         super.setUp()
@@ -55,7 +55,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         MockUser.mockSelf().clients = Set([mockSelfClient])
 
         let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
-        selfVideoStream = stubProvider.videoStream(
+        selfStream = stubProvider.stream(
             user: MockUserType.createUser(name: "Alice"),
             client: client,
             activeSpeakerState: .active(audioLevelNow: 100)
@@ -79,7 +79,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testNoActiveSpeakersSpinner() {
-        configuration.videoStreams = []
+        configuration.streams = []
         configuration.presentationMode = .activeSpeakers
 
         createSut()
@@ -88,11 +88,11 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testActiveSpeakersIndicators_OneToOne() {
-        configuration.videoStreams = [stubProvider.videoStream(
+        configuration.streams = [stubProvider.stream(
             user: MockUserType.createUser(name: "Bob"),
             activeSpeakerState: .active(audioLevelNow: 100)
         )]
-        configuration.floatingVideoStream = selfVideoStream
+        configuration.floatingStream = selfStream
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
@@ -100,13 +100,13 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testActiveSpeakersIndicators_Conference() {
-        configuration.videoStreams = [
-            stubProvider.videoStream(user: MockUserType.createUser(name: "Alice"),
-                                     activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.videoStream(user: MockUserType.createUser(name: "Bob"),
-                                     activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.videoStream(user: MockUserType.createUser(name: "Carol"),
-                                     activeSpeakerState: .active(audioLevelNow: 100))
+        configuration.streams = [
+            stubProvider.stream(user: MockUserType.createUser(name: "Alice"),
+                                activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.stream(user: MockUserType.createUser(name: "Bob"),
+                                activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.stream(user: MockUserType.createUser(name: "Carol"),
+                                activeSpeakerState: .active(audioLevelNow: 100))
         ]
         createSut()
 

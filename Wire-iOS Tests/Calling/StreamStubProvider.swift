@@ -19,21 +19,21 @@
 import Foundation
 @testable import Wire
 
-class VideoStreamStubProvider {
-    func videoStream(
+class StreamStubProvider {
+    func stream(
         user: UserType = MockUserType.createUser(name: "Bob"),
         client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
         muted: Bool = false,
         videoState: VideoState = .started,
         activeSpeakerState: ActiveSpeakerState = .inactive,
-        paused: Bool = false) -> VideoStream {
-        let stream = Wire.Stream(
+        paused: Bool = false) -> Wire.Stream {
+        return Wire.Stream(
             streamId: client,
             user: user,
             microphoneState: muted ? .muted : .unmuted,
             videoState: videoState,
-            activeSpeakerState: activeSpeakerState
+            activeSpeakerState: activeSpeakerState,
+            isPaused: paused
         )
-        return VideoStream(stream: stream, isPaused: paused)
     }
 }

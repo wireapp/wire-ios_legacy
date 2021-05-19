@@ -21,8 +21,8 @@ import WireSyncEngine
 
 protocol CallGridViewControllerInput {
 
-    var floatingVideoStream: VideoStream? { get }
-    var videoStreams: [VideoStream] { get }
+    var floatingStream: Stream? { get }
+    var streams: [Stream] { get }
     var videoState: VideoState { get }
     var networkQuality: NetworkQuality { get }
     var shouldShowActiveSpeakerFrame: Bool { get }
@@ -34,7 +34,7 @@ protocol CallGridViewControllerInput {
 extension CallGridViewControllerInput {
 
     var allStreamIds: Set<AVSClient> {
-        let streamIds = (videoStreams + [floatingVideoStream]).compactMap { $0?.stream.streamId }
+        let streamIds = (streams + [floatingStream]).compactMap { $0?.streamId }
         return Set(streamIds)
     }
 
@@ -43,8 +43,8 @@ extension CallGridViewControllerInput {
     // the `CallGridViewController` generic to work around the `Self` requirement of
     // `Equatable` which we want to avoid.
     func isEqual(toConfiguration other: CallGridViewControllerInput) -> Bool {
-        return floatingVideoStream == other.floatingVideoStream &&
-            videoStreams == other.videoStreams &&
+        return floatingStream == other.floatingStream &&
+            streams == other.streams &&
             networkQuality == other.networkQuality &&
             shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
             presentationMode == other.presentationMode &&

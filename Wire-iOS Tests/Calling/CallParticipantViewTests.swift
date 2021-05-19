@@ -25,8 +25,8 @@ import SnapshotTesting
 class CallParticipantViewTests: XCTestCase {
     var size = XCTestCase.DeviceSizeIPhone5
     var sut: CallParticipantView!
-    var stubProvider = VideoStreamStubProvider()
-    var unmutedStream = VideoStreamStubProvider().videoStream(muted: false).stream
+    var stubProvider = StreamStubProvider()
+    var unmutedStream = StreamStubProvider().stream(muted: false)
 
     override func tearDown() {
         sut = nil
@@ -66,7 +66,7 @@ class CallParticipantViewTests: XCTestCase {
 
     func testThatItShouldNotFill_WhenScreenSharing_AndNotMaximized() {
         // GIVEN / WHEN
-        let stream = stubProvider.videoStream(muted: false, videoState: .screenSharing).stream
+        let stream = stubProvider.stream(muted: false, videoState: .screenSharing)
         sut = createView(from: stream, isCovered: false)
 
         // THEN
@@ -83,7 +83,7 @@ class CallParticipantViewTests: XCTestCase {
 
     func testMutedState() {
         // GIVEN / WHEN
-        let stream = stubProvider.videoStream(muted: true).stream
+        let stream = stubProvider.stream(muted: true)
         sut = createView(from: stream, isCovered: false)
 
         // THEN
@@ -92,7 +92,7 @@ class CallParticipantViewTests: XCTestCase {
 
     func testActiveState() {
         // GIVEN / WHEN
-        let stream = stubProvider.videoStream(muted: false, activeSpeakerState: .active(audioLevelNow: 100)).stream
+        let stream = stubProvider.stream(muted: false, activeSpeakerState: .active(audioLevelNow: 100))
         sut = createView(from: stream, isCovered: false)
 
         // THEN
@@ -149,7 +149,7 @@ class CallParticipantViewTests: XCTestCase {
 
     func testThat_ScalingIsDisabled_WhenRuleIs_EnableWhenFitted_And_ShouldFill_IsTrue() {
         // given - view is not maximized and videoState is .started, shouldFill will compute to true
-        let stream = stubProvider.videoStream(videoState: .started).stream
+        let stream = stubProvider.stream(videoState: .started)
         sut = createView(from: stream, isCovered: false, pinchToZoomRule: .enableWhenFitted)
         sut.isMaximized = false
 

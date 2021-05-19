@@ -33,7 +33,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     var selfUserId = UUID()
     var selfClientId = UUID().transportString()
 
-    var stubProvider = VideoStreamStubProvider()
+    var stubProvider = StreamStubProvider()
 
     override func setUp() {
         super.setUp()
@@ -75,7 +75,7 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
 
     // MARK: - activeVideoStreams(from participants:)
 
-    func testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: Bool) {
+    func testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideo(enabled: Bool) {
         // GIVEN
         let participants = [
             participantStub(for: mockUser1, videoEnabled: enabled),
@@ -83,20 +83,20 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         ]
 
         // WHEN
-        let videoStreams = sut.activeVideoStreams(from: participants)
+        let streams = sut.activeStreams(from: participants)
 
         // THEN
-        XCTAssertEqual(videoStreams.count, 2)
-        XCTAssertTrue(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId1}))
-        XCTAssertTrue(videoStreams.contains(where: {$0.stream.streamId.userId == remoteId2}))
+        XCTAssertEqual(streams.count, 2)
+        XCTAssertTrue(streams.contains(where: {$0.streamId.userId == remoteId1}))
+        XCTAssertTrue(streams.contains(where: {$0.streamId.userId == remoteId2}))
     }
 
-    func testThatActiveVideoStreams_ReturnsVideoStreams_ForParticipantsWithVideo() {
-       testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: true)
+    func testThatActiveStreams_ReturnsVideoStreams_ForParticipantsWithVideo() {
+       testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideo(enabled: true)
     }
 
-    func testThatActiveVideoStreams_ReturnsVideoStreams_ForParticipantsWithoutVideo() {
-        testThatActiveVideoStreams_ReturnsVideoSteams_ForParticipantsWithVideo(enabled: false)
+    func testThatActiveStreams_ReturnsVideoStreams_ForParticipantsWithoutVideo() {
+        testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideo(enabled: false)
     }
 
     // MARK: - participants(for presentationMode:)
@@ -154,43 +154,43 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockSelfUser])
 
-        let participantVideoStreams = [stubProvider.videoStream()]
-        let selfStream = stubProvider.videoStream(client: AVSClient(userId: selfUserId, clientId: selfClientId))
+        let participantStreams = [stubProvider.stream()]
+        let selfStream = stubProvider.stream(client: AVSClient(userId: selfUserId, clientId: selfClientId))
 
         // WHEN
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
+        let streamArrangement = sut.arrangeStreams(for: selfStream, participantsStreams: participantStreams)
 
         // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
-        XCTAssert(videoStreamArrangement.preview == selfStream)
+        XCTAssert(streamArrangement.grid.elementsEqual(participantStreams))
+        XCTAssert(streamArrangement.preview == selfStream)
     }
 
     func testThatItReturnsNilPreviewAndParticipantInGrid_WhenOnlyTwoParticipants_WithoutSelfStream() {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockSelfUser])
 
-        let participantVideoStreams = [stubProvider.videoStream()]
+        let participantStreams = [stubProvider.stream()]
 
         // WHEN
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
+        let streamArrangement = sut.arrangeStreams(for: nil, participantsStreams: participantStreams)
 
         // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
-        XCTAssert(videoStreamArrangement.preview == nil)
+        XCTAssert(streamArrangement.grid.elementsEqual(participantStreams))
+        XCTAssert(streamArrangement.preview == nil)
     }
 
     func testThatItReturnsNilPreviewAndAllParticipantsInGrid_WhenOverTwoParticipants() {
         // GIVEN
         setMockParticipants(with: [mockUser1, mockUser2, mockSelfUser])
 
-        let participantVideoStreams = [stubProvider.videoStream()]
-        let selfStream = stubProvider.videoStream()
+        let participantStreams = [stubProvider.stream()]
+        let selfStream = stubProvider.stream()
 
         // WHEN
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
+        let streamArrangement = sut.arrangeStreams(for: selfStream, participantsStreams: participantStreams)
 
         // THEN
-        XCTAssert(videoStreamArrangement.grid.elementsEqual([selfStream] + participantVideoStreams))
-        XCTAssert(videoStreamArrangement.preview == nil)
+        XCTAssert(streamArrangement.grid.elementsEqual([selfStream] + participantStreams))
+        XCTAssert(streamArrangement.preview == nil)
     }
 }
