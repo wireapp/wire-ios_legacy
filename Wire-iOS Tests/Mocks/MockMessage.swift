@@ -112,9 +112,9 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
     var parentMessage: ZMSystemMessageData?
-    var participantsRemovedReason: ParticipantsRemovedReason
+    var participantsRemovedReason: ZMParticipantsRemovedReason
 
-    init(systemMessageType: ZMSystemMessageType, reason: ParticipantsRemovedReason) {
+    init(systemMessageType: ZMSystemMessageType, reason: ZMParticipantsRemovedReason) {
         self.systemMessageType = systemMessageType
         self.participantsRemovedReason = reason
     }

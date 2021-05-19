@@ -22,7 +22,7 @@ import WireDataModel
 
 enum ConversationActionType {
 
-    case none, started(withName: String?), added(herself: Bool), removed(reason: ParticipantsRemovedReason), left, teamMemberLeave
+    case none, started(withName: String?), added(herself: Bool), removed(reason: ZMParticipantsRemovedReason), left, teamMemberLeave
 
     /// Some actions only involve the sender, others involve other users too.
     var involvesUsersOtherThanSender: Bool {

@@ -109,7 +109,7 @@ final class MockMessageFactory {
                                     conversation: Conversation? = nil,
                                     users numUsers: Int = 0,
                                     sender: UserType? = nil,
-                                    reason: ParticipantsRemovedReason = .none) -> (MockMessage?, MockSystemMessageData) {
+                                    reason: ZMParticipantsRemovedReason = .none) -> (MockMessage?, MockSystemMessageData) {
         let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType, reason: reason)
@@ -130,7 +130,7 @@ final class MockMessageFactory {
                              users numUsers: Int = 0,
                              clients numClients: Int = 0,
                              sender: UserType? = nil,
-                             reason: ParticipantsRemovedReason = .none) -> MockMessage? {
+                             reason: ZMParticipantsRemovedReason = .none) -> MockMessage? {
 
         let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType,
                                                                     conversation: conversation,
