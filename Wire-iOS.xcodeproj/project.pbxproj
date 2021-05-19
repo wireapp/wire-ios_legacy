@@ -451,6 +451,7 @@
 		6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */; };
 		6305206224FFEF9600ED295A /* OrientableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305206124FFEF9600ED295A /* OrientableView.swift */; };
 		6316C4062654209C00D7E806 /* CallParticipantViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */; };
+		6316C415265556C700D7E806 /* CallParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */; };
 		631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */; };
 		631ED088257558A400EFDD05 /* PulsingIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631ED087257558A400EFDD05 /* PulsingIconImageView.swift */; };
 		63256D8224D46456009FC58B /* BitRateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256D8124D46455009FC58B /* BitRateLabel.swift */; };
@@ -465,7 +466,6 @@
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
 		63421E3726149D7500ADA723 /* PinchToZoomRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63421E3626149D7500ADA723 /* PinchToZoomRule.swift */; };
 		63421E4B2614C25700ADA723 /* NotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63421E4A2614C25700ADA723 /* NotificationLabel.swift */; };
-		634273EB24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */; };
 		634497D924A492140000131D /* CallParticipantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497D824A492140000131D /* CallParticipantDetailView.swift */; };
 		634497DB24A49BF80000131D /* BaseCallParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497DA24A49BF70000131D /* BaseCallParticipantView.swift */; };
 		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
@@ -2121,7 +2121,7 @@
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
 		63421E3626149D7500ADA723 /* PinchToZoomRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchToZoomRule.swift; sourceTree = "<group>"; };
 		63421E4A2614C25700ADA723 /* NotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLabel.swift; sourceTree = "<group>"; };
-		634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoParticipantDetailsViewTests.swift; sourceTree = "<group>"; };
+		634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantDetailsViewTests.swift; sourceTree = "<group>"; };
 		634497D824A492140000131D /* CallParticipantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantDetailView.swift; sourceTree = "<group>"; };
 		634497DA24A49BF70000131D /* BaseCallParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCallParticipantView.swift; sourceTree = "<group>"; };
 		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
@@ -4368,7 +4368,7 @@
 				1658C19720A1E55200148F6D /* CallInfoRootViewControllerTests.swift */,
 				EF1CB6F622B3C430004CB458 /* CallInfoRootViewControllerSnapshotTests.swift */,
 				16A94AEC20934AA8008A5718 /* CallParticipantsListViewControllerTests.swift */,
-				634273EA24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift */,
+				634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */,
 				BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */,
 				634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */,
 				637387DA2649277A004FEF79 /* ScalableViewTests.swift */,
@@ -8698,6 +8698,7 @@
 				A9A3B1FE24D9B33B001AF38E /* WipeCompletionViewControllerTests.swift in Sources */,
 				EEBE8C5E1F68171F009D78C9 /* Data_ImageTypeTests.swift in Sources */,
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,
+				6316C415265556C700D7E806 /* CallParticipantDetailsViewTests.swift in Sources */,
 				068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */,
 				5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */,
 				EEEED9B223F6EA53008C94CA /* MockUserType+ZMEditableUser.swift in Sources */,
@@ -8932,7 +8933,6 @@
 				EF8DD90E211DE14300E970F1 /* MessagePresenterTests.swift in Sources */,
 				543F26CE2562AC330097F5EB /* CallControllerTests.swift in Sources */,
 				1661C74321A83B25003DCE1C /* ConversationAudioMessageCellTests.swift in Sources */,
-				634273EB24B60D4B00EC2976 /* VideoParticipantDetailsViewTests.swift in Sources */,
 				EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */,
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
