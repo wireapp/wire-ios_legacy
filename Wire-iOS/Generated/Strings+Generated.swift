@@ -1669,7 +1669,7 @@ internal enum L10n {
         internal static let cannotAdd = L10n.tr("Localizable", "error.conversation.cannot_add")
         /// Removing the participant failed
         internal static let cannotRemove = L10n.tr("Localizable", "error.conversation.cannot_remove")
-        /// You cannot invite a user with a lega hold device, because the conversation contains users that have not granted consent to being put under legal hold
+        /// You cannot invite a user with a legal hold device, because the conversation contains users that have not granted consent to being put under legal hold
         internal static let needsLegalholdConsent = L10n.tr("Localizable", "error.conversation.needs_legalhold_consent")
         /// There seems to be a problem with your Internet connection. Please make sure it’s working.
         internal static let offline = L10n.tr("Localizable", "error.conversation.offline")
