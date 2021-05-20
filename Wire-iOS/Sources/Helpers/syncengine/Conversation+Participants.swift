@@ -84,13 +84,19 @@ extension ZMConversation {
     }
 
     private func showAlertForAdding(for error: Error) {
+        typealias ConversationError = L10n.Localizable.Error.Conversation
+
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
-            showErrorAlert(message: "error.conversation.too_many_members".localized)
+            showErrorAlert(message: ConversationError.tooManyMembers)
         case NetworkError.offline:
-            showErrorAlert(message: "error.conversation.offline".localized)
+            showErrorAlert(message: ConversationError.offline)
+        case ConversationAddParticipantsError.conversationNeedsLegalHoldConsent:
+            showErrorAlert(message: ConversationError.needsLegalholdConsent)
+        case ConversationAddParticipantsError.participantNeedsLegalHoldConsent:
+            showErrorAlert(message: ConversationError.participantNeedsLegalholdConsent)
         default:
-            showErrorAlert(message: "error.conversation.cannot_add".localized)
+            showErrorAlert(message: ConversationError.cannotAdd)
         }
     }
 
