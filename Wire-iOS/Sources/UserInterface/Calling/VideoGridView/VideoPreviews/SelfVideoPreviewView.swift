@@ -67,9 +67,7 @@ final class SelfVideoPreviewView: BaseVideoPreviewView {
             shouldPulse: stream.activeSpeakerState.isSpeakingNow
         )
 
-        guard let name = stream.participantName else {
-            return
-        }
+        guard let name = stream.user?.name else { return }
         userDetailsView.name = name + "user_cell.title.you_suffix".localized
     }
 

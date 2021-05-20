@@ -104,15 +104,6 @@ class GridViewTests: XCTestCase {
     func testEightViews() {
         testGrid(withAmount: 8)
     }
-
-    func testTenViews() {
-        testGrid(withAmount: 10)
-    }
-
-    func testTwelveViews() {
-        testGrid(withAmount: 12)
-    }
-
 }
 
 extension GridViewTests: UICollectionViewDataSource {

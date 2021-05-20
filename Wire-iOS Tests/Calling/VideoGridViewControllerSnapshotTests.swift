@@ -55,7 +55,7 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
 
         let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
         selfVideoStream = stubProvider.videoStream(
-            participantName: "Alice",
+            user: MockUserType.createUser(name: "Alice"),
             client: client,
             activeSpeakerState: .active(audioLevelNow: 100)
         )
@@ -87,7 +87,10 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testActiveSpeakersIndicators_OneToOne() {
-        configuration.videoStreams = [stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100))]
+        configuration.videoStreams = [stubProvider.videoStream(
+            user: MockUserType.createUser(name: "Bob"),
+            activeSpeakerState: .active(audioLevelNow: 100)
+        )]
         configuration.floatingVideoStream = selfVideoStream
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
@@ -97,9 +100,12 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
 
     func testActiveSpeakersIndicators_Conference() {
         configuration.videoStreams = [
-            stubProvider.videoStream(participantName: "Alice", activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.videoStream(participantName: "Bob", activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.videoStream(participantName: "Carol", activeSpeakerState: .active(audioLevelNow: 100))
+            stubProvider.videoStream(user: MockUserType.createUser(name: "Alice"),
+                                     activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(user: MockUserType.createUser(name: "Bob"),
+                                     activeSpeakerState: .active(audioLevelNow: 100)),
+            stubProvider.videoStream(user: MockUserType.createUser(name: "Carol"),
+                                     activeSpeakerState: .active(audioLevelNow: 100))
         ]
         createSut()
 

@@ -108,9 +108,9 @@ extension VoiceChannel {
     func activeVideoStreams(from participants: [CallParticipant]) -> [VideoStream] {
         return participants.compactMap { participant in
             switch participant.state {
-            case .connected(let videoState, let microphoneState) where videoState != .stopped:
+            case .connected(let videoState, let microphoneState):
                 let stream = Stream(streamId: participant.streamId,
-                                    participantName: participant.user.name,
+                                    user: participant.user,
                                     microphoneState: microphoneState,
                                     videoState: videoState,
                                     activeSpeakerState: participant.activeSpeakerState)
@@ -127,14 +127,13 @@ extension VoiceChannel {
         guard
             let selfUser = ZMUser.selfUser(),
             let userId = selfUser.remoteIdentifier,
-            let clientId = selfUser.selfClient()?.remoteIdentifier,
-            let name = selfUser.name
+            let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
             return nil
         }
 
         let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
-                            participantName: name,
+                            user: selfUser,
                             microphoneState: .unmuted,
                             videoState: videoState,
                             activeSpeakerState: .inactive)

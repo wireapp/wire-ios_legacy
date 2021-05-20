@@ -30,6 +30,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
             updateUserDetails()
             updateActiveSpeakerFrame()
             updateVideoKind()
+            hideVideoViewsIfNeeded()
         }
     }
 
@@ -54,6 +55,8 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     let userDetailsView = VideoParticipantDetailsView()
     var scalableView: ScalableView?
+    var avatarView = UserImageView(size: .normal)
+    var userSession = ZMUserSession.shared()
     private(set) var videoView: AVSVideoViewProtocol?
 
     // MARK: - Private Properties
@@ -85,6 +88,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         updateUserDetails()
         updateActiveSpeakerFrame()
         updateVideoKind()
+        hideVideoViewsIfNeeded()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
     }
@@ -95,8 +99,9 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     }
 
     // MARK: - Setup
+
     func updateUserDetails() {
-        userDetailsView.name = stream.participantName
+        userDetailsView.name = stream.user?.name
         userDetailsView.microphoneIconStyle = MicrophoneIconStyle(state: stream.microphoneState, shouldPulse: stream.activeSpeakerState.isSpeakingNow)
         userDetailsView.alpha = userDetailsAlpha
     }
@@ -105,19 +110,40 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         layer.borderColor = UIColor.accent().cgColor
         layer.borderWidth = 0
         backgroundColor = .graphite
-        userDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        avatarView.user = stream.user
+        avatarView.userSession = userSession
+        userDetailsView.alpha = 0
+
+        addSubview(avatarView)
         addSubview(userDetailsView)
-        userDetailsView.alpha = 0.0
     }
 
     func createConstraints() {
+
+        [avatarView, userDetailsView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         detailsConstraints = UserDetailsConstraints(
             view: userDetailsView,
             superview: self,
             safeAreaInsets: adjustedInsets
         )
 
-        NSLayoutConstraint.activate([userDetailsView.heightAnchor.constraint(equalToConstant: 24)])
+        NSLayoutConstraint.activate([
+            userDetailsView.heightAnchor.constraint(equalToConstant: 24),
+            avatarView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            avatarView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            avatarView.widthAnchor.constraint(equalToConstant: 88),
+            avatarView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.7),
+            avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor)
+        ])
+    }
+
+    private func hideVideoViewsIfNeeded() {
+        guard let videoState = stream.videoState else { return }
+
+        scalableView?.isHidden = videoState == .stopped
     }
 
     // MARK: - Pinch To Zoom
@@ -209,7 +235,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
     // MARK: - Accessibility for automation
     override var accessibilityIdentifier: String? {
         get {
-            let name = stream.participantName ?? ""
+            let name = stream.user?.name ?? ""
             let maximizationState = isMaximized ? "maximized" : "minimized"
             let activityState = stream.isParticipantUnmutedAndActive ? "active" : "inactive"
             return "VideoView.\(name).\(maximizationState).\(activityState)"
