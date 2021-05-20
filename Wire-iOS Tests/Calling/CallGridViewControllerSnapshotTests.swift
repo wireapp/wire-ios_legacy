@@ -46,6 +46,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockCallGridViewControllerInput()
 
