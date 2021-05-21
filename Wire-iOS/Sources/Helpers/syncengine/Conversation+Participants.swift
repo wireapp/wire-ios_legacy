@@ -91,10 +91,8 @@ extension ZMConversation {
             showErrorAlert(message: ConversationError.tooManyMembers)
         case NetworkError.offline:
             showErrorAlert(message: ConversationError.offline)
-        case ConversationAddParticipantsError.conversationNeedsLegalHoldConsent:
-            showErrorAlert(message: ConversationError.needsLegalholdConsent)
-        case ConversationAddParticipantsError.participantNeedsLegalHoldConsent:
-            showErrorAlert(message: ConversationError.participantNeedsLegalholdConsent)
+        case ConversationAddParticipantsError.missingLegalholdConsent:
+            showErrorAlert(message: ConversationError.missingLegalholdConsent)
         default:
             showErrorAlert(message: ConversationError.cannotAdd)
         }
