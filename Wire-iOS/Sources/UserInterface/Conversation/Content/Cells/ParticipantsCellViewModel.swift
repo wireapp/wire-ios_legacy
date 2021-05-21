@@ -218,8 +218,8 @@ class ParticipantsCellViewModel {
         guard
             let sender = message.senderUser,
             let formatter = formatter(for: message)
-        else { return nil }
-        
+            else { return nil }
+
         let senderName = name(for: sender).capitalized
 
         if action.involvesUsersOtherThanSender {
