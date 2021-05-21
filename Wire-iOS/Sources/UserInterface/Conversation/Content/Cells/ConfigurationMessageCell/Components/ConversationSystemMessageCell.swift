@@ -337,10 +337,6 @@ final class ConversationSystemMessageCellDescription {
         case .readReceiptsEnabled,
              .readReceiptsDisabled,
              .readReceiptsOn:
-            guard let sender = message.senderUser else {
-                preconditionFailure("Invalid system message")
-            }
-
             let cell = ConversationReadReceiptSettingChangedCellDescription(sender: sender,
                                                                             systemMessageType: systemMessageData.systemMessageType)
             return [AnyConversationMessageCellDescription(cell)]
