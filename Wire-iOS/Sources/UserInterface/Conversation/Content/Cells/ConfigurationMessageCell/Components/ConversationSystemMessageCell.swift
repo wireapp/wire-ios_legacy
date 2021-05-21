@@ -268,6 +268,7 @@ final class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
+            let sender = message.senderUser,
             let conversation = message.conversationLike else {
             preconditionFailure("Invalid system message")
         }
@@ -277,8 +278,7 @@ final class ConversationSystemMessageCellDescription {
             break // Deprecated
 
         case .conversationNameChanged:
-            guard let newName = systemMessageData.text,
-                  let sender = message.senderUser else {
+            guard let newName = systemMessageData.text else {
                 fallthrough
             }
 
@@ -294,16 +294,11 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(callCell)]
 
         case .messageDeletedForEveryone:
-            guard let sender = message.senderUser else {
-                preconditionFailure("Invalid system message")
-            }
-
             let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
             return [AnyConversationMessageCellDescription(senderCell)]
 
         case .messageTimerUpdate:
-            guard let timer = systemMessageData.messageTimer,
-                  let sender = message.senderUser else {
+            guard let timer = systemMessageData.messageTimer else {
                 fallthrough
             }
 
@@ -315,18 +310,10 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(shieldCell)]
 
         case .sessionReset:
-            guard let sender = message.senderUser else {
-                preconditionFailure("Invalid system message")
-            }
-
             let sessionResetCell = ConversationSessionResetSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender)
             return [AnyConversationMessageCellDescription(sessionResetCell)]
 
         case .decryptionFailed, .decryptionFailedResolved, .decryptionFailed_RemoteIdentityChanged:
-            guard let sender = message.senderUser else {
-                preconditionFailure("Invalid system message")
-            }
-
             let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender)
             return [AnyConversationMessageCellDescription(decryptionCell)]
 

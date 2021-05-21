@@ -928,7 +928,7 @@ internal enum L10n {
               return L10n.tr("Localizable", "content.system.conversation.other.started", String(describing: p1), String(describing: p2))
             }
             internal enum Removed {
-              /// %@ was removed from this group, because there are users with Legal Hold.
+              /// %@ was removed from this conversation because legal hold has been activated.
               internal static func legalhold(_ p1: Any) -> String {
                 return L10n.tr("Localizable", "content.system.conversation.other.removed.legalhold", String(describing: p1))
               }
@@ -970,7 +970,7 @@ internal enum L10n {
               return L10n.tr("Localizable", "content.system.conversation.you.started", String(describing: p1), String(describing: p2))
             }
             internal enum Removed {
-              /// %@ were removed from this group, because there are users with Legal Hold.
+              /// %@ were removed from this conversation because legal hold has been activated.
               internal static func legalhold(_ p1: Any) -> String {
                 return L10n.tr("Localizable", "content.system.conversation.you.removed.legalhold", String(describing: p1))
               }
