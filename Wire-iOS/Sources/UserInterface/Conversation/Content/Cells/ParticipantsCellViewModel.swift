@@ -138,13 +138,9 @@ class ParticipantsCellViewModel {
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
     lazy var sortedUsers: [UserType] = {
-        guard let systemMessage = message.systemMessageData else { return [] }
-
-        guard let sender = message.senderUser else {
-            let users = Array(systemMessage.userTypes) as? [UserType] ?? []
-            return users.sorted { name(for: $0) < name(for: $1) }
-        }
+        guard let sender = message.senderUser else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
+        guard let systemMessage = message.systemMessageData else { return [] }
 
         let usersWithoutSender: Set<AnyHashable>
         if let hashableSender = sender as? AnyHashable {
@@ -197,7 +193,7 @@ class ParticipantsCellViewModel {
         if message.isUserSender(user) { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
-        if case .removed(reason: .legalHoldPolicyConflict) = action, sortedUsersWithoutSelf.count == 0 { return "started" }
+        //if case .removed(reason: .legalHoldPolicyConflict) = action, sortedUsersWithoutSelf.count == 0 { return "started" }
         return "accusative"
     }
 
@@ -219,12 +215,11 @@ class ParticipantsCellViewModel {
     }
 
     func attributedTitle() -> NSAttributedString? {
-        guard let formatter = formatter(for: message) else { return nil }
-
-        guard let sender = message.senderUser else {
-            return formatter.title(senderIsSelf: isSelfIncludedInUsers || sortedUsers.count > 1, names: nameList)
-        }
-
+        guard
+            let sender = message.senderUser,
+            let formatter = formatter(for: message)
+        else { return nil }
+        
         let senderName = name(for: sender).capitalized
 
         if action.involvesUsersOtherThanSender {
