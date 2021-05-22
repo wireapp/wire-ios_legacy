@@ -109,7 +109,8 @@ final class MockMessageFactory {
                                     conversation: Conversation? = nil,
                                     users numUsers: Int = 0,
                                     sender: UserType? = nil,
-                                    reason: ZMParticipantsRemovedReason = .none) -> (MockMessage?, MockSystemMessageData) {
+                                    reason: ZMParticipantsRemovedReason = .none,
+                                    isSelfIncludedInUsers: Bool = false) -> (MockMessage?, MockSystemMessageData) {
         let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType, reason: reason)
@@ -130,13 +131,15 @@ final class MockMessageFactory {
                              users numUsers: Int = 0,
                              clients numClients: Int = 0,
                              sender: UserType? = nil,
-                             reason: ZMParticipantsRemovedReason = .none) -> MockMessage? {
+                             reason: ZMParticipantsRemovedReason = .none,
+                             isSelfIncludedInUsers: Bool = false) -> MockMessage? {
 
         let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType,
                                                                     conversation: conversation,
                                                                     users: numUsers,
                                                                     sender: sender,
-                                                                    reason: reason)
+                                                                    reason: reason,
+                                                                    isSelfIncludedInUsers: isSelfIncludedInUsers)
 
         var userClients: [AnyHashable] = []
 

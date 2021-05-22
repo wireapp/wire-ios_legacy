@@ -137,22 +137,6 @@ final class ParticipantsStringFormatter {
         return [text, title].joined(separator: "\n".attributedString) && textColor && .lineSpacing(4)
     }
 
-    /// Title when the subject (sender) is nil.
-    func title(senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
-        let formatKey = message.actionType.formatKey
-        let nameSequence = format(names)
-
-        guard case .removed(reason: .legalHoldPolicyConflict) = message.actionType else { return nil }
-        var result = formatKey(senderIsSelf).localized(args: nameSequence.string) && font && textColor
-        result = result.adding(font: boldFont, to: nameSequence.string)
-        let moreInfo = NSAttributedString(string: L10n.Localizable.Call.Quality.Indicator.MoreInfo.Button.text,
-                                           attributes: [.font: font,
-                                                        .link: ConversationLegalHoldSystemMessageCell.legalHoldURL as AnyObject,
-                                                        .foregroundColor: UIColor.from(scheme: .textForeground)])
-
-        return result += " " + moreInfo
-    }
-
     /// Title when the subject (sender) is performing the action alone.
     func title(senderName: String, senderIsSelf: Bool) -> NSAttributedString? {
         switch message.actionType {
@@ -165,7 +149,7 @@ final class ParticipantsStringFormatter {
     }
 
     /// Title when the subject (sender) performing the action on objects (names).
-    func title(senderName: String, senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
+    func title(senderName: String, senderIsSelf: Bool, names: NameList, isSelfIncludedInUsers: Bool = false) -> NSAttributedString? {
         guard !names.names.isEmpty else { return nil }
 
         var result: NSAttributedString
@@ -174,7 +158,16 @@ final class ParticipantsStringFormatter {
 
         switch message.actionType {
         case .removed(reason: .legalHoldPolicyConflict):
-            return title(senderIsSelf: senderIsSelf, names: names)
+            let isSelfUserIncluded = isSelfIncludedInUsers || names.names.count > 1
+            result = formatKey(isSelfUserIncluded).localized(args: nameSequence.string) && font && textColor
+            result = result.adding(font: boldFont, to: nameSequence.string)
+            let moreInfo = NSAttributedString(string: L10n.Localizable.Call.Quality.Indicator.MoreInfo.Button.text,
+                                              attributes: [.font: font,
+                                                           .link: ConversationLegalHoldSystemMessageCell.legalHoldURL as AnyObject,
+                                                           .foregroundColor: UIColor.from(scheme: .textForeground)])
+
+            return result += " " + moreInfo
+
         case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }

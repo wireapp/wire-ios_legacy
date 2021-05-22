@@ -182,7 +182,13 @@ class ParticipantsCellViewModel {
     }
 
     private var nameList: NameList {
-        let userNames = shownUsers.map { self.name(for: $0) }
+        var userNames = shownUsers.map { self.name(for: $0) }
+        if case .removed(reason: .legalHoldPolicyConflict) = action,
+           isSelfIncludedInUsers,
+           !sortedUsersWithoutSelf.isEmpty {
+            userNames = [self.name(for: SelfUser.current)]
+        }
+
         return NameList(names: userNames, collapsed: collapsedUsers.count, selfIncluded: isSelfIncludedInUsers)
     }
 
@@ -193,7 +199,7 @@ class ParticipantsCellViewModel {
         if message.isUserSender(user) { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
-        //if case .removed(reason: .legalHoldPolicyConflict) = action, sortedUsersWithoutSelf.count == 0 { return "started" }
+        if case .removed(reason: .legalHoldPolicyConflict) = action, sortedUsersWithoutSelf.count == 0 { return "started" }
         return "accusative"
     }
 
@@ -223,7 +229,7 @@ class ParticipantsCellViewModel {
         let senderName = name(for: sender).capitalized
 
         if action.involvesUsersOtherThanSender {
-            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList, isSelfIncludedInUsers: isSelfIncludedInUsers)
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }
