@@ -32,8 +32,6 @@ protocol ProfileDetailsContentControllerDelegate: class {
     /// Called when the group role change.
     func profileGroupRoleDidChange(isAdminRole: Bool)
 
-    /// Called when the "Learn more link" is tapped
-    func profileDetailsDidTapLearnMore(_ contentController: NSObject)
 }
 
 /**

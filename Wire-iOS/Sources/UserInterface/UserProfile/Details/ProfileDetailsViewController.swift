@@ -192,8 +192,4 @@ extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate 
         tableView.reloadData()
     }
 
-    func profileDetailsDidTapLearnMore(_ contentController: NSObject) {
-        URL.wr_legalHoldLearnMore.openInApp(above: self)
-    }
-
 }
