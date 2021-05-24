@@ -137,7 +137,7 @@ final class ProfileActionsFactory {
 
         // Do not show any action if the user is blocked
         if user.isBlocked {
-            return [.block(isBlocked: true)]
+            return user.isMissingLegalholdConsent ? [] : [.block(isBlocked: true)]
         }
 
         var conversation: ZMConversation?

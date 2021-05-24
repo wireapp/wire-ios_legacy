@@ -97,6 +97,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         contentController.delegate = self
 
         IconToggleSubtitleCell.register(in: tableView)
+        BlockingReasonCell.register(in: tableView)
     }
 
     @available(*, unavailable)
@@ -189,6 +190,10 @@ extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate 
 
     func profileDetailsContentDidChange() {
         tableView.reloadData()
+    }
+
+    func profileDetailsDidTapLearnMore(_ contentController: NSObject) {
+        URL.wr_legalHoldLearnMore.openInApp(above: self)
     }
 
 }

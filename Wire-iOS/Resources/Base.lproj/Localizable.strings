@@ -875,6 +875,7 @@
 "profile.details.guest" = "Guest";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold.";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Display name";
