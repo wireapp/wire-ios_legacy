@@ -143,7 +143,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isBlocked: Bool = false
 
-    var consentsToLegalHoldExposure: Bool = false
+    var consentsToLegalHoldExposure: Bool = true
 
     var isIgnored: Bool = false
 
