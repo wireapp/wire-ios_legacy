@@ -218,5 +218,5 @@ private extension UserType {
   var canBeUnblocked: Bool {
     return consentsToLegalHoldExposure
   }
-    
+
 }
