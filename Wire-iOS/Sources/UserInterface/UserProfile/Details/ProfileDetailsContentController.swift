@@ -31,7 +31,6 @@ protocol ProfileDetailsContentControllerDelegate: class {
 
     /// Called when the group role change.
     func profileGroupRoleDidChange(isAdminRole: Bool)
-
 }
 
 /**

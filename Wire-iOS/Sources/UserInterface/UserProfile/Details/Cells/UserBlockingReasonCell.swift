@@ -62,7 +62,6 @@ final class UserBlockingReasonCell: UITableViewCell {
 
     private func configureLabel() {
         let markdownTitle = L10n.Localizable.Profile.Details.blockingReason(URL.wr_legalHoldLearnMore.absoluteString)
-
         titleLabel.attributedText = .markdown(from: markdownTitle,
                                               style: .labelStyle)
     }
