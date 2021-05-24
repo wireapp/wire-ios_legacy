@@ -180,6 +180,7 @@ final class SearchResultsViewController: UIViewController {
 
     deinit {
         searchDirectory?.tearDown()
+        NotificationCenter.default.removeObserver(self)
     }
 
     init(userSelection: UserSelection,
@@ -215,6 +216,8 @@ final class SearchResultsViewController: UIViewController {
         servicesSection.delegate = self
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showError), name: ZMConnectionLimitNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
@@ -230,6 +233,17 @@ final class SearchResultsViewController: UIViewController {
         super.viewWillAppear(animated)
         sectionController.collectionView?.reloadData()
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
+    }
+
+    @objc
+    func showError() {
+        typealias ConnectionError = L10n.Localizable.Error.Connection
+
+        let alertController = UIAlertController(title: "error.conversation.title".localized,
+                                                message: ConnectionError.missingLegalholdConsent,
+                                                alertAction: .ok(style: .cancel))
+
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
 
     override func viewDidLoad() {
