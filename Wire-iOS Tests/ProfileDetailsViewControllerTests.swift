@@ -1051,14 +1051,15 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     // MARK: - Blocking Connection
 
-    func test_Group_BlockingConnectionRequest_MissingLegalholdConsent() {
+    func test_Group_BlockingConnectionRequest_MissingLegalHoldConsent() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isConnected = false
         otherUser.readReceiptsEnabled = true
         otherUser.isGuestInConversation = true
         otherUser.richProfile = defaultRichProfile
-        otherUser.isMissingLegalholdConsent = true
+        otherUser.isBlocked = true
+        otherUser.consentsToLegalHoldExposure = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, otherUser]

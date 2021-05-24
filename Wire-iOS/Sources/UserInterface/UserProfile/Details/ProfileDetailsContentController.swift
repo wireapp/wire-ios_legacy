@@ -174,7 +174,7 @@ final class ProfileDetailsContentController: NSObject,
                 items.append(richProfile)
             }
 
-            if user.isMissingLegalholdConsent {
+            if user.isBlocked && !user.consentsToLegalHoldExposure {
                 items.append(.blockingReason)
             }
 
@@ -272,23 +272,9 @@ final class ProfileDetailsContentController: NSObject,
             fatalError("We do not create cells for the readReceiptsStatus section.")
 
         case .blockingReason:
-            let cell = tableView.dequeueReusableCell(withIdentifier: BlockingReasonCell.zm_reuseIdentifier, for: indexPath) as! BlockingReasonCell
-            cell.configure(with: blockingReason(), delegate: self)
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserBlockingReasonCell.zm_reuseIdentifier, for: indexPath) as! UserBlockingReasonCell
             return cell
         }
-    }
-
-    private func blockingReason() -> NSAttributedString {
-        let font = UIFont.systemFont(ofSize: 14)
-        let textColor = UIColor.from(scheme: .textForeground, variant: ColorScheme.default.variant)
-        let title: NSAttributedString = L10n.Localizable.Profile.Details.blockingReason && font && textColor
-        let learnMore = NSAttributedString(string: L10n.Localizable.LegalholdActive.Alert.learnMore,
-                                           attributes: [.font: font,
-                                                        .link: URL.wr_legalHoldLearnMore as AnyObject,
-                                                        .foregroundColor: UIColor.accent()])
-        let result = title + " " + learnMore
-        return result
-
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -342,14 +328,4 @@ final class ProfileDetailsContentController: NSObject,
         self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
         self.delegate?.profileDetailsContentDidChange()
     }
-}
-
-extension ProfileDetailsContentController: UITextViewDelegate {
-
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        delegate?.profileDetailsDidTapLearnMore(self)
-
-        return false
-    }
-
 }
