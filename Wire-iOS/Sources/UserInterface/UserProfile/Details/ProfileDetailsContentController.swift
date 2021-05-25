@@ -171,7 +171,7 @@ final class ProfileDetailsContentController: NSObject,
                 items.append(richProfile)
             }
 
-            if user.isBlocked && !user.consentsToLegalHoldExposure {
+            if user.isBlocked && user.blockStateReason == .blockedMissingLegalholdConsent {
                 items.append(.blockingReason)
             }
 

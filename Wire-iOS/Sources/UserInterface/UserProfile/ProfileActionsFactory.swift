@@ -216,7 +216,12 @@ final class ProfileActionsFactory {
 private extension UserType {
 
   var canBeUnblocked: Bool {
-    return consentsToLegalHoldExposure
+    switch blockStateReason {
+    case .blockedMissingLegalholdConsent:
+        return false
+    default:
+        return true
+    }
   }
 
 }

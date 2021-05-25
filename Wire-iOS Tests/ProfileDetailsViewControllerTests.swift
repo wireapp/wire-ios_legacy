@@ -1059,7 +1059,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.isGuestInConversation = true
         otherUser.richProfile = defaultRichProfile
         otherUser.isBlocked = true
-        otherUser.consentsToLegalHoldExposure = false
+        otherUser.blockStateReason = .blockedMissingLegalholdConsent
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, otherUser]
