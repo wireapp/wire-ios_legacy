@@ -108,10 +108,11 @@ final class MockMessageFactory {
     class func systemMessageAndData(with systemMessageType: ZMSystemMessageType,
                                     conversation: Conversation? = nil,
                                     users numUsers: Int = 0,
-                                    sender: UserType? = nil) -> (MockMessage?, MockSystemMessageData) {
+                                    sender: UserType? = nil,
+                                    reason: ZMParticipantsRemovedReason = .none) -> (MockMessage?, MockSystemMessageData) {
         let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
-        let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
+        let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType, reason: reason)
 
         message.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
 
@@ -128,11 +129,14 @@ final class MockMessageFactory {
                              conversation: Conversation? = nil,
                              users numUsers: Int = 0,
                              clients numClients: Int = 0,
-                             sender: UserType? = nil) -> MockMessage? {
+                             sender: UserType? = nil,
+                             reason: ZMParticipantsRemovedReason = .none) -> MockMessage? {
 
         let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType,
                                                                     conversation: conversation,
-                                                                    users: numUsers, sender: sender)
+                                                                    users: numUsers,
+                                                                    sender: sender,
+                                                                    reason: reason)
 
         var userClients: [AnyHashable] = []
 
