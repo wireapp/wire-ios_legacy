@@ -216,7 +216,7 @@ final class ProfileActionsFactory {
 private extension UserType {
 
   var canBeUnblocked: Bool {
-    switch blockStateReason {
+    switch blockState {
     case .blockedMissingLegalholdConsent:
         return false
     default:
