@@ -21,10 +21,10 @@ import WireSyncEngine
 struct CallGridConfiguration: CallGridViewControllerInput {
 
     fileprivate static let maxActiveSpeakers: Int = 4
-    fileprivate static let maxVideoStreams: Int = 8
+    fileprivate static let maxStreams: Int = 8
 
-    let floatingVideoStream: VideoStream?
-    let videoStreams: [VideoStream]
+    let floatingStream: Stream?
+    let streams: [Stream]
     let videoState: VideoState
     let networkQuality: NetworkQuality
     let shouldShowActiveSpeakerFrame: Bool
@@ -32,10 +32,10 @@ struct CallGridConfiguration: CallGridViewControllerInput {
     let callHasTwoParticipants: Bool
 
     init(voiceChannel: VoiceChannel) {
-        let videoStreamArrangment = voiceChannel.createVideoStreamArrangment()
+        let videoStreamArrangment = voiceChannel.createStreamArrangment()
 
-        floatingVideoStream = videoStreamArrangment.preview
-        videoStreams = videoStreamArrangment.grid
+        floatingStream = videoStreamArrangment.preview
+        streams = videoStreamArrangment.grid
         videoState = voiceChannel.videoState
         networkQuality = voiceChannel.networkQuality
         shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
@@ -52,27 +52,27 @@ extension CallParticipant {
 
 extension VoiceChannel {
 
-    // MARK: - Video Stream Arrangment
+    // MARK: - Stream Arrangment
 
-    typealias VideoStreamArrangment = (preview: VideoStream?, grid: [VideoStream])
+    typealias StreamArrangment = (preview: Stream?, grid: [Stream])
 
-    fileprivate func createVideoStreamArrangment() -> VideoStreamArrangment {
-        guard isEstablished else { return videoStreamArrangementForNonEstablishedCall }
+    fileprivate func createStreamArrangment() -> StreamArrangment {
+        guard isEstablished else { return streamArrangementForNonEstablishedCall }
 
         let participants = self.participants(forPresentationMode: videoGridPresentationMode)
 
-        let videoStreams = Array(activeVideoStreams(from: participants).prefix(CallGridConfiguration.maxVideoStreams))
+        let streams = Array(activeStreams(from: participants).prefix(CallGridConfiguration.maxStreams))
 
         let selfStream = self.selfStream(
-            from: videoStreams,
+            from: streams,
             createIfNeeded: videoGridPresentationMode.needsSelfStream
         )
 
-        return arrangeVideoStreams(for: selfStream, participantsStreams: videoStreams)
+        return arrangeStreams(for: selfStream, participantsStreams: streams)
     }
 
-    func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> VideoStreamArrangment {
-        let streamsExcludingSelf = participantsStreams.filter { $0.stream.streamId != selfStreamId }
+    func arrangeStreams(for selfStream: Stream?, participantsStreams: [Stream]) -> StreamArrangment {
+        let streamsExcludingSelf = participantsStreams.filter { $0.streamId != selfStreamId }
 
         guard let selfStream = selfStream else {
             return (nil, streamsExcludingSelf)
@@ -85,7 +85,7 @@ extension VoiceChannel {
         }
     }
 
-    private var videoStreamArrangementForNonEstablishedCall: VideoStreamArrangment {
+    private var streamArrangementForNonEstablishedCall: StreamArrangment {
         guard videoGridPresentationMode.needsSelfStream, let stream = createSelfStream() else {
             return (nil, [])
         }
@@ -105,16 +105,18 @@ extension VoiceChannel {
         return participants
     }
 
-    func activeVideoStreams(from participants: [CallParticipant]) -> [VideoStream] {
+    func activeStreams(from participants: [CallParticipant]) -> [Stream] {
         return participants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState):
-                let stream = Stream(streamId: participant.streamId,
-                                    user: participant.user,
-                                    microphoneState: microphoneState,
-                                    videoState: videoState,
-                                    activeSpeakerState: participant.activeSpeakerState)
-                return VideoStream(stream: stream, isPaused: videoState == .paused)
+                return Stream(
+                    streamId: participant.streamId,
+                    user: participant.user,
+                    microphoneState: microphoneState,
+                    videoState: videoState,
+                    activeSpeakerState: participant.activeSpeakerState,
+                    isPaused: videoState == .paused
+                )
             default:
                 return nil
             }
@@ -123,7 +125,7 @@ extension VoiceChannel {
 
     // MARK: - Self Stream
 
-    private func createSelfStream() -> VideoStream? {
+    private func createSelfStream() -> Stream? {
         guard
             let selfUser = ZMUser.selfUser(),
             let userId = selfUser.remoteIdentifier,
@@ -132,28 +134,32 @@ extension VoiceChannel {
             return nil
         }
 
-        let stream = Stream(streamId: AVSClient(userId: userId, clientId: clientId),
-                            user: selfUser,
-                            microphoneState: .unmuted,
-                            videoState: videoState,
-                            activeSpeakerState: .inactive)
-
+        var isPaused = false
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
-            return .init(stream: stream, isPaused: false)
+            isPaused = false
         case (_, .paused):
-            return .init(stream: stream, isPaused: true)
+            isPaused = true
         case (_, .stopped):
             return nil
         }
+
+        return Stream(
+            streamId: AVSClient(userId: userId, clientId: clientId),
+            user: selfUser,
+            microphoneState: .unmuted,
+            videoState: videoState,
+            activeSpeakerState: .inactive,
+            isPaused: isPaused
+        )
     }
 
     private var selfStreamId: AVSClient? {
         return ZMUser.selfUser()?.selfStreamId
     }
 
-    private func selfStream(from videoStreams: [VideoStream], createIfNeeded: Bool) -> VideoStream? {
-        guard let selfStream = videoStreams.first(where: { $0.stream.streamId == selfStreamId }) else {
+    private func selfStream(from streams: [Stream], createIfNeeded: Bool) -> Stream? {
+        guard let selfStream = streams.first(where: { $0.streamId == selfStreamId }) else {
             return createIfNeeded ? createSelfStream() : nil
         }
 

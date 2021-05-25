@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import DifferenceKit
 
 struct Stream: Equatable {
 
@@ -26,7 +27,17 @@ struct Stream: Equatable {
     let microphoneState: MicrophoneState?
     let videoState: VideoState?
     let activeSpeakerState: ActiveSpeakerState
+    let isPaused: Bool
 
+}
+
+extension Stream: Differentiable {
+    var differenceIdentifier: AVSClient {
+        return streamId
+    }
+}
+
+extension Stream {
     static func == (lhs: Stream, rhs: Stream) -> Bool {
         return lhs.streamId == rhs.streamId
             && lhs.microphoneState == rhs.microphoneState

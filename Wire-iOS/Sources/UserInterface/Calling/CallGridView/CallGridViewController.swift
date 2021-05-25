@@ -31,18 +31,18 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     // MARK: - Private Properties
 
-    private var videoStreams: [VideoStream] {
-        if let videoStream = configuration.videoStreams.first(where: { isMaximized(stream: $0.stream) }) {
-            return [videoStream]
+    private var streams: [Stream] {
+        if let stream = configuration.streams.first(where: { isMaximized(stream: $0) }) {
+            return [stream]
         }
-        return configuration.videoStreams
+        return configuration.streams
     }
 
     private var pinchToZoomRule: PinchToZoomRule {
         PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
     }
 
-    private var dataSource: [VideoStream] = []
+    private var dataSource: [Stream] = []
     private var maximizedView: BaseCallParticipantView?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
@@ -155,7 +155,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
         maximizedView = shouldMaximize ? view : nil
         view.isMaximized = shouldMaximize
-        updateGrid(with: videoStreams)
+        updateGrid(with: streams)
         updateHint(for: .maximizationChanged(maximized: shouldMaximize))
     }
 
@@ -187,7 +187,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         case .configurationChanged:
             guard
                 configuration.callHasTwoParticipants,
-                let stream = configuration.videoStreams.first?.stream
+                let stream = configuration.streams.first
             else { return }
 
             if stream.videoState == .some(.screenSharing) {
@@ -239,8 +239,8 @@ final class CallGridViewController: SpinnerCapableViewController {
 
         displaySpinnerIfNeeded()
         updateSelfCallParticipantView()
-        updateFloatingView(with: configuration.floatingVideoStream)
-        updateGrid(with: videoStreams)
+        updateFloatingView(with: configuration.floatingStream)
+        updateGrid(with: streams)
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
@@ -251,7 +251,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     private func displaySpinnerIfNeeded() {
         guard
             configuration.presentationMode == .activeSpeakers,
-            configuration.videoStreams.isEmpty
+            configuration.streams.isEmpty
         else {
             dismissSpinner?()
             return
@@ -283,15 +283,15 @@ final class CallGridViewController: SpinnerCapableViewController {
         }
     }
 
-    private func updateFloatingView(with state: VideoStream?) {
+    private func updateFloatingView(with stream: Stream?) {
         // No stream, remove floating video if there is any.
-        guard let state = state else {
+        guard let stream = stream else {
             Log.calling.debug("Removing self video from floating preview")
             return thumbnailViewController.removeCurrentThumbnailContentView()
         }
 
         // We only support the self preview in the floating overlay.
-        guard state.stream.streamId == ZMUser.selfUser()?.selfStreamId else {
+        guard stream.streamId == ZMUser.selfUser()?.selfStreamId else {
             return Log.calling.error("Invalid operation: Non self preview in overlay")
         }
 
@@ -302,8 +302,8 @@ final class CallGridViewController: SpinnerCapableViewController {
         }
     }
 
-    private func updateGrid(with newVideoStreams: [VideoStream]) {
-        let changeSet = StagedChangeset(source: dataSource, target: newVideoStreams)
+    private func updateGrid(with newStreams: [Stream]) {
+        let changeSet = StagedChangeset(source: dataSource, target: newStreams)
 
         UIView.performWithoutAnimation {
             gridView.reload(using: changeSet) { dataSource = $0 }
@@ -313,11 +313,11 @@ final class CallGridViewController: SpinnerCapableViewController {
         pruneCache()
     }
 
-    private func updateStates(with videoStreams: [VideoStream]) {
-        videoStreams.forEach {
-            let view = (streamView(for: $0.stream) as? CallParticipantView)
+    private func updateStates(with streams: [Stream]) {
+        streams.forEach {
+            let view = (cachedStreamView(for: $0) as? CallParticipantView)
 
-            view?.stream = $0.stream
+            view?.stream = $0
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
@@ -367,7 +367,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     // MARK: - Helpers
 
-    private func streamView(for stream: Stream) -> UIView? {
+    private func cachedStreamView(for stream: Stream) -> OrientableView? {
         return viewCache[stream.streamId]
     }
 
@@ -375,14 +375,14 @@ final class CallGridViewController: SpinnerCapableViewController {
         guard let indexPath = gridView.indexPathForItem(at: location) else {
             return nil
         }
-        return streamView(for: dataSource[indexPath.row].stream) as? BaseCallParticipantView
+        return cachedStreamView(for: dataSource[indexPath.row]) as? BaseCallParticipantView
     }
 
     private func stream(with streamId: AVSClient) -> Stream? {
-        var stream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })?.stream
+        var stream = configuration.streams.first(where: { $0.streamId == streamId })
 
-        if stream == nil && configuration.floatingVideoStream?.stream.streamId == streamId {
-            stream = configuration.floatingVideoStream?.stream
+        if stream == nil && configuration.floatingStream?.streamId == streamId {
+            stream = configuration.floatingStream
         }
 
         return stream
@@ -421,20 +421,20 @@ extension CallGridViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let videoStream = dataSource[indexPath.row]
-        cell.add(streamView: streamView(for: videoStream))
+        let stream = dataSource[indexPath.row]
+        cell.add(streamView: streamView(for: stream))
 
         return cell
     }
 
-    private func streamView(for videoStream: VideoStream) -> OrientableView {
-        let streamId = videoStream.stream.streamId
+    private func streamView(for stream: Stream) -> OrientableView {
+        let streamId = stream.streamId
 
-        if let streamView = viewCache[streamId] {
+        if let streamView = cachedStreamView(for: stream) {
             return streamView
         } else {
             let view = CallParticipantView(
-                stream: videoStream.stream,
+                stream: stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
                 pinchToZoomRule: pinchToZoomRule

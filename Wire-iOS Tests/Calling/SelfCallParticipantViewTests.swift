@@ -36,13 +36,13 @@ class MockAVSVideoPreview: AVSVideoPreview {
 
 class SelfCallParticipantViewTests: XCTestCase {
     var sut: SelfCallParticipantView!
-    var stubProvider = VideoStreamStubProvider()
+    var stubProvider = StreamStubProvider()
     var previewViewMock = MockAVSVideoPreview()
 
     override func setUp() {
         super.setUp()
 
-        let stream = stubProvider.videoStream().stream
+        let stream = stubProvider.stream()
         sut = SelfCallParticipantView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false, pinchToZoomRule: .enableWhenFitted)
         sut.previewView = previewViewMock
     }
@@ -112,7 +112,7 @@ class SelfCallParticipantViewTests: XCTestCase {
         previewViewMock.isCapturing = false
 
         // When
-        sut.stream = stubProvider.videoStream(videoState: .started).stream
+        sut.stream = stubProvider.stream(videoState: .started)
 
         // Then
         XCTAssertTrue(previewViewMock.isCapturing)
