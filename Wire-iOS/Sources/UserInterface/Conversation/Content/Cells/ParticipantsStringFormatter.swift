@@ -160,9 +160,11 @@ final class ParticipantsStringFormatter {
             typealias Conversation = L10n.Localizable.Content.System.Conversation
 
             // If there is selfUser in the list, we should only display selfUser
-            let isOneUser = isSelfIncludedInUsers || names.names.count == 1
-            let markdownTitle = isOneUser
+            let isSelfUserOrManyUsers = isSelfIncludedInUsers || names.names.count > 1
+            let markdownTitle = isSelfUserOrManyUsers
+                // i.e. "You (Bob, Alice,...) were removed from this conversation because legal hold has been activated."
                 ? Conversation.You.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
+                // i.e. "Bob was removed from this conversation because legal hold has been activated."
                 : Conversation.Other.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
             return .markdown(from: markdownTitle, style: .systemMessage)
 
