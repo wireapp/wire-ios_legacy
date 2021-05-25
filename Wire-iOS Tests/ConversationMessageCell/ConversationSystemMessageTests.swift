@@ -93,23 +93,23 @@ final class ConversationSystemMessageTests: XCTestCase {
         verify(message: message, allColorSchemes: true)
     }
 
-//    func testRemoveManyParticipants_LegalHoldPolicyConflict() {
-//        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 5, clients: 1, reason: .legalHoldPolicyConflict)!
-//        message.senderUser = SwiftMockLoader.mockUsers().last
-//
-//        verify(message: message, allColorSchemes: true)
-//    }
-
-    func testRemoveFiveParticipants_LegalHoldPolicyConflict() {
-        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 6, clients: 0, reason: .legalHoldPolicyConflict)!
+    func testRemoveManyParticipants_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 5, clients: 0, reason: .legalHoldPolicyConflict)!
         message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message, allColorSchemes: true)
     }
 
     func testRemoveSelfUserAndManyParticipants_LegalHoldPolicyConflict() {
-        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 5, clients: 0, reason: .legalHoldPolicyConflict, isSelfIncludedInUsers: true)!
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 0, clients: 0, reason: .legalHoldPolicyConflict, isSelfIncludedInUsers: true)!
         message.senderUser = SwiftMockLoader.mockUsers().last
+
+        let mockSelfUser = MockUserType.createSelfUser(name: "MMMAlice")
+        var newUserTypes = SwiftMockLoader.mockUsers()[0...4]
+            //Array(message.backingSystemMessageData.userTypes) as! [MockUserType]
+        newUserTypes.append(mockSelfUser)
+
+        message.backingSystemMessageData.userTypes = Set(newUserTypes[0...4])
 
         verify(message: message, allColorSchemes: true)
     }
