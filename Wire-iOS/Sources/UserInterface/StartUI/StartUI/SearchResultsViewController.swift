@@ -180,6 +180,7 @@ final class SearchResultsViewController: UIViewController {
 
     deinit {
         searchDirectory?.tearDown()
+        NotificationCenter.default.removeObserver(self)
     }
 
     init(userSelection: UserSelection,
@@ -215,6 +216,8 @@ final class SearchResultsViewController: UIViewController {
         servicesSection.delegate = self
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(UIAlertController.showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
