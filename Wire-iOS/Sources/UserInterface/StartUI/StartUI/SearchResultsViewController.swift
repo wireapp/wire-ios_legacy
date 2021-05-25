@@ -217,7 +217,7 @@ final class SearchResultsViewController: UIViewController {
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
 
-        NotificationCenter.default.addObserver(self, selector: #selector(showError), name: ZMConnectionLimitNotification.missingLegalHoldConsent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
@@ -236,7 +236,7 @@ final class SearchResultsViewController: UIViewController {
     }
 
     @objc
-    func showError() {
+    func showErrorAlertForConnectionRequest() {
         typealias ErrorString = L10n.Localizable.Error
 
         let alertController = UIAlertController(title: ErrorString.Conversation.title,
