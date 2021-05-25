@@ -17,29 +17,9 @@
 //
 
 import Foundation
-import UIKit
 
-enum VideoGridHintKind {
-    private typealias HintString = L10n.Localizable.Call.Grid.Hints
-
-    case fullscreen
-    case zoom
-    case goBackOrZoom
-
-    var message: String {
-        switch self {
-        case .fullscreen:
-            return HintString.fullscreen
-        case .zoom:
-            return HintString.zoom
-        case .goBackOrZoom:
-            return HintString.goBackOrZoom
-        }
-    }
-}
-
-class VideoGridHintNotificationLabel: NotificationLabel {
-    func show(hint: VideoGridHintKind) {
-        show(message: hint.message, hideAfter: 5)
-    }
+enum CallGridEvent {
+    case configurationChanged
+    case maximizationChanged(maximized: Bool)
+    case viewDidLoad
 }

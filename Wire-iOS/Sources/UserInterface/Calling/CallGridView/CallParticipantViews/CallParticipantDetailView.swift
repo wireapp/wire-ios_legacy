@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-final class VideoParticipantDetailsView: UIView {
+final class CallParticipantDetailsView: UIView {
     private let nameLabel = UILabel(
         key: nil,
         size: .medium,

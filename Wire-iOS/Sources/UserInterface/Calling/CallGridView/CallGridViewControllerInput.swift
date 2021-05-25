@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-protocol VideoGridConfiguration {
+protocol CallGridViewControllerInput {
 
     var floatingVideoStream: VideoStream? { get }
     var videoStreams: [VideoStream] { get }
@@ -31,18 +31,18 @@ protocol VideoGridConfiguration {
 
 }
 
-extension VideoGridConfiguration {
+extension CallGridViewControllerInput {
 
     var allStreamIds: Set<AVSClient> {
         let streamIds = (videoStreams + [floatingVideoStream]).compactMap { $0?.stream.streamId }
         return Set(streamIds)
     }
 
-    // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
+    // Workaround to make the protocol equatable, it might be possible to conform CallGridViewControllerInput
     // to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
-    // the `VideoGridViewController` generic to work around the `Self` requirement of
+    // the `CallGridViewController` generic to work around the `Self` requirement of
     // `Equatable` which we want to avoid.
-    func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
+    func isEqual(toConfiguration other: CallGridViewControllerInput) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
             networkQuality == other.networkQuality &&

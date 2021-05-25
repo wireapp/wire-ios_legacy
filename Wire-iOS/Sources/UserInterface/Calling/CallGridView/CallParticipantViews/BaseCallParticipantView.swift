@@ -21,7 +21,7 @@ import UIKit
 import avs
 import WireSyncEngine
 
-class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
+class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - Public Properties
 
@@ -53,7 +53,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
         return isMaximized ? false : videoKind.shouldFill
     }
 
-    let userDetailsView = VideoParticipantDetailsView()
+    let userDetailsView = CallParticipantDetailsView()
     var scalableView: ScalableView?
     var avatarView = UserImageView(size: .normal)
     var userSession = ZMUserSession.shared()
@@ -219,7 +219,7 @@ class BaseVideoPreviewView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - Visibility
     @objc private func updateUserDetailsVisibility(_ notification: Notification?) {
-        guard let isCovered = notification?.userInfo?[VideoGridViewController.isCoveredKey] as? Bool else {
+        guard let isCovered = notification?.userInfo?[CallGridViewController.isCoveredKey] as? Bool else {
             return
         }
         self.isCovered = isCovered

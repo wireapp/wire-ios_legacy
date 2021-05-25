@@ -103,8 +103,8 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
 
 }
 
-extension ShowAllParticipantsCell: CallParticipantsCellConfigurationConfigurable {
-    func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant,
+extension ShowAllParticipantsCell: CallParticipantsListCellConfigurable {
+    func configure(with configuration: CallParticipantsListCellConfiguration, variant: ColorSchemeVariant,
                    selfUser: UserType) {
         guard case let .showAll(totalCount: totalCount) = configuration else { preconditionFailure() }
 

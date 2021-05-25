@@ -34,8 +34,8 @@ class MockAVSVideoPreview: AVSVideoPreview {
     }
 }
 
-class SelfVideoPreviewViewTests: XCTestCase {
-    var sut: SelfVideoPreviewView!
+class SelfCallParticipantViewTests: XCTestCase {
+    var sut: SelfCallParticipantView!
     var stubProvider = VideoStreamStubProvider()
     var previewViewMock = MockAVSVideoPreview()
 
@@ -43,7 +43,7 @@ class SelfVideoPreviewViewTests: XCTestCase {
         super.setUp()
 
         let stream = stubProvider.videoStream().stream
-        sut = SelfVideoPreviewView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false, pinchToZoomRule: .enableWhenFitted)
+        sut = SelfCallParticipantView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false, pinchToZoomRule: .enableWhenFitted)
         sut.previewView = previewViewMock
     }
 

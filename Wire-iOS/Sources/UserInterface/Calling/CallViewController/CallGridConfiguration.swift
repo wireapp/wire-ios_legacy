@@ -18,7 +18,7 @@
 
 import WireSyncEngine
 
-struct VideoConfiguration: VideoGridConfiguration {
+struct CallGridConfiguration: CallGridViewControllerInput {
 
     fileprivate static let maxActiveSpeakers: Int = 4
     fileprivate static let maxVideoStreams: Int = 8
@@ -61,7 +61,7 @@ extension VoiceChannel {
 
         let participants = self.participants(forPresentationMode: videoGridPresentationMode)
 
-        let videoStreams = Array(activeVideoStreams(from: participants).prefix(VideoConfiguration.maxVideoStreams))
+        let videoStreams = Array(activeVideoStreams(from: participants).prefix(CallGridConfiguration.maxVideoStreams))
 
         let selfStream = self.selfStream(
             from: videoStreams,
@@ -95,7 +95,7 @@ extension VoiceChannel {
     func participants(forPresentationMode mode: VideoGridPresentationMode) -> [CallParticipant] {
         var participants = self.participants(
             ofKind: mode.callParticipantsListKind,
-            activeSpeakersLimit: VideoConfiguration.maxActiveSpeakers
+            activeSpeakersLimit: CallGridConfiguration.maxActiveSpeakers
         )
 
         if mode == .allVideoStreams {

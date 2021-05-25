@@ -21,7 +21,7 @@ import UIKit
 import avs
 import WireSyncEngine
 
-final class VideoPreviewView: BaseVideoPreviewView {
+final class CallParticipantView: BaseCallParticipantView {
 
     // MARK: - Public Properties
 
