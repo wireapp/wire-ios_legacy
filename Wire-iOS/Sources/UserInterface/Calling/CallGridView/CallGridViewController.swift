@@ -48,6 +48,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let hintView = CallGridHintNotificationLabel()
+    private let pageIndicator = RoundedPageIndicator()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
@@ -118,11 +119,15 @@ final class CallGridViewController: SpinnerCapableViewController {
         topStack.addArrangedSubview(networkConditionView)
         topStack.addArrangedSubview(hintView)
 
+        view.addSubview(pageIndicator)
+        pageIndicator.pageControl.numberOfPages = 5
+        pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
+
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     private func createConstraints() {
-        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView].forEach {
+        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView, pageIndicator].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -134,7 +139,9 @@ final class CallGridViewController: SpinnerCapableViewController {
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
-            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
+            pageIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 
