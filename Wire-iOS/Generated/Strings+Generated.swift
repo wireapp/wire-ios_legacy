@@ -1676,6 +1676,10 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "error.call.slow_connection.title")
         }
       }
+      internal enum Connection {
+        /// You cannot connect to this user due to legal hold.
+        internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.connection.missing_legalhold_consent")
+      }
       internal enum Conversation {
         /// Adding the participant failed
         internal static let cannotAdd = L10n.tr("Localizable", "error.conversation.cannot_add")
