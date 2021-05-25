@@ -27,8 +27,7 @@ private extension ConversationActionType {
         case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
         case .added(herself: true): return "content.system.conversation.guest.joined"
         case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
-        case .removed(reason: .legalHoldPolicyConflict): return (localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser) + ".legalhold")
-        case .removed(reason: .none): return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
         case .teamMemberLeave: return "content.system.conversation.team.member-leave"
@@ -158,15 +157,14 @@ final class ParticipantsStringFormatter {
 
         switch message.actionType {
         case .removed(reason: .legalHoldPolicyConflict):
-            let isSelfUserIncluded = isSelfIncludedInUsers || names.names.count > 1
-            result = formatKey(isSelfUserIncluded).localized(args: nameSequence.string) && font && textColor
-            result = result.adding(font: boldFont, to: nameSequence.string)
-            let moreInfo = NSAttributedString(string: L10n.Localizable.Call.Quality.Indicator.MoreInfo.Button.text,
-                                              attributes: [.font: font,
-                                                           .link: ConversationLegalHoldSystemMessageCell.legalHoldURL as AnyObject,
-                                                           .foregroundColor: UIColor.from(scheme: .textForeground)])
+            typealias Conversation = L10n.Localizable.Content.System.Conversation
 
-            return result += " " + moreInfo
+            // If there is selfUser in the list, we should only display selfUser
+            let isOneUser = isSelfIncludedInUsers || names.names.count == 1
+            let markdownTitle = isOneUser
+                ? Conversation.You.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
+                : Conversation.Other.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
+            return .markdown(from: markdownTitle, style: .systemMessage)
 
         case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor

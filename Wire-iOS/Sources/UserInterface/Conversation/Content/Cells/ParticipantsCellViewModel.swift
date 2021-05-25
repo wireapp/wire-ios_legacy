@@ -199,7 +199,10 @@ class ParticipantsCellViewModel {
         if message.isUserSender(user) { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
-        if case .removed(reason: .legalHoldPolicyConflict) = action, sortedUsersWithoutSelf.count == 0 { return "started" }
+
+        // If there is selfUser in the list, we should only display selfUser as "You"
+        if case .removed(reason: .legalHoldPolicyConflict) = action,
+           !sortedUsers.filter({ $0.isSelfUser }).isEmpty { return "started" }
         return "accusative"
     }
 
