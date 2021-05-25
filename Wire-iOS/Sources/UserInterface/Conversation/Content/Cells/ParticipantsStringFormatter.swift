@@ -27,7 +27,8 @@ private extension ConversationActionType {
         case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
         case .added(herself: true): return "content.system.conversation.guest.joined"
         case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
-        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .removed(reason: .legalHoldPolicyConflict): return (localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser) + ".legalhold")
+        case .removed(reason: .none): return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
         case .teamMemberLeave: return "content.system.conversation.team.member-leave"
@@ -161,12 +162,14 @@ final class ParticipantsStringFormatter {
 
             // If there is selfUser in the list, we should only display selfUser
             let isSelfUserOrManyUsers = isSelfIncludedInUsers || names.names.count > 1
-            let markdownTitle = isSelfUserOrManyUsers
-                // i.e. "You (Bob, Alice,...) were removed from this conversation because legal hold has been activated."
-                ? Conversation.You.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
-                // i.e. "Bob was removed from this conversation because legal hold has been activated."
-                : Conversation.Other.Removed.legalhold(nameSequence.string, URL.wr_legalHoldLearnMore.absoluteString)
-            return .markdown(from: markdownTitle, style: .systemMessage)
+
+            result = formatKey(isSelfUserOrManyUsers).localized(args: nameSequence.string) && font && textColor
+            result = result.adding(font: boldFont, to: nameSequence.string)
+            let learnMore = NSAttributedString(string: L10n.Localizable.Content.System.MessageLegalHold.learnMore.uppercased(),
+                                               attributes: [.font: font,
+                                                            .link: URL.wr_legalHoldLearnMore.absoluteString as AnyObject,
+                                                            .foregroundColor: UIColor.from(scheme: .textForeground)])
+            return result += " " + learnMore
 
         case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
