@@ -44,6 +44,10 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         return ColorScheme.default.statusBarStyle
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     init(conversation: GroupDetailsConversationType) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
@@ -60,6 +64,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                 }
             }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(UIAlertController.showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
