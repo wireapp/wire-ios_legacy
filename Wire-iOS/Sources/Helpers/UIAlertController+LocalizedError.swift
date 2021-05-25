@@ -30,3 +30,17 @@ extension UIAlertController {
     }
 
 }
+
+extension UIAlertController {
+
+    @objc
+    func showErrorAlertForConnectionRequest() {
+        typealias ErrorString = L10n.Localizable.Error
+
+        let alertController = UIAlertController(title: ErrorString.Conversation.title,
+                                                message: ErrorString.Connection.missingLegalholdConsent,
+                                                alertAction: .ok(style: .cancel))
+
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
+    }
+}
