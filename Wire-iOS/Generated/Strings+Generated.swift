@@ -2863,6 +2863,10 @@ internal enum L10n {
         internal static let blocked = L10n.tr("Localizable", "profile.connection_request_state.blocked")
       }
       internal enum Details {
+        /// This user is blocked due to legal hold. [LEARN MORE](%@)
+        internal static func blockingReason(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
+        }
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest
