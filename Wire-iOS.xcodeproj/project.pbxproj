@@ -452,6 +452,7 @@
 		6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */; };
 		6305206224FFEF9600ED295A /* OrientableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305206124FFEF9600ED295A /* OrientableView.swift */; };
 		6305E34B266530EC00A44933 /* RoundedBlurViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305E34A266530EC00A44933 /* RoundedBlurViewTests.swift */; };
+		6305E31D265D34BD00A44933 /* RoundedPageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */; };
 		6316C4062654209C00D7E806 /* CallParticipantViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */; };
 		6316C415265556C700D7E806 /* CallParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */; };
 		6316C42F2657F0CE00D7E806 /* RoundedBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316C42E2657F0CE00D7E806 /* RoundedBlurView.swift */; };
@@ -2111,6 +2112,7 @@
 		6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+DeviceOrientation.swift"; sourceTree = "<group>"; };
 		6305206124FFEF9600ED295A /* OrientableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientableView.swift; sourceTree = "<group>"; };
 		6305E34A266530EC00A44933 /* RoundedBlurViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlurViewTests.swift; sourceTree = "<group>"; };
+		6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageIndicator.swift; sourceTree = "<group>"; };
 		6316C42E2657F0CE00D7E806 /* RoundedBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlurView.swift; sourceTree = "<group>"; };
 		631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateExtending.swift; sourceTree = "<group>"; };
 		631ED087257558A400EFDD05 /* PulsingIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingIconImageView.swift; sourceTree = "<group>"; };
@@ -3558,6 +3560,7 @@
 				EE378E2F24BDE6210014118A /* CallGridViewControllerInput.swift */,
 				63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */,
 				63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */,
+				6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */,
 			);
 			path = CallGridView;
 			sourceTree = "<group>";
@@ -8527,6 +8530,7 @@
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
 				5EA952C722647B3100C83FDB /* IconButton.swift in Sources */,
 				A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */,
+				6305E31D265D34BD00A44933 /* RoundedPageIndicator.swift in Sources */,
 				EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */,
 				EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */,
 				5E8DA76C211B2EC200360979 /* AuthenticationEventResponderChain.swift in Sources */,
