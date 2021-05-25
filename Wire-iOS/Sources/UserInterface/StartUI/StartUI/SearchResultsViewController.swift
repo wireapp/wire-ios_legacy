@@ -237,10 +237,10 @@ final class SearchResultsViewController: UIViewController {
 
     @objc
     func showError() {
-        typealias ConnectionError = L10n.Localizable.Error.Connection
+        typealias ErrorString = L10n.Localizable.Error
 
-        let alertController = UIAlertController(title: "error.conversation.title".localized,
-                                                message: ConnectionError.missingLegalholdConsent,
+        let alertController = UIAlertController(title: ErrorString.Conversation.title,
+                                                message: ErrorString.Connection.missingLegalholdConsent,
                                                 alertAction: .ok(style: .cancel))
 
         UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
