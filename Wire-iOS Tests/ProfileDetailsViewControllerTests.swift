@@ -1051,7 +1051,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     // MARK: - Blocking Connection
 
-    func test_Group_BlockingConnectionRequest_MissingLegalHoldConsent() {
+    func test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isConnected = false
