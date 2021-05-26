@@ -160,10 +160,12 @@ final class ParticipantsStringFormatter {
         case .removed(reason: .legalHoldPolicyConflict):
             typealias Conversation = L10n.Localizable.Content.System.Conversation
 
-            // If there is selfUser in the list, we should only display selfUser
-            let isSelfUserOrManyUsers = isSelfIncludedInUsers || names.names.count > 1
-
-            result = formatKey(isSelfUserOrManyUsers).localized(args: nameSequence.string) && font && textColor
+            var senderPath = names.names.count > 1 ? "others" : "other"
+            if isSelfIncludedInUsers {
+                senderPath = "you"
+            }
+            let formatString = "content.system.conversation.\(senderPath).removed.legalhold"
+            result = formatString.localized(args: nameSequence.string) && font && textColor
             result = result.adding(font: boldFont, to: nameSequence.string)
             let learnMore = NSAttributedString(string: L10n.Localizable.Content.System.MessageLegalHold.learnMore.uppercased(),
                                                attributes: [.font: font,

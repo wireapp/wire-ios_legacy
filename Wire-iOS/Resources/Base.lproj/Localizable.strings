@@ -445,6 +445,7 @@
 "content.system.conversation.other.added" = "%@ added %@";
 "content.system.conversation.other.removed" = "%@ removed %@";
 "content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ left";
 
 "content.system.conversation.you.started" = "%@ started a conversation with %@";

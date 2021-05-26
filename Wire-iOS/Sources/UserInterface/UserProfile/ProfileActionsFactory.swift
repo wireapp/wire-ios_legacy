@@ -213,7 +213,7 @@ final class ProfileActionsFactory {
 
 }
 
-private extension UserType {
+extension UserType {
 
   var canBeUnblocked: Bool {
     switch blockState {

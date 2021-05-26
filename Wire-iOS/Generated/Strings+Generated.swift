@@ -934,6 +934,14 @@ internal enum L10n {
               }
             }
           }
+          internal enum Others {
+            internal enum Removed {
+              /// %@ were removed from this conversation because legal hold has been activated.
+              internal static func legalhold(_ p1: Any) -> String {
+                return L10n.tr("Localizable", "content.system.conversation.others.removed.legalhold", String(describing: p1))
+              }
+            }
+          }
           internal enum Team {
             /// %@ was removed from the team.
             internal static func memberLeave(_ p1: Any) -> String {

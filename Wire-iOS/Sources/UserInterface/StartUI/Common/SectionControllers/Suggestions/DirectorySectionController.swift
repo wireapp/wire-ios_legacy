@@ -58,7 +58,7 @@ final class DirectorySectionController: SearchSectionController {
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
-        cell.connectButton.isHidden = false
+        cell.connectButton.isHidden = !user.canBeUnblocked
         cell.connectButton.tag = indexPath.row
         cell.connectButton.addTarget(self, action: #selector(connect(_:)), for: .touchUpInside)
 
