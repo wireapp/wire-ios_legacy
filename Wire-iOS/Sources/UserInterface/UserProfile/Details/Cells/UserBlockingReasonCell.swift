@@ -57,7 +57,12 @@ final class UserBlockingReasonCell: UITableViewCell {
     }
 
     private func createConstraints() {
-        titleLabel.fitInSuperview(with: .init(top: 8, leading: 16, bottom: 8, trailing: 16))
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ])
     }
 
     private func configureLabel() {
