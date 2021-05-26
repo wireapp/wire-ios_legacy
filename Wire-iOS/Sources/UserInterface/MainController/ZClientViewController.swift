@@ -675,6 +675,10 @@ final class ZClientViewController: UIViewController {
                 animated: Bool,
                 completion: Completion? = nil) {
         dismissAllModalControllers(callback: { [weak self] in
+            guard !conversation.isDeleted,
+                  let _ = conversation.managedObjectContext else {
+                return
+            }
             self?.conversationListViewController.viewModel.select(conversation: conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }

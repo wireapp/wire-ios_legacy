@@ -85,6 +85,9 @@ final class ConversationListContentController: UICollectionViewController, Popov
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.activeMediaPlayerChanged()
         }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConversationRequest), name: ZMConversation.missingLegalHoldConsentNotificationName, object: nil)
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,6 +97,12 @@ final class ConversationListContentController: UICollectionViewController, Popov
             NotificationCenter.default.removeObserver(token)
             self.token = nil
         }
+    }
+
+    @objc
+    func showErrorAlertForConversationRequest() {
+        typealias ErrorString = L10n.Localizable.Error
+        UIAlertController.showErrorAlert(message: ErrorString.Conversation.missingLegalholdConsent)
     }
 
     private func activeMediaPlayerChanged() {

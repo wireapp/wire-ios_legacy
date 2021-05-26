@@ -64,12 +64,18 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                 }
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(UIAlertController.showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc
+    func showErrorAlertForConnectionRequest() {
+        typealias ErrorString = L10n.Localizable.Error
+        UIAlertController.showErrorAlert(message: ErrorString.Connection.missingLegalholdConsent)
     }
 
     func createSubviews() {
