@@ -39,6 +39,10 @@ final class ConversationListContentController: UICollectionViewController, Popov
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
     private var token: NSObjectProtocol?
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     init() {
         let flowLayout = BoundsAwareFlowLayout()
         flowLayout.minimumLineSpacing = 0
@@ -48,6 +52,8 @@ final class ConversationListContentController: UICollectionViewController, Popov
         super.init(collectionViewLayout: flowLayout)
 
         registerSectionHeader()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConversationRequest), name: ZMConversation.missingLegalHoldConsentNotificationName, object: nil)
     }
 
     @available(*, unavailable)
@@ -94,6 +100,11 @@ final class ConversationListContentController: UICollectionViewController, Popov
             NotificationCenter.default.removeObserver(token)
             self.token = nil
         }
+    }
+
+    @objc
+    func showErrorAlertForConversationRequest() {
+        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Conversation.missingLegalholdConsent)
     }
 
     private func activeMediaPlayerChanged() {
