@@ -32,12 +32,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     let groupSelector: SearchGroupSelector = SearchGroupSelector(style: .dark)
 
-    let searchResultsViewController: SearchResultsViewController = {
-        let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
-        viewController.mode = .list
-
-        return viewController
-    }()
+    let searchResultsViewController: SearchResultsViewController
 
     var addressBookUploadLogicHandled = false
 
@@ -46,6 +41,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     var addressBookHelper: AddressBookHelperProtocol {
         return addressBookHelperType.sharedHelper
     }
+
+    let isFederationEnabled: Bool
 
     let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
 
@@ -60,8 +57,14 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
-    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
+         isFederationEnabled: Bool = Settings.shared[.federationEnabled] == true) {
+        self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
+        self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
+                                                                       isAddingParticipants: false,
+                                                                       shouldIncludeGuests: true,
+                                                                       isFederationEnabled: isFederationEnabled)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -107,7 +110,9 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     func setupViews() {
         configGroupSelector()
-        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: .dark,
+                                                 isSelfUserAdmin: selfUser.canManageTeam,
+                                                 isFederationEnabled: isFederationEnabled)
 
         emptyResultView.delegate = self
 

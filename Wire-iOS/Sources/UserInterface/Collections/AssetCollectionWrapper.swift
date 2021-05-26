@@ -55,27 +55,27 @@ extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
 }
 
 final class AssetCollectionWrapper: NSObject {
-    let conversation: ZMConversation
+    let conversation: ConversationLike
     let assetCollection: ZMCollection
     let assetCollectionDelegate: AssetCollectionMulticastDelegate
     let matchingCategories: [CategoryMatch]
 
-    init(conversation: ZMConversation, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate, matchingCategories: [CategoryMatch]) {
+    init(conversation: ConversationLike, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate, matchingCategories: [CategoryMatch]) {
         self.conversation = conversation
         self.assetCollection = assetCollection
         self.assetCollectionDelegate = assetCollectionDelegate
         self.matchingCategories = matchingCategories
     }
 
-    convenience init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
+    convenience init(conversation: ConversationLike,
+                     matchingCategories: [CategoryMatch]) {
         let assetCollection: ZMCollection
         let delegate = AssetCollectionMulticastDelegate()
 
         let enableBatchCollections: Bool? = Settings.shared[.enableBatchCollections]
         if enableBatchCollections == true {
             assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
-        }
-        else {
+        } else {
             assetCollection = AssetCollection(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
         }
         self.init(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: matchingCategories)

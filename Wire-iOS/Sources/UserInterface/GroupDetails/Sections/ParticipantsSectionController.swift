@@ -61,12 +61,22 @@ private struct ParticipantsSectionViewModel {
 
     let showSectionCount: Bool
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
+
     var sectionTitle: String? {
-        switch conversationRole {
-        case .member:
-            return showSectionCount ? ("group_details.conversation_members_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count)) : "group_details.conversation_members_header.title".localized.localizedUppercase
-        case .admin:
-            return showSectionCount ? ("group_details.conversation_admins_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count)) : "group_details.conversation_admins_header.title".localized.localizedUppercase
+        typealias GroupDetails = L10n.Localizable.GroupDetails
+
+        switch (conversationRole, showSectionCount) {
+        case (.member, true):
+            return GroupDetails.ConversationMembersHeader.title.localizedUppercase + " (%d)".localized(args: participants.count)
+
+        case (.member, false):
+            return GroupDetails.ConversationMembersHeader.title.localizedUppercase
+
+        case (.admin, true):
+            return GroupDetails.ConversationAdminsHeader.title.localizedUppercase + " (%d)".localized(args: participants.count)
+
+        case (.admin, false):
+            return GroupDetails.ConversationAdminsHeader.title.localizedUppercase
         }
     }
 
@@ -201,22 +211,34 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
 
     // MARK: - Footer
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
 
-        guard viewModel.footerVisible,
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
+        guard
+            viewModel.footerVisible,
+            let footer = collectionView.dequeueFooter(for: IndexPath(item: 0, section: section)) as? SectionFooter
+        else {
+            return .zero
+        }
 
         footer.titleLabel.text = viewModel.footerTitle
-
         footer.size(fittingWidth: collectionView.bounds.width)
+
         return footer.bounds.size
     }
 
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionFooter else { return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
 
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
+        guard kind == UICollectionView.elementKindSectionFooter else {
+            return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+        }
+
+        let view = collectionView.dequeueFooter(for: indexPath)
         (view as? SectionFooter)?.titleLabel.text = viewModel.footerTitle
+
         return view
     }
 
@@ -245,6 +267,16 @@ extension ParticipantsSectionController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged || changeInfo.nameChanged else { return }
         collectionView?.reloadData()
+    }
+
+}
+
+private extension UICollectionView {
+
+    func dequeueFooter(for indexPath: IndexPath) -> UICollectionReusableView {
+        dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                         withReuseIdentifier: "SectionFooter",
+                                         for: indexPath)
     }
 
 }

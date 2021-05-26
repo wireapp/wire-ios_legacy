@@ -23,34 +23,39 @@ extension Notification.Name {
 }
 
 // MARK: - URLActionRouterDelegete
-protocol URLActionRouterDelegete: class {
+protocol URLActionRouterDelegate: class {
+
     func urlActionRouterWillShowCompanyLoginError()
+    func urlActionRouterCanDisplayAlerts() -> Bool
+
 }
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink(needsAuthentication: Bool)
     func open(url: URL) -> Bool
 }
+
+// MARK: - Logging
+private let zmLog = ZMSLog(tag: "UI")
 
 // MARK: - URLActionRouter
 class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    weak var delegate: URLActionRouterDelegete?
+    weak var delegate: URLActionRouterDelegate?
+    weak var authenticatedRouter: AuthenticatedRouterProtocol?
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private var url: URL?
+    private var pendingDestination: NavigationDestination?
+    private var pendingAlert: UIAlertController?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
-                sessionManager: SessionManager? = nil,
-                url: URL? = nil) {
+                sessionManager: SessionManager? = nil) {
         self.rootViewController = viewController
         self.sessionManager = sessionManager
-        self.url = url
     }
 
     // MARK: - Public Implementation
@@ -74,21 +79,51 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink(needsAuthentication: Bool = false) {
-        do {
-            guard let deeplink = url else { return }
-            guard let action = try URLAction(url: deeplink) else { return }
-            guard action.requiresAuthentication == needsAuthentication else { return }
-            open(url: deeplink)
-            resetDeepLinkURL()
-        } catch {
-            print("Cuold not open deepLink for url: \(String(describing: url?.absoluteString))")
-        }
+    func performPendingActions() {
+        performPendingNavigation()
+        presentPendingAlert()
     }
 
     // MARK: - Private Implementation
-    private func resetDeepLinkURL() {
-        url = nil
+
+    func performPendingNavigation() {
+        guard let destination = pendingDestination else {
+            return
+        }
+
+        pendingDestination = nil
+        navigate(to: destination)
+    }
+
+    func navigate(to destination: NavigationDestination) {
+        guard authenticatedRouter != nil else {
+            pendingDestination = destination
+            return
+        }
+
+        authenticatedRouter?.navigate(to: destination)
+    }
+
+    func presentPendingAlert() {
+        guard let alert = pendingAlert else {
+            return
+        }
+
+        pendingAlert = nil
+        presentAlert(alert)
+    }
+
+    func presentAlert(_ alert: UIAlertController) {
+        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
+            pendingAlert = alert
+            return
+        }
+
+        internalPresentAlert(alert)
+    }
+
+    func internalPresentAlert(_ alert: UIAlertController) {
+        rootViewController.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -118,31 +153,19 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConnectionRequest(userId: userId)
+        navigate(to: .connectionRequest(userId))
     }
 
     func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showUserProfile(user: user)
+        navigate(to: .userProfile(user))
     }
 
     func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversation(conversation, at: message)
+        navigate(to: .conversation(conversation, message))
     }
 
     func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversationList()
+        navigate(to: .conversationList)
     }
 
     // MARK: - Private Implementation
@@ -169,7 +192,7 @@ extension URLActionRouter: PresentationDelegate {
 
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func presentCustomBackendAlert(with configurationURL: URL) {
@@ -186,7 +209,7 @@ extension URLActionRouter: PresentationDelegate {
         let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func switchBackend(with configurationURL: URL) {
@@ -208,6 +231,6 @@ extension URLActionRouter: PresentationDelegate {
         let alertMessage = error.failureReason ?? "error.user.unkown_error".localized
         let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
                                                                   message: alertMessage)
-        rootViewController.present(alertController, animated: true)
+        presentAlert(alertController)
     }
 }

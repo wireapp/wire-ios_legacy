@@ -34,8 +34,8 @@ protocol ConversationOptionsViewModelConfiguration: class {
 protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRevokingLink completion: @escaping (Bool) -> Void)
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
@@ -98,9 +98,9 @@ final class ConversationOptionsViewModel {
 
     private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
-                get: { [unowned self] in return self.configuration.allowGuests },
-                set: { [unowned self] in self.setAllowGuests($0) }
-            )]
+            get: { [unowned self] in return self.configuration.allowGuests },
+            set: { [unowned self] in self.setAllowGuests($0, view: $1) }
+        )]
 
         if configuration.allowGuests {
             rows.append(.linkHeader)
@@ -124,8 +124,11 @@ final class ConversationOptionsViewModel {
         return rows
     }
 
-    private func revokeLink() {
-        delegate?.viewModel(self, confirmRevokingLink: { [weak self] revoke in
+    /// revoke a conversation link
+    ///
+    /// - Parameter view: the source view which triggers revokeLink action
+    private func revokeLink(view: UIView? = nil) {
+        delegate?.viewModel(self, sourceView: view, confirmRevokingLink: { [weak self] revoke in
             guard let `self` = self else { return }
             guard revoke else { return self.updateRows() }
 
@@ -199,7 +202,12 @@ final class ConversationOptionsViewModel {
         }
     }
 
-    @discardableResult func setAllowGuests(_ allowGuests: Bool) -> UIAlertController? {
+    /// set conversation option AllowGuestsAndServices
+    /// - Parameters:
+    ///   - allowGuests: new state AllowGuestsAndServices
+    ///   - view: the source view which triggers setAllowGuests action
+    /// - Returns: alert controller
+    @discardableResult func setAllowGuests(_ allowGuests: Bool, view: UIView? = nil) -> UIAlertController? {
         func _setAllowGuests() {
             let item = CancelableItem(delay: 0.4) { [weak self] in
                 self?.state.isLoading = true
@@ -227,7 +235,7 @@ final class ConversationOptionsViewModel {
         // to confirm this action as all guests will be removed.
         if !allowGuests && configuration.areGuestOrServicePresent {
             // Make "remove guests and services" warning only appear if guests or services are present
-            return delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
+            return delegate?.viewModel(self, sourceView: view, confirmRemovingGuests: { [weak self] remove in
                 guard let `self` = self else { return }
                 guard remove else { return self.updateRows() }
                 self.link = nil

@@ -25,7 +25,13 @@ import WireTransport
  * The view controller to use to ask the user to enter their credentials.
  */
 
-final class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
+final class AuthenticationCredentialsViewController: AuthenticationStepController,
+                                                     CountryCodeTableViewControllerDelegate,
+                                                     EmailPasswordTextFieldDelegate,
+                                                     PhoneNumberInputViewDelegate,
+                                                     TabBarDelegate,
+                                                     TextFieldValidationDelegate,
+                                                     UITextFieldDelegate {
 
     /// Types of flow provided by the view controller.
     enum FlowType {

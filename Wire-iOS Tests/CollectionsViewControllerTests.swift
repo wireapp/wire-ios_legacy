@@ -51,6 +51,8 @@ final class CollectionsViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        accentColor = .vividRed
+
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()

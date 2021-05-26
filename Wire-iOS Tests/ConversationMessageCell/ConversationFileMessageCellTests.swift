@@ -147,7 +147,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    func testDownloadedCell_fromOtherUser() {
+    func disable_testDownloadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded

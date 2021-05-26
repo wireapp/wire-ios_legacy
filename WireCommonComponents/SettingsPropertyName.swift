@@ -77,6 +77,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
+    case federationEnabled = "federationEnabled"
 
     case lockApp = "lockApp"
 
@@ -86,6 +87,10 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
+    }
+
+    public var notificationName: Notification.Name {
+        return Notification.Name(changeNotificationName)
     }
     
     public var description: String {

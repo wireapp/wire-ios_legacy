@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contactos";
 "peoplepicker.header.contacts_personal" = "Contactos personales";
 "peoplepicker.header.directory" = "Conectar";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Añadir Participantes";
 "peoplepicker.group.title.plural" = "Añadir Participantes (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "No hay contactos.";
 
-"peoplepicker.no_matching_results_title" = "Sin resultados.";
-"peoplepicker.no_matching_results_message" = "Introduce un email.";
 "peoplepicker.no_search_results" = "No se han encontrado resultados. Intente introducir un nombre diferente.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Enviar una invitación";
 "peoplepicker.no_matching_results.action.share_contacts" = "Compartir contactos";
+"peoplepicker.no_matching_results.action.learn_more" = "Más información";
+"peoplepicker.no_matching_results.action.manage_services" = "Gestionar los servicios";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Por favor, introduce una dirección de email válida";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No hay resultados.";
-"peoplepicker.no_matching_results_services_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo. Para activarlos, póngase en contacto con el administrador.";
-"peoplepicker.no_matching_results_services_admin_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Gestionar los servicios";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Introduce un email completo o";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "compartir contactos";
-
-"peoplepicker.share_contacts.no_results.title" = "Encuentra usuarios por su nombre o email";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "No hay resultados.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitación enviada";
 "peoplepicker.send_invitation.dialog.message" = "Puede aceptarse hasta pasadas 2 semanas. Envía una nueva si ésta caduca.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Crear una sala de invitados";
 "peoplepicker.quick-action.admin-services" = "Gestionar los servicios";
 
-"add_participants.all_contacts_added" = "Todos están aquí.";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "Grupo completo";
 "add_participants.alert.message.new_conversation" = "Hasta %d personas pueden unirse a una conversación.";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Insertar salto de línea";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar el último mensaje";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
 "conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Este mensaje ha sido eliminado";
 
-"conversation.guests_present" = "Invitados presentes";
-"conversation.services_present" = "Servicios activos";
-"conversation.guests_services_present" = "Hay invitados y servicios activos";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Buscar";
 
 // Reply message preview
@@ -678,10 +683,13 @@
 "call.overlay.switch_to.speakers" = "SPEAKERS";
 "call.overlay.switch_to.all" = "ALL";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pausado";
-
 "call.video.too_many.alert.title" = "Demasiadas personas para Vídeo";
 "call.video.too_many.alert.message" = "Las videollamadas sólo funcionan en grupos de 4 personas o menos.";
 
@@ -1626,6 +1634,14 @@
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Ve a Ajustes";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Continuar";
+
 // Third Party
 "giphy.conversation.message" = "%@ · vía giphy.com";
 "giphy.conversation.random_message" = "vía giphy.com";
@@ -1788,6 +1804,9 @@
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
 
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
+
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
 "button_message_cell.state.selected" = "selected";
@@ -1853,5 +1872,5 @@
 "appLockModule.message.touchID" = "Desbloquea Wire con Touch ID o el código";
 "appLockModule.message.passcode" = "Desbloquear Wire con Passcode";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear Wire, habilite el uso de Passcode en la configuracion del dispositivo";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

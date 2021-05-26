@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Contacts personnels";
 "peoplepicker.header.directory" = "Se connecter";
+"peoplepicker.header.federation" = "Se connecter à un autre domaine";
 
 "peoplepicker.group.title.singular" = "Ajouter des Participants";
 "peoplepicker.group.title.plural" = "Ajouter des Participants (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Aucun contact.";
 
-"peoplepicker.no_matching_results_title" = "Aucun résultat.";
-"peoplepicker.no_matching_results_message" = "Veuillez saisir une adresse e-mail complète.";
 "peoplepicker.no_search_results" = "Aucun résultat. Essayez avec un nom différent.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Envoyer une invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Partager vos contacts";
+"peoplepicker.no_matching_results.action.learn_more" = "En savoir plus";
+"peoplepicker.no_matching_results.action.manage_services" = "Gérer les Services";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Veuillez saisir une adresse e-mail valide";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Aucun résultat.";
-"peoplepicker.no_matching_results_services_title" = "Les services sont des programmes qui peuvent améliorer votre flux de travail. Pour les activer, contactez votre administrateur.";
-"peoplepicker.no_matching_results_services_admin_title" = "Les services sont des programmes qui peuvent améliorer votre flux de travail.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Gérer les Services";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Veuillez saisir une adresse e-mail complète ou";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "partagez vos contacts";
-
-"peoplepicker.share_contacts.no_results.title" = "Trouvez des contacts grâce à leur nom ou à leur adresse e-mail";
+"peoplepicker.no_matching_results.message.users" = "Trouver des contacts sur Wire par nom ou par @identifiant";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Trouvez des contacts sur Wire par nom ou par @identifiant\n\nTrouvez des contacts sur un autre domaine par @identifiant@nomdedomaine";
+"peoplepicker.no_matching_results.message.users_all_added" = "Tout le monde est là.";
+"peoplepicker.no_matching_results.message.services" = "Aucun résultat.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Les services sont des programmes qui peuvent améliorer votre flux de travail.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Les services sont des programmes qui peuvent améliorer votre flux de travail. Pour les activer, contactez votre administrateur.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation envoyée";
 "peoplepicker.send_invitation.dialog.message" = "Elle peut être utilisée pendant 2 semaines. Envoyez-en une nouvelle si elle expire.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Créer une Guest Room";
 "peoplepicker.quick-action.admin-services" = "Gérer les Services";
 
-"add_participants.all_contacts_added" = "Tout le monde est là.";
+"peoplepicker.federation.domain_unvailable" = "Le domaine fédéré n'est actuellement pas disponible. [En savoir plus](%@)";
 
 "add_participants.alert.title" = "Le groupe est complet";
 "add_participants.alert.message.new_conversation" = "Jusqu'à %d contacts peuvent participer à une conversation.";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Nouvelle ligne";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choisir la mention précédente";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choisir la mention suivante";
 
 "conversation.input_bar.message_too_long.title" = "Message trop long";
 "conversation.input_bar.message_too_long.message" = "Vous pouvez envoyer des messages de %d caractères maximum.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Le message est supprimé.";
 
-"conversation.guests_present" = "Des contacts externes sont présents";
-"conversation.services_present" = "Les services sont actifs";
-"conversation.guests_services_present" = "Des contacts externes et des services sont présents";
+// Conversation banner
+"conversation.banner.guests_present" = "Des **invités** sont présents";
+"conversation.banner.services_present" = "Des **services** sont actifs";
+"conversation.banner.externals_present" = "Des **contacts externes** sont présents";
+"conversation.banner.guests_services_present" = "Des **invités** et des **services** sont présents";
+"conversation.banner.externals_services_present" = "Des **contacts externes** et des **services** sont présents";
+"conversation.banner.externals_guests_present" = "Des **contacts externes** et des **invités** sont présents";
+"conversation.banner.externals_guests_services_present" = "Des **contacts externes** , des **invités** et des **services** sont présents";
+
 "conversation.action.search" = "Chercher";
 
 // Reply message preview
@@ -469,8 +474,8 @@
 "content.system.you_wanted_to_talk" = "Vous avez appelé";
 "content.system.ephemeral_time_remaining" = "%@ restantes";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "**Vous** avez commencé à utiliser [un nouvel appareil](%@)";
+"content.system.self_user_new_self_client" = "**Vous** avez commencé à utiliser [cet appareil](%@)";
 
 "content.system.you_started" = "Vous";
 
@@ -519,15 +524,15 @@
 
 //
 
-"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+"content.system.reactivated_device" = "Vous avez recommencé à utiliser [cet appareil](%@). Les messages envoyés entre-temps n’apparaîtront pas ici.";
 
 "content.system.is_verified" = "Toutes les empreintes numériques sont vérifiées";
 
 "content.system.new_users" = "Un nouvel utilisateur est arrivé.";
 "content.system.verify_devices" = "Vérifier les appareils";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "**Vous** avez annulé la vérification d'un de [vos appareils](%@)";
+"content.system.unverified_other_devices" = "**Vous** avez annulé la vérification d'un des [ appareils de %1$@](%2$@)";
 
 "content.system.missing_messages.title" = "Vous n’avez pas utilisé cet appareil depuis un moment. Il est possible que certains messages n’apparaissent pas ici.";
 "content.system.missing_messages.subtitle_start" = "Pendant ce temps,";
@@ -676,12 +681,15 @@
 "call.participants.list.title" = "Participants";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.all" = "TOUS";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "Aucun speaker vidéo actif ...";
+
+"call.grid.hints.fullscreen" = "Appuyez deux fois sur une cellule pour passer en plein écran";
+"call.grid.hints.go_back_or_zoom" = "Appuyez deux fois pour revenir en arrière, pincez pour zoomer";
+"call.grid.hints.zoom" = "Pincez pour zoomer";
 
 "call.video.paused" = "Vidéo en pause";
-
 "call.video.too_many.alert.title" = "Trop de participants pour un appel vidéo";
 "call.video.too_many.alert.message" = "Les appels vidéo fonctionnent dans les groupes de 4 personnes maximum.";
 
@@ -1626,6 +1634,14 @@
 "jailbrokendevice.alert.title" = "Jailbreak détecté";
 "jailbrokendevice.alert.message" = "Pour des raisons de sécurité Wire ne peut pas être utilisé sur cet appareil. Toutes données Wire existantes ont été effacées.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Espace insuffisant";
+"databaseloadingfailure.alert.message" = "La base de données n'a pas pu être chargée en raison d'un espace de stockage insuffisant. Vérifiez l'utilisation du stockage de votre appareil et réessayez.";
+"databaseloadingfailure.alert.settings" = "Allez dans les paramètres";
+"databaseloadingfailure.alert.delete_database" = "Supprimer la base de données";
+"databaseloadingfailure.alert.delete_database.message" = "En supprimant la base de données, toutes les données locales et les messages de ce compte seront supprimés définitivement.";
+"databaseloadingfailure.alert.delete_database.continue" = "Continuer";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1787,6 +1803,9 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";
 "account_deleted_session_expired_alert.message" = "L'application n'a pas communiqué avec le serveur depuis une longue période, ou votre session a été invalidée à distance.";
+
+"account_deleted_missing_passcode_alert.title" = "Aucun code d'accès de l'appareil";
+"account_deleted_missing_passcode_alert.message" = "Afin d'utiliser Wire, veuillez définir un code d'accès dans les paramètres de votre appareil.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "Non sélectionné";

@@ -20,7 +20,7 @@ import WireDataModel
 
 extension UserType {
 
-    var nameAccentColor: UIColor? {
+    var nameAccentColor: UIColor {
         return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
     }
 

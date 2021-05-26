@@ -239,8 +239,7 @@ private extension AppDelegate {
         appRootRouter = AppRootRouter(viewController: viewController,
                                       navigator: navigator,
                                       sessionManager: sessionManager,
-                                      appStateCalculator: appStateCalculator,
-                                      deepLinkURL: launchOptions[.url] as? URL)
+                                      appStateCalculator: appStateCalculator)
     }
 
     private func createSessionManager(launchOptions: LaunchOptions) -> SessionManager? {

@@ -268,7 +268,7 @@ final class CollectionsViewController: UIViewController {
 
         // The label must be inset from the top due to navigation bar title alignment
         let titleViewWrapper = UIView()
-        let titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
+        let titleView = ConversationTitleView(conversation: collection.conversation, interactive: false)
         titleViewWrapper.addSubview(titleView)
 
         constrain(titleView, titleViewWrapper) { titleView, titleViewWrapper in

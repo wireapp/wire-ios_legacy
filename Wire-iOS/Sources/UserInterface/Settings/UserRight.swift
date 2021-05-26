@@ -24,31 +24,40 @@ protocol UserRightInterface {
 }
 
 final class UserRight: UserRightInterface {
+
     enum Permission {
-        case resetPassword,
-             editName,
-             editHandle,
-             editEmail,
-             editPhone,
-             editProfilePicture,
-             editAccentColor
+
+        case resetPassword
+        case editName
+        case editHandle
+        case editEmail
+        case editPhone
+        case editProfilePicture
+        case editAccentColor
+
     }
 
     static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool {
-        let selfUser = ZMUser.selfUser()
-        let usesCompanyLogin = selfUser?.usesCompanyLogin == true
+        guard let selfUser = SelfUser.provider?.selfUser else { return false }
+
+        let isProfileEditable = selfUser.managedByWire
+        let usesCompanyLogin = selfUser.usesCompanyLogin
 
         switch permission {
         case .editEmail:
         #if EMAIL_EDITING_DISABLED
             return false
         #else
-            return isProfileEditable || !usesCompanyLogin
+            return isProfileEditable
         #endif
+
         case .resetPassword:
             return isProfileEditable || !usesCompanyLogin
+
         case .editProfilePicture:
-            return true // NOTE we always allow editing for now since settting profile picture is not yet supported by SCIM
+            // NOTE we always allow editing for now since settting profile picture is not yet supported by SCIM.
+            return true
+
         case .editName,
              .editHandle,
              .editPhone,
@@ -57,7 +66,4 @@ final class UserRight: UserRightInterface {
         }
     }
 
-    private static var isProfileEditable: Bool {
-        return ZMUser.selfUser()?.managedByWire ?? true
-    }
 }

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
 "peoplepicker.header.directory" = "Lisa kontakt";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Lisa osalejaid";
 "peoplepicker.group.title.plural" = "Lisa osalejaid (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Ei ole kontakte.";
 
-"peoplepicker.no_matching_results_title" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results_message" = "Sisesta täielik meiliaadress.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Saada kutse";
 "peoplepicker.no_matching_results.action.share_contacts" = "Jaga kontakte";
+"peoplepicker.no_matching_results.action.learn_more" = "Loe lähemalt";
+"peoplepicker.no_matching_results.action.manage_services" = "Halda teenuseid";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Palun sisesta korrektne e-posti aadress";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results_services_title" = "Teenused on abistajad, mis võivad aidata sul töid teha. Nende lubamiseks pöördu oma administraatori poole.";
-"peoplepicker.no_matching_results_services_admin_title" = "Teenused on abistajad, mis võivad aidata sul töid teha.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Halda teenuseid";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Otsi meiliaadressi järgi või";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "jaga kontakte";
-
-"peoplepicker.share_contacts.no_results.title" = "Otsi inimesi nime või meiliaadressi järgi";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Tulemusi ei leitud.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Kutse saadetud";
 "peoplepicker.send_invitation.dialog.message" = "See kehtib 2 nädalat. Saada kehtivuse lõppedes uus.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
 "peoplepicker.quick-action.admin-services" = "Halda teenuseid";
 
-"add_participants.all_contacts_added" = "Kõik on siin.";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "Grupp on täis";
 "add_participants.alert.message.new_conversation" = "Vestlusega saab liituda kuni %d inimest.";
@@ -205,7 +202,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "jagas pildi";
-"notifications.pinged" = "pingis";
+"notifications.pinged" = "pingutas";
 "notifications.sent_file" = "jagas faili";
 "notifications.sent_location" = "jagas asukohta";
 "notifications.sent_video" = "jagas videot";
@@ -247,7 +244,7 @@
 "conversation.status.message.audio" = "Jagas häälsõnumit";
 "conversation.status.message.video" = "Jagas videot";
 "conversation.status.message.file" = "Jagas faili";
-"conversation.status.message.knock" = "Pingis";
+"conversation.status.message.knock" = "Pingutas";
 "conversation.status.message.missedcall" = "Vastamata kõne";
 "conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
 "conversation.status.message.mention" = "%@";
@@ -258,8 +255,8 @@
 "conversation.status.message.ephemeral.mention.group" = "Keegi mainis sind";
 "conversation.status.message.ephemeral.reply" = "Replied to your message";
 "conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
-"conversation.status.message.ephemeral.knock" = "Pingis";
-"conversation.status.message.ephemeral.knock.group" = "Keegi pingis";
+"conversation.status.message.ephemeral.knock" = "Pingutas";
+"conversation.status.message.ephemeral.knock.group" = "Keegi pingutas";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Lisa reavahetus";
 "conversation.input_bar.shortcut.edit_last_message" = "Viimase sõnumi muutmine";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Tühista";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Kohal on külalisi";
-"conversation.services_present" = "Kohal on teenuseid";
-"conversation.guests_services_present" = "Kohal on külalisi ja teenuseid";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Otsing";
 
 // Reply message preview
@@ -595,8 +600,8 @@
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
 // Someone pinged
-"content.ping.text" = "%@ pingis";
-"content.ping.text-you" = "%@ pingis";
+"content.ping.text" = "%@ pingutas";
+"content.ping.text-you" = "%@ pingutas";
 
 // Current user pinged
 "content.ping.text.you" = "Sina";
@@ -678,10 +683,13 @@
 "call.overlay.switch_to.speakers" = "SPEAKERS";
 "call.overlay.switch_to.all" = "ALL";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pausil";
-
 "call.video.too_many.alert.title" = "Vestluses on videokõne alustamiseks liiga palju osalejaid";
 "call.video.too_many.alert.message" = "Videokõned töötavad kuni 4 osalejaga vestluses.";
 
@@ -1626,6 +1634,14 @@
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Ava Seaded";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Jätka";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1788,6 +1804,9 @@
 "account_deleted_session_expired_alert.title" = "Sinu sessioon aegus";
 "account_deleted_session_expired_alert.message" = "Rakendus ei kontakteerunud serveriga pika aja jooksul või su sessioon lõpetati kaugjuhtimise teel.";
 
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
+
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
 "button_message_cell.state.selected" = "selected";
@@ -1853,5 +1872,5 @@
 "appLockModule.message.touchID" = "Ava Wire Touch ID või parooliga";
 "appLockModule.message.passcode" = "Unlock Wire with Passcode";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Vabasta lukust";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

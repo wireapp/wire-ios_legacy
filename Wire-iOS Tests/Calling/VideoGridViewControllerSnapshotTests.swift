@@ -32,6 +32,8 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
     var networkQuality: NetworkQuality = .normal
 
     var presentationMode: VideoGridPresentationMode = .allVideoStreams
+
+    var callHasTwoParticipants: Bool = false
 }
 
 final class VideoGridViewControllerSnapshotTests: XCTestCase {
@@ -66,11 +68,13 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func createSut() {
+    func createSut(hideHintView: Bool = true) {
         sut = VideoGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
+
         sut.isCovered = false
         sut.view.backgroundColor = .black
+        if hideHintView { sut.hideHintView() }
     }
 
     func testNoActiveSpeakersSpinner() {
@@ -103,8 +107,28 @@ final class VideoGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForBadNetwork() {
+        // given / when
         configuration.networkQuality = .poor
         createSut()
+
+        // then
+        verify(matching: sut)
+    }
+
+    func testHintView() {
+        // given / when
+        createSut(hideHintView: false)
+
+        // then
+        verify(matching: sut)
+    }
+
+    func testHintViewWithNetworkQualityView() {
+        // given / when
+        configuration.networkQuality = .poor
+        createSut(hideHintView: false)
+
+        // then
         verify(matching: sut)
     }
 }

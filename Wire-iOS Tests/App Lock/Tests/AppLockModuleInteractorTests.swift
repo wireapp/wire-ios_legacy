@@ -64,7 +64,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.requireCustomPasscode = true
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
@@ -77,7 +77,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         authenticationType.current = .unavailable
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
@@ -90,7 +90,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: true)])
@@ -101,7 +101,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.isCustomPasscodeSet = true
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
@@ -113,7 +113,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         appLock.needsToNotifyUser = true
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
@@ -126,7 +126,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         authenticationType.current = .unavailable
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
@@ -137,42 +137,39 @@ final class AppLockModuleInteractorTests: XCTestCase {
         session.lock = .none
 
         // When
-        sut.executeRequest(.initiateAuthentication)
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: false))
 
         // Then
         XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
-    // MARK: - Evaluate authentication
-
-    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInactive() {
-        // Given
-        applicationStateProvider.applicationState = .inactive
-        authenticationType.current = .faceID
-
-        // When
-        sut.executeRequest(.evaluateAuthentication)
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
-
-        // Then
-        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
-        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
-    }
-
-    func test_EvaluateAuthentication_ReturnsDeniedIfAppIsInBackground() {
+    func test_InitiateAuthentication_RequireActiveApp_ReturnsNothingIfAppIsInBackground() {
         // Given
         applicationStateProvider.applicationState = .background
-        authenticationType.current = .faceID
+        appLock.isCustomPasscodeSet = true
 
         // When
-        sut.executeRequest(.evaluateAuthentication)
-        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: true))
 
         // Then
-        XCTAssertEqual(appLock.methodCalls.evaluateAuthentication.count, 0)
-        XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
+        XCTAssertEqual(presenter.results, [])
     }
+
+    func test_InitiateAuthentication_NeedsToCreateCustomPasscodeAndRequireActiveApp_ReturnsNothingIfAppIsInBackground() {
+        // Given
+        applicationStateProvider.applicationState = .background
+        appLock.isCustomPasscodeSet = false
+        appLock.requireCustomPasscode = true
+
+        // When
+        sut.executeRequest(.initiateAuthentication(requireActiveApp: true))
+
+        // Then
+        XCTAssertEqual(presenter.results, [])
+    }
+
+    // MARK: - Evaluate authentication
 
     func test_EvaluateAuthentication_SessionIsAlreadyUnlocked() {
         // Given

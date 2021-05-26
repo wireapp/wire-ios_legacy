@@ -11,6 +11,9 @@ pr:
     include:
       - '*'
 
+variables:
+  coveragePath: './test-reports/'
+
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_12.4.app
@@ -37,6 +40,18 @@ steps:
     fastlane test
   displayName: "Test"
 
+- script: gem install slather
+  displayName: 'Install Slather'
+
+- script: |
+    slather coverage
+  displayName: "Run Slather to convert Code Coverage report to Cobertura XML format"
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(coveragePath)/cobertura.xml'
+
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: 'test/*.junit'
@@ -60,7 +75,6 @@ steps:
 - script: |
     fastlane post_test
   env:  
-    CODECOV_TOKEN: $(CODECOV_TOKEN)
     DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Post Test"

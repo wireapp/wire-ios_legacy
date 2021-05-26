@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contacten";
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
 "peoplepicker.header.directory" = "Contacten toevoegen";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Deelnemers toevoegen";
 "peoplepicker.group.title.plural" = "Voeg deelnemers toe (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Geen contacten";
 
-"peoplepicker.no_matching_results_title" = "Geen resultaten.";
-"peoplepicker.no_matching_results_message" = "E-mailadres invoegen.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Uitnodiging sturen";
 "peoplepicker.no_matching_results.action.share_contacts" = "Contacten delen";
+"peoplepicker.no_matching_results.action.learn_more" = "Leer meer";
+"peoplepicker.no_matching_results.action.manage_services" = "Beheer diensten";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
-"peoplepicker.no_matching_results_services_title" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
-"peoplepicker.no_matching_results_services_admin_title" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Beheer diensten";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "Contacten delen";
-
-"peoplepicker.share_contacts.no_results.title" = "Zoek personen op naam of op e-mailadres";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Geen resultaten";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Uitnodiging verstuurd";
 "peoplepicker.send_invitation.dialog.message" = "De uitnodiging kan 2 weken gebruikt worden. Stuur een nieuwe als hij verlopen is.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Maak een nieuwe gast chat aan";
 "peoplepicker.quick-action.admin-services" = "Beheer diensten";
 
-"add_participants.all_contacts_added" = "Iedereen is hier.";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "De groep is vol";
 "add_participants.alert.message.new_conversation" = "Tot %d mensen kunnen deelnemen aan een gesprek.";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Voeg een regelafbreking toe";
 "conversation.input_bar.shortcut.edit_last_message" = "Bewerkt laaste bericht";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuleer";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Bericht te lang";
 "conversation.input_bar.message_too_long.message" = "Je kan berichten verzenden van maximaal %d tekens lang.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Het bericht is verwijderd.";
 
-"conversation.guests_present" = "Er zijn gasten in dit geprek";
-"conversation.services_present" = "Diensten zijn actief";
-"conversation.guests_services_present" = "Gasten en diensten zijn aanwezig";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Zoeken";
 
 // Reply message preview
@@ -678,10 +683,13 @@
 "call.overlay.switch_to.speakers" = "SPEAKERS";
 "call.overlay.switch_to.all" = "ALL";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video is gepauzeerd";
-
 "call.video.too_many.alert.title" = "Te veel mensen voor Video bellen";
 "call.video.too_many.alert.message" = "Video gesprekken werken in groepen van 4 personen of minder.";
 
@@ -1626,6 +1634,14 @@
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Ga naar Instellingen";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Ga door";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1788,6 +1804,9 @@
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
 
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
+
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
 "button_message_cell.state.selected" = "selected";
@@ -1853,5 +1872,5 @@
 "appLockModule.message.touchID" = "Ontgrendel Wire met Touch ID of Wachtwoord";
 "appLockModule.message.passcode" = "Ontgrendel Wire met wachtwoord";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Ontgrendel";
 "appLockModule.goToSettingsButton.title" = "Go to settings";

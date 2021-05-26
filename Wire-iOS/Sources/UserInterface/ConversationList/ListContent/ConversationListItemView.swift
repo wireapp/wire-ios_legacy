@@ -244,8 +244,9 @@ final class ConversationListItemView: UIView {
         // Configure the title and status
         let title: NSAttributedString?
 
-        if SelfUser.current.isTeamMember,
-           let connectedUser = conversation.connectedUserType {
+        if let selfUser = SelfUser.provider?.selfUser,
+            selfUser.isTeamMember,
+            let connectedUser = conversation.connectedUserType {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
 
             if connectedUser.availability != .none {

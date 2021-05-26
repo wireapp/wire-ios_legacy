@@ -83,6 +83,13 @@ final class UserCellTests: XCTestCase {
         verify(mockUser: mockUser, conversation: conversation)
     }
 
+    func testFederatedUser() {
+        mockUser.isFederated = true
+        mockUser.domain = "foo.com"
+
+        verify(mockUser: mockUser, conversation: conversation)
+    }
+
     func testGuestUser() {
         mockUser.isGuestInConversation = true
 

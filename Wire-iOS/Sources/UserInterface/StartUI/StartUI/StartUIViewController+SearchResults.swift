@@ -178,6 +178,8 @@ extension StartUIViewController: EmptySearchResultsViewDelegate {
         switch action {
         case .openManageServices:
             URL.manageTeam(source: .onboarding).openInApp(above: self)
+        case .openSearchSupportPage:
+            URL.wr_searchSupport.open()
         }
     }
 }

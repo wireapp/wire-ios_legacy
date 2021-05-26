@@ -43,7 +43,7 @@ enum CellConfiguration {
         icon: StyleKitIcon?,
         color: UIColor?,
         get: () -> Bool,
-        set: (Bool) -> Void)
+        set: (Bool, UIView?) -> Void)
 
     var cellType: CellConfigurationConfigurable.Type {
         switch self {

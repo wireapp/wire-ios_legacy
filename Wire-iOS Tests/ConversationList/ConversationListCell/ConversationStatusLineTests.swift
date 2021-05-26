@@ -201,7 +201,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "1 mention, 5 messages")
     }
 
-    func testStatusForMultipleTextMessagesInConversation_LastRename() {
+    func disable_testStatusForMultipleTextMessagesInConversation_LastRename() {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {

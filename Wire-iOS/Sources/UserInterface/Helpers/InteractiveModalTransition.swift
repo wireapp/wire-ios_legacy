@@ -110,14 +110,15 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
 }
 
 final private class ModalInteractionController: UIPercentDrivenInteractiveTransition {
-
     var interactionInProgress = false
     private var shouldCompleteTransition = false
     private weak var presentationViewController: ModalPresentationViewController!
 
     func setupWith(viewController: ModalPresentationViewController) {
         presentationViewController = viewController
-        viewController.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan))
+        panGestureRecognizer.maximumNumberOfTouches = 1
+        viewController.view.addGestureRecognizer(panGestureRecognizer)
     }
 
     @objc

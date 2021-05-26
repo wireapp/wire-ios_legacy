@@ -56,6 +56,9 @@
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithPicture()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -63,6 +66,12 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
                </Test>
                <Test
                   Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">

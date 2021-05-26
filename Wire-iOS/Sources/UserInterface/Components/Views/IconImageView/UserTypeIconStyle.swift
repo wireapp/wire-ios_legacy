@@ -23,6 +23,7 @@ enum UserTypeIconStyle: String, IconImageStyle {
     case guest
     case external
     case member
+    case federated
 
     var icon: StyleKitIcon? {
         switch self {
@@ -32,6 +33,8 @@ enum UserTypeIconStyle: String, IconImageStyle {
             return .externalPartner
         case .member:
             return .none
+        case .federated:
+            return .federated
         }
     }
 
@@ -44,7 +47,9 @@ extension UserTypeIconStyle {
     init(conversation: GroupDetailsConversationType?,
          user: UserType,
          selfUser: UserType) {
-        if user.isExternalPartner {
+        if user.isFederated {
+            self = .federated
+        } else if user.isExternalPartner {
             self = .external
         } else if let conversation = conversation {
             self = !user.isGuest(in: conversation) || user.isSelfUser ? .member : .guest

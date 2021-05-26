@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
 "peoplepicker.header.directory" = "Додати до контактів";
+"peoplepicker.header.federation" = "З'єднатися з іншим доменом";
 
 "peoplepicker.group.title.singular" = "Додати учасників";
 "peoplepicker.group.title.plural" = "Додати учасників (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Контактів немає.";
 
-"peoplepicker.no_matching_results_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_message" = "Введіть адресу електронної пошти.";
 "peoplepicker.no_search_results" = "Немає відповідних результатів. Спробуйте ввести інше ім'я.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Надіслати запрошення";
 "peoplepicker.no_matching_results.action.share_contacts" = "Поділитись контактами";
+"peoplepicker.no_matching_results.action.learn_more" = "Дізнатися більше";
+"peoplepicker.no_matching_results.action.manage_services" = "Керування сервісами";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_services_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
-"peoplepicker.no_matching_results_services_admin_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Керування сервісами";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
-
-"peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
+"peoplepicker.no_matching_results.message.users" = "Знайти людей в Wire по імені або @ніку";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Знаходьте людей в Wire по імені або @ніку\n\nЗнаходьте  людей з іншого домену,\nвикористовуючи формат @нік@ім'я_домену";
+"peoplepicker.no_matching_results.message.users_all_added" = "Всі вже тут.";
+"peoplepicker.no_matching_results.message.services" = "Нікого не знайдено.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до IT-адміністратора вашої команди.";
 
 "peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
 "peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Створити гостьову кімнату";
 "peoplepicker.quick-action.admin-services" = "Керування сервісами";
 
-"add_participants.all_contacts_added" = "Всі вже тут.";
+"peoplepicker.federation.domain_unvailable" = "Федеративний домен наразі не доступний. [Дізнатися більше](%@)";
 
 "add_participants.alert.title" = "Розмова переповнена";
 "add_participants.alert.message.new_conversation" = "До розмови може приєднатися до %d учасників.";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
+"conversation.input_bar.shortcut.choose_next_mention" = "Виберіть наступну згадку";
 
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
-"conversation.guests_present" = "Присутні гості";
-"conversation.services_present" = "Сервіси активовані";
-"conversation.guests_services_present" = "Присутні гості та сервіси";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Пошук";
 
 // Reply message preview
@@ -678,10 +683,13 @@
 "call.overlay.switch_to.speakers" = "ДИНАМІКИ";
 "call.overlay.switch_to.all" = "ВСІ";
 
-"call.grid.no_active_speakers" = "Активні динаміки відсутні…";
+"call.grid.no_active_speakers" = "Активні спікери відсутні...";
+
+"call.grid.hints.fullscreen" = "Торкніться двічі для повноекранного режиму";
+"call.grid.hints.go_back_or_zoom" = "Токніться двічі, щоб повернутись. Розведіть/зведіть пальці для збільшення/зменшення";
+"call.grid.hints.zoom" = "Зведіть або розведіть пальці для зміни масштабу";
 
 "call.video.paused" = "Відео призупинено";
-
 "call.video.too_many.alert.title" = "Занадто багато людей для відеодзвінка";
 "call.video.too_many.alert.message" = "Відеодзвінки працюють тільки в групах з 4-ма або менше учасниками.";
 
@@ -1626,6 +1634,14 @@
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
 "jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";
 
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Недостатньо місця";
+"databaseloadingfailure.alert.message" = "Не вдалося завантажити базу даних через нестачу вільного місця. Перевірте розмір вільного місця на вашому пристрої та спробуйте ще раз.";
+"databaseloadingfailure.alert.settings" = "Перейти до налаштувань";
+"databaseloadingfailure.alert.delete_database" = "Видалити базу даних";
+"databaseloadingfailure.alert.delete_database.message" = "З видаленням бази даних, всі локальні дані та повідомлення для цього акаунту також будуть остаточно видалені.";
+"databaseloadingfailure.alert.delete_database.continue" = "Продовжити";
+
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
 "giphy.conversation.random_message" = "через giphy.com";
@@ -1788,6 +1804,9 @@
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
 "account_deleted_session_expired_alert.message" = "Додаток не зв'язувався із сервером впродовж тривалого періоду часу, або ваша сесія була анульована.";
 
+"account_deleted_missing_passcode_alert.title" = "Код допуску для пристрою не заданий";
+"account_deleted_missing_passcode_alert.message" = "Для використання Wire встановіть код допуску в налаштуваннях пристрою.";
+
 // Button cell state
 "button_message_cell.state.unselected" = "не вибрано";
 "button_message_cell.state.selected" = "вибрано";
@@ -1850,7 +1869,7 @@
 // MARK: - App lock module
 
 "appLockModule.message.faceID" = "Розблокувати Wire за допомогою Face ID або коду допуску";
-"appLockModule.message.touchID" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
+"appLockModule.message.touchID" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "appLockModule.message.passcode" = "Розблокувати Wire за допомогою коду допуску";
 "appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
 "appLockModule.unlockButton.title" = "Розблокувати";

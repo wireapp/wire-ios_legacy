@@ -29,6 +29,7 @@ struct VideoConfiguration: VideoGridConfiguration {
     let networkQuality: NetworkQuality
     let shouldShowActiveSpeakerFrame: Bool
     let presentationMode: VideoGridPresentationMode
+    let callHasTwoParticipants: Bool
 
     init(voiceChannel: VoiceChannel) {
         let videoStreamArrangment = voiceChannel.createVideoStreamArrangment()
@@ -39,6 +40,7 @@ struct VideoConfiguration: VideoGridConfiguration {
         networkQuality = voiceChannel.networkQuality
         shouldShowActiveSpeakerFrame = voiceChannel.shouldShowActiveSpeakerFrame
         presentationMode = voiceChannel.videoGridPresentationMode
+        callHasTwoParticipants = voiceChannel.callHasTwoParticipants
     }
 }
 
@@ -165,7 +167,7 @@ extension VoiceChannel {
         return state == .established
     }
 
-    private var callHasTwoParticipants: Bool {
+    fileprivate var callHasTwoParticipants: Bool {
         return connectedParticipants.count == 2
     }
 
@@ -193,14 +195,5 @@ private extension VideoGridPresentationMode {
 
     var needsSelfStream: Bool {
         return self == .allVideoStreams
-    }
-}
-
-private extension Array where Element == CallParticipant {
-    mutating func sortByName(selfStreamId: AVSClient?) {
-        self = self.sorted {
-            $0.streamId == selfStreamId ||
-            $0.user.name?.lowercased() < $1.user.name?.lowercased()
-        }
     }
 }

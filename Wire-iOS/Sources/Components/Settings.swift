@@ -58,6 +58,7 @@ enum SettingKey: String, CaseIterable {
     case disableCallKit = "UserDefaultDisableCallKit"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
+    case federationEnabled = "FederationEnabled"
     // MARK: Link opening options
     case twitterOpeningRawValue = "TwitterOpeningRawValue"
     case mapsOpeningRawValue = "MapsOpeningRawValue"

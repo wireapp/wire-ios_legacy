@@ -57,6 +57,12 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "about.website.title")
       }
     }
+    internal enum AccountDeletedMissingPasscodeAlert {
+      /// In order to use Wire, please set a passcode in your device settings.
+      internal static let message = L10n.tr("Localizable", "account_deleted_missing_passcode_alert.message")
+      /// No device passcode
+      internal static let title = L10n.tr("Localizable", "account_deleted_missing_passcode_alert.title")
+    }
     internal enum AccountDeletedSessionExpiredAlert {
       /// The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.
       internal static let message = L10n.tr("Localizable", "account_deleted_session_expired_alert.message")
@@ -64,8 +70,6 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "account_deleted_session_expired_alert.title")
     }
     internal enum AddParticipants {
-      /// Everyone’s here.
-      internal static let allContactsAdded = L10n.tr("Localizable", "add_participants.all_contacts_added")
       internal enum Alert {
         /// The group is full
         internal static let title = L10n.tr("Localizable", "add_participants.alert.title")
@@ -271,6 +275,14 @@ internal enum L10n {
       internal enum Grid {
         /// No active video speakers...
         internal static let noActiveSpeakers = L10n.tr("Localizable", "call.grid.no_active_speakers")
+        internal enum Hints {
+          /// Double tap on a tile for fullscreen
+          internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
+          /// Double tap to go back, pinch to zoom
+          internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
+          /// Pinch to zoom
+          internal static let zoom = L10n.tr("Localizable", "call.grid.hints.zoom")
+        }
       }
       internal enum Overlay {
         internal enum SwitchTo {
@@ -1028,12 +1040,6 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
-      /// Guests are present
-      internal static let guestsPresent = L10n.tr("Localizable", "conversation.guests_present")
-      /// Guests and services are present
-      internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.guests_services_present")
-      /// Services are active
-      internal static let servicesPresent = L10n.tr("Localizable", "conversation.services_present")
       internal enum Action {
         /// Search
         internal static let search = L10n.tr("Localizable", "conversation.action.search")
@@ -1041,6 +1047,22 @@ internal enum L10n {
       internal enum Alert {
         /// The message is deleted.
         internal static let messageDeleted = L10n.tr("Localizable", "conversation.alert.message_deleted")
+      }
+      internal enum Banner {
+        /// **Externals** and **guests** are present
+        internal static let externalsGuestsPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_present")
+        /// **Externals**, **guests**, and **services** are present
+        internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_services_present")
+        /// **Externals** are present
+        internal static let externalsPresent = L10n.tr("Localizable", "conversation.banner.externals_present")
+        /// **External**s and **services** are present
+        internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_services_present")
+        /// **Guests** are present
+        internal static let guestsPresent = L10n.tr("Localizable", "conversation.banner.guests_present")
+        /// **Guests** and **services** are present
+        internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.banner.guests_services_present")
+        /// **Services** are active
+        internal static let servicesPresent = L10n.tr("Localizable", "conversation.banner.services_present")
       }
       internal enum Call {
         internal enum ManyParticipantsConfirmation {
@@ -1214,6 +1236,10 @@ internal enum L10n {
         internal enum Shortcut {
           /// Cancel
           internal static let cancelEditingMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.cancel_editing_message")
+          /// Choose next mention
+          internal static let chooseNextMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_next_mention")
+          /// Choose previous mention
+          internal static let choosePreviousMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_previous_mention")
           /// Edit Last Message
           internal static let editLastMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.edit_last_message")
           /// Insert line break
@@ -1533,6 +1559,24 @@ internal enum L10n {
         internal static let light = L10n.tr("Localizable", "dark_theme.option.light")
         /// Sync with system settings
         internal static let system = L10n.tr("Localizable", "dark_theme.option.system")
+      }
+    }
+    internal enum Databaseloadingfailure {
+      internal enum Alert {
+        /// Delete Database
+        internal static let deleteDatabase = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database")
+        /// The database could not be loaded due to insufficient storage. Review your device storage usage and try again.
+        internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.message")
+        /// Go to Settings
+        internal static let settings = L10n.tr("Localizable", "databaseloadingfailure.alert.settings")
+        /// Not Enough Storage
+        internal static let title = L10n.tr("Localizable", "databaseloadingfailure.alert.title")
+        internal enum DeleteDatabase {
+          /// Continue
+          internal static let `continue` = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.continue")
+          /// By deleting the database, all local data and messages for this account will be permanently deleted.
+          internal static let message = L10n.tr("Localizable", "databaseloadingfailure.alert.delete_database.message")
+        }
       }
     }
     internal enum Device {
@@ -2576,24 +2620,8 @@ internal enum L10n {
       internal static let inviteTeamMembers = L10n.tr("Localizable", "peoplepicker.invite_team_members")
       /// No Contacts.
       internal static let noContactsTitle = L10n.tr("Localizable", "peoplepicker.no_contacts_title")
-      /// share contacts
-      internal static let noMatchingResultsAfterAddressBookUploadButton = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_button")
-      /// Enter a full email address or
-      internal static let noMatchingResultsAfterAddressBookUploadMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_message")
       /// No results.
       internal static let noMatchingResultsAfterAddressBookUploadTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_after_address_book_upload_title")
-      /// Enter a full email address.
-      internal static let noMatchingResultsMessage = L10n.tr("Localizable", "peoplepicker.no_matching_results_message")
-      /// Please enter a valid email address
-      internal static let noMatchingResultsProvideValidEmail = L10n.tr("Localizable", "peoplepicker.no_matching_results_provide_valid_email")
-      /// Services are helpers that can improve your workflow.
-      internal static let noMatchingResultsServicesAdminTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_admin_title")
-      /// Manage Services
-      internal static let noMatchingResultsServicesManageServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_manage_services_title")
-      /// Services are helpers that can improve your workflow. To enable them, ask your administrator.
-      internal static let noMatchingResultsServicesTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_services_title")
-      /// No results.
-      internal static let noMatchingResultsTitle = L10n.tr("Localizable", "peoplepicker.no_matching_results_title")
       /// No matching results. Try entering a different name.
       internal static let noSearchResults = L10n.tr("Localizable", "peoplepicker.no_search_results")
       /// Search by name or username
@@ -2603,6 +2631,12 @@ internal enum L10n {
         internal static let addToConversation = L10n.tr("Localizable", "peoplepicker.button.add_to_conversation")
         /// Create group
         internal static let createConversation = L10n.tr("Localizable", "peoplepicker.button.create_conversation")
+      }
+      internal enum Federation {
+        /// The federated domain is currently not available. [Learn more](%@)
+        internal static func domainUnvailable(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "peoplepicker.federation.domain_unvailable", String(describing: p1))
+        }
       }
       internal enum Group {
         /// Create
@@ -2629,6 +2663,8 @@ internal enum L10n {
         internal static let conversations = L10n.tr("Localizable", "peoplepicker.header.conversations")
         /// Connect
         internal static let directory = L10n.tr("Localizable", "peoplepicker.header.directory")
+        /// Connect with other domain
+        internal static let federation = L10n.tr("Localizable", "peoplepicker.header.federation")
         /// People
         internal static let people = L10n.tr("Localizable", "peoplepicker.header.people")
         /// Invite
@@ -2644,10 +2680,28 @@ internal enum L10n {
       }
       internal enum NoMatchingResults {
         internal enum Action {
+          /// Learn more
+          internal static let learnMore = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.learn_more")
+          /// Manage Services
+          internal static let manageServices = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.manage_services")
           /// Send an invitation
           internal static let sendInvite = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.send_invite")
           /// Share contacts
           internal static let shareContacts = L10n.tr("Localizable", "peoplepicker.no_matching_results.action.share_contacts")
+        }
+        internal enum Message {
+          /// No results.
+          internal static let services = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services")
+          /// Services are helpers that can improve your workflow. To enable them, ask your administrator.
+          internal static let servicesNotEnabled = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled")
+          /// Services are helpers that can improve your workflow.
+          internal static let servicesNotEnabledAdmin = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.services_not_enabled_admin")
+          /// Find people in Wire by name or @username
+          internal static let users = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users")
+          /// Everyone’s here.
+          internal static let usersAllAdded = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.users_all_added")
+          /// Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname
+          internal static let usersAndFederation = L10n.tr("Localizable", "peoplepicker.no_matching_results.message.usersAndFederation")
         }
       }
       internal enum QuickAction {
@@ -2686,12 +2740,6 @@ internal enum L10n {
         internal enum OpenConversation {
           /// Open conversation
           internal static let item = L10n.tr("Localizable", "peoplepicker.services.open_conversation.item")
-        }
-      }
-      internal enum ShareContacts {
-        internal enum NoResults {
-          /// Find people by name or email address
-          internal static let title = L10n.tr("Localizable", "peoplepicker.share_contacts.no_results.title")
         }
       }
       internal enum Suggested {

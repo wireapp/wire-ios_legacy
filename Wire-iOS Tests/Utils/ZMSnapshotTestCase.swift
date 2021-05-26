@@ -72,6 +72,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
     typealias Configuration = (_ view: UIView) -> Void
 
     var uiMOC: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
 
     /// The color of the container view in which the view to
     /// be snapshot will be placed, defaults to UIColor.lightGrayColor
@@ -100,21 +101,23 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         recordMode = strcmp(getenv("RECORDING_SNAPSHOTS"), "YES") == 0
 
         usesDrawViewHierarchyInRect = true
-        let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
-        StorageStack.reset()
-        StorageStack.shared.createStorageAsInMemory = true
+
         do {
             documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         } catch {
             XCTAssertNil(error, "Unexpected error \(error)")
         }
 
-        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
-            self.uiMOC = contextDirectory.uiContext
-            contextExpectation.fulfill()
-        })
+        let account = Account(userName: "", userIdentifier: UUID())
+        let coreDataStack = CoreDataStack(account: account,
+                                          applicationContainer: documentsDirectory!,
+                                          inMemoryStore: true)
 
-        wait(for: [contextExpectation], timeout: 0.1)
+        coreDataStack.loadStores(completionHandler: { error in
+            XCTAssertNil(error)
+        })
+        self.coreDataStack = coreDataStack
+        self.uiMOC = coreDataStack.viewContext
 
         if needsCaches {
             setUpCaches()
@@ -128,6 +131,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         // Needs to be called before setting self.documentsDirectory to nil.
         removeContentsOfDocumentsDirectory()
         uiMOC = nil
+        coreDataStack = nil
         documentsDirectory = nil
         snapshotBackgroundColor = nil
         UIColor.setAccentOverride(.undefined)
