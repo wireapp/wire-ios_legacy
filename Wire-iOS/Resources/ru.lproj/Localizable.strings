@@ -223,7 +223,7 @@
 "list.section.favorites" = "Избранное";
 
 "conversation.voiceover.verified" = "верифицировано";
-"conversation.voiceover.legalhold" = "правовая защита";
+"conversation.voiceover.legalhold" = "юридические ограничения";
 "conversation.voiceover.value.active" = "активно";
 "conversation.voiceover.value.disabled" = "отключено";
 
@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ начал беседу с %@";
 "content.system.conversation.other.added" = "%@ добавил(a) %@";
 "content.system.conversation.other.removed" = "%@ удалил %@";
+"content.system.conversation.other.removed.legalhold" = "%@ был удален из этой беседы, поскольку были активированы юридические ограничения. _Подробнее_";
+"content.system.conversation.others.removed.legalhold" = "%@ были удалены из этой беседы, поскольку были активированы юридические ограничения. _Подробнее_";
 "content.system.conversation.other.left" = "%@ покинул(-а) беседу";
 
 "content.system.conversation.you.started" = "%@ начал беседу с %@";
 "content.system.conversation.you.added" = "%@ добавили %@";
 "content.system.conversation.you.removed" = "%@ удалили %@";
+"content.system.conversation.you.removed.legalhold" = "%@ были удалены из этой беседы, поскольку были активированы юридические ограничения. _Подробнее_";
 "content.system.conversation.you.left" = "%@ покинули беседу";
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
@@ -518,7 +521,7 @@
 // legal hold
 
 "content.system.message_legal_hold.enabled" = "Эта беседа находится под правовой защитой";
-"content.system.message_legal_hold.disabled" = "Для этой беседы деактивирована правовая защита";
+"content.system.message_legal_hold.disabled" = "Для этой беседы деактивированы юридические ограничения";
 
 "content.system.message_legal_hold.learn_more" = "Подробнее";
 
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
+"error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";
@@ -711,7 +715,7 @@
 "call.alert.ongoing.start.button" = "Все равно позвонить";
 "call.alert.ongoing.join.button" = "Все равно присоединиться";
 
-"call.quality.indicator.message" = "Ретрансляторы вызовов недоступны. Это может повлиять на качество разговора.";
+"call.quality.indicator.message" = "Ретрансляторы вызовов недоступны. Это может повлиять на качество вызова.";
 "call.quality.indicator.more_info.button.text" = "Подробнее";
 
 // Call Actions (accessibility)
@@ -803,8 +807,8 @@
 "meta.degraded.verify_devices_button" = "Верифицируйте устройства…";
 "meta.degraded.send_anyway_button" = "Отправить в любом случае";
 "meta.degraded.cancel_sending_button" = "Отмена";
-"meta.legalhold.info_button" = "Что такое правовая защита?";
-"meta.legalhold.send_alert_title" = "Эта беседа теперь является предметом правовой защиты.";
+"meta.legalhold.info_button" = "Что такое юридические ограничения?";
+"meta.legalhold.send_alert_title" = "Эта беседа теперь является предметом юридических ограничений.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Удалить?";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Гость";
 "profile.details.group_admin" = "Администратор группы";
 "profile.details.partner" = "внешний";
+"profile.details.blocking_reason" = "Этот пользователь заблокирован из-за юридических ограничений. [ПОДРОБНЕЕ](%@)";
 
 "profile_view.accessibility.handle" = "Псевдоним";
 "profile_view.accessibility.name" = "Отображаемое имя";
@@ -894,7 +899,7 @@
 "device.verified" = "Верифицировано";
 "device.not_verified" = "Не верифицировано";
 
-"device.class.legalhold" = "Правовая защита";
+"device.class.legalhold" = "Юридические ограничения";
 "device.class.desktop" = "Компьютер";
 "device.class.tablet" = "Планшет";
 "device.class.phone" = "Телефон";
@@ -902,7 +907,7 @@
 
 "device.type.permanent" = "Постоянное";
 "device.type.temporary" = "Временное";
-"device.type.legalhold" = "Правовая защита";
+"device.type.legalhold" = "Юридические ограничения";
 "device.type.unknown" = "Неизвестное";
 
 // Bot
@@ -924,10 +929,10 @@
 
 // Legal hold details
 
-"legalhold.participants.section.title" = "Субъекты правовой защиты";
-"legalhold.header.title" = "Правовая защита";
-"legalhold.header.other_description" = "В этой беседе активирована правовая защита как минимум для одного участника.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.";
-"legalhold.header.self_description" = "Для вашей учетной записи активирована правовая защита.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\nВаши собеседники будут уведомлены об этом.";
+"legalhold.participants.section.title" = "Субъекты юридических ограничений";
+"legalhold.header.title" = "Юридические ограничения";
+"legalhold.header.other_description" = "В этой беседе активированы юридические ограничения как минимум для одного участника.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.";
+"legalhold.header.self_description" = "Для вашей учетной записи активированы юридические ограничения.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\nВаши собеседники будут уведомлены об этом.";
 "legalhold.accessibility" = "Информация о правовой защите";
 
 
@@ -1194,7 +1199,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
 "self.settings.privacy.clear_history.title" = "Очистить историю";
-"self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит контент всех ваших бесед.";
+"self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит содержимое всех ваших бесед.";
 
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
@@ -1401,7 +1406,7 @@
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Восстановить историю";
-"registration.no_history.restore_backup_warning.message" = "Контент резервной копии заменит историю бесед на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
+"registration.no_history.restore_backup_warning.message" = "Содержимое резервной копии заменит историю бесед на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
 "registration.no_history.restore_backup_warning.proceed" = "Выберите резервную копию";
 
 /// Restore History Failure Alerts
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Не удалось удалить участника";
 "error.conversation.too_many_members" = "Беседа переполнена";
 "error.conversation.offline" = "Похоже, что есть проблема с вашим интернет-соединением. Пожалуйста, убедитесь, что оно работает.";
+"error.conversation.missing_legalhold_consent" = "Из-за юридических ограничений в эту беседу могут быть добавлены только члены команды";
 
 "sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 
@@ -1779,7 +1785,7 @@
 "registration.password.rules.with_requirements" = "Использовать %@, с %@.";
 
 // Legal Hold Deactivation
-"legal_hold.deactivated.title" = "Правовая защита деактивирована";
+"legal_hold.deactivated.title" = "Юридические ограничения деактивированы";
 "legal_hold.deactivated.message" = "Будущие сообщения не будут сохраняться.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1790,15 +1796,15 @@
 
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "В ожидании принятия.";
-"legalhold_request.alert.title" = "Запрошена правовая защита";
+"legalhold_request.alert.title" = "Запрошены юридические ограничения";
 "legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nСюда входят удаленные, отредактированные и просроченные сообщения во всех беседах.";
 "legalhold_request.alert.detail.enter_password" = "Введите пароль для подтверждения.";
 "legalhold_request.alert.error_wrong_password" = "Неверный пароль";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "Правовая защита активна";
+"legalhold_active.alert.title" = "Юридические ограничения активны";
 "legalhold_active.alert.learn_more" = "Подробнее";
-"legalhold_active.alert.message" = "Для вашей учетной записи активирована правовая защита.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\n\nВаши собеседники будут уведомлены об этом.";
+"legalhold_active.alert.message" = "Для вашей учетной записи активированы юридические ограничения.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\n\nВаши собеседники будут уведомлены об этом.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Ваша сессия истекла";

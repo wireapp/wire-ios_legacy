@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ startet en samtale med %@";
 "content.system.conversation.other.added" = "%@ la til %@";
 "content.system.conversation.other.removed" = "%@ fjernet %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ igjen";
 
 "content.system.conversation.you.started" = "%@ startet en samtale med %@";
 "content.system.conversation.you.added" = "%@ la til %@";
 "content.system.conversation.you.removed" = "%@ fjernet %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ igjen";
 "content.system.conversation.team.member-leave" = "%@ ble fjernet fra teamet.";
 "content.system.conversation.guest.joined" = "%@ ble med";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Koble til";
 "inbox.connection_request.connect_button_title" = "Koble til";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Gjest";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Brukernavn";
 "profile_view.accessibility.name" = "Display name";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Samtalen er full";
 "error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Tap colors to change brush size";
 

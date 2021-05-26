@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ pradėjo susirašinėjimą su %@";
 "content.system.conversation.other.added" = "%@ pridėjo pašnekovą %@";
 "content.system.conversation.other.removed" = "%@ pašalino pašnekovą %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ išėjo";
 
 "content.system.conversation.you.started" = "%@ pradėjo susirašinėjimą su %@";
 "content.system.conversation.you.added" = "%@ pridėjo pašnekovą %@";
 "content.system.conversation.you.removed" = "%@ pašalino pašnekovą %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ išėjote";
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
 "content.system.conversation.guest.joined" = "%@ prisijungė";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.connect_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.ignore_button_title" = "Nepaisyti";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "„Wire“ reikia leidimo matyti jūsų nuotraukas";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Svečias";
 "profile.details.group_admin" = "Grupės administratorius";
 "profile.details.partner" = "išorinis";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Naudotojo vardas";
 "profile_view.accessibility.name" = "Vardas pavardė";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Pašalinti pašnekovų nepavyko";
 "error.conversation.too_many_members" = "Susirašinėjimas pilnas";
 "error.conversation.offline" = "Panašu, kad yra nesklandumų su interneto ryšiu. Įsitikinkite, kad jis yra.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Spustelėkite spalvas, kad pakeistumėte teptuko dydį";
 

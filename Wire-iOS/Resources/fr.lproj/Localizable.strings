@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ a commencé une conversation avec %@";
 "content.system.conversation.other.added" = "%@ a ajouté %@";
 "content.system.conversation.other.removed" = "%@ a exclu %@";
+"content.system.conversation.other.removed.legalhold" = "%@ a été retiré de cette conversation car la conservation à des fins juridiques a été activée.";
+"content.system.conversation.others.removed.legalhold" = "%@ ont été retirés de cette conversation car la conservation à des fins juridiques a été activée.";
 "content.system.conversation.other.left" = "%@ est parti";
 
 "content.system.conversation.you.started" = "%@ avez commencé une conversation avec %@";
 "content.system.conversation.you.added" = "%@ avez ajouté %@";
 "content.system.conversation.you.removed" = "%@ avez exclu %@";
+"content.system.conversation.you.removed.legalhold" = "%@ avez été retiré de cette conversation car la conservation à des fins juridiques a été activée.";
 "content.system.conversation.you.left" = "%@ êtes parti";
 "content.system.conversation.team.member-leave" = "%@ a été exclu de l'équipe.";
 "content.system.conversation.guest.joined" = "%@ a rejoint la conversation";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Se connecter";
 "inbox.connection_request.connect_button_title" = "Se connecter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
+"error.connection.missing_legalhold_consent" = "Vous ne pouvez pas vous connecter à cet utilisateur à cause de la conservation à des fins juridiques.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire a besoin d'accéder à vos photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Contact externe";
 "profile.details.group_admin" = "Admin du groupe";
 "profile.details.partner" = "externe";
+"profile.details.blocking_reason" = "Cet utilisateur est bloqué en raison de la conservation à des fins juridiques. [PLUS D'INFOS](%@)";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
 "profile_view.accessibility.name" = "Nom affiché";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Le participant n'a pas pu être retiré";
 "error.conversation.too_many_members" = "Cette conversation est saturée";
 "error.conversation.offline" = "Il semble y avoir un problème avec votre connexion Internet. Merci de vous assurer de son bon fonctionnement.";
+"error.conversation.missing_legalhold_consent" = "A cause de la conservation à des fins juridiques, seuls les membres de l'équipe peuvent être ajoutés à cette conversation";
 
 "sketchpad.initial_hint" = "Appuyez sur les couleurs pour changer la taille du pinceau";
 

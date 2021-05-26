@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ hat ein Gespräch mit %@ begonnen";
 "content.system.conversation.other.added" = "%@ hat %@ hinzugefügt";
 "content.system.conversation.other.removed" = "%@ hat %@ entfernt";
+"content.system.conversation.other.removed.legalhold" = "%@ wurde aus dieser Unterhaltung entfernt, da die gesetzliche Aufbewahrung aktiviert wurde.";
+"content.system.conversation.others.removed.legalhold" = "%@ wurden aus dieser Unterhaltung entfernt, da die gesetzliche Aufbewahrung aktiviert wurde.";
 "content.system.conversation.other.left" = "%@ hat das Gespräch verlassen";
 
 "content.system.conversation.you.started" = "%@ haben ein Gespräch mit %@ begonnen";
 "content.system.conversation.you.added" = "%@ haben %@ hinzugefügt";
 "content.system.conversation.you.removed" = "%@ haben %@ entfernt";
+"content.system.conversation.you.removed.legalhold" = "%@ wurden aus dieser Unterhaltung entfernt, da die gesetzliche Aufbewahrung aktiviert wurde.";
 "content.system.conversation.you.left" = "%@ haben das Gespräch verlassen";
 "content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Kontaktanfrage";
 "inbox.connection_request.connect_button_title" = "Verbinden";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
+"error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Gast";
 "profile.details.group_admin" = "Gruppen-Admin";
 "profile.details.partner" = "extern";
+"profile.details.blocking_reason" = "Dieser Nutzer ist aufgrund der gesetzlichen Aufbewahrung gesperrt. [MEHR ERFAHREN](%@)";
 
 "profile_view.accessibility.handle" = "Benutzername";
 "profile_view.accessibility.name" = "Angezeigter Name";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Teilnehmer konnte nicht entfernt werden";
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
 "error.conversation.offline" = "Es scheint ein Problem mit der Internetverbindung zu geben. Bitte stellen Sie sicher, dass sie funktioniert.";
+"error.conversation.missing_legalhold_consent" = "Aufgrund der gesetzlichen Aufbewahrung können nur Team-Mitglieder zu dieser Unterhaltung hinzugefügt werden.";
 
 "sketchpad.initial_hint" = "Tippen Sie auf Farben, um die Pinselgröße zu ändern";
 

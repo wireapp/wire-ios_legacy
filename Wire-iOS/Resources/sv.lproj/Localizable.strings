@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ startade en konversation med %@";
 "content.system.conversation.other.added" = "%@ lade till %@";
 "content.system.conversation.other.removed" = "%@ tog bort %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ lämnade";
 
 "content.system.conversation.you.started" = "%@ startade en konversation med %@";
 "content.system.conversation.you.added" = "%@ lade till %@";
 "content.system.conversation.you.removed" = "%@ tog bort %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ lämnade";
 "content.system.conversation.team.member-leave" = "%@ togs bort från teamet.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Anslut";
 "inbox.connection_request.connect_button_title" = "Anslut";
 "inbox.connection_request.ignore_button_title" = "Ignorera";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Gäst";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Användarnanm";
 "profile_view.accessibility.name" = "Visningsnamn";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Konversationen är full";
 "error.conversation.offline" = "Det verkar finnas ett problem med din Internetanslutning. Vänligen se till att den fungerar.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Tryck på färgen om du vill ändra penselstorlek";
 

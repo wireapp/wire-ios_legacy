@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests_present" = "Присутні **гості**";
+"conversation.banner.services_present" = "Присутні **сервіси**";
+"conversation.banner.externals_present" = "Присутні **зовнішні учасники**";
+"conversation.banner.guests_services_present" = "Присутні **гості** та **сервіси**";
+"conversation.banner.externals_services_present" = "Присутні **зовнішні учасники** та **сервіси**";
+"conversation.banner.externals_guests_present" = "Присутні **зовнішні учасники** та **гості**";
+"conversation.banner.externals_guests_services_present" = "Присутні **зовнішні учасники**, **гості** та **сервіси**";
 
 "conversation.action.search" = "Пошук";
 
@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ почав(-ла) розмову з %@";
 "content.system.conversation.other.added" = "%@ додав(-ла) %@";
 "content.system.conversation.other.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.other.removed.legalhold" = "%@ був(-ла) видалений(-а) з цієї розмови, тому що правовий режим було активовано.";
+"content.system.conversation.others.removed.legalhold" = "%@ були видалені з цієї розмови, тому що правовий режим було активовано.";
 "content.system.conversation.other.left" = "%@ вийшов(-ла)";
 
 "content.system.conversation.you.started" = "%@ почав(-ла) розмову з %@";
 "content.system.conversation.you.added" = "%@ додав(-ла) %@";
 "content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.you.removed.legalhold" = "%@ були видалені з цієї розмови, тому що правовий режим було активовано.";
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Додати";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
+"error.connection.missing_legalhold_consent" = "Ви не можете додати цього користувача через правовий захист.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire потребує доступу до ваших фотографій";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Гість";
 "profile.details.group_admin" = "Адміністратор групи";
 "profile.details.partner" = "зовнішній";
+"profile.details.blocking_reason" = "Цей користувач заблокований через правовий захист. [ДІЗНАТИСЯ БІЛЬШЕ](%@)";
 
 "profile_view.accessibility.handle" = "Нік";
 "profile_view.accessibility.name" = "Власне ім'я";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Не вдалося видалити учасника(-цю)";
 "error.conversation.too_many_members" = "Розмова переповнена";
 "error.conversation.offline" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
+"error.conversation.missing_legalhold_consent" = "Тільки члени команди можуть бути додані до цієї розмови через правовий захист.";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 

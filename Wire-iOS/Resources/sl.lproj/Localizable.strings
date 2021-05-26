@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ je začel(-a) pogovor s/z %@";
 "content.system.conversation.other.added" = "%@ je dodal(-a) %@";
 "content.system.conversation.other.removed" = "%@ je odstranil(-a) %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ je zapustil(-a) pogovor";
 
 "content.system.conversation.you.started" = "%@ je začel(-a) pogovor s/z %@";
 "content.system.conversation.you.added" = "%@ je dodal(-a) %@";
 "content.system.conversation.you.removed" = "%@ je odstranil(-a) %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ je zapustil(-a) pogovor";
 "content.system.conversation.team.member-leave" = "%@ je bil(-a) odstranjen(-a) iz ekipe.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Poveži";
 "inbox.connection_request.connect_button_title" = "Poveži";
 "inbox.connection_request.ignore_button_title" = "Ignoriraj";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Gost";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Uporabniško ime";
 "profile_view.accessibility.name" = "Uporabniško ime";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
 "error.conversation.offline" = "Zdi se, da je problem z vašo spletno povezavo. Prosim preverite, če deluje.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Tapnite barve, da spremenite velikost čopiča";
 
