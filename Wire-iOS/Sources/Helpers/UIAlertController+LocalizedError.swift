@@ -35,7 +35,7 @@ extension UIAlertController {
 
     @objc
     public static func showErrorAlert(message: String) {
-        let alertController = UIAlertController(title: "error.conversation.title".localized,
+        let alertController = UIAlertController(title: L10n.Localizable.Error.Conversation.title,
                                                 message: message,
                                                 alertAction: .ok(style: .cancel))
 
