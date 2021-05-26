@@ -74,8 +74,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
     @objc
     func showErrorAlertForConnectionRequest() {
-        typealias ErrorString = L10n.Localizable.Error
-        UIAlertController.showErrorAlert(message: ErrorString.Connection.missingLegalholdConsent)
+        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Connection.missingLegalholdConsent)
     }
 
     func createSubviews() {
