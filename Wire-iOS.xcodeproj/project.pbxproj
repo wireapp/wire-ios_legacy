@@ -786,6 +786,9 @@
 		A92CA24924323E2600A29896 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CA24824323E2600A29896 /* Spinner.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
+		A92DC12C265E8CDA00D15576 /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3652477F3AC00236F9F /* Cartography */; };
+		A92DC12D265E8CDA00D15576 /* Cartography in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3672477F63100236F9F /* Cartography */; };
+		A92DC12E265E8CDA00D15576 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A938B3622477F19600236F9F /* SnapshotTesting */; };
 		A92E731C2407F54A007C1FFE /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		A92E731E2407F587007C1FFE /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E731D2407F587007C1FFE /* String+Localized.swift */; };
 		A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936A37E23D202F600136469 /* InvisibleInputAccessoryView.swift */; };
@@ -3329,7 +3332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
-				A938B3682477F63100236F9F /* Cartography in Frameworks */,
+				A92DC12D265E8CDA00D15576 /* Cartography in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3356,7 +3359,7 @@
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				87BEB0361D39018600DE9575 /* FormatterKit.framework in Frameworks */,
-				A938B3662477F3AC00236F9F /* Cartography in Frameworks */,
+				A92DC12C265E8CDA00D15576 /* Cartography in Frameworks */,
 				CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */,
 				878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */,
 			);
@@ -3371,7 +3374,7 @@
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
-				A938B3632477F19600236F9F /* SnapshotTesting in Frameworks */,
+				A92DC12E265E8CDA00D15576 /* SnapshotTesting in Frameworks */,
 				871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */,
 				871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */,
 			);
