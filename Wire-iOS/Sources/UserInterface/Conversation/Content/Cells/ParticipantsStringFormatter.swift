@@ -27,7 +27,8 @@ private extension ConversationActionType {
         case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
         case .added(herself: true): return "content.system.conversation.guest.joined"
         case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
-        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .removed(reason: .legalHoldPolicyConflict): return (localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser) + ".legalhold")
+        case .removed(reason: .none): return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
         case .teamMemberLeave: return "content.system.conversation.team.member-leave"
@@ -148,7 +149,7 @@ final class ParticipantsStringFormatter {
     }
 
     /// Title when the subject (sender) performing the action on objects (names).
-    func title(senderName: String, senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
+    func title(senderName: String, senderIsSelf: Bool, names: NameList, isSelfIncludedInUsers: Bool = false) -> NSAttributedString? {
         guard !names.names.isEmpty else { return nil }
 
         var result: NSAttributedString
@@ -156,7 +157,23 @@ final class ParticipantsStringFormatter {
         let nameSequence = format(names)
 
         switch message.actionType {
-        case .removed, .added(herself: false), .started(withName: .none):
+        case .removed(reason: .legalHoldPolicyConflict):
+            typealias Conversation = L10n.Localizable.Content.System.Conversation
+
+            var senderPath = names.names.count > 1 ? "others" : "other"
+            if isSelfIncludedInUsers {
+                senderPath = "you"
+            }
+            let formatString = "content.system.conversation.\(senderPath).removed.legalhold"
+            result = formatString.localized(args: nameSequence.string) && font && textColor
+            result = result.adding(font: boldFont, to: nameSequence.string)
+            let learnMore = NSAttributedString(string: L10n.Localizable.Content.System.MessageLegalHold.learnMore.uppercased(),
+                                               attributes: [.font: font,
+                                                            .link: URL.wr_legalHoldLearnMore.absoluteString as AnyObject,
+                                                            .foregroundColor: UIColor.from(scheme: .textForeground)])
+            return result += " " + learnMore
+
+        case .removed(reason: .none), .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
 

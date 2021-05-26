@@ -68,6 +68,9 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
+                  Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
+               </Test>
+               <Test
                   Identifier = "ConversationVideoMessageCellTests">
                </Test>
                <Test
@@ -81,6 +84,9 @@
                </Test>
                <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
+               </Test>
+               <Test
+                  Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
