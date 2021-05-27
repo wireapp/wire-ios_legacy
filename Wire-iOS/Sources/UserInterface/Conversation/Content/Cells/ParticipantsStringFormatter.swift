@@ -28,7 +28,7 @@ private extension ConversationActionType {
         case .added(herself: true): return "content.system.conversation.guest.joined"
         case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
         case .removed(reason: .legalHoldPolicyConflict): return (localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser) + ".legalhold")
-        case .removed(reason: .none): return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
+        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
         case .teamMemberLeave: return "content.system.conversation.team.member-leave"
@@ -173,7 +173,7 @@ final class ParticipantsStringFormatter {
                                                             .foregroundColor: UIColor.from(scheme: .textForeground)])
             return result += " " + learnMore
 
-        case .removed(reason: .none), .added(herself: false), .started(withName: .none):
+        case .removed, .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
 
