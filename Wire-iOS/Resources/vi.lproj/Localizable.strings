@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.other.added" = "%@ đã thêm %@";
 "content.system.conversation.other.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ còn lại";
 
 "content.system.conversation.you.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.you.added" = "%@ đã thêm %@";
 "content.system.conversation.you.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ còn lại";
 "content.system.conversation.team.member-leave" = "%@ đã bị xóa khỏi nhóm.";
 "content.system.conversation.guest.joined" = "%@ đã tham gia";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Kết nối";
 "inbox.connection_request.connect_button_title" = "Kết nối";
 "inbox.connection_request.ignore_button_title" = "Bỏ qua";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Khách";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Tên người dùng";
 "profile_view.accessibility.name" = "Hiển thị tên";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Cuộc hội thoại đã đầy";
 "error.conversation.offline" = "Có vẻ là một vấn đề với kết nối Internet của bạn. Vui lòng chắc chắn rằng nó hoạt động.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Chạm vào màu để đổi kích thước";
 

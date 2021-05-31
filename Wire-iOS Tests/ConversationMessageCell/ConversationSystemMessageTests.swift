@@ -77,6 +77,29 @@ final class ConversationSystemMessageTests: XCTestCase {
         verify(message: message, allColorSchemes: true)
     }
 
+    func testRemoveSelfUser_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 0, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+        let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        message.backingSystemMessageData.userTypes = Set([mockSelfUser])
+
+        verify(message: message, allColorSchemes: true)
+    }
+
+    func testRemoveParticipant_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+
+        verify(message: message, allColorSchemes: true)
+    }
+
+    func testRemoveManyParticipants_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 5, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+
+        verify(message: message, allColorSchemes: true)
+    }
+
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
         message.senderUser = SwiftMockLoader.mockUsers().last

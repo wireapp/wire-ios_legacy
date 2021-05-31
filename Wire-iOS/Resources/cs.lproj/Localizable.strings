@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ zahájil(a) konverzaci s %@";
 "content.system.conversation.other.added" = "%@ přidal %@";
 "content.system.conversation.other.removed" = "%@ odebrán %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ opustil(a) konverzaci";
 
 "content.system.conversation.you.started" = "%@ zahájil(a) konverzaci s %@";
 "content.system.conversation.you.added" = "%@ přidán %@";
 "content.system.conversation.you.removed" = "%@ odebrán %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ opustil(a) konverzaci";
 "content.system.conversation.team.member-leave" = "Uživatel %@ byl odstraněn z týmu.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Připojit";
 "inbox.connection_request.connect_button_title" = "Připojit";
 "inbox.connection_request.ignore_button_title" = "Ignorovat";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire potřebuje přístup k vašim fotografiím";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Host";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Uživatelské jméno";
 "profile_view.accessibility.name" = "Zobrazované jméno";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Odebrání uživatele se nezdařilo";
 "error.conversation.too_many_members" = "Konverzace je plná";
 "error.conversation.offline" = "Zdá se, že je zde problém s vaším připojením k internetu. Prosím ujistěte se, že je funguje.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Klepnutím na tlačítko barvy můžete měnit velikost stopy";
 

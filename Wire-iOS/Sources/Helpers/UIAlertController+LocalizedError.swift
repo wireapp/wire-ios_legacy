@@ -30,3 +30,16 @@ extension UIAlertController {
     }
 
 }
+
+extension UIAlertController {
+
+    @objc
+    public static func showErrorAlert(message: String) {
+        let alertController = UIAlertController(title: L10n.Localizable.Error.Conversation.title,
+                                                message: message,
+                                                alertAction: .ok(style: .cancel))
+
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
+    }
+
+}

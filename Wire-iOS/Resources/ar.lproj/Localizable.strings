@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ بدأ مُحادثة مع %@";
 "content.system.conversation.other.added" = "%@ أضاف %@";
 "content.system.conversation.other.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "غادر %@";
 
 "content.system.conversation.you.started" = "%@ بدأ مُحادثة مع %@";
 "content.system.conversation.you.added" = "%@ أضاف %@";
 "content.system.conversation.you.removed" = "قام %@ بإزالة %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "غادر %@";
 "content.system.conversation.team.member-leave" = "حُذِف %@ من الفريق.";
 "content.system.conversation.guest.joined" = "انضم %@";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "تواصل";
 "inbox.connection_request.connect_button_title" = "تواصل";
 "inbox.connection_request.ignore_button_title" = "تجاهل";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "يريد Wire الوصول لصورك";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "ضيف";
 "profile.details.group_admin" = "مدير المجموعة";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "مُعرّف";
 "profile_view.accessibility.name" = "اسم العرض";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "فشل حذف المشارك";
 "error.conversation.too_many_members" = "المحادثة مكتملة العدد";
 "error.conversation.offline" = "يبدو أن هناك مشكلة في اتصالك بالإنترنت. من فضلك تأكد من عمل الاتصال.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "انقر على الألوان لتغيير حجم الفرشة";
 

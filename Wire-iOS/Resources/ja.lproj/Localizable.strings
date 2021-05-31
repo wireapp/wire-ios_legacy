@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@と%@は会話を始めました";
 "content.system.conversation.other.added" = "%@は%@を追加しました";
 "content.system.conversation.other.removed" = "%@は%@を削除しました";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@が退出しました";
 
 "content.system.conversation.you.started" = "%@と%@は会話を始めました";
 "content.system.conversation.you.added" = "%@は%@を追加しました";
 "content.system.conversation.you.removed" = "%@は%@を削除しました";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@が退出しました";
 "content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
 "content.system.conversation.guest.joined" = "%@ 参加済";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "接続";
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "\"Wire\"が 写真へのアクセスを求めています。";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "ゲスト";
 "profile.details.group_admin" = "グループ管理者";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "ユーザーネーム";
 "profile_view.accessibility.name" = "表示名";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "参加者の削除に失敗しました";
 "error.conversation.too_many_members" = "会話数が上限に達しました。";
 "error.conversation.offline" = "インターネット接続に問題があるようです。インターネット接続を確認してください。";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "色をタップしてブラシのサイズを変更します";
 

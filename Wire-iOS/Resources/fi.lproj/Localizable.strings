@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ aloitti keskustelun %@ n kanssa";
 "content.system.conversation.other.added" = "%@ lisäsi %@ n";
 "content.system.conversation.other.removed" = "%@ poisti %@ n";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ poistui";
 
 "content.system.conversation.you.started" = "%@ aloitti keskustelun %@ n kanssa";
 "content.system.conversation.you.added" = "%@ lisäsi %@ n";
 "content.system.conversation.you.removed" = "%@ poisti %@ n";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ poistui";
 "content.system.conversation.team.member-leave" = "%@ poistettiin tiimistä.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Yhdistä";
 "inbox.connection_request.connect_button_title" = "Yhdistä";
 "inbox.connection_request.ignore_button_title" = "Hylkää";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Vieras";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Käyttäjänimi";
 "profile_view.accessibility.name" = "Näyttönimi";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
 "error.conversation.offline" = "Vaikuttaa että Internet-yhteydessäsi on jokin ongelma. Varmista, että se toimii.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Napauta värejä vaihtaaksesi siveltimen kokoa";
 

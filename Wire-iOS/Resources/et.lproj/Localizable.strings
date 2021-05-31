@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ alustas vestlust kasutajaga %@";
 "content.system.conversation.other.added" = "%@ lisas kasutaja %@";
 "content.system.conversation.other.removed" = "%@ eemaldas kasutaja %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ lahkus";
 
 "content.system.conversation.you.started" = "%@ alustas vestlust kasutajaga %@";
 "content.system.conversation.you.added" = "%@ lisas kasutaja %@";
 "content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ lahkus";
 "content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
 "content.system.conversation.guest.joined" = "%@ liitus";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Lisa kontakt";
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
 "inbox.connection_request.ignore_button_title" = "Ignoreeri";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Külaline";
 "profile.details.group_admin" = "Grupi admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Kasutajanimi";
 "profile_view.accessibility.name" = "Kuvatav nimi";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Osaleja eemaldamine ebaõnnestus";
 "error.conversation.too_many_members" = "Vestlus on täis";
 "error.conversation.offline" = "Tundub, et sinu internetiühendusega on probleem. Palun kontrolli ühendust.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Vajuta värvidel, et muuta pintsli suurust";
 

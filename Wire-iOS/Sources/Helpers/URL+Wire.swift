@@ -180,6 +180,10 @@ extension URL {
         }
     }
 
+    static var wr_legalHoldLearnMore: URL {
+        return wr_support.appendingPathComponent("hc/articles/360002018278-What-is-legal-hold-")
+    }
+
 }
 
 extension NSURL {

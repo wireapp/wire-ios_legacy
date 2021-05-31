@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ (가)이 %@ 과(와) 대화를 시작하셨습니다.";
 "content.system.conversation.other.added" = "%@ (이) 가 %@를 초대하였습니다";
 "content.system.conversation.other.removed" = "%@ (이) 가 %@ (을) 를 삭제하였습니다";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ left";
 
 "content.system.conversation.you.started" = "%@ (가)이 %@ 과(와) 대화를 시작하셨습니다.";
 "content.system.conversation.you.added" = "%@ (이) 가 %@를 초대하였습니다";
 "content.system.conversation.you.removed" = "%@ (이) 가 %@ (을) 를 삭제하였습니다";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ left";
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "연결하기";
 "inbox.connection_request.connect_button_title" = "연결하기";
 "inbox.connection_request.ignore_button_title" = "Ignore";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Guest";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Display name";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "대화방 참가자 수가 가득 찼습니다.";
 "error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Tap colors to change brush size";
 

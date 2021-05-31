@@ -21,43 +21,55 @@ import XCTest
 
 final class URLActionRouterTests: XCTestCase {
 
-    func testThatDeepLinkIsNotOpened_WhenDeepLinkIsNotValid() {
+    // MARK: Presenting Alerts
+
+    func testThatAlertIsPresented_WhenCanDisplayAlertsReturnsTrue() {
         // GIVEN
-        let invalidDeepLinkUrl = URL(string: "wire://invalidDeepLinkUrl")!
-        let router =  TestableURLActionRouter(viewController: RootViewController())
-        router.testHelper_setUrl(invalidDeepLinkUrl)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
 
         // WHEN
-        router.openDeepLink(for: .authenticated(completedRegistration: true))
+        router.presentAlert(alert)
 
         // THEN
-        XCTAssertFalse(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, alert)
     }
 
-    func testThatDeepLinkIsOpened_WhenDeepLinkIsValidAndAppStateValid() {
+    func testThatAlertIsNotPresented_WhenCanDisplayAlertsReturnsFalse() {
         // GIVEN
-        let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
-        let router =  TestableURLActionRouter(viewController: RootViewController())
-        router.testHelper_setUrl(validDeepLink)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        delegate.canDisplayAlerts = false
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
 
         // WHEN
-        router.openDeepLink(for: .authenticated(completedRegistration: true))
+        router.presentAlert(alert)
 
         // THEN
-        XCTAssertTrue(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, nil)
     }
 
-    func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndAppStateInvalid() {
+    func testThatPendingAlertIsPresented_WhenPerformPendingActionsIsCalled() {
         // GIVEN
-        let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
-        let router =  TestableURLActionRouter(viewController: RootViewController())
-        router.testHelper_setUrl(validDeepLink)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        delegate.canDisplayAlerts = false
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
+        router.presentAlert(alert)
 
         // WHEN
-        router.openDeepLink(for: .migrating)
+        delegate.canDisplayAlerts = true
+        router.performPendingActions()
 
         // THEN
-        XCTAssertFalse(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, alert)
     }
 
     // MARK: Navigation
@@ -85,6 +97,7 @@ final class URLActionRouterTests: XCTestCase {
 
         // WHEN
         router.authenticatedRouter = authenticatedRouter
+        router.performPendingActions()
 
         // THEN
         guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
@@ -106,10 +119,24 @@ class MockAuthenticatedRouter: AuthenticatedRouterProtocol {
 
 }
 
+class MockURLActionRouterDelegate: URLActionRouterDelegate {
+
+    var didCallWillShowCompanyLoginError: Bool = false
+    func urlActionRouterWillShowCompanyLoginError() {
+        didCallWillShowCompanyLoginError = true
+    }
+
+    var canDisplayAlerts: Bool = true
+    func urlActionRouterCanDisplayAlerts() -> Bool {
+        return canDisplayAlerts
+    }
+
+}
+
 class TestableURLActionRouter: URLActionRouter {
-    var wasDeepLinkOpened = false
-    override func open(url: URL) -> Bool {
-        wasDeepLinkOpened = true
-        return wasDeepLinkOpened
+
+    var presentedAlert: UIAlertController?
+    override func internalPresentAlert(_ alert: UIAlertController) {
+        presentedAlert = alert
     }
 }

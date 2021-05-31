@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ begon een gesprek met %@";
 "content.system.conversation.other.added" = "%@ heeft %@ toegevoegd";
 "content.system.conversation.other.removed" = "%@ verwijderde %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ verliet";
 
 "content.system.conversation.you.started" = "%@ begon een gesprek met %@";
 "content.system.conversation.you.added" = "%@ heeft %@ toegevoegd";
 "content.system.conversation.you.removed" = "%@ verwijderde %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ verliet";
 "content.system.conversation.team.member-leave" = "%@ was verwijderd van het team.";
 "content.system.conversation.guest.joined" = "%@ joined";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Uitnodigen";
 "inbox.connection_request.connect_button_title" = "Uitnodigen";
 "inbox.connection_request.ignore_button_title" = "Negeer";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire heeft toegang nodig tot jouw foto's";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Gast";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Gebruikersnaam";
 "profile_view.accessibility.name" = "Weergavenaam";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Het gesprek is vol";
 "error.conversation.offline" = "Er lijkt een probleem te zijn met je internetverbinding. Controleer of deze werkt.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Klik op de kleuren om de penseelgrootte te veranderen";
 
