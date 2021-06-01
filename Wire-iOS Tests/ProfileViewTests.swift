@@ -59,7 +59,7 @@ final class ProfileViewTests: ZMSnapshotTestCase {
 
     // MARK: - Helpers
 
-    func verifyProfile(options: ProfileHeaderViewController.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
+    func verifyProfile(options: ProfileHeaderViewController.Options, availability: AvailabilityKind = .available, file: StaticString = #file, line: UInt = #line) {
         let selfUser = MockUserType.createSelfUser(name: "selfUser", inTeam: UUID())
         selfUser.teamName = "Stunning"
         selfUser.handle = "browncow"

@@ -90,7 +90,7 @@
 @property (nonatomic) ZMAddressBookContact *contact;
 @property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
-@property (nonatomic, readwrite) Availability availability;
+@property (nonatomic, readwrite) AvailabilityKind availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
 @property (nonatomic) NSUUID *teamIdentifier;
