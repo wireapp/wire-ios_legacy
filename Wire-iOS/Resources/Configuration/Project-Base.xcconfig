@@ -49,7 +49,7 @@ LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/
 
 // Search Paths
 //
-FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/**
 HEADER_SEARCH_PATHS = $(inherited) "$(TARGET_TEMP_DIR)/DerivedSources"
 ALWAYS_SEARCH_USER_PATHS = NO
 
