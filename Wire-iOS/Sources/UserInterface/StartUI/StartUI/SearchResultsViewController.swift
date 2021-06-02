@@ -180,7 +180,7 @@ final class SearchResultsViewController: UIViewController {
 
     deinit {
         searchDirectory?.tearDown()
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
 
     init(userSelection: UserSelection,
@@ -217,7 +217,7 @@ final class SearchResultsViewController: UIViewController {
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
 
-        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
@@ -233,6 +233,13 @@ final class SearchResultsViewController: UIViewController {
         super.viewWillAppear(animated)
         sectionController.collectionView?.reloadData()
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {
