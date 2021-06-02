@@ -239,7 +239,7 @@ final class SearchResultsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     override func viewDidLoad() {
