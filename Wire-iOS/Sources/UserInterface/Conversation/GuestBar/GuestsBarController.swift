@@ -58,7 +58,7 @@ final class GuestsBarController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .clear
-        container.backgroundColor = UIColor.from(scheme: .utilityNeutral)
+        container.backgroundColor = .accent()
         container.clipsToBounds = true
         container.addSubview(label)
         view.addSubview(container)
