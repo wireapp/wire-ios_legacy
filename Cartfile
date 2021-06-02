@@ -8,4 +8,4 @@ github "wireapp/appcenter-sdk-apple" "3.3.4_xcframework"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/Down" "v2.3.0_xcframework"
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
-github "wireapp/countly-sdk-ios" ~> 20.11.1
+github "wireapp/countly-sdk-ios" "20.11.1_xcframework"
