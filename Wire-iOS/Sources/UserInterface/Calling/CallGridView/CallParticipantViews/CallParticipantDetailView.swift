@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-final class CallParticipantDetailsView: UIView {
+final class CallParticipantDetailsView: RoundedBlurView {
     private let nameLabel = UILabel(
         key: nil,
         size: .medium,
@@ -28,7 +28,6 @@ final class CallParticipantDetailsView: UIView {
         variant: .dark
     )
 
-    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let microphoneIconView = PulsingIconImageView()
 
     var name: String? {
@@ -43,36 +42,21 @@ final class CallParticipantDetailsView: UIView {
         }
     }
 
-    init() {
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupViews() {
-        layer.cornerRadius = 12
-        blurView.layer.cornerRadius = 12
-
+    override func setupViews() {
+        super.setupViews()
+        setCornerRadius(12)
         microphoneIconView.set(size: .tiny, color: .white)
 
-        [blurView, microphoneIconView, nameLabel].forEach {
+        [microphoneIconView, nameLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.clipsToBounds = true
             addSubview($0)
         }
     }
 
-    func createConstraints() {
+    override func createConstraints() {
+        super.createConstraints()
+
         NSLayoutConstraint.activate([
-            blurView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: topAnchor),
-            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: microphoneIconView.trailingAnchor, constant: 4),
