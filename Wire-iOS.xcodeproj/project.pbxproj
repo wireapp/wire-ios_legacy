@@ -9369,7 +9369,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				VALIDATE_WORKSPACE = YES;
 			};
@@ -9387,7 +9387,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				VALIDATE_WORKSPACE = NO;
 			};
