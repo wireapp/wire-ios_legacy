@@ -143,6 +143,8 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isBlocked: Bool = false
 
+    var blockState: ZMBlockState = .none
+
     var isIgnored: Bool = false
 
     var isPendingApprovalBySelfUser: Bool = false

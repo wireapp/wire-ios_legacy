@@ -1049,6 +1049,26 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [])
     }
 
+    // MARK: - Blocking Connection
+
+    func test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1() {
+        // GIVEN
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        otherUser.isConnected = false
+        otherUser.readReceiptsEnabled = true
+        otherUser.isGuestInConversation = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.isBlocked = true
+        otherUser.blockState = .blockedMissingLegalholdConsent
+
+        let conversation = MockConversation.groupConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [.blockingReason])
+    }
+
     // MARK: Deep Link
 
     func test_ProfileViewer_OtherUserIsGuest() {

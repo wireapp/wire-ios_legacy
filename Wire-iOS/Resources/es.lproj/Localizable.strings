@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ inició un chat con %@";
 "content.system.conversation.other.added" = "%@ añadió a %@";
 "content.system.conversation.other.removed" = "%@ eliminó a %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ se fue";
 
 "content.system.conversation.you.started" = "%@ inició un chat con %@";
 "content.system.conversation.you.added" = "%@ añadió a %@";
 "content.system.conversation.you.removed" = "%@ eliminó a %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ se fue";
 "content.system.conversation.team.member-leave" = "%@ fue eliminado del equipo.";
 "content.system.conversation.guest.joined" = "%@ se ha unido";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "Conectar";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire necesita acceder a tus fotos";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "Invitado";
 "profile.details.group_admin" = "Administración de grupo";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Nombre de usuario";
 "profile_view.accessibility.name" = "Nombre a mostrar";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "La conversación está llena";
 "error.conversation.offline" = "Parece haber un problema con tu conexión a Internet. Por favor, asegúrate de que está funcionando.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Pulsa en los colores para cambiar el tamaño del pincel";
 

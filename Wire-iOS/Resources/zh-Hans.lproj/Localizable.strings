@@ -444,11 +444,14 @@
 "content.system.conversation.other.started" = "%@ 和 %@ 开始了聊天";
 "content.system.conversation.other.added" = "%@加了%@";
 "content.system.conversation.other.removed" = "%@移除了%@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ 离开了";
 
 "content.system.conversation.you.started" = "%@和%@开始了聊天";
 "content.system.conversation.you.added" = "%@加了%@";
 "content.system.conversation.you.removed" = "%@移除了%@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ 离开了";
 "content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
@@ -619,6 +622,7 @@
 "connection_request.send_button_title" = "新增好友";
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
@@ -875,6 +879,7 @@
 "profile.details.guest" = "游客";
 "profile.details.group_admin" = "群组管理员";
 "profile.details.partner" = "外部合作者";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "用户名";
 "profile_view.accessibility.name" = "昵称";
@@ -1613,6 +1618,7 @@
 "error.conversation.cannot_remove" = "移除参与者失败";
 "error.conversation.too_many_members" = "对话人数已达上限";
 "error.conversation.offline" = "您的互联网连线似乎出现了问题。请确保您有网路连线。";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "点击颜色更换画笔大小";
 
