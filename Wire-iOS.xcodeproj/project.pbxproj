@@ -9304,7 +9304,7 @@
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = "i386 arm64";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build",
