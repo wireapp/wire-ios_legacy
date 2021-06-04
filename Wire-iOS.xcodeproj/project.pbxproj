@@ -838,11 +838,8 @@
 		A986827C2666E1830064581B /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A986827B2666E1830064581B /* OCMock.xcframework */; };
 		A986827F2666E2E70064581B /* FBSnapshotTestCase.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A986827E2666E2E70064581B /* FBSnapshotTestCase.xcframework */; };
 		A98682822666E40D0064581B /* WireRequestStrategy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE197266657AE00E713FC /* WireRequestStrategy.xcframework */; };
-		A98682832666E40D0064581B /* WireRequestStrategy.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE197266657AE00E713FC /* WireRequestStrategy.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A98682872666E64E0064581B /* Countly.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98682862666E64E0064581B /* Countly.xcframework */; };
-		A98682882666E64E0064581B /* Countly.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A98682862666E64E0064581B /* Countly.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A986828E2667813F0064581B /* Cartography.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; };
-		A986828F2667813F0064581B /* Cartography.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9868294266784810064581B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = A9868293266784810064581B /* SnapshotTesting */; };
 		A98CD44E24C74C9F00EAC484 /* UIColor+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CD44D24C74C9F00EAC484 /* UIColor+Const.swift */; };
 		A98CF97425A47295008818D8 /* ConversationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CF97325A47295008818D8 /* ConversationProtocol.swift */; };
@@ -853,47 +850,25 @@
 		A99E3E912519F3A300E4FD3E /* AnalyticsCountlyProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99E3E8E2519F2B800E4FD3E /* AnalyticsCountlyProviderTests.swift */; };
 		A99E3E922519F41500E4FD3E /* AnalyticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0ACA91FA20D7C001B2B9D /* AnalyticsTests.swift */; };
 		A99EE1A8266657B000E713FC /* WireImages.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE193266657AE00E713FC /* WireImages.xcframework */; };
-		A99EE1A9266657B000E713FC /* WireImages.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE193266657AE00E713FC /* WireImages.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1AA266657B000E713FC /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE194266657AE00E713FC /* WireSystem.xcframework */; };
-		A99EE1AB266657B000E713FC /* WireSystem.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE194266657AE00E713FC /* WireSystem.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1AC266657B000E713FC /* WireTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE195266657AE00E713FC /* WireTransport.xcframework */; };
-		A99EE1AD266657B000E713FC /* WireTransport.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE195266657AE00E713FC /* WireTransport.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1AE266657B000E713FC /* WireLinkPreview.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE196266657AE00E713FC /* WireLinkPreview.xcframework */; };
-		A99EE1AF266657B000E713FC /* WireLinkPreview.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE196266657AE00E713FC /* WireLinkPreview.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1B0266657B000E713FC /* WireRequestStrategy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE197266657AE00E713FC /* WireRequestStrategy.xcframework */; };
-		A99EE1B1266657B000E713FC /* WireRequestStrategy.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE197266657AE00E713FC /* WireRequestStrategy.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1B2266657B000E713FC /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE198266657AE00E713FC /* WireUtilities.xcframework */; };
-		A99EE1B3266657B000E713FC /* WireUtilities.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE198266657AE00E713FC /* WireUtilities.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1B4266657B000E713FC /* avs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE199266657AE00E713FC /* avs.xcframework */; };
-		A99EE1B5266657B000E713FC /* avs.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE199266657AE00E713FC /* avs.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1B6266657B100E713FC /* WireCryptobox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19A266657AE00E713FC /* WireCryptobox.xcframework */; };
-		A99EE1B7266657B100E713FC /* WireCryptobox.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19A266657AE00E713FC /* WireCryptobox.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1B8266657B100E713FC /* ZipArchive.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19B266657AF00E713FC /* ZipArchive.xcframework */; };
-		A99EE1B9266657B100E713FC /* ZipArchive.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19B266657AF00E713FC /* ZipArchive.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1BA266657B100E713FC /* Ziphy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19C266657AF00E713FC /* Ziphy.xcframework */; };
-		A99EE1BB266657B100E713FC /* Ziphy.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19C266657AF00E713FC /* Ziphy.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1BC266657B100E713FC /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
-		A99EE1BD266657B100E713FC /* WireSyncEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1BE266657B100E713FC /* WireCanvas.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19E266657AF00E713FC /* WireCanvas.xcframework */; };
-		A99EE1BF266657B100E713FC /* WireCanvas.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19E266657AF00E713FC /* WireCanvas.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		A99EE1C0266657B100E713FC /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19F266657AF00E713FC /* WireTesting.xcframework */; };
-		A99EE1C1266657B100E713FC /* WireTesting.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19F266657AF00E713FC /* WireTesting.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1C2266657B100E713FC /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A0266657AF00E713FC /* PINCache.xcframework */; };
-		A99EE1C3266657B200E713FC /* PINCache.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A0266657AF00E713FC /* PINCache.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1C4266657B200E713FC /* WireProtos.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A1266657AF00E713FC /* WireProtos.xcframework */; };
-		A99EE1C5266657B200E713FC /* WireProtos.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A1266657AF00E713FC /* WireProtos.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1C6266657B200E713FC /* HTMLString.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A2266657AF00E713FC /* HTMLString.xcframework */; };
-		A99EE1C7266657B200E713FC /* HTMLString.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A2266657AF00E713FC /* HTMLString.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1C8266657B200E713FC /* Cartography.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; };
-		A99EE1C9266657B200E713FC /* Cartography.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1CA266657B200E713FC /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
-		A99EE1CB266657B200E713FC /* WireShareEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1CC266657B200E713FC /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
-		A99EE1CD266657B200E713FC /* WireDataModel.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1CE266657B300E713FC /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
-		A99EE1CF266657B300E713FC /* SwiftProtobuf.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1D0266657B300E713FC /* libPhoneNumber.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A7266657B000E713FC /* libPhoneNumber.xcframework */; };
-		A99EE1D1266657B300E713FC /* libPhoneNumber.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A7266657B000E713FC /* libPhoneNumber.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE1D62666587D00E713FC /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		A99EE1DC2666589D00E713FC /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A0266657AF00E713FC /* PINCache.xcframework */; };
 		A99EE1E2266658AB00E713FC /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
@@ -924,13 +899,9 @@
 		A99EE2132666666400E713FC /* DifferenceKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE2122666666400E713FC /* DifferenceKit.xcframework */; };
 		A99EE2142666666400E713FC /* DifferenceKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE2122666666400E713FC /* DifferenceKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A99EE21C2666684600E713FC /* FLAnimatedImage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE2172666682200E713FC /* FLAnimatedImage.xcframework */; };
-		A99EE21D2666684600E713FC /* FLAnimatedImage.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE2172666682200E713FC /* FLAnimatedImage.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A99EE22226666A9600E713FC /* FormatterKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22126666A9600E713FC /* FormatterKit.xcframework */; };
-		A99EE22326666A9600E713FC /* FormatterKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22126666A9600E713FC /* FormatterKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A99EE22726666FC700E713FC /* Down.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; };
-		A99EE22826666FC700E713FC /* Down.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A99EE238266680FE00E713FC /* libcmark.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE237266680FE00E713FC /* libcmark.xcframework */; };
-		A99EE239266680FE00E713FC /* libcmark.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE237266680FE00E713FC /* libcmark.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A99EE23B2666824200E713FC /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
 		A9A3B1EB24D823CC001AF38E /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1E824D823CB001AF38E /* UnlockViewController.swift */; };
 		A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B1F224D9A009001AF38E /* WipeCompletionViewController.swift */; };
@@ -1637,7 +1608,6 @@
 		F1FDF2C421ADA3A600E037A1 /* OtherImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1FDF2C321ADA3A600E037A1 /* OtherImages.xcassets */; };
 		F1FDF2C621ADA3FA00E037A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1FDF2C521ADA3F000E037A1 /* Images.xcassets */; };
 		F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
-		F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 /* End PBXBuildFile section */
 
@@ -1673,43 +1643,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1EE85C681B5F96FC008E084B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				A99EE1B5266657B000E713FC /* avs.xcframework in Embed Frameworks */,
-				A99EE1AD266657B000E713FC /* WireTransport.xcframework in Embed Frameworks */,
-				A99EE1AB266657B000E713FC /* WireSystem.xcframework in Embed Frameworks */,
-				A99EE22826666FC700E713FC /* Down.xcframework in Embed Frameworks */,
-				A99EE22326666A9600E713FC /* FormatterKit.xcframework in Embed Frameworks */,
-				A99EE1C1266657B100E713FC /* WireTesting.xcframework in Embed Frameworks */,
-				A99EE21D2666684600E713FC /* FLAnimatedImage.xcframework in Embed Frameworks */,
-				A98682882666E64E0064581B /* Countly.xcframework in Embed Frameworks */,
-				A99EE1CB266657B200E713FC /* WireShareEngine.xcframework in Embed Frameworks */,
-				A99EE1C3266657B200E713FC /* PINCache.xcframework in Embed Frameworks */,
-				A99EE1AF266657B000E713FC /* WireLinkPreview.xcframework in Embed Frameworks */,
-				A99EE1C9266657B200E713FC /* Cartography.xcframework in Embed Frameworks */,
-				A99EE1CF266657B300E713FC /* SwiftProtobuf.xcframework in Embed Frameworks */,
-				A99EE1C7266657B200E713FC /* HTMLString.xcframework in Embed Frameworks */,
-				A99EE1BB266657B100E713FC /* Ziphy.xcframework in Embed Frameworks */,
-				A99EE1CD266657B200E713FC /* WireDataModel.xcframework in Embed Frameworks */,
-				A99EE1A9266657B000E713FC /* WireImages.xcframework in Embed Frameworks */,
-				A99EE1B7266657B100E713FC /* WireCryptobox.xcframework in Embed Frameworks */,
-				A99EE1B9266657B100E713FC /* ZipArchive.xcframework in Embed Frameworks */,
-				A99EE1B3266657B000E713FC /* WireUtilities.xcframework in Embed Frameworks */,
-				A99EE1C5266657B200E713FC /* WireProtos.xcframework in Embed Frameworks */,
-				A99EE1BF266657B100E713FC /* WireCanvas.xcframework in Embed Frameworks */,
-				F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */,
-				A99EE239266680FE00E713FC /* libcmark.xcframework in Embed Frameworks */,
-				A99EE1D1266657B300E713FC /* libPhoneNumber.xcframework in Embed Frameworks */,
-				A99EE1B1266657B000E713FC /* WireRequestStrategy.xcframework in Embed Frameworks */,
-				A99EE1BD266657B100E713FC /* WireSyncEngine.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1EE9DC6B1B5F983600E347DF /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1728,18 +1661,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98682842666E40D0064581B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				A986828F2667813F0064581B /* Cartography.xcframework in Embed Frameworks */,
-				A98682832666E40D0064581B /* WireRequestStrategy.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A99EE1EA266658D500E713FC /* Embed Frameworks */ = {
@@ -3491,7 +3412,6 @@
 				A99EE1B2266657B000E713FC /* WireUtilities.xcframework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				A99EE1C2266657B100E713FC /* PINCache.xcframework in Frameworks */,
-				A99EE1C0266657B100E713FC /* WireTesting.xcframework in Frameworks */,
 				A99EE1CC266657B200E713FC /* WireDataModel.xcframework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				A99EE1CA266657B200E713FC /* WireShareEngine.xcframework in Frameworks */,
@@ -7260,7 +7180,6 @@
 				168A16A51D9597C2005CFA6C /* Sources */,
 				168A16A61D9597C2005CFA6C /* Frameworks */,
 				168A16A71D9597C2005CFA6C /* Resources */,
-				A98682842666E40D0064581B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -7281,7 +7200,6 @@
 				8F42C536199244A700288E4D /* Resources */,
 				160EABBA1D47BD7200F83CA7 /* Copy Extra Audio Notifications */,
 				5E055B28228AAF1500E91314 /* Embed Internal Resources */,
-				1EE85C681B5F96FC008E084B /* Embed Frameworks */,
 				873AA0501D05A74B0038343B /* Strip BitCode */,
 				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
 				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
@@ -9360,10 +9278,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					"$(NATIVE_ARCH)",
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = i386;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9379,10 +9294,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					"$(NATIVE_ARCH)",
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/**",
