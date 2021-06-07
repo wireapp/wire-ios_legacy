@@ -24,7 +24,9 @@ class RoundedPageIndicator: RoundedBlurView {
 
     override func setupViews() {
         super.setupViews()
+        isHidden = true
         setCornerRadius(12)
+        clipsToBounds = true
 
         addSubview(pageControl)
         pageControl.currentPageIndicatorTintColor = .accent()
@@ -38,6 +40,24 @@ class RoundedPageIndicator: RoundedBlurView {
     override func createConstraints() {
         super.createConstraints()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.fitIn(view: self, insets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+
+        NSLayoutConstraint.activate([
+            pageControl.centerYAnchor.constraint(equalTo: centerYAnchor),
+            pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+        ])
+    }
+
+    var numberOfPages: Int = 0 {
+        didSet {
+            pageControl.numberOfPages = numberOfPages
+            isHidden = numberOfPages <= 1
+        }
+    }
+
+    var currentPage: Int = 0 {
+        didSet {
+            pageControl.currentPage = currentPage
+        }
     }
 }
