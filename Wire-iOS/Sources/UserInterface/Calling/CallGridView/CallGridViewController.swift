@@ -44,7 +44,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var dataSource: [Stream] = []
     private var maximizedView: BaseCallParticipantView?
-    private let gridView = GridView()
+    private let gridView = GridView(maxItemsPerPage: 8)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let hintView = CallGridHintNotificationLabel()
@@ -109,6 +109,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private func setupViews() {
         gridView.dataSource = self
+        gridView.gridViewDelegate = self
         view.addSubview(gridView)
 
         addToSelf(thumbnailViewController)
@@ -120,9 +121,6 @@ final class CallGridViewController: SpinnerCapableViewController {
         topStack.addArrangedSubview(hintView)
 
         view.addSubview(pageIndicator)
-        pageIndicator.pageControl.numberOfPages = 5
-        pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
-
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
@@ -132,17 +130,22 @@ final class CallGridViewController: SpinnerCapableViewController {
         }
 
         [gridView, thumbnailViewController.view].forEach {
-            $0?.fitInSuperview()
+            $0.fitIn(view: view)
         }
+
+        let pageIndicatorHeight: CGFloat = 24
 
         NSLayoutConstraint.activate([
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
-            pageIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            pageIndicator.heightAnchor.constraint(equalToConstant: pageIndicatorHeight),
+            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -(pageIndicatorHeight / 2 + 10))
         ])
+
+        pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
     }
 
     // MARK: - Public Interface
@@ -316,6 +319,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             gridView.reload(using: changeSet) { dataSource = $0 }
         }
 
+        pageIndicator.numberOfPages = gridView.numberOfPages
         updateStates(with: dataSource)
         pruneCache()
     }
@@ -449,6 +453,14 @@ extension CallGridViewController: UICollectionViewDataSource {
             viewCache[streamId] = view
             return view
         }
+    }
+}
+
+// MARK: - GridViewDelegate
+
+extension CallGridViewController: GridViewDelegate {
+    func gridViewPageDidChange(to index: Int) {
+        pageIndicator.currentPage = index
     }
 }
 
