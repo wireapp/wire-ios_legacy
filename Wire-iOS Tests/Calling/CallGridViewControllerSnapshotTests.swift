@@ -138,4 +138,21 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         // then
         verify(matching: sut)
     }
+
+    func testPagingIndicator() {
+        configuration.streams = [
+            stubProvider.stream(user: MockUserType.createUser(name: "Alice")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Bob")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Carol")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Chuck")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Craig")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Dan")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Erin")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Eve")),
+            stubProvider.stream(user: MockUserType.createUser(name: "Faythe"))
+        ]
+        createSut()
+
+        verify(matching: sut)
+    }
 }
