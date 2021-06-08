@@ -232,10 +232,6 @@ final class SearchResultsViewController: UIViewController {
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
