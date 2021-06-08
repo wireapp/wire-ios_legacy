@@ -230,13 +230,10 @@ final class SearchResultsViewController: UIViewController {
         super.viewWillAppear(animated)
         sectionController.collectionView?.reloadData()
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     override func viewDidLoad() {
@@ -247,11 +244,6 @@ final class SearchResultsViewController: UIViewController {
         updateVisibleSections()
 
         searchResultsView.emptyResultContainer.isHidden = !isResultEmpty
-    }
-
-    @objc
-    func showErrorAlertForConnectionRequest() {
-        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Connection.missingLegalholdConsent)
     }
 
     @objc

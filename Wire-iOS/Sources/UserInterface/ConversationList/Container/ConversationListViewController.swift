@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum ConversationListState {
     case conversationList
@@ -83,6 +84,10 @@ final class ConversationListViewController: UIViewController {
         return conversationListOnboardingHint
     }()
 
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
+    }
+
     convenience init(account: Account, selfUser: SelfUserType) {
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
 
@@ -133,7 +138,7 @@ final class ConversationListViewController: UIViewController {
         /// update
         hideNoContactLabel(animated: false)
 
-        viewModel.setupObservers()
+        setupObservers()
 
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
     }
@@ -193,6 +198,16 @@ final class ConversationListViewController: UIViewController {
     }
 
     // MARK: - setup UI
+
+    private func setupObservers() {
+        viewModel.setupObservers()
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
+    }
+
+    @objc
+    func showErrorAlertForConnectionRequest() {
+        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Connection.missingLegalholdConsent)
+    }
 
     private func setupTopBar() {
         add(topBarViewController, to: contentContainer)

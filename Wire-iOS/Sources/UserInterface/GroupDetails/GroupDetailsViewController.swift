@@ -44,10 +44,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         return ColorScheme.default.statusBarStyle
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     init(conversation: GroupDetailsConversationType) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
@@ -64,17 +60,11 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                 }
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
     }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc
-    func showErrorAlertForConnectionRequest() {
-        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Connection.missingLegalholdConsent)
     }
 
     func createSubviews() {
