@@ -46,7 +46,7 @@ final class GridView: UICollectionView {
     // MARK: - Private Properties
 
     private let layout = UICollectionViewFlowLayout()
-    let maxItemsPerPage: Int
+    private let maxItemsPerPage: Int
 
     // MARK: - Initialization
 
@@ -133,8 +133,12 @@ private extension GridView {
             return 0
         }
 
-        let numberOfItemsRemaining = numberOfItems - indexPath.row
-        return numberOfItemsRemaining > maxItemsPerPage ? maxItemsPerPage : numberOfItemsRemaining
+        // The result will be floored because the operation is on two Ints. This makes pages start from 0.
+        let page = indexPath.row / maxItemsPerPage
+
+        let itemsInPastPages = page * maxItemsPerPage
+        let itemsRemaining = numberOfItems - itemsInPastPages
+        return itemsRemaining > maxItemsPerPage ? maxItemsPerPage : itemsRemaining
     }
 
     func numberOfItemsIn(_ segmentType: SegmentType, for indexPath: IndexPath) -> Int {
@@ -233,7 +237,7 @@ extension GridView: UIScrollViewDelegate {
             return
         }
 
-        gridViewDelegate?.gridViewPageDidChange(to: Int(ceil(index)))
+        gridViewDelegate?.gridViewPageDidChange(to: Int(index))
     }
 
 }

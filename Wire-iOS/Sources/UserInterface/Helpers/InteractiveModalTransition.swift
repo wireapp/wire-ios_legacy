@@ -156,8 +156,7 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
 
     init(viewController: UIViewController,
          configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3),
-         enableDismissOnPan: Bool = true)
-    {
+         enableDismissOnPan: Bool = true) {
         self.viewController = viewController
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
