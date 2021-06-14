@@ -144,12 +144,12 @@ extension URLActionRouter: PresentationDelegate {
         typealias UrlAction = L10n.Localizable.UrlAction
         switch action {
         case .connectBot:
-            presentConfirmAlert(title: UrlAction.title, message: UrlAction.ConnectToBot.message, decisionHandler: decisionHandler)
+            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.ConnectToBot.message, decisionHandler: decisionHandler)
         case .accessBackend(configurationURL: let configurationURL):
             guard SecurityFlags.customBackend.isEnabled else { return }
             presentCustomBackendAlert(with: configurationURL)
         case .joinConversation:
-            presentConfirmAlert(title: UrlAction.title, message: UrlAction.JoinConversation.message, decisionHandler: decisionHandler)
+            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.JoinConversation.message, decisionHandler: decisionHandler)
         default:
             decisionHandler(true)
         }
@@ -176,23 +176,16 @@ extension URLActionRouter: PresentationDelegate {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
 
-    private func presentConfirmAlert(title: String, message:String, decisionHandler: @escaping (Bool) -> Void) {
+    private func presentConfirmationAlert(title: String, message:String, decisionHandler: @escaping (Bool) -> Void) {
+
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
 
-        let agreeAction = UIAlertAction(title: L10n.Localizable.UrlAction.confirm,
-                                        style: .default) { _ in
-                                            decisionHandler(true)
-        }
-
+        let agreeAction = UIAlertAction.confirm(style: .default) { _ in decisionHandler(true) }
         alert.addAction(agreeAction)
 
-        let cancelAction = UIAlertAction(title: L10n.Localizable.General.cancel,
-                                         style: .cancel) { _ in
-                                            decisionHandler(false)
-        }
-
+        let cancelAction = UIAlertAction.cancel({ decisionHandler(false) })
         alert.addAction(cancelAction)
 
         presentAlert(alert)
