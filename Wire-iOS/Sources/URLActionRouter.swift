@@ -176,7 +176,7 @@ extension URLActionRouter: PresentationDelegate {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
 
-    private func presentConfirmationAlert(title: String, message:String, decisionHandler: @escaping (Bool) -> Void) {
+    private func presentConfirmationAlert(title: String, message: String, decisionHandler: @escaping (Bool) -> Void) {
 
         let alert = UIAlertController(title: title,
                                       message: message,
