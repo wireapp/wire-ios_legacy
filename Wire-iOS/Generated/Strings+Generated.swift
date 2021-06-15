@@ -4262,6 +4262,10 @@ internal enum L10n {
         /// Wire can't find this person.
         internal static let title = L10n.tr("Localizable", "url_action.invalid_user.title")
       }
+      internal enum JoinConversation {
+        /// You are about to join the guestroom conversation
+        internal static let message = L10n.tr("Localizable", "url_action.join_conversation.message")
+      }
       internal enum SwitchBackend {
         /// This configuration will connect the app to a third-party server:\n%@
         internal static func message(_ p1: Any) -> String {

@@ -1732,6 +1732,7 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+"url_action.join_conversation.message" = "You are about to join the guestroom conversation";
 
 "url_action.switch_backend.title" = "Connect to server";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
