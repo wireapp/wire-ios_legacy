@@ -51,6 +51,10 @@ final class GridView: UICollectionView {
     // MARK: - Initialization
 
     init(maxItemsPerPage: Int) {
+        guard maxItemsPerPage > 0 else {
+            fatalError("maxItemsPerPage needs to be greater than zero")
+        }
+
         self.maxItemsPerPage = maxItemsPerPage
         super.init(frame: .zero, collectionViewLayout: layout)
         setupViews()
@@ -81,9 +85,7 @@ final class GridView: UICollectionView {
             return 0
         }
 
-        let pages = Double(numberOfItems) / Double(maxItemsPerPage)
-
-        return Int(ceil(pages))
+        return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
     }
 
 }

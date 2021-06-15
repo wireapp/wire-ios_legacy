@@ -133,16 +133,14 @@ final class CallGridViewController: SpinnerCapableViewController {
             $0.fitIn(view: view)
         }
 
-        let pageIndicatorHeight: CGFloat = 24
-
         NSLayoutConstraint.activate([
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            pageIndicator.heightAnchor.constraint(equalToConstant: pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -(pageIndicatorHeight / 2 + 10))
+            pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
+            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
@@ -512,4 +510,8 @@ extension Notification.Name {
 
     static let videoGridVisibilityChanged = Notification.Name(rawValue: "VideoGridVisibilityChanged")
 
+}
+
+private extension CGFloat {
+    static let pageIndicatorHeight: CGFloat = 24
 }

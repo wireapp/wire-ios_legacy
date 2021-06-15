@@ -43,8 +43,8 @@ class RoundedPageIndicator: RoundedBlurView {
 
         NSLayoutConstraint.activate([
             pageControl.centerYAnchor.constraint(equalTo: centerYAnchor),
-            pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
+            pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.pageControlMargin),
+            pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.pageControlMargin)
         ])
     }
 
@@ -60,4 +60,8 @@ class RoundedPageIndicator: RoundedBlurView {
             pageControl.currentPage = currentPage
         }
     }
+}
+
+private extension CGFloat {
+    static let pageControlMargin: CGFloat = 10 
 }
