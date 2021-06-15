@@ -139,7 +139,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testPagingIndicator() {
+    func disable_testPagingIndicator() {
         configuration.streams = [
             stubProvider.stream(user: MockUserType.createUser(name: "Alice")),
             stubProvider.stream(user: MockUserType.createUser(name: "Bob")),
