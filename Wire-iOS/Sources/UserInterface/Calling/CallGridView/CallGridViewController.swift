@@ -44,7 +44,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var dataSource: [Stream] = []
     private var maximizedView: BaseCallParticipantView?
-    private let gridView = GridView(maxItemsPerPage: 8)
+    private let gridView = GridView(maxItemsPerPage: 4)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let hintView = CallGridHintNotificationLabel()
