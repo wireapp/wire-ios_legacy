@@ -124,6 +124,7 @@ class CallParticipantViewTests: XCTestCase {
         // GIVEN
         let stream = stubProvider.stream(videoState: .stopped)
         sut = createView(from: stream, isCovered: false)
+        sut.layer.borderWidth = 1
 
         // WHEN
         sut.isMaximized = true
