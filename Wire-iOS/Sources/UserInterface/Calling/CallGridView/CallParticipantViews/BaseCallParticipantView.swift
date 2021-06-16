@@ -28,7 +28,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     var stream: Stream {
         didSet {
             updateUserDetails()
-            updateActiveSpeakerFrame()
+            updateBorderStyle()
             updateVideoKind()
             hideVideoViewsIfNeeded()
         }
@@ -36,14 +36,20 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
     var shouldShowActiveSpeakerFrame: Bool {
         didSet {
-            updateActiveSpeakerFrame()
+            updateBorderStyle()
+        }
+    }
+
+    var shouldShowBorderWhenVideoIsStopped: Bool {
+        didSet {
+            updateBorderStyle()
         }
     }
 
     /// indicates wether or not the view is shown in full in the grid
     var isMaximized: Bool = false {
         didSet {
-            updateActiveSpeakerFrame()
+            updateBorderStyle()
             updateFillMode()
             updateScalableView()
         }
@@ -75,10 +81,15 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - View Life Cycle
 
-    init(stream: Stream, isCovered: Bool, shouldShowActiveSpeakerFrame: Bool, pinchToZoomRule: PinchToZoomRule) {
+    init(stream: Stream,
+         isCovered: Bool,
+         shouldShowActiveSpeakerFrame: Bool,
+         shouldShowBorderWhenVideoIsStopped: Bool,
+         pinchToZoomRule: PinchToZoomRule) {
         self.stream = stream
         self.isCovered = isCovered
         self.shouldShowActiveSpeakerFrame = shouldShowActiveSpeakerFrame
+        self.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         self.pinchToZoomRule = pinchToZoomRule
 
         super.init(frame: .zero)
@@ -86,8 +97,8 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateUserDetails()
-        updateActiveSpeakerFrame()
         updateVideoKind()
+        updateBorderStyle()
         hideVideoViewsIfNeeded()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserDetailsVisibility), name: .videoGridVisibilityChanged, object: nil)
@@ -107,15 +118,13 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     }
 
     func setupViews() {
-        layer.borderColor = UIColor.accent().cgColor
-        layer.borderWidth = 0
+        addSubview(avatarView)
+        addSubview(userDetailsView)
+
         backgroundColor = .graphite
         avatarView.user = stream.user
         avatarView.userSession = userSession
         userDetailsView.alpha = 0
-
-        addSubview(avatarView)
-        addSubview(userDetailsView)
     }
 
     func createConstraints() {
@@ -141,9 +150,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     }
 
     private func hideVideoViewsIfNeeded() {
-        guard let videoState = stream.videoState else { return }
-
-        scalableView?.isHidden = videoState == .stopped
+        scalableView?.isHidden = !isSharingVideo
     }
 
     // MARK: - Pinch To Zoom
@@ -188,13 +195,21 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
         videoView?.shouldFill = shouldFill
     }
 
-    // MARK: - Active Speaker Frame
+    // MARK: - Border Style
 
-    private func updateActiveSpeakerFrame() {
-        let showFrame = shouldShowActiveSpeakerFrame
-            && stream.isParticipantUnmutedAndSpeakingNow
-            && !isMaximized
-        layer.borderWidth = showFrame ? 1 : 0
+    private var isSharingVideo: Bool {
+        guard let videoState = stream.videoState else {
+            return false
+        }
+        return videoState != .stopped
+    }
+
+    private func updateBorderStyle() {
+        let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
+        let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !isSharingVideo
+
+        layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
+        layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
     }
 
     // MARK: - Orientation & Layout
