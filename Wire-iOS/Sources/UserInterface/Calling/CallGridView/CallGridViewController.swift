@@ -512,6 +512,6 @@ extension Notification.Name {
 
 }
 
-private extension CGFloat {
+fileprivate extension CGFloat {
     static let pageIndicatorHeight: CGFloat = 24
 }
