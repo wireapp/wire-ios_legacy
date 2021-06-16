@@ -451,7 +451,9 @@
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
 		6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */; };
 		6305206224FFEF9600ED295A /* OrientableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305206124FFEF9600ED295A /* OrientableView.swift */; };
+		6305E31D265D34BD00A44933 /* RoundedPageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */; };
 		6305E34B266530EC00A44933 /* RoundedBlurViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6305E34A266530EC00A44933 /* RoundedBlurViewTests.swift */; };
+		6314DC5C266F68D9005E3139 /* RoundedPageIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6314DC5B266F68D8005E3139 /* RoundedPageIndicatorTests.swift */; };
 		6316C4062654209C00D7E806 /* CallParticipantViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */; };
 		6316C415265556C700D7E806 /* CallParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */; };
 		6316C42F2657F0CE00D7E806 /* RoundedBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316C42E2657F0CE00D7E806 /* RoundedBlurView.swift */; };
@@ -2110,7 +2112,9 @@
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
 		6305205F24FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+DeviceOrientation.swift"; sourceTree = "<group>"; };
 		6305206124FFEF9600ED295A /* OrientableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientableView.swift; sourceTree = "<group>"; };
+		6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageIndicator.swift; sourceTree = "<group>"; };
 		6305E34A266530EC00A44933 /* RoundedBlurViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlurViewTests.swift; sourceTree = "<group>"; };
+		6314DC5B266F68D8005E3139 /* RoundedPageIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedPageIndicatorTests.swift; sourceTree = "<group>"; };
 		6316C42E2657F0CE00D7E806 /* RoundedBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlurView.swift; sourceTree = "<group>"; };
 		631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateExtending.swift; sourceTree = "<group>"; };
 		631ED087257558A400EFDD05 /* PulsingIconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingIconImageView.swift; sourceTree = "<group>"; };
@@ -3558,6 +3562,7 @@
 				EE378E2F24BDE6210014118A /* CallGridViewControllerInput.swift */,
 				63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */,
 				63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */,
+				6305E31C265D34BD00A44933 /* RoundedPageIndicator.swift */,
 			);
 			path = CallGridView;
 			sourceTree = "<group>";
@@ -4377,6 +4382,7 @@
 				BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */,
 				634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */,
 				637387DA2649277A004FEF79 /* ScalableViewTests.swift */,
+				6314DC5B266F68D8005E3139 /* RoundedPageIndicatorTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -8527,6 +8533,7 @@
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
 				5EA952C722647B3100C83FDB /* IconButton.swift in Sources */,
 				A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */,
+				6305E31D265D34BD00A44933 /* RoundedPageIndicator.swift in Sources */,
 				EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */,
 				EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */,
 				5E8DA76C211B2EC200360979 /* AuthenticationEventResponderChain.swift in Sources */,
@@ -8816,6 +8823,7 @@
 				EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */,
 				EE876CAE23F2FCB100040D75 /* SwiftMockLoader.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
+				6314DC5C266F68D9005E3139 /* RoundedPageIndicatorTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
 				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
 				5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */,

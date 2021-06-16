@@ -44,10 +44,11 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var dataSource: [Stream] = []
     private var maximizedView: BaseCallParticipantView?
-    private let gridView = GridView()
+    private let gridView = GridView(maxItemsPerPage: 8)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let hintView = CallGridHintNotificationLabel()
+    private let pageIndicator = RoundedPageIndicator()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
@@ -108,6 +109,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private func setupViews() {
         gridView.dataSource = self
+        gridView.gridViewDelegate = self
         view.addSubview(gridView)
 
         addToSelf(thumbnailViewController)
@@ -118,24 +120,30 @@ final class CallGridViewController: SpinnerCapableViewController {
         topStack.addArrangedSubview(networkConditionView)
         topStack.addArrangedSubview(hintView)
 
+        view.addSubview(pageIndicator)
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     private func createConstraints() {
-        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView].forEach {
+        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView, pageIndicator].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
         [gridView, thumbnailViewController.view].forEach {
-            $0?.fitInSuperview()
+            $0.fitIn(view: view)
         }
 
         NSLayoutConstraint.activate([
             topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
-            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
+            pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
+            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
         ])
+
+        pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
     }
 
     // MARK: - Public Interface
@@ -309,6 +317,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             gridView.reload(using: changeSet) { dataSource = $0 }
         }
 
+        pageIndicator.numberOfPages = gridView.numberOfPages
         updateStates(with: dataSource)
         pruneCache()
     }
@@ -445,6 +454,14 @@ extension CallGridViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - GridViewDelegate
+
+extension CallGridViewController: GridViewDelegate {
+    func gridViewPageDidChange(to index: Int) {
+        pageIndicator.currentPage = index
+    }
+}
+
 // MARK: - Test Helpers
 
 extension CallGridViewController {
@@ -493,4 +510,8 @@ extension Notification.Name {
 
     static let videoGridVisibilityChanged = Notification.Name(rawValue: "VideoGridVisibilityChanged")
 
+}
+
+fileprivate extension CGFloat {
+    static let pageIndicatorHeight: CGFloat = 24
 }

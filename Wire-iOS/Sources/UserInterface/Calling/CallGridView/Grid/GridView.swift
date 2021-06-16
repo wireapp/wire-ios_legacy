@@ -18,6 +18,10 @@
 
 import UIKit
 
+protocol GridViewDelegate: class {
+    func gridViewPageDidChange(to index: Int)
+}
+
 /// A collection view that displays its items in a dynamic grid layout
 /// depending on the number of items.
 ///
@@ -37,15 +41,23 @@ final class GridView: UICollectionView {
         }
     }
 
+    weak var gridViewDelegate: GridViewDelegate?
+
     // MARK: - Private Properties
 
     private let layout = UICollectionViewFlowLayout()
+    private let maxItemsPerPage: Int
 
     // MARK: - Initialization
 
-    init() {
+    init(maxItemsPerPage: Int) {
+        guard maxItemsPerPage > 0 else {
+            fatalError("maxItemsPerPage needs to be greater than zero")
+        }
+
+        self.maxItemsPerPage = maxItemsPerPage
         super.init(frame: .zero, collectionViewLayout: layout)
-        setUp()
+        setupViews()
     }
 
     required init?(coder: NSCoder) {
@@ -54,11 +66,28 @@ final class GridView: UICollectionView {
 
     // MARK: - Private Methods
 
-    private func setUp() {
+    private func setupViews() {
         delegate = self
         register(GridCell.self, forCellWithReuseIdentifier: GridCell.reuseIdentifier)
-        isScrollEnabled = false
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
+        isPagingEnabled = true
+
+        if #available(iOS 11.0, *) {
+            contentInsetAdjustmentBehavior = .never
+        }
     }
+
+    // MARK: - Public Interface
+
+    var numberOfPages: Int {
+        guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: 0) else {
+            return 0
+        }
+
+        return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
+    }
+
 }
 
 // MARK: - Segment calculation
@@ -91,9 +120,9 @@ private extension GridView {
         init(_ layoutDirection: UICollectionView.ScrollDirection, _ segmentType: SegmentType) {
             switch (layoutDirection, segmentType) {
             case (.vertical, .row), (.horizontal, .column):
-                self = .proportionalSplit
-            case (.horizontal, .row), (.vertical, .column):
                 self = .middleSplit
+            case (.horizontal, .row), (.vertical, .column):
+                self = .proportionalSplit
             @unknown default:
                 fatalError()
             }
@@ -101,21 +130,32 @@ private extension GridView {
 
     }
 
-    func numberOfItems(in segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+    private func numberOfItemsInPage(indexPath: IndexPath) -> Int {
         guard let numberOfItems = dataSource?.collectionView(self, numberOfItemsInSection: indexPath.section) else {
             return 0
         }
 
-        let participantAmount = ParticipantAmount(numberOfItems)
+        // The result will be floored because the operation is on two Ints. This makes pages start from 0.
+        let page = indexPath.row / maxItemsPerPage
+
+        let itemsInPastPages = page * maxItemsPerPage
+        let itemsRemaining = numberOfItems - itemsInPastPages
+        return itemsRemaining > maxItemsPerPage ? maxItemsPerPage : itemsRemaining
+    }
+
+    func numberOfItemsIn(_ segmentType: SegmentType, for indexPath: IndexPath) -> Int {
+        let numberOfItemsInPage = self.numberOfItemsInPage(indexPath: indexPath)
+
+        let participantAmount = ParticipantAmount(numberOfItemsInPage)
         let splitType = SplitType(layoutDirection, segmentType)
 
         switch (participantAmount, splitType) {
         case (.moreThanTwo, .proportionalSplit):
-            return numberOfItems.evenlyCeiled / 2
+            return numberOfItemsInPage.evenlyCeiled / 2
         case (.moreThanTwo, .middleSplit):
             return isOddLastRow(indexPath) ? 1 : 2
         case (.twoOrLess, .proportionalSplit):
-            return numberOfItems
+            return numberOfItemsInPage
         case (.twoOrLess, .middleSplit):
             return 1
         }
@@ -141,11 +181,11 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let maxWidth = collectionView.bounds.size.width
         let maxHeight = collectionView.bounds.size.height
 
-        let rows = numberOfItems(in: .row, for: indexPath)
-        let columns = numberOfItems(in: .column, for: indexPath)
+        let itemsInRow = numberOfItemsIn(.row, for: indexPath)
+        let itemsInColumn = numberOfItemsIn(.column, for: indexPath)
 
-        let width = maxWidth / CGFloat(columns)
-        let height = maxHeight / CGFloat(rows)
+        let width = maxWidth / CGFloat(itemsInRow)
+        let height = maxHeight / CGFloat(itemsInColumn)
 
         return CGSize(width: width, height: height)
     }
@@ -180,6 +220,26 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int) -> CGSize {
 
         return .zero
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension GridView: UIScrollViewDelegate {
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        var index: CGFloat
+
+        switch layout.scrollDirection {
+        case .horizontal:
+            index = scrollView.contentOffset.x / scrollView.frame.size.width
+        case .vertical:
+            index = scrollView.contentOffset.y / scrollView.frame.size.height
+        @unknown default:
+            return
+        }
+
+        gridViewDelegate?.gridViewPageDidChange(to: Int(index))
     }
 
 }

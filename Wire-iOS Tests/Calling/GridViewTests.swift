@@ -26,9 +26,19 @@ class OrientableViewMock: OrientableView {
     func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation) {}
 }
 
+class GridViewDelegateMock: GridViewDelegate {
+
+    var index: Int = 0
+    func gridViewPageDidChange(to index: Int) {
+        self.index = index
+    }
+
+}
+
 class GridViewTests: XCTestCase {
 
     var sut: GridView!
+    var gridViewDelegateMock: GridViewDelegateMock!
     var tiles = [OrientableView]()
 
     let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: XCTestCase.DeviceSizeIPhone5)
@@ -56,23 +66,30 @@ class GridViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = GridView()
-        sut.frame = frame
-        sut.dataSource = self
-        tiles.removeAll()
+        gridViewDelegateMock = GridViewDelegateMock()
     }
 
     override func tearDown() {
         sut = nil
+        gridViewDelegateMock = nil
+        tiles.removeAll()
         super.tearDown()
     }
 
-    func testGrid(withAmount amount: Int,
-                  file: StaticString = #file,
-                  testName: String = #function,
-                  line: UInt = #line) {
+    private func setupSut(maxItemsPerPage: Int = 8) {
+        sut = GridView(maxItemsPerPage: maxItemsPerPage)
+        sut.frame = frame
+        sut.dataSource = self
+    }
+
+    private func testGrid(withAmount amount: Int,
+                          maxItemsPerPage: Int = 8,
+                          file: StaticString = #file,
+                          testName: String = #function,
+                          line: UInt = #line) {
         // Given
         tiles = Array(views.prefix(amount))
+        setupSut(maxItemsPerPage: maxItemsPerPage)
         sut.reloadData()
 
         // Then
@@ -103,6 +120,24 @@ class GridViewTests: XCTestCase {
 
     func testEightViews() {
         testGrid(withAmount: 8)
+    }
+
+    func testEightViews_WithMaxItemsPerPage_Of_Four() {
+        testGrid(withAmount: 8, maxItemsPerPage: 4)
+    }
+
+    func testThatItUpdatesDelegate_When_ThePageChanges() {
+        // Given
+        setupSut()
+        sut.gridViewDelegate = gridViewDelegateMock
+        let scrollView = UIScrollView(frame: frame)
+        scrollView.contentOffset = CGPoint(x: 0, y: frame.size.height)
+
+        // When
+        sut.scrollViewDidEndDecelerating(scrollView)
+
+        // Then
+        XCTAssertEqual(gridViewDelegateMock.index, 1)
     }
 }
 
