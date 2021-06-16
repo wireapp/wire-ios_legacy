@@ -38,6 +38,7 @@ class CallParticipantViewTests: XCTestCase {
             stream: stream,
             isCovered: isCovered,
             shouldShowActiveSpeakerFrame: true,
+            shouldShowBorderWhenVideoIsStopped: true,
             pinchToZoomRule: pinchToZoomRule
         )
         view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
@@ -108,6 +109,27 @@ class CallParticipantViewTests: XCTestCase {
 
         // THEN
         verify(matching: sut)
+    }
+
+    func testVideoStoppedState() {
+        // GIVEN
+        let stream = stubProvider.stream(videoState: .stopped)
+        sut = createView(from: stream, isCovered: false)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testVideoStoppedBorder_IsZero_WhenMaximized() {
+        // GIVEN
+        let stream = stubProvider.stream(videoState: .stopped)
+        sut = createView(from: stream, isCovered: false)
+
+        // WHEN
+        sut.isMaximized = true
+
+        // THEN
+        XCTAssertEqual(sut.layer.borderWidth, 0)
     }
 
     func testCoveredState() {
