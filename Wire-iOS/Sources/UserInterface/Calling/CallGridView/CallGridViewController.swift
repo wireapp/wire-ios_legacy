@@ -281,13 +281,13 @@ final class CallGridViewController: SpinnerCapableViewController {
         if let view = selfCallParticipantView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
-            view.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped(isSelfCallParticipantView: true)
+            view.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         } else {
             viewCache[selfStreamId] = SelfCallParticipantView(
                 stream: selfStream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
-                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped(isSelfCallParticipantView: true),
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
         }
@@ -332,7 +332,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
-            view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped()
+            view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         }
     }
 
@@ -379,8 +379,11 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     // MARK: - Helpers
 
-    private func shouldShowBorderWhenVideoIsStopped(isSelfCallParticipantView: Bool = false) -> Bool {
-        return dataSource.count > 1 && (isSelfCallParticipantView ? configuration.floatingStream == nil : true)
+    private var shouldShowBorderWhenVideoIsStopped: Bool {
+        let gridHasOnlyOneTile = dataSource.count == 1
+        let gridHasOneTileAndAFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+
+        return !gridHasOnlyOneTile && !gridHasOneTileAndAFloatingTile
     }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {
@@ -453,7 +456,7 @@ extension CallGridViewController: UICollectionViewDataSource {
                 stream: stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
-                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped(),
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
             viewCache[streamId] = view
