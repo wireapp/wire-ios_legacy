@@ -380,7 +380,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Helpers
 
     private var shouldShowBorderWhenVideoIsStopped: Bool {
-        let gridHasOnlyOneTile = dataSource.count == 1
+        let gridHasOnlyOneTile = configuration.streams.count == 1
         let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
 
         return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
