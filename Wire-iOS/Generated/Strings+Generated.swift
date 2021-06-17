@@ -4262,6 +4262,24 @@ internal enum L10n {
         /// Wire can't find this person.
         internal static let title = L10n.tr("Localizable", "url_action.invalid_user.title")
       }
+      internal enum JoinConversation {
+        internal enum Confirmation {
+          /// Join
+          internal static let confirmButton = L10n.tr("Localizable", "url_action.join_conversation.confirmation.confirm_button")
+          /// You have been invited to a conversation:\n%@
+          internal static func message(_ p1: Any) -> String {
+            return L10n.tr("Localizable", "url_action.join_conversation.confirmation.message", String(describing: p1))
+          }
+        }
+        internal enum Error {
+          /// The conversation is full.
+          internal static let converationIsFull = L10n.tr("Localizable", "url_action.join_conversation.error.converation_is_full")
+          /// The conversation link is invalid.
+          internal static let linkIsInvalid = L10n.tr("Localizable", "url_action.join_conversation.error.link_is_invalid")
+          /// You could not join the conversation
+          internal static let title = L10n.tr("Localizable", "url_action.join_conversation.error.title")
+        }
+      }
       internal enum SwitchBackend {
         /// This configuration will connect the app to a third-party server:\n%@
         internal static func message(_ p1: Any) -> String {
