@@ -60,6 +60,11 @@ class RoundedPageIndicator: RoundedBlurView {
             pageControl.currentPage = currentPage
         }
     }
+
+    override var accessibilityIdentifier: String? {
+        get { "\(String(describing: self)).\(currentPage)" }
+        set {}
+    }
 }
 
 private extension CGFloat {
