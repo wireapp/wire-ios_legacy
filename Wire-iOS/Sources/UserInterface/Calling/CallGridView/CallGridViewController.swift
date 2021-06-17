@@ -381,9 +381,9 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var shouldShowBorderWhenVideoIsStopped: Bool {
         let gridHasOnlyOneTile = dataSource.count == 1
-        let gridHasOneTileAndAFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+        let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
 
-        return !gridHasOnlyOneTile && !gridHasOneTileAndAFloatingTile
+        return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
     }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {
