@@ -164,7 +164,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         maximizedView = shouldMaximize ? view : nil
         view.isMaximized = shouldMaximize
         updateGrid(with: streams)
-        updateHint(for: .maximizationChanged(maximized: shouldMaximize))
+        updateHint(for: .maximizationChanged(stream: view.stream, maximized: view.isMaximized))
     }
 
     private func allowMaximizationToggling(for stream: Stream) -> Bool {
@@ -192,23 +192,24 @@ final class CallGridViewController: SpinnerCapableViewController {
         switch event {
         case .viewDidLoad:
             hintView.show(hint: .fullscreen)
-        case .configurationChanged:
+        case .configurationChanged where configuration.callHasTwoParticipants:
             guard
-                configuration.callHasTwoParticipants,
-                let stream = configuration.streams.first
+                let stream = configuration.streams.first,
+                stream.isSharingVideo
             else { return }
 
-            if stream.videoState == .some(.screenSharing) {
+            if stream.isScreenSharing {
                 hintView.show(hint: .zoom)
             } else if isMaximized(stream: stream) {
                 hintView.show(hint: .goBackOrZoom)
             }
-        case .maximizationChanged(maximized: let maximized):
+        case .maximizationChanged(stream: let stream, maximized: let maximized):
             if maximized {
-                hintView.show(hint: .goBackOrZoom)
+                hintView.show(hint: stream.isSharingVideo ? .goBackOrZoom : .goBack)
             } else {
                 hintView.hideAndStopTimer()
             }
+        default: break
         }
     }
 

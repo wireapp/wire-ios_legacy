@@ -25,6 +25,7 @@ enum CallGridHintKind {
     case fullscreen
     case zoom
     case goBackOrZoom
+    case goBack
 
     var message: String {
         switch self {
@@ -34,6 +35,8 @@ enum CallGridHintKind {
             return HintString.zoom
         case .goBackOrZoom:
             return HintString.goBackOrZoom
+        case .goBack:
+            return HintString.goBack
         }
     }
 }

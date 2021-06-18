@@ -20,6 +20,6 @@ import Foundation
 
 enum CallGridEvent {
     case configurationChanged
-    case maximizationChanged(maximized: Bool)
+    case maximizationChanged(stream: Stream, maximized: Bool)
     case viewDidLoad
 }
