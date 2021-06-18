@@ -153,7 +153,7 @@ extension URLActionRouter: PresentationDelegate {
         }
     }
 
-    func shouldPerformActionWithTitle(_ message: String, action: URLAction, decisionHandler: @escaping (_ shouldPerformAction: Bool) -> Void) {
+    func shouldPerformActionWithMessage(_ message: String, action: URLAction, decisionHandler: @escaping (_ shouldPerformAction: Bool) -> Void) {
         typealias UrlAction = L10n.Localizable.UrlAction
         switch action {
         case .joinConversation:
