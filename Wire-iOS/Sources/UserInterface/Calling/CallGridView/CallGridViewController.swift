@@ -168,7 +168,10 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     private func allowMaximizationToggling(for stream: Stream) -> Bool {
-        return !(configuration.callHasTwoParticipants && stream.videoState == .screenSharing)
+        let isStreamScreenSharingOneToOne = gridIsOneToOneWithFloatingTile && stream.isScreenSharing
+        let isStreamMinimizedAndNotSharingVideo = !isMaximized(stream: stream) && !stream.isSharingVideo
+
+        return !isStreamScreenSharingOneToOne && !(isStreamMinimizedAndNotSharingVideo && gridHasOnlyOneTile)
     }
 
     private func isMaximized(stream: Stream?) -> Bool {
@@ -381,10 +384,15 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Helpers
 
     private var shouldShowBorderWhenVideoIsStopped: Bool {
-        let gridHasOnlyOneTile = configuration.streams.count == 1
-        let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+       !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    }
 
-        return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    private var gridHasOnlyOneTile: Bool {
+        configuration.streams.count == 1
+    }
+
+    private var gridIsOneToOneWithFloatingTile: Bool {
+        gridHasOnlyOneTile && configuration.floatingStream != nil
     }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {
