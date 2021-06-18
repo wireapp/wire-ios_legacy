@@ -149,7 +149,7 @@ extension URLActionRouter: PresentationDelegate {
             guard SecurityFlags.customBackend.isEnabled else { return }
             presentCustomBackendAlert(with: configurationURL)
         case .joinConversation:
-            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.JoinConversation.message, decisionHandler: decisionHandler)
+            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.JoinConversation.Confirmation.message(""), decisionHandler: decisionHandler)
         default:
             decisionHandler(true)
         }
