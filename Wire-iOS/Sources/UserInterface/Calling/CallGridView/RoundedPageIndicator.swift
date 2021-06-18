@@ -63,5 +63,5 @@ class RoundedPageIndicator: RoundedBlurView {
 }
 
 private extension CGFloat {
-    static let pageControlMargin: CGFloat = 10 
+    static let pageControlMargin: CGFloat = 10
 }
