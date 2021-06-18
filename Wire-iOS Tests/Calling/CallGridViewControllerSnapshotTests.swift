@@ -42,7 +42,9 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     var mediaManager: ZMMockAVSMediaManager!
     var configuration: MockCallGridViewControllerInput!
     var selfStream: Wire.Stream!
+    var selfAVSClient: AVSClient!
     var stubProvider = StreamStubProvider()
+    var conferenceParticipants =  ["Alice", "Bob", "Carol"]
 
     override func setUp() {
         super.setUp()
@@ -54,10 +56,10 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
 
-        let client = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
+        selfAVSClient = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
         selfStream = stubProvider.stream(
             user: MockUserType.createUser(name: "Alice"),
-            client: client,
+            client: selfAVSClient,
             activeSpeakerState: .active(audioLevelNow: 100)
         )
     }
@@ -88,6 +90,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     }
 
     func testActiveSpeakersIndicators_OneToOne() {
+        // Given / When
         configuration.streams = [stubProvider.stream(
             user: MockUserType.createUser(name: "Bob"),
             activeSpeakerState: .active(audioLevelNow: 100)
@@ -96,20 +99,51 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         configuration.shouldShowActiveSpeakerFrame = false
         createSut()
 
+        // Then
         verify(matching: sut)
     }
 
     func testActiveSpeakersIndicators_Conference() {
-        configuration.streams = [
-            stubProvider.stream(user: MockUserType.createUser(name: "Alice"),
-                                activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.stream(user: MockUserType.createUser(name: "Bob"),
-                                activeSpeakerState: .active(audioLevelNow: 100)),
-            stubProvider.stream(user: MockUserType.createUser(name: "Carol"),
-                                activeSpeakerState: .active(audioLevelNow: 100))
-        ]
+        // Given / When
+        conferenceParticipants.forEach {
+            configuration.streams += [stubProvider.stream(
+                user: MockUserType.createUser(name: $0),
+                activeSpeakerState: .active(audioLevelNow: 100)
+            )]
+        }
+
         createSut()
 
+        // Then
+        verify(matching: sut)
+    }
+
+    func testVideoStoppedBorder_DoesntAppear_OneToOne() {
+        // Given / When
+        configuration.streams = [stubProvider.stream(videoState: .stopped)]
+        configuration.floatingStream = stubProvider.stream(
+            user: MockUserType.createUser(name: "Alice"),
+            client: selfAVSClient,
+            videoState: .stopped
+        )
+        createSut()
+
+        // Then
+        verify(matching: sut)
+    }
+
+    func testVideoStoppedBorder_Appears_Conference() {
+        // Given / When
+        conferenceParticipants.forEach {
+            configuration.streams += [stubProvider.stream(
+                user: MockUserType.createUser(name: $0),
+                videoState: .stopped
+            )]
+        }
+
+        createSut()
+
+        // Then
         verify(matching: sut)
     }
 
@@ -139,20 +173,16 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func disable_testPagingIndicator() {
-        configuration.streams = [
-            stubProvider.stream(user: MockUserType.createUser(name: "Alice")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Bob")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Carol")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Chuck")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Craig")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Dan")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Erin")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Eve")),
-            stubProvider.stream(user: MockUserType.createUser(name: "Faythe"))
-        ]
+    func testPagingIndicator() {
+        // given
+        ["Alice", "Bob", "Carol", "Chuck", "Craig", "Dan", "Erin", "Eve", "Faythe"].forEach {
+            configuration.streams += [stubProvider.stream(user: MockUserType.createUser(name: $0))]
+        }
+
+        // when
         createSut()
 
+        // then
         verify(matching: sut)
     }
 }

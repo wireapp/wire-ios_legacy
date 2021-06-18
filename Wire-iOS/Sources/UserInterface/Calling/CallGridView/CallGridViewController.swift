@@ -141,8 +141,8 @@ final class CallGridViewController: SpinnerCapableViewController {
             topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            pageIndicator.heightAnchor.constraint(equalToConstant: pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -(pageIndicatorHeight / 2 + 10))
+            pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
+            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
@@ -283,11 +283,13 @@ final class CallGridViewController: SpinnerCapableViewController {
         if let view = selfCallParticipantView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
+            view.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         } else {
             viewCache[selfStreamId] = SelfCallParticipantView(
                 stream: selfStream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
         }
@@ -332,6 +334,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
+            view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         }
     }
 
@@ -377,6 +380,13 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     // MARK: - Helpers
+
+    private var shouldShowBorderWhenVideoIsStopped: Bool {
+        let gridHasOnlyOneTile = configuration.streams.count == 1
+        let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+
+        return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {
         return viewCache[stream.streamId]
@@ -448,6 +458,7 @@ extension CallGridViewController: UICollectionViewDataSource {
                 stream: stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
             viewCache[streamId] = view
@@ -512,4 +523,8 @@ extension Notification.Name {
 
     static let videoGridVisibilityChanged = Notification.Name(rawValue: "VideoGridVisibilityChanged")
 
+}
+
+fileprivate extension CGFloat {
+    static let pageIndicatorHeight: CGFloat = 24
 }

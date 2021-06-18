@@ -43,7 +43,13 @@ class SelfCallParticipantViewTests: XCTestCase {
         super.setUp()
 
         let stream = stubProvider.stream()
-        sut = SelfCallParticipantView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: false, pinchToZoomRule: .enableWhenFitted)
+        sut = SelfCallParticipantView(
+            stream: stream,
+            isCovered: false,
+            shouldShowActiveSpeakerFrame: false,
+            shouldShowBorderWhenVideoIsStopped: false,
+            pinchToZoomRule: .enableWhenFitted
+        )
         sut.previewView = previewViewMock
     }
 
