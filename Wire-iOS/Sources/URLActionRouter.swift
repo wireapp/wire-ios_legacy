@@ -148,6 +148,14 @@ extension URLActionRouter: PresentationDelegate {
         case .accessBackend(configurationURL: let configurationURL):
             guard SecurityFlags.customBackend.isEnabled else { return }
             presentCustomBackendAlert(with: configurationURL)
+        default:
+            decisionHandler(true)
+        }
+    }
+
+    func shouldPerformAction(_ message: String, action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
+        typealias UrlAction = L10n.Localizable.UrlAction
+        switch action {
         case .joinConversation:
             presentConfirmationAlert(title: UrlAction.title, message: UrlAction.JoinConversation.message, decisionHandler: decisionHandler)
         default:
