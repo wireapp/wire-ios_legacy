@@ -493,6 +493,7 @@
 		637387D52645B931004FEF79 /* AVSVideoViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637387D42645B931004FEF79 /* AVSVideoViewProtocol.swift */; };
 		637387E026492833004FEF79 /* ScalableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637387DA2649277A004FEF79 /* ScalableViewTests.swift */; };
 		6375051B262477ED0083DC27 /* NotificationLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6375051A262477ED0083DC27 /* NotificationLabelTests.swift */; };
+		637C825C267CED69009457CA /* Stream+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637C825B267CED68009457CA /* Stream+Video.swift */; };
 		638332EA250282D200D18F42 /* OrientationDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638332E9250282D200D18F42 /* OrientationDelta.swift */; };
 		639290A2252633E600046171 /* UIAlertController+DegradedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */; };
 		63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */; };
@@ -2153,6 +2154,7 @@
 		637387D42645B931004FEF79 /* AVSVideoViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVSVideoViewProtocol.swift; sourceTree = "<group>"; };
 		637387DA2649277A004FEF79 /* ScalableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalableViewTests.swift; sourceTree = "<group>"; };
 		6375051A262477ED0083DC27 /* NotificationLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLabelTests.swift; sourceTree = "<group>"; };
+		637C825B267CED68009457CA /* Stream+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stream+Video.swift"; sourceTree = "<group>"; };
 		638332E9250282D200D18F42 /* OrientationDelta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDelta.swift; sourceTree = "<group>"; };
 		6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantViewTests.swift; sourceTree = "<group>"; };
 		639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+DegradedCall.swift"; sourceTree = "<group>"; };
@@ -4417,6 +4419,7 @@
 			children = (
 				EE378E2B24BDE5D50014118A /* Stream.swift */,
 				637387BC2644331F004FEF79 /* Stream+ActiveSpeaker.swift */,
+				637C825B267CED68009457CA /* Stream+Video.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -8623,6 +8626,7 @@
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				EF4C5D50233A17680092CA38 /* ConversationListContentController.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
+				637C825C267CED69009457CA /* Stream+Video.swift in Sources */,
 				EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */,
 				F17B0A9D219489DC005ECAD0 /* NetworkCondition+Helper.swift in Sources */,
 				879649002046EE5E00F46B4B /* BarController.swift in Sources */,

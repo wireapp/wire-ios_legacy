@@ -150,7 +150,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
     }
 
     private func hideVideoViewsIfNeeded() {
-        scalableView?.isHidden = !isSharingVideo
+        scalableView?.isHidden = !stream.isSharingVideo
     }
 
     // MARK: - Pinch To Zoom
@@ -197,16 +197,9 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
 
     // MARK: - Border Style
 
-    private var isSharingVideo: Bool {
-        guard let videoState = stream.videoState else {
-            return false
-        }
-        return videoState != .stopped
-    }
-
     private func updateBorderStyle() {
         let showBorderForActiveSpeaker = shouldShowActiveSpeakerFrame && stream.isParticipantUnmutedAndSpeakingNow
-        let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !isSharingVideo
+        let showBorderForAudioParticipant = shouldShowBorderWhenVideoIsStopped && !stream.isSharingVideo
 
         layer.borderWidth = (showBorderForActiveSpeaker || showBorderForAudioParticipant) && !isMaximized ? 1 : 0
         layer.borderColor = showBorderForActiveSpeaker ? UIColor.accent().cgColor : UIColor.black.cgColor
