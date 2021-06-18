@@ -281,11 +281,13 @@ final class CallGridViewController: SpinnerCapableViewController {
         if let view = selfCallParticipantView {
             view.stream = selfStream
             view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
+            view.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         } else {
             viewCache[selfStreamId] = SelfCallParticipantView(
                 stream: selfStream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
         }
@@ -330,6 +332,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
             view?.isPaused = $0.isPaused
             view?.pinchToZoomRule = pinchToZoomRule
+            view?.shouldShowBorderWhenVideoIsStopped = shouldShowBorderWhenVideoIsStopped
         }
     }
 
@@ -375,6 +378,13 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     // MARK: - Helpers
+
+    private var shouldShowBorderWhenVideoIsStopped: Bool {
+        let gridHasOnlyOneTile = configuration.streams.count == 1
+        let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+
+        return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {
         return viewCache[stream.streamId]
@@ -446,6 +456,7 @@ extension CallGridViewController: UICollectionViewDataSource {
                 stream: stream,
                 isCovered: isCovered,
                 shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                shouldShowBorderWhenVideoIsStopped: shouldShowBorderWhenVideoIsStopped,
                 pinchToZoomRule: pinchToZoomRule
             )
             viewCache[streamId] = view
