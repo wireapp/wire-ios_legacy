@@ -157,7 +157,7 @@ extension URLActionRouter: PresentationDelegate {
         typealias UrlAction = L10n.Localizable.UrlAction
         switch action {
         case .joinConversation:
-            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.JoinConversation.Confirmation.message(message), decisionHandler: decisionHandler)
+            presentConfirmationAlert(title: nil, message: UrlAction.JoinConversation.Confirmation.message(message), decisionHandler: decisionHandler)
         default:
             decisionHandler(true)
         }
@@ -184,7 +184,7 @@ extension URLActionRouter: PresentationDelegate {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
 
-    private func presentConfirmationAlert(title: String, message: String, decisionHandler: @escaping (Bool) -> Void) {
+    private func presentConfirmationAlert(title: String?, message: String, decisionHandler: @escaping (Bool) -> Void) {
 
         let alert = UIAlertController(title: title,
                                       message: message,
