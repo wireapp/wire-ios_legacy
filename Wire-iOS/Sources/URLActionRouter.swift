@@ -240,6 +240,8 @@ private extension URLActionRouter {
 
     enum URLActionError: LocalizedError {
 
+        private typealias Strings = L10n.Localizable.UrlAction.JoinConversation
+
         /// Could not join a conversation because it is full.
 
         case conversationIsFull
@@ -266,22 +268,16 @@ private extension URLActionRouter {
         }
 
         var errorDescription: String? {
-            switch self {
-            case .conversationIsFull, .conversationLinkIsInvalid:
-                fatalError("Not implemented")
-
-            case .unknown:
-                return nil
-            }
+            return Strings.Error.title
         }
 
         var failureReason: String? {
             switch self {
             case .conversationIsFull:
-                fatalError("Not implemented")
+                return Strings.Error.converationIsFull
 
             case .conversationLinkIsInvalid:
-                fatalError("Not implemented")
+                return Strings.Error.linkIsInvalid
 
             case .unknown:
                 return L10n.Localizable.Error.User.unkownError
