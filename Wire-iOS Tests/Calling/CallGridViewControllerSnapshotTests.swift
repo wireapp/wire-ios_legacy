@@ -45,12 +45,14 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     var selfAVSClient: AVSClient!
     var stubProvider = StreamStubProvider()
     var conferenceParticipants =  ["Alice", "Bob", "Carol"]
+    var mockHintView: MockCallGridHintNotificationLabel!
 
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockCallGridViewControllerInput()
+        mockHintView = MockCallGridHintNotificationLabel()
 
         let mockSelfClient = MockUserClient()
         mockSelfClient.remoteIdentifier = "selfClient123"
@@ -67,6 +69,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     override func tearDown() {
         sut = nil
         mediaManager = nil
+        mockHintView = nil
 
         super.tearDown()
     }
@@ -79,6 +82,8 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         sut.view.backgroundColor = .black
         if hideHintView { sut.hideHintView() }
     }
+
+    // MARK: - Snapshots
 
     func testNoActiveSpeakersSpinner() {
         configuration.streams = []
@@ -184,5 +189,114 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
         // then
         verify(matching: sut)
+    }
+
+    // MARK: - Hint update
+
+    func testThat_HintIs_Fullscreen_ForViewDidLoad() {
+        // given
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .viewDidLoad)
+
+        // then
+        XCTAssertEqual(mockHintView.hint, .fullscreen)
+    }
+
+    func testThat_HintIs_Nil_ForConfigurationChanged_MoreThanTwoParticipants() {
+        // given
+        configuration.callHasTwoParticipants = false
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .configurationChanged)
+
+        // then
+        XCTAssertNil(mockHintView.hint)
+    }
+
+    func testThat_HintIs_Nil_ForConfigurationChanged_TwoParticipants_NotSharingVideo() {
+        // given
+        configuration.callHasTwoParticipants = true
+        configuration.streams = [stubProvider.stream(videoState: .stopped)]
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .configurationChanged)
+
+        // then
+        XCTAssertNil(mockHintView.hint)
+    }
+
+    func testThat_HintIs_Zoom_ForConfigurationChanged_TwoParticipants_Screensharing() {
+        // given
+        configuration.callHasTwoParticipants = true
+        configuration.streams = [stubProvider.stream(videoState: .screenSharing)]
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .configurationChanged)
+
+        // then
+        XCTAssertEqual(mockHintView.hint, .zoom)
+    }
+
+    func testThat_HintIs_GoBackOrZoom_ForConfigurationChanged_TwoParticipants_SharingVideo_Maximized() {
+        // given
+        let stream = stubProvider.stream(videoState: .started)
+        let view = BaseCallParticipantView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: true, shouldShowBorderWhenVideoIsStopped: true, pinchToZoomRule: .enableWhenFitted)
+
+        configuration.callHasTwoParticipants = true
+        configuration.streams = [stream]
+        createSut()
+        sut.maximizedView = view
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .configurationChanged)
+
+        // then
+        XCTAssertEqual(mockHintView.hint, .goBackOrZoom)
+    }
+
+    func testThat_HintIs_GoBackOrZoom_ForMaximizationChanged_Maximized_SharingVideo() {
+        // given
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .started), maximized: true))
+
+        // then
+        XCTAssertEqual(mockHintView.hint, .goBackOrZoom)
+    }
+
+    func testThat_HintIs_GoBack_ForMaximizationChanged_Maximized_NotSharingVideo() {
+        // given
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .stopped), maximized: true))
+
+        // then
+        XCTAssertEqual(mockHintView.hint, .goBack)
+    }
+
+    func testThat_ItHidesHintAndStopsTimer_ForMaximizationChanged_NotMaximized() {
+        // given
+        createSut()
+        sut.hintView = mockHintView
+
+        // when
+        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .stopped), maximized: false))
+
+        // then
+        XCTAssertTrue(mockHintView.didCallHideAndStopTimer)
     }
 }

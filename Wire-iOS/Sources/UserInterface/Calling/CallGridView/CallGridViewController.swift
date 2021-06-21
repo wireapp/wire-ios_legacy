@@ -43,17 +43,19 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     private var dataSource: [Stream] = []
-    private var maximizedView: BaseCallParticipantView?
     private let gridView = GridView(maxItemsPerPage: 8)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
-    private let hintView = CallGridHintNotificationLabel()
     private let pageIndicator = RoundedPageIndicator()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
 
     // MARK: - Public Properties
+
+    // These two views are public for testing purposes
+    var maximizedView: BaseCallParticipantView?
+    var hintView = CallGridHintNotificationLabel()
 
     var configuration: CallGridViewControllerInput {
         didSet {
@@ -191,7 +193,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     // MARK: - Hint
 
-    private func updateHint(for event: CallGridEvent) {
+    func updateHint(for event: CallGridEvent) {
         switch event {
         case .viewDidLoad:
             hintView.show(hint: .fullscreen)
