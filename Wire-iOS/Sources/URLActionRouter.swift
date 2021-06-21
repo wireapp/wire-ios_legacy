@@ -132,7 +132,8 @@ extension URLActionRouter: PresentationDelegate {
 
     // MARK: - Public Implementation
     func failedToPerformAction(_ action: URLAction, error: Error) {
-        presentLocalizedErrorAlert(error)
+        let localizedError = mapToLocalizedError(error)
+        presentLocalizedErrorAlert(localizedError)
     }
 
     func completedURLAction(_ action: URLAction) {
@@ -224,18 +225,77 @@ extension URLActionRouter: PresentationDelegate {
             case let .success(environment):
                 BackendEnvironment.shared = environment
             case let .failure(error):
-                self?.presentLocalizedErrorAlert(error)
+                guard let strongSelf = self else { return }
+                let localizedError = strongSelf.mapToLocalizedError(error)
+                strongSelf.presentLocalizedErrorAlert(localizedError)
             }
         }
     }
 
-    private func presentLocalizedErrorAlert(_ error: Error) {
-        guard let error = error as? LocalizedError else {
-            return
+}
+
+// MARK: - Errors
+
+private extension URLActionRouter {
+
+    enum URLActionError: LocalizedError {
+
+        private typealias Strings = L10n.Localizable.UrlAction.JoinConversation
+
+        /// Could not join a conversation because it is full.
+
+        case conversationIsFull
+
+        /// Converation link may have been revoked or it is corrupted.
+
+        case conversationLinkIsInvalid
+
+        /// A generic error case.
+
+        case unknown
+
+        init(from error: Error) {
+            switch error {
+            case ConversationJoinError.invalidCode:
+                self = .conversationLinkIsInvalid
+
+            case ConversationJoinError.tooManyMembers:
+                self = .conversationIsFull
+
+            default:
+                self = .unknown
+            }
         }
-        let alertMessage = error.failureReason ?? "error.user.unkown_error".localized
-        let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
-                                                                  message: alertMessage)
-        presentAlert(alertController)
+
+        var errorDescription: String? {
+            return Strings.Error.title
+        }
+
+        var failureReason: String? {
+            switch self {
+            case .conversationIsFull:
+                return Strings.Error.converationIsFull
+
+            case .conversationLinkIsInvalid:
+                return Strings.Error.linkIsInvalid
+
+            case .unknown:
+                return L10n.Localizable.Error.User.unkownError
+            }
+        }
+
     }
+
+    private func mapToLocalizedError(_ error: Error) -> LocalizedError {
+        return (error as? LocalizedError) ?? URLActionError(from: error)
+    }
+
+    private func presentLocalizedErrorAlert(_ error: LocalizedError) {
+        let title = error.errorDescription
+        let message = error.failureReason ?? L10n.Localizable.Error.User.unkownError
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.ok(style: .cancel))
+        presentAlert(alert)
+    }
+
 }
