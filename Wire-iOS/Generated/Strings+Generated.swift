@@ -4263,8 +4263,6 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "url_action.invalid_user.title")
       }
       internal enum JoinConversation {
-        /// You are about to join the guestroom conversation
-        internal static let message = L10n.tr("Localizable", "url_action.join_conversation.message")
         internal enum Confirmation {
           /// Join
           internal static let confirmButton = L10n.tr("Localizable", "url_action.join_conversation.confirmation.confirm_button")
