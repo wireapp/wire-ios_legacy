@@ -31,3 +31,5 @@ jobs:
           
           config: crowdin.yml
           dryrun_action: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
