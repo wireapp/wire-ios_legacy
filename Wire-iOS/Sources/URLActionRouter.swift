@@ -154,10 +154,11 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     func shouldPerformActionWithMessage(_ message: String, action: URLAction, decisionHandler: @escaping (_ shouldPerformAction: Bool) -> Void) {
-        typealias UrlAction = L10n.Localizable.UrlAction
         switch action {
         case .joinConversation:
-            presentConfirmationAlert(title: nil, message: UrlAction.JoinConversation.Confirmation.message(message), decisionHandler: decisionHandler)
+            presentConfirmationAlert(title: nil,
+                                     message: L10n.Localizable.UrlAction.JoinConversation.Confirmation.message(message),
+                                     decisionHandler: decisionHandler)
         default:
             decisionHandler(true)
         }
