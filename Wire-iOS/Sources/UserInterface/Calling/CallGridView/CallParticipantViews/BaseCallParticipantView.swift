@@ -246,7 +246,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
             let name = stream.user?.name ?? ""
             let maximizationState = isMaximized ? "maximized" : "minimized"
             let activityState = stream.isParticipantUnmutedAndActive ? "active" : "inactive"
-            let viewKind = isSharingVideo ? "videoView" : "audioView"
+            let viewKind = stream.isSharingVideo ? "videoView" : "audioView"
             return "\(viewKind).\(name).\(maximizationState).\(activityState)"
         }
         set {}
