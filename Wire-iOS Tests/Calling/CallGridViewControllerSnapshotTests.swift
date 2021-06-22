@@ -193,110 +193,179 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     // MARK: - Hint update
 
-    func testThat_HintIs_Fullscreen_ForViewDidLoad() {
-        // given
+    func testThat_ItUpdatesHint() {
+
+        // Maximization
+
+        assertHint(
+            input: .maximizationChanged(state: .maximized(isSharingVideo: true)),
+            output: .show(hint: .goBackOrZoom)
+        )
+
+        assertHint(
+            input: .maximizationChanged(state: .maximized(isSharingVideo: false)),
+            output: .show(hint: .goBack)
+        )
+
+        assertHint(
+            input: .maximizationChanged(state: .notMaximized),
+            output: .hideHintAndStopTimer
+        )
+
+        // Configuration Changed
+
+        assertHint(
+            input: .configurationChanged(participants: .moreThanTwo),
+            output: .showNothing
+        )
+
+        assertHint(
+            input: .configurationChanged(participants: .two(videoState: .notSharing)),
+            output: .showNothing
+        )
+
+        assertHint(
+            input: .configurationChanged(participants: .two(videoState: .screenSharing)),
+            output: .show(hint: .zoom)
+        )
+
+        assertHint(
+            input: .configurationChanged(participants: .two(videoState: .sharing(isMaximized: true))),
+            output: .show(hint: .goBackOrZoom)
+        )
+
+        assertHint(
+            input: .configurationChanged(participants: .two(videoState: .sharing(isMaximized: false))),
+            output: .showNothing
+        )
+
+        // View Did Load
+
+        assertHint(
+            input: .viewDidLoad,
+            output: .show(hint: .fullscreen)
+        )
+    }
+}
+
+extension CallGridViewControllerSnapshotTests {
+
+    private func assertHint(input: HintTestCase.Input, output: HintTestCase.Output, file: StaticString = #file, line: UInt = #line) {
+        var maximizedView: BaseCallParticipantView?
+        if case let .configurationChanged(participants) = input {
+            configuration.callHasTwoParticipants = participants.isTwo
+
+            if let stream = participants.stream {
+                configuration.streams = [stream]
+
+                maximizedView = BaseCallParticipantView(
+                    stream: stream,
+                    isCovered: false,
+                    shouldShowActiveSpeakerFrame: true,
+                    shouldShowBorderWhenVideoIsStopped: true,
+                    pinchToZoomRule: .enableWhenFitted
+                )
+            }
+        }
+
         createSut()
+        sut.maximizedView = maximizedView
         sut.hintView = mockHintView
 
-        // when
-        sut.updateHint(for: .viewDidLoad)
+        sut.updateHint(for: input.event)
 
-        // then
-        XCTAssertEqual(mockHintView.hint, .fullscreen)
+        output.assert(mockHintView: mockHintView)
     }
 
-    func testThat_HintIs_Nil_ForConfigurationChanged_MoreThanTwoParticipants() {
-        // given
-        configuration.callHasTwoParticipants = false
-        createSut()
-        sut.hintView = mockHintView
+    private struct HintTestCase {
+        enum Input {
+            case configurationChanged(participants: Participants)
+            case maximizationChanged(state: MaximizationState)
+            case viewDidLoad
 
-        // when
-        sut.updateHint(for: .configurationChanged)
+            var event: Wire.CallGridEvent {
+                switch self {
+                case .maximizationChanged(state: let state):
+                    return .maximizationChanged(stream: state.stream, maximized: state.isMaximized)
+                case .configurationChanged:
+                    return .configurationChanged
+                default:
+                    return .viewDidLoad
+                }
+            }
 
-        // then
-        XCTAssertNil(mockHintView.hint)
-    }
+            enum Participants: Equatable {
+                case two(videoState: VideoState)
+                case moreThanTwo
 
-    func testThat_HintIs_Nil_ForConfigurationChanged_TwoParticipants_NotSharingVideo() {
-        // given
-        configuration.callHasTwoParticipants = true
-        configuration.streams = [stubProvider.stream(videoState: .stopped)]
-        createSut()
-        sut.hintView = mockHintView
+                var isTwo: Bool { self != .moreThanTwo }
 
-        // when
-        sut.updateHint(for: .configurationChanged)
+                var stream: Wire.Stream? {
+                    switch self {
+                    case .two(videoState: let videoState):
+                        return videoState.stream
+                    case .moreThanTwo:
+                        return nil
+                    }
+                }
 
-        // then
-        XCTAssertNil(mockHintView.hint)
-    }
+                enum VideoState: Equatable {
+                    case screenSharing
+                    case sharing(isMaximized: Bool)
+                    case notSharing
 
-    func testThat_HintIs_Zoom_ForConfigurationChanged_TwoParticipants_Screensharing() {
-        // given
-        configuration.callHasTwoParticipants = true
-        configuration.streams = [stubProvider.stream(videoState: .screenSharing)]
-        createSut()
-        sut.hintView = mockHintView
+                    var stream: Wire.Stream {
+                        StreamStubProvider().stream(videoState: videoState)
+                    }
 
-        // when
-        sut.updateHint(for: .configurationChanged)
+                    private var videoState: WireSyncEngine.VideoState {
+                        switch self {
+                        case .notSharing:
+                            return .stopped
+                        case .sharing:
+                            return .started
+                        case .screenSharing:
+                            return .screenSharing
+                        }
+                    }
+                }
+            }
 
-        // then
-        XCTAssertEqual(mockHintView.hint, .zoom)
-    }
+            enum MaximizationState: Equatable {
+                case notMaximized
+                case maximized(isSharingVideo: Bool)
 
-    func testThat_HintIs_GoBackOrZoom_ForConfigurationChanged_TwoParticipants_SharingVideo_Maximized() {
-        // given
-        let stream = stubProvider.stream(videoState: .started)
-        let view = BaseCallParticipantView(stream: stream, isCovered: false, shouldShowActiveSpeakerFrame: true, shouldShowBorderWhenVideoIsStopped: true, pinchToZoomRule: .enableWhenFitted)
+                var stream: Wire.Stream {
+                    let stubProvider = StreamStubProvider()
 
-        configuration.callHasTwoParticipants = true
-        configuration.streams = [stream]
-        createSut()
-        sut.maximizedView = view
-        sut.hintView = mockHintView
+                    switch self {
+                    case .maximized(isSharingVideo: let isSharingVideo):
+                        return stubProvider.stream(videoState: isSharingVideo ? .started : .stopped)
+                    case .notMaximized:
+                        return stubProvider.stream()
+                    }
+                }
 
-        // when
-        sut.updateHint(for: .configurationChanged)
+                var isMaximized: Bool { self != .notMaximized }
+            }
 
-        // then
-        XCTAssertEqual(mockHintView.hint, .goBackOrZoom)
-    }
+        }
 
-    func testThat_HintIs_GoBackOrZoom_ForMaximizationChanged_Maximized_SharingVideo() {
-        // given
-        createSut()
-        sut.hintView = mockHintView
+        enum Output {
+            case show(hint: CallGridHintKind)
+            case showNothing
+            case hideHintAndStopTimer
 
-        // when
-        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .started), maximized: true))
-
-        // then
-        XCTAssertEqual(mockHintView.hint, .goBackOrZoom)
-    }
-
-    func testThat_HintIs_GoBack_ForMaximizationChanged_Maximized_NotSharingVideo() {
-        // given
-        createSut()
-        sut.hintView = mockHintView
-
-        // when
-        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .stopped), maximized: true))
-
-        // then
-        XCTAssertEqual(mockHintView.hint, .goBack)
-    }
-
-    func testThat_ItHidesHintAndStopsTimer_ForMaximizationChanged_NotMaximized() {
-        // given
-        createSut()
-        sut.hintView = mockHintView
-
-        // when
-        sut.updateHint(for: .maximizationChanged(stream: stubProvider.stream(videoState: .stopped), maximized: false))
-
-        // then
-        XCTAssertTrue(mockHintView.didCallHideAndStopTimer)
+            func assert(mockHintView: MockCallGridHintNotificationLabel, file: StaticString = #file, line: UInt = #line) {
+                switch self {
+                case .show(hint: let hint):
+                    XCTAssertEqual(mockHintView.hint, hint, file: file, line: line)
+                case .showNothing:
+                    XCTAssertNil(mockHintView.hint, file: file, line: line)
+                case .hideHintAndStopTimer:
+                    XCTAssertTrue(mockHintView.didCallHideAndStopTimer, file: file, line: line)
+                }
+            }
+        }
     }
 }
