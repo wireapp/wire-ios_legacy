@@ -824,7 +824,7 @@
 "profile.block_dialog.button_block" = "Заблокировать";
 
 // Delete message dialog
-"message.delete_dialog.message" = "Это не может быть отменено.";
+"message.delete_dialog.message" = "Это невозможно отменить.";
 "message.delete_dialog.action.cancel" = "Отмена";
 "message.delete_dialog.action.hide" = "Удалить у меня";
 "message.delete_dialog.action.delete" = "Удалить у всех";

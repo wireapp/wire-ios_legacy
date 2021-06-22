@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "Contatos";
 "peoplepicker.header.contacts_personal" = "Contatos pessoais";
 "peoplepicker.header.directory" = "Conectar";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "Conecte-se com outro domínio";
 
 "peoplepicker.group.title.singular" = "Adicionar Participantes";
 "peoplepicker.group.title.plural" = "Adicionar Participantes (%d)";
@@ -89,12 +89,12 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Gerenciar serviços";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sem resultados.";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users" = "Encontre pessoas no Wire por nome ou @nomedeusuario";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Encontre pessoas no Wire por nome ou @nomedeusuario\n\nEncontre pessoas em outro domínio por @nomedeusuario@nomededominio";
+"peoplepicker.no_matching_results.message.users_all_added" = "Todo mundo está aqui.";
 "peoplepicker.no_matching_results.message.services" = "Sem resultados.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Os serviços são auxiliares que podem melhorar seu fluxo de trabalho.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Os serviços são auxiliares que podem melhorar seu fluxo de trabalho. Para ativá-los, pergunte ao seu administrador.";
 
 "peoplepicker.send_invitation.dialog.title" = "Convite enviado";
 "peoplepicker.send_invitation.dialog.message" = "Pode ser usado por duas semanas. Envie um novo caso expire.";
@@ -107,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Criar grupo de convidados";
 "peoplepicker.quick-action.admin-services" = "Gerenciar serviços";
 
-"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
+"peoplepicker.federation.domain_unvailable" = "O domínio federado não está disponível no momento. [Saiba mais](%@)";
 
 "add_participants.alert.title" = "Chamada cheia";
 "add_participants.alert.message.new_conversation" = "Até %d pessoas podem participar de uma conversa.";
@@ -310,8 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Inserir quebra de linha";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
-"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
-"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Escolha a menção anterior";
+"conversation.input_bar.shortcut.choose_next_mention" = "Escolha a próxima menção";
 
 "conversation.input_bar.message_too_long.title" = "Mensagem muito longa";
 "conversation.input_bar.message_too_long.message" = "Você pode enviar mensagens até %d caracteres.";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests_present" = "**Convidados** estão presentes";
+"conversation.banner.services_present" = "**Serviços** estão ativos";
+"conversation.banner.externals_present" = "**Externos** estão presentes";
+"conversation.banner.guests_services_present" = "**Convidados** e **serviços** estão presentes";
+"conversation.banner.externals_services_present" = "**Externos** e **serviços ** estão presentes";
+"conversation.banner.externals_guests_present" = "**Externos** e **convidados** estão presentes";
+"conversation.banner.externals_guests_services_present" = "**Externos**, **convidados** e **serviços** estão presentes";
 
 "conversation.action.search" = "Procurar";
 
@@ -444,14 +444,14 @@
 "content.system.conversation.other.started" = "%@ iniciou uma conversa com %@";
 "content.system.conversation.other.added" = "%@ adicionou %@";
 "content.system.conversation.other.removed" = "%@ removeu %@";
-"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
-"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
+"content.system.conversation.other.removed.legalhold" = "%@ foi removido desta conversa porque a retenção legal foi ativada.";
+"content.system.conversation.others.removed.legalhold" = "%@ foram removidos desta conversa porque a retenção legal foi ativada.";
 "content.system.conversation.other.left" = "%@ saiu";
 
 "content.system.conversation.you.started" = "%@ iniciou uma conversa com %@";
 "content.system.conversation.you.added" = "%@ adicionou %@";
 "content.system.conversation.you.removed" = "%@ removeu %@";
-"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
+"content.system.conversation.you.removed.legalhold" = "%@ foram removidos desta conversa porque a retenção legal foi ativada.";
 "content.system.conversation.you.left" = "%@ saiu";
 "content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
 "content.system.conversation.guest.joined" = "%@ juntou-se";
@@ -477,8 +477,8 @@
 "content.system.you_wanted_to_talk" = "Você ligou";
 "content.system.ephemeral_time_remaining" = "%@ saiu";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "**Você** começou a usar [um novo dispositivo](%@)";
+"content.system.self_user_new_self_client" = "**Você** começou a usar [este dispositivo](%@)";
 
 "content.system.you_started" = "Você";
 
@@ -486,10 +486,10 @@
 "content.system.call.called-you" = "%@ ligou";
 "content.system.call.called.you" = "Você";
 
-"content.system.call.missed-call" = "Chamada não atendida";
-"content.system.call.missed-call-you" = "Chamada não atendida";
+"content.system.call.missed-call" = "Chamada perdida";
+"content.system.call.missed-call-you" = "Chamada perdida";
 
-"content.system.call.missed-call.groups" = "Chamada não atendida de %@";
+"content.system.call.missed-call.groups" = "Chamada perdida de %@";
 "content.system.call.missed-call.groups-you" = "Chamada perdida de %2$@";
 "content.system.call.missed-call.groups.you" = "Você";
 
@@ -527,32 +527,32 @@
 
 //
 
-"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
+"content.system.reactivated_device" = "Você começou a usar [este dispositivo](%@) novamente. As mensagens enviadas entretanto não aparecerão aqui.";
 
 "content.system.is_verified" = "Todas as impressões digitais são verificadas";
 
 "content.system.new_users" = "Novo usuário juntou-se.";
 "content.system.verify_devices" = "Verifique dispositivos";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "**Você** não verificou um de [seus dispositivos](%@)";
+"content.system.unverified_other_devices" = "**Você** não verificou um dos [%1$@ dispositivos seus](%2$@)";
 
 "content.system.missing_messages.title" = "Você não usou este dispositivo por algum um tempo. Algumas mensagens podem não aparecer aqui.";
 "content.system.missing_messages.subtitle_start" = "Enquanto isso,";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
-"content.system.cannot_decrypt.reset_session" = "Fix future messages";
-"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
+"content.system.cannot_decrypt.self" = "Uma mensagem **sua** não pôde ser descriptografada.";
+"content.system.cannot_decrypt.other" = "Uma mensagem de **%@** não pôde ser descriptografada.";
+"content.system.cannot_decrypt.reset_session" = "Corrigir mensagens futuras";
+"content.system.cannot_decrypt.error_details" = "(Erro corrigido: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "Agora você pode descriptografar mensagens de você mesmo. Para recuperar mensagens perdidas, **você precisa reenviá-las.**";
+"content.system.cannot_decrypt_resolved.other" = "Agora você pode descriptografar mensagens de **%1$@**. Para recuperar mensagens perdidas, **peça a %1$@ para reenviá-las.**";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "A identidade do **seu dispositivo** mudou. Mensagem não entregue.";
+"content.system.cannot_decrypt_identity_changed.other" = "A identidade do dispositivo de **%@** mudou. Mensagem não entregue."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "**%@ não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema**. Isso afetou todas as conversas que vocês compartilham.";
+"content.system.session_reset.self" = "**Você não conseguiu descriptografar algumas de suas mensagens, mas resolveu o problema**. Isso afetou todas as conversas.";
 
 "content.system.unknown_message.body" = "Esta mensagem não pode ser exibida. Você pode estar usando uma versão antiga do Wire.";
 
@@ -622,7 +622,7 @@
 "connection_request.send_button_title" = "Conectar";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
-"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.missing_legalhold_consent" = "Você não pode se conectar a este usuário devido à uma retenção legal.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire precisa acessar suas Fotos";
@@ -684,14 +684,14 @@
 "call.participants.show_all" = "Mostrar todas (%@)";
 "call.participants.list.title" = "Participantes";
 
-"call.overlay.switch_to.speakers" = "Palestrantes";
+"call.overlay.switch_to.speakers" = "PALESTRANTES";
 "call.overlay.switch_to.all" = "TODOS";
 
 "call.grid.no_active_speakers" = "Não há palestrantes de vídeo ativos...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
-"call.grid.hints.zoom" = "Pinch to zoom";
+"call.grid.hints.fullscreen" = "Toque duas vezes em um bloco para tela inteira";
+"call.grid.hints.go_back_or_zoom" = "Toque duas vezes para voltar, aperte para dar zoom";
+"call.grid.hints.zoom" = "Aperte para dar zoom";
 
 "call.video.paused" = "Vídeo pausado";
 "call.video.too_many.alert.title" = "Muitas pessoas para Vídeo";
@@ -879,7 +879,7 @@
 "profile.details.guest" = "Convidado";
 "profile.details.group_admin" = "Administrador do Grupo";
 "profile.details.partner" = "externo";
-"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
+"profile.details.blocking_reason" = "Este usuário está bloqueado devido à retenção legal. [SAIBA MAIS](%@)";
 
 "profile_view.accessibility.handle" = "Nome de usuário";
 "profile_view.accessibility.name" = "Nome de exibição";
@@ -1618,7 +1618,7 @@
 "error.conversation.cannot_remove" = "Remover o participante falhou";
 "error.conversation.too_many_members" = "A conversa está cheia";
 "error.conversation.offline" = "Parece que há um problema com sua conexão de Internet. Por favor, verifique se tudo está funcionando.";
-"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.conversation.missing_legalhold_consent" = "Devido à retenção legal, apenas membros da equipe podem ser adicionados a esta conversa";
 
 "sketchpad.initial_hint" = "Toque em cores para alterar o tamanho do pincel";
 
@@ -1641,11 +1641,11 @@
 "jailbrokendevice.alert.message" = "Por motivos de segurança, o Wire não pode ser usado neste dispositivo. Todos os dados existentes do Wire foram apagados.";
 
 // Database Loading Failure alert
-"databaseloadingfailure.alert.title" = "Not Enough Storage";
-"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.title" = "Sem espaço de armazenamento suficiente";
+"databaseloadingfailure.alert.message" = "O banco de dados não pôde ser carregado devido a armazenamento insuficiente. Revise o uso de armazenamento do dispositivo e tente novamente.";
 "databaseloadingfailure.alert.settings" = "Vá para os ajustes";
-"databaseloadingfailure.alert.delete_database" = "Delete Database";
-"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database" = "Excluir Banco de Dados";
+"databaseloadingfailure.alert.delete_database.message" = "Ao excluir o banco de dados, todos os dados e mensagens locais para esta conta serão excluídos permanentemente.";
 "databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
 // Third Party
@@ -1810,8 +1810,8 @@
 "account_deleted_session_expired_alert.title" = "Sua sessão expirou";
 "account_deleted_session_expired_alert.message" = "O aplicativo não se comunicou com o servidor por um longo período ou sua sessão foi invalidada remotamente.";
 
-"account_deleted_missing_passcode_alert.title" = "No device passcode";
-"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
+"account_deleted_missing_passcode_alert.title" = "Sem código de acesso do dispositivo";
+"account_deleted_missing_passcode_alert.message" = "Para usar o Wire, defina um código de acesso nas configurações do seu dispositivo.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "não selecionado";
@@ -1827,8 +1827,8 @@
 // Custom app lock - create passcode
 "create_passcode.textfield.placeholder" = "";
 "create_passcode.title_label" = "Crie uma senha";
-"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
-"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.info_label" = "Ele será usado para desbloquear o Wire. Se você esquecer esta senha, **ela não poderá ser recuperada.**";
+"create_passcode.info_label_forced_applock" = "Crie um código de acesso para desbloquear o Wire. Lembre-se disso, pois ela **não pode ser recuperada.**";
 "create_passcode.create_button.title" = "criar senha";
 
 // Custom app lock - create passcode validation
@@ -1847,9 +1847,9 @@
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "Houve uma mudança no Wire";
-"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
-"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
-"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+"warning_screen.main_info.forced_applock" = "Sua organização precisa bloquear seu aplicativo quando o Wire não estiver em uso para manter a equipe segura.";
+"warning_screen.info_label.forced_applock" = "Da próxima vez, desbloqueie o Wire da mesma maneira que desbloqueia seu telefone.";
+"warning_screen.info_label.non_forced_applock" = "Sua organização não precisa mais de bloqueio de aplicativo. A partir de agora, você pode acessar o Wire sem quaisquer obstáculos.";
 
 // Wipe database
 
@@ -1879,4 +1879,4 @@
 "appLockModule.message.passcode" = "Desbloquear Wire com senha";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
 "appLockModule.unlockButton.title" = "Desbloquear";
-"appLockModule.goToSettingsButton.title" = "Go to settings";
+"appLockModule.goToSettingsButton.title" = "Ir para as configurações";
