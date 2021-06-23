@@ -24,7 +24,7 @@ enum AvailabilityLabelStyle: Int {
     case list, participants, placeholder
 }
 
-extension Availability {
+extension AvailabilityKind {
     var canonicalName: String {
         switch self {
         case .none:
