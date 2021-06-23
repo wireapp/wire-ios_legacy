@@ -1742,6 +1742,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "El servidor no respon";
 "url_action.switch_backend.error.invalid_backend" = "Comproveu la vostra connexió a Internet, assegureu-vos que l'enllaç és correcte i torneu a provar-ho.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Join";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire no pot trobar aquesta persona.";

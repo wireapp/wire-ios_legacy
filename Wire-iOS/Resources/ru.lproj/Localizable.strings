@@ -1742,6 +1742,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "Сервер не отвечает";
 "url_action.switch_backend.error.invalid_backend" = "Пожалуйста, убедитесь в наличии доступа к сети интернет, проверьте ссылку и попробуйте снова.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "Вас пригласили в беседу:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Присоединиться";
+
+"url_action.join_conversation.error.title" = "Вы не смогли присоединиться к беседе";
+"url_action.join_conversation.error.converation_is_full" = "Беседа переполнена.";
+"url_action.join_conversation.error.link_is_invalid" = "Ссылка на беседу недействительна.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не может найти этого человека.";

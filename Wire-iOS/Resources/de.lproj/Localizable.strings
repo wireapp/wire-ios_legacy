@@ -1742,6 +1742,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "Der Server antwortet nicht";
 "url_action.switch_backend.error.invalid_backend" = "Bitte Internetverbindung überprüfen, den Link bestätigen und nochmal versuchen.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "Sie wurden zu dieser Unterhaltung eingeladen:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Beitreten";
+
+"url_action.join_conversation.error.title" = "Sie konnten der Unterhaltung nicht beitreten";
+"url_action.join_conversation.error.converation_is_full" = "Die Unterhaltung ist voll.";
+"url_action.join_conversation.error.link_is_invalid" = "Der Link zu dieser Unterhaltung ist ungültig.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";
