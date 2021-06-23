@@ -1742,6 +1742,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "هذا الخادم لا يستجيب";
 "url_action.switch_backend.error.invalid_backend" = "الرجاء التحقق من اتصال الإنترنت الخاص بك والتحقق مِن الربط ثم حاول مرة أخرى.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "انضم إلى";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "لم يتمكّن Wire مِن العثور على هذا الشخص.";
