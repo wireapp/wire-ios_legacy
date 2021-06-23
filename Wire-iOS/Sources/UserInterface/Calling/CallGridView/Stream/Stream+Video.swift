@@ -17,32 +17,16 @@
 //
 
 import Foundation
-import UIKit
 
-enum CallGridHintKind {
-    private typealias HintString = L10n.Localizable.Call.Grid.Hints
-
-    case fullscreen
-    case zoom
-    case goBackOrZoom
-    case goBack
-
-    var message: String {
-        switch self {
-        case .fullscreen:
-            return HintString.fullscreen
-        case .zoom:
-            return HintString.zoom
-        case .goBackOrZoom:
-            return HintString.goBackOrZoom
-        case .goBack:
-            return HintString.goBack
+extension Stream {
+    var isSharingVideo: Bool {
+        guard let videoState = videoState else {
+            return false
         }
+        return videoState != .stopped
     }
-}
 
-class CallGridHintNotificationLabel: NotificationLabel {
-    func show(hint: CallGridHintKind) {
-        show(message: hint.message, hideAfter: 5)
+    var isScreenSharing: Bool {
+        return videoState == .some(.screenSharing)
     }
 }

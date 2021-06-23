@@ -43,17 +43,19 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     private var dataSource: [Stream] = []
-    private var maximizedView: BaseCallParticipantView?
     private let gridView = GridView(maxItemsPerPage: 8)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
-    private let hintView = CallGridHintNotificationLabel()
     private let pageIndicator = RoundedPageIndicator()
     private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
     private var viewCache = [AVSClient: OrientableView]()
 
     // MARK: - Public Properties
+
+    // These two views are public for testing purposes
+    var maximizedView: BaseCallParticipantView?
+    var hintView = CallGridHintNotificationLabel()
 
     var configuration: CallGridViewControllerInput {
         didSet {
@@ -164,11 +166,14 @@ final class CallGridViewController: SpinnerCapableViewController {
         maximizedView = shouldMaximize ? view : nil
         view.isMaximized = shouldMaximize
         updateGrid(with: streams)
-        updateHint(for: .maximizationChanged(maximized: shouldMaximize))
+        updateHint(for: .maximizationChanged(stream: view.stream, maximized: view.isMaximized))
     }
 
     private func allowMaximizationToggling(for stream: Stream) -> Bool {
-        return !(configuration.callHasTwoParticipants && stream.videoState == .screenSharing)
+        let isStreamScreenSharingOneToOne = gridIsOneToOneWithFloatingTile && stream.isScreenSharing
+        let isStreamMinimizedAndNotSharingVideo = !isMaximized(stream: stream) && !stream.isSharingVideo
+
+        return !isStreamScreenSharingOneToOne && !(isStreamMinimizedAndNotSharingVideo && gridHasOnlyOneTile)
     }
 
     private func isMaximized(stream: Stream?) -> Bool {
@@ -188,27 +193,28 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     // MARK: - Hint
 
-    private func updateHint(for event: CallGridEvent) {
+    func updateHint(for event: CallGridEvent) {
         switch event {
         case .viewDidLoad:
             hintView.show(hint: .fullscreen)
-        case .configurationChanged:
+        case .configurationChanged where configuration.callHasTwoParticipants:
             guard
-                configuration.callHasTwoParticipants,
-                let stream = configuration.streams.first
+                let stream = configuration.streams.first,
+                stream.isSharingVideo
             else { return }
 
-            if stream.videoState == .some(.screenSharing) {
+            if stream.isScreenSharing {
                 hintView.show(hint: .zoom)
             } else if isMaximized(stream: stream) {
                 hintView.show(hint: .goBackOrZoom)
             }
-        case .maximizationChanged(maximized: let maximized):
+        case .maximizationChanged(stream: let stream, maximized: let maximized):
             if maximized {
-                hintView.show(hint: .goBackOrZoom)
+                hintView.show(hint: stream.isSharingVideo ? .goBackOrZoom : .goBack)
             } else {
                 hintView.hideAndStopTimer()
             }
+        default: break
         }
     }
 
@@ -380,10 +386,15 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Helpers
 
     private var shouldShowBorderWhenVideoIsStopped: Bool {
-        let gridHasOnlyOneTile = configuration.streams.count == 1
-        let gridIsOneToOneWithFloatingTile = gridHasOnlyOneTile && configuration.floatingStream != nil
+       !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    }
 
-        return !gridHasOnlyOneTile && !gridIsOneToOneWithFloatingTile
+    private var gridHasOnlyOneTile: Bool {
+        configuration.streams.count == 1
+    }
+
+    private var gridIsOneToOneWithFloatingTile: Bool {
+        gridHasOnlyOneTile && configuration.floatingStream != nil
     }
 
     private func cachedStreamView(for stream: Stream) -> OrientableView? {

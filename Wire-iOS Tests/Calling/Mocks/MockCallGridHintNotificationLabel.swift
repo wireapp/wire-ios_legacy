@@ -16,33 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import UIKit
+@testable import Wire
 
-enum CallGridHintKind {
-    private typealias HintString = L10n.Localizable.Call.Grid.Hints
+class MockCallGridHintNotificationLabel: CallGridHintNotificationLabel {
 
-    case fullscreen
-    case zoom
-    case goBackOrZoom
-    case goBack
-
-    var message: String {
-        switch self {
-        case .fullscreen:
-            return HintString.fullscreen
-        case .zoom:
-            return HintString.zoom
-        case .goBackOrZoom:
-            return HintString.goBackOrZoom
-        case .goBack:
-            return HintString.goBack
-        }
+    var hint: CallGridHintKind?
+    override func show(hint: CallGridHintKind) {
+        self.hint = hint
     }
-}
 
-class CallGridHintNotificationLabel: NotificationLabel {
-    func show(hint: CallGridHintKind) {
-        show(message: hint.message, hideAfter: 5)
+    var didCallHideAndStopTimer: Bool = false
+    override func hideAndStopTimer() {
+        didCallHideAndStopTimer = true
     }
 }
