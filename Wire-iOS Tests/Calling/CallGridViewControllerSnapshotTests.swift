@@ -251,6 +251,9 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 extension CallGridViewControllerSnapshotTests {
 
     private func assertHint(input: HintTestCase.Input, output: HintTestCase.Output, file: StaticString = #file, line: UInt = #line) {
+        mockHintView.didCallHideAndStopTimer = false
+        mockHintView.hint = nil
+
         var maximizedView: BaseCallParticipantView?
         if case let .configurationChanged(participants) = input {
             configuration.callHasTwoParticipants = participants.isTwo
@@ -258,13 +261,15 @@ extension CallGridViewControllerSnapshotTests {
             if let stream = participants.stream {
                 configuration.streams = [stream]
 
-                maximizedView = BaseCallParticipantView(
-                    stream: stream,
-                    isCovered: false,
-                    shouldShowActiveSpeakerFrame: true,
-                    shouldShowBorderWhenVideoIsStopped: true,
-                    pinchToZoomRule: .enableWhenFitted
-                )
+                if case let .two(videoState) = participants, videoState.isMaximized {
+                    maximizedView = BaseCallParticipantView(
+                        stream: stream,
+                        isCovered: false,
+                        shouldShowActiveSpeakerFrame: true,
+                        shouldShowBorderWhenVideoIsStopped: true,
+                        pinchToZoomRule: .enableWhenFitted
+                    )
+                }
             }
         }
 
@@ -313,6 +318,15 @@ extension CallGridViewControllerSnapshotTests {
                     case screenSharing
                     case sharing(isMaximized: Bool)
                     case notSharing
+
+                    var isMaximized: Bool {
+                        switch self {
+                        case .sharing(isMaximized: let isMaximized):
+                            return isMaximized
+                        default:
+                            return false
+                        }
+                    }
 
                     var stream: Wire.Stream {
                         StreamStubProvider().stream(videoState: videoState)
