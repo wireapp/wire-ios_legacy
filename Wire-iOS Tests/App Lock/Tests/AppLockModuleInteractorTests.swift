@@ -70,6 +70,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: false)])
     }
 
+    // @SF.Locking @TSFI.ClientPlatform @TSFI.UserInterface
     func test_InitiaAuthentication_NeedsToCreateCustomPasscode_NotRequired() {
         // Given
         appLock.isCustomPasscodeSet = false
@@ -96,6 +97,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.customPasscodeCreationNeeded(shouldInform: true)])
     }
 
+    // @SF.Locking @TSFI.ClientPlatform @TSFI.UserInterface
     func test_InitiateAuthentication_DoesNotNeedToCreateCustomPasscode() {
         // Given
         appLock.isCustomPasscodeSet = true
@@ -119,6 +121,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: true)])
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_InitiateAuthentication_DoesNotNeedToCreateCustomPasscode_WhenDatabaseIsLocked() {
         // Given
         session.lock = .database
@@ -132,6 +135,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.readyForAuthentication(shouldInform: false)])
     }
 
+    // @SF.Locking @TSFI.ClientPlatform @TSFI.UserInterface
     func test_InitiateAuthentication_SessionIsAlreadyUnlocked() {
         // Given
         session.lock = .none
@@ -144,6 +148,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
+    // @SF.Locking @TSFI.ClientPlatform @TSFI.UserInterface
     func test_InitiateAuthentication_RequireActiveApp_ReturnsNothingIfAppIsInBackground() {
         // Given
         applicationStateProvider.applicationState = .background
@@ -184,6 +189,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
+    // @SF.Locking @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_ScreenLock() {
         // Given
         session.lock = .screen
@@ -216,6 +222,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(preference, .customOnly)
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_DatabaseLock() {
         // Given
         session.lock = .database
@@ -231,6 +238,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(preference, .deviceOnly)
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_Granted() {
         // Given
         session.lock = .database
@@ -245,6 +253,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(appLock.methodCalls.open.count, 1)
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_Denied() {
         // Given
         session.lock = .database
@@ -261,6 +270,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.authenticationDenied(.faceID)])
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_NeedCustomPasscode() {
         // Given
         session.lock = .screen
@@ -276,6 +286,7 @@ final class AppLockModuleInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.results, [.customPasscodeNeeded])
     }
 
+    // @SF.Locking @SF.Storage @TSFI.ClientPlatform @TSFI.UserInterface
     func test_EvaluateAuthentication_Unavailable() {
         // Given
         session.lock = .screen

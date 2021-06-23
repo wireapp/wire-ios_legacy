@@ -1742,6 +1742,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "Сервер не відповідає";
 "url_action.switch_backend.error.invalid_backend" = "Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте ще раз.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "Вас запросили до розмови:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Приєднатись";
+
+"url_action.join_conversation.error.title" = "Не вдалося приєднатися до розмови";
+"url_action.join_conversation.error.converation_is_full" = "Розмова переповнена.";
+"url_action.join_conversation.error.link_is_invalid" = "Посилання на розмову недійсне.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
