@@ -3438,15 +3438,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		067BBBFC247E693400D73407 /* Wire Notification Service Extension */ = {
-			isa = PBXGroup;
-			children = (
-				067BBBFD247E693400D73407 /* NotificationService.swift */,
-				067BBBFF247E693400D73407 /* Info.plist */,
-			);
-			path = "Wire Notification Service Extension";
-			sourceTree = "<group>";
-		};
 		060B1E2D25BADCDB00A6ADA7 /* Password */ = {
 			isa = PBXGroup;
 			children = (
@@ -3481,6 +3472,15 @@
 				EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */,
 			);
 			path = UIApplication;
+			sourceTree = "<group>";
+		};
+		067BBBFC247E693400D73407 /* Wire Notification Service Extension */ = {
+			isa = PBXGroup;
+			children = (
+				067BBBFD247E693400D73407 /* NotificationService.swift */,
+				067BBBFF247E693400D73407 /* Info.plist */,
+			);
+			path = "Wire Notification Service Extension";
 			sourceTree = "<group>";
 		};
 		160D691E212C78C700096EAD /* CallQualityController */ = {
@@ -9305,8 +9305,10 @@
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = "i386 arm64";
 				INFOPLIST_FILE = "Wire Notification Service Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -9329,8 +9331,10 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				EXCLUDED_ARCHS = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator14.4]" = "i386 arm64";
 				INFOPLIST_FILE = "Wire Notification Service Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
