@@ -93,7 +93,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
 
     // MARK: - Common methods
 
-    private func createTest(for options: AvailabilityTitleView.Options, with availability: Availability, on user: ZMUser, colorSchemeVariant: ColorSchemeVariant = .dark, file: StaticString = #file, line: UInt = #line) {
+    private func createTest(for options: AvailabilityTitleView.Options, with availability: AvailabilityKind, on user: ZMUser, colorSchemeVariant: ColorSchemeVariant = .dark, file: StaticString = #file, line: UInt = #line) {
         updateAvailability(for: user, newValue: availability)
         let sut = AvailabilityTitleView(user: user, options: options)
         sut.colorSchemeVariant = colorSchemeVariant
@@ -101,7 +101,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
         verify(view: sut, file: file, line: line)
     }
 
-    func updateAvailability(for user: ZMUser, newValue: Availability) {
+    func updateAvailability(for user: ZMUser, newValue: AvailabilityKind) {
         if user == ZMUser.selfUser() {
             user.availability = newValue
         } else {
@@ -113,7 +113,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
 }
 
 extension ZMUser {
-    func updateAvailability(_ newValue: Availability) {
+    func updateAvailability(_ newValue: AvailabilityKind) {
         self.willChangeValue(forKey: AvailabilityKey)
         self.setPrimitiveValue(NSNumber(value: newValue.rawValue), forKey: AvailabilityKey)
         self.didChangeValue(forKey: AvailabilityKey)
