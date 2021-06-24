@@ -16,37 +16,35 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
 final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: FullscreenImageViewController!
 
     override func setUp() {
         super.setUp()
     }
-    
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatVeryLargeImageIsLoadedToImageView(){
+    func testThatVeryLargeImageIsLoadedToImageView() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "20000x20000.gif")
 
         verify(view: sut.view)
     }
 
-    func testThatSmallImageIsCenteredInTheScreen(){
+    func testThatSmallImageIsCenteredInTheScreen() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
 
         verify(view: sut.view)
     }
 
-    func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
+    func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped() {
         // GIVEN
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
 
@@ -56,10 +54,10 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         // THEN
         verify(view: sut.view)
     }
-    
+
     func testThatImageIsDarkenWhenSelectedByMenu() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
-        
+
         sut.setSelectedByMenu(true, animated: false)
         // test for tap again does not add one more layer
         sut.setSelectedByMenu(false, animated: false)

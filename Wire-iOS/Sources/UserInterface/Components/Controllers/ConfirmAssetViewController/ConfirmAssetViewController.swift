@@ -92,10 +92,10 @@ final class ConfirmAssetViewController: UIViewController {
         super.viewDidLoad()
 
         switch asset {
-            case .image(let mediaAsset):
-                createPreviewPanel(image: mediaAsset)
-            case .video(let url):
-                createVideoPanel(videoURL: url)
+        case .image(let mediaAsset):
+            createPreviewPanel(image: mediaAsset)
+        case .video(let url):
+            createVideoPanel(videoURL: url)
         }
 
         createTopPanel()
@@ -200,7 +200,7 @@ final class ConfirmAssetViewController: UIViewController {
         canvasViewController.select(editMode: editMode, animated: false)
 
         let navigationController = canvasViewController.wrapInNavigationController()
-        
+
         if #available(iOS 13.0, *) {
         } else {
             navigationController.modalTransitionStyle = .crossDissolve
@@ -395,7 +395,7 @@ final class ConfirmAssetViewController: UIViewController {
             }
             }
         // Player View
-        case .video(_):
+        case .video:
             if let playerView = playerViewController?.view {
                 constraints += [
                     playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

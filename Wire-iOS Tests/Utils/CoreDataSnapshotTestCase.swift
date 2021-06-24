@@ -19,7 +19,6 @@
 import WireTesting
 import XCTest
 
-
 struct SelfProvider: SelfUserProvider {
     let selfUser: UserType & ZMEditableUser
 }
@@ -28,7 +27,6 @@ struct SelfProvider: SelfUserProvider {
 /// of mock objects.
 class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
-
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
@@ -36,9 +34,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     var team: Team?
     var teamMember: Member?
 
-    let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
-                     "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
-                     "Brett", "Hannah", "Ana", "Paula"]
+    let usernames = MockUserType.usernames
 
     // The provider to use when configuring `SelfUser.provider`, needed only when tested code
     // invokes `SelfUser.current`. As we slowly migrate to `UserType`, we will use this more
@@ -75,7 +71,6 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         team = Team.insertNewObject(in: uiMOC)
         team!.remoteIdentifier = UUID()
-        
 
         teamMember = Member.insertNewObject(in: uiMOC)
         teamMember!.user = selfUser
@@ -119,14 +114,14 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
             team = nil
         }
     }
-    
+
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
         user.name = name
         user.remoteIdentifier = UUID()
         return user
     }
-    
+
     func createService(name: String) -> ZMUser {
         let user = createUser(name: name)
         user.serviceIdentifier = UUID.create().transportString()
@@ -147,28 +142,27 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         updateTeamStatus(wasInTeam: wasInTeam)
         block()
     }
-    
+
     func markAllMessagesAsUnread(in conversation: ZMConversation) {
         conversation.lastReadServerTimeStamp = Date.distantPast
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
     }
 
+// MARK: - mock conversation
 
-//MARK: - mock conversation
-    
     func createGroupConversation() -> ZMConversation {
         return ZMConversation.createGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createTeamGroupConversation() -> ZMConversation {
         return ZMConversation.createTeamGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createGroupConversationOnlyAdmin() -> ZMConversation {
         return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
     }
 
-//MARK: - mock service user
+// MARK: - mock service user
 
     func createServiceUser() -> ZMUser {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
@@ -183,4 +177,3 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         return serviceUser
     }
 }
-

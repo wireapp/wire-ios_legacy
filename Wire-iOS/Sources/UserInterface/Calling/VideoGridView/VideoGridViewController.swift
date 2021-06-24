@@ -24,26 +24,36 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
-final class VideoGridViewController: UIViewController {
-
+final class VideoGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
 
     // MARK: - Private Properties
-    
-    private var videoStreams: [VideoStream] = []
+
+    private var videoStreams: [VideoStream] {
+        if let videoStream = configuration.videoStreams.first(where: { isMaximized(stream: $0.stream) }) {
+            return [videoStream]
+        }
+        return configuration.videoStreams
+    }
+
+    private var dataSource: [VideoStream] = []
+    private var maximizedView: BaseVideoPreviewView?
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
+    private let hintView = VideoGridHintNotificationLabel()
+    private let topStack = UIStackView(axis: .vertical)
     private let mediaManager: AVSMediaManagerInterface
-    private var viewCache = [AVSClient: UIView]()
+    private var viewCache = [AVSClient: OrientableView]()
 
-    // MARK: - Properties
+    // MARK: - Public Properties
 
     var configuration: VideoGridConfiguration {
         didSet {
             guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
     }
@@ -59,8 +69,11 @@ final class VideoGridViewController: UIViewController {
             notifyVisibilityChanged()
             displayIndicatorViewsIfNeeded()
             animateNetworkConditionView()
+            hintView.setMessageHidden(isCovered)
         }
     }
+
+    var dismissSpinner: SpinnerCompletion?
 
     // MARK: - Initialization
 
@@ -82,6 +95,11 @@ final class VideoGridViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateHint(for: .viewDidLoad)
+    }
+
     // MARK: - Setup
 
     private func setupViews() {
@@ -90,31 +108,96 @@ final class VideoGridViewController: UIViewController {
 
         addToSelf(thumbnailViewController)
 
-        view.addSubview(networkConditionView)
+        view.addSubview(topStack)
+        topStack.alignment = .center
+        topStack.spacing = 10
+        topStack.addArrangedSubview(networkConditionView)
+        topStack.addArrangedSubview(hintView)
 
         networkConditionView.accessibilityIdentifier = "network-conditions-indicator"
     }
 
     private func createConstraints() {
-        for subView in [gridView, thumbnailViewController.view] {
-            subView?.translatesAutoresizingMaskIntoConstraints = false
-            subView?.fitInSuperview()
+        [gridView, thumbnailViewController.view, topStack, hintView, networkConditionView].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        constrain(view, networkConditionView) { view, networkConditionView in
-            networkConditionView.centerX == view.centerX
-            networkConditionView.top == view.safeAreaLayoutGuideOrFallback.top + 24
+        [gridView, thumbnailViewController.view].forEach {
+            $0?.fitInSuperview()
         }
+
+        NSLayoutConstraint.activate([
+            topStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            topStack.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24),
+            topStack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
+            topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+        ])
     }
 
     // MARK: - Public Interface
 
-    public func switchFillMode(location: CGPoint) {
-        let tappedView = viewCache.values.lazy
-            .compactMap { $0 as? VideoPreviewView }
-            .first(where: { self.view.convert($0.frame, from: $0.superview).contains(location) })
+    public func handleDoubleTap(gesture: UIGestureRecognizer) {
+        let location = gesture.location(in: gridView)
+        toggleMaximized(view: streamView(at: location))
+    }
 
-        tappedView?.shouldFill.toggle()
+    // MARK: - View maximization
+
+    private func toggleMaximized(view: BaseVideoPreviewView?) {
+        guard let view = view else { return }
+        guard allowMaximizationToggling(for: view.stream) else { return }
+
+        let shouldMaximize = !isMaximized(stream: view.stream)
+
+        maximizedView = shouldMaximize ? view : nil
+        view.isMaximized = shouldMaximize
+        updateVideoGrid(with: videoStreams)
+        updateHint(for: .maximizationChanged(maximized: shouldMaximize))
+    }
+
+    private func allowMaximizationToggling(for stream: Stream) -> Bool {
+        return !(configuration.callHasTwoParticipants && stream.videoState == .screenSharing)
+    }
+
+    private func isMaximized(stream: Stream?) -> Bool {
+        guard
+            let streamId = stream?.streamId,
+            let maximizedStreamId = maximizedView?.stream.streamId
+        else { return false }
+
+        return streamId == maximizedStreamId
+    }
+
+    private func dismissMaximizedViewIfNeeded(oldPresentationMode: VideoGridPresentationMode) {
+        guard oldPresentationMode != configuration.presentationMode else { return }
+        maximizedView?.isMaximized = false
+        maximizedView = nil
+    }
+
+    // MARK: - Hint
+
+    private func updateHint(for event: VideoGridEvent) {
+        switch event {
+        case .viewDidLoad:
+            hintView.show(hint: .fullscreen)
+        case .configurationChanged:
+            guard
+                configuration.callHasTwoParticipants,
+                let stream = configuration.videoStreams.first?.stream
+            else { return }
+
+            if stream.videoState == .some(.screenSharing) {
+                hintView.show(hint: .zoom)
+            } else if isMaximized(stream: stream) {
+                hintView.show(hint: .goBackOrZoom)
+            }
+        case .maximizationChanged(maximized: let maximized):
+            if maximized {
+                hintView.show(hint: .goBackOrZoom)
+            } else {
+                hintView.hideAndStopTimer()
+            }
+        }
     }
 
     // MARK: - UI Update
@@ -150,27 +233,48 @@ final class VideoGridViewController: UIViewController {
     private func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
+        displaySpinnerIfNeeded()
         updateSelfPreview()
         updateFloatingVideo(with: configuration.floatingVideoStream)
-        updateVideoGrid(with: configuration.videoStreams)
+        updateVideoGrid(with: videoStreams)
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
+        updateHint(for: .configurationChanged)
 
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
-    private func updateSelfPreview() {
+    private func displaySpinnerIfNeeded() {
         guard
-            let selfStreamId = ZMUser.selfUser()?.selfStreamId,
-            let selfStream = stream(with: selfStreamId)
+            configuration.presentationMode == .activeSpeakers,
+            configuration.videoStreams.isEmpty
         else {
+            dismissSpinner?()
             return
         }
 
-        if let view = viewCache[selfStreamId] as? SelfVideoPreviewView {
+        showLoadingView(title: L10n.Localizable.Call.Grid.noActiveSpeakers)
+    }
+
+    private func updateSelfPreview() {
+        guard let selfStreamId = ZMUser.selfUser()?.selfStreamId else { return }
+
+        // No stream to show. Update the capture state.
+        guard let selfStream = stream(with: selfStreamId) else {
+            Log.calling.debug("updating capture state to \(configuration.videoState)")
+            selfPreviewView?.updateCaptureState(with: configuration.videoState)
+            return
+        }
+
+        if let view = selfPreviewView {
             view.stream = selfStream
+            view.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
         } else {
-            viewCache[selfStreamId] = SelfVideoPreviewView(stream: selfStream, isCovered: isCovered)
+            viewCache[selfStreamId] = SelfVideoPreviewView(
+                stream: selfStream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame
+            )
         }
     }
 
@@ -194,21 +298,24 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func updateVideoGrid(with newVideoStreams: [VideoStream]) {
-        let changeSet = StagedChangeset(source: videoStreams, target: newVideoStreams)
+        let changeSet = StagedChangeset(source: dataSource, target: newVideoStreams)
 
         UIView.performWithoutAnimation {
-            gridView.reload(using: changeSet) { videoStreams = $0 }
+            gridView.reload(using: changeSet) { dataSource = $0 }
         }
 
-        updateStates(with: videoStreams)
+        updateStates(with: dataSource)
         pruneCache()
     }
 
     private func updateStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
             let view = (streamView(for: $0.stream) as? VideoPreviewView)
-            view?.isPaused = $0.isPaused
+
             view?.stream = $0.stream
+            view?.shouldShowActiveSpeakerFrame = configuration.shouldShowActiveSpeakerFrame
+            view?.isPaused = $0.isPaused
+            view?.pinchToZoomRule = PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
         }
     }
 
@@ -217,6 +324,7 @@ final class VideoGridViewController: UIViewController {
         let currentStreamsIds = configuration.allStreamIds
 
         for deletedStreamId in existingStreamsIds.subtracting(currentStreamsIds) {
+            guard deletedStreamId != ZMUser.selfUser()?.selfStreamId else { return }
             viewCache[deletedStreamId]?.removeFromSuperview()
             viewCache.removeValue(forKey: deletedStreamId)
         }
@@ -258,6 +366,13 @@ final class VideoGridViewController: UIViewController {
         return viewCache[stream.streamId]
     }
 
+    private func streamView(at location: CGPoint) -> BaseVideoPreviewView? {
+        guard let indexPath = gridView.indexPathForItem(at: location) else {
+            return nil
+        }
+        return streamView(for: dataSource[indexPath.row].stream) as? BaseVideoPreviewView
+    }
+
     private func stream(with streamId: AVSClient) -> Stream? {
         var stream = configuration.videoStreams.first(where: { $0.stream.streamId == streamId })?.stream
 
@@ -274,16 +389,15 @@ final class VideoGridViewController: UIViewController {
         }
         return viewCache[selfStreamId] as? SelfVideoPreviewView
     }
-    
+
     private func videoConfigurationDescription() -> String {
         return """
         showing self preview: \(selfPreviewView != nil)
-        videos in grid: [\(videoStreams)]\n
+        videos in grid: [\(dataSource)]\n
         """
     }
 
 }
-
 
 // MARK: - UICollectionViewDataSource
 
@@ -294,7 +408,7 @@ extension VideoGridViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoStreams.count
+        return dataSource.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,22 +416,36 @@ extension VideoGridViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let videoStream = videoStreams[indexPath.row]
+        let videoStream = dataSource[indexPath.row]
         cell.add(streamView: streamView(for: videoStream))
 
         return cell
     }
 
-    private func streamView(for videoStream: VideoStream) -> UIView {
+    private func streamView(for videoStream: VideoStream) -> OrientableView {
         let streamId = videoStream.stream.streamId
 
         if let streamView = viewCache[streamId] {
             return streamView
         } else {
-            let view = VideoPreviewView(stream: videoStream.stream, isCovered: isCovered)
+            let view = VideoPreviewView(
+                stream: videoStream.stream,
+                isCovered: isCovered,
+                shouldShowActiveSpeakerFrame: configuration.shouldShowActiveSpeakerFrame,
+                pinchToZoomRule: PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
+            )
             viewCache[streamId] = view
             return view
         }
+    }
+}
+
+// MARK: - Test Helpers
+
+extension VideoGridViewController {
+    /// used by snapshot tests
+    func hideHintView() {
+        hintView.hideAndStopTimer()
     }
 }
 

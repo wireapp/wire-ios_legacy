@@ -27,7 +27,7 @@ extension UIAlertController {
     /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialog(over viewController:UIViewController, completionHandler: @escaping ResultHandler) {
+    static func showNewsletterSubscriptionDialog(over viewController: UIViewController, completionHandler: @escaping ResultHandler) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts && !dataCollectionDisabled else { return }
 
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
@@ -36,7 +36,7 @@ extension UIAlertController {
 
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             let browserViewController = BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
-            
+
             browserViewController.completion = {
                 UIAlertController.showNewsletterSubscriptionDialog(over: viewController, completionHandler: completionHandler)
             }
@@ -65,7 +65,7 @@ extension UIAlertController {
             UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
-    
+
     private static  var dataCollectionDisabled: Bool {
         #if DATA_COLLECTION_DISABLED
         return true
@@ -85,12 +85,29 @@ extension UIAlertController {
 extension AuthenticationCoordinatorAlert {
 
     static func makeMarketingConsentAlert() -> AuthenticationCoordinatorAlert {
-        // Alert Actions
-        let privacyPolicyAction = AuthenticationCoordinatorAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized, coordinatorActions: [.showLoadingView, .openURL(URL.wr_privacyPolicy.appendingLocaleParameter)])
-        let declineAction = AuthenticationCoordinatorAlertAction(title: "general.decline".localized, coordinatorActions: [.setMarketingConsent(false)])
-        let acceptAction = AuthenticationCoordinatorAlertAction(title: "general.accept".localized, coordinatorActions: [.setMarketingConsent(true)])
+        typealias Consent = L10n.Localizable.NewsOffers.Consent
 
-        return AuthenticationCoordinatorAlert(title: "news_offers.consent.title".localized, message: "news_offers.consent.message".localized, actions: [privacyPolicyAction, declineAction, acceptAction])
+        return AuthenticationCoordinatorAlert(title: Consent.title,
+                                              message: Consent.message,
+                                              actions: [.privacyPolicy, .decline, .accept])
     }
 
+}
+
+private extension AuthenticationCoordinatorAlertAction {
+
+    static var privacyPolicy: Self {
+        Self.init(title: L10n.Localizable.NewsOffers.Consent.Button.PrivacyPolicy.title,
+                  coordinatorActions: [.showLoadingView, .openURL(URL.wr_privacyPolicy.appendingLocaleParameter)])
+    }
+
+    static var decline: Self {
+        Self.init(title: L10n.Localizable.General.decline,
+                  coordinatorActions: [.setMarketingConsent(false)])
+    }
+
+    static var accept: Self {
+        Self.init(title: L10n.Localizable.General.accept,
+                  coordinatorActions: [.setMarketingConsent(true)])
+    }
 }

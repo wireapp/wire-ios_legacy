@@ -194,7 +194,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
             ])
 
-        constrain(actionButton, buttonSpacer){ actionButton, buttonSpacer in
+        constrain(actionButton, buttonSpacer) { actionButton, buttonSpacer in
             buttonSpacer.top == actionButton.top
             buttonSpacer.bottom == actionButton.bottom
 
@@ -204,7 +204,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key : Any]?) -> Float {
+    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key: Any]?) -> Float {
         var width: CGFloat = 0
         for title: String in actionButtonTitles {
             let transformedTitle = title.applying(transform: textTransform)
@@ -222,7 +222,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             return
         }
 
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: ZMUser.selfUser())
     }
 
     @objc func actionButtonPressed(sender: Any?) {
@@ -248,7 +248,7 @@ extension ContactsCell: Themeable {
 }
 
 extension ContactsCell: UserCellSubtitleProtocol {
-    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+    static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] = [:]
 }
 
 extension ContactsCell {

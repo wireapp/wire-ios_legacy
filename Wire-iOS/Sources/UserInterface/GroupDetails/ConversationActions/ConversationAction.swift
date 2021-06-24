@@ -21,7 +21,7 @@ import WireDataModel
 
 extension ZMConversation {
     enum Action: Equatable {
-        
+
         case deleteGroup
         case moveToFolder
         case removeFromFolder(folder: String)
@@ -37,15 +37,15 @@ extension ZMConversation {
         case remove
         case favorite(isFavorite: Bool)
     }
-    
+
     var listActions: [Action] {
         return actions.filter({ $0 != .deleteGroup })
     }
-    
+
     var detailActions: [Action] {
         return actions.filter({ $0 != .configureNotifications})
     }
-    
+
     private var actions: [Action] {
         switch conversationType {
         case .connection:
@@ -58,7 +58,7 @@ extension ZMConversation {
             return availableGroupActions()
         }
     }
-    
+
     private func availableOneToOneActions() -> [Action] {
         precondition(conversationType == .oneOnOne)
         var actions = [Action]()
@@ -69,12 +69,12 @@ extension ZMConversation {
         }
         return actions
     }
-    
+
     private func availablePendingActions() -> [Action] {
         precondition(conversationType == .connection)
         return [.archive(isArchived: isArchived), .cancelRequest]
     }
-    
+
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
@@ -89,14 +89,14 @@ extension ZMConversation {
 
         return actions
     }
-    
+
     private func availableStandardActions() -> [Action] {
         var actions = [Action]()
-        
+
         if let markReadAction = markAsReadAction() {
             actions.append(markReadAction)
         }
-        
+
         if !isReadOnly {
             if ZMUser.selfUser()?.isTeamMember ?? false {
                 actions.append(.configureNotifications)
@@ -112,7 +112,7 @@ extension ZMConversation {
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
             actions.append(.moveToFolder)
-            
+
             if let folderName = folder?.name {
                 actions.append(.removeFromFolder(folder: folderName))
             }
@@ -120,7 +120,7 @@ extension ZMConversation {
 
         return actions
     }
-    
+
     private func markAsReadAction() -> Action? {
         guard Bundle.developerModeEnabled else { return nil }
         if unreadMessages.count > 0 {
@@ -142,7 +142,7 @@ extension ZMConversation.Action {
         default: return false
         }
     }
-    
+
     var title: String {
         switch self {
         case .removeFromFolder(let folder):
@@ -151,7 +151,7 @@ extension ZMConversation.Action {
             return localizationKey.localized
         }
     }
-    
+
     private var localizationKey: String {
         switch self {
         case .deleteGroup: return "meta.menu.delete"
@@ -170,7 +170,7 @@ extension ZMConversation.Action {
         case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
         }
     }
-    
+
     func alertAction(handler: @escaping () -> Void) -> UIAlertAction {
         return .init(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
     }

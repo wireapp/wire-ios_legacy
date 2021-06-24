@@ -18,13 +18,14 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 protocol CallAccessoryViewControllerDelegate: class {
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)
 }
 
 final class CallAccessoryViewController: UIViewController, CallParticipantsViewControllerDelegate {
-    
+
     weak var delegate: CallAccessoryViewControllerDelegate?
     private let participantsViewController: CallParticipantsViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
@@ -42,9 +43,12 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         }
     }
 
-    init(configuration: CallInfoViewControllerInput) {
+    init(configuration: CallInfoViewControllerInput,
+         selfUser: UserType) {
         self.configuration = configuration
-        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
+        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants,
+                                                                    allowsScrolling: false,
+                                                                    selfUser: selfUser)
         super.init(nibName: nil, bundle: nil)
         participantsViewController.delegate = self
     }
@@ -83,14 +87,14 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         NSLayoutConstraint.activate([
             videoPlaceholderStatusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             videoPlaceholderStatusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 
     private func updateState() {
         switch configuration.accessoryType {
         case .avatar(let user):
-            avatarView.user = user
+            avatarView.user = user.value
         case .participantsList(let participants):
             participantsViewController.variant = configuration.effectiveColorVariant
             participantsViewController.participants = participants
@@ -101,7 +105,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
         videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
     }
-    
+
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
         delegate?.callAccessoryViewControllerDidSelectShowMore(viewController: self)
     }

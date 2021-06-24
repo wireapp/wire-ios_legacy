@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class CollectionViewContainerCellSnapshotTests: XCTest {
-    
+
     var sut: CollectionViewContainerCell!
-    
+
     override func setUp() {
         super.setUp()
         sut = CollectionViewContainerCell(frame: CGRect(x: 0, y: 0, width: 375, height: 97))
@@ -30,13 +30,13 @@ final class CollectionViewContainerCellSnapshotTests: XCTest {
         sut.collectionView?.backgroundColor = .black
         sut.updateConstraints()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatCollectionViewHasSameSizeOfTheCell(){
+    func testThatCollectionViewHasSameSizeOfTheCell() {
         XCTAssertEqual(sut.frame, sut.collectionView?.frame)
     }
 }

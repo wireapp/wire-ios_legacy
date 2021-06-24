@@ -25,26 +25,27 @@ extension ZMConversationMessage {
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
         guard
-            SelfUser.current.phoneNumber != nil,
-            SelfUser.current.isTeamMember,
-            SelfUser.current.hasDigitalSignatureEnabled
+            let selfUser = SelfUser.provider?.selfUser,
+            selfUser.phoneNumber != nil,
+            selfUser.isTeamMember,
+            selfUser.hasDigitalSignatureEnabled
         else {
             return false
         }
         return isPDF
     }
-    
+
     /// Whether the message can be copied.
     var canBeCopied: Bool {
         return SecurityFlags.clipboard.isEnabled
             && !isEphemeral
             && (isText || isImage || isLocation)
     }
-    
+
     /// Whether the message can be edited.
     var canBeEdited: Bool {
-        guard let conversation = self.conversation,
-              let sender = self.sender else {
+        guard let conversation = conversationLike,
+              let sender = senderUser else {
             return false
         }
         return !isEphemeral &&
@@ -53,10 +54,10 @@ extension ZMConversationMessage {
                sender.isSelfUser &&
                deliveryState.isOne(of: .delivered, .sent, .read)
     }
-    
+
     /// Whether the message can be quoted.
     var canBeQuoted: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 
@@ -65,7 +66,7 @@ extension ZMConversationMessage {
 
     /// Whether message details are available for this message.
     var areMessageDetailsAvailable: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 
@@ -78,7 +79,7 @@ extension ZMConversationMessage {
         guard conversation.conversationType == .group else {
             return false
         }
-        
+
         // Show the message details in Team groups.
         if conversation.teamRemoteIdentifier != nil {
             return canBeLiked || isSentBySelfUser
@@ -93,12 +94,12 @@ extension ZMConversationMessage {
         guard areMessageDetailsAvailable else {
             return false
         }
-        
+
         // Read receipts are only available in team groups
-        guard conversation?.teamRemoteIdentifier != nil else {
+        guard conversationLike?.teamRemoteIdentifier != nil else {
             return false
         }
-        
+
         // Only the sender of a message can see read receipts for their messages.
         return isSentBySelfUser
     }
@@ -117,13 +118,13 @@ extension ZMConversationMessage {
         }
         return isFile && fileMessageData.downloadState == .downloading
     }
-    
+
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
         if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
             return false
         }
-        
+
         if isImage {
             return true
         }
@@ -140,7 +141,7 @@ extension ZMConversationMessage {
             return false
         }
     }
-    
+
     /// Wether it should be possible to forward given message to another conversation.
     var canBeForwarded: Bool {
         if isEphemeral {
@@ -157,11 +158,11 @@ extension ZMConversationMessage {
 
     /// Wether the message sending failed in the past and we can attempt to resend the message.
     var canBeResent: Bool {
-        guard let conversation = self.conversation,
-              let sender = self.sender else {
+        guard let conversation = conversationLike,
+              let sender = senderUser else {
             return false
         }
-        
+
         return conversation.isSelfAnActiveMember &&
                sender.isSelfUser &&
                (isText || isImage || isLocation || isFile) &&

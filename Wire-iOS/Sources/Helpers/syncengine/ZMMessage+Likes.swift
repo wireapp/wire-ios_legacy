@@ -16,35 +16,33 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireDataModel
-
 
 extension ZMConversationMessage {
 
     var canBeLiked: Bool {
-        guard let conversation = self.conversation else {
+        guard let conversation = conversationLike else {
             return false
         }
 
-        let participatesInConversation = conversation.localParticipants.contains(ZMUser.selfUser())
+        let participatesInConversation = conversation.localParticipantsContain(user: SelfUser.current)
         let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
     }
 
     var liked: Bool {
+        get {
+            return likers.contains { $0.isSelfUser }
+        }
+
         set {
             if newValue {
                 ZMMessage.addReaction(.like, toMessage: self)
-            }
-            else {
+            } else {
                 ZMMessage.removeReaction(onMessage: self)
             }
-        }
-        get {
-            return likers().contains(.selfUser())
         }
     }
 
@@ -54,7 +52,7 @@ extension ZMConversationMessage {
             }.reduce(0, +) > 0
     }
 
-    func likers() -> [ZMUser] {
+    var likers: [UserType] {
         return usersReaction.filter { (reaction, _) -> Bool in
             reaction == MessageReaction.like.unicodeValue
             }.map { (_, users) in
@@ -62,12 +60,12 @@ extension ZMConversationMessage {
             }.first ?? []
     }
 
-    var sortedLikers: [ZMUser] {
-        return likers().sorted { $0.name < $1.name }
+    var sortedLikers: [UserType] {
+        return likers.sorted { $0.name < $1.name }
     }
 
     var sortedReadReceipts: [ReadReceipt] {
-        return readReceipts.sorted { $0.user.name < $1.user.name }
+        return readReceipts.sorted { $0.userType.name < $1.userType.name }
     }
 
 }

@@ -81,7 +81,7 @@ final class LicensesLoaderTests: XCTestCase {
         XCTAssertFalse(loader.cacheEmpty)
 
         // WHEN
-        let predicate = NSPredicate(block: { any, _ in
+        let predicate = NSPredicate(block: { _, _ in
             return self.loader.cacheEmpty
         })
 

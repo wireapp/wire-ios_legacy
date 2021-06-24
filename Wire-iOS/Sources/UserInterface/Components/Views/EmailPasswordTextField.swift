@@ -26,12 +26,17 @@ protocol EmailPasswordTextFieldDelegate: class {
 
 class EmailPasswordTextField: UIView, MagicTappable {
 
-    let emailField = AccessoryTextField(kind: .email)
-    let passwordField = AccessoryTextField(kind: .password(isNew: false))
+    let emailField = ValidatedTextField(kind: .email)
+    let passwordField = ValidatedTextField(kind: .password(isNew: false))
     let contentStack = UIStackView()
     let separatorContainer: ContentInsetView
 
     var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updateEmailFieldisEnabled()
+        }
+    }
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
@@ -122,7 +127,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -130,6 +135,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
     func prefill(email: String?) {
         hasPrefilledValue = email != nil
         emailField.text = email
+        updateEmailFieldisEnabled()
+    }
+
+    func updateEmailFieldisEnabled() {
+        emailField.isEnabled = !hasPrefilledValue || allowEditingPrefilledValue
     }
 
     // MARK: - Appearance
@@ -193,7 +203,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
         }
-        
+
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
     }
 
@@ -243,4 +253,3 @@ extension EmailPasswordTextField: TextFieldValidationDelegate {
         }
     }
 }
-

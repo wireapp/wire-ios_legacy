@@ -23,10 +23,13 @@ protocol VideoGridConfiguration {
 
     var floatingVideoStream: VideoStream? { get }
     var videoStreams: [VideoStream] { get }
+    var videoState: VideoState { get }
     var networkQuality: NetworkQuality { get }
+    var shouldShowActiveSpeakerFrame: Bool { get }
+    var presentationMode: VideoGridPresentationMode { get }
+    var callHasTwoParticipants: Bool { get }
 
 }
-
 
 extension VideoGridConfiguration {
 
@@ -34,7 +37,7 @@ extension VideoGridConfiguration {
         let streamIds = (videoStreams + [floatingVideoStream]).compactMap { $0?.stream.streamId }
         return Set(streamIds)
     }
-    
+
     // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
     // to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
     // the `VideoGridViewController` generic to work around the `Self` requirement of
@@ -42,7 +45,11 @@ extension VideoGridConfiguration {
     func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
         return floatingVideoStream == other.floatingVideoStream &&
             videoStreams == other.videoStreams &&
-            networkQuality == other.networkQuality
+            networkQuality == other.networkQuality &&
+            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
+            presentationMode == other.presentationMode &&
+            videoState == other.videoState &&
+            callHasTwoParticipants == other.callHasTwoParticipants
     }
 
 }

@@ -25,7 +25,7 @@ protocol CollectionsViewControllerDelegate: class {
 }
 
 final class CollectionsViewController: UIViewController {
-    var onDismiss: ((CollectionsViewController)->Void)?
+    var onDismiss: ((CollectionsViewController) -> Void)?
     let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
     var isShowingSearchResults: Bool {
@@ -94,7 +94,7 @@ final class CollectionsViewController: UIViewController {
         self.collection = collection
         self.sections = sections
 
-        switch(sections) {
+        switch sections {
         case CollectionsSectionSet.images:
             self.imageMessages = messages
         case CollectionsSectionSet.filesAndAudio:
@@ -161,7 +161,7 @@ final class CollectionsViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
-        ///Prevent content overlaps navi bar
+        /// Prevent content overlaps navi bar
         navigationController?.navigationBar.isTranslucent = false
     }
 
@@ -178,7 +178,7 @@ final class CollectionsViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        switch (self.traitCollection.horizontalSizeClass) {
+        switch self.traitCollection.horizontalSizeClass {
         case .compact:
             return false
         default:
@@ -241,7 +241,7 @@ final class CollectionsViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        guard let _ = self.view.window else {
+        guard self.view.window != nil else {
             return
         }
 
@@ -268,7 +268,7 @@ final class CollectionsViewController: UIViewController {
 
         // The label must be inset from the top due to navigation bar title alignment
         let titleViewWrapper = UIView()
-        let titleView = ConversationTitleView(conversation: self.collection.conversation, interactive: false)
+        let titleView = ConversationTitleView(conversation: collection.conversation, interactive: false)
         titleViewWrapper.addSubview(titleView)
 
         constrain(titleView, titleViewWrapper) { titleView, titleViewWrapper in
@@ -345,7 +345,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
 extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     fileprivate func elements(for section: CollectionsSectionSet) -> [ZMConversationMessage] {
-        switch(section) {
+        switch section {
         case CollectionsSectionSet.images:
             return self.imageMessages
         case CollectionsSectionSet.filesAndAudio:
@@ -359,7 +359,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
 
     fileprivate func numberOfElements(for section: CollectionsSectionSet) -> Int {
-        switch(section) {
+        switch section {
         case CollectionsSectionSet.images:
             let max = self.inOverviewMode ? self.maxOverviewElementsInGrid(in: section) : Int.max
             return min(self.imageMessages.count, max)
@@ -437,7 +437,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         var desiredWidth: CGFloat?
         var desiredHeight: CGFloat?
 
-        switch(section) {
+        switch section {
         case CollectionsSectionSet.images, CollectionsSectionSet.videos:
             desiredWidth = gridElementSize.width
             desiredHeight = gridElementSize.height
@@ -505,7 +505,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
         let resultCell: CollectionCell
 
-        switch(section) {
+        switch section {
         case CollectionsSectionSet.images:
             resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
 
@@ -551,7 +551,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
 
-        switch (kind) {
+        switch kind {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as! CollectionHeaderView
             header.section = section

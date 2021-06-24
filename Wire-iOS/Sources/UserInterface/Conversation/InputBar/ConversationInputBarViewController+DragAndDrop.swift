@@ -35,7 +35,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
 
                 DispatchQueue.main.async {
                     let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: draggedImage),
-                                                                     onConfirm: { [unowned self] (editedImage: UIImage?) in
+                                                                     onConfirm: { [unowned self] _ in
                                                                                     self.dismiss(animated: true) {
                                                                                         if let draggedImageData = draggedImage.pngData() {
                                                                                             self.sendController.sendMessage(withImageData: draggedImageData)
@@ -53,7 +53,8 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                             }
                 }
             })
-            ///TODO: it's a temporary solution to drag only one image, while we have no design for multiple images
+
+            // TODO: it's a temporary solution to drag only one image, while we have no design for multiple images
             break
         }
     }

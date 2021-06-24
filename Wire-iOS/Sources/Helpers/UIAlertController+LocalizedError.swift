@@ -20,13 +20,26 @@ import Foundation
 import UIKit
 
 extension UIAlertController {
-    
+
     convenience init(_ error: LocalizedError, preferredStyle: UIAlertController.Style) {
-        
+
         let title = error.localizedDescription
         let message = error.failureReason
-        
+
         self.init(title: title, message: message, preferredStyle: preferredStyle)
     }
-    
+
+}
+
+extension UIAlertController {
+
+    @objc
+    public static func showErrorAlert(message: String) {
+        let alertController = UIAlertController(title: L10n.Localizable.Error.Conversation.title,
+                                                message: message,
+                                                alertAction: .ok(style: .cancel))
+
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
+    }
+
 }

@@ -62,7 +62,7 @@ final class ConversationMessageActionController {
                                    for: message,
                                    view: targetView)
             }
-            
+
             return UIAction(title: title,
                             image: messageAction.systemIcon(),
                             handler: handler)
@@ -113,7 +113,8 @@ final class ConversationMessageActionController {
              .sketchEmoji:
             return message.isImage
         case .present,
-             .openQuote:
+             .openQuote,
+             .resetSession:
             return false
         }
     }
@@ -191,7 +192,7 @@ final class ConversationMessageActionController {
     @objc func digitallySignMessage() {
         perform(action: .digitallySign)
     }
-    
+
     @objc func copyMessage() {
         perform(action: .copy)
     }

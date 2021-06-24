@@ -21,8 +21,8 @@ import UIKit
 final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
-    private let thumbnailContainerView = UIView()
-    private(set) var contentView: UIView?
+    private let thumbnailContainerView = PassthroughTouchesView()
+    private(set) var contentView: OrientableView?
 
     // MARK: - Dynamics
 
@@ -42,17 +42,17 @@ final class PinnableThumbnailViewController: UIViewController {
     // MARK: - Changing the Previewed Content
 
     fileprivate(set) var thumbnailContentSize = CGSize(width: 100, height: 100)
-    
+
     func removeCurrentThumbnailContentView() {
         contentView?.removeFromSuperview()
         contentView = nil
+        thumbnailView.accessibilityIdentifier = nil
     }
 
-    func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
+    func setThumbnailContentView(_ contentView: OrientableView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
         thumbnailView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.fitInSuperview()
+        thumbnailView.accessibilityIdentifier = "ThumbnailView"
         self.contentView = contentView
 
         self.thumbnailContentSize = contentSize
@@ -66,6 +66,10 @@ final class PinnableThumbnailViewController: UIViewController {
 
     // MARK: - Configuration
 
+    override func loadView() {
+        view = PassthroughTouchesView()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,6 +78,8 @@ final class PinnableThumbnailViewController: UIViewController {
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         thumbnailView.addGestureRecognizer(panGestureRecognizer)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,15 +88,15 @@ final class PinnableThumbnailViewController: UIViewController {
         if !hasDoneInitialLayout {
             view.layoutIfNeeded()
             view.backgroundColor = .clear
-            
+
             updateThumbnailAfterLayoutUpdate()
             hasDoneInitialLayout = true
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if !hasEnabledPinningBehavior {
             animator.addBehavior(self.pinningBehavior)
             hasEnabledPinningBehavior = true
@@ -104,7 +110,7 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
         thumbnailView.shape = .rounded(radius: 12)
-        
+
         thumbnailContainerView.layer.shadowRadius = 30
         thumbnailContainerView.layer.shadowOpacity = 0.32
         thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
@@ -119,6 +125,12 @@ final class PinnableThumbnailViewController: UIViewController {
         thumbnailContainerView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor).isActive = true
         thumbnailContainerView.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
         thumbnailContainerView.bottomAnchor.constraint(equalTo: safeBottomAnchor).isActive = true
+    }
+
+    // MARK: - Orientation
+
+    @objc func orientationDidChange() {
+        contentView?.layoutForOrientation()
     }
 
     // MARK: - Size
@@ -138,9 +150,9 @@ final class PinnableThumbnailViewController: UIViewController {
         let bounds = CGRect(origin: CGPoint.zero, size: safeSize)
         pinningBehavior.updateFields(in: bounds)
 
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             self.updateThumbnailFrame(animated: false, parentSize: safeSize)
-        }, completion: { context in
+        }, completion: { _ in
             self.pinningBehavior.isEnabled = true
         })
     }
@@ -162,7 +174,7 @@ final class PinnableThumbnailViewController: UIViewController {
         let size = thumbnailContentSize.withOrientation(UIDevice.current.orientation)
         let position = thumbnailPosition(for: size, parentSize: parentSize)
 
-        let changesBlock = { [thumbnailView, view] in
+        let changesBlock = { [contentView, thumbnailView, view] in
             thumbnailView.frame = CGRect(
                 x: position.x - size.width / 2,
                 y: position.y - size.height / 2,
@@ -171,8 +183,9 @@ final class PinnableThumbnailViewController: UIViewController {
             )
 
             view?.layoutIfNeeded()
+            contentView?.layoutForOrientation()
         }
-        
+
         if animated {
             UIView.animate(withDuration: 0.2, animations: changesBlock)
         } else {

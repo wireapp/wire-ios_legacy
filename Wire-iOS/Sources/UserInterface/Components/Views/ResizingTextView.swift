@@ -26,9 +26,7 @@ class ResizingTextView: TextView {
     }
 
     override var intrinsicContentSize: CGSize {
-        get {
-            return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
-        }
+        return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
     }
 
     override func paste(_ sender: Any?) {

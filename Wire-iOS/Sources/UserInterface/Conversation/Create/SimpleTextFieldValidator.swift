@@ -38,13 +38,13 @@ final class SimpleTextFieldValidator: NSObject {
 
     func validate(text: String) -> SimpleTextFieldValidator.ValidationError? {
         let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         if stringToValidate.isEmpty {
             return .empty
         }
-        
+
         var validatedString: Any? = stringToValidate as Any
-        
+
         do {
             _ = try StringLengthValidator.validateStringValue(&validatedString,
                                                     minimumStringLength: 1,
@@ -52,14 +52,14 @@ final class SimpleTextFieldValidator: NSObject {
                                                     maximumByteLength: 256)
         }
         catch let stringValidationError as NSError {
-            
+
             switch stringValidationError.code {
             case Int(ZMManagedObjectValidationErrorCode.tooLong.rawValue):
                 return .tooLong
             default: break
             }
         }
-    
+
         return nil
     }
 }
@@ -69,7 +69,7 @@ extension SimpleTextFieldValidator: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldValue = textField.text as NSString?
         let result = oldValue?.replacingCharacters(in: range, with: string) ?? ""
-        if !result.isEmpty, let _ = self.validate(text: result)  {
+        if !result.isEmpty, self.validate(text: result) != nil {
             return false
         }
         delegate?.textFieldValueChanged(result)
@@ -81,15 +81,15 @@ extension SimpleTextFieldValidator: UITextFieldDelegate {
         delegate?.textFieldValueSubmitted(text)
         return true
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.textFieldDidEndEditing()
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         delegate?.textFieldDidBeginEditing()
     }
-    
+
 }
 
 extension SimpleTextFieldValidator.ValidationError: LocalizedError {

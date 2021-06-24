@@ -20,25 +20,25 @@ import Foundation
 import WireSyncEngine
 
 extension SessionManager.AccountError: LocalizedError {
-    
+
     public var errorDescription: String? {
         switch self {
         case .accountLimitReached:
             return "self.settings.add_account.error.title".localized
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .accountLimitReached:
             return "self.settings.add_account.error.message".localized
         }
     }
-    
+
 }
 
 extension SessionManager.SwitchBackendError: LocalizedError {
-    
+
     public var errorDescription: String? {
         switch self {
         case .invalidBackend:
@@ -47,7 +47,7 @@ extension SessionManager.SwitchBackendError: LocalizedError {
             return "url_action.switch_backend.error.logged_in.title".localized
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .invalidBackend:
@@ -59,7 +59,7 @@ extension SessionManager.SwitchBackendError: LocalizedError {
 }
 
 extension DeepLinkRequestError: LocalizedError {
-    
+
     public var errorDescription: String? {
         switch self {
         case .invalidUserLink:
@@ -72,7 +72,7 @@ extension DeepLinkRequestError: LocalizedError {
             return "url_action.authorization_required.title".localized
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .invalidUserLink:
@@ -85,30 +85,30 @@ extension DeepLinkRequestError: LocalizedError {
             return "url_action.authorization_required.message".localized
         }
     }
-    
+
 }
 
 extension CompanyLoginError: LocalizedError {
-    
+
     public var errorDescription: String? {
         return "general.failure".localized
     }
-    
+
     public var failureReason: String? {
         return "login.sso.error.alert.message".localized(args: displayCode)
     }
-    
+
 }
 
 extension ConmpanyLoginRequestError: LocalizedError {
-    
+
     public var errorDescription: String? {
         switch self {
         case .invalidLink:
             return "login.sso.start_error_title".localized
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .invalidLink:

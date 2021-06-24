@@ -19,26 +19,33 @@
 import XCTest
 @testable import Wire
 
-class ConversationMessageSectionControllerTests: XCTestCase {
+final class ConversationMessageSectionControllerTests: XCTestCase {
 
     // MARK: - Dequeuing
-    
+
     var context: ConversationMessageContext!
-    
+
     override func setUp() {
         super.setUp()
-        
-        context = ConversationMessageContext(isSameSenderAsPrevious: false, isTimeIntervalSinceLastMessageSignificant: false, isFirstMessageOfTheDay: false, isFirstUnreadMessage: false, isLastMessage: false, searchQueries: [], previousMessageIsKnock: false, spacing: 0)
+
+        context = ConversationMessageContext(isSameSenderAsPrevious: false,
+                                             isTimeIntervalSinceLastMessageSignificant: false,
+                                             isFirstMessageOfTheDay: false,
+                                             isFirstUnreadMessage: false,
+                                             isLastMessage: false,
+                                             searchQueries: [],
+                                             previousMessageIsKnock: false,
+                                             spacing: 0)
     }
-    
+
     override func tearDown() {
         context = nil
-        
+
         super.tearDown()
     }
 
     func testThatItReturnsCellsInCorrectOrder_Normal() {
-        
+
         // GIVEN
         let section = ConversationMessageSectionController(message: MockMessage(), context: context)
         section.cellDescriptions.removeAll()

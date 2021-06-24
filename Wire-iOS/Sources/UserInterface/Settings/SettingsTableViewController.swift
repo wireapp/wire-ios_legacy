@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import Cartography
 import WireSyncEngine
@@ -47,7 +46,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
         }
     }
-    
+
     init(style: UITableView.Style) {
         tableView = IntrinsicSizeTableView(frame: .zero, style: style)
         super.init(nibName: nil, bundle: nil)
@@ -105,7 +104,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             footerContainer.right == tableView.right
             footerContainer.bottom == view.bottom
             footerContainer.height == 0 ~ 750.0
-            
+
             footerSeparator.left == footerContainer.left
             footerSeparator.right == footerContainer.right
             footerSeparator.top == footerContainer.top
@@ -154,13 +153,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     let group: SettingsInternalGroupCellDescriptorType
     fileprivate var sections: [SettingsSectionDescriptorType]
     fileprivate var selfUserObserver: NSObjectProtocol!
-    
+
     required init(group: SettingsInternalGroupCellDescriptorType) {
         self.group = group
         self.sections = group.visibleItems
         super.init(style: group.style == .plain ? .plain : .grouped)
         self.title = group.title.localizedUppercase
-        
+
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
                 groupDescriptor.viewController = self
@@ -170,7 +169,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let userSession = ZMUserSession.shared() {
             self.selfUserObserver = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
@@ -185,18 +184,26 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTableView()
-        
+
         self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self, SettingsStaticTextTableCell.self]
+        let allCellTypes: [SettingsTableCell.Type] = [
+            SettingsTableCell.self,
+            SettingsGroupCell.self,
+            SettingsButtonCell.self,
+            SettingsToggleCell.self,
+            SettingsValueCell.self,
+            SettingsTextCell.self,
+            SettingsStaticTextTableCell.self
+        ]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
     }
-    
+
     func refreshData() {
         sections = group.visibleItems
         tableView.reloadData()
@@ -260,12 +267,12 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 }
 
 extension SettingsTableViewController {
-    
+
     @objc
     func applicationDidBecomeActive() {
         refreshData()
     }
-    
+
 }
 
 extension SettingsTableViewController: ZMUserObserver {

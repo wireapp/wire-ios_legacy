@@ -26,10 +26,10 @@ import WireSyncEngine
 final class InitialSyncObserver: NSObject, ZMInitialSyncCompletionObserver {
     private var token: Any!
     private var handler: (Bool) -> Void
-    
+
     /// Whether the initial sync has been completed yet.
     private(set) var isCompleted = false
-    
+
     init(in userSession: ZMUserSession, handler: @escaping (Bool) -> Void) {
         self.handler = handler
         super.init()
@@ -42,17 +42,17 @@ final class InitialSyncObserver: NSObject, ZMInitialSyncCompletionObserver {
             token = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
     }
-    
+
     private func handleCompletedSync() {
         isCompleted = true
         handler(isCompleted)
     }
-    
+
     // MARK: - ZMInitialSyncCompletionObserver
-    
+
     func initialSyncCompleted() {
         handleCompletedSync()
         token = nil
     }
-    
+
 }

@@ -36,7 +36,7 @@ final class ConversationInputBarViewController: UIViewController,
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
-    let conversation: ZMConversation
+    let conversation: InputBarConversationType
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
     private(set) var inputController: UIViewController? {
@@ -75,7 +75,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
-    
+
     var textfieldObserverToken: Any?
     lazy var audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
 
@@ -96,7 +96,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
         button.setTitleColor(UIColor.accent(), for: .normal)
-        
+
         configureEphemeralKeyboardButton(button)
 
         return button
@@ -104,12 +104,12 @@ final class ConversationInputBarViewController: UIViewController,
 
     lazy var hourglassButton: IconButton = {
         let button = IconButton(style: .default)
-        
+
         button.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
         button.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-        
+
         configureEphemeralKeyboardButton(button)
-        
+
         return button
     }()
 
@@ -125,7 +125,7 @@ final class ConversationInputBarViewController: UIViewController,
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
         tapGestureRecognizer.require(toFail: longPressRecognizer)
         button.addGestureRecognizer(tapGestureRecognizer)
@@ -159,16 +159,16 @@ final class ConversationInputBarViewController: UIViewController,
         view.setHidden(true, animated: false)
         return view
     }()
-    
-    //MARK: custom keyboards
+
+    // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
-    
+
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
-    //MARK: text input
+    // MARK: text input
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
@@ -176,8 +176,8 @@ final class ConversationInputBarViewController: UIViewController,
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
-    
-    //MARK: feedback
+
+    // MARK: feedback
     lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -207,9 +207,9 @@ final class ConversationInputBarViewController: UIViewController,
                         setupClosure: () -> UIViewController) {
                 if inputController == nil ||
                     inputController != viewController {
-                    
+
                     let newViewController: UIViewController
-                    
+
                     if let viewController = viewController {
                         newViewController = viewController
                     } else {
@@ -261,15 +261,18 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - Input views handling
 
-    /// init with a ZMConversation objcet
+    /// init with a InputBarConversationType objcet
     /// - Parameter conversation: provide nil only for tests
-    init(conversation: ZMConversation) {
+    init(conversation: InputBarConversationType) {
         self.conversation = conversation
 
         super.init(nibName: nil, bundle: nil)
 
-        conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
-        typingObserverToken = conversation.addTypingObserver(self)
+        if !ProcessInfo.processInfo.isRunningTests,
+           let conversation = conversation as? ZMConversation {
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+            typingObserverToken = conversation.addTypingObserver(self)
+        }
 
         setupNotificationCenter()
         setupInputLanguageObserver()
@@ -281,17 +284,12 @@ final class ConversationInputBarViewController: UIViewController,
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
-    }
-
     // MARK: - view life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupCallStateObserver()
-        setupAppLockedObserver()
 
         setupSingleTapGestureRecognizer()
 
@@ -312,15 +310,6 @@ final class ConversationInputBarViewController: UIViewController,
         gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
 
-        if conversationObserverToken == nil {
-            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
-        }
-
-        if let connectedUser = conversation.connectedUser,
-            let userSession = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
-        }
-
         updateAccessoryViews()
         updateInputBarVisibility()
         updateTypingIndicator()
@@ -334,6 +323,24 @@ final class ConversationInputBarViewController: UIViewController,
         if #available(iOS 11.0, *) {
             let interaction = UIDropInteraction(delegate: self)
             inputBar.textView.addInteraction(interaction)
+        }
+
+        setupObservers()
+    }
+
+    private func setupObservers() {
+        guard !ProcessInfo.processInfo.isRunningTests else {
+            return
+        }
+
+        if conversationObserverToken == nil,
+           let conversation = conversation as? ZMConversation {
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
+
+        if let connectedUser = conversation.connectedUserType as? ZMUser,
+           let userSession = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, in: userSession)
         }
     }
 
@@ -353,7 +360,6 @@ final class ConversationInputBarViewController: UIViewController,
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         endEditingMessageIfNeeded()
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
 
     override func viewDidLayoutSubviews() {
@@ -408,7 +414,13 @@ final class ConversationInputBarViewController: UIViewController,
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-        sendButtonState.update(textLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+        sendButtonState.update(textLength: trimmed.count,
+                               editing: nil != editingMessage,
+                               markingDown: inputBar.isMarkingDown,
+                               destructionTimeout: conversation.messageDestructionTimeoutValue,
+                               conversationType: conversation.conversationType,
+                               mode: mode,
+                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
 
         sendButton.isHidden = sendButtonState.sendButtonHidden
         hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
@@ -445,7 +457,7 @@ final class ConversationInputBarViewController: UIViewController,
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
             conversation.conversationType == .oneOnOne,
-            let connectedUser = conversation.connectedUser else {
+            let connectedUser = conversation.connectedUserType else {
                 return
         }
 
@@ -517,16 +529,18 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: - PingButton
 
     @objc
-    func pingButtonPressed(_ button: UIButton?) {
+    private func pingButtonPressed(_ button: UIButton?) {
         appendKnock()
     }
 
     private func appendKnock() {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         notificationFeedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
             do {
-                try self.conversation.appendKnock()
-                Analytics.shared().tagMediaActionCompleted(.ping, inConversation: self.conversation)
+                try conversation.appendKnock()
+                Analytics.shared.tagMediaActionCompleted(.ping, inConversation: conversation)
 
                 AVSMediaManager.sharedInstance().playKnockSound()
                 self.notificationFeedbackGenerator.notificationOccurred(.success)
@@ -553,7 +567,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     @objc
     private func giphyButtonPressed(_ sender: Any?) {
-        guard !AppDelegate.isOffline else { return }
+        guard !AppDelegate.isOffline, let conversation = conversation as? ZMConversation else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
@@ -572,7 +586,7 @@ final class ConversationInputBarViewController: UIViewController,
             self.photoButton.transform = CGAffineTransform.identity
         }
 
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { _ in
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
         }
     }
@@ -624,7 +638,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
         dismiss(animated: true) {
             let messageText: String
 
-            if (searchTerm == "") {
+            if searchTerm == "" {
                 messageText = String(format: "giphy.conversation.random_message".localized, searchTerm)
             } else {
                 messageText = String(format: "giphy.conversation.message".localized, searchTerm)
@@ -639,7 +653,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
-    ///TODO: check this is still necessary on iOS 13?
+    /// TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
         do {
@@ -649,7 +663,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String

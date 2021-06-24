@@ -90,10 +90,10 @@ extension UIImage {
 
     private class func thumbnailOptions(withMaxSize maxSize: CGFloat) -> CFDictionary {
         return [
-            kCGImageSourceCreateThumbnailWithTransform : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageIfAbsent : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageAlways : kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: Float(maxSize))
+            kCGImageSourceCreateThumbnailWithTransform: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageIfAbsent: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageAlways: kCFBooleanTrue,
+            kCGImageSourceThumbnailMaxPixelSize: NSNumber(value: Float(maxSize))
             ] as CFDictionary
     }
 
@@ -133,7 +133,7 @@ extension UIImage {
 
         guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, UIImage.thumbnailOptions(withMaxSize: longSideLength)) else { return nil }
 
-        ///TODO: read screen scale
+        // TODO: read screen scale
         self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
     }
 

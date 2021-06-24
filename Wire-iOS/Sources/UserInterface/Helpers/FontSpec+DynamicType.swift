@@ -20,9 +20,7 @@ import Foundation
 import UIKit
 
 extension FontSpec {
-    
     var font: UIFont? {
         return defaultFontScheme.font(for: self)
     }
-    
 }

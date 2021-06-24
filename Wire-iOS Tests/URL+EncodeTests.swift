@@ -20,27 +20,27 @@ import XCTest
 @testable import Wire
 
 final class URL_EncodeTests: XCTestCase {
-    
+
     var sut: URL!
-    
+
     override func setUp() {
         super.setUp()
 
         // GIVEN
         sut = URL(string: "https://en.wikipedia.org/wiki/Wire_Swiss#History")
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatURLIsEncodedForFirefox(){
+    func testThatURLIsEncodedForFirefox() {
         // WHEN & THEN
         XCTAssertEqual(sut.firefoxURL, URL(string: "firefox://open-url?url=https%3A%2F%2Fen%2Ewikipedia%2Eorg%2Fwiki%2FWire%5FSwiss%23History"))
     }
 
-    func testThatURLIsEncodedForBrave(){
+    func testThatURLIsEncodedForBrave() {
         // WHEN & THEN
         XCTAssertEqual(sut.braveURL, URL(string: "brave://open-url?url=https%3A%2F%2Fen%2Ewikipedia%2Eorg%2Fwiki%2FWire%5FSwiss%23History"))
     }

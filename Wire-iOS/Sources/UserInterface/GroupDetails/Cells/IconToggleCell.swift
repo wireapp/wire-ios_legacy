@@ -20,12 +20,12 @@ import UIKit
 
 class IconToggleCell: DetailsCollectionViewCell {
     var isOn: Bool {
-        set {
-            toggle.isOn = newValue
-        }
-
         get {
             return toggle.isOn
+        }
+
+        set {
+            toggle.isOn = newValue
         }
     }
 
