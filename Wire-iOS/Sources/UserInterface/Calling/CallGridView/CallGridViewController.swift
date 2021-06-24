@@ -24,6 +24,10 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
+protocol CallGridViewControllerDelegate: class {
+    func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction)
+}
+
 final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
@@ -42,8 +46,15 @@ final class CallGridViewController: SpinnerCapableViewController {
         PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
     }
 
+    private var visibileVideoStreams: [AVSClient] {
+        didSet {
+            guard visibileVideoStreams != oldValue else { return }
+            delegate?.callGridViewController(self, perform: .requestVideoStreams(visibileVideoStreams))
+        }
+    }
+
     private var dataSource: [Stream] = []
-    private let gridView = GridView(maxItemsPerPage: 8)
+    private let gridView = GridView(maxItemsPerPage: 1)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let pageIndicator = RoundedPageIndicator()
@@ -82,6 +93,8 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     var dismissSpinner: SpinnerCompletion?
 
+    weak var delegate: CallGridViewControllerDelegate?
+
     // MARK: - Initialization
 
     init(configuration: CallGridViewControllerInput,
@@ -89,6 +102,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
         self.configuration = configuration
         self.mediaManager = mediaManager
+        self.visibileVideoStreams = []
 
         super.init(nibName: nil, bundle: nil)
 
@@ -258,6 +272,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
+        updateVisibleVideoStreams(currentPage: gridView.currentPage)
 
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
@@ -479,8 +494,21 @@ extension CallGridViewController: UICollectionViewDataSource {
 // MARK: - GridViewDelegate
 
 extension CallGridViewController: GridViewDelegate {
-    func gridViewPageDidChange(to index: Int) {
-        pageIndicator.currentPage = index
+    func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
+        pageIndicator.currentPage = page
+
+        updateVisibleVideoStreams(currentPage: page)
+    }
+
+    func updateVisibleVideoStreams(currentPage: Int) {
+        let startIndex = currentPage * gridView.maxItemsPerPage
+        let endIndex = startIndex + gridView.maxItemsPerPage
+
+        guard endIndex <= dataSource.count, startIndex >= 0 else { return }
+
+        visibileVideoStreams = dataSource[startIndex..<endIndex]
+            .filter(\.isSharingVideo)
+            .map(\.streamId)
     }
 }
 

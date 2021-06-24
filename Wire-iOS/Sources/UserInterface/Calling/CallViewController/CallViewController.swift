@@ -84,6 +84,7 @@ final class CallViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
+        callGridViewController.delegate = self
         observerTokens += [voiceChannel.addCallStateObserver(self),
                            voiceChannel.addParticipantObserver(self),
                            voiceChannel.addConstantBitRateObserver(self),
@@ -456,6 +457,14 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         }
     }
 
+}
+
+extension CallViewController: CallGridViewControllerDelegate {
+    func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction) {
+        switch action {
+        case .requestVideoStreams(let videoStreams): voiceChannel.request(videoStreams: videoStreams)
+        }
+    }
 }
 
 // MARK: - Hide + Show Overlay

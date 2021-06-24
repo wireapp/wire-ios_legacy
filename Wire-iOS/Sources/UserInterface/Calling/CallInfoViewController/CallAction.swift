@@ -34,3 +34,7 @@ enum CallAction {
     case showParticipantsList
     case updateVideoGridPresentationMode(_ mode: VideoGridPresentationMode)
 }
+
+enum CallGridAction {
+    case requestVideoStreams(_ videoStreams: [AVSClient])
+}
