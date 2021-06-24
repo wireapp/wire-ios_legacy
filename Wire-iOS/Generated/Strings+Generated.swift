@@ -903,6 +903,8 @@ internal enum L10n {
             internal static func joined(_ p1: Any) -> String {
               return L10n.tr("Localizable", "content.system.conversation.guest.joined", String(describing: p1))
             }
+            /// You joined
+            internal static let youJoined = L10n.tr("Localizable", "content.system.conversation.guest.you_joined")
           }
           internal enum Invite {
             /// Invite people
