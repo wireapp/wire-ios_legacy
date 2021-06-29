@@ -1736,6 +1736,14 @@ internal enum L10n {
         /// Please configure your SMS to be able to send the invites via SMS
         internal static let noMessagingProvider = L10n.tr("Localizable", "error.invite.no_messaging_provider")
       }
+      internal enum Message {
+        internal enum Send {
+          /// You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings
+          internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.message.send.missing_legalhold_consent")
+          /// Messages cannot be sent
+          internal static let title = L10n.tr("Localizable", "error.message.send.title")
+        }
+      }
       internal enum Phone {
         /// Please enter a valid phone number
         internal static let invalid = L10n.tr("Localizable", "error.phone.invalid")

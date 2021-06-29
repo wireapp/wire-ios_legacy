@@ -135,12 +135,20 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         setupMentionsResultsView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertToSendMessage), name: ZMConversation.failedToSendMessageNotificationName, object: .none)
     }
 
     @objc
     private func applicationDidBecomeActive(_ notification: Notification) {
         dataSource.resetSectionControllers()
         tableView.reloadData()
+    }
+
+    @objc
+    private func showErrorAlertToSendMessage() {
+        typealias MessageSendError = L10n.Localizable.Error.Message.Send
+        UIAlertController.showErrorAlert(title: MessageSendError.title, message: MessageSendError.missingLegalholdConsent)
     }
 
     override func viewDidAppear(_ animated: Bool) {
