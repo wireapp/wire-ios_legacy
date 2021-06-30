@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ ayrıldı";
 "content.system.conversation.team.member-leave" = "%@ takımdan çıkarıldı.";
 "content.system.conversation.guest.joined" = "%@ katıldı";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Ekibiniz dışındaki hizmetler ve kişiler bu sohbete katılabilir.";
 "content.system.conversation.invite.button" = "İnsanları davet et";

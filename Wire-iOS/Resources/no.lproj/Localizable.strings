@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ igjen";
 "content.system.conversation.team.member-leave" = "%@ ble fjernet fra teamet.";
 "content.system.conversation.guest.joined" = "%@ ble med";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Inviter andre";

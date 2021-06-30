@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ kiléptél a beszélgetésből";
 "content.system.conversation.team.member-leave" = "%@ el lett távolítva a csapatból.";
 "content.system.conversation.guest.joined" = "%@ csatlakozott";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Csapatodon kívüli emberek is csatlakozhatnak ehhez a beszélgetéshez.";
 "content.system.conversation.invite.button" = "Partner meghívása";

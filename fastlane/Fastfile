@@ -152,6 +152,32 @@ platform :ios do
         end
     end
 
+    desc "Build for release to AppStore without symbols"
+    lane :build_for_release_without_symbols do |options|
+        xcode_version = options[:xcode_version]
+
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
+        end
+
+        build = Build.new(options: options)
+
+        build_app(
+            scheme: "Wire-iOS",
+            configuration: build.configuration,
+            export_method: build.export_method,
+            export_options: {"iCloudContainerEnvironment": "Production"},
+            derived_data_path: "DerivedData",
+            archive_path: build.archive_path(with_filename: true),
+            buildlog_path: build.build_path,
+            output_directory: build.artifact_path(with_filename: false),
+            output_name: build.filename,
+            include_bitcode: false,
+            include_symbols: false,
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
+        )
+    end
+
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)

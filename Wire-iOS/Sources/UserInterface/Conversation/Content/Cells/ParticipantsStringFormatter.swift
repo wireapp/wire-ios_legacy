@@ -140,11 +140,16 @@ final class ParticipantsStringFormatter {
     /// Title when the subject (sender) is performing the action alone.
     func title(senderName: String, senderIsSelf: Bool) -> NSAttributedString? {
         switch message.actionType {
+        case .added(herself: true) where senderIsSelf:
+            return L10n.Localizable.Content.System.Conversation.Guest.youJoined && font && textColor
+
         case .left, .teamMemberLeave, .added(herself: true):
             let formatKey = message.actionType.formatKey
             let title = formatKey(senderIsSelf).localized(args: senderName) && font && textColor
             return senderIsSelf ? title : title.adding(font: boldFont, to: senderName)
-        default: return nil
+
+        default:
+            return nil
         }
     }
 

@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@が退出しました";
 "content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
 "content.system.conversation.guest.joined" = "%@ 参加済";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "サービスと外部ユーザは、あなたのチームの会話に参加できます。";
 "content.system.conversation.invite.button" = "招待する";

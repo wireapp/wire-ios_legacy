@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ còn lại";
 "content.system.conversation.team.member-leave" = "%@ đã bị xóa khỏi nhóm.";
 "content.system.conversation.guest.joined" = "%@ đã tham gia";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Mời mọi người";

@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ verliet";
 "content.system.conversation.team.member-leave" = "%@ was verwijderd van het team.";
 "content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Diensten en mensen buiten jou team kunnen deelnemen aan dit gesprek.";
 "content.system.conversation.invite.button" = "Nodig anderen uit";
