@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ se fue";
 "content.system.conversation.team.member-leave" = "%@ fue eliminado del equipo.";
 "content.system.conversation.guest.joined" = "%@ se ha unido";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Servicios y usuarios externos pueden unirse a la conversación";
 "content.system.conversation.invite.button" = "Invitar gente";

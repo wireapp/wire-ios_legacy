@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ opustil(a) konverzaci";
 "content.system.conversation.team.member-leave" = "Uživatel %@ byl odstraněn z týmu.";
 "content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Pozvat další";

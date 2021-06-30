@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ je otišao / otišla";
 "content.system.conversation.team.member-leave" = "%@ je uklonjen iz tima.";
 "content.system.conversation.guest.joined" = "%@ se pridružio";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Usluge i ljudi van Vašeg tima mogu se pridružiti razgovoru.";
 "content.system.conversation.invite.button" = "Pozovi ljude";
