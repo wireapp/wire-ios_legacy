@@ -3,7 +3,7 @@ github "wireapp/Cartography" "4.0.0-xcode_12_4"
 github "wireapp/wire-ios-sync-engine" ~> 383.0.0
 github "wireapp/wire-ios-share-engine" ~> 220.0.2
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
-github "wireapp/wire-ios-canvas" ~> 12.0
+github "wireapp/wire-ios-canvas" ~> 12.0.0
 github "wireapp/appcenter-sdk-apple" ~> 3.3.4
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/Down" "v2.3.0_Xcode12.4"
