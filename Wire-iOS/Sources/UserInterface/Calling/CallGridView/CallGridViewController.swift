@@ -32,6 +32,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
+    static let maxItemsPerPage = 8
 
     // MARK: - Private Properties
 
@@ -46,15 +47,9 @@ final class CallGridViewController: SpinnerCapableViewController {
         PinchToZoomRule(isOneToOneCall: configuration.callHasTwoParticipants)
     }
 
-    private var visibileVideoStreams: [AVSClient] {
-        didSet {
-            guard visibileVideoStreams != oldValue else { return }
-            delegate?.callGridViewController(self, perform: .requestVideoStreams(visibileVideoStreams))
-        }
-    }
-
+    private var visibleClientsSharingVideo: [AVSClient] = []
     private var dataSource: [Stream] = []
-    private let gridView = GridView(maxItemsPerPage: 1)
+    private let gridView = GridView(maxItemsPerPage: CallGridViewController.maxItemsPerPage)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let pageIndicator = RoundedPageIndicator()
@@ -102,7 +97,6 @@ final class CallGridViewController: SpinnerCapableViewController {
 
         self.configuration = configuration
         self.mediaManager = mediaManager
-        self.visibileVideoStreams = []
 
         super.init(nibName: nil, bundle: nil)
 
@@ -272,7 +266,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         displayIndicatorViewsIfNeeded()
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
-        updateVisibleVideoStreams(currentPage: gridView.currentPage)
+        requestVideoStreamsIfNeeded(forPage: gridView.currentPage)
 
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
@@ -366,6 +360,24 @@ final class CallGridViewController: SpinnerCapableViewController {
             viewCache[deletedStreamId]?.removeFromSuperview()
             viewCache.removeValue(forKey: deletedStreamId)
         }
+    }
+
+    func requestVideoStreamsIfNeeded(forPage page: Int) {
+        let isLastPage = page == gridView.numberOfPages
+
+        let startIndex = page * gridView.maxItemsPerPage
+        let endIndex = isLastPage ? dataSource.count : startIndex + gridView.maxItemsPerPage
+
+        guard endIndex <= dataSource.count, startIndex >= 0 else { return }
+
+        let clients = dataSource[startIndex..<endIndex]
+            .filter(\.isSharingVideo)
+            .map(\.streamId)
+
+        guard clients != visibleClientsSharingVideo else { return }
+
+        delegate?.callGridViewController(self, perform: .requestVideoStreamsForClients(clients))
+        visibleClientsSharingVideo = clients
     }
 
     // MARK: - Grid View Axis
@@ -497,18 +509,7 @@ extension CallGridViewController: GridViewDelegate {
     func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
         pageIndicator.currentPage = page
 
-        updateVisibleVideoStreams(currentPage: page)
-    }
-
-    func updateVisibleVideoStreams(currentPage: Int) {
-        let startIndex = currentPage * gridView.maxItemsPerPage
-        let endIndex = startIndex + gridView.maxItemsPerPage
-
-        guard endIndex <= dataSource.count, startIndex >= 0 else { return }
-
-        visibileVideoStreams = dataSource[startIndex..<endIndex]
-            .filter(\.isSharingVideo)
-            .map(\.streamId)
+        requestVideoStreamsIfNeeded(forPage: page)
     }
 }
 

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,21 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireSyncEngine
+import Foundation
 
-// The ouput actions a `CallInfoViewController` can perform.
-enum CallAction {
-    case toggleMuteState
-    case toggleVideoState
-    case alertVideoUnavailable
-    case toggleSpeakerState
-    case continueDegradedCall
-    case acceptCall
-    case acceptDegradedCall
-    case terminateCall
-    case terminateDegradedCall
-    case flipCamera
-    case minimizeOverlay
-    case showParticipantsList
-    case updateVideoGridPresentationMode(_ mode: VideoGridPresentationMode)
+extension Array {
+    func prefixed(by amount: Int) -> [Element] {
+        return Array(prefix(amount))
+    }
 }

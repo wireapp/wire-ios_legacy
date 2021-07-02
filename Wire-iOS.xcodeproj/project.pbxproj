@@ -474,6 +474,7 @@
 		634497D924A492140000131D /* CallParticipantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497D824A492140000131D /* CallParticipantDetailView.swift */; };
 		634497DB24A49BF80000131D /* BaseCallParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634497DA24A49BF70000131D /* BaseCallParticipantView.swift */; };
 		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
+		63497734268CBDAE00824A05 /* CallGridAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63497733268CBDAE00824A05 /* CallGridAction.swift */; };
 		634FDB87263AF418002D6B94 /* ActiveCallRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */; };
 		6357B41626121D55008F1761 /* MockPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */; };
 		6357B41A261226C4008F1761 /* MockPinchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */; };
@@ -504,6 +505,7 @@
 		63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */; };
 		63B9F5B825E7D7190059020D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5B725E7D7190059020D /* ToastView.swift */; };
 		63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */; };
+		63D17D71268F52A500B0CC4F /* Array+Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D17D70268F52A300B0CC4F /* Array+Prefix.swift */; };
 		63E128B726208BAD009D9AF2 /* CallGridHintNotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */; };
 		63E128BB26208DDC009D9AF2 /* CallGridEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */; };
 		63F65EEE2462DB6B00534A69 /* PreBackendSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */; };
@@ -1597,34 +1599,6 @@
 			remoteGlobalIDString = 168A16A81D9597C2005CFA6C;
 			remoteInfo = "Wire-iOS Share Extension";
 		};
-		634976A326837C2500824A05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 549815931A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		634976A526837C2500824A05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E1860C3191A649D000FE027;
-			remoteInfo = UnitTests;
-		};
-		634976A726837C2500824A05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E186088191A56F6000FE027;
-			remoteInfo = "WireSyncEngine Test Host";
-		};
-		634976A926837C2500824A05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 169BA1D225ECDBA300374343;
-			remoteInfo = IntegrationTests;
-		};
 		BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -2164,7 +2138,7 @@
 		634497D824A492140000131D /* CallParticipantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantDetailView.swift; sourceTree = "<group>"; };
 		634497DA24A49BF70000131D /* BaseCallParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCallParticipantView.swift; sourceTree = "<group>"; };
 		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
-		6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
+		63497733268CBDAE00824A05 /* CallGridAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridAction.swift; sourceTree = "<group>"; };
 		634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallRouterTests.swift; sourceTree = "<group>"; };
 		6357B41526121D55008F1761 /* MockPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		6357B419261226C4008F1761 /* MockPinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPinchGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -2196,6 +2170,7 @@
 		63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveSpeakerState+Helper.swift"; sourceTree = "<group>"; };
 		63B9F5B725E7D7190059020D /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDeltaTests.swift; sourceTree = "<group>"; };
+		63D17D70268F52A300B0CC4F /* Array+Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Prefix.swift"; sourceTree = "<group>"; };
 		63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridHintNotificationLabel.swift; sourceTree = "<group>"; };
 		63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridEvent.swift; sourceTree = "<group>"; };
 		63F65EED2462DB6B00534A69 /* PreBackendSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewController.swift; sourceTree = "<group>"; };
@@ -4437,17 +4412,6 @@
 			path = CallParticipantViews;
 			sourceTree = "<group>";
 		};
-		6349769D26837C2400824A05 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				634976A426837C2500824A05 /* WireSyncEngine.framework */,
-				634976A626837C2500824A05 /* UnitTests.xctest */,
-				634976A826837C2500824A05 /* WireSyncEngine Test Host.app */,
-				634976AA26837C2500824A05 /* IntegrationTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		6370DA1F2577933400B5C8F1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -5339,7 +5303,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
@@ -5554,6 +5517,7 @@
 				6372AAA9249A4F2600C5F307 /* Int+Even.swift */,
 				54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */,
 				EE997A192507A851008336D2 /* Logging.swift */,
+				63D17D70268F52A300B0CC4F /* Array+Prefix.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6466,6 +6430,7 @@
 				BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */,
 				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
 				BFE4186C209B6FFA00503C7C /* CallAction.swift */,
+				63497733268CBDAE00824A05 /* CallGridAction.swift */,
 				5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */,
 				63256D8124D46455009FC58B /* BitRateLabel.swift */,
 			);
@@ -7374,12 +7339,6 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 6349769D26837C2400824A05 /* Products */;
-					ProjectRef = 6349769C26837C2400824A05 /* WireSyncEngine.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -7389,37 +7348,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		634976A426837C2500824A05 /* WireSyncEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireSyncEngine.framework;
-			remoteRef = 634976A326837C2500824A05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		634976A626837C2500824A05 /* UnitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTests.xctest;
-			remoteRef = 634976A526837C2500824A05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		634976A826837C2500824A05 /* WireSyncEngine Test Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireSyncEngine Test Host.app";
-			remoteRef = 634976A726837C2500824A05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		634976AA26837C2500824A05 /* IntegrationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = IntegrationTests.xctest;
-			remoteRef = 634976A926837C2500824A05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -7600,7 +7528,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
@@ -7973,6 +7901,7 @@
 				EF1EE76F2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift in Sources */,
 				633860FE25E93F150077BC05 /* Toast.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
+				63D17D71268F52A500B0CC4F /* Array+Prefix.swift in Sources */,
 				5E769C5C21AEA3CB00785EB7 /* MessageDetailsContentViewController.swift in Sources */,
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
 				A9806A3C23E209FC00691DFE /* AudioTrack.swift in Sources */,
@@ -8357,6 +8286,7 @@
 				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
+				63497734268CBDAE00824A05 /* CallGridAction.swift in Sources */,
 				EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */,
 				5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
