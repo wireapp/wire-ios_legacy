@@ -28,11 +28,11 @@ class OrientableViewMock: OrientableView {
 
 class GridViewDelegateMock: GridViewDelegate {
 
-    var index: Int = 0
-    func gridViewPageDidChange(to index: Int) {
-        self.index = index
-    }
+    var page: Int = 0
 
+    func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
+        self.page = page
+    }
 }
 
 class GridViewTests: XCTestCase {
@@ -137,7 +137,7 @@ class GridViewTests: XCTestCase {
         sut.scrollViewDidEndDecelerating(scrollView)
 
         // Then
-        XCTAssertEqual(gridViewDelegateMock.index, 1)
+        XCTAssertEqual(gridViewDelegateMock.page, 1)
     }
 }
 

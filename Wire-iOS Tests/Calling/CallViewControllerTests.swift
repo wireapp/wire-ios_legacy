@@ -115,6 +115,22 @@ final class CallViewControllerTests: XCTestCase {
         XCTAssertEqual(mockVoiceChannel.videoGridPresentationMode, VideoGridPresentationMode.activeSpeakers)
     }
 
+    func testThatCallGridViewControllerDelegate_ForwardsVideoStreamsRequestToVoiceChannel() {
+        // Given
+        let configuration = MockCallGridViewControllerInput()
+        let viewController = CallGridViewController(configuration: configuration)
+        let clients = [
+            AVSClient(userId: UUID(), clientId: UUID().transportString()),
+            AVSClient(userId: UUID(), clientId: UUID().transportString())
+        ]
+
+        // When
+        sut.callGridViewController(viewController, perform: .requestVideoStreamsForClients(clients))
+
+        // Then
+        XCTAssertEqual(mockVoiceChannel.requestedVideoStreams, clients)
+    }
+
     func testThatItDeallocates() {
         // when & then
         verifyDeallocation { () -> CallViewController in

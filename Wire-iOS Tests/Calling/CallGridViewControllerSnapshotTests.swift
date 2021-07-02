@@ -44,8 +44,8 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     var selfStream: Wire.Stream!
     var selfAVSClient: AVSClient!
     var stubProvider = StreamStubProvider()
-    var conferenceParticipants =  ["Alice", "Bob", "Carol"]
     var mockHintView: MockCallGridHintNotificationLabel!
+    var allParticipantsNames = ["Alice", "Bob", "Carol", "Chuck", "Craig", "Dan", "Erin", "Eve", "Faythe"]
 
     override func setUp() {
         super.setUp()
@@ -110,7 +110,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     func testActiveSpeakersIndicators_Conference() {
         // Given / When
-        conferenceParticipants.forEach {
+        allParticipantsNames.prefixed(by: 3).forEach {
             configuration.streams += [stubProvider.stream(
                 user: MockUserType.createUser(name: $0),
                 activeSpeakerState: .active(audioLevelNow: 100)
@@ -139,7 +139,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     func testVideoStoppedBorder_Appears_Conference() {
         // Given / When
-        conferenceParticipants.forEach {
+        allParticipantsNames.prefixed(by: 3).forEach {
             configuration.streams += [stubProvider.stream(
                 user: MockUserType.createUser(name: $0),
                 videoState: .stopped
@@ -180,7 +180,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     func testPagingIndicator() {
         // given
-        ["Alice", "Bob", "Carol", "Chuck", "Craig", "Dan", "Erin", "Eve", "Faythe"].forEach {
+        allParticipantsNames.forEach {
             configuration.streams += [stubProvider.stream(user: MockUserType.createUser(name: $0))]
         }
 
@@ -246,6 +246,45 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
             output: .show(hint: .fullscreen)
         )
     }
+
+    // MARK: - Selective video
+
+    func testThatItRequestsVideoStreams_ForParticipantsOnGivenPageWithVideoEnabled() {
+        // given
+        createSut()
+        let mockDelegate = MockCallGridViewControllerDelegate()
+        sut.delegate = mockDelegate
+
+        let configuration = MockCallGridViewControllerInput()
+
+        // Page 1 - video enabled
+        for _ in 0..<CallGridViewController.maxItemsPerPage {
+            configuration.streams += [stubProvider.stream(videoState: .started)]
+        }
+
+        // Page 2 - First half with video disabled
+        let half = CallGridViewController.maxItemsPerPage / 2
+        for _ in 0..<half {
+            configuration.streams += [stubProvider.stream(videoState: .stopped)]
+        }
+
+        // Page 2 - Second half with video enabled
+        var expectedClients = [AVSClient]()
+        for _ in half..<CallGridViewController.maxItemsPerPage {
+            let client = AVSClient(userId: UUID(), clientId: UUID().transportString())
+            configuration.streams += [stubProvider.stream(client: client, videoState: .started)]
+            expectedClients += [client]
+        }
+
+        sut.configuration = configuration
+
+        // when
+        sut.requestVideoStreamsIfNeeded(forPage: 1)
+
+        // then
+        XCTAssertEqual(mockDelegate.requestedClients, expectedClients)
+    }
+
 }
 
 extension CallGridViewControllerSnapshotTests {
