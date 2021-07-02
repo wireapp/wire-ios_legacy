@@ -508,7 +508,6 @@ extension CallGridViewController: UICollectionViewDataSource {
 extension CallGridViewController: GridViewDelegate {
     func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
         pageIndicator.currentPage = page
-
         requestVideoStreamsIfNeeded(forPage: page)
     }
 }
