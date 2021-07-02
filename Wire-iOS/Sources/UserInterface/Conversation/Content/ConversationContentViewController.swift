@@ -405,7 +405,6 @@ extension ConversationContentViewController: UITableViewDataSourcePrefetching {
     }
 }
 
-
 private extension UIAlertController {
 
     static func showErrorAlertWithLink(title: String,
@@ -425,8 +424,6 @@ private extension UIAlertController {
         alertController.addAction(UIAlertAction(title: L10n.Localizable.LegalholdActive.Alert.learnMore,
                                                 style: .default,
                                                 handler: legalHoldLearnMoreHandler))
-
-
 
         topmostViewController?.present(alertController, animated: true)
     }
