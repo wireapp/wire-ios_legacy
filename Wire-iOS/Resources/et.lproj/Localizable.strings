@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ lahkus";
 "content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
 "content.system.conversation.guest.joined" = "%@ liitus";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Teenused ja inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
 "content.system.conversation.invite.button" = "Jaga teistega";

@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ 离开了";
 "content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "服务和团队外的人员可以加入此对话。";
 "content.system.conversation.invite.button" = "邀请联系人";
