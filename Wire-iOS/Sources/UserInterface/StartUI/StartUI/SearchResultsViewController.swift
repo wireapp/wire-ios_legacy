@@ -215,6 +215,7 @@ final class SearchResultsViewController: UIViewController {
         servicesSection.delegate = self
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
+        federationSection.delegate = self
     }
 
     @available(*, unavailable)
