@@ -152,7 +152,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     @objc
     private func showErrorAlertToSendMessage() {
         typealias MessageSendError = L10n.Localizable.Error.Message.Send
-        UIAlertController.showErrorAlert(title: MessageSendError.title, message: MessageSendError.missingLegalholdConsent)
+        UIAlertController.showErrorAlertWithLink(title: MessageSendError.title,
+                                                 message: MessageSendError.missingLegalholdConsent)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -402,4 +403,32 @@ extension ConversationContentViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         // no-op
     }
+}
+
+
+private extension UIAlertController {
+
+    static func showErrorAlertWithLink(title: String,
+                                       message: String) {
+        let topmostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
+
+        let legalHoldLearnMoreHandler: ((UIAlertAction) -> Swift.Void) = { _ in
+            let browserViewController = BrowserViewController(url: URL.wr_legalHoldLearnMore.appendingLocaleParameter)
+            topmostViewController?.present(browserViewController, animated: true)
+        }
+
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+
+        alertController.addAction(.ok(style: .cancel))
+        alertController.addAction(UIAlertAction(title: L10n.Localizable.LegalholdActive.Alert.learnMore,
+                                                style: .default,
+                                                handler: legalHoldLearnMoreHandler))
+
+
+
+        topmostViewController?.present(alertController, animated: true)
+    }
+
 }
