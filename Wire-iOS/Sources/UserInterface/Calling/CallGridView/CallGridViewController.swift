@@ -365,7 +365,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     func requestVideoStreamsIfNeeded(forPage page: Int) {
         let startIndex = page * gridView.maxItemsPerPage
         var endIndex = startIndex + gridView.maxItemsPerPage
-        endIndex = endIndex <= dataSource.count ? endIndex : dataSource.count
+        endIndex = min(endIndex, dataSource.count)
 
         guard startIndex >= 0 else { return }
 
