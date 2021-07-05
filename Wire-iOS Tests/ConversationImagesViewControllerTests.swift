@@ -19,15 +19,6 @@
 import XCTest
 @testable import Wire
 
-extension SelfUser {
-
-    /// setup self user as a team member if providing teamID with the name Tarja Turunen
-    /// - Parameter teamID: when providing a team ID, self user is a team member
-    static func setupMockSelfUser(inTeam teamID: UUID? = nil) {
-        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen", inTeam: teamID))
-    }
-}
-
 final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: ConversationImagesViewController! = nil
@@ -44,13 +35,13 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
 
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let initialMessage = try! otherUserConversation.appendImage(from: image.imageData!)
+        let initialMessage = try! otherUserConversation.appendImage(from: image.imageData!)///TODO: initialMessage.isImage is false
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
         let collection = MockCollection(messages: [ imagesCategoryMatch: [initialMessage] ])
         let delegate = AssetCollectionMulticastDelegate()
 
         let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])
-        sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true)
+        sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true) ///TODO: crash
 
         navigatorController = sut.wrapInNavigationController(navigationBarClass: UINavigationBar.self)
     }

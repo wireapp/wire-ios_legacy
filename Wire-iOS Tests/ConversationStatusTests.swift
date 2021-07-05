@@ -167,7 +167,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         XCTAssertTrue(status.hasMessages)
         XCTAssertEqual(status.messagesRequiringAttention.count, 3)
         XCTAssertEqual(status.messagesRequiringAttentionByType[.text], .none)
-        XCTAssertEqual(status.messagesRequiringAttentionByType[.image]!, 3)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.image]!, 3)///TODO: nil crash
     }
 
     func testThatItReturnsStatusForBlocked() {

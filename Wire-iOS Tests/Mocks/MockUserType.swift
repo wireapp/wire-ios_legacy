@@ -20,6 +20,15 @@ import Foundation
 import WireDataModel
 @testable import Wire
 
+extension SelfUser {
+
+    /// setup self user as a team member if providing teamID with the name Tarja Turunen
+    /// - Parameter teamID: when providing a team ID, self user is a team member
+    static func setupMockSelfUser(inTeam teamID: UUID? = nil) {
+        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen", inTeam: teamID))
+    }
+}
+
 class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Decodable

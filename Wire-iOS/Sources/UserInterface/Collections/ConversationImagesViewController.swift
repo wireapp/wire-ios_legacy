@@ -83,7 +83,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
-        assert(initialMessage.isImage)
+        assert(initialMessage.isImage)///TODO: crash
 
         self.inverse = inverse
         self.collection = collection
