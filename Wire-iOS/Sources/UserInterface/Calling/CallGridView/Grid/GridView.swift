@@ -19,7 +19,7 @@
 import UIKit
 
 protocol GridViewDelegate: class {
-    func gridView(_ gridView: GridView, pageDidChangeTo page: Int)
+    func gridView(_ gridView: GridView, didChangePageTo page: Int)
 }
 
 /// A collection view that displays its items in a dynamic grid layout
@@ -242,7 +242,7 @@ extension GridView: UIScrollViewDelegate {
         }
 
         currentPage = Int(page)
-        gridViewDelegate?.gridView(self, pageDidChangeTo: currentPage)
+        gridViewDelegate?.gridView(self, didChangePageTo: currentPage)
     }
 
 }

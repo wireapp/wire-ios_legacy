@@ -30,7 +30,7 @@ class GridViewDelegateMock: GridViewDelegate {
 
     var page: Int = 0
 
-    func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
+    func gridView(_ gridView: GridView, didChangePageTo page: Int) {
         self.page = page
     }
 }

@@ -373,7 +373,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             .filter(\.isSharingVideo)
             .map(\.streamId)
 
-        guard clients != visibleClientsSharingVideo else { return }
+        guard Set(clients) != Set(visibleClientsSharingVideo) else { return }
 
         delegate?.callGridViewController(self, perform: .requestVideoStreamsForClients(clients))
         visibleClientsSharingVideo = clients
@@ -505,7 +505,7 @@ extension CallGridViewController: UICollectionViewDataSource {
 // MARK: - GridViewDelegate
 
 extension CallGridViewController: GridViewDelegate {
-    func gridView(_ gridView: GridView, pageDidChangeTo page: Int) {
+    func gridView(_ gridView: GridView, didChangePageTo page: Int) {
         pageIndicator.currentPage = page
         requestVideoStreamsIfNeeded(forPage: page)
     }
