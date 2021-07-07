@@ -19,7 +19,7 @@
 import UIKit
 
 protocol GridViewDelegate: class {
-    func gridViewPageDidChange(to index: Int)
+    func gridView(_ gridView: GridView, didChangePageTo page: Int)
 }
 
 /// A collection view that displays its items in a dynamic grid layout
@@ -43,10 +43,12 @@ final class GridView: UICollectionView {
 
     weak var gridViewDelegate: GridViewDelegate?
 
+    let maxItemsPerPage: Int
+    private(set) var currentPage: Int = 0
+
     // MARK: - Private Properties
 
     private let layout = UICollectionViewFlowLayout()
-    private let maxItemsPerPage: Int
 
     // MARK: - Initialization
 
@@ -228,18 +230,19 @@ extension GridView: UICollectionViewDelegateFlowLayout {
 extension GridView: UIScrollViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        var index: CGFloat
+        var page: CGFloat
 
         switch layout.scrollDirection {
         case .horizontal:
-            index = scrollView.contentOffset.x / scrollView.frame.size.width
+            page = scrollView.contentOffset.x / scrollView.frame.size.width
         case .vertical:
-            index = scrollView.contentOffset.y / scrollView.frame.size.height
+            page = scrollView.contentOffset.y / scrollView.frame.size.height
         @unknown default:
             return
         }
 
-        gridViewDelegate?.gridViewPageDidChange(to: Int(index))
+        currentPage = Int(page)
+        gridViewDelegate?.gridView(self, didChangePageTo: currentPage)
     }
 
 }
