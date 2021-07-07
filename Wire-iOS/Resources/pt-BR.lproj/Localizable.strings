@@ -89,7 +89,7 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Gerenciar serviços";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sem resultados.";
-"peoplepicker.no_matching_results.message.users" = "Encontre pessoas no Wire por nome ou @nomedeusuario";
+"peoplepicker.no_matching_results.message.users" = "Encontre pessoas no Wire por nome ou @nomedeusuário";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Encontre pessoas no Wire por nome ou @nomedeusuario\n\nEncontre pessoas em outro domínio por @nomedeusuario@nomededominio";
 "peoplepicker.no_matching_results.message.users_all_added" = "Todo mundo está aqui.";
 "peoplepicker.no_matching_results.message.services" = "Sem resultados.";
@@ -455,7 +455,7 @@
 "content.system.conversation.you.left" = "%@ saiu";
 "content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
 "content.system.conversation.guest.joined" = "%@ juntou-se";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "Você entrou";
 
 "content.system.conversation.invite.title" = "Serviços e pessoas fora da sua equipe podem participar desta conversa.";
 "content.system.conversation.invite.button" = "Convidar pessoas";
