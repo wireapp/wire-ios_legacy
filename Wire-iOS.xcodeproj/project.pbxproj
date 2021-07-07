@@ -864,7 +864,6 @@
 		A99EE1CA266657B200E713FC /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
 		A99EE1CC266657B200E713FC /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		A99EE1CE266657B300E713FC /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
-		A99EE1D0266657B300E713FC /* libPhoneNumber.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A7266657B000E713FC /* libPhoneNumber.xcframework */; };
 		A99EE1D62666587D00E713FC /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		A99EE1DC2666589D00E713FC /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A0266657AF00E713FC /* PINCache.xcframework */; };
 		A99EE1E2266658AB00E713FC /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
@@ -929,6 +928,7 @@
 		A9CBBEC124CF31E8006543D4 /* PasscodeSetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */; };
 		A9CBBEC324CF7FF9006543D4 /* AccessoryTextField+factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */; };
 		A9CBBEC524CF81EE006543D4 /* UIView+ConstraintFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBBEC424CF81EE006543D4 /* UIView+ConstraintFactory.swift */; };
+		A9CCBA8B269601CF00122380 /* libPhoneNumberiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CCBA8A269601CF00122380 /* libPhoneNumberiOS.xcframework */; };
 		A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF5F57242B98B300920877 /* NetworkStatus.swift */; };
 		A9CF740E24891498007A11DC /* Settings+Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CF740D24891498007A11DC /* Settings+Reset.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
@@ -2599,7 +2599,6 @@
 		A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireShareEngine.xcframework; path = Carthage/Build/WireShareEngine.xcframework; sourceTree = "<group>"; };
 		A99EE1A5266657B000E713FC /* WireDataModel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireDataModel.xcframework; path = Carthage/Build/WireDataModel.xcframework; sourceTree = "<group>"; };
 		A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
-		A99EE1A7266657B000E713FC /* libPhoneNumber.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libPhoneNumber.xcframework; path = Carthage/Build/libPhoneNumber.xcframework; sourceTree = "<group>"; };
 		A99EE202266660D200E713FC /* AppCenter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenter.xcframework; path = Carthage/Build/AppCenter.xcframework; sourceTree = "<group>"; };
 		A99EE203266660D300E713FC /* AppCenterAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenterAnalytics.xcframework; path = Carthage/Build/AppCenterAnalytics.xcframework; sourceTree = "<group>"; };
 		A99EE204266660D300E713FC /* AppCenterCrashes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenterCrashes.xcframework; path = Carthage/Build/AppCenterCrashes.xcframework; sourceTree = "<group>"; };
@@ -2636,6 +2635,7 @@
 		A9CBBEBF24CF31DC006543D4 /* PasscodeSetupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerTests.swift; sourceTree = "<group>"; };
 		A9CBBEC224CF7FF9006543D4 /* AccessoryTextField+factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessoryTextField+factory.swift"; sourceTree = "<group>"; };
 		A9CBBEC424CF81EE006543D4 /* UIView+ConstraintFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ConstraintFactory.swift"; sourceTree = "<group>"; };
+		A9CCBA8A269601CF00122380 /* libPhoneNumberiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libPhoneNumberiOS.xcframework; path = Carthage/Build/libPhoneNumberiOS.xcframework; sourceTree = "<group>"; };
 		A9CF5F57242B98B300920877 /* NetworkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 		A9CF740D24891498007A11DC /* Settings+Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Reset.swift"; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -3404,7 +3404,6 @@
 				A99EE1C6266657B200E713FC /* HTMLString.xcframework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				A99EE1BA266657B100E713FC /* Ziphy.xcframework in Frameworks */,
-				A99EE1D0266657B300E713FC /* libPhoneNumber.xcframework in Frameworks */,
 				A99EE22226666A9600E713FC /* FormatterKit.xcframework in Frameworks */,
 				A99EE1C8266657B200E713FC /* Cartography.xcframework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
@@ -3422,6 +3421,7 @@
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				A99EE1C2266657B100E713FC /* PINCache.xcframework in Frameworks */,
 				A99EE1CC266657B200E713FC /* WireDataModel.xcframework in Frameworks */,
+				A9CCBA8B269601CF00122380 /* libPhoneNumberiOS.xcframework in Frameworks */,
 				F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */,
 				A99EE1CA266657B200E713FC /* WireShareEngine.xcframework in Frameworks */,
 				A99EE1AC266657B000E713FC /* WireTransport.xcframework in Frameworks */,
@@ -4501,6 +4501,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9CCBA8A269601CF00122380 /* libPhoneNumberiOS.xcframework */,
 				A9C4B410266A550700C88BEB /* ios-arm64_x86_64-simulator */,
 				A9C4B3FB266A51D300C88BEB /* SnapshotTesting.xcframework */,
 				A98682862666E64E0064581B /* Countly.xcframework */,
@@ -4518,7 +4519,6 @@
 				A99EE199266657AE00E713FC /* avs.xcframework */,
 				A99EE1A3266657AF00E713FC /* Cartography.xcframework */,
 				A99EE1A2266657AF00E713FC /* HTMLString.xcframework */,
-				A99EE1A7266657B000E713FC /* libPhoneNumber.xcframework */,
 				A99EE1A0266657AF00E713FC /* PINCache.xcframework */,
 				A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */,
 				A99EE19E266657AF00E713FC /* WireCanvas.xcframework */,
