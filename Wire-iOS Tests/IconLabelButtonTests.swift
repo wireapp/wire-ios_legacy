@@ -48,7 +48,7 @@ final class IconLabelButtonTests: XCTestCase {
         button.isSelected = appearance.isSelected
 
         let name = "testIconLabelButton_\(appearance.description)"
-        verify(matching: button, named: name, file: file, line: line)
+        verify(matching: button, file: file, testName: name, line: line)
     }
 
 }
