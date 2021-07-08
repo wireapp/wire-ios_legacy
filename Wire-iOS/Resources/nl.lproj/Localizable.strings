@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Geen contacten";
 
-"peoplepicker.no_matching_results_title" = "Geen resultaten.";
-"peoplepicker.no_matching_results_message" = "E-mailadres invoegen.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Uitnodiging sturen";
 "peoplepicker.no_matching_results.action.share_contacts" = "Contacten delen";
+"peoplepicker.no_matching_results.action.learn_more" = "Leer meer";
+"peoplepicker.no_matching_results.action.manage_services" = "Beheer diensten";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
-"peoplepicker.no_matching_results_services_title" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
-"peoplepicker.no_matching_results_services_admin_title" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Beheer diensten";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "Contacten delen";
-
-"peoplepicker.share_contacts.no_results.title" = "Zoek personen op naam of op e-mailadres";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Geen resultaten";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Uitnodiging verstuurd";
 "peoplepicker.send_invitation.dialog.message" = "De uitnodiging kan 2 weken gebruikt worden. Stuur een nieuwe als hij verlopen is.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Beheer diensten";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Iedereen is hier.";
 
 "add_participants.alert.title" = "De groep is vol";
 "add_participants.alert.message.new_conversation" = "Tot %d mensen kunnen deelnemen aan een gesprek.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Het bericht is verwijderd.";
 
-"conversation.guests_present" = "Er zijn gasten in dit geprek";
-"conversation.services_present" = "Diensten zijn actief";
-"conversation.guests_services_present" = "Gasten en diensten zijn aanwezig";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Zoeken";
 
 // Reply message preview
@@ -444,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ begon een gesprek met %@";
 "content.system.conversation.other.added" = "%@ heeft %@ toegevoegd";
 "content.system.conversation.other.removed" = "%@ verwijderde %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ verliet";
 
 "content.system.conversation.you.started" = "%@ begon een gesprek met %@";
 "content.system.conversation.you.added" = "%@ heeft %@ toegevoegd";
 "content.system.conversation.you.removed" = "%@ verwijderde %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ verliet";
 "content.system.conversation.team.member-leave" = "%@ was verwijderd van het team.";
 "content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Diensten en mensen buiten jou team kunnen deelnemen aan dit gesprek.";
 "content.system.conversation.invite.button" = "Nodig anderen uit";
@@ -619,6 +623,7 @@
 "connection_request.send_button_title" = "Uitnodigen";
 "inbox.connection_request.connect_button_title" = "Uitnodigen";
 "inbox.connection_request.ignore_button_title" = "Negeer";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire heeft toegang nodig tot jouw foto's";
@@ -875,6 +880,7 @@
 "profile.details.guest" = "Gast";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Gebruikersnaam";
 "profile_view.accessibility.name" = "Weergavenaam";
@@ -1613,6 +1619,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Het gesprek is vol";
 "error.conversation.offline" = "Er lijkt een probleem te zijn met je internetverbinding. Controleer of deze werkt.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Klik op de kleuren om de penseelgrootte te veranderen";
 
@@ -1736,6 +1743,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
 "url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Deelnemen";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kan deze persoon niet vinden.";

@@ -23,13 +23,15 @@ extension Notification.Name {
 }
 
 // MARK: - URLActionRouterDelegete
-protocol URLActionRouterDelegete: class {
+protocol URLActionRouterDelegate: class {
+
     func urlActionRouterWillShowCompanyLoginError()
+    func urlActionRouterCanDisplayAlerts() -> Bool
+
 }
 
 // MARK: - URLActionRouterProtocol
 protocol URLActionRouterProtocol {
-    func openDeepLink(for appState: AppState)
     func open(url: URL) -> Bool
 }
 
@@ -41,11 +43,13 @@ class URLActionRouter: URLActionRouterProtocol {
 
     // MARK: - Public Property
     var sessionManager: SessionManager?
-    weak var delegate: URLActionRouterDelegete?
+    weak var delegate: URLActionRouterDelegate?
+    weak var authenticatedRouter: AuthenticatedRouterProtocol?
 
     // MARK: - Private Property
     private let rootViewController: RootViewController
-    private var url: URL?
+    private var pendingDestination: NavigationDestination?
+    private var pendingAlert: UIAlertController?
 
     // MARK: - Initialization
     public init(viewController: RootViewController,
@@ -58,7 +62,6 @@ class URLActionRouter: URLActionRouterProtocol {
     @discardableResult
     func open(url: URL) -> Bool {
         do {
-            self.url = url
             return try sessionManager?.openURL(url) ?? false
         } catch let error as LocalizedError {
             if error is CompanyLoginError {
@@ -76,21 +79,51 @@ class URLActionRouter: URLActionRouterProtocol {
         }
     }
 
-    func openDeepLink(for appState: AppState) {
-        do {
-            guard let deeplink = url else { return }
-            guard appState.canProcessDeepLinks else { return }
-            guard try (URLAction(url: deeplink) != nil) else { return }
-            open(url: deeplink)
-            resetDeepLinkURL()
-        } catch {
-            zmLog.error("Could not open deepLink for url: \(String(describing: url?.absoluteString))")
-        }
+    func performPendingActions() {
+        performPendingNavigation()
+        presentPendingAlert()
     }
 
     // MARK: - Private Implementation
-    private func resetDeepLinkURL() {
-        url = nil
+
+    func performPendingNavigation() {
+        guard let destination = pendingDestination else {
+            return
+        }
+
+        pendingDestination = nil
+        navigate(to: destination)
+    }
+
+    func navigate(to destination: NavigationDestination) {
+        guard authenticatedRouter != nil else {
+            pendingDestination = destination
+            return
+        }
+
+        authenticatedRouter?.navigate(to: destination)
+    }
+
+    func presentPendingAlert() {
+        guard let alert = pendingAlert else {
+            return
+        }
+
+        pendingAlert = nil
+        presentAlert(alert)
+    }
+
+    func presentAlert(_ alert: UIAlertController) {
+        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
+            pendingAlert = alert
+            return
+        }
+
+        internalPresentAlert(alert)
+    }
+
+    func internalPresentAlert(_ alert: UIAlertController) {
+        rootViewController.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -99,7 +132,8 @@ extension URLActionRouter: PresentationDelegate {
 
     // MARK: - Public Implementation
     func failedToPerformAction(_ action: URLAction, error: Error) {
-        presentLocalizedErrorAlert(error)
+        let localizedError = mapToLocalizedError(error)
+        presentLocalizedErrorAlert(localizedError)
     }
 
     func completedURLAction(_ action: URLAction) {
@@ -108,9 +142,10 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     func shouldPerformAction(_ action: URLAction, decisionHandler: @escaping (Bool) -> Void) {
+        typealias UrlAction = L10n.Localizable.UrlAction
         switch action {
         case .connectBot:
-            presentConnectBotAlert(with: decisionHandler)
+            presentConfirmationAlert(title: UrlAction.title, message: UrlAction.ConnectToBot.message, decisionHandler: decisionHandler)
         case .accessBackend(configurationURL: let configurationURL):
             guard SecurityFlags.customBackend.isEnabled else { return }
             presentCustomBackendAlert(with: configurationURL)
@@ -119,32 +154,31 @@ extension URLActionRouter: PresentationDelegate {
         }
     }
 
-    func showConnectionRequest(userId: UUID) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
+    func shouldPerformActionWithMessage(_ message: String, action: URLAction, decisionHandler: @escaping (_ shouldPerformAction: Bool) -> Void) {
+        switch action {
+        case .joinConversation:
+            presentConfirmationAlert(title: nil,
+                                     message: L10n.Localizable.UrlAction.JoinConversation.Confirmation.message(message),
+                                     decisionHandler: decisionHandler)
+        default:
+            decisionHandler(true)
         }
-        zClientViewController.showConnectionRequest(userId: userId)
+    }
+
+    func showConnectionRequest(userId: UUID) {
+        navigate(to: .connectionRequest(userId))
     }
 
     func showUserProfile(user: UserType) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showUserProfile(user: user)
+        navigate(to: .userProfile(user))
     }
 
     func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversation(conversation, at: message)
+        navigate(to: .conversation(conversation, message))
     }
 
     func showConversationList() {
-        guard let zClientViewController = rootViewController.firstChild(ofType: ZClientViewController.self) else {
-            return
-        }
-        zClientViewController.showConversationList()
+        navigate(to: .conversationList)
     }
 
     // MARK: - Private Implementation
@@ -152,26 +186,19 @@ extension URLActionRouter: PresentationDelegate {
         NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
     }
 
-    private func presentConnectBotAlert(with decisionHandler: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: "url_action.title".localized,
-                                      message: "url_action.connect_to_bot.message".localized,
+    private func presentConfirmationAlert(title: String?, message: String, decisionHandler: @escaping (Bool) -> Void) {
+
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
 
-        let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
-                                        style: .default) { _ in
-                                            decisionHandler(true)
-        }
-
+        let agreeAction = UIAlertAction.confirm(style: .default) { _ in decisionHandler(true) }
         alert.addAction(agreeAction)
 
-        let cancelAction = UIAlertAction(title: "general.cancel".localized,
-                                         style: .cancel) { _ in
-                                            decisionHandler(false)
-        }
-
+        let cancelAction = UIAlertAction.cancel({ decisionHandler(false) })
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func presentCustomBackendAlert(with configurationURL: URL) {
@@ -188,7 +215,7 @@ extension URLActionRouter: PresentationDelegate {
         let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
         alert.addAction(cancelAction)
 
-        rootViewController.present(alert, animated: true, completion: nil)
+        presentAlert(alert)
     }
 
     private func switchBackend(with configurationURL: URL) {
@@ -198,25 +225,77 @@ extension URLActionRouter: PresentationDelegate {
             case let .success(environment):
                 BackendEnvironment.shared = environment
             case let .failure(error):
-                self?.presentLocalizedErrorAlert(error)
+                guard let strongSelf = self else { return }
+                let localizedError = strongSelf.mapToLocalizedError(error)
+                strongSelf.presentLocalizedErrorAlert(localizedError)
             }
         }
     }
 
-    private func presentLocalizedErrorAlert(_ error: Error) {
-        guard let error = error as? LocalizedError else {
-            return
-        }
-        let alertMessage = error.failureReason ?? "error.user.unkown_error".localized
-        let alertController = UIAlertController.alertWithOKButton(title: error.errorDescription,
-                                                                  message: alertMessage)
-        rootViewController.present(alertController, animated: true)
-    }
 }
 
-extension URLActionRouter {
-    // NOTA BENE: THIS MUST BE USED JUST FOR TESTING PURPOSE
-    public func testHelper_setUrl(_ url: URL) {
-        self.url = url
+// MARK: - Errors
+
+private extension URLActionRouter {
+
+    enum URLActionError: LocalizedError {
+
+        private typealias Strings = L10n.Localizable.UrlAction.JoinConversation
+
+        /// Could not join a conversation because it is full.
+
+        case conversationIsFull
+
+        /// Converation link may have been revoked or it is corrupted.
+
+        case conversationLinkIsInvalid
+
+        /// A generic error case.
+
+        case unknown
+
+        init(from error: Error) {
+            switch error {
+            case ConversationJoinError.invalidCode:
+                self = .conversationLinkIsInvalid
+
+            case ConversationJoinError.tooManyMembers:
+                self = .conversationIsFull
+
+            default:
+                self = .unknown
+            }
+        }
+
+        var errorDescription: String? {
+            return Strings.Error.title
+        }
+
+        var failureReason: String? {
+            switch self {
+            case .conversationIsFull:
+                return Strings.Error.converationIsFull
+
+            case .conversationLinkIsInvalid:
+                return Strings.Error.linkIsInvalid
+
+            case .unknown:
+                return L10n.Localizable.Error.User.unkownError
+            }
+        }
+
     }
+
+    private func mapToLocalizedError(_ error: Error) -> LocalizedError {
+        return (error as? LocalizedError) ?? URLActionError(from: error)
+    }
+
+    private func presentLocalizedErrorAlert(_ error: LocalizedError) {
+        let title = error.errorDescription
+        let message = error.failureReason ?? L10n.Localizable.Error.User.unkownError
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.ok(style: .cancel))
+        presentAlert(alert)
+    }
+
 }

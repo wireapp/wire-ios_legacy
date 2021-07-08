@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -41,16 +41,18 @@ protocol CallQualityRouterProtocol: class {
 // MARK: - ActiveCallRouter
 class ActiveCallRouter: NSObject {
 
+    // MARK: - Public Property
+    var isActiveCallShown = false
+
     // MARK: - Private Property
     private let rootViewController: RootViewController
     private let callController: CallController
     private let callQualityController: CallQualityController
     private var transitioningDelegate: CallQualityAnimator
 
-    private var isActiveCallShown = false
     private var isCallQualityShown = false
     private var isCallTopOverlayShown = false
-    private var scheduledPostCallAction: (() -> Void)?
+    private(set) var scheduledPostCallAction: (() -> Void)?
 
     private var zClientViewController: ZClientViewController? {
         return rootViewController.firstChild(ofType: ZClientViewController.self)
@@ -96,7 +98,10 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
     }
 
     func dismissActiveCall(animated: Bool = true, completion: Completion? = nil) {
-        guard isActiveCallShown else { return }
+        guard isActiveCallShown else {
+            completion?()
+            return
+        }
         rootViewController.dismiss(animated: animated, completion: { [weak self] in
             self?.isActiveCallShown = false
             self?.scheduledPostCallAction?()
@@ -156,8 +161,8 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
 
     // MARK: - Helpers
 
-    private func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
-        if isActiveCallShown {
+    func executeOrSchedulePostCallAction(_ action: @escaping () -> Void) {
+        if !isActiveCallShown {
             action()
         } else {
             scheduledPostCallAction = action
@@ -216,6 +221,7 @@ extension ActiveCallRouter: CallQualityRouterProtocol {
 extension ActiveCallRouter: CallTopOverlayControllerDelegate {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?) {
         guard let voiceChannel = voiceChannel else { return }
+        isActiveCallShown = false
         presentActiveCall(for: voiceChannel, animated: true)
     }
 }

@@ -97,6 +97,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         contentController.delegate = self
 
         IconToggleSubtitleCell.register(in: tableView)
+        UserBlockingReasonCell.register(in: tableView)
     }
 
     @available(*, unavailable)

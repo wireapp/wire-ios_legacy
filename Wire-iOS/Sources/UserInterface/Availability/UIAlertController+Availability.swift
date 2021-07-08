@@ -22,7 +22,7 @@ import WireDataModel
 
 extension UIAlertController {
 
-    static func availabilityExplanation(_ availability: Availability) -> UIAlertController {
+    static func availabilityExplanation(_ availability: AvailabilityKind) -> UIAlertController {
 
         let title = "availability.reminder.\(availability.canonicalName).title".localized
         let message = "availability.reminder.\(availability.canonicalName).message".localized
@@ -36,10 +36,10 @@ extension UIAlertController {
         return alert
     }
 
-    static func availabilityPicker(_ handler: @escaping (_ availability: Availability) -> Void) -> UIAlertController {
+    static func availabilityPicker(_ handler: @escaping (_ availability: AvailabilityKind) -> Void) -> UIAlertController {
         let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
 
-        for availability in Availability.allCases {
+        for availability in AvailabilityKind.allCases {
             alert.addAction(UIAlertAction(title: availability.localizedName, style: .default, handler: { _ in
                 handler(availability)
             }))

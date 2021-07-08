@@ -86,7 +86,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var accentColorValue: ZMAccentColor = .strongBlue
 
-    var availability: Availability = .none
+    var availability: AvailabilityKind = .none
 
     var allClients: [UserClientType] = []
 
@@ -142,6 +142,8 @@ class MockUserType: NSObject, UserType, Decodable {
     var isConnected: Bool = false
 
     var isBlocked: Bool = false
+
+    var blockState: ZMBlockState = .none
 
     var isIgnored: Bool = false
 

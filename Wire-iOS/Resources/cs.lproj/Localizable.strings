@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Žádné kontakty.";
 
-"peoplepicker.no_matching_results_title" = "Žádné výsledky.";
-"peoplepicker.no_matching_results_message" = "Zadejte platnou emailovou adresu.";
 "peoplepicker.no_search_results" = "Žádné odpovídající výsledky. Zkuste jiné jméno.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Odeslat pozvánku";
 "peoplepicker.no_matching_results.action.share_contacts" = "Sdílet kontakty";
+"peoplepicker.no_matching_results.action.learn_more" = "Dozvědět se více";
+"peoplepicker.no_matching_results.action.manage_services" = "Spravovat služby";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Zadejte prosím platnou emailovou adresu";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Žádné výsledky.";
-"peoplepicker.no_matching_results_services_title" = "Služby pomáhají zlepšit váš workflow. Pro jejich zprovoznění kontaktujte svého administrátora.";
-"peoplepicker.no_matching_results_services_admin_title" = "Služby jsou pomůcky, které mohou zlepšit vaši workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Spravovat služby";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Zadejte platnou emailovou adresu nebo";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "sdílet kontakty";
-
-"peoplepicker.share_contacts.no_results.title" = "Najít lidi podle jména nebo emailové adresy";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Žádné výsledky.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Pozvánka odeslána";
 "peoplepicker.send_invitation.dialog.message" = "Může být použito na 2 týdny. Zašlete novou, pokud její platnost vyprší.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Spravovat služby";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Všichni jsou zde.";
 
 "add_participants.alert.title" = "Přeplněné kupé";
 "add_participants.alert.message.new_conversation" = "Až %d lidí se může připojit do konverzace.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Hledat";
 
 // Reply message preview
@@ -444,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ zahájil(a) konverzaci s %@";
 "content.system.conversation.other.added" = "%@ přidal %@";
 "content.system.conversation.other.removed" = "%@ odebrán %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ opustil(a) konverzaci";
 
 "content.system.conversation.you.started" = "%@ zahájil(a) konverzaci s %@";
 "content.system.conversation.you.added" = "%@ přidán %@";
 "content.system.conversation.you.removed" = "%@ odebrán %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ opustil(a) konverzaci";
 "content.system.conversation.team.member-leave" = "Uživatel %@ byl odstraněn z týmu.";
 "content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Pozvat další";
@@ -619,6 +623,7 @@
 "connection_request.send_button_title" = "Připojit";
 "inbox.connection_request.connect_button_title" = "Připojit";
 "inbox.connection_request.ignore_button_title" = "Ignorovat";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire potřebuje přístup k vašim fotografiím";
@@ -875,6 +880,7 @@
 "profile.details.guest" = "Host";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Uživatelské jméno";
 "profile_view.accessibility.name" = "Zobrazované jméno";
@@ -1613,6 +1619,7 @@
 "error.conversation.cannot_remove" = "Odebrání uživatele se nezdařilo";
 "error.conversation.too_many_members" = "Konverzace je plná";
 "error.conversation.offline" = "Zdá se, že je zde problém s vaším připojením k internetu. Prosím ujistěte se, že je funguje.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Klepnutím na tlačítko barvy můžete měnit velikost stopy";
 
@@ -1736,6 +1743,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "Server neodpovídá";
 "url_action.switch_backend.error.invalid_backend" = "Zkontrolujte prosím své internetové připojení, ověřte odkaz a zkuste to znovu.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Vstoupit";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire nemůže nalézt tento kontakt.";

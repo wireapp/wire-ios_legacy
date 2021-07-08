@@ -62,7 +62,7 @@ final class AvailabilityStringBuilder: NSObject {
         return attributedText
     }
 
-    static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
+    static func icon(for availability: AvailabilityKind, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard availability != .none, let iconType = availability.iconType
             else { return nil }
 

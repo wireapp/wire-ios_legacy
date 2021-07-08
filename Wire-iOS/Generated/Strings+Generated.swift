@@ -903,6 +903,8 @@ internal enum L10n {
             internal static func joined(_ p1: Any) -> String {
               return L10n.tr("Localizable", "content.system.conversation.guest.joined", String(describing: p1))
             }
+            /// You joined
+            internal static let youJoined = L10n.tr("Localizable", "content.system.conversation.guest.you_joined")
           }
           internal enum Invite {
             /// Invite people
@@ -926,6 +928,20 @@ internal enum L10n {
             /// %@ started a conversation with %@
             internal static func started(_ p1: Any, _ p2: Any) -> String {
               return L10n.tr("Localizable", "content.system.conversation.other.started", String(describing: p1), String(describing: p2))
+            }
+            internal enum Removed {
+              /// %@ was removed from this conversation because legal hold has been activated.
+              internal static func legalhold(_ p1: Any) -> String {
+                return L10n.tr("Localizable", "content.system.conversation.other.removed.legalhold", String(describing: p1))
+              }
+            }
+          }
+          internal enum Others {
+            internal enum Removed {
+              /// %@ were removed from this conversation because legal hold has been activated.
+              internal static func legalhold(_ p1: Any) -> String {
+                return L10n.tr("Localizable", "content.system.conversation.others.removed.legalhold", String(describing: p1))
+              }
             }
           }
           internal enum Team {
@@ -962,6 +978,12 @@ internal enum L10n {
             /// %@ started a conversation with %@
             internal static func started(_ p1: Any, _ p2: Any) -> String {
               return L10n.tr("Localizable", "content.system.conversation.you.started", String(describing: p1), String(describing: p2))
+            }
+            internal enum Removed {
+              /// %@ were removed from this conversation because legal hold has been activated.
+              internal static func legalhold(_ p1: Any) -> String {
+                return L10n.tr("Localizable", "content.system.conversation.you.removed.legalhold", String(describing: p1))
+              }
             }
           }
         }
@@ -1040,12 +1062,6 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
-      /// Guests are present
-      internal static let guestsPresent = L10n.tr("Localizable", "conversation.guests_present")
-      /// Guests and services are present
-      internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.guests_services_present")
-      /// Services are active
-      internal static let servicesPresent = L10n.tr("Localizable", "conversation.services_present")
       internal enum Action {
         /// Search
         internal static let search = L10n.tr("Localizable", "conversation.action.search")
@@ -1053,6 +1069,22 @@ internal enum L10n {
       internal enum Alert {
         /// The message is deleted.
         internal static let messageDeleted = L10n.tr("Localizable", "conversation.alert.message_deleted")
+      }
+      internal enum Banner {
+        /// **Externals** and **guests** are present
+        internal static let externalsGuestsPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_present")
+        /// **Externals**, **guests**, and **services** are present
+        internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_services_present")
+        /// **Externals** are present
+        internal static let externalsPresent = L10n.tr("Localizable", "conversation.banner.externals_present")
+        /// **External**s and **services** are present
+        internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_services_present")
+        /// **Guests** are present
+        internal static let guestsPresent = L10n.tr("Localizable", "conversation.banner.guests_present")
+        /// **Guests** and **services** are present
+        internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.banner.guests_services_present")
+        /// **Services** are active
+        internal static let servicesPresent = L10n.tr("Localizable", "conversation.banner.services_present")
       }
       internal enum Call {
         internal enum ManyParticipantsConfirmation {
@@ -1654,11 +1686,17 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "error.call.slow_connection.title")
         }
       }
+      internal enum Connection {
+        /// You cannot connect to this user due to legal hold.
+        internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.connection.missing_legalhold_consent")
+      }
       internal enum Conversation {
         /// Adding the participant failed
         internal static let cannotAdd = L10n.tr("Localizable", "error.conversation.cannot_add")
         /// Removing the participant failed
         internal static let cannotRemove = L10n.tr("Localizable", "error.conversation.cannot_remove")
+        /// Due to legal hold, only team members can be added to this conversation
+        internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.conversation.missing_legalhold_consent")
         /// There seems to be a problem with your Internet connection. Please make sure it’s working.
         internal static let offline = L10n.tr("Localizable", "error.conversation.offline")
         /// Error
@@ -2835,6 +2873,10 @@ internal enum L10n {
         internal static let blocked = L10n.tr("Localizable", "profile.connection_request_state.blocked")
       }
       internal enum Details {
+        /// This user is blocked due to legal hold. [LEARN MORE](%@)
+        internal static func blockingReason(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
+        }
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest
@@ -4221,6 +4263,24 @@ internal enum L10n {
         internal static let message = L10n.tr("Localizable", "url_action.invalid_user.message")
         /// Wire can't find this person.
         internal static let title = L10n.tr("Localizable", "url_action.invalid_user.title")
+      }
+      internal enum JoinConversation {
+        internal enum Confirmation {
+          /// Join
+          internal static let confirmButton = L10n.tr("Localizable", "url_action.join_conversation.confirmation.confirm_button")
+          /// You have been invited to a conversation:\n%@
+          internal static func message(_ p1: Any) -> String {
+            return L10n.tr("Localizable", "url_action.join_conversation.confirmation.message", String(describing: p1))
+          }
+        }
+        internal enum Error {
+          /// The conversation is full.
+          internal static let converationIsFull = L10n.tr("Localizable", "url_action.join_conversation.error.converation_is_full")
+          /// The conversation link is invalid.
+          internal static let linkIsInvalid = L10n.tr("Localizable", "url_action.join_conversation.error.link_is_invalid")
+          /// You could not join the conversation
+          internal static let title = L10n.tr("Localizable", "url_action.join_conversation.error.title")
+        }
       }
       internal enum SwitchBackend {
         /// This configuration will connect the app to a third-party server:\n%@

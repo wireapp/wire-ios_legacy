@@ -81,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Không có Danh bạ.";
 
-"peoplepicker.no_matching_results_title" = "Không có kết quả.";
-"peoplepicker.no_matching_results_message" = "Nhập địa chỉ email đầy đủ.";
 "peoplepicker.no_search_results" = "Kết quả không khớp. Thử nhập lại một cái tên khác.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Gửi lời mời";
 "peoplepicker.no_matching_results.action.share_contacts" = "Chia sẽ danh bạ";
+"peoplepicker.no_matching_results.action.learn_more" = "Tìm hiểu thêm";
+"peoplepicker.no_matching_results.action.manage_services" = "Quản lý Dịch vụ";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Vui lòng nhập email hợp lệ";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Không có kết quả.";
-"peoplepicker.no_matching_results_services_title" = "Các dịch vụ là các công cụ có thể cải thiện năng suất làm việc của bạn. Để kích hoạt chúng, liên hệ quản trị viên của bạn.";
-"peoplepicker.no_matching_results_services_admin_title" = "Các dịch vụ là công cụ có thể cải thiện năng suất làm việc của bạn.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Quản lý Dịch vụ";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Nhập địa chỉ email đầy đủ hoặc";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "chia sẽ danh bạ";
-
-"peoplepicker.share_contacts.no_results.title" = "Tìm mọi người bằng tên hoặc địa chỉ email";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "Không có kết quả.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Lời mời đã gửi";
 "peoplepicker.send_invitation.dialog.message" = "Nó có thể được dùng trong 2 tuần. Gửi một cái mới nếu đã quá hạn.";
@@ -112,8 +108,6 @@
 "peoplepicker.quick-action.admin-services" = "Quản lý Dịch vụ";
 
 "peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
-
-"add_participants.all_contacts_added" = "Mọi người đã ở đây.";
 
 "add_participants.alert.title" = "Nhóm đã đầy";
 "add_participants.alert.message.new_conversation" = "Lên đến %d người có thể tham gia một cuộc hội thoại.";
@@ -340,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Tin nhắn này đã bị xoá.";
 
-"conversation.guests_present" = "Khách vãn lai đang trực tuyến";
-"conversation.services_present" = "Dịch vụ được kích hoạt";
-"conversation.guests_services_present" = "Khách vãn lai và dịch vụ đang trực tuyến";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Tìm kiếm";
 
 // Reply message preview
@@ -444,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.other.added" = "%@ đã thêm %@";
 "content.system.conversation.other.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ còn lại";
 
 "content.system.conversation.you.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.you.added" = "%@ đã thêm %@";
 "content.system.conversation.you.removed" = "%@ đã xóa bỏ %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ còn lại";
 "content.system.conversation.team.member-leave" = "%@ đã bị xóa khỏi nhóm.";
 "content.system.conversation.guest.joined" = "%@ đã tham gia";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Mời mọi người";
@@ -619,6 +623,7 @@
 "connection_request.send_button_title" = "Kết nối";
 "inbox.connection_request.connect_button_title" = "Kết nối";
 "inbox.connection_request.ignore_button_title" = "Bỏ qua";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -875,6 +880,7 @@
 "profile.details.guest" = "Khách";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Tên người dùng";
 "profile_view.accessibility.name" = "Hiển thị tên";
@@ -1613,6 +1619,7 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Cuộc hội thoại đã đầy";
 "error.conversation.offline" = "Có vẻ là một vấn đề với kết nối Internet của bạn. Vui lòng chắc chắn rằng nó hoạt động.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 
 "sketchpad.initial_hint" = "Chạm vào màu để đổi kích thước";
 
@@ -1736,6 +1743,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
 "url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Tham gia";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";
