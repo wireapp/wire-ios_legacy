@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,28 +16,29 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
+import WireSyncEngine
 
-extension IconLabelButton {
-
-    convenience init(callActionIcon: CallActionIconType) {
-        self.init(input: callActionIcon)
+extension VideoGridPresentationMode {
+    var title: String {
+        switch self {
+        case .activeSpeakers:
+            return "call.overlay.switch_to.speakers".localized
+        case .allVideoStreams:
+            return "call.overlay.switch_to.all".localized
+        }
     }
 
-    static func speaker() -> IconLabelButton {
-        .init(callActionIcon: .speaker)
+    var accessibilityIdentifier: String {
+        switch self {
+        case .activeSpeakers:
+            return "speakers"
+        case .allVideoStreams:
+            return "all"
+        }
     }
 
-    static func microphone() -> IconLabelButton {
-        .init(callActionIcon: .microphone)
+    var index: Int {
+        Self.allCases.firstIndex(of: self)!
     }
-
-    static func camera() -> IconLabelButton {
-        .init(callActionIcon: .camera)
-    }
-
-    static func flipCamera() -> IconLabelButton {
-        .init(callActionIcon: .flipCamera)
-    }
-
 }

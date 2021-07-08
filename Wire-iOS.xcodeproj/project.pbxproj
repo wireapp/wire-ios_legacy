@@ -6451,6 +6451,8 @@
 				D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */,
 				631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */,
 				63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */,
+				63F239402695AEFF000BFFC6 /* CallActionIconType.swift */,
+				63F239522696E932000BFFC6 /* VideoGridPresentationMode+CallActions.swift */,
 			);
 			path = CallActionsView;
 			sourceTree = "<group>";
@@ -8439,6 +8441,7 @@
 				A9BA580D2497994D005B806B /* ContextMenuDelegate.swift in Sources */,
 				EE948F1923E17778000A663E /* ContactsDataSource.swift in Sources */,
 				16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */,
+				63F239412695AF00000BFFC6 /* CallActionIconType.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
 				16A5FDC52154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift in Sources */,
@@ -8457,6 +8460,7 @@
 				A93C96BB251CD3DE00EBD4D8 /* AnalyticsDecryptionFailedObserver.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */,
+				63F239532696E932000BFFC6 /* VideoGridPresentationMode+CallActions.swift in Sources */,
 				EFA145F6231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */,

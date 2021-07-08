@@ -31,7 +31,7 @@ extension MicrophoneIconStyle: IconImageStyle {
     var icon: StyleKitIcon? {
         switch self {
         case .muted:
-            return .microphoneWithStrikethrough
+            return .microphoneOff
         case .unmuted, .unmutedPulsing:
             return .microphone
         case .hidden:

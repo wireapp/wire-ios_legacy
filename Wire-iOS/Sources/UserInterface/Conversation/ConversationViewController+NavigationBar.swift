@@ -36,7 +36,7 @@ extension ConversationViewController {
     }
 
     var videoCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .videoCall, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
+        let button = UIBarButtonItem(icon: .camera, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_video_call".localized
