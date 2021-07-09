@@ -2877,6 +2877,8 @@ internal enum L10n {
         internal static func blockingReason(_ p1: Any) -> String {
           return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
         }
+        /// Federated
+        internal static let federated = L10n.tr("Localizable", "profile.details.federated")
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest
