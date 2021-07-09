@@ -35,6 +35,9 @@ private struct SenderCellConfiguration {
         } else if user.isExternalPartner {
             textColor = user.nameAccentColor
             icon = .externalPartner
+        } else if user.isFederated {
+            textColor = user.nameAccentColor
+            icon = .federated
         } else if let conversation = conversation,
                   user.isGuest(in: conversation) {
             textColor = user.nameAccentColor
