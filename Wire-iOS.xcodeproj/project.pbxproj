@@ -2618,6 +2618,7 @@
 		A9A687D8250B7AA900AEE878 /* WipeDatabaseWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WipeDatabaseWireframe.swift; sourceTree = "<group>"; };
 		A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+conversionTests.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
+		A9B405DF269C812700ACE28C /* ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = ios.xcconfig; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDelegate.swift; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
@@ -7100,6 +7101,7 @@
 		F1B2422E219B2C9B00F7035C /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				A9B405DF269C812700ACE28C /* ios.xcconfig */,
 				F1B24235219B2C9B00F7035C /* Warnings.xcconfig */,
 				F114466921A56F3200B5FEBA /* Version.xcconfig */,
 				F1B2422F219B2C9B00F7035C /* Project-Base.xcconfig */,

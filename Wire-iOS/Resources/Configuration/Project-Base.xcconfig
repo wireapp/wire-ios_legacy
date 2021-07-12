@@ -17,17 +17,13 @@
 // 
 
 #include "../../../Configuration/Base.xcconfig"
-#include "./Warnings.xcconfig"
-#include "./Version.xcconfig"
-
-// Architectures
-//
-SDKROOT = iphoneos
+#include "Warnings.xcconfig"
+#include "Version.xcconfig"
+#include "../../../Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"
 
 // Packaging
 //
 INFOPLIST_EXPAND_BUILD_SETTINGS = YES
-DEFINES_MODULE = YES
 
 // Deployment
 //
