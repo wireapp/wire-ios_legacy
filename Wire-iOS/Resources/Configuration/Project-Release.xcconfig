@@ -28,7 +28,6 @@ STRIP_INSTALLED_PRODUCT = YES
 VALIDATE_PRODUCT = YES
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 OTHER_CFLAGS = ${inherited} -Wno-unused-variable -Wno-macro-redefined
-ENABLE_NS_ASSERTIONS = NO
 
 // LLVM compiler - Preprocessing
 //
