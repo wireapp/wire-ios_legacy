@@ -54,7 +54,7 @@ enum CallActionIconType: IconLabelButtonInput {
     private var normalIcon: StyleKitIcon {
         switch self {
         case .microphone: return .microphoneOff
-        case .camera: return .videoOff // TODO: - David: change .videoOff to .cameraOff
+        case .camera: return .cameraOff
         case .speaker: return .speakerOff
         case .flipCamera: return .flipCamera
         }
