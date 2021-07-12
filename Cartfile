@@ -5,7 +5,7 @@ github "wireapp/wire-ios-ziphy" "feature/xcframework"
 github "wireapp/wire-ios-canvas" "feature/xcframework"
 
 github "wireapp/Cartography" "4.0.0_xcframework"
-github "billypchan/FormatterKit" "1.8.1_xcframework"
+github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/appcenter-sdk-apple" "3.3.4_xcframework"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/Down" "v2.3.0_xcframework"
