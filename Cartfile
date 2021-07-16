@@ -1,9 +1,9 @@
-github "wireapp/wire-ios-ziphy" "feature/xcframework"
+github "wireapp/wire-ios-ziphy" ~> 16.0.1
 github "wireapp/Cartography" "4.0.0_xcframework"
-github "wireapp/wire-ios-sync-engine" "feature/xcframework"
-github "wireapp/wire-ios-share-engine" "feature/xcframework"
-github "wireapp/wire-ios-canvas" "feature/xcframework"
+github "wireapp/wire-ios-sync-engine" ~> 384.0.0
+github "wireapp/wire-ios-share-engine" ~> 221.0.0
 github "wireapp/FormatterKit" "1.8.1_xcframework"
+github "wireapp/wire-ios-canvas" ~> 13.0.0
 github "wireapp/appcenter-sdk-apple" "3.3.4_xcframework"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/Down" "v2.3.0_xcframework"
