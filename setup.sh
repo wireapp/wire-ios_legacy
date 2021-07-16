@@ -50,7 +50,7 @@ carthage bootstrap --cache-builds --platform ios --use-xcframeworks
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh
+#./Scripts/download-avs.sh
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
