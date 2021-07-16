@@ -49,9 +49,9 @@ echo "ℹ️  Carthage bootstrap. This might take a while..."
 carthage bootstrap --cache-builds --platform ios --use-xcframeworks 
 echo ""
 
-echo "ℹ️  Downloading AVS library..."
+#echo "ℹ️  Downloading AVS library..."
 #./Scripts/download-avs.sh
-echo ""
+#echo ""
 
 echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh "$@"

@@ -7231,7 +7231,6 @@
 				5E055B28228AAF1500E91314 /* Embed Internal Resources */,
 				873AA0501D05A74B0038343B /* Strip BitCode */,
 				1EE9DC6B1B5F983600E347DF /* Embed App Extensions */,
-				8795A5D21D34D1A50024101B /* EmbedBuildInfo */,
 				EEF9786E25D2923A00F7333E /* Run SwiftGen */,
 				EE00ACE125E43FA2005FEC14 /* Run SwiftLint */,
 			);
@@ -7517,23 +7516,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/Scripts/remove-bitcode.sh $BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH $EXPANDED_CODE_SIGN_IDENTITY\n";
-		};
-		8795A5D21D34D1A50024101B /* EmbedBuildInfo */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Cartfile.resolved",
-				"$(SRCROOT)/avs-versions",
-			);
-			name = EmbedBuildInfo;
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/ComponentsVersions.plist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Generating ComponentsVersions.plist\"\nsource avs-versions\n${SRCROOT}/Scripts/embedBuildInfo --output ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/ComponentsVersions.plist\n";
 		};
 		BFE731DE20A2F2270088BA22 /* Remove Old Snapshot Results */ = {
 			isa = PBXShellScriptBuildPhase;
