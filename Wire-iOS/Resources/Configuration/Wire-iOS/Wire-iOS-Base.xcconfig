@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-// Build Options
-ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-
 // Packaging
-DEFINES_MODULE = YES
 INFOPLIST_FILE = $(SRCROOT)/Wire-iOS/Wire-Info.plist
 PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID)
 PRODUCT_NAME = Wire
 
 // Search Paths
-FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/iOS
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build
 
 // Signing
 CODE_SIGN_ENTITLEMENTS = $(CODE_SIGN_ENTITLEMENTS_APP)
@@ -34,10 +30,3 @@ PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_APP)
 
 // Apple Clang - Language
 GCC_PREFIX_HEADER = Wire-iOS/Wire-iOS-Prefix.pch
-
-// Apple Clang - Language - Modules
-CLANG_ENABLE_MODULES = YES
-
-// Swift Compiler - Custom Flags
-
-ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
