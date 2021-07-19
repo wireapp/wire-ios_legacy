@@ -26,7 +26,6 @@
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
 		06E69AB425C8301D00B678BF /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
-		06E69AB725C9A03500B678BF /* LayoutDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0D21EE0B180052DF03 /* LayoutDirection.swift */; };
 		06E69AB825C9A37700B678BF /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		06E89AFE25C82C51008E3846 /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E89AFD25C82C50008E3846 /* UnlockViewController.swift */; };
 		06E89B0025C82CA9008E3846 /* PasscodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E89AFF25C82CA9008E3846 /* PasscodeTextField.swift */; };
@@ -352,7 +351,6 @@
 		5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0721ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift */; };
 		5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0921ECE3920052DF03 /* BackupRestoreStepDescription.swift */; };
 		5E8FFC0C21EDDB970052DF03 /* SolidButtonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0B21EDDB970052DF03 /* SolidButtonDescription.swift */; };
-		5E8FFC0E21EE0B180052DF03 /* LayoutDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0D21EE0B180052DF03 /* LayoutDirection.swift */; };
 		5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0F21EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift */; };
 		5E8FFC1421EF3F9B0052DF03 /* BackupRestoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1321EF3F9B0052DF03 /* BackupRestoreController.swift */; };
 		5E8FFC1621EF46600052DF03 /* AuthenticationCoordinator+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC1521EF46600052DF03 /* AuthenticationCoordinator+Backup.swift */; };
@@ -908,6 +906,8 @@
 		A9A687D9250B7AA900AEE878 /* WipeDatabaseWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A687D8250B7AA900AEE878 /* WipeDatabaseWireframe.swift */; };
 		A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */; };
 		A9BA580D2497994D005B806B /* ContextMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */; };
+		A9BBD8CE26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BBD8CD26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift */; };
+		A9BBD8D026A5D51D00C768B1 /* LayoutDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FFC0D21EE0B180052DF03 /* LayoutDirection.swift */; };
 		A9C3223F23EB200F00E17311 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCell.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
@@ -2620,6 +2620,7 @@
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
 		A9B405DF269C812700ACE28C /* ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = ios.xcconfig; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A9BA580C2497994D005B806B /* ContextMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuDelegate.swift; sourceTree = "<group>"; };
+		A9BBD8CD26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+directionAware.swift"; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
 		A9C33DFF23D078B80069C8BB /* ConversationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListItemView.swift; sourceTree = "<group>"; };
@@ -5510,6 +5511,7 @@
 				5E769C5321AD89A900785EB7 /* UIViewController+Dismiss.swift */,
 				5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */,
 				5E8FFC0D21EE0B180052DF03 /* LayoutDirection.swift */,
+				A9BBD8CD26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift */,
 				A9275F5E24221AD6007CB2BC /* TextTransform.swift */,
 				5E1D74C22266221800AD1F32 /* AccentColorProvider.swift */,
 				F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */,
@@ -7654,7 +7656,6 @@
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
-				5E8FFC0E21EE0B180052DF03 /* LayoutDirection.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */,
@@ -8312,6 +8313,7 @@
 				0617001523E48B66005C262D /* VerticalTransition.swift in Sources */,
 				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
 				06C412AC238FCAA80018866F /* Int+Const.swift in Sources */,
+				A9BBD8D026A5D51D00C768B1 /* LayoutDirection.swift in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
@@ -9034,7 +9036,6 @@
 				F15650C321DD0A9B00210504 /* Bundle+Backend.swift in Sources */,
 				F15650B221DD018700210504 /* Bundle+Identifiers.swift in Sources */,
 				F15650B021DCFF5300210504 /* AutomationHelper.swift in Sources */,
-				06E69AB725C9A03500B678BF /* LayoutDirection.swift in Sources */,
 				F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */,
 				A98370BA248806E600515687 /* UIAlertController+factory.swift in Sources */,
 				F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */,
@@ -9053,6 +9054,7 @@
 				A92E731E2407F587007C1FFE /* String+Localized.swift in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F15650B321DD025A00210504 /* URL+Backup.swift in Sources */,
+				A9BBD8CE26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift in Sources */,
 				A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */,
 				7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */,
 				F15650AF21DCFE5200210504 /* CircularProgressView.swift in Sources */,
@@ -9212,7 +9214,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Debug;
 		};
@@ -9220,7 +9221,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Release;
 		};
@@ -9313,7 +9313,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F156509721DCED3000210504 /* CommonComponents-Debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -9328,7 +9327,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F156509621DCED3000210504 /* CommonComponents-Release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
