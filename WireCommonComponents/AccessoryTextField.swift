@@ -67,6 +67,7 @@ open class AccessoryTextField: UITextField {
         stack.distribution = .fill
         return stack
     }()
+    
     let accessoryContainer = UIView()
     
     public var textInsets: UIEdgeInsets
