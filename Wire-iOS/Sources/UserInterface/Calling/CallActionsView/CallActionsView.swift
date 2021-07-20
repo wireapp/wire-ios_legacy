@@ -147,11 +147,13 @@ final class CallActionsView: UIView {
     }
 
     private func setupAccessibility() {
-        microphoneButton.accessibilityLabel = "voice.mute_button.title".localized
-        cameraButton.accessibilityLabel = "voice.video_button.title".localized
-        speakerButton.accessibilityLabel = "voice.speaker_button.title".localized
-        flipCameraButton.accessibilityLabel = "voice.flip_video_button.title".localized
-        acceptCallButton.accessibilityLabel = "voice.accept_button.title".localized
+        typealias Voice = L10n.Localizable.Voice
+
+        microphoneButton.accessibilityLabel = Voice.MuteButton.title
+        cameraButton.accessibilityLabel = Voice.VideoButton.title
+        speakerButton.accessibilityLabel = Voice.SpeakerButton.title
+        flipCameraButton.accessibilityLabel = Voice.FlipVideoButton.title
+        acceptCallButton.accessibilityLabel = Voice.AcceptButton.title
     }
 
     private func createConstraints() {
@@ -241,16 +243,16 @@ final class CallActionsView: UIView {
     // MARK: - Accessibility
 
     private func updateAccessibilityElements(with input: CallActionsViewInputType) {
-        microphoneButton.accessibilityLabel = "call.actions.label.toggle_mute_\(input.isMuted ? "off" : "on")".localized
-        flipCameraButton.accessibilityLabel = "call.actions.label.flip_camera".localized
-        speakerButton.accessibilityLabel = "call.actions.label.toggle_speaker_\(input.mediaState.isSpeakerEnabled ? "off" : "on")".localized
-        acceptCallButton.accessibilityLabel = "call.actions.label.accept_call".localized
-        endCallButton.accessibilityLabel = "call.actions.label.\(input.callState.canAccept ? "reject" : "terminate")_call".localized
-        cameraButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized
-        cameraButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
+        typealias Label = L10n.Localizable.Call.Actions.Label
 
-        let targetCamera = input.cameraType == .front ? "back" : "front"
-        flipCameraButton.accessibilityLabel = "call.actions.label.switch_to_\(targetCamera)_camera".localized
+        microphoneButton.accessibilityLabel = input.isMuted ? Label.toggleMuteOff : Label.toggleMuteOn
+        flipCameraButton.accessibilityLabel = Label.flipCamera
+        speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Label.toggleSpeakerOff : Label.toggleSpeakerOn
+        acceptCallButton.accessibilityLabel = Label.acceptCall
+        endCallButton.accessibilityLabel = input.callState.canAccept ? Label.rejectCall : Label.terminateCall
+        cameraButtonDisabled.accessibilityLabel = Label.toggleVideoOn
+        cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff : Label.toggleVideoOn
+        flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera : Label.switchToFrontCamera
 
         speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }

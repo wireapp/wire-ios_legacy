@@ -33,9 +33,9 @@ enum CallActionIconType: IconLabelButtonInput {
         }
     }
 
-    typealias Voice = L10n.Localizable.Voice
-
     var label: String {
+        typealias Voice = L10n.Localizable.Voice
+
         switch self {
         case .microphone: return Voice.MuteButton.title
         case .camera: return Voice.VideoButton.title

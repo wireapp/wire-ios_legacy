@@ -20,9 +20,10 @@ import Foundation
 import WireSyncEngine
 
 extension VideoGridPresentationMode {
-    typealias SwitchTo = L10n.Localizable.Call.Overlay.SwitchTo
 
     var title: String {
+        typealias SwitchTo = L10n.Localizable.Call.Overlay.SwitchTo
+
         switch self {
         case .activeSpeakers: return SwitchTo.speakers
         case .allVideoStreams: return SwitchTo.all
