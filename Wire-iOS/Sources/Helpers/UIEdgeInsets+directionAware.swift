@@ -21,7 +21,7 @@ import UIKit
 
 extension UIView {
     var isLeftToRight: Bool {
-        return effectiveUserInterfaceLayoutDirection != .rightToLeft
+        return effectiveUserInterfaceLayoutDirection == .leftToRight
     }
 }
 
