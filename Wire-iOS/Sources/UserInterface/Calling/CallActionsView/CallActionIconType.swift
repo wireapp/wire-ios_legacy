@@ -33,12 +33,14 @@ enum CallActionIconType: IconLabelButtonInput {
         }
     }
 
+    typealias Voice = L10n.Localizable.Voice
+
     var label: String {
         switch self {
-        case .microphone: return "voice.mute_button.title".localized
-        case .camera: return "voice.video_button.title".localized
-        case .speaker: return "voice.speaker_button.title".localized
-        case .flipCamera: return "voice.flip_video_button.title".localized
+        case .microphone: return Voice.MuteButton.title
+        case .camera: return Voice.VideoButton.title
+        case .speaker: return Voice.SpeakerButton.title
+        case .flipCamera: return Voice.FlipVideoButton.title
         }
     }
 
