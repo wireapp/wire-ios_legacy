@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,24 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import UIKit
 
-extension UIApplication {
-
-    /// Check whether that app is in left to right layout.
-    static var isLeftToRightLayout: Bool {
-        return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight
+extension UIView {
+    var isLeftToRight: Bool {
+        return effectiveUserInterfaceLayoutDirection == .leftToRight
     }
-
 }
 
-// MARK: - UIEdgeInsets
-
 extension UIEdgeInsets {
-
     /// The leading insets, that respect the layout direction.
-    var leading: CGFloat {
-        if UIApplication.isLeftToRightLayout {
+    func leading(view: UIView) -> CGFloat {
+        if view.isLeftToRight {
             return left
         } else {
             return right
@@ -41,28 +36,19 @@ extension UIEdgeInsets {
     }
 
     /// The trailing insets, that respect the layout direction.
-    var trailing: CGFloat {
-        if UIApplication.isLeftToRightLayout {
+    func trailing(view: UIView) -> CGFloat {
+        if view.isLeftToRight {
             return right
         } else {
             return left
         }
     }
-}
 
-// MARK: - String
-
-extension String {
-
-    func addingTrailingAttachment(_ attachment: NSTextAttachment, verticalOffset: CGFloat = 0) -> NSAttributedString {
-        if let attachmentSize = attachment.image?.size {
-            attachment.bounds = CGRect(x: 0, y: verticalOffset, width: attachmentSize.width, height: attachmentSize.height)
-        }
-
-        if UIApplication.isLeftToRightLayout {
-            return self + "  " + NSAttributedString(attachment: attachment)
-        } else {
-            return NSAttributedString(attachment: attachment) + "  " + self
-        }
+    /// Returns a copy of the insets that are adapted for the current layout.
+    func directionAwareInsets(view: UIView) -> UIEdgeInsets {
+        return UIEdgeInsets(top: top,
+                            left: leading(view: view),
+                            bottom: bottom,
+                            right: trailing(view: view))
     }
 }

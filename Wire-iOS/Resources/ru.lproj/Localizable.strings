@@ -89,8 +89,8 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Управление сервисами";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
-"peoplepicker.no_matching_results.message.users" = "Найти людей в Wire, используя имя или @псевдоним";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Найти людей в Wire, используя имя или @псевдоним\n\nНайти людей в другом домене, используя @псевдоним@домен";
+"peoplepicker.no_matching_results.message.users" = "Найти пользователей в Wire, используя имя или @псевдоним";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Найти пользователей в Wire, используя имя или @псевдоним\n\nНайти пользователей в другом домене, используя @псевдоним@домен";
 "peoplepicker.no_matching_results.message.users_all_added" = "Все пользователи добавлены.";
 "peoplepicker.no_matching_results.message.services" = "Ничего не найдено.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс.";
@@ -100,8 +100,8 @@
 "peoplepicker.send_invitation.dialog.message" = "Оно будет актуально в течение 2 недель. Вы можете отправить новое приглашение, если срок этого истечет.";
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
-"peoplepicker.invite_more_people" = "Пригласить еще людей";
-"peoplepicker.invite_team_members" = "Пригласите людей в команду";
+"peoplepicker.invite_more_people" = "Пригласить больше пользователей";
+"peoplepicker.invite_team_members" = "Пригласите пользователей в команду";
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
 "peoplepicker.quick-action.create-guest-room" = "Создать гостевую комнату";
@@ -123,7 +123,7 @@
 "contacts_ui.invite_sheet.cancel_button_title" = "Отмена";
 "contacts_ui.notification.invitation_sent" = "Приглашение отправлено";
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
-"contacts_ui.title" = "Пригласить людей";
+"contacts_ui.title" = "Пригласить пользователей";
 
 "conversation_list.empty.all_archived.message" = "Отправлено в архив";
 "conversation_list.empty.no_contacts.message" = "Начните беседу или\nсоздайте группу.";
@@ -164,7 +164,7 @@
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "архивировано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивированных бесед";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "поиск людей в Wire";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "поиск пользователей в Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "создать";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "создайте сообщение и сохраните его для последующей отправки";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
@@ -277,9 +277,9 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
 "conversation.invite_more_people.title" = "Распространить информацию!";
-"conversation.invite_more_people.description" = "Добавить людей в эту беседу";
+"conversation.invite_more_people.description" = "Добавить пользователей в эту беседу";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
-"conversation.invite_more_people.button_title" = "Добавить людей";
+"conversation.invite_more_people.button_title" = "Добавить пользователей";
 
 // Conversation names
 "conversation.displayname.emptygroup" = "Пустая группа";
@@ -323,7 +323,7 @@
 "conversation.create.options.title" = "Настройки беседы";
 "conversation.create.options.subtitle" = "Гости и сервисы: %@, Отчеты о прочтении: %@";
 "conversation.create.guests.title" = "Разрешить гостей и сервисы";
-"conversation.create.guests.subtitle" = "Открыть эту беседу для сервисов и людей не из вашей команды.";
+"conversation.create.guests.subtitle" = "Открыть эту беседу для сервисов и пользователей не из вашей команды.";
 "conversation.create.receipts.title" = "Отчеты о прочтении";
 "conversation.create.receipts.subtitle" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.you_joined" = "Вы присоединились";
 
 "content.system.conversation.invite.title" = "Сервисы и пользователи не из вашей команды могут присоединиться к этой беседе.";
-"content.system.conversation.invite.button" = "Пригласить участников";
+"content.system.conversation.invite.button" = "Пригласить пользователей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название беседы";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название беседы";
@@ -695,7 +695,7 @@
 "call.grid.hints.zoom" = "Сведите или раздвиньте для изменения масштаба";
 
 "call.video.paused" = "Видео приостановлено";
-"call.video.too_many.alert.title" = "Слишком много людей для видео";
+"call.video.too_many.alert.title" = "Слишком много пользователей для видео";
 "call.video.too_many.alert.message" = "Видеозвонки работают в группах из 4 участников и меньше.";
 
 "call.degraded.alert.title" = "Новое устройство";
@@ -871,7 +871,7 @@
 "profile.read_receipts_disabled_memo.header" = "У ВАС ОТКЛЮЧЕНЫ ОТЧЕТЫ О ПРОЧТЕНИИ";
 "profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы сможете видеть когда были прочитаны ваши сообщения.\n\nЭтот параметр можно изменить в настройках вашего аккаунта.";
 
-"profile.group_admin_status_memo.body" = "Администратор может добавлять или удалять людей и сервисы, обновлять настройки групп, а также изменять роли участников.";
+"profile.group_admin_status_memo.body" = "Администратор может добавлять или удалять пользователей и сервисы, обновлять настройки групп, а также изменять роли участников.";
 
 "profile.extended_metadata.header" = "Информация";
 
@@ -1009,7 +1009,7 @@
 "self.settings.account_section.handle.title" = "Псевдоним";
 "self.settings.account_section.add_handle.title" = "Добавить псевдоним";
 
-"self.settings.account_details_group.info.footer" = "Люди могут найти вас с этими данными.";
+"self.settings.account_details_group.info.footer" = "Пользователи могут вас найти по этим данным.";
 "self.settings.account_details_group.personal.footer" = "Эта информация не видна.";
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
@@ -1180,7 +1180,7 @@
 
 "self.settings.privacy_contacts_section.title" = "Контакты";
 "self.settings.privacy_contacts_menu.settings_button.title" = "Открыть настройки контактов";
-"self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет найти людей, которых вы знаете. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
+"self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет найти пользователей, которых вы знаете. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_security.lock_app" = "Блокировка кодом доступа";
 "self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокировать Wire через %@ после перехода в фоновый режим.";
@@ -1231,7 +1231,7 @@
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
 
 // Invite from Settings
-"self.settings.invite_friends.title" = "Пригласить людей";
+"self.settings.invite_friends.title" = "Пригласить пользователей";
 
 // History backup
 
@@ -1345,7 +1345,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Разрешить гостей и сервисы";
-"guest_room.allow_guests.subtitle" = "Открыть эту беседу для сервисов и людей не из вашей команды.";
+"guest_room.allow_guests.subtitle" = "Открыть эту беседу для сервисов и пользователей не из вашей команды.";
 "guest_room.remove_guests.message" = "Все гости и сервисы будут удалены из беседы. Новые гости и сервисы допущены не будут.";
 "guest_room.remove_guests.action" = "Удалить";
 "guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
@@ -1485,7 +1485,7 @@
 "registration.country_select.title" = "Страна";
 
 "registration.share_contacts.hero.title" = "Найти друзей в Wire";
-"registration.share_contacts.hero.paragraph" = "Поделитесь своими контактами, чтобы мы могли соединить вас с другими людьми. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще.";
+"registration.share_contacts.hero.paragraph" = "Поделитесь своими контактами, чтобы мы могли соединить вас с другими пользователями. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще.";
 "registration.share_contacts.find_friends_button.title" = "Обмен контактами";
 "registration.share_contacts.skip_button.title" = "Не сейчас";
 
@@ -1544,7 +1544,7 @@
 "registration.phone.verify_field.label" = "Код подтверждения";
 
 "registration.add_phone_number.hero.title" = "Добавить номер телефона";
-"registration.add_phone_number.hero.paragraph" = "Это поможет нам найти людей, которых вы, возможно, знаете. Мы не разглашаем информацию о вас.";
+"registration.add_phone_number.hero.paragraph" = "Это поможет нам найти пользователей, которых вы, возможно, знаете. Мы не разглашаем информацию о вас.";
 "registration.add_phone_number.skip_button.title" = "Не сейчас";
 
 "registration.add_email_password.hero.title" = "Добавьте ваш email и пароль";
@@ -1584,7 +1584,7 @@
 "error.user.domain_blocked" = "Это письмо требует приглашения от существующей команды. По вопросам получения приглашения, свяжитесь с ИТ-администраторами вашей организации.";
 "error.user.invalid_credentials" = "Пожалуйста, проверьте ваши данные и попробуйте еще раз.";
 "error.user.account_pending_activation" = "Учетная запись, к которой вы пытаетесь получить доступ, ожидает активации. Пожалуйста, проверьте ваши данные.";
-"error.user.network_error" = "Кажется, проблема в вашей сети. Пожалуйста, попробуйте позже.";
+"error.user.network_error" = "Похоже, возникла проблема с вашей сетью. Пожалуйста, попробуйте позже.";
 "error.user.email_is_taken" = "Указанный вами адрес электронной почты уже зарегистрирован. Пожалуйста, попробуйте еще раз.";
 "error.user.phone_is_taken" = "Указанный вами номер телефона уже зарегистрирован. Пожалуйста, попробуйте еще раз.";
 "error.user.phone_code_invalid" = "Пожалуйста, введите правильный код";
@@ -1599,7 +1599,7 @@
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
 "error.updating_password" = "Не удалось обновить пароль.";
 
-"error.group_call.too_many_members_in_conversation.title" = "Вы выбрали слишком много людей для звонка";
+"error.group_call.too_many_members_in_conversation.title" = "Вы выбрали слишком много пользователей для звонка";
 "error.group_call.too_many_members_in_conversation" = "Звонки работают в беседах до %d человек.";
 "error.group_call.too_many_participants_in_the_call.title" = "Вызов переполнен";
 "error.group_call.too_many_participants_in_the_call" = "Здесь хватит места только для %d участников.";
@@ -1661,7 +1661,7 @@
 
 "invite_banner.title" = "Приведите своих друзей в Wire!";
 "invite_banner.message" = "Наслаждайтесь звонками, сообщениями, скетчами, GIF и многим другим в приватной беседе или при общении в группе.";
-"invite_banner.invite_button_title" = "Пригласить больше людей";
+"invite_banner.invite_button_title" = "Пригласить больше пользователей";
 
 // Collections
 "collections.section.images.title" = "Изображения";
