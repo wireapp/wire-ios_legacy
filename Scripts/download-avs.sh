@@ -61,6 +61,8 @@ fi
 AVS_FILENAME="${AVS_FRAMEWORK_NAME}-${AVS_VERSION}.zip"
 AVS_RELEASE_TAG_PATH="https://api.github.com/repos/${AVS_REPO}/releases/tags/${AVS_VERSION}"
 
+echo "ℹ️  AVS_FILENAME is ${AVS_FILENAME}"
+
 ##################################
 # SET UP FOLDERS
 ##################################
