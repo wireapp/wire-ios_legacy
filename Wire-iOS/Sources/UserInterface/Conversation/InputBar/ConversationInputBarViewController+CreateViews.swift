@@ -35,13 +35,13 @@ extension ConversationInputBarViewController {
     }
 
     var inputBarButtons: [IconButton] {
-        return [photoButton,
+        return [canFilesBeShared ? photoButton : nil,
                 mentionButton,
                 sketchButton,
-                SecurityFlags.gifAction.isEnabled ? gifButton : nil,
+                canFilesBeShared ? gifButton : nil,
                 audioButton,
                 pingButton,
-                SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton : nil,
+                canFilesBeShared ? uploadFileButton : nil,
                 locationButton,
                 videoButton].compactMap { $0 }
     }
@@ -107,5 +107,17 @@ extension ConversationInputBarViewController {
             typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
             typingIndicatorView.rightAnchor.constraint(lessThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
         ])
+    }
+}
+
+extension ConversationInputBarViewController {
+    /// Whether files can be shared
+    var canFilesBeShared: Bool {
+        guard
+            let selfUser = SelfUser.provider?.selfUser,
+            selfUser.isTeamMember else {
+            return true
+        }
+        return selfUser.canShareFiles
     }
 }
