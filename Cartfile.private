@@ -1,3 +1,3 @@
 github "wireapp/ios-snapshot-test-case" "4.0.0-xcframework"
-github "wireapp/wire-ios-testing" ~> 25.0.5
+github "wireapp/wire-ios-testing" ~> 25.0.6
 github "wireapp/swift-snapshot-testing" "1.8.2-xcframework"
