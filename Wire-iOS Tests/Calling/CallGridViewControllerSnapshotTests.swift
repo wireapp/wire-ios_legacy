@@ -74,12 +74,13 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func createSut(hideHintView: Bool = true) {
+    func createSut(hideHintView: Bool = true, delegate: MockCallGridViewControllerDelegate? = nil) {
         sut = CallGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
 
         sut.isCovered = false
         sut.view.backgroundColor = .black
+        sut.delegate = delegate
         if hideHintView { sut.hideHintView() }
     }
 
@@ -251,9 +252,8 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
     func testThatItRequestsVideoStreams_ForParticipantsOnGivenPageWithVideoEnabled() {
         // given
-        createSut()
         let mockDelegate = MockCallGridViewControllerDelegate()
-        sut.delegate = mockDelegate
+        createSut(delegate: mockDelegate)
 
         let configuration = MockCallGridViewControllerInput()
 
@@ -283,6 +283,28 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
 
         // then
         XCTAssertEqual(mockDelegate.requestedClients, expectedClients)
+    }
+
+    func testThatItDoesntRequestVideoStreams_IfPageIsInvalid() {
+        // given
+        let mockDelegate = MockCallGridViewControllerDelegate()
+        let configuration = MockCallGridViewControllerInput()
+
+        createSut(delegate: mockDelegate)
+
+        // this will be one page's worth of streams
+        for _ in 0..<CallGridViewController.maxItemsPerPage {
+            configuration.streams += [stubProvider.stream(videoState: .started)]
+        }
+
+        sut.configuration = configuration
+        mockDelegate.requestedClients = nil
+
+        // when - we request video streams for a second page that doesn't exist
+        sut.requestVideoStreamsIfNeeded(forPage: 1) // pages start from 0
+
+        // then
+        XCTAssertNil(mockDelegate.requestedClients)
     }
 
 }
