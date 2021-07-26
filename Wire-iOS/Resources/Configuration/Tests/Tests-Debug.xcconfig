@@ -17,6 +17,7 @@
 // 
 
 #include "../Project-Debug.xcconfig"
+#include "../../../Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"
 
 // Linking
 BUNDLE_LOADER = $(TEST_HOST)
