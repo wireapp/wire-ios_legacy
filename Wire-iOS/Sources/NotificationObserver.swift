@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 // MARK: - ObserverTokenStore
 protocol ObserverTokenStore: AnyObject {
@@ -91,6 +92,23 @@ extension AudioPermissionsObserving {
                                                                 queue: nil) { [weak self] _ in
             guard let observer = self else { return }
             observer.userDidGrantAudioPermissions()
+        })
+    }
+}
+
+// MARK: - FeatureConfigChangeObserving
+protocol FeatureConfigObserving: ObserverTokenStore {
+    func featureConfigDidChange(in event: ZMUpdateEvent)
+}
+
+extension FeatureConfigObserving {
+    func setupFeatureConfigNotifications() {
+        addObserverToken(NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification,
+                                                                object: nil,
+                                                                queue: .main) { [weak self] note in
+            guard let observer = self,
+                  let event = note.object as? ZMUpdateEvent else { return }
+            observer.featureConfigDidChange(in: event)
         })
     }
 }

@@ -1637,6 +1637,14 @@
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
+//Feature flag
+"feature.flag.update.alert.base_message" = "The team admin changed the following features:\n%@";
+
+//Feature flag - File sharing
+"feature.flag.update.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is disabled";
+"feature.flag.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is enabled";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
