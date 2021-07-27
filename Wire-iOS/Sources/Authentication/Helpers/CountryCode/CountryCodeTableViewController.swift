@@ -79,7 +79,7 @@ final class CountryCodeTableViewController: UITableViewController, UISearchContr
 
         resultsTableViewController.tableView.delegate = self
         searchController.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchBar.backgroundColor = UIColor.white
 

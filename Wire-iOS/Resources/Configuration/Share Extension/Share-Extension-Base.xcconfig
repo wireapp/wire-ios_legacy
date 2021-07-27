@@ -26,7 +26,7 @@ APPLICATION_EXTENSION_API_ONLY = YES
 SKIP_INSTALL = YES
 
 // Linking
-LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS ;
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build ;
 
 // Packaging
 DEFINES_MODULE = NO

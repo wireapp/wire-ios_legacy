@@ -17,4 +17,4 @@
 # along with this program. If not, see http://www.gnu.org/licenses/.
 #
 
-export APPSTORE_AVS_VERSION=7.1.6
+export APPSTORE_AVS_VERSION=7.1.6_xcframework

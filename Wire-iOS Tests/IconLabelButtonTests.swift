@@ -36,120 +36,107 @@ final class IconLabelButtonTests: XCTestCase {
         super.tearDown()
     }
 
-    func testIconLabelButton_Dark_Unselected_Enabled() {
-        // When
-        button.appearance = .dark(blurred: false)
-
-        // Then
-        verify(matching: button)
+    func testIconLabelButton() {
+        IconLabelButtonTestCase.Appearance.allCases.forEach {
+            verify(appearance: $0)
+        }
     }
 
-    func testIconLabelButton_Dark_Unselected_Disabled() {
-        // When
-        button.isEnabled = false
-        button.appearance = .dark(blurred: false)
+    func verify(appearance: IconLabelButtonTestCase.Appearance, file: StaticString = #file, line: UInt = #line) {
+        button.appearance = appearance.callActionAppearance
+        button.isEnabled = appearance.isEnabled
+        button.isSelected = appearance.isSelected
 
-        // Then
-        verify(matching: button)
+        let name = "testIconLabelButton_\(appearance.description)"
+        verify(matching: button, file: file, testName: name, line: line)
     }
 
-    func testIconLabelButton_Dark_Selected_Enabled() {
-        // When
-        button.isSelected = true
-        button.appearance = .dark(blurred: false)
+}
 
-        // Then
-        verify(matching: button)
+struct IconLabelButtonTestCase {
+
+    enum Appearance: CaseIterable {
+        typealias AllCases = [Appearance]
+
+        static var allCases: AllCases {
+            var cases = AllCases()
+
+            InteractionState.allCases.forEach { interactionState in
+                SelectionState.allCases.forEach { selectionState in
+                    BlurState.allCases.forEach { blurState in
+                        cases += [.dark(blurState, selectionState, interactionState)]
+                    }
+                    cases += [.light(selectionState, interactionState)]
+                }
+            }
+
+            return cases
+        }
+
+        case dark(BlurState, SelectionState, InteractionState)
+        case light(SelectionState, InteractionState)
+
+        var callActionAppearance: CallActionAppearance {
+            switch self {
+            case .dark(let blurState, _, _): return .dark(blurred: blurState.isBlurred)
+            case .light: return .light
+            }
+        }
+
+        var isSelected: Bool {
+            return selectionState.isSelected
+        }
+
+        var isEnabled: Bool {
+            return interactionState.isEnabled
+        }
+
+        var description: String {
+            switch self {
+            case .dark(let blurState, let selectionState, let interactionState):
+                return "dark_\(blurState.rawValue)_\(selectionState.rawValue)_\(interactionState.rawValue)"
+            case .light(let selectionState, let interactionState):
+                return "light_\(selectionState.rawValue)_\(interactionState.rawValue)"
+            }
+        }
+
+        private var selectionState: SelectionState {
+            switch self {
+            case .dark(_, let selectionState, _), .light(let selectionState, _): return selectionState
+            }
+        }
+
+        private var interactionState: InteractionState {
+            switch self {
+            case .dark(_, _, let interactionState), .light(_, let interactionState): return interactionState
+            }
+        }
     }
 
-    func testIconLabelButton_Dark_Selected_Disabled() {
-        // When
-        button.isSelected = true
-        button.isEnabled = false
-        button.appearance = .dark(blurred: false)
+    enum BlurState: String, CaseIterable {
+        case blurred, notBlurred
 
-        // Then
-        verify(matching: button)
+        var isBlurred: Bool {
+            if case .blurred = self { return true }
+            return false
+        }
     }
 
-    func testIconLabelButton_Dark_Unselected_Enabled_Blurred() {
-        // When
-        button.appearance = .dark(blurred: true)
+    enum SelectionState: String, CaseIterable {
+        case selected, unselected
 
-        // Then
-        verify(matching: button)
+        var isSelected: Bool {
+            if case .selected = self { return true }
+            return false
+        }
     }
 
-    func testIconLabelButton_Dark_Unselected_Disabled_Blurred() {
-        // When
-        button.isEnabled = false
-        button.appearance = .dark(blurred: true)
+    enum InteractionState: String, CaseIterable {
+        case enabled, disabled
 
-        // Then
-        verify(matching: button)
+        var isEnabled: Bool {
+            if case .enabled = self { return true }
+            return false
+        }
     }
-
-    func testIconLabelButton_Dark_Selected_Enabled_Blurred() {
-        // When
-        button.isSelected = true
-        button.appearance = .dark(blurred: true)
-
-        // Then
-        verify(matching: button)
-    }
-
-    func testIconLabelButton_Dark_Selected_Disabled_Blurred() {
-        // When
-        button.isSelected = true
-        button.isEnabled = false
-        button.appearance = .dark(blurred: true)
-
-        // Then
-        verify(matching: button)
-    }
-
-    func testIconLabelButton_Light_Unselected_Enabled() {
-        // Given
-
-        // When
-        button.appearance = .light
-
-        // Then
-        verify(matching: button)
-    }
-
-    func testIconLabelButton_Light_Unselected_Disabled() {
-        // Given
-
-        // When
-        button.isEnabled = false
-        button.appearance = .light
-
-        // Then
-        verify(matching: button)
-    }
-
-    func testIconLabelButton_Light_Selected_Enabled() {
-        // Given
-
-        // When
-        button.isSelected = true
-        button.appearance = .light
-
-        // Then
-        verify(matching: button)
-    }
-
-    func testIconLabelButton_Light_Selected_Disabled() {
-        // Given
-
-        // When
-        button.isSelected = true
-        button.isEnabled = false
-        button.appearance = .light
-
-        // Then
-        verify(matching: button)
-    }
-
 }
