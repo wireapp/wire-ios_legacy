@@ -114,7 +114,7 @@ extension ConversationInputBarViewController {
 extension ConversationInputBarViewController {
     /// Whether files can be shared and received
     var canFilesBeShared: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
+        guard let session = ZMUserSession.shared() else { return true }
         return session.fileSharingFeature.status == .enabled
     }
 }
