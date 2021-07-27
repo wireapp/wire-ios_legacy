@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 extension ConversationInputBarViewController {
     func setupViews() {
@@ -111,13 +112,9 @@ extension ConversationInputBarViewController {
 }
 
 extension ConversationInputBarViewController {
-    /// Whether files can be shared
+    /// Whether files can be shared and received
     var canFilesBeShared: Bool {
-        guard
-            let selfUser = SelfUser.provider?.selfUser,
-            selfUser.isTeamMember else {
-            return true
-        }
-        return selfUser.canShareFiles
+        guard let session = ZMUserSession.shared() else { return false }
+        return session.fileSharingFeature.status == .enabled
     }
 }
