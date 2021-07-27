@@ -21,13 +21,10 @@ import Foundation
 enum SecurityFlags {
     case clipboard
     case saveMessage
-    case gifAction
-    case externalFilePicker
     case generateLinkPreviews
     case forceConstantBitRateCalls
     case openFilePreview
     case customBackend
-    case shareExtension
     case cameraRoll
     case backup
 
@@ -41,10 +38,6 @@ enum SecurityFlags {
             return "ClipboardEnabled"
         case .saveMessage:
             return "SaveMessageEnabled"
-        case .gifAction:
-            return "FileGifActionEnabled"
-        case .externalFilePicker:
-            return "ExternalFilePickerEnabled"
         case .generateLinkPreviews:
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:
@@ -53,8 +46,6 @@ enum SecurityFlags {
             return "OpenFilePreviewEnabled"
         case .customBackend:
             return "CustomBackendEnabled"
-        case .shareExtension:
-            return "ShareExtensionEnabled"
         case .cameraRoll:
             return "CameraRollEnabled"
         case .backup:
