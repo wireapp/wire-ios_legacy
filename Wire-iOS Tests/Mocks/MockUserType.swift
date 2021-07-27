@@ -129,8 +129,6 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var hasDigitalSignatureEnabled: Bool = false
 
-    var canShareFiles: Bool = true
-
     var teamName: String?
 
     var teamRole: TeamRole = .none
