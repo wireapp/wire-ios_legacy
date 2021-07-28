@@ -46,6 +46,7 @@ final class ConversationImageMessageCell: UIView,
     }()
 
     private let obfuscationView = ObfuscationView(icon: .photo)
+    private let testView = FileTransferView3()
 
     private var aspectConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
@@ -82,17 +83,20 @@ final class ConversationImageMessageCell: UIView,
 
         addSubview(containerView)
 
-        [imageResourceView, obfuscationView].forEach(containerView.addSubview)
+        [imageResourceView, obfuscationView, testView].forEach(containerView.addSubview)
         obfuscationView.isHidden = true
+        testView.isHidden = true
     }
 
     private func createConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
         imageResourceView.translatesAutoresizingMaskIntoConstraints = false
+        testView.translatesAutoresizingMaskIntoConstraints = false
 
         obfuscationView.fitInSuperview()
         imageResourceView.fitInSuperview()
+        testView.fitInSuperview()
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
         let trailing = containerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
@@ -115,8 +119,11 @@ final class ConversationImageMessageCell: UIView,
     }
 
     func configure(with object: Configuration, animated: Bool) {
+        testView.configure(for: object.message)
+
+        testView.isHidden = object.message.canBeReceived
         obfuscationView.isHidden = !object.isObfuscated
-        imageResourceView.isHidden = object.isObfuscated
+        imageResourceView.isHidden = object.isObfuscated && !object.message.canBeReceived
 
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))

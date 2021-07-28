@@ -36,6 +36,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     private let imageView = ImageResourceView()
+    private let testView = FileTransferView3()
 
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.
@@ -59,11 +60,17 @@ final class CollectionImageCell: CollectionCell {
         self.imageView.accessibilityIdentifier = "image"
         self.imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
         self.secureContentsView.addSubview(self.imageView)
-        constrain(self, self.imageView) { selfView, imageView in
+        self.secureContentsView.addSubview(self.testView)
+        constrain(self, self.imageView, self.testView) { selfView, imageView, testView in
             imageView.left == selfView.left
             imageView.right == selfView.right
             imageView.top == selfView.top
             imageView.bottom == selfView.bottom
+
+            testView.left == selfView.left
+            testView.right == selfView.right
+            testView.top == selfView.top
+            testView.bottom == selfView.bottom
         }
     }
 
@@ -98,6 +105,12 @@ final class CollectionImageCell: CollectionCell {
     }
 
     fileprivate func loadImage() {
-        imageView.imageResource = message?.imageMessageData?.image
+        if let message = message, !message.canBeReceived {
+            testView.isHidden = false
+            testView.configure(for: message)
+        } else {
+            testView.isHidden = true
+            imageView.imageResource = message?.imageMessageData?.image
+        }
     }
 }

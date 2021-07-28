@@ -24,6 +24,7 @@ import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
+    private let testView = FileTransferView2()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,7 +43,12 @@ final class CollectionVideoCell: CollectionCell {
             return
         }
 
-        videoMessageView.configure(for: message, isInitial: true)
+        if message.canBeReceived {
+            videoMessageView.configure(for: message, isInitial: true)
+            testView.isHidden = true
+        } else {
+            testView.configure(for: message)
+        }
     }
 
     func loadView() {
@@ -51,9 +57,11 @@ final class CollectionVideoCell: CollectionCell {
         self.videoMessageView.clipsToBounds = true
         self.videoMessageView.timeLabelHidden = true
         self.secureContentsView.addSubview(self.videoMessageView)
+        self.secureContentsView.addSubview(self.testView)
 
-        constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
+        constrain(self.contentView, self.videoMessageView, self.testView) { contentView, videoMessageView, testView in
             videoMessageView.edges == contentView.edges
+            testView.edges == contentView.edges
         }
     }
 

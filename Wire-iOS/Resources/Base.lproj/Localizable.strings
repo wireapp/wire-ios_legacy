@@ -1644,6 +1644,10 @@
 "feature.flag.update.file_sharing.alert.title" = "File sharing restrictions";
 "feature.flag.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is disabled";
 "feature.flag.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is enabled";
+"feature.flag.restriction.file" = "Receiving files restricted";
+"feature.flag.restriction.picture" = "Receiving pictures restricted";
+"feature.flag.restriction.video" = "Receiving videos restricted";
+"feature.flag.restriction.audio" = "Receiving audio files restricted";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";

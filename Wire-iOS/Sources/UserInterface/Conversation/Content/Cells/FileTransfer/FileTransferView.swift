@@ -155,6 +155,21 @@ final class FileTransferView: UIView, TransferView {
         fileTypeIconView.contentMode = .center
         fileTypeIconView.setTemplateIcon(.document, size: .small)
 
+        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
+        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
+
+        guard message.canBeReceived else {
+            fileEyeView.setTemplateIcon(.block, size: 8)
+
+            let firstLine = fileNameAttributed
+            let secondLine = "feature.flag.restriction.file".localized(uppercased: true) && labelFont && labelTextBlendedColor
+            self.topLabel.attributedText = firstLine
+            self.bottomLabel.attributedText = secondLine
+
+            self.actionButton.isUserInteractionEnabled = false
+            return
+        }
+
         fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
             guard let image = image else { return }
 
@@ -196,12 +211,10 @@ final class FileTransferView: UIView, TransferView {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
         }
-
-        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
-        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
     }
 
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
+        //check
         guard let state = FileMessageViewState.fromConversationMessage(message) else { return }
 
         var visibleViews: [UIView] = [topLabel, bottomLabel]
@@ -243,6 +256,7 @@ final class FileTransferView: UIView, TransferView {
     // MARK: - Actions
 
     @objc func onActionButtonPressed(_ sender: UIButton) {
+        // do not allow
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }
@@ -261,6 +275,277 @@ final class FileTransferView: UIView, TransferView {
             } else {
                 self.delegate?.transferView(self, didSelect: .present)
             }
+        }
+    }
+}
+
+
+final class FileTransferView1: UIView {
+    var fileMessage: ZMConversationMessage?
+
+
+    let topLabel = UILabel()
+    let bottomLabel = UILabel()
+    let fileTypeIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .from(scheme: .textForeground)
+        return imageView
+    }()
+    let fileEyeView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .from(scheme: .background)
+        return imageView
+    }()
+
+    let labelTextColor: UIColor = .from(scheme: .textForeground)
+    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    let labelFont: UIFont = .smallLightFont
+    let labelBoldFont: UIFont = .smallSemiboldFont
+
+    private var allViews: [UIView] = []
+
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .from(scheme: .placeholderBackground)
+
+        self.topLabel.numberOfLines = 1
+        self.topLabel.lineBreakMode = .byTruncatingMiddle
+        self.topLabel.accessibilityIdentifier = "AudioTransferTopLabel"
+
+        self.bottomLabel.numberOfLines = 1
+        self.bottomLabel.accessibilityIdentifier = "AudioTransferBottomLabel"
+
+        self.fileTypeIconView.accessibilityIdentifier = "AudioTransferFileTypeIcon"
+
+        self.fileEyeView.setTemplateIcon(.eye, size: 8)
+
+        self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView]
+        self.allViews.forEach(self.addSubview)
+
+        self.createConstraints()
+
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView])
+        self.accessibilityElements = currentElements
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
+    }
+
+    private func createConstraints() {
+        constrain(self, self.topLabel, self.fileTypeIconView) { selfView, topLabel, fileTypeIconView in
+            topLabel.top == selfView.top + 12
+            topLabel.left == fileTypeIconView.right + 12
+            topLabel.right == selfView.right - 12
+
+            fileTypeIconView.centerY == selfView.centerY
+            fileTypeIconView.left == selfView.left + 12
+            fileTypeIconView.width == 32
+            fileTypeIconView.height == 32
+        }
+
+        constrain(self.fileTypeIconView, self.fileEyeView) { fileTypeIconView, fileEyeView in
+            fileEyeView.centerX == fileTypeIconView.centerX
+            fileEyeView.centerY == fileTypeIconView.centerY + 3
+        }
+
+        constrain(self, self.topLabel, self.bottomLabel) { _, topLabel, bottomLabel in
+            bottomLabel.top == topLabel.bottom + 2
+            bottomLabel.left == topLabel.left
+            bottomLabel.right == topLabel.right
+        }
+    }
+
+    func configure(for message: ZMConversationMessage) {
+        self.fileMessage = message
+        guard let fileMessageData = message.fileMessageData
+            else { return }
+        let fileNameAttributed = "conversation.input_bar.message_preview.audio".localized.localizedUppercase && labelBoldFont && labelTextColor
+
+
+        fileTypeIconView.contentMode = .center
+//        fileTypeIconView.setTemplateIcon(.document, size: .small)
+        fileTypeIconView.setTemplateIcon(.microphone, size: .small)
+
+        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
+        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
+
+        guard message.canBeReceived else {
+//            fileEyeView.setTemplateIcon(.block, size: 8)
+
+            let firstLine = fileNameAttributed
+            let secondLine = "feature.flag.restriction.audio".localized(uppercased: true) && labelFont && labelTextBlendedColor
+            self.topLabel.attributedText = firstLine
+            self.bottomLabel.attributedText = secondLine
+
+            return
+        }
+    }
+}
+
+final class FileTransferView2: UIView {
+    var fileMessage: ZMConversationMessage?
+
+    let topLabel = UILabel()
+    let fileTypeIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .from(scheme: .textForeground)
+        return imageView
+    }()
+
+    let labelTextColor: UIColor = .from(scheme: .textForeground)
+    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    let labelFont: UIFont = .smallLightFont
+    let labelBoldFont: UIFont = .smallSemiboldFont
+
+    private var allViews: [UIView] = []
+
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .from(scheme: .placeholderBackground)
+
+        self.topLabel.numberOfLines = 3
+        self.topLabel.lineBreakMode = .byTruncatingMiddle
+        self.topLabel.accessibilityIdentifier = "VideoTransferTopLabel"
+
+        self.fileTypeIconView.accessibilityIdentifier = "VideoTransferFileTypeIcon"
+
+        self.allViews = [topLabel, fileTypeIconView]
+        self.allViews.forEach(self.addSubview)
+
+        self.createConstraints()
+
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [topLabel, fileTypeIconView])
+        self.accessibilityElements = currentElements
+
+        fileTypeIconView.clipsToBounds = true
+        fileTypeIconView.layer.cornerRadius = 16
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
+    }
+
+    private func createConstraints() {
+        constrain(self, self.topLabel, self.fileTypeIconView) { selfView, topLabel, fileTypeIconView in
+            fileTypeIconView.centerY == selfView.centerY - 12
+            fileTypeIconView.centerX == selfView.centerX
+            fileTypeIconView.width == 32
+            fileTypeIconView.height == 32
+
+            topLabel.centerX == selfView.centerX
+            topLabel.top == fileTypeIconView.bottom + 12
+        }
+    }
+
+    func configure(for message: ZMConversationMessage) {
+        self.fileMessage = message
+        guard let fileMessageData = message.fileMessageData
+            else { return }
+
+
+        fileTypeIconView.contentMode = .center
+        fileTypeIconView.setTemplateIcon(.play, size: .tiny)
+        fileTypeIconView.backgroundColor = .white
+
+        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
+
+        guard message.canBeReceived else {
+            let firstLine = "feature.flag.restriction.video".localized(uppercased: true) && labelFont && labelTextBlendedColor
+            self.topLabel.attributedText = firstLine
+
+            return
+        }
+    }
+}
+
+final class FileTransferView3: UIView {
+    var fileMessage: ZMConversationMessage?
+
+    let topLabel = UILabel()
+    let fileTypeIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .from(scheme: .textForeground)
+        return imageView
+    }()
+
+    let labelTextColor: UIColor = .from(scheme: .textForeground)
+    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    let labelFont: UIFont = .smallLightFont
+    let labelBoldFont: UIFont = .smallSemiboldFont
+
+    private var allViews: [UIView] = []
+
+    required override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .from(scheme: .placeholderBackground)
+
+        self.topLabel.numberOfLines = 3
+        self.topLabel.lineBreakMode = .byTruncatingMiddle
+        self.topLabel.accessibilityIdentifier = "PictureTransferTopLabel"
+
+        self.fileTypeIconView.accessibilityIdentifier = "PictureTransferFileTypeIcon"
+
+        self.allViews = [topLabel, fileTypeIconView]
+        self.allViews.forEach(self.addSubview)
+
+        self.createConstraints()
+
+        var currentElements = self.accessibilityElements ?? []
+        currentElements.append(contentsOf: [topLabel, fileTypeIconView])
+        self.accessibilityElements = currentElements
+
+//        fileTypeIconView.clipsToBounds = true
+//        fileTypeIconView.layer.cornerRadius = 16
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
+    }
+
+    private func createConstraints() {
+        constrain(self, self.topLabel, self.fileTypeIconView) { selfView, topLabel, fileTypeIconView in
+            fileTypeIconView.centerY == selfView.centerY - 12
+            fileTypeIconView.centerX == selfView.centerX
+            fileTypeIconView.width == 32
+            fileTypeIconView.height == 32
+
+            topLabel.centerX == selfView.centerX
+            topLabel.top == fileTypeIconView.bottom + 12
+        }
+    }
+
+    func configure(for message: ZMConversationMessage) {
+        self.fileMessage = message
+        guard let fileMessageData = message.fileMessageData
+            else { return }
+
+
+        fileTypeIconView.contentMode = .center
+        fileTypeIconView.setTemplateIcon(.photo, size: .small)
+       // fileTypeIconView.backgroundColor = .red
+
+        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
+
+        guard message.canBeReceived else {
+            let firstLine = "feature.flag.restriction.picture".localized(uppercased: true) && labelFont && labelTextBlendedColor
+            self.topLabel.attributedText = firstLine
+
+            return
         }
     }
 }

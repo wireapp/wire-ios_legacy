@@ -1777,6 +1777,16 @@ internal enum L10n {
     }
     internal enum Feature {
       internal enum Flag {
+        internal enum Restriction {
+          /// Receiving audio files restricted
+          internal static let audio = L10n.tr("Localizable", "feature.flag.restriction.audio")
+          /// Receiving files restricted
+          internal static let file = L10n.tr("Localizable", "feature.flag.restriction.file")
+          /// Receiving pictures restricted
+          internal static let picture = L10n.tr("Localizable", "feature.flag.restriction.picture")
+          /// Receiving videos restricted
+          internal static let video = L10n.tr("Localizable", "feature.flag.restriction.video")
+        }
         internal enum Update {
           internal enum Alert {
             /// The team admin changed the following features:\n%@
