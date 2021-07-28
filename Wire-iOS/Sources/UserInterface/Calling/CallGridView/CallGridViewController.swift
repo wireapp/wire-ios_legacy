@@ -367,7 +367,9 @@ final class CallGridViewController: SpinnerCapableViewController {
         var endIndex = startIndex + gridView.maxItemsPerPage
         endIndex = min(endIndex, dataSource.count)
 
-        guard startIndex >= 0 else { return }
+        guard dataSource.indices.contains(startIndex),
+              endIndex > startIndex
+        else { return }
 
         let clients = dataSource[startIndex..<endIndex]
             .filter(\.isSharingVideo)
