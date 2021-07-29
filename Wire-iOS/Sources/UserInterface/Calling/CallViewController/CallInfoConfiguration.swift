@@ -27,9 +27,8 @@ fileprivate extension VoiceChannel {
              .answered,
              .establishedDataChannel,
              .outgoing:
-            guard
-                !videoState.isSending,
-                let initiator = initiator
+            guard !videoState.isSending,
+                  let initiator = initiator
             else { return .none }
             return .avatar(HashBox(value: initiator))
         case .unknown,
