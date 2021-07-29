@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 extension ConversationInputBarViewController {
     func setupViews() {
@@ -35,13 +36,13 @@ extension ConversationInputBarViewController {
     }
 
     var inputBarButtons: [IconButton] {
-        return [photoButton,
+        return [canFilesBeShared ? photoButton : nil,
                 mentionButton,
                 sketchButton,
-                SecurityFlags.gifAction.isEnabled ? gifButton : nil,
+                canFilesBeShared ? gifButton : nil,
                 audioButton,
                 pingButton,
-                SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton : nil,
+                canFilesBeShared ? uploadFileButton : nil,
                 locationButton,
                 videoButton].compactMap { $0 }
     }
@@ -107,5 +108,13 @@ extension ConversationInputBarViewController {
             typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
             typingIndicatorView.rightAnchor.constraint(lessThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
         ])
+    }
+}
+
+extension ConversationInputBarViewController {
+    /// Whether files can be shared and received
+    var canFilesBeShared: Bool {
+        guard let session = ZMUserSession.shared() else { return true }
+        return session.fileSharingFeature.status == .enabled
     }
 }
