@@ -98,7 +98,7 @@ extension AudioPermissionsObserving {
 
 // MARK: - FeatureConfigChangeObserving
 protocol FeatureConfigObserving: ObserverTokenStore {
-    func featureConfigDidChange(in event: ZMUpdateEvent)
+    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload)
 }
 
 extension FeatureConfigObserving {
@@ -107,8 +107,9 @@ extension FeatureConfigObserving {
                                                                 object: nil,
                                                                 queue: .main) { [weak self] note in
             guard let observer = self,
-                  let event = note.object as? ZMUpdateEvent else { return }
-            observer.featureConfigDidChange(in: event)
+                  let featureUpdateEvent = note.object as? FeatureUpdateEventPayload
+            else { return }
+            observer.featureConfigDidChange(in: featureUpdateEvent)
         })
     }
 }

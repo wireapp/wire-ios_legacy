@@ -23,31 +23,29 @@ extension UIAlertController {
 
     struct Configuration {
         typealias FeatureFlag = L10n.Localizable.Feature.Flag.Update
+        typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
-        let title: String?
-        let message: String?
+        var title: String? = nil
+        var message: String? = nil
 
         init(featureName: Feature.Name, status: Feature.Status) {
             switch featureName {
             case .fileSharing:
-                typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
                 title = FileSharingAlert.title
                 message = (status == .enabled)
                     ? FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.enabled)
                     : FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
-            default:
-                title = nil
-                message = nil
+            case .appLock:
+                break
             }
         }
     }
 
-    public static func featureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
+    public static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
         let alertConfiguration = Configuration(featureName: featureName, status: status)
         guard let title = alertConfiguration.title,
-              let message = alertConfiguration.message else {
-            return
-        }
+              let message = alertConfiguration.message 
+        else { return }
         let alertController = UIAlertController(title: title,
                                                 message: message,
                                                 alertAction: .ok(style: .cancel))
