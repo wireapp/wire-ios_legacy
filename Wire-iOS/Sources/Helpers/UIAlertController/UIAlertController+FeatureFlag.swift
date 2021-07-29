@@ -21,7 +21,7 @@ import WireSyncEngine
 
 extension UIAlertController {
 
-    struct Configuration {
+    fileprivate struct Configuration {
         typealias FeatureFlag = L10n.Localizable.Feature.Flag.Update
         typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
@@ -36,7 +36,7 @@ extension UIAlertController {
             case (.fileSharing, .disabled):
                 title = FileSharingAlert.title
                 message = FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
-            case (.appLock,_):
+            case (.appLock, _):
                 break
             }
         }
@@ -45,8 +45,9 @@ extension UIAlertController {
     public static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
         let alertConfiguration = Configuration(featureName: featureName, status: status)
         guard let title = alertConfiguration.title,
-              let message = alertConfiguration.message 
-        else { return }
+              let message = alertConfiguration.message else {
+            return
+        }
         let alertController = UIAlertController(title: title,
                                                 message: message,
                                                 alertAction: .ok(style: .cancel))
