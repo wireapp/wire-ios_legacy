@@ -214,7 +214,6 @@ final class FileTransferView: UIView, TransferView {
     }
 
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
-        //check
         guard let state = FileMessageViewState.fromConversationMessage(message) else { return }
 
         var visibleViews: [UIView] = [topLabel, bottomLabel]
@@ -256,7 +255,6 @@ final class FileTransferView: UIView, TransferView {
     // MARK: - Actions
 
     @objc func onActionButtonPressed(_ sender: UIButton) {
-        // do not allow
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }

@@ -162,14 +162,13 @@ final class MessagePresenter: NSObject {
         fileAvailabilityObserver = nil
         modalTargetController?.view.window?.endEditing(true)
 
-        //
         if Message.isLocation(message) {
             openLocationMessage(message)
         } else if Message.isVideo(message), message.canBeReceived  {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isFileTransfer(message), message.canBeReceived /*SecurityFlags.openFilePreview.isEnabled*/ {
+        } else if Message.isFileTransfer(message), message.canBeReceived {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isImage(message), message.canBeReceived /*SecurityFlags.openFilePreview.isEnabled*/ {
+        } else if Message.isImage(message), message.canBeReceived {
             openImageMessage(message, actionResponder: delegate)
         } else if let openableURL = message.textMessageData?.linkPreview?.openableURL {
             openableURL.open()

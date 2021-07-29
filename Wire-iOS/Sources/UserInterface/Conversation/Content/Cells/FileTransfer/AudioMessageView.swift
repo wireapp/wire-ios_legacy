@@ -179,7 +179,6 @@ final class AudioMessageView: UIView, TransferView {
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
 
-        //
         guard let fileMessageData = message.fileMessageData else {
             return
         }
