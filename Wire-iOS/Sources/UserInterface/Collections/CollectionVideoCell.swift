@@ -24,7 +24,7 @@ import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
-    private let testView = FileTransferView2()
+    private let testView = VideoMessageRestrictionView()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,7 +47,7 @@ final class CollectionVideoCell: CollectionCell {
             videoMessageView.configure(for: message, isInitial: true)
             testView.isHidden = true
         } else {
-            testView.configure(for: message)
+            testView.configure()
         }
     }
 

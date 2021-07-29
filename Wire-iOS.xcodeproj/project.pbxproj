@@ -17,6 +17,9 @@
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
+		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
+		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
+		0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */; };
@@ -1733,6 +1736,9 @@
 		0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockChangeWarningViewController.swift; sourceTree = "<group>"; };
 		064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+OpenURL.swift"; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
+		0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageRestrictionView.swift; sourceTree = "<group>"; };
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
@@ -3537,6 +3543,16 @@
 				EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */,
 			);
 			path = UIApplication;
+			sourceTree = "<group>";
+		};
+		0685007F26B35DFC00721F80 /* Restrictions */ = {
+			isa = PBXGroup;
+			children = (
+				0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */,
+				0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */,
+				0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */,
+			);
+			path = Restrictions;
 			sourceTree = "<group>";
 		};
 		06B3091126AEDC830057AF9E /* UIAlertController */ = {
@@ -5741,6 +5757,7 @@
 				EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */,
 				BF0555BC1E6D785C00D3E9D4 /* CallCellViewModel.swift */,
 				160C311E1E4C78480012E4BC /* CustomMessageView.swift */,
+				0685007F26B35DFC00721F80 /* Restrictions */,
 				87F18BB41E0154C000C69D9B /* FileTransfer */,
 				874448871C22FCE500E7B947 /* Utility */,
 				166264F12179D33D00300F45 /* CellComponents */,
@@ -7674,6 +7691,7 @@
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				A9CBBEBA24CED5C9006543D4 /* StyleKitIcon+Const.swift in Sources */,
 				87240380215B8EBA0094363B /* Collection+MentionSearch.swift in Sources */,
+				0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
 				EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */,
@@ -8164,6 +8182,7 @@
 				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,
 				EF471BE2232654CE008E11A5 /* ConversationListViewControllerViewModel+Handles.swift in Sources */,
 				87AC33CD2182064F00069C79 /* ReplyComposingView.swift in Sources */,
+				0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */,
 				F15650DB21DD10A100210504 /* UserImageView.swift in Sources */,
 				1639A84922648BE400868AB9 /* ZClientViewController+AvailabilityBehaviourChange.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
@@ -8471,6 +8490,7 @@
 				5501FFC922B398B30050D8FC /* UserInputRequest.swift in Sources */,
 				5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
+				0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
 				5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */,
 				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,

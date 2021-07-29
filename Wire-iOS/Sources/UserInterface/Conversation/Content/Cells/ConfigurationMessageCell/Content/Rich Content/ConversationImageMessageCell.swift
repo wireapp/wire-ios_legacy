@@ -46,7 +46,7 @@ final class ConversationImageMessageCell: UIView,
     }()
 
     private let obfuscationView = ObfuscationView(icon: .photo)
-    private let testView = FileTransferView3()
+    private let restrictionView = ImageMessageRestrictionView()
 
     private var aspectConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
@@ -83,20 +83,20 @@ final class ConversationImageMessageCell: UIView,
 
         addSubview(containerView)
 
-        [imageResourceView, obfuscationView, testView].forEach(containerView.addSubview)
+        [imageResourceView, obfuscationView, restrictionView].forEach(containerView.addSubview)
         obfuscationView.isHidden = true
-        testView.isHidden = true
+        restrictionView.isHidden = true
     }
 
     private func createConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
         imageResourceView.translatesAutoresizingMaskIntoConstraints = false
-        testView.translatesAutoresizingMaskIntoConstraints = false
+        restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
         obfuscationView.fitInSuperview()
         imageResourceView.fitInSuperview()
-        testView.fitInSuperview()
+        restrictionView.fitInSuperview()
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
         let trailing = containerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
@@ -119,9 +119,9 @@ final class ConversationImageMessageCell: UIView,
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        testView.configure(for: object.message)
+        restrictionView.configure()
 
-        testView.isHidden = object.message.canBeReceived
+        restrictionView.isHidden = object.message.canBeReceived
         obfuscationView.isHidden = !object.isObfuscated
         imageResourceView.isHidden = object.isObfuscated && !object.message.canBeReceived
 

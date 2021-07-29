@@ -25,7 +25,7 @@ import WireCommonComponents
 
 final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
-    private let testView = FileTransferView1()
+    private let testView = AudioMessageRestrictionView()
     private let headerView = CollectionCellHeader()
 
     public required init?(coder aDecoder: NSCoder) {
@@ -50,7 +50,7 @@ final class CollectionAudioCell: CollectionCell {
             audioMessageView.configure(for: message, isInitial: true)
             testView.isHidden = true
         } else {
-            testView.configure(for: message)
+            testView.configure()
         }
     }
 

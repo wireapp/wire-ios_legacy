@@ -31,7 +31,7 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
 
     private let transferView = AudioMessageView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
-    private let testView = FileTransferView1()
+    private let restrictionView = AudioMessageRestrictionView()
 
     weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
@@ -57,17 +57,17 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
 
         transferView.delegate = self
         obfuscationView.isHidden = true
-        testView.isHidden = true
+        restrictionView.isHidden = true
 
         addSubview(self.transferView)
         addSubview(self.obfuscationView)
-        addSubview(self.testView)
+        addSubview(self.restrictionView)
     }
 
     private func configureConstraints() {
         transferView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
-        testView.translatesAutoresizingMaskIntoConstraints = false
+        restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
@@ -84,21 +84,21 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
             obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
             obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            // testView
-            testView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            testView.topAnchor.constraint(equalTo: topAnchor),
-            testView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            testView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            // restrictionView
+            restrictionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            restrictionView.topAnchor.constraint(equalTo: topAnchor),
+            restrictionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            restrictionView.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
     }
 
     func configure(with object: Configuration, animated: Bool) {
         transferView.configure(for: object.message, isInitial: false)
-        testView.configure(for: object.message)
+        restrictionView.configure()
 
-        testView.isHidden = object.message.canBeReceived
+        restrictionView.isHidden = object.message.canBeReceived
         obfuscationView.isHidden = !object.isObfuscated
-        transferView.isHidden = object.isObfuscated
+        transferView.isHidden = object.isObfuscated && !object.message.canBeReceived
     }
 
     override public var tintColor: UIColor! {

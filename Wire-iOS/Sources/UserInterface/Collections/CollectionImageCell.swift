@@ -36,7 +36,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     private let imageView = ImageResourceView()
-    private let testView = FileTransferView3()
+    private let testView = ImageMessageRestrictionView()
 
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.
@@ -107,7 +107,7 @@ final class CollectionImageCell: CollectionCell {
     fileprivate func loadImage() {
         if let message = message, !message.canBeReceived {
             testView.isHidden = false
-            testView.configure(for: message)
+            testView.configure()
         } else {
             testView.isHidden = true
             imageView.imageResource = message?.imageMessageData?.image
