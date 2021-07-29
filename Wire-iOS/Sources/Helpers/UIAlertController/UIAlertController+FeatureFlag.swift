@@ -42,7 +42,7 @@ extension UIAlertController {
         }
     }
 
-    public static func featureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
+    public static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
         let alertConfiguration = Configuration(featureName: featureName, status: status)
         guard let title = alertConfiguration.title,
               let message = alertConfiguration.message 
