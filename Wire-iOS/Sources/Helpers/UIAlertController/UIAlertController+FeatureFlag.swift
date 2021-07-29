@@ -25,17 +25,18 @@ extension UIAlertController {
         typealias FeatureFlag = L10n.Localizable.Feature.Flag.Update
         typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
-        var title: String? = nil
-        var message: String? = nil
+        var title: String?
+        var message: String?
 
         init(featureName: Feature.Name, status: Feature.Status) {
-            switch featureName {
-            case .fileSharing:
+            switch (featureName, status) {
+            case (.fileSharing, .enabled):
                 title = FileSharingAlert.title
-                message = (status == .enabled)
-                    ? FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.enabled)
-                    : FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
-            case .appLock:
+                message = FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.enabled)
+            case (.fileSharing, .disabled):
+                title = FileSharingAlert.title
+                message = FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
+            case (.appLock,_):
                 break
             }
         }
