@@ -26,7 +26,7 @@ extension UIAlertController {
         typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
         var title: String?
-        var message: String? = nil
+        var message: String?
 
         init(featureName: Feature.Name, status: Feature.Status) {
             switch (featureName, status) {
