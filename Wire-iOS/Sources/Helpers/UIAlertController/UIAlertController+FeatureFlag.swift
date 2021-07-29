@@ -29,7 +29,7 @@ extension UIAlertController {
         var message: String? = nil
 
         init(featureName: Feature.Name, status: Feature.Status) {
-            switch featureName {
+            switch (featureName, status) {
             case .fileSharing:
                 title = FileSharingAlert.title
                 message = (status == .enabled)
