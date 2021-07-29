@@ -30,12 +30,13 @@ extension UIAlertController {
 
         init(featureName: Feature.Name, status: Feature.Status) {
             switch (featureName, status) {
-            case .fileSharing:
+            case (.fileSharing, .enabled):
                 title = FileSharingAlert.title
-                message = (status == .enabled)
-                    ? FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.enabled)
-                    : FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
-            case .appLock:
+                message = FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.enabled)
+            case (.fileSharing, .disabled):
+                title = FileSharingAlert.title
+                message = FeatureFlag.Alert.baseMessage(FileSharingAlert.Message.disabled)
+            case (.appLock,_):
                 break
             }
         }
