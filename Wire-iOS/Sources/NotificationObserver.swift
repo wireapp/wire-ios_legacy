@@ -107,7 +107,8 @@ extension FeatureConfigObserving {
                                                                 object: nil,
                                                                 queue: .main) { [weak self] note in
             guard let observer = self,
-                  let event = note.object as? ZMUpdateEvent else { return }
+                  let event = note.object as? ZMUpdateEvent 
+            else { return }
             observer.featureConfigDidChange(in: event)
         })
     }
