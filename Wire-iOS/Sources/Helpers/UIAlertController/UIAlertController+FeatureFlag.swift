@@ -25,7 +25,7 @@ extension UIAlertController {
         typealias FeatureFlag = L10n.Localizable.Feature.Flag.Update
         typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
-        var title: String? = nil
+        var title: String?
         var message: String? = nil
 
         init(featureName: Feature.Name, status: Feature.Status) {
