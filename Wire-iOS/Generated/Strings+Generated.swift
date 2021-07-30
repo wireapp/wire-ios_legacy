@@ -4389,7 +4389,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title")
       }
       internal enum FlipVideoButton {
-        /// Flip
+        /// Flip camera
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title")
       }
       internal enum HangUpButton {
@@ -4397,7 +4397,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.hang_up_button.title")
       }
       internal enum MuteButton {
-        /// Mute
+        /// Microphone
         internal static let title = L10n.tr("Localizable", "voice.mute_button.title")
       }
       internal enum NetworkError {
@@ -4449,7 +4449,7 @@ internal enum L10n {
         internal static let tapToReturn = L10n.tr("Localizable", "voice.top_overlay.tap_to_return")
       }
       internal enum VideoButton {
-        /// Video
+        /// Camera
         internal static let title = L10n.tr("Localizable", "voice.video_button.title")
       }
     }
