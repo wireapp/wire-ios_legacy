@@ -61,7 +61,7 @@ fi
 AVS_FILENAME="${AVS_FRAMEWORK_NAME}-${AVS_VERSION}.zip"
 AVS_RELEASE_TAG_PATH="https://api.github.com/repos/${AVS_REPO}/releases/tags/${AVS_VERSION}"
 
-echo "ℹ️  AVS_FILENAME is ${AVS_FILENAME}"
+echo "ℹ️  going to download file and save to AVS_FILENAME: ${AVS_FILENAME}"
 
 ##################################
 # SET UP FOLDERS
@@ -134,7 +134,7 @@ fi
 echo "ℹ️  Installing in ${CARTHAGE_BUILD_PATH}/${AVS_FRAMEWORK_NAME}..."
 mkdir "${AVS_FRAMEWORK_NAME}"
 
-if ! unzip "${AVS_FILENAME}" "Carthage/Build/*" > /dev/null; then
+if ! unzip "${AVS_FILENAME}" "*" > /dev/null; then
 	rm -fr "${AVS_FILENAME}"
 	echo "❌  Failed to install, is the downloaded file valid? ⚠️"
 	exit 1
