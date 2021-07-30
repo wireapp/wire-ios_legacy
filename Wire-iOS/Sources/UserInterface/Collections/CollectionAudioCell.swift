@@ -25,7 +25,7 @@ import WireCommonComponents
 
 final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
-    private let testView = AudioMessageRestrictionView()
+    private let restrictionView = AudioMessageRestrictionView()
     private let headerView = CollectionCellHeader()
 
     public required init?(coder aDecoder: NSCoder) {
@@ -48,9 +48,9 @@ final class CollectionAudioCell: CollectionCell {
         headerView.message = message
         if message.canBeReceived {
             audioMessageView.configure(for: message, isInitial: true)
-            testView.isHidden = true
+            restrictionView.isHidden = true
         } else {
-            testView.configure()
+            restrictionView.configure()
         }
     }
 
@@ -59,15 +59,15 @@ final class CollectionAudioCell: CollectionCell {
         self.audioMessageView.layer.cornerRadius = 4
         self.audioMessageView.clipsToBounds = true
 
-        self.testView.layer.cornerRadius = 4
-        self.testView.clipsToBounds = true
+        self.restrictionView.layer.cornerRadius = 4
+        self.restrictionView.clipsToBounds = true
 
         self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         self.secureContentsView.addSubview(self.headerView)
         self.secureContentsView.addSubview(self.audioMessageView)
-        self.secureContentsView.addSubview(self.testView)
+        self.secureContentsView.addSubview(self.restrictionView)
 
-        constrain(self.secureContentsView, self.audioMessageView, self.headerView, self.testView) { contentView, audioMessageView, headerView, testView in
+        constrain(self.secureContentsView, self.audioMessageView, self.headerView, self.restrictionView) { contentView, audioMessageView, headerView, restrictionView in
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
@@ -78,10 +78,10 @@ final class CollectionAudioCell: CollectionCell {
             audioMessageView.right == contentView.rightMargin
             audioMessageView.bottom == contentView.bottomMargin
 
-            testView.top == headerView.bottom + 4
-            testView.left == contentView.leftMargin
-            testView.right == contentView.rightMargin
-            testView.bottom == contentView.bottomMargin
+            restrictionView.top == headerView.bottom + 4
+            restrictionView.left == contentView.leftMargin
+            restrictionView.right == contentView.rightMargin
+            restrictionView.bottom == contentView.bottomMargin
         }
     }
 

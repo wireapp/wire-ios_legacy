@@ -36,7 +36,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     private let imageView = ImageResourceView()
-    private let testView = ImageMessageRestrictionView()
+    private let restrictionView = ImageMessageRestrictionView()
 
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.
@@ -60,17 +60,17 @@ final class CollectionImageCell: CollectionCell {
         self.imageView.accessibilityIdentifier = "image"
         self.imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
         self.secureContentsView.addSubview(self.imageView)
-        self.secureContentsView.addSubview(self.testView)
-        constrain(self, self.imageView, self.testView) { selfView, imageView, testView in
+        self.secureContentsView.addSubview(self.restrictionView)
+        constrain(self, self.imageView, self.restrictionView) { selfView, imageView, restrictionView in
             imageView.left == selfView.left
             imageView.right == selfView.right
             imageView.top == selfView.top
             imageView.bottom == selfView.bottom
 
-            testView.left == selfView.left
-            testView.right == selfView.right
-            testView.top == selfView.top
-            testView.bottom == selfView.bottom
+            restrictionView.left == selfView.left
+            restrictionView.right == selfView.right
+            restrictionView.top == selfView.top
+            restrictionView.bottom == selfView.bottom
         }
     }
 
@@ -106,10 +106,10 @@ final class CollectionImageCell: CollectionCell {
 
     fileprivate func loadImage() {
         if let message = message, !message.canBeReceived {
-            testView.isHidden = false
-            testView.configure()
+            restrictionView.isHidden = false
+            restrictionView.configure()
         } else {
-            testView.isHidden = true
+            restrictionView.isHidden = true
             imageView.imageResource = message?.imageMessageData?.image
         }
     }

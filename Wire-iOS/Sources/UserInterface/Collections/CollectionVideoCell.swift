@@ -24,7 +24,7 @@ import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
-    private let testView = VideoMessageRestrictionView()
+    private let restrictionView = VideoMessageRestrictionView()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,9 +45,9 @@ final class CollectionVideoCell: CollectionCell {
 
         if message.canBeReceived {
             videoMessageView.configure(for: message, isInitial: true)
-            testView.isHidden = true
+            restrictionView.isHidden = true
         } else {
-            testView.configure()
+            restrictionView.configure()
         }
     }
 
@@ -57,11 +57,11 @@ final class CollectionVideoCell: CollectionCell {
         self.videoMessageView.clipsToBounds = true
         self.videoMessageView.timeLabelHidden = true
         self.secureContentsView.addSubview(self.videoMessageView)
-        self.secureContentsView.addSubview(self.testView)
+        self.secureContentsView.addSubview(self.restrictionView)
 
-        constrain(self.contentView, self.videoMessageView, self.testView) { contentView, videoMessageView, testView in
+        constrain(self.contentView, self.videoMessageView, self.restrictionView) { contentView, videoMessageView, restrictionView in
             videoMessageView.edges == contentView.edges
-            testView.edges == contentView.edges
+            restrictionView.edges == contentView.edges
         }
     }
 
