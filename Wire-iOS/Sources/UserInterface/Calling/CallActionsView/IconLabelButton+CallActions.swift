@@ -20,24 +20,36 @@ import UIKit
 
 extension IconLabelButton {
 
-    convenience init(callActionIcon: CallActionIconType) {
-        self.init(input: callActionIcon)
-    }
-
     static func speaker() -> IconLabelButton {
-        .init(callActionIcon: .speaker)
+        return .init(
+            icon: .speaker,
+            label: "voice.speaker_button.title".localized,
+            accessibilityIdentifier: "CallSpeakerButton"
+        )
     }
 
-    static func microphone() -> IconLabelButton {
-        .init(callActionIcon: .microphone)
+    static func muteCall() -> IconLabelButton {
+        return .init(
+            icon: .microphoneWithStrikethrough,
+            label: "voice.mute_button.title".localized,
+            accessibilityIdentifier: "CallMuteButton"
+        )
     }
 
-    static func camera() -> IconLabelButton {
-        .init(callActionIcon: .camera)
+    static func video() -> IconLabelButton {
+        return .init(
+            icon: .videoCall,
+            label: "voice.video_button.title".localized,
+            accessibilityIdentifier: "CallVideoButton"
+        )
     }
 
     static func flipCamera() -> IconLabelButton {
-        .init(callActionIcon: .flipCamera)
+        return .init(
+            icon: .cameraSwitch,
+            label: "voice.flip_video_button.title".localized,
+            accessibilityIdentifier: "CallFlipCameraButton"
+        )
     }
 
 }

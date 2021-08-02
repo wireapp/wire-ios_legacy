@@ -25,7 +25,7 @@ final class IconLabelButtonTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        button = IconLabelButton.camera()
+        button = IconLabelButton.video()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setNeedsLayout()
         button.layoutIfNeeded()

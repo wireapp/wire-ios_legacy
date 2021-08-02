@@ -32,7 +32,7 @@ enum VideoIconStyle: String, IconImageStyle {
         case .screenshare:
             return .screenshare
         case .video:
-            return .camera
+            return .videoCall
         }
     }
 

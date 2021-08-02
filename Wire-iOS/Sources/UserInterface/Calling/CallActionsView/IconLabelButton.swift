@@ -19,12 +19,6 @@
 import UIKit
 import WireCommonComponents
 
-protocol IconLabelButtonInput {
-    func icon(forState state: UIControl.State) -> StyleKitIcon
-    var label: String { get }
-    var accessibilityIdentifier: String { get }
-}
-
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
     private static let height: CGFloat = 88
@@ -39,14 +33,13 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    init(input: IconLabelButtonInput) {
+    init(icon: StyleKitIcon, label: String, accessibilityIdentifier: String) {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
-        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
-        subtitleLabel.text = input.label
-        self.accessibilityIdentifier = input.accessibilityIdentifier
+        iconButton.setIcon(icon, size: .tiny, for: .normal)
+        subtitleLabel.text = label
+        self.accessibilityIdentifier = accessibilityIdentifier
     }
 
     @available(*, unavailable)
@@ -91,7 +84,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
             subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             subtitleLabel.heightAnchor.constraint(equalToConstant: 16)
-        ])
+            ])
     }
 
     private func updateState() {
