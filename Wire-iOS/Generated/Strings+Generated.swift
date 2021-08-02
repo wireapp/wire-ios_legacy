@@ -295,9 +295,9 @@ internal enum L10n {
         }
       }
       internal enum Participants {
-        /// Participants (%@)
-        internal static func showAll(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "call.participants.show_all", String(describing: p1))
+        /// Participants (%d)
+        internal static func showAll(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "call.participants.show_all", p1)
         }
         internal enum List {
           /// Participants
