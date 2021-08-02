@@ -55,20 +55,15 @@ fileprivate extension VoiceChannel {
 
     func canToggleMediaType(with permissions: CallPermissionsConfiguration,
                             selfUser: UserType) -> Bool {
-        switch state {
-        case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
-            return false
-        default:
-            guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
+        guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
 
-            // The user can only re-enable their video if the conversation allows GVC
-            if videoState == .stopped {
-                return canUpgradeToVideo(selfUser: selfUser)
-            }
-
-            // If the user already enabled video, they should be able to disable it
-            return true
+        // The user can only re-enable their video if the conversation allows GVC
+        if videoState == .stopped {
+            return canUpgradeToVideo(selfUser: selfUser)
         }
+
+        // If the user already enabled video, they should be able to disable it
+        return true
     }
 
     func mediaState(with permissions: CallPermissionsConfiguration) -> MediaState {
