@@ -158,11 +158,11 @@ final class FileTransferView: UIView, TransferView {
         self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
         self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
 
-        guard message.canBeReceived else {
+        guard !message.isRestricted else {
             fileEyeView.setTemplateIcon(.block, size: 8)
 
             let firstLine = fileNameAttributed
-            let secondLine = L10n.Localizable.Feature.Flag.Restriction.file.localizedUppercase && labelFont && labelTextBlendedColor
+            let secondLine = L10n.Localizable.FeatureConfig.FileSharingRestrictions.file.localizedUppercase && labelFont && labelTextBlendedColor
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
 

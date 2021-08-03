@@ -19,74 +19,33 @@
 import Foundation
 import UIKit
 
-final class VideoMessageRestrictionView: UIView {
-
-    // MARK: - Properties
-    
-    let topLabel = UILabel()
-    let iconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .textForeground)
-        return imageView
-    }()
-
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
+final class VideoMessageRestrictionView: BaseMessageRestrictionView {
 
     // MARK: - Life cycle
 
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .from(scheme: .placeholderBackground)
-
-        topLabel.numberOfLines = 3
-        topLabel.lineBreakMode = .byTruncatingMiddle
-        topLabel.accessibilityIdentifier = "VideoMessageRestrictionTopLabel"
-
-        iconView.clipsToBounds = true
-        iconView.layer.cornerRadius = 16
-        iconView.backgroundColor = .white
-        iconView.accessibilityIdentifier = "VideoMessageRestrictionIcon"
-
-        [topLabel, iconView].forEach(self.addSubview)
-
-        createConstraints()
+    init() {
+        super.init(context: .video)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
-    }
-
     // MARK: - Helpers
-    
-    private func createConstraints() {
-        topLabel.translatesAutoresizingMaskIntoConstraints = false
-        iconView.translatesAutoresizingMaskIntoConstraints = false
 
+    override func createConstraints() {
+        super.createConstraints()
+        
         NSLayoutConstraint.activate([
             // icon view
             iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -12),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32),
-
+            
             // top label
             topLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             topLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 12),
         ])
-    }
-
-    // MARK: - Public
-
-    func configure() {
-        iconView.contentMode = .center
-        iconView.setTemplateIcon(.play, size: .tiny)
-
-        let firstLine = L10n.Localizable.Feature.Flag.Restriction.video.localizedUppercase && labelFont && labelTextBlendedColor
-        topLabel.attributedText = firstLine
     }
 }

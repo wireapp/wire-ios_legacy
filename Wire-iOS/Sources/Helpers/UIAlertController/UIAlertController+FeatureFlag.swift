@@ -22,7 +22,7 @@ import WireSyncEngine
 extension UIAlertController {
 
     fileprivate struct Configuration {
-        typealias FeatureFlag = L10n.Localizable.Feature.Flag.Update
+        typealias FeatureFlag = L10n.Localizable.FeatureConfig.Update
         typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
 
         var title: String?

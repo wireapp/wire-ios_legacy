@@ -20,6 +20,7 @@
 		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
 		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
 		0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */; };
+		0685009326B7F7B600721F80 /* BaseMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */; };
@@ -1739,6 +1740,7 @@
 		0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageRestrictionView.swift; sourceTree = "<group>"; };
 		0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageRestrictionView.swift; sourceTree = "<group>"; };
 		0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageRestrictionView.swift; sourceTree = "<group>"; };
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
@@ -3548,6 +3550,7 @@
 		0685007F26B35DFC00721F80 /* Restrictions */ = {
 			isa = PBXGroup;
 			children = (
+				0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */,
 				0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */,
 				0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */,
 				0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */,
@@ -8449,6 +8452,7 @@
 				5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */,
 				63589AA124DAA398008FEC8F /* UIAlertController+Permissions.swift in Sources */,
 				5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */,
+				0685009326B7F7B600721F80 /* BaseMessageRestrictionView.swift in Sources */,
 				F15650E721DD14B600210504 /* String+Transform.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,

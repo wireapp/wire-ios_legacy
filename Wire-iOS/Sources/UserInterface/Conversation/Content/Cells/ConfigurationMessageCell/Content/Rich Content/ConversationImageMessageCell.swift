@@ -121,16 +121,18 @@ final class ConversationImageMessageCell: UIView,
     func configure(with object: Configuration, animated: Bool) {
         restrictionView.configure()
 
-        restrictionView.isHidden = object.message.canBeReceived
+        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
+        restrictionView.isHidden = !isRestricted
         obfuscationView.isHidden = !object.isObfuscated
-        imageResourceView.isHidden = object.isObfuscated && !object.message.canBeReceived
+        imageResourceView.isHidden = object.isObfuscated || object.message.isRestricted
 
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
         let imageAspectRatio = imageSize.width > 0 ? imageSize.height / imageSize.width : 1.0
 
         aspectConstraint.apply({ containerView.removeConstraint($0) })
-        aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: imageAspectRatio)
+        aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor,
+                                                                 multiplier: !isRestricted ? imageAspectRatio : 9/16)
         aspectConstraint?.isActive = true
         widthConstraint?.constant = imageSize.width
         heightConstraint?.constant = imageSize.height

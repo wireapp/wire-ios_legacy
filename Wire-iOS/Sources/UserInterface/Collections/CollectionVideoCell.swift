@@ -43,11 +43,11 @@ final class CollectionVideoCell: CollectionCell {
             return
         }
 
-        if message.canBeReceived {
-            videoMessageView.configure(for: message, isInitial: true)
-            restrictionView.isHidden = true
-        } else {
+        if message.isRestricted {
             restrictionView.configure()
+        } else {
+            restrictionView.isHidden = true
+            videoMessageView.configure(for: message, isInitial: true)
         }
     }
 

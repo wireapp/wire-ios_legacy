@@ -70,21 +70,22 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 160.0),
-
             // transferView
+            transferView.heightAnchor.constraint(equalToConstant: 160),
             transferView.leadingAnchor.constraint(equalTo: leadingAnchor),
             transferView.topAnchor.constraint(equalTo: topAnchor),
             transferView.trailingAnchor.constraint(equalTo: trailingAnchor),
             transferView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             // obfuscationView
+            obfuscationView.heightAnchor.constraint(equalToConstant: 160),
             obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
             obfuscationView.topAnchor.constraint(equalTo: topAnchor),
             obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
             obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             // restrictionView
+            restrictionView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 9/16),
             restrictionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             restrictionView.topAnchor.constraint(equalTo: topAnchor),
             restrictionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -96,9 +97,14 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         transferView.configure(for: object.message, isInitial: false)
         restrictionView.configure()
 
-        restrictionView.isHidden = object.message.canBeReceived
+        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
+        restrictionView.isHidden = !isRestricted
         obfuscationView.isHidden = !object.isObfuscated
-        transferView.isHidden = object.isObfuscated && !object.message.canBeReceived
+        transferView.isHidden = object.isObfuscated || object.message.isRestricted
+
+        if isRestricted {
+            
+        }
 
     }
 

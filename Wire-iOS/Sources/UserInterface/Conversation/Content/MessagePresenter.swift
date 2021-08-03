@@ -164,11 +164,11 @@ final class MessagePresenter: NSObject {
 
         if Message.isLocation(message) {
             openLocationMessage(message)
-        } else if Message.isVideo(message), message.canBeReceived  {
+        } else if Message.isVideo(message), !message.isRestricted  {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isFileTransfer(message), message.canBeReceived {
+        } else if Message.isFileTransfer(message), !message.isRestricted {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isImage(message), message.canBeReceived {
+        } else if Message.isImage(message), !message.isRestricted {
             openImageMessage(message, actionResponder: delegate)
         } else if let openableURL = message.textMessageData?.linkPreview?.openableURL {
             openableURL.open()

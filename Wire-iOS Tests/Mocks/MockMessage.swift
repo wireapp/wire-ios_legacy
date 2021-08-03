@@ -348,6 +348,10 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     var linkAttachments: [LinkAttachment]?
     var needsLinkAttachmentsUpdate: Bool = false
     var isSilenced: Bool = false
+    var isRestrictedBacking: Bool = false
+    var isRestricted: Bool {
+        return isRestrictedBacking
+    }
 
     var isSent: Bool {
         switch deliveryState {

@@ -105,7 +105,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     fileprivate func loadImage() {
-        if let message = message, !message.canBeReceived {
+        if let message = message, message.isRestricted {
             restrictionView.isHidden = false
             restrictionView.configure()
         } else {

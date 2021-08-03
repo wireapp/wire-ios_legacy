@@ -19,57 +19,22 @@
 import Foundation
 import UIKit
 
-final class AudioMessageRestrictionView: UIView {
-
-    // MARK: - Properties
-
-    let topLabel = UILabel()
-    let bottomLabel = UILabel()
-    let iconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .textForeground)
-        return imageView
-    }()
-
-    let labelTextColor: UIColor = .from(scheme: .textForeground)
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
-    let labelBoldFont: UIFont = .smallSemiboldFont
+final class AudioMessageRestrictionView: BaseMessageRestrictionView {
 
     // MARK: - Life cycle
 
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .from(scheme: .placeholderBackground)
-
-        topLabel.numberOfLines = 1
-        topLabel.lineBreakMode = .byTruncatingMiddle
-        topLabel.accessibilityIdentifier = "AudioMessageRestrictionTopLabel"
-
-        bottomLabel.numberOfLines = 1
-        bottomLabel.accessibilityIdentifier = "AudioMessageRestrictionBottomLabel"
-
-        iconView.accessibilityIdentifier = "AudioMessageRestrictionIcon"
-
-        [topLabel, bottomLabel, iconView].forEach(self.addSubview)
-
-        createConstraints()
+    init() {
+        super.init(context: .audio)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
-    }
-
     // MARK: - Helpers
 
-    private func createConstraints() {
-        topLabel.translatesAutoresizingMaskIntoConstraints = false
-        bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-        iconView.translatesAutoresizingMaskIntoConstraints = false
+    override func createConstraints() {
+        super.createConstraints()
 
         NSLayoutConstraint.activate([
             // top label
@@ -88,18 +53,5 @@ final class AudioMessageRestrictionView: UIView {
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32)
         ])
-    }
-
-    // MARK: - Public
-
-    func configure() {
-        iconView.contentMode = .center
-        iconView.setTemplateIcon(.microphone, size: .small)
-
-        let firstLine = L10n.Localizable.Conversation.InputBar.MessagePreview.audio.localizedUppercase && labelBoldFont && labelTextColor
-        let secondLine = L10n.Localizable.Feature.Flag.Restriction.audio.localizedUppercase && labelFont && labelTextBlendedColor
-
-        topLabel.attributedText = firstLine
-        bottomLabel.attributedText = secondLine
     }
 }

@@ -96,9 +96,10 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
         transferView.configure(for: object.message, isInitial: false)
         restrictionView.configure()
 
-        restrictionView.isHidden = object.message.canBeReceived
+        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
+        restrictionView.isHidden = !isRestricted
         obfuscationView.isHidden = !object.isObfuscated
-        transferView.isHidden = object.isObfuscated && !object.message.canBeReceived
+        transferView.isHidden = object.isObfuscated || object.message.isRestricted
     }
 
     override public var tintColor: UIColor! {

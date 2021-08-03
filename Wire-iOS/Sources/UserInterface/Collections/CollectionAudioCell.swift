@@ -46,11 +46,11 @@ final class CollectionAudioCell: CollectionCell {
         }
 
         headerView.message = message
-        if message.canBeReceived {
-            audioMessageView.configure(for: message, isInitial: true)
-            restrictionView.isHidden = true
-        } else {
+        if message.isRestricted {
             restrictionView.configure()
+        } else {
+            restrictionView.isHidden = true
+            audioMessageView.configure(for: message, isInitial: true)
         }
     }
 

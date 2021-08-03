@@ -35,12 +35,6 @@ extension ZMConversationMessage {
         return isPDF
     }
 
-    /// Whether the message can be received.
-    var canBeReceived: Bool {
-        guard let session = ZMUserSession.shared() else { return true }
-        return session.fileSharingFeature.status == .enabled
-    }
-
     /// Whether the message can be copied.
     var canBeCopied: Bool {
         return SecurityFlags.clipboard.isEnabled
