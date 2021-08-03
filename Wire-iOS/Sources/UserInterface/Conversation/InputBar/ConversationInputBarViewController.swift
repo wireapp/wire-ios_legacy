@@ -473,7 +473,8 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     @objc func updateInputBarButtons() {
-
+        inputBar.buttonsView.buttons = inputBarButtons
+        inputBar.buttonsView.layoutSubviews()
     }
 
     // MARK: - Save draft message
