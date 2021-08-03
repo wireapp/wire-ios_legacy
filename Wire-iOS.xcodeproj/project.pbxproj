@@ -9251,6 +9251,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 			};
 			name = Debug;
@@ -9354,6 +9355,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F156509721DCED3000210504 /* CommonComponents-Debug.xcconfig */;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
