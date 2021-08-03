@@ -150,7 +150,7 @@ fi
 #	echo "ℹ️  Debug symbols not found, crash reports will have to be symbolicated manually! ⚠️"
 #fi
 
-rm -rf "Carthage"
+#rm -rf "Carthage"
 
 echo "✅  Done"
 
