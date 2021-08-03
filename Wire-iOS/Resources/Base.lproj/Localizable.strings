@@ -347,6 +347,7 @@
 
 // Reply message preview
 "conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.picture" = "Picture";
 "conversation.input_bar.message_preview.location" = "Location";
 "conversation.input_bar.message_preview.video" = "Video";
 "conversation.input_bar.message_preview.audio" = "Audio Message";

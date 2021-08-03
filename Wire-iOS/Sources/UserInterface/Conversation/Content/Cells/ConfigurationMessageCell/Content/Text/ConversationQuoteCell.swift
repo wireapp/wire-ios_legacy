@@ -34,6 +34,8 @@ final class ConversationReplyContentView: UIView {
         let isEdited: Bool
         let senderName: String?
         let timestamp: String?
+        let showRestriction: Bool
+        let restrictionDescription: String?
 
         let content: Content
         let contentType: String
@@ -42,6 +44,7 @@ final class ConversationReplyContentView: UIView {
     let senderComponent = SenderNameCellComponent()
     let contentTextView = UITextView()
     let timestampLabel = UILabel()
+    let restrictionLabel = UILabel()
     let assetThumbnail = ImageResourceThumbnailView()
 
     let stackView = UIStackView()
@@ -86,6 +89,11 @@ final class ConversationReplyContentView: UIView {
         contentTextView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         stackView.addArrangedSubview(contentTextView)
 
+        restrictionLabel.accessibilityIdentifier = "original.restriction"
+        restrictionLabel.font = .smallLightFont
+        restrictionLabel.textColor = .from(scheme: .textDimmed)
+        stackView.addArrangedSubview(restrictionLabel)
+
         assetThumbnail.shape = .rounded(radius: 4)
         assetThumbnail.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(assetThumbnail)
@@ -114,11 +122,13 @@ final class ConversationReplyContentView: UIView {
     func configure(with object: Configuration) {
         senderComponent.isHidden = !object.showDetails
         timestampLabel.isHidden = !object.showDetails
+        restrictionLabel.isHidden = !object.showRestriction
 
         senderComponent.senderName = object.senderName
         senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: .from(scheme: .iconNormal)) : nil
         senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
+        restrictionLabel.text = object.restrictionDescription
 
         switch object.content {
         case .text(let attributedContent):
@@ -187,6 +197,8 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
 final class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
+    typealias FileSharingRestrictions = L10n.Localizable.FeatureConfig.FileSharingRestrictions
+    typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
     let configuration: View.Configuration
 
     var showEphemeralTimer: Bool = false
@@ -206,6 +218,8 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
         let isEdited = quotedMessage?.updatedAt != nil
         let senderName = quotedMessage?.senderName
         let timestamp = quotedMessage?.formattedOriginalReceivedDate()
+        var restrictionDescription: String? = nil
+        let showRestriction = quotedMessage?.isRestricted ?? false
 
         var isUnavailable = false
         let content: View.Configuration.Content
@@ -222,19 +236,34 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
         case let message? where message.isLocation:
             let location = message.locationMessageData!
             let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? MessagePreview.location).localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.location"
 
         case let message? where message.isAudio:
             let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.audio.localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.audio"
+            restrictionDescription = FileSharingRestrictions.audio.localizedUppercase
+
+        case let message? where message.isImage && message.isRestricted:
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.picture.localizedUppercase
+            content = .text(initialString && attributes)
+            contentType = "quote.type.image"
+            restrictionDescription = FileSharingRestrictions.picture.localizedUppercase
 
         case let message? where message.isImage:
             content = .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
             contentType = "quote.type.image"
+
+        case let message? where message.isVideo && message.isRestricted:
+            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground))
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
+            content = .text(initialString && attributes)
+            contentType = "quote.type.video"
+            restrictionDescription = FileSharingRestrictions.video.localizedUppercase
 
         case let message? where message.isVideo:
             content = .imagePreview(thumbnail: message.fileMessageData!.thumbnailImage, isVideo: true)
@@ -243,9 +272,10 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
         case let message? where message.isFile:
             let fileData = message.fileMessageData!
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? MessagePreview.file).localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.file"
+            restrictionDescription = FileSharingRestrictions.file.localizedUppercase
 
         default:
             isUnavailable = true
@@ -254,7 +284,7 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
             contentType = "quote.type.unavailable"
         }
 
-        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, content: content, contentType: contentType)
+        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, showRestriction: showRestriction, restrictionDescription: restrictionDescription, content: content, contentType: contentType)
     }
 
 }

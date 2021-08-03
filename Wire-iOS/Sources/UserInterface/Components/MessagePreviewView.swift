@@ -155,16 +155,18 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     }
 
     private func updateForMessage() {
+        typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
+        imagePreview.isHidden = message.isRestricted
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.picture.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             if let imageResource = message.imageMessageData?.image {
@@ -173,7 +175,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
             let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             imagePreview.setImageResource(fileMessageData.thumbnailImage)
