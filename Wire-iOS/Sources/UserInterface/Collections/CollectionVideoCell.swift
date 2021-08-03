@@ -24,7 +24,7 @@ import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
-    private let restrictionView = VideoMessageRestrictionView(isShortVersion: true)
+    private let restrictionView = SimpleVideoMessageRestrictionView()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

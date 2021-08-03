@@ -21,18 +21,9 @@ import UIKit
 
 final class VideoMessageRestrictionView: BaseMessageRestrictionView {
 
-    // MARK: - Properties
-
-    /// For the search screen
-    private var isShortVersion: Bool
-    private let viewMargin: CGFloat
-
     // MARK: - Life cycle
 
-    init(isShortVersion: Bool = false) {
-        self.isShortVersion = isShortVersion
-        viewMargin = isShortVersion ? 0 : 12
-
+    init() {
         super.init(messageType: .video)
     }
 
@@ -46,12 +37,6 @@ final class VideoMessageRestrictionView: BaseMessageRestrictionView {
         super.setupViews()
 
         [bottomLabel, iconView].forEach(self.addSubview)
-    }
-
-    override func setupLabels() {
-        super.setupLabels()
-
-        bottomLabel.isHidden = isShortVersion
     }
 
     override func setupIconView() {
@@ -68,13 +53,13 @@ final class VideoMessageRestrictionView: BaseMessageRestrictionView {
         NSLayoutConstraint.activate([
             // icon view
             iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -viewMargin),
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -12),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32),
 
-            // top label
+            // bottom label
             bottomLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            bottomLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: viewMargin)
+            bottomLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 12)
         ])
     }
 }

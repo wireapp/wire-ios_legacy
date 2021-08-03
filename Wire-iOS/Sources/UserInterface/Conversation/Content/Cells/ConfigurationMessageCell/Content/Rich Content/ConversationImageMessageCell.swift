@@ -94,9 +94,25 @@ final class ConversationImageMessageCell: UIView,
         imageResourceView.translatesAutoresizingMaskIntoConstraints = false
         restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
-        obfuscationView.fitInSuperview()
-        imageResourceView.fitInSuperview()
-        restrictionView.fitInSuperview()
+        NSLayoutConstraint.activate([
+            // imageResourceView
+            imageResourceView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageResourceView.topAnchor.constraint(equalTo: topAnchor),
+            imageResourceView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageResourceView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // obfuscationView
+            obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            obfuscationView.topAnchor.constraint(equalTo: topAnchor),
+            obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // restrictionView
+            restrictionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            restrictionView.topAnchor.constraint(equalTo: topAnchor),
+            restrictionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            restrictionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
         let trailing = containerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)

@@ -36,7 +36,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     private let imageView = ImageResourceView()
-    private let restrictionView = ImageMessageRestrictionView(isShortVersion: true)
+    private let restrictionView = SimpleImageMessageRestrictionView()
 
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.

@@ -19,24 +19,32 @@
 import Foundation
 import UIKit
 
-final class ImageMessageRestrictionView: BaseMessageRestrictionView {
+final class SimpleVideoMessageRestrictionView: BaseMessageRestrictionView {
 
     // MARK: - Life cycle
 
     init() {
-        super.init(messageType: .image)
+        super.init(messageType: .video)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Helpers
 
     override func setupViews() {
         super.setupViews()
 
-        [bottomLabel, iconView].forEach(self.addSubview)
+        addSubview(iconView)
+    }
+
+    override func setupIconView() {
+        super.setupIconView()
+
+        iconView.clipsToBounds = true
+        iconView.layer.cornerRadius = 16
+        iconView.backgroundColor = .white
     }
 
     override func createConstraints() {
@@ -45,13 +53,11 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
         NSLayoutConstraint.activate([
             // icon view
             iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -12),
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32),
-
-            // bottom label
-            bottomLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            bottomLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 12)
         ])
     }
 }
+
+

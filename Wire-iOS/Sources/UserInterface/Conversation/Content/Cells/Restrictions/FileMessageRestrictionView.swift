@@ -29,7 +29,7 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
         imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
-    
+
     // MARK: - Life cycle
 
     init() {
@@ -43,11 +43,9 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
     func configure(for message: ZMConversationMessage?) {
         super.configure()
 
-        guard let fileMessageData = message?.fileMessageData else { return }
-        let filepath = (fileMessageData.filename ?? "") as NSString
-        let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
+        guard let filename = message?.filename else { return }
         let fileNameAttributed = filename.uppercased() && .smallSemiboldFont && .from(scheme: .textForeground)
-        
+
         topLabel.attributedText = fileNameAttributed
     }
 
@@ -93,3 +91,12 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
     }
 }
 
+extension ZMConversationMessage {
+    var filename: String? {
+        guard let fileMessageData = self.fileMessageData,
+              let filepath = fileMessageData.filename as NSString? else {
+            return nil
+        }
+        return (filepath.lastPathComponent as NSString).deletingPathExtension
+    }
+}

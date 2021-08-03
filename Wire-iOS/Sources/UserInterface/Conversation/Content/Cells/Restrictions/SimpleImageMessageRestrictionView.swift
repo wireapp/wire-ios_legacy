@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-final class ImageMessageRestrictionView: BaseMessageRestrictionView {
+final class SimpleImageMessageRestrictionView: BaseMessageRestrictionView {
 
     // MARK: - Life cycle
 
@@ -36,7 +36,7 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
     override func setupViews() {
         super.setupViews()
 
-        [bottomLabel, iconView].forEach(self.addSubview)
+        addSubview(iconView)
     }
 
     override func createConstraints() {
@@ -45,13 +45,10 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
         NSLayoutConstraint.activate([
             // icon view
             iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -12),
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32),
-
-            // bottom label
-            bottomLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            bottomLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 12)
         ])
     }
 }
+
