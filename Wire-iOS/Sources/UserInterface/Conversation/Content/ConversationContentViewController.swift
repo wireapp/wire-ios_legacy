@@ -88,6 +88,9 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.updateMediaBar()
         }
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateVisibleCells()
+        }
     }
 
     @available(*, unavailable)
@@ -351,6 +354,16 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         let index = dataSource.indexOfMessage(message)
         return indexPathsForVisibleRows.contains { $0.section == index }
     }
+
+    // MARK: - Feature config changes
+
+    private func updateVisibleCells() {
+        let visibleRows = tableView.indexPathsForVisibleRows
+        tableView.beginUpdates()
+        tableView.reloadRows(at: visibleRows!, with: .none)
+        tableView.endUpdates()
+    }
+
 }
 
 // MARK: - TableView
