@@ -32,22 +32,16 @@ class BaseMessageRestrictionView: UIView {
         return imageView
     }()
 
-    private var context: MessageRestrictionContext {
+    private var messageType: RestrictedMessageType {
         didSet {
             configure()
         }
     }
 
-    /// For the search screen
-    private var isShortVersion: Bool
-    let viewMargin: CGFloat
-
     // MARK: - Life cycle
 
-    init(context: MessageRestrictionContext, isShortVersion: Bool = false) {
-        self.context = context
-        self.isShortVersion = isShortVersion
-        viewMargin = isShortVersion ? 0 : 12
+    init(messageType: RestrictedMessageType) {
+        self.messageType = messageType
         super.init(frame: .zero)
 
         setupViews()
@@ -64,49 +58,24 @@ class BaseMessageRestrictionView: UIView {
 
     // MARK: - Helpers
 
-    private func setupViews() {
+    func setupViews() {
         backgroundColor = .from(scheme: .placeholderBackground)
         setupLabels()
         setupIconView()
-
-        var allViews: [UIView] {
-            switch context {
-            case .audio:
-                return [topLabel, bottomLabel, iconView]
-            case .video, .image:
-                return [topLabel, iconView]
-            }
-        }
-        allViews.forEach(self.addSubview)
     }
 
-    private func setupLabels() {
-        switch context {
-        case .image, .video:
-            topLabel.isHidden = isShortVersion
-        default:
-            topLabel.isHidden = false
-        }
+    func setupLabels() {
         topLabel.numberOfLines = 1
         topLabel.lineBreakMode = .byTruncatingMiddle
-        topLabel.accessibilityIdentifier = "\(context.rawValue.capitalizingFirstLetter()) + MessageRestrictionTopLabel"
+        topLabel.accessibilityIdentifier = "\(messageType.rawValue.capitalizingFirstLetter()) + MessageRestrictionTopLabel"
 
         bottomLabel.numberOfLines = 1
-        bottomLabel.accessibilityIdentifier = "\(context.rawValue.capitalizingFirstLetter()) + MessageRestrictionBottomLabel"
+        bottomLabel.accessibilityIdentifier = "\(messageType.rawValue.capitalizingFirstLetter()) + MessageRestrictionBottomLabel"
     }
 
-    private func setupIconView() {
+    func setupIconView() {
         iconView.contentMode = .center
-        iconView.accessibilityIdentifier = "\(context.rawValue.capitalizingFirstLetter()) + MessageRestrictionIcon"
-
-        switch context {
-        case .video:
-            iconView.clipsToBounds = true
-            iconView.layer.cornerRadius = 16
-            iconView.backgroundColor = .white
-        default:
-            break
-        }
+        iconView.accessibilityIdentifier = "\(messageType.rawValue.capitalizingFirstLetter()) + MessageRestrictionIcon"
     }
 
     /// Override this method to provide a different view.
@@ -119,26 +88,21 @@ class BaseMessageRestrictionView: UIView {
     // MARK: - Public
 
     func configure() {
-        iconView.setTemplateIcon(context.icon, size: context.iconSize)
+        iconView.setTemplateIcon(messageType.icon, size: messageType.iconSize)
 
-        let titleString = context.title.localizedUppercase && .smallSemiboldFont && .from(scheme: .textForeground)
-        let subtitleString = context.subtitle.localizedUppercase && .smallLightFont && .from(scheme: .textDimmed)
-
-        switch context {
-        case .audio:
-            topLabel.attributedText = titleString
-            bottomLabel.attributedText = subtitleString
-        case .video, .image:
-            topLabel.attributedText = subtitleString
-        }
+        let titleString = messageType.title.localizedUppercase && .smallSemiboldFont && .from(scheme: .textForeground)
+        let subtitleString = messageType.subtitle.localizedUppercase && .smallLightFont && .from(scheme: .textDimmed)
+        topLabel.attributedText = titleString
+        bottomLabel.attributedText = subtitleString
     }
 
 }
 
-enum MessageRestrictionContext: String {
+enum RestrictedMessageType: String {
     case audio
     case video
     case image
+    case file
 
     var icon: StyleKitIcon {
         switch self {
@@ -148,12 +112,14 @@ enum MessageRestrictionContext: String {
             return .play
         case .image:
             return .photo
+        case .file:
+            return .document
         }
     }
 
     var iconSize: StyleKitIcon.Size {
         switch self {
-        case .audio:
+        case .audio, .file:
             return .small
         case .video, .image:
             return .tiny
@@ -169,6 +135,8 @@ enum MessageRestrictionContext: String {
             return MessagePreview.video
         case .image:
             return MessagePreview.image
+        case .file:
+            return MessagePreview.file
         }
     }
 
@@ -181,6 +149,8 @@ enum MessageRestrictionContext: String {
             return FileSharingRestrictions.video
         case .image:
             return FileSharingRestrictions.picture
+        case .file:
+            return FileSharingRestrictions.file
         }
     }
 }

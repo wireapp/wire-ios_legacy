@@ -155,21 +155,6 @@ final class FileTransferView: UIView, TransferView {
         fileTypeIconView.contentMode = .center
         fileTypeIconView.setTemplateIcon(.document, size: .small)
 
-        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
-        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
-
-        guard !message.isRestricted else {
-            fileEyeView.setTemplateIcon(.block, size: 8)
-
-            let firstLine = fileNameAttributed
-            let secondLine = L10n.Localizable.FeatureConfig.FileSharingRestrictions.file.localizedUppercase && labelFont && labelTextBlendedColor
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
-
-            self.actionButton.isUserInteractionEnabled = false
-            return
-        }
-
         fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
             guard let image = image else { return }
 
@@ -211,6 +196,9 @@ final class FileTransferView: UIView, TransferView {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
         }
+
+        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
+        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
     }
 
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {

@@ -18,17 +18,37 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
-final class AudioMessageRestrictionView: BaseMessageRestrictionView {
+final class FileMessageRestrictionView: BaseMessageRestrictionView {
 
+    // MARK: - Properties
+
+    let fileBlockView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .from(scheme: .background)
+        return imageView
+    }()
+    
     // MARK: - Life cycle
 
     init() {
-        super.init(messageType: .audio)
+        super.init(messageType: .file)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(for message: ZMConversationMessage?) {
+        super.configure()
+
+        guard let fileMessageData = message?.fileMessageData else { return }
+        let filepath = (fileMessageData.filename ?? "") as NSString
+        let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
+        let fileNameAttributed = filename.uppercased() && .smallSemiboldFont && .from(scheme: .textForeground)
+        
+        topLabel.attributedText = fileNameAttributed
     }
 
     // MARK: - Helpers
@@ -36,11 +56,18 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
     override func setupViews() {
         super.setupViews()
 
-        [topLabel, bottomLabel, iconView].forEach(self.addSubview)
+        [topLabel, bottomLabel, iconView, fileBlockView].forEach(self.addSubview)
+    }
+
+    override func setupIconView() {
+        super.setupIconView()
+
+        fileBlockView.setTemplateIcon(.block, size: 8)
     }
 
     override func createConstraints() {
         super.createConstraints()
+        fileBlockView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // top label
@@ -57,7 +84,12 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
             iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
             iconView.widthAnchor.constraint(equalToConstant: 32),
-            iconView.heightAnchor.constraint(equalToConstant: 32)
+            iconView.heightAnchor.constraint(equalToConstant: 32),
+
+            // fileBlock view
+            fileBlockView.centerXAnchor.constraint(equalTo: iconView.centerXAnchor),
+            fileBlockView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor, constant: 3)
         ])
     }
 }
+

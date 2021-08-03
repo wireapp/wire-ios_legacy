@@ -30,6 +30,7 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
     private let fileTransferView = FileTransferView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .paperclip)
+    private let restrictionView = FileMessageRestrictionView()
 
     weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
@@ -55,14 +56,17 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
         fileTransferView.delegate = self
         obfuscationView.isHidden = true
+        restrictionView.isHidden = true
 
         addSubview(self.fileTransferView)
         addSubview(self.obfuscationView)
+        addSubview(self.restrictionView)
     }
 
     private func configureConstraints() {
         fileTransferView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
+        restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
@@ -77,15 +81,24 @@ class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
             obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
             obfuscationView.topAnchor.constraint(equalTo: topAnchor),
             obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            // restrictionView
+            restrictionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            restrictionView.topAnchor.constraint(equalTo: topAnchor),
+            restrictionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            restrictionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
     func configure(with object: Configuration, animated: Bool) {
         fileTransferView.configure(for: object.message, isInitial: false)
+        restrictionView.configure(for: object.message)
 
+        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
+        restrictionView.isHidden = !isRestricted
         obfuscationView.isHidden = !object.isObfuscated
-        fileTransferView.isHidden = object.isObfuscated
+        fileTransferView.isHidden = object.isObfuscated || object.message.isRestricted
 
     }
 

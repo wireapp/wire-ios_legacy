@@ -25,6 +25,7 @@ import WireCommonComponents
 
 final class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
+    private let restrictionView = FileMessageRestrictionView()
     private let headerView = CollectionCellHeader()
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
@@ -33,8 +34,14 @@ final class CollectionFileCell: CollectionCell {
         guard let message = self.message else {
             return
         }
+
         headerView.message = message
-        fileTransferView.configure(for: message, isInitial: changeInfo == .none)
+        if message.isRestricted {
+            restrictionView.configure(for: message)
+        } else {
+            restrictionView.isHidden = true
+            fileTransferView.configure(for: message, isInitial: changeInfo == .none)
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -55,8 +62,9 @@ final class CollectionFileCell: CollectionCell {
         self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         self.secureContentsView.addSubview(self.headerView)
         self.secureContentsView.addSubview(self.fileTransferView)
+        self.secureContentsView.addSubview(self.restrictionView)
 
-        constrain(self.secureContentsView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
+        constrain(self.secureContentsView, self.fileTransferView, self.headerView, self.restrictionView) { contentView, fileTransferView, headerView, restrictionView in
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
@@ -66,6 +74,11 @@ final class CollectionFileCell: CollectionCell {
             fileTransferView.left == contentView.leftMargin
             fileTransferView.right == contentView.rightMargin
             fileTransferView.bottom == contentView.bottomMargin
+
+            restrictionView.top == headerView.bottom + 4
+            restrictionView.left == contentView.leftMargin
+            restrictionView.right == contentView.rightMargin
+            restrictionView.bottom == contentView.bottomMargin
         }
     }
 

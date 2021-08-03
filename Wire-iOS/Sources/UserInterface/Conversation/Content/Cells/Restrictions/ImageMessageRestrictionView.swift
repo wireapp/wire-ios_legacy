@@ -21,10 +21,19 @@ import UIKit
 
 final class ImageMessageRestrictionView: BaseMessageRestrictionView {
 
+    // MARK: - Properties
+
+    /// For the search screen
+    private var isShortVersion: Bool
+    private let viewMargin: CGFloat
+
     // MARK: - Life cycle
 
     init(isShortVersion: Bool = false) {
-        super.init(context: .image, isShortVersion: isShortVersion)
+        self.isShortVersion = isShortVersion
+        viewMargin = isShortVersion ? 0 : 12
+        
+        super.init(messageType: .image)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,6 +41,18 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
     }
 
     // MARK: - Helpers
+
+    override func setupViews() {
+        super.setupViews()
+
+        [bottomLabel, iconView].forEach(self.addSubview)
+    }
+
+    override func setupLabels() {
+        super.setupLabels()
+
+        bottomLabel.isHidden = isShortVersion
+    }
 
     override func createConstraints() {
         super.createConstraints()
@@ -44,8 +65,8 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
             iconView.heightAnchor.constraint(equalToConstant: 32),
 
             // top label
-            topLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            topLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: viewMargin)
+            bottomLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            bottomLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: viewMargin)
         ])
     }
 }

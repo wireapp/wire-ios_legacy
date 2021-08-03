@@ -82,7 +82,7 @@ final class ConversationImageMessageTests: XCTestCase {
 
     func testRestrictionMessageCell() {
         createSut(imageName: "unsplash_matterhorn.jpg")
-        message.isRestrictedBacking = true
+        message.backingIsRestritcted = true
 
         verify(message: message)
     }

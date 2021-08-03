@@ -222,7 +222,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
     // MARK: - Receiving restrictions
 
     func testRestrictionMessageCell() {
-        message.isRestrictedBacking = true
+        message.backingIsRestritcted = true
         message.backingFileMessageData.mimeType = "audio/x-m4a"
 
         verify(message: message)
