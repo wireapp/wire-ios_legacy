@@ -26,7 +26,7 @@ final class VideoMessageRestrictionView: BaseMessageRestrictionView {
     /// For the search screen
     private var isShortVersion: Bool
     private let viewMargin: CGFloat
-    
+
     // MARK: - Life cycle
 
     init(isShortVersion: Bool = false) {
@@ -41,10 +41,10 @@ final class VideoMessageRestrictionView: BaseMessageRestrictionView {
     }
 
     // MARK: - Helpers
-    
+
     override func setupViews() {
         super.setupViews()
-        
+
         [bottomLabel, iconView].forEach(self.addSubview)
     }
 
