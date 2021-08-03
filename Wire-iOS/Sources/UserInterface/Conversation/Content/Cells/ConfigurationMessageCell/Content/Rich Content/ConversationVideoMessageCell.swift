@@ -101,11 +101,6 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         restrictionView.isHidden = !isRestricted
         obfuscationView.isHidden = !object.isObfuscated
         transferView.isHidden = object.isObfuscated || object.message.isRestricted
-
-        if isRestricted {
-            
-        }
-
     }
 
     override public var tintColor: UIColor! {

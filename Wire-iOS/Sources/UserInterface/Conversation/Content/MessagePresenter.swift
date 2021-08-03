@@ -164,7 +164,7 @@ final class MessagePresenter: NSObject {
 
         if Message.isLocation(message) {
             openLocationMessage(message)
-        } else if Message.isVideo(message), !message.isRestricted  {
+        } else if Message.isVideo(message), !message.isRestricted {
             openFileMessage(message, targetView: targetView)
         } else if Message.isFileTransfer(message), !message.isRestricted {
             openFileMessage(message, targetView: targetView)

@@ -29,7 +29,7 @@ final class ConversationImageMessageTests: XCTestCase {
 
         UIColor.setAccentOverride(.vividRed)
     }
-    
+
     override func tearDown() {
         image = nil
         message = nil

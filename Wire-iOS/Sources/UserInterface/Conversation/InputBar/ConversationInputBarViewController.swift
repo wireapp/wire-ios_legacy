@@ -342,6 +342,10 @@ final class ConversationInputBarViewController: UIViewController,
            let userSession = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, in: userSession)
         }
+
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateInputBarButtons()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -466,6 +470,10 @@ final class ConversationInputBarViewController: UIViewController,
 
     func updateInputBarVisibility() {
         view.isHidden = conversation.isReadOnly
+    }
+
+    @objc func updateInputBarButtons() {
+
     }
 
     // MARK: - Save draft message

@@ -23,8 +23,8 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
 
     // MARK: - Life cycle
 
-    init() {
-        super.init(context: .image)
+    init(isShortVersion: Bool = false) {
+        super.init(context: .image, isShortVersion: isShortVersion)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,13 +39,13 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
         NSLayoutConstraint.activate([
             // icon view
             iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -12),
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -viewMargin),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32),
 
             // top label
             topLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            topLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 12),
+            topLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: viewMargin)
         ])
     }
 }

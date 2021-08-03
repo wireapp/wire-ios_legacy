@@ -38,10 +38,16 @@ class BaseMessageRestrictionView: UIView {
         }
     }
 
+    /// For the search screen
+    private var isShortVersion: Bool
+    let viewMargin: CGFloat
+
     // MARK: - Life cycle
 
-    init(context: MessageRestrictionContext) {
+    init(context: MessageRestrictionContext, isShortVersion: Bool = false) {
         self.context = context
+        self.isShortVersion = isShortVersion
+        viewMargin = isShortVersion ? 0 : 12
         super.init(frame: .zero)
 
         setupViews()
@@ -75,6 +81,12 @@ class BaseMessageRestrictionView: UIView {
     }
 
     private func setupLabels() {
+        switch context {
+        case .image, .video:
+            topLabel.isHidden = isShortVersion
+        default:
+            topLabel.isHidden = false
+        }
         topLabel.numberOfLines = 1
         topLabel.lineBreakMode = .byTruncatingMiddle
         topLabel.accessibilityIdentifier = "\(context.rawValue.capitalizingFirstLetter()) + MessageRestrictionTopLabel"
@@ -122,7 +134,6 @@ class BaseMessageRestrictionView: UIView {
     }
 
 }
-
 
 enum MessageRestrictionContext: String {
     case audio

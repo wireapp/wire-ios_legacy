@@ -26,7 +26,7 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
     init() {
         super.init(context: .audio)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,9 +38,9 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
 
         NSLayoutConstraint.activate([
             // top label
-            topLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),
-            topLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
-            topLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+            topLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: viewMargin),
+            topLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: viewMargin),
+            topLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -viewMargin),
 
             // bottom label
             bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 2),
@@ -49,7 +49,7 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
 
             // icon view
             iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: viewMargin),
             iconView.widthAnchor.constraint(equalToConstant: 32),
             iconView.heightAnchor.constraint(equalToConstant: 32)
         ])
