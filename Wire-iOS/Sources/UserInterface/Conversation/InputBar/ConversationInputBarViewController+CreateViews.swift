@@ -40,11 +40,11 @@ extension ConversationInputBarViewController {
                 mentionButton,
                 canFilesBeShared ? sketchButton : nil,
                 canFilesBeShared ? gifButton : nil,
-                audioButton,
+                canFilesBeShared ? audioButton : nil,
                 pingButton,
                 canFilesBeShared ? uploadFileButton : nil,
                 locationButton,
-                videoButton].compactMap { $0 }
+                canFilesBeShared ? videoButton : nil].compactMap { $0 }
     }
 
     private func setupInputBar() {
