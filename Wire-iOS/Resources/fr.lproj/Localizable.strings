@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Raccrocher";
 "voice.mute_button.title" = "Mettre en sourdine";
 "voice.video_button.title" = "Vidéo";
-"voice.flip_video_button.title" = "Inverser";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Haut-parleur";
 "voice.cancel_button.title" = "Annuler";
 "voice.call_button.title" = "Appeler";

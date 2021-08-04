@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Завершити";
 "voice.mute_button.title" = "Вимкнути звук";
 "voice.video_button.title" = "Відео";
-"voice.flip_video_button.title" = "Переключити";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Гучномовець";
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
