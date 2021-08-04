@@ -1,6 +1,6 @@
 github "wireapp/wire-ios-ziphy" ~> 16.0.3
 github "wireapp/Cartography" "4.0.0_xcframework"
-github "wireapp/wire-ios-sync-engine" ~> 385.0.2
+github "wireapp/wire-ios-sync-engine" ~> 385.0.3
 github "wireapp/wire-ios-share-engine" ~> 222.0.0
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 13.0.2
