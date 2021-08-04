@@ -284,7 +284,14 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
             contentType = "quote.type.unavailable"
         }
 
-        configuration = View.Configuration(showDetails: !isUnavailable, isEdited: isEdited, senderName: senderName, timestamp: timestamp, showRestriction: showRestriction, restrictionDescription: restrictionDescription, content: content, contentType: contentType)
+        configuration = View.Configuration(showDetails: !isUnavailable,
+                                           isEdited: isEdited,
+                                           senderName: senderName,
+                                           timestamp: timestamp,
+                                           showRestriction: showRestriction,
+                                           restrictionDescription: restrictionDescription,
+                                           content: content,
+                                           contentType: contentType)
     }
 
 }
