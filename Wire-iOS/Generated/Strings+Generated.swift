@@ -1208,8 +1208,6 @@ internal enum L10n {
           internal static let image = L10n.tr("Localizable", "conversation.input_bar.message_preview.image")
           /// Location
           internal static let location = L10n.tr("Localizable", "conversation.input_bar.message_preview.location")
-          /// Picture
-          internal static let picture = L10n.tr("Localizable", "conversation.input_bar.message_preview.picture")
           /// Video
           internal static let video = L10n.tr("Localizable", "conversation.input_bar.message_preview.video")
           internal enum Accessibility {

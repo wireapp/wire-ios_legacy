@@ -45,13 +45,13 @@ final class ConversationImageMessageTests: XCTestCase {
         message.senderUser = sender
     }
 
-//    func testTransparentImage() {
-//        // GIVEN
-//        createSut(imageName: "transparent.png")
-//
-//        // THEN
-//        verify(message: message, waitForImagesToLoad: true)
-//    }
+    func testTransparentImage() {
+        // GIVEN
+        createSut(imageName: "transparent.png")
+
+        // THEN
+        verify(message: message, waitForImagesToLoad: true)
+    }
 
     func testOpaqueImage() {
         // GIVEN

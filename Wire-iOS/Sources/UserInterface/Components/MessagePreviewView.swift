@@ -166,7 +166,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.picture.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             if let imageResource = message.imageMessageData?.image {

@@ -249,7 +249,7 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
 
         case let message? where message.isImage && message.isRestricted:
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.picture.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             content = .text(initialString && attributes)
             contentType = "quote.type.image"
             restrictionDescription = FileSharingRestrictions.picture.localizedUppercase
