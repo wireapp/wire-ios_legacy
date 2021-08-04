@@ -358,9 +358,9 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     // MARK: - Feature config changes
 
     private func updateVisibleCells() {
-        let visibleRows = tableView.indexPathsForVisibleRows
+        guard let visibleRows = tableView.indexPathsForVisibleRows else { return }
         tableView.beginUpdates()
-        tableView.reloadRows(at: visibleRows!, with: .none)
+        tableView.reloadRows(at: visibleRows, with: .none)
         tableView.endUpdates()
     }
 
