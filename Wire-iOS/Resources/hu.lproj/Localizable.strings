@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Hívás befejezése";
 "voice.mute_button.title" = "Némítás";
 "voice.video_button.title" = "Videó";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Hangszóró";
 "voice.cancel_button.title" = "Mégsem";
 "voice.call_button.title" = "Hívás";

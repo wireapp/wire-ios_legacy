@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "接聽";
 "voice.decline_button.title" = "拒絕通話";
 "voice.hang_up_button.title" = "結束通話";
-"voice.mute_button.title" = "靜音";
+"voice.mute_button.title" = "關閉訊息通知";
 "voice.video_button.title" = "影片";
-"voice.flip_video_button.title" = "切換鏡頭";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "擴音";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通話";

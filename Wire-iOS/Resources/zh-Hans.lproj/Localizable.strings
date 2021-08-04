@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "结束通话";
 "voice.mute_button.title" = "静音";
 "voice.video_button.title" = "视频";
-"voice.flip_video_button.title" = "翻转";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";

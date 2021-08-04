@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
-"voice.mute_button.title" = "Микрофон";
+"voice.mute_button.title" = "Отключить уведомления";
 "voice.video_button.title" = "Видео";
-"voice.flip_video_button.title" = "Перевернуть";
+"voice.flip_video_button.title" = "Переключить";
 "voice.speaker_button.title" = "Динамик";
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
@@ -1448,7 +1448,7 @@
 "login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
 "login.sso.backend_switch.title" = "Перенаправление...";
 "login.sso.backend_switch.subtitle" = "Вы будете перенаправлены на специализированное обслуживание вашей организации.";
-"login.sso.backend_switch.information" = "Указывайте учетные данные, только если вы уверены, что это форма авторизации вашей организации.";
+"login.sso.backend_switch.information" = "Указывайте учетные данные, только если уверены, что это страница авторизации вашей организации.";
 
 
 // Restore In Progress Loading Titles

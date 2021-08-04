@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Læg på";
 "voice.mute_button.title" = "Lyd fra";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Højtaler";
 "voice.cancel_button.title" = "Annuller";
 "voice.call_button.title" = "Ring op";
