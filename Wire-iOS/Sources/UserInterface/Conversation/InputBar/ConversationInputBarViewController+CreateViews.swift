@@ -38,7 +38,7 @@ extension ConversationInputBarViewController {
     var inputBarButtons: [IconButton] {
         return [canFilesBeShared ? photoButton : nil,
                 mentionButton,
-                sketchButton,
+                canFilesBeShared ? sketchButton : nil,
                 canFilesBeShared ? gifButton : nil,
                 audioButton,
                 pingButton,
