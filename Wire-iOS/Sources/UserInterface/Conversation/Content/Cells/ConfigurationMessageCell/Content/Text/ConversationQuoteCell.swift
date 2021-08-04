@@ -218,7 +218,7 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
         let isEdited = quotedMessage?.updatedAt != nil
         let senderName = quotedMessage?.senderName
         let timestamp = quotedMessage?.formattedOriginalReceivedDate()
-        var restrictionDescription: String? = nil
+        var restrictionDescription: String?
         let showRestriction = quotedMessage?.isRestricted ?? false
 
         var isUnavailable = false
