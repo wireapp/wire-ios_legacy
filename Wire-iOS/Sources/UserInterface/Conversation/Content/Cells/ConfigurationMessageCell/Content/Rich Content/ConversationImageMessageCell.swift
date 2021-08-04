@@ -96,22 +96,22 @@ final class ConversationImageMessageCell: UIView,
 
         NSLayoutConstraint.activate([
             // imageResourceView
-            imageResourceView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageResourceView.topAnchor.constraint(equalTo: topAnchor),
-            imageResourceView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageResourceView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            imageResourceView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            imageResourceView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            imageResourceView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            imageResourceView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 
             // obfuscationView
-            obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            obfuscationView.topAnchor.constraint(equalTo: topAnchor),
-            obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            obfuscationView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            obfuscationView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            obfuscationView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 
             // restrictionView
-            restrictionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            restrictionView.topAnchor.constraint(equalTo: topAnchor),
-            restrictionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            restrictionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            restrictionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            restrictionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            restrictionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            restrictionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
