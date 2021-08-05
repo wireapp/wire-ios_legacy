@@ -21,6 +21,7 @@ import UIKit
 import WireDataModel
 
 class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
+    typealias Participants = L10n.Localizable.Call.Participants
 
     let participantIconView = UIImageView()
     let titleLabel = UILabel()
@@ -109,14 +110,14 @@ extension ShowAllParticipantsCell: CallParticipantsListCellConfigurable {
         guard case let .showAll(totalCount: totalCount) = configuration else { preconditionFailure() }
 
         self.variant = variant
-        titleLabel.text = "call.participants.show_all".localized(args: String(totalCount))
+        titleLabel.text = Participants.showAll(totalCount)
     }
 }
 
 extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
     func configure(with rowType: ParticipantsRowType, conversation: GroupDetailsConversationType, showSeparator: Bool) {
         guard case let .showAll(count) = rowType else { preconditionFailure() }
-        titleLabel.text = "call.participants.show_all".localized(args: String(count))
+        titleLabel.text = Participants.showAll(count)
         backgroundColor = .from(scheme: .barBackground)
         cellIdentifier = "cell.call.show_all_participants"
         accessibilityIdentifier = identifier
