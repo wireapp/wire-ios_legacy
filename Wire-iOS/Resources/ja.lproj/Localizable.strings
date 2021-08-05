@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "電話を切る";
 "voice.mute_button.title" = "ミュート";
 "voice.video_button.title" = "ビデオ";
-"voice.flip_video_button.title" = "カメラ切替";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "スピーカー";
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";

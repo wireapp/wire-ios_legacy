@@ -455,7 +455,7 @@
 "content.system.conversation.you.left" = "%@ êtes parti";
 "content.system.conversation.team.member-leave" = "%@ a été exclu de l'équipe.";
 "content.system.conversation.guest.joined" = "%@ a rejoint la conversation";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "Vous avez rejoint";
 
 "content.system.conversation.invite.title" = "Des services et contacts externes à votre équipe peuvent rejoindre la conversation.";
 "content.system.conversation.invite.button" = "Inviter des contacts";
@@ -1744,12 +1744,12 @@
 "url_action.switch_backend.error.invalid_backend" = "Veuillez vérifier votre connexion internet, vérifier le lien et essayer à nouveau.";
 
 // Placeholder: conversation name
-"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.message" = "Vous avez été invité à une conversation :\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Rejoindre";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.title" = "Vous n'avez pas pu rejoindre la conversation";
+"url_action.join_conversation.error.converation_is_full" = "La conversation est saturée";
+"url_action.join_conversation.error.link_is_invalid" = "Le lien de la conversation est invalide.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire ne peut pas trouver cette personne.";

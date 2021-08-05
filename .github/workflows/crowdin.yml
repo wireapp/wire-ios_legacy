@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Config git user
+        run: git config --global user.email "iosx@wire.com"
+      
       - name: Checkout
         uses: actions/checkout@v2
 

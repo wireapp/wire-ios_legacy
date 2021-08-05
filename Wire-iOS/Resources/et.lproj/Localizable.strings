@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Lõpeta kõne";
 "voice.mute_button.title" = "Hääletu";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Pööra ümber";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Kõlar";
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";

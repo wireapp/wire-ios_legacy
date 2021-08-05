@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Прекини везу";
 "voice.mute_button.title" = "Ућуткај";
 "voice.video_button.title" = "Видео";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Звучник";
 "voice.cancel_button.title" = "Откажи";
 "voice.call_button.title" = "Позив";

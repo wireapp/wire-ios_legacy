@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Riattacca";
 "voice.mute_button.title" = "Silenzia";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Capovolgi";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
