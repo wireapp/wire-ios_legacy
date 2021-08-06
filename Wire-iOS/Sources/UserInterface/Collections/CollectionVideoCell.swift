@@ -74,6 +74,8 @@ final class CollectionVideoCell: CollectionCell {
 
     private func setup(_ view: UIView) {
         view.clipsToBounds = true
+
+        containerView.removeSubviews()
         containerView.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false

@@ -149,6 +149,7 @@ final class ConversationImageMessageCell: UIView,
     }
 
     private func setup(_ view: UIView) {
+        containerView.removeSubviews()
         containerView.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false

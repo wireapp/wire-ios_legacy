@@ -87,6 +87,7 @@ final class CollectionFileCell: CollectionCell {
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
 
+        containerView.removeSubviews()
         containerView.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false

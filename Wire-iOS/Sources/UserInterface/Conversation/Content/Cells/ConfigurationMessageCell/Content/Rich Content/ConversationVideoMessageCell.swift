@@ -86,6 +86,7 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     }
 
     private func setup(_ view: UIView) {
+        containerView.removeSubviews()
         containerView.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false
