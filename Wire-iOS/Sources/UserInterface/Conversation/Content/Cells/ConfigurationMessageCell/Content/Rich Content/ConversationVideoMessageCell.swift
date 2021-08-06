@@ -96,7 +96,7 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
             view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
-    
+
     override public var tintColor: UIColor! {
         didSet {
             self.transferView.tintColor = self.tintColor

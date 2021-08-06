@@ -60,7 +60,7 @@ final class CollectionFileCell: CollectionCell {
     func loadView() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         secureContentsView.addSubview(self.headerView)
         secureContentsView.addSubview(containerView)
