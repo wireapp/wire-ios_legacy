@@ -697,7 +697,7 @@ extension CollectionsViewController: CollectionCellDelegate {
         case .present:
             self.selectedMessage = message
 
-            if message.isImage {
+            if message.isImage, !message.isRestricted {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
 
                 let backButton = CollectionsView.backButton()

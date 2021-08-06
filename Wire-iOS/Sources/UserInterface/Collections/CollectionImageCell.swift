@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
@@ -31,10 +30,11 @@ final class CollectionImageCell: CollectionCell {
 
     override var message: ZMConversationMessage? {
         didSet {
-            loadImage()
+            updateViews()
         }
     }
 
+    private var containerView = UIView()
     private let imageView = ImageResourceView()
     private let restrictionView = SimpleImageMessageRestrictionView()
 
@@ -55,30 +55,23 @@ final class CollectionImageCell: CollectionCell {
     var isHeightCalculated: Bool = false
 
     func loadView() {
-        self.imageView.contentMode = .scaleAspectFill
-        self.imageView.clipsToBounds = true
-        self.imageView.accessibilityIdentifier = "image"
-        self.imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
-        self.secureContentsView.addSubview(self.imageView)
-        self.secureContentsView.addSubview(self.restrictionView)
-        constrain(self, self.imageView, self.restrictionView) { selfView, imageView, restrictionView in
-            imageView.left == selfView.left
-            imageView.right == selfView.right
-            imageView.top == selfView.top
-            imageView.bottom == selfView.bottom
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        secureContentsView.addSubview(containerView)
 
-            restrictionView.left == selfView.left
-            restrictionView.right == selfView.right
-            restrictionView.top == selfView.top
-            restrictionView.bottom == selfView.bottom
-        }
+        NSLayoutConstraint.activate([
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
+        ])
     }
 
     public override func prepareForReuse() {
         super.prepareForReuse()
-        self.message = .none
-        self.isHeightCalculated = false
-        self.reuseToken = UUID()
+        message = .none
+        isHeightCalculated = false
+        reuseToken = UUID()
     }
 
     override var obfuscationIcon: StyleKitIcon {
@@ -90,27 +83,37 @@ final class CollectionImageCell: CollectionCell {
 
         guard let changeInfo = changeInfo, changeInfo.imageChanged else { return }
 
-        loadImage()
+        updateViews()
     }
 
-    var saveableImage: SavableImage?
+    private func updateViews() {
+        guard let message = self.message else { return }
 
-    @objc func save(_ sender: AnyObject!) {
-        guard let imageMessageData = self.message?.imageMessageData, let imageData = imageMessageData.imageData else { return }
-
-        saveableImage = SavableImage(data: imageData, isGIF: imageMessageData.isAnimatedGIF)
-        saveableImage?.saveToLibrary { [weak self] _ in
-            self?.saveableImage = nil
-        }
-    }
-
-    fileprivate func loadImage() {
-        if let message = message, message.isRestricted {
-            restrictionView.isHidden = false
+        if message.isRestricted {
+            setup(restrictionView)
             restrictionView.configure()
         } else {
-            restrictionView.isHidden = true
-            imageView.imageResource = message?.imageMessageData?.image
+            imageView.contentMode = .scaleAspectFill
+            imageView.accessibilityIdentifier = "image"
+            imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
+            imageView.imageResource = message.imageMessageData?.image
+
+            setup(imageView)
         }
+    }
+
+    private func setup(_ view: UIView) {
+        view.clipsToBounds = true
+
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
     }
 }

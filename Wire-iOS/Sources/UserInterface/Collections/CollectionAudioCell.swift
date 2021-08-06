@@ -17,13 +17,13 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
 import WireCommonComponents
 
 final class CollectionAudioCell: CollectionCell {
+    private var containerView = UIView()
     private let audioMessageView = AudioMessageView()
     private let restrictionView = AudioMessageRestrictionView()
     private let headerView = CollectionCellHeader()
@@ -41,54 +41,61 @@ final class CollectionAudioCell: CollectionCell {
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
 
-        guard let message = self.message else {
-            return
-        }
-
+        guard let message = self.message else { return }
         headerView.message = message
+
         if message.isRestricted {
+            setup(restrictionView)
             restrictionView.configure()
         } else {
-            restrictionView.isHidden = true
+            audioMessageView.delegate = self
+
+            setup(audioMessageView)
             audioMessageView.configure(for: message, isInitial: true)
         }
     }
 
     func loadView() {
-        self.audioMessageView.delegate = self
-        self.audioMessageView.layer.cornerRadius = 4
-        self.audioMessageView.clipsToBounds = true
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.restrictionView.layer.cornerRadius = 4
-        self.restrictionView.clipsToBounds = true
+        secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
+        secureContentsView.addSubview(headerView)
+        secureContentsView.addSubview(containerView)
 
-        self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
-        self.secureContentsView.addSubview(self.headerView)
-        self.secureContentsView.addSubview(self.audioMessageView)
-        self.secureContentsView.addSubview(self.restrictionView)
+        NSLayoutConstraint.activate([
+            // headerView
+            headerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor, constant: 12),
+            headerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor, constant: -12),
 
-        constrain(self.secureContentsView, self.audioMessageView, self.headerView, self.restrictionView) { contentView, audioMessageView, headerView, restrictionView in
-            headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin + 12
-            headerView.trailing == contentView.trailingMargin - 12
-
-            audioMessageView.top == headerView.bottom + 4
-
-            audioMessageView.left == contentView.leftMargin
-            audioMessageView.right == contentView.rightMargin
-            audioMessageView.bottom == contentView.bottomMargin
-
-            restrictionView.top == headerView.bottom + 4
-            restrictionView.left == contentView.leftMargin
-            restrictionView.right == contentView.rightMargin
-            restrictionView.bottom == contentView.bottomMargin
-        }
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
+        ])
     }
 
     override var obfuscationIcon: StyleKitIcon {
         return .microphone
     }
 
+    private func setup(_ view: UIView) {
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 4),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
 }
 
 extension CollectionAudioCell: TransferViewDelegate {
