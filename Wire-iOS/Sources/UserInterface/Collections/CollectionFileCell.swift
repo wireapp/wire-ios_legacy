@@ -17,13 +17,13 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
 import WireCommonComponents
 
 final class CollectionFileCell: CollectionCell {
+    private var containerView = UIView()
     private let fileTransferView = FileTransferView()
     private let restrictionView = FileMessageRestrictionView()
     private let headerView = CollectionCellHeader()
@@ -37,9 +37,12 @@ final class CollectionFileCell: CollectionCell {
 
         headerView.message = message
         if message.isRestricted {
+            setup(restrictionView)
             restrictionView.configure(for: message)
         } else {
-            restrictionView.isHidden = true
+            fileTransferView.delegate = self
+
+            setup(fileTransferView)
             fileTransferView.configure(for: message, isInitial: changeInfo == .none)
         }
     }
@@ -55,37 +58,45 @@ final class CollectionFileCell: CollectionCell {
     }
 
     func loadView() {
-        self.fileTransferView.delegate = self
-        self.fileTransferView.layer.cornerRadius = 4
-        self.fileTransferView.clipsToBounds = true
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
+        secureContentsView.addSubview(self.headerView)
+        secureContentsView.addSubview(containerView)
 
-        self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
-        self.secureContentsView.addSubview(self.headerView)
-        self.secureContentsView.addSubview(self.fileTransferView)
-        self.secureContentsView.addSubview(self.restrictionView)
+        NSLayoutConstraint.activate([
+            // headerView
+            headerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor, constant: 12),
+            headerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor, constant: -12),
 
-        constrain(self.secureContentsView, self.fileTransferView, self.headerView, self.restrictionView) { contentView, fileTransferView, headerView, restrictionView in
-            headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin + 12
-            headerView.trailing == contentView.trailingMargin - 12
-
-            fileTransferView.top == headerView.bottom + 4
-
-            fileTransferView.left == contentView.leftMargin
-            fileTransferView.right == contentView.rightMargin
-            fileTransferView.bottom == contentView.bottomMargin
-
-            restrictionView.top == headerView.bottom + 4
-            restrictionView.left == contentView.leftMargin
-            restrictionView.right == contentView.rightMargin
-            restrictionView.bottom == contentView.bottomMargin
-        }
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
+        ])
     }
 
     override var obfuscationIcon: StyleKitIcon {
         return .document
     }
 
+    private func setup(_ view: UIView) {
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 4),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
 }
 
 extension CollectionFileCell: TransferViewDelegate {

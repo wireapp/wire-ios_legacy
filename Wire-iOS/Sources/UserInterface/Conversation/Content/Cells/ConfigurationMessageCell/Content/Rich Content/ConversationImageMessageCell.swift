@@ -66,7 +66,7 @@ final class ConversationImageMessageCell: UIView,
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureViews()
+        configureView()
         createConstraints()
     }
 
@@ -75,43 +75,24 @@ final class ConversationImageMessageCell: UIView,
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureViews() {
+    private func configureView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .from(scheme: .placeholderBackground)
-        imageResourceView.contentMode = .scaleAspectFill
-        imageResourceView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
+        containerView.contentMode = .scaleAspectFill
+        containerView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
 
         addSubview(containerView)
-
-        [imageResourceView, obfuscationView, restrictionView].forEach(containerView.addSubview)
-        obfuscationView.isHidden = true
-        restrictionView.isHidden = true
     }
 
     private func createConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        obfuscationView.translatesAutoresizingMaskIntoConstraints = false
-        imageResourceView.translatesAutoresizingMaskIntoConstraints = false
-        restrictionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            // imageResourceView
-            imageResourceView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            imageResourceView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            imageResourceView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            imageResourceView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-
-            // obfuscationView
-            obfuscationView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            obfuscationView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            obfuscationView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-
-            // restrictionView
-            restrictionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            restrictionView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            restrictionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            restrictionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
@@ -135,18 +116,12 @@ final class ConversationImageMessageCell: UIView,
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        restrictionView.configure()
-
-        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
-        restrictionView.isHidden = !isRestricted
-        obfuscationView.isHidden = !object.isObfuscated
-        imageResourceView.isHidden = object.isObfuscated || object.message.isRestricted
-
         let scaleFactor: CGFloat = object.image.isAnimatedGIF ? 1 : 0.5
         let imageSize = object.image.originalSize.applying(CGAffineTransform.init(scaleX: scaleFactor, y: scaleFactor))
         let imageAspectRatio = imageSize.width > 0 ? imageSize.height / imageSize.width : 1.0
 
         aspectConstraint.apply({ containerView.removeConstraint($0) })
+        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
         aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor,
                                                                  multiplier: !isRestricted ? imageAspectRatio : 9/16)
         aspectConstraint?.isActive = true
@@ -154,17 +129,38 @@ final class ConversationImageMessageCell: UIView,
         heightConstraint?.constant = imageSize.height
 
         containerView.backgroundColor = UIColor.from(scheme: .placeholderBackground)
-        imageResourceView.layer.borderWidth = 0
 
-        let imageResource = object.isObfuscated ? nil : object.image.image
+        if object.isObfuscated {
+            setup(obfuscationView)
+        } else if object.message.isRestricted {
+            setup(restrictionView)
+            restrictionView.configure()
+        } else {
+            setup(imageResourceView)
+            imageResourceView.layer.borderWidth = 0
 
-        imageResourceView.setImageResource(imageResource) { [weak self] in
-            self?.updateImageContainerAppearance()
-            _ = object.message.startSelfDestructionIfNeeded()
+            let imageResource = object.isObfuscated ? nil : object.image.image
+
+            imageResourceView.setImageResource(imageResource) { [weak self] in
+                self?.updateImageContainerAppearance()
+                _ = object.message.startSelfDestructionIfNeeded()
+            }
         }
     }
 
-    func updateImageContainerAppearance() {
+    private func setup(_ view: UIView) {
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+
+    private func updateImageContainerAppearance() {
         if imageResourceView.image?.isTransparent == true {
             containerView.backgroundColor = UIColor.clear
             imageResourceView.layer.borderWidth = 0
@@ -173,7 +169,6 @@ final class ConversationImageMessageCell: UIView,
             imageResourceView.layer.borderWidth = UIScreen.hairline
         }
     }
-
 }
 
 final class ConversationImageMessageCellDescription: ConversationMessageCellDescription {
