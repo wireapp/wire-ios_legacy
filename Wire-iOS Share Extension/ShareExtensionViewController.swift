@@ -157,20 +157,15 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let hostBundleIdentifier = Bundle.main.hostBundleIdentifier,
             let accountIdentifier = account?.userIdentifier
             else { return }
-        let configuration = AppLockRules.fromBundle()
-        let appLockConfig = AppLockController.Config(
-            isAvailable: true,
-            isForced: configuration.forceAppLock,
-            timeout: configuration.appLockTimeout,
-            requireCustomPasscode: configuration.useBiometricsOrCustomPasscode
-        )
+
+        let legacyConfig = AppLockController.LegacyConfig.fromBundle()
 
         sharingSession = try SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier,
             environment: BackendEnvironment.shared,
-            appLockConfig: appLockConfig
+            appLockConfig: legacyConfig
         )
     }
 

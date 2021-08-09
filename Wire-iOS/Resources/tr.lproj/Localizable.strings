@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Aramayı sonlandır";
 "voice.mute_button.title" = "Sustur";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Çevir";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Hoparlör";
 "voice.cancel_button.title" = "İptal";
 "voice.call_button.title" = "Ara";

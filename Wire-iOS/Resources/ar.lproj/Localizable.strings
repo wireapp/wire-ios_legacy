@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "إنهاء الاتصال";
 "voice.mute_button.title" = "كتم الصوت";
 "voice.video_button.title" = "فيديو";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "مكبّر الصوت";
 "voice.cancel_button.title" = "إلغاء";
 "voice.call_button.title" = "اتصال";

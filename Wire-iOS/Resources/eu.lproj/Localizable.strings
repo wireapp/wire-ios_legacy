@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Hang Up";
 "voice.mute_button.title" = "Mute";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Ezeztatu";
 "voice.call_button.title" = "Deitu";

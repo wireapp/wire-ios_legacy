@@ -180,7 +180,7 @@ internal enum L10n {
         internal enum Label {
           /// Accept call
           internal static let acceptCall = L10n.tr("Localizable", "call.actions.label.accept_call")
-          /// Flip camera
+          /// Switch camera
           internal static let flipCamera = L10n.tr("Localizable", "call.actions.label.flip_camera")
           /// Join call
           internal static let joinCall = L10n.tr("Localizable", "call.actions.label.join_call")
@@ -278,6 +278,8 @@ internal enum L10n {
         internal enum Hints {
           /// Double tap on a tile for fullscreen
           internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
+          /// Double tap to go back
+          internal static let goBack = L10n.tr("Localizable", "call.grid.hints.go_back")
           /// Double tap to go back, pinch to zoom
           internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
           /// Pinch to zoom
@@ -293,9 +295,9 @@ internal enum L10n {
         }
       }
       internal enum Participants {
-        /// Show All (%@)
-        internal static func showAll(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "call.participants.show_all", String(describing: p1))
+        /// Participants (%d)
+        internal static func showAll(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "call.participants.show_all", p1)
         }
         internal enum List {
           /// Participants
@@ -4389,7 +4391,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title")
       }
       internal enum FlipVideoButton {
-        /// Flip camera
+        /// Switch camera
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title")
       }
       internal enum HangUpButton {

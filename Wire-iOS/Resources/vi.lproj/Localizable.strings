@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Chờ";
 "voice.mute_button.title" = "Tắt âm";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Người nói";
 "voice.cancel_button.title" = "Huỷ";
 "voice.call_button.title" = "Gọi";

@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Priimti";
 "voice.decline_button.title" = "Atmesti";
 "voice.hang_up_button.title" = "Užbaigti";
-"voice.mute_button.title" = "Nutildyti";
-"voice.video_button.title" = "Vaizdas";
-"voice.flip_video_button.title" = "Apversti";
+"voice.mute_button.title" = "Išjungti pranešimus";
+"voice.video_button.title" = "Vaizdo įrašas";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Garsiakalbis";
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";

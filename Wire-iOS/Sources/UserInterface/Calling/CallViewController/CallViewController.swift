@@ -38,8 +38,8 @@ final class CallViewController: UIViewController {
     fileprivate let hapticsController = CallHapticsController()
 
     private var observerTokens: [Any] = []
-    private var videoConfiguration: VideoConfiguration
-    private let videoGridViewController: VideoGridViewController
+    private var callGridConfiguration: CallGridConfiguration
+    private let callGridViewController: CallGridViewController
     private var cameraType: CaptureDevice = .front
     private var singleTapRecognizer: UITapGestureRecognizer!
     private var doubleTapRecognizer: UITapGestureRecognizer!
@@ -69,7 +69,7 @@ final class CallViewController: UIViewController {
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
+        callGridConfiguration = CallGridConfiguration(voiceChannel: voiceChannel)
 
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
                                                       preferedVideoPlaceholderState: preferedVideoPlaceholderState,
@@ -80,10 +80,11 @@ final class CallViewController: UIViewController {
                                                       selfUser: selfUser)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
-        videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
+        callGridViewController = CallGridViewController(configuration: callGridConfiguration)
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
+        callGridViewController.delegate = self
         observerTokens += [voiceChannel.addCallStateObserver(self),
                            voiceChannel.addParticipantObserver(self),
                            voiceChannel.addConstantBitRateObserver(self),
@@ -114,7 +115,7 @@ final class CallViewController: UIViewController {
 
         guard canHideOverlay else { return }
 
-        if let overlay = videoGridViewController.previewOverlay,
+        if let overlay = callGridViewController.previewOverlay,
             overlay.point(inside: sender.location(in: overlay), with: nil), !isOverlayVisible {
             return
         }
@@ -124,7 +125,7 @@ final class CallViewController: UIViewController {
     @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
         guard !isOverlayVisible else { return }
 
-        videoGridViewController.handleDoubleTap(gesture: sender)
+        callGridViewController.handleDoubleTap(gesture: sender)
     }
 
     deinit {
@@ -197,11 +198,11 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
+        [callGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
 
     private func createConstraints() {
-        [videoGridViewController, callInfoRootViewController].forEach { $0.view.fitInSuperview() }
+        [callGridViewController, callInfoRootViewController].forEach { $0.view.fitInSuperview() }
     }
 
     fileprivate func minimizeOverlay() {
@@ -233,8 +234,8 @@ final class CallViewController: UIViewController {
                                                       selfUser: ZMUser.selfUser())
 
         callInfoRootViewController.configuration = callInfoConfiguration
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
-        videoGridViewController.configuration = videoConfiguration
+        callGridConfiguration = CallGridConfiguration(voiceChannel: voiceChannel)
+        callGridViewController.configuration = callGridConfiguration
         updateOverlayAfterStateChanged()
         updateAppearance()
         updateIdleTimer()
@@ -247,7 +248,7 @@ final class CallViewController: UIViewController {
     }
 
     private func updateAppearance() {
-        view.backgroundColor = UIColor.from(scheme: .background, variant: callInfoConfiguration.variant)
+        view.backgroundColor = UIColor.from(scheme: .background, variant: .dark)
     }
 
     fileprivate func alertVideoUnavailable() {
@@ -458,6 +459,14 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
 
 }
 
+extension CallViewController: CallGridViewControllerDelegate {
+    func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction) {
+        switch action {
+        case .requestVideoStreamsForClients(let clients): voiceChannel.request(videoStreams: clients)
+        }
+    }
+}
+
 // MARK: - Hide + Show Overlay
 
 extension CallViewController {
@@ -468,7 +477,7 @@ extension CallViewController {
 
     fileprivate var canHideOverlay: Bool {
         guard case .established = callInfoConfiguration.state else { return false }
-        return callInfoConfiguration.isVideoCall
+        return true
     }
 
     fileprivate func toggleOverlayVisibility() {
@@ -488,7 +497,7 @@ extension CallViewController {
             updateConfiguration()
         }
 
-        videoGridViewController.isCovered = show
+        callGridViewController.isCovered = show
 
         UIView.animate(
             withDuration: 0.2,

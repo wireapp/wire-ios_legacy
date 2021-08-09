@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Katkaise puhelu";
 "voice.mute_button.title" = "Mykistä";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Kaiutin";
 "voice.cancel_button.title" = "Peruuta";
 "voice.call_button.title" = "Puhelu";

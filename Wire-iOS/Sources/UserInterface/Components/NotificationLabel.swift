@@ -19,11 +19,10 @@
 import Foundation
 import UIKit
 
-class NotificationLabel: UIView {
+class NotificationLabel: RoundedBlurView {
 
     private(set) var timer: Timer?
 
-    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private let messageLabel = UILabel(
         key: nil,
         size: .medium,
@@ -39,22 +38,16 @@ class NotificationLabel: UIView {
 
     init(shouldAnimate: Bool = true) {
         self.shouldAnimate = shouldAnimate
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init()
     }
 
     // MARK: - Setup
 
-    private func setupViews() {
+    override func setupViews() {
+        super.setupViews()
+
+        setCornerRadius(12)
         isHidden = true
-        layer.cornerRadius = 12
-        blurView.layer.cornerRadius = 12
 
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
@@ -66,12 +59,10 @@ class NotificationLabel: UIView {
         }
     }
 
-    private func createConstraints() {
+    override func createConstraints() {
+        super.createConstraints()
+
         NSLayoutConstraint.activate([
-            blurView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            blurView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: topAnchor),
-            blurView.bottomAnchor.constraint(equalTo: bottomAnchor),
             messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
