@@ -63,6 +63,7 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 56),
             // containerView
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),

@@ -64,7 +64,6 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
 
         NSLayoutConstraint.activate([
             // containerView
-            containerView.heightAnchor.constraint(equalToConstant: 160),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -76,7 +75,7 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         if object.isObfuscated {
             setup(obfuscationView)
         } else if object.message.isRestricted {
-            setup(restrictionView)
+            setup(restrictionView, heightMultiplier: 9/16)
             restrictionView.configure()
         } else {
             transferView.delegate = self
@@ -91,6 +90,21 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
 
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: 160),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+
+    private func setup(_ view: UIView, heightMultiplier: CGFloat) {
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalTo: widthAnchor, multiplier: heightMultiplier),
             view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             view.topAnchor.constraint(equalTo: containerView.topAnchor),
             view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),

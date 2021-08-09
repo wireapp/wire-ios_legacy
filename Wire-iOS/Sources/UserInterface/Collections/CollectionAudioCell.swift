@@ -59,19 +59,18 @@ final class CollectionAudioCell: CollectionCell {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
-        secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         secureContentsView.addSubview(headerView)
         secureContentsView.addSubview(containerView)
 
         NSLayoutConstraint.activate([
             // headerView
-            headerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor, constant: 12),
-            headerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor, constant: -12),
+            headerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor, constant: 16),
+            headerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor, constant: 16),
+            headerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor, constant: -16),
 
             // containerView
+            containerView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 4),
             containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
-            containerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
             containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
         ])
@@ -90,10 +89,10 @@ final class CollectionAudioCell: CollectionCell {
 
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            view.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 4),
-            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 4),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4)
         ])
     }
 }
