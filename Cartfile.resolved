@@ -28,3 +28,4 @@ github "wireapp/wire-ios-testing" "fix/SQPIT-514-drop-iOS-10-11-support"
 github "wireapp/wire-ios-transport" "fix/SQPIT-514-drop-iOS-10-11-support"
 github "wireapp/wire-ios-utilities" "fix/SQPIT-514-drop-iOS-10-11-support"
 github "wireapp/wire-ios-ziphy" "16.0.3"
+
