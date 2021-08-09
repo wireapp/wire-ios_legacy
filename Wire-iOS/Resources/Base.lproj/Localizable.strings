@@ -1638,12 +1638,16 @@
 "force.update.ok_button" = "Go to App Store";
 
 //Feature flag
-"feature.flag.update.alert.base_message" = "The team admin changed the following features:\n%@";
+"feature_config.update.alert.base_message" = "The team admin changed the following features:\n%@";
 
 //Feature flag - File sharing
-"feature.flag.update.file_sharing.alert.title" = "File sharing restrictions";
-"feature.flag.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is disabled";
-"feature.flag.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is enabled";
+"feature_config.update.file_sharing.alert.title" = "File sharing restrictions";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is disabled";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is enabled";
+"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
+"feature_config.file_sharing_restrictions.picture" = "Receiving pictures restricted";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";

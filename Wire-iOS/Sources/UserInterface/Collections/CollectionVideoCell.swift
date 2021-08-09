@@ -17,13 +17,14 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
+    private var containerView = UIView()
     private let videoMessageView = VideoMessageView()
+    private let restrictionView = SimpleVideoMessageRestrictionView()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,25 +43,49 @@ final class CollectionVideoCell: CollectionCell {
             return
         }
 
-        videoMessageView.configure(for: message, isInitial: true)
+        if message.isRestricted {
+            setup(restrictionView)
+            restrictionView.configure()
+        } else {
+            videoMessageView.delegate = self
+            videoMessageView.timeLabelHidden = true
+
+            setup(videoMessageView)
+            videoMessageView.configure(for: message, isInitial: true)
+        }
     }
 
     func loadView() {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        secureContentsView.addSubview(containerView)
 
-        self.videoMessageView.delegate = self
-        self.videoMessageView.clipsToBounds = true
-        self.videoMessageView.timeLabelHidden = true
-        self.secureContentsView.addSubview(self.videoMessageView)
-
-        constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
-            videoMessageView.edges == contentView.edges
-        }
+        NSLayoutConstraint.activate([
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
+        ])
     }
 
     override var obfuscationIcon: StyleKitIcon {
         return .movie
     }
 
+    private func setup(_ view: UIView) {
+        view.clipsToBounds = true
+
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
 }
 
 extension CollectionVideoCell: TransferViewDelegate {

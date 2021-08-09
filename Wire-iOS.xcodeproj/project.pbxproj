@@ -17,6 +17,14 @@
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
+		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
+		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
+		0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */; };
+		0685009326B7F7B600721F80 /* BaseMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */; };
+		068500BD26B9580700721F80 /* FileMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500BC26B9580700721F80 /* FileMessageRestrictionView.swift */; };
+		068500C126B9A11C00721F80 /* SimpleImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500C026B9A11B00721F80 /* SimpleImageMessageRestrictionView.swift */; };
+		068500C726B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */; };
+		068500DF26BD4E4B00721F80 /* UIView+Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500DE26BD4E4800721F80 /* UIView+Subviews.swift */; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */; };
@@ -1733,6 +1741,14 @@
 		0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockChangeWarningViewController.swift; sourceTree = "<group>"; };
 		064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+OpenURL.swift"; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
+		0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageRestrictionView.swift; sourceTree = "<group>"; };
+		0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageRestrictionView.swift; sourceTree = "<group>"; };
+		068500BC26B9580700721F80 /* FileMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageRestrictionView.swift; sourceTree = "<group>"; };
+		068500C026B9A11B00721F80 /* SimpleImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageMessageRestrictionView.swift; sourceTree = "<group>"; };
+		068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoMessageRestrictionView.swift; sourceTree = "<group>"; };
+		068500DE26BD4E4800721F80 /* UIView+Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Subviews.swift"; sourceTree = "<group>"; };
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
@@ -3539,6 +3555,20 @@
 			path = UIApplication;
 			sourceTree = "<group>";
 		};
+		0685007F26B35DFC00721F80 /* Restrictions */ = {
+			isa = PBXGroup;
+			children = (
+				0685009226B7F7B500721F80 /* BaseMessageRestrictionView.swift */,
+				0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */,
+				0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */,
+				0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */,
+				068500BC26B9580700721F80 /* FileMessageRestrictionView.swift */,
+				068500C026B9A11B00721F80 /* SimpleImageMessageRestrictionView.swift */,
+				068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */,
+			);
+			path = Restrictions;
+			sourceTree = "<group>";
+		};
 		06B3091126AEDC830057AF9E /* UIAlertController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4855,6 +4885,7 @@
 				EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */,
 				8716850F203332F800AC9F81 /* UIViewController+SafeArea.swift */,
 				1682AEB520480C80003A052A /* UIViewController+Navigation.swift */,
+				068500DE26BD4E4800721F80 /* UIView+Subviews.swift */,
 				EFA6E24B2056E0DA008AB47E /* UITraitEnvironment+SizeClass.swift */,
 				EF22DC7E224BC5C2001EDE8E /* UIViewController+Alert.swift */,
 				5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */,
@@ -5741,6 +5772,7 @@
 				EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */,
 				BF0555BC1E6D785C00D3E9D4 /* CallCellViewModel.swift */,
 				160C311E1E4C78480012E4BC /* CustomMessageView.swift */,
+				0685007F26B35DFC00721F80 /* Restrictions */,
 				87F18BB41E0154C000C69D9B /* FileTransfer */,
 				874448871C22FCE500E7B947 /* Utility */,
 				166264F12179D33D00300F45 /* CellComponents */,
@@ -7674,6 +7706,7 @@
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				A9CBBEBA24CED5C9006543D4 /* StyleKitIcon+Const.swift in Sources */,
 				87240380215B8EBA0094363B /* Collection+MentionSearch.swift in Sources */,
+				0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
 				EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */,
@@ -7804,6 +7837,7 @@
 				5E4BC1CC218CA94D00A8682E /* ZMConversationMessage+Date.swift in Sources */,
 				EF4265892333BA7600DDAD0A /* ConversationListViewModel.swift in Sources */,
 				5E1D74C32266221800AD1F32 /* AccentColorProvider.swift in Sources */,
+				068500BD26B9580700721F80 /* FileMessageRestrictionView.swift in Sources */,
 				5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */,
 				D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */,
 				87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */,
@@ -7961,6 +7995,7 @@
 				EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */,
 				D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
+				068500C126B9A11C00721F80 /* SimpleImageMessageRestrictionView.swift in Sources */,
 				162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */,
 				BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */,
 				EEE104052126F68A003C779B /* CameraController.swift in Sources */,
@@ -8028,6 +8063,7 @@
 				5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */,
 				EF471BE4232658A9008E11A5 /* ConversationListViewControllerViewModel.swift in Sources */,
 				EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */,
+				068500C726B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
 				1661C71F21A71F15003DCE1C /* ConversationAudioMessageCell.swift in Sources */,
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
@@ -8164,6 +8200,7 @@
 				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,
 				EF471BE2232654CE008E11A5 /* ConversationListViewControllerViewModel+Handles.swift in Sources */,
 				87AC33CD2182064F00069C79 /* ReplyComposingView.swift in Sources */,
+				0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */,
 				F15650DB21DD10A100210504 /* UserImageView.swift in Sources */,
 				1639A84922648BE400868AB9 /* ZClientViewController+AvailabilityBehaviourChange.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
@@ -8179,6 +8216,7 @@
 				5405444F253842C200FAE77A /* LaunchSequenceOperation.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */,
 				16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */,
+				068500DF26BD4E4B00721F80 /* UIView+Subviews.swift in Sources */,
 				5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */,
 				5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */,
 				EEA65C2725D27A8300AA7519 /* Strings+Generated.swift in Sources */,
@@ -8430,6 +8468,7 @@
 				5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */,
 				63589AA124DAA398008FEC8F /* UIAlertController+Permissions.swift in Sources */,
 				5EFCB3BF21AAD46C00E892D9 /* Message+Pasteboard.swift in Sources */,
+				0685009326B7F7B600721F80 /* BaseMessageRestrictionView.swift in Sources */,
 				F15650E721DD14B600210504 /* String+Transform.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
@@ -8471,6 +8510,7 @@
 				5501FFC922B398B30050D8FC /* UserInputRequest.swift in Sources */,
 				5EBBE96F218783A2008BC1B7 /* ConversationMessageActionController.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
+				0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
 				5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */,
 				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,
