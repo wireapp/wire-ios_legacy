@@ -64,7 +64,6 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
-            
             // containerView
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),
