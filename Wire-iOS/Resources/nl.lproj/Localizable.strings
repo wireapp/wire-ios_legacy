@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Ophangen";
 "voice.mute_button.title" = "Dempen";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Draai om";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Luidspreker";
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";

@@ -34,7 +34,6 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var isConstantBitRate: Bool
     var title: String
     var isVideoCall: Bool
-    var variant: ColorSchemeVariant
     var disableIdleTimer: Bool
     var cameraType: CaptureDevice
     var networkQuality: NetworkQuality

@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Leggja á";
 "voice.mute_button.title" = "Þagga";
 "voice.video_button.title" = "Myndskeið";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Hætta við";
 "voice.call_button.title" = "Hringja";
