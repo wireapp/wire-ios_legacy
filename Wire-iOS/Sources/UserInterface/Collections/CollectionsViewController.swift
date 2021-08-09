@@ -152,7 +152,11 @@ final class CollectionsViewController: UIViewController {
 
         self.updateNoElementsState()
 
-        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] note in
+            guard let featureUpdateEvent = note.object as? FeatureUpdateEventPayload,
+                  featureUpdateEvent.name == .fileSharing else {
+                return
+            }
             self?.reloadData()
         }
     }

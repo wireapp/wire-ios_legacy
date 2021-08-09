@@ -93,7 +93,9 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
                                                object: nil,
                                                queue: .main) { [weak self] note in
             guard let featureUpdateEvent = note.object as? FeatureUpdateEventPayload,
-                  featureUpdateEvent.name == .fileSharing else { return }
+                  featureUpdateEvent.name == .fileSharing else {
+                return
+            }
             self?.updateVisibleCells()
         }
     }
