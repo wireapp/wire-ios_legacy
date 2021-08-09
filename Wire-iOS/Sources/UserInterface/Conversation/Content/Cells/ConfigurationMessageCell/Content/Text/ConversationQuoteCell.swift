@@ -22,6 +22,9 @@ import WireDataModel
 import WireCommonComponents
 
 final class ConversationReplyContentView: UIView {
+    typealias View = ConversationReplyCell
+    typealias FileSharingRestrictions = L10n.Localizable.FeatureConfig.FileSharingRestrictions
+    typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
     let numberOfLinesLimit: Int = 4
 
     struct Configuration {
@@ -30,15 +33,119 @@ final class ConversationReplyContentView: UIView {
             case imagePreview(thumbnail: PreviewableImageResource, isVideo: Bool)
         }
 
-        let showDetails: Bool
-        let isEdited: Bool
-        let senderName: String?
-        let timestamp: String?
-        let showRestriction: Bool
-        let restrictionDescription: String?
+        var quotedMessage: ZMConversationMessage?
 
-        let content: Content
-        let contentType: String
+        var showDetails: Bool {
+            guard let message = quotedMessage,
+                  (message.isText
+                    || message.isLocation
+                    || message.isAudio
+                    || message.isImage
+                    || message.isVideo
+                    || message.isFile) else {
+                return false
+            }
+            return true
+        }
+
+        var isEdited: Bool {
+            return quotedMessage?.updatedAt != nil
+        }
+
+        var senderName: String? {
+            return quotedMessage?.senderName
+        }
+
+        var timestamp: String? {
+            return quotedMessage?.formattedOriginalReceivedDate()
+        }
+
+        var showRestriction: Bool {
+            guard let message = quotedMessage,
+                  message.isRestricted else {
+                return false
+            }
+            return true
+        }
+
+        var restrictionDescription: String? {
+            guard let message = quotedMessage,
+                  message.isRestricted else {
+                return nil
+            }
+
+            if message.isAudio {
+                return FileSharingRestrictions.audio
+            } else if message.isImage {
+                return FileSharingRestrictions.picture
+            } else if message.isVideo {
+                return FileSharingRestrictions.video
+            } else if message.isFile {
+                return FileSharingRestrictions.file
+            } else {
+                return nil
+            }
+        }
+
+        var content: Content {
+            return setupContent()
+        }
+
+        var contentType: String {
+            guard let message = quotedMessage else {
+                return "quote.type.unavailable"
+            }
+            return "quote.type.\(message.typeString)"
+        }
+
+        private func setupContent() -> Content {
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
+                                                             .foregroundColor: UIColor.from(scheme: .textForeground)]
+            switch quotedMessage {
+            case let message? where message.isText:
+                let data = message.textMessageData!
+                return .text(NSAttributedString.formatForPreview(message: data, inputMode: false))
+
+            case let message? where message.isLocation:
+                let location = message.locationMessageData!
+                let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))
+                let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? MessagePreview.location).localizedUppercase
+                return .text(initialString && attributes)
+
+            case let message? where message.isAudio:
+                let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))
+                let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.audio.localizedUppercase
+                return .text(initialString && attributes)
+
+            case let message? where message.isImage && message.isRestricted:
+                let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
+                let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
+                return .text(initialString && attributes)
+
+            case let message? where message.isImage:
+                return .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
+
+            case let message? where message.isVideo && message.isRestricted:
+                let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground))
+                let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
+                return .text(initialString && attributes)
+
+            case let message? where message.isVideo:
+                return .imagePreview(thumbnail: message.fileMessageData!.thumbnailImage, isVideo: true)
+
+            case let message? where message.isFile:
+                let fileData = message.fileMessageData!
+                let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))
+                let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? MessagePreview.file).localizedUppercase
+                return .text(initialString && attributes)
+
+            default:
+                let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic,
+                                                                       .foregroundColor: UIColor.from(scheme: .textDimmed)]
+                return .text(NSAttributedString(string: "content.message.reply.broken_message".localized,
+                                                attributes: attributes))
+            }
+        }
     }
 
     let senderComponent = SenderNameCellComponent()
@@ -128,7 +235,7 @@ final class ConversationReplyContentView: UIView {
         senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: .from(scheme: .iconNormal)) : nil
         senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
         timestampLabel.text = object.timestamp
-        restrictionLabel.text = object.restrictionDescription
+        restrictionLabel.text = object.restrictionDescription?.localizedUppercase
 
         switch object.content {
         case .text(let attributedContent):
@@ -197,8 +304,6 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
 final class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
-    typealias FileSharingRestrictions = L10n.Localizable.FeatureConfig.FileSharingRestrictions
-    typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
     let configuration: View.Configuration
 
     var showEphemeralTimer: Bool = false
@@ -215,83 +320,26 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
     let accessibilityIdentifier: String? = "ReplyCell"
 
     init(quotedMessage: ZMConversationMessage?) {
-        let isEdited = quotedMessage?.updatedAt != nil
-        let senderName = quotedMessage?.senderName
-        let timestamp = quotedMessage?.formattedOriginalReceivedDate()
-        var restrictionDescription: String?
-        let showRestriction = quotedMessage?.isRestricted ?? false
-
-        var isUnavailable = false
-        let content: View.Configuration.Content
-        let contentType: String
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                         .foregroundColor: UIColor.from(scheme: .textForeground)]
-
-        switch quotedMessage {
-        case let message? where message.isText:
-            let data = message.textMessageData!
-            content = .text(NSAttributedString.formatForPreview(message: data, inputMode: false))
-            contentType = "quote.type.text"
-
-        case let message? where message.isLocation:
-            let location = message.locationMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? MessagePreview.location).localizedUppercase
-            content = .text(initialString && attributes)
-            contentType = "quote.type.location"
-
-        case let message? where message.isAudio:
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.audio.localizedUppercase
-            content = .text(initialString && attributes)
-            contentType = "quote.type.audio"
-            restrictionDescription = FileSharingRestrictions.audio.localizedUppercase
-
-        case let message? where message.isImage && message.isRestricted:
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
-            content = .text(initialString && attributes)
-            contentType = "quote.type.image"
-            restrictionDescription = FileSharingRestrictions.picture.localizedUppercase
-
-        case let message? where message.isImage:
-            content = .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
-            contentType = "quote.type.image"
-
-        case let message? where message.isVideo && message.isRestricted:
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
-            content = .text(initialString && attributes)
-            contentType = "quote.type.video"
-            restrictionDescription = FileSharingRestrictions.video.localizedUppercase
-
-        case let message? where message.isVideo:
-            content = .imagePreview(thumbnail: message.fileMessageData!.thumbnailImage, isVideo: true)
-            contentType = "quote.type.video"
-
-        case let message? where message.isFile:
-            let fileData = message.fileMessageData!
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground))
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? MessagePreview.file).localizedUppercase
-            content = .text(initialString && attributes)
-            contentType = "quote.type.file"
-            restrictionDescription = FileSharingRestrictions.file.localizedUppercase
-
-        default:
-            isUnavailable = true
-            let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic, .foregroundColor: UIColor.from(scheme: .textDimmed)]
-            content = .text(NSAttributedString(string: "content.message.reply.broken_message".localized, attributes: attributes))
-            contentType = "quote.type.unavailable"
-        }
-
-        configuration = View.Configuration(showDetails: !isUnavailable,
-                                           isEdited: isEdited,
-                                           senderName: senderName,
-                                           timestamp: timestamp,
-                                           showRestriction: showRestriction,
-                                           restrictionDescription: restrictionDescription,
-                                           content: content,
-                                           contentType: contentType)
+       configuration = View.Configuration(quotedMessage: quotedMessage)
     }
+}
 
+private extension ZMConversationMessage {
+    var typeString: String {
+        if isText {
+            return "text"
+        } else if isLocation {
+            return "location"
+        } else if isAudio {
+            return "audio"
+        } else if isImage {
+            return "image"
+        } else if isVideo {
+            return "video"
+        } else if isFile {
+            return "file"
+        } else {
+            return "unavailable"
+        }
+    }
 }

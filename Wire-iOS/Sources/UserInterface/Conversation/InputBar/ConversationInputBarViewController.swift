@@ -474,7 +474,10 @@ final class ConversationInputBarViewController: UIViewController,
 
     @objc func updateInputBarButtons() {
         inputBar.buttonsView.buttons = inputBarButtons
-        inputBar.buttonsView.layoutSubviews()
+        inputBarButtons.forEach {
+            $0.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        }
+        inputBar.buttonsView.setNeedsLayout()
     }
 
     // MARK: - Save draft message

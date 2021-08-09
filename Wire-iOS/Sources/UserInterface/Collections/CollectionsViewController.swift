@@ -151,6 +151,10 @@ final class CollectionsViewController: UIViewController {
         self.contentView.collectionView.prefetchDataSource = self
 
         self.updateNoElementsState()
+
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.reloadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -209,6 +213,7 @@ final class CollectionsViewController: UIViewController {
         shouldTrackOnNextOpen = false
     }
 
+    @objc
     private func reloadData() {
         UIView.performWithoutAnimation {
             self.contentView.collectionView.performBatchUpdates({
