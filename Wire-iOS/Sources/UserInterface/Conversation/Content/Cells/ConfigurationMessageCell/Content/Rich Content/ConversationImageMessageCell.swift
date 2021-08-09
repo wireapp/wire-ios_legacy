@@ -78,7 +78,6 @@ final class ConversationImageMessageCell: UIView,
     private func configureView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .from(scheme: .placeholderBackground)
-        containerView.contentMode = .scaleAspectFill
         containerView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
 
         addSubview(containerView)
@@ -86,14 +85,6 @@ final class ConversationImageMessageCell: UIView,
 
     private func createConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            // containerView
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
 
         let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
         let trailing = containerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
@@ -137,6 +128,8 @@ final class ConversationImageMessageCell: UIView,
             restrictionView.configure()
         } else {
             setup(imageResourceView)
+            imageResourceView.contentMode = .scaleAspectFill
+            imageResourceView.layer.borderColor = UIColor.from(scheme: .cellSeparator).cgColor
             imageResourceView.layer.borderWidth = 0
 
             let imageResource = object.isObfuscated ? nil : object.image.image
