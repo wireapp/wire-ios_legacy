@@ -455,7 +455,7 @@
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "Ви приєдналися";
 
 "content.system.conversation.invite.title" = "Сервіси та люди поза межами вашої команди можуть приєднатися до цієї розмови.";
 "content.system.conversation.invite.button" = "Запросити людей";

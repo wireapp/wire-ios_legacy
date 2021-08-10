@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Tutup";
 "voice.mute_button.title" = "Diamkan";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Flip";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Pembicara";
 "voice.cancel_button.title" = "Batal";
 "voice.call_button.title" = "Panggil";

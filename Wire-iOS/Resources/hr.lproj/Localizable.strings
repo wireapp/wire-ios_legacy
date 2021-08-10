@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Poklopi";
 "voice.mute_button.title" = "Isključi zvuk";
 "voice.video_button.title" = "Videozapis";
-"voice.flip_video_button.title" = "Okreni";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Zvučnik";
 "voice.cancel_button.title" = "Odustani";
 "voice.call_button.title" = "Poziv";

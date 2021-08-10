@@ -17,23 +17,26 @@
 //
 
 import Foundation
+import WireDataModel
 
-public struct AppLockRules: Decodable {
-    public let useBiometricsOrCustomPasscode: Bool
-    public let forceAppLock: Bool
-    public let appLockTimeout: UInt
-    
-    public static func fromBundle() -> AppLockRules {
-        if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
-            let fileData = try? Data(contentsOf: fileURL) {
-            return fromData(fileData)
-        } else {
+public extension AppLockController.LegacyConfig {
+
+    private struct Container: Decodable {
+
+        let legacyAppLockConfig: AppLockController.LegacyConfig?
+
+    }
+
+    static func fromBundle() -> Self? {
+        guard
+            let url = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
+            let data = try? Data(contentsOf: url)
+        else {
             fatalError("session_manager.json not exist")
         }
+
+        let container = try? JSONDecoder().decode(Container.self, from: data)
+        return container?.legacyAppLockConfig
     }
-    
-    public static func fromData(_ data: Data) -> AppLockRules {
-        let decoder = JSONDecoder()
-        return try! decoder.decode(AppLockRules.self, from: data)
-    }
+
 }

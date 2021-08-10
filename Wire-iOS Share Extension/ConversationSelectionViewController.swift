@@ -43,7 +43,7 @@ final class ConversationSelectionViewController : UITableViewController {
         tableView.estimatedRowHeight = 56
         tableView.register(TargetConversationCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
-        searchController.dimsBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.isTranslucent = false
 

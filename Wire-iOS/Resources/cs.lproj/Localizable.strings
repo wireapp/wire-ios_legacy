@@ -650,7 +650,7 @@
 "voice.hang_up_button.title" = "Zavěsit";
 "voice.mute_button.title" = "Ztlumit";
 "voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Překlopení";
+"voice.flip_video_button.title" = "Switch";
 "voice.speaker_button.title" = "Reproduktor";
 "voice.cancel_button.title" = "Zrušit";
 "voice.call_button.title" = "Hovor";
