@@ -109,7 +109,10 @@ extension ZMConversationMessage {
         guard let fileMessageData = self.fileMessageData else {
             return false
         }
-        return isFile && fileMessageData.transferState == .uploaded && fileMessageData.downloadState == .remote
+        return isFile
+            && fileMessageData.transferState == .uploaded
+            && fileMessageData.downloadState == .remote
+            && !isRestricted
     }
 
     var canCancelDownload: Bool {
@@ -121,7 +124,7 @@ extension ZMConversationMessage {
 
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
+        if isEphemeral || isRestricted {
             return false
         }
 
@@ -144,7 +147,7 @@ extension ZMConversationMessage {
 
     /// Wether it should be possible to forward given message to another conversation.
     var canBeForwarded: Bool {
-        if isEphemeral {
+        if isEphemeral || isRestricted {
             return false
         }
 
