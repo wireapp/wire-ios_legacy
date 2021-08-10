@@ -1777,6 +1777,38 @@ internal enum L10n {
         internal static let unkownError = L10n.tr("Localizable", "error.user.unkown_error")
       }
     }
+    internal enum FeatureConfig {
+      internal enum FileSharingRestrictions {
+        /// Receiving audio files restricted
+        internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
+        /// Receiving files restricted
+        internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
+        /// Receiving pictures restricted
+        internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
+        /// Receiving videos restricted
+        internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
+      }
+      internal enum Update {
+        internal enum Alert {
+          /// The team admin changed the following features:\n%@
+          internal static func baseMessage(_ p1: Any) -> String {
+            return L10n.tr("Localizable", "feature_config.update.alert.base_message", String(describing: p1))
+          }
+        }
+        internal enum FileSharing {
+          internal enum Alert {
+            /// File sharing restrictions
+            internal static let title = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.title")
+            internal enum Message {
+              /// Sharing and receiving files of any type is disabled
+              internal static let disabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.disabled")
+              /// Sharing and receiving files of any type is enabled
+              internal static let enabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.enabled")
+            }
+          }
+        }
+      }
+    }
     internal enum Folder {
       internal enum Creation {
         internal enum Name {
