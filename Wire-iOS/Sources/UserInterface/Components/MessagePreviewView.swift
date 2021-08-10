@@ -112,6 +112,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
+        imagePreview.accessibilityIdentifier = "ThumbnailImagePreview"
 
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
