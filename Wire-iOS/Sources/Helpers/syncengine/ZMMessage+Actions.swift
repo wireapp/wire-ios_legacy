@@ -106,13 +106,13 @@ extension ZMConversationMessage {
 
     /// Wether it is possible to download the message content.
     var canBeDownloaded: Bool {
-        guard let fileMessageData = self.fileMessageData else {
+        guard let fileMessageData = self.fileMessageData,
+              !isRestricted else {
             return false
         }
         return isFile
             && fileMessageData.transferState == .uploaded
             && fileMessageData.downloadState == .remote
-            && !isRestricted
     }
 
     var canCancelDownload: Bool {
