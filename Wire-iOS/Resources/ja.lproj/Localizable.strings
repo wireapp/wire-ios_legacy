@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "承諾";
 "voice.decline_button.title" = "辞退";
 "voice.hang_up_button.title" = "電話を切る";
-"voice.mute_button.title" = "ミュート";
-"voice.video_button.title" = "ビデオ";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "スピーカー";
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "固定ビットレート";
 "call.status.variable_bitrate" = "可変ビット レート";
 
-"call.participants.show_all" = "全てを表示 (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "参加者";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "一時停止中";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "%@ からの着信";
 "call.actions.label.toggle_mute_on" = "ミュート";
 "call.actions.label.toggle_mute_off" = "ミュート解除します。";
-"call.actions.label.flip_camera" = "カメラを切り替える";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "外部スピーカー有効";
 "call.actions.label.toggle_speaker_off" = "外部スピーカー無効化";
 "call.actions.label.accept_call" = "通話をうけいれる";

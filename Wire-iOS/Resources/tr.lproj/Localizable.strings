@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Kabul et";
 "voice.decline_button.title" = "Reddet";
 "voice.hang_up_button.title" = "Aramayı sonlandır";
-"voice.mute_button.title" = "Sustur";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Hoparlör";
 "voice.cancel_button.title" = "İptal";
 "voice.call_button.title" = "Ara";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Sabit Bit Hızı";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "(%@) Tümünü göster";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Katılımcılar";
 
 "call.overlay.switch_to.speakers" = "KONUŞMACILAR";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video duraklatıldı";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "%@ gelen arama";
 "call.actions.label.toggle_mute_on" = "Sustur";
 "call.actions.label.toggle_mute_off" = "Sesi aç";
-"call.actions.label.flip_camera" = "Kamerayı çevir";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Hoparlörü etkinleştir";
 "call.actions.label.toggle_speaker_off" = "Hoparlörü devre dışı bırak";
 "call.actions.label.accept_call" = "Aramayı kabul et";

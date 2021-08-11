@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Prihvati";
 "voice.decline_button.title" = "Odbij";
 "voice.hang_up_button.title" = "Poklopi";
-"voice.mute_button.title" = "Isključi zvuk";
-"voice.video_button.title" = "Videozapis";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Zvučnik";
 "voice.cancel_button.title" = "Odustani";
 "voice.call_button.title" = "Poziv";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Konstanta bitna brzina";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Prikaži sve (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Sudionici";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pauziran";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Dolazni poziv od %@";
 "call.actions.label.toggle_mute_on" = "Isključi zvuk";
 "call.actions.label.toggle_mute_off" = "Uključi zvuk";
-"call.actions.label.flip_camera" = "Okreni kameru";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Omogući zvučnik";
 "call.actions.label.toggle_speaker_off" = "Onemogući zvučnik";
 "call.actions.label.accept_call" = "Prihvati poziv";
