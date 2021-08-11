@@ -169,7 +169,9 @@
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
-    <array/>
+	<array>
+		<string>armv7</string>
+	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarStyle</key>
