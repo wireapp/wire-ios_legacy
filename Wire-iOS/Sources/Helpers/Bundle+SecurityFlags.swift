@@ -20,7 +20,6 @@ import Foundation
 
 enum SecurityFlags {
     case clipboard
-    case saveMessage
     case generateLinkPreviews
     case forceConstantBitRateCalls
     case openFilePreview
@@ -36,8 +35,6 @@ enum SecurityFlags {
         switch self {
         case .clipboard:
             return "ClipboardEnabled"
-        case .saveMessage:
-            return "SaveMessageEnabled"
         case .generateLinkPreviews:
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:
