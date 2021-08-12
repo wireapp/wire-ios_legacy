@@ -38,6 +38,7 @@ final class ZClientViewController: UIViewController {
     var legalHoldDisclosureController: LegalHoldDisclosureController?
 
     var userObserverToken: Any?
+    var conferenceCallingUnavailableObserverToken: Any?
 
     private let topOverlayContainer: UIView = UIView()
     private var topOverlayViewController: UIViewController?
@@ -163,6 +164,8 @@ final class ZClientViewController: UIViewController {
         }
 
         setupUserChangeInfoObserver()
+        setUpFeatureChangeObservation()
+        setUpConferenceCallingUnavailableObserver()
     }
 
     private func createBackgroundViewController() {
