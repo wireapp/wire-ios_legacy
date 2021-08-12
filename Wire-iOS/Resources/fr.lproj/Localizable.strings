@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "Des **services** sont actifs";
 "conversation.banner.externals_present" = "Des **contacts externes** sont présents";
 "conversation.banner.guests_services_present" = "Des **invités** et des **services** sont présents";
-"conversation.banner.externals_services_present" = "Des **contacts externes** et des **services** sont présents";
+"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
 "conversation.banner.externals_guests_present" = "Des **contacts externes** et des **invités** sont présents";
 "conversation.banner.externals_guests_services_present" = "Des **contacts externes** , des **invités** et des **services** sont présents";
 
@@ -1621,6 +1621,8 @@
 "error.conversation.too_many_members" = "Cette conversation est saturée";
 "error.conversation.offline" = "Il semble y avoir un problème avec votre connexion Internet. Merci de vous assurer de son bon fonctionnement.";
 "error.conversation.missing_legalhold_consent" = "A cause de la conservation à des fins juridiques, seuls les membres de l'équipe peuvent être ajoutés à cette conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Appuyez sur les couleurs pour changer la taille du pinceau";
 

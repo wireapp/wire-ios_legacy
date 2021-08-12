@@ -1621,6 +1621,8 @@
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
 "error.conversation.offline" = "Es scheint ein Problem mit der Internetverbindung zu geben. Bitte stellen Sie sicher, dass sie funktioniert.";
 "error.conversation.missing_legalhold_consent" = "Aufgrund der gesetzlichen Aufbewahrung können nur Team-Mitglieder zu dieser Unterhaltung hinzugefügt werden.";
+"error.message.send.missing_legalhold_consent" = "Sie können diese Nachricht nicht senden, weil Sie mindestens ein veraltetes Gerät haben, das die gesetzliche Aufbewahrung nicht unterstützt. Bitte aktualisieren Sie all Ihre Geräte oder entfernen Sie sie in den App-Einstellungen.";
+"error.message.send.title" = "Nachrichten können nicht gesendet werden";
 
 "sketchpad.initial_hint" = "Tippen Sie auf Farben, um die Pinselgröße zu ändern";
 
