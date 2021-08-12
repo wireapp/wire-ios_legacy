@@ -103,6 +103,8 @@
 		1658D2041D3E742A00249609 /* new_message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA11D34FF0400105D44 /* new_message.caf */; };
 		1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA21D34FF0400105D44 /* ping_from_them.caf */; };
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
+		1658E93226C5609F003D0090 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E93126C5609F003D0090 /* Starscream.xcframework */; };
+		1658E93326C560A0003D0090 /* Starscream.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E93126C5609F003D0090 /* Starscream.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
 		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
 		165C55C2254B0CB500731CA9 /* UIColor+NamedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */; };
@@ -1703,6 +1705,7 @@
 				A96867D726A5E70D00679D95 /* SwiftProtobuf.xcframework in Embed Frameworks */,
 				A96867D126A5E6C100679D95 /* Cartography.xcframework in Embed Frameworks */,
 				A96867B926A5E5A000679D95 /* WireSyncEngine.xcframework in Embed Frameworks */,
+				1658E93326C560A0003D0090 /* Starscream.xcframework in Embed Frameworks */,
 				A96867F926A5EAEB00679D95 /* libPhoneNumberiOS.xcframework in Embed Frameworks */,
 				A96867B726A5E5A000679D95 /* WireShareEngine.xcframework in Embed Frameworks */,
 				A96867DA26A5E71000679D95 /* PINCache.xcframework in Embed Frameworks */,
@@ -1823,6 +1826,7 @@
 		1658C19720A1E55200148F6D /* CallInfoRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoRootViewControllerTests.swift; sourceTree = "<group>"; };
 		1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoTestFixture.swift; sourceTree = "<group>"; };
 		1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInfoViewControllerInput.swift; sourceTree = "<group>"; };
+		1658E93126C5609F003D0090 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
 		16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+CallEvents.swift"; sourceTree = "<group>"; };
 		1659FCCC234E415200D06C1F /* MockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLabel.swift; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
@@ -3475,6 +3479,7 @@
 				A96867D626A5E70D00679D95 /* SwiftProtobuf.xcframework in Frameworks */,
 				A96867AA26A5E59F00679D95 /* WireCryptobox.xcframework in Frameworks */,
 				A96867AC26A5E59F00679D95 /* WireDataModel.xcframework in Frameworks */,
+				1658E93226C5609F003D0090 /* Starscream.xcframework in Frameworks */,
 				A96867FC26A5ECA700679D95 /* avs.xcframework in Frameworks */,
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
@@ -4609,6 +4614,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1658E93126C5609F003D0090 /* Starscream.xcframework */,
 				A9CCBA8A269601CF00122380 /* libPhoneNumberiOS.xcframework */,
 				A9C4B410266A550700C88BEB /* ios-arm64_x86_64-simulator */,
 				A9C4B3FB266A51D300C88BEB /* SnapshotTesting.xcframework */,
@@ -9371,6 +9377,10 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
