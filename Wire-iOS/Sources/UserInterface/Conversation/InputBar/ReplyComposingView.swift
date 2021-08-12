@@ -96,8 +96,8 @@ final class ReplyComposingView: UIView {
 
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
-        previewView.isAccessibilityElement = true
-        previewView.shouldGroupAccessibilityChildren = true
+//        previewView.isAccessibilityElement = true
+//        previewView.shouldGroupAccessibilityChildren = true
         previewView.accessibilityIdentifier = "replyView"
         previewView.accessibilityLabel = buildAccessibilityLabel()
 

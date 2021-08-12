@@ -106,6 +106,8 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         imagePreview.clipsToBounds = true
@@ -113,7 +115,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
         imagePreview.isAccessibilityElement = true
-        imagePreview.accessibilityIdentifier = "ThumbnailImagePreview"
+        imagePreview.accessibilityIdentifier = "ThumbnailImage_ReplyPreview"
 
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
@@ -250,6 +252,8 @@ final class MessagePreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         allViews.prepareForLayout()
