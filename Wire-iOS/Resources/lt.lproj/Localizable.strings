@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Priimti";
 "voice.decline_button.title" = "Atmesti";
 "voice.hang_up_button.title" = "Užbaigti";
-"voice.mute_button.title" = "Išjungti pranešimus";
-"voice.video_button.title" = "Vaizdo įrašas";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Garsiakalbis";
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Pastovi sparta (bitais)";
 "call.status.variable_bitrate" = "Kintama sparta bitais";
 
-"call.participants.show_all" = "Rodyti visus (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Dalyviai";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Vaizdas pristabdytas";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Jums skambina %@";
 "call.actions.label.toggle_mute_on" = "Išjungti mikrofoną";
 "call.actions.label.toggle_mute_off" = "Įjungti mikrofoną";
-"call.actions.label.flip_camera" = "Perjungti kamerą";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Įjungti garsiakalbį";
 "call.actions.label.toggle_speaker_off" = "Išjungti garsiakalbį";
 "call.actions.label.accept_call" = "Atsiliepti";

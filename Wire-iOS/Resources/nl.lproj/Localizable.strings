@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
-"voice.mute_button.title" = "Dempen";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Luidspreker";
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Constante Bit Rate";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Toon alle (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Deelnemers";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video is gepauzeerd";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Incoming call from %@";
 "call.actions.label.toggle_mute_on" = "Dempen";
 "call.actions.label.toggle_mute_off" = "Dempen opheffen";
-"call.actions.label.flip_camera" = "Schakelen tussen camera's";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Luidspreker inschakelen";
 "call.actions.label.toggle_speaker_off" = "Luidspreker uitschakelen";
 "call.actions.label.accept_call" = "Gesprek aannemen";

@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Vasta";
 "voice.decline_button.title" = "Keeldu";
 "voice.hang_up_button.title" = "Lõpeta kõne";
-"voice.mute_button.title" = "Hääletu";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Kõlar";
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Ühtlane bitisagedus";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Näita kõik (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Osalejad";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pausil";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "%@ helistab";
 "call.actions.label.toggle_mute_on" = "Hääletu";
 "call.actions.label.toggle_mute_off" = "Heli sisse";
-"call.actions.label.flip_camera" = "Pööra kaamera ümber";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Luba kõlarid";
 "call.actions.label.toggle_speaker_off" = "Keela kõlarid";
 "call.actions.label.accept_call" = "Võta kõne vastu";

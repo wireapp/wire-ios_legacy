@@ -91,9 +91,9 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "邀请已送出";
@@ -310,7 +310,7 @@
 "conversation.input_bar.shortcut.newline" = "插入换行符";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
-"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_previous_mention" = "选择前面的引用";
 "conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
@@ -455,7 +455,7 @@
 "content.system.conversation.you.left" = "%@ 离开了";
 "content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "您已加入";
 
 "content.system.conversation.invite.title" = "服务和团队外的人员可以加入此对话。";
 "content.system.conversation.invite.button" = "邀请联系人";
@@ -543,7 +543,7 @@
 
 "content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
 "content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
-"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.reset_session" = "修复未来的消息";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
 "content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "接听";
 "voice.decline_button.title" = "拒绝";
 "voice.hang_up_button.title" = "结束通话";
-"voice.mute_button.title" = "静音";
-"voice.video_button.title" = "视频";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "麦克风";
+"voice.video_button.title" = "相机";
+"voice.flip_video_button.title" = "切换相机";
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
@@ -682,16 +682,17 @@
 "call.status.constant_bitrate" = "固定码率";
 "call.status.variable_bitrate" = "可变比特率";
 
-"call.participants.show_all" = "全部显示 (%@)";
+"call.participants.show_all" = "参与者 (%d)";
 "call.participants.list.title" = "参与者";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.speakers" = "发言者";
+"call.overlay.switch_to.all" = "所有人";
 
 "call.grid.no_active_speakers" = "No active video speakers...";
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "视频已暂停";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "收到来自%@的呼叫";
 "call.actions.label.toggle_mute_on" = "静音";
 "call.actions.label.toggle_mute_off" = "关闭静音";
-"call.actions.label.flip_camera" = "切换摄像头";
+"call.actions.label.flip_camera" = "切换相机";
 "call.actions.label.toggle_speaker_on" = "开启扬声器";
 "call.actions.label.toggle_speaker_off" = "禁用扬声器";
 "call.actions.label.accept_call" = "接受呼叫";
@@ -1642,7 +1643,7 @@
 "jailbrokendevice.alert.message" = "出于安全原因，Wire不能在此设备上使用，现有的所有Wire数据已被擦除。";
 
 // Database Loading Failure alert
-"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.title" = "储存空间不足";
 "databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
 "databaseloadingfailure.alert.settings" = "打开设置";
 "databaseloadingfailure.alert.delete_database" = "删除数据库";
@@ -1748,7 +1749,7 @@
 "url_action.join_conversation.confirmation.confirm_button" = "加入";
 
 "url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.converation_is_full" = "对话已满。";
 "url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
@@ -1871,14 +1872,14 @@
 
 "wipe_database.alert.description" = "Confirm database deletion";
 "wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
-"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.placeholder" = "输入 'Delete'";
 "wipe_database.alert.confirm" = "删除";
 "wipe_database.alert.confirm_input" = "删除";
 
 // Wipe database completion
 
-"wipe_database_completion.title" = "Database deleted";
-"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+"wipe_database_completion.title" = "数据库已删除";
+"wipe_database_completion.subtitle" = "您的数据和消息已被删除。您现在可以作为一个新的设备重新登录。";
 
 // MARK: - App lock module
 
@@ -1887,4 +1888,4 @@
 "appLockModule.message.passcode" = "使用密码解锁Wire";
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
 "appLockModule.unlockButton.title" = "解锁";
-"appLockModule.goToSettingsButton.title" = "Go to settings";
+"appLockModule.goToSettingsButton.title" = "前往设置";

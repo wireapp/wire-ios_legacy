@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "**Services** are active";
 "conversation.banner.externals_present" = "**Externals** are present";
 "conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
 "conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
 "conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
 

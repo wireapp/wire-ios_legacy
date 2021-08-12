@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
-"voice.mute_button.title" = "Silenzia";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Bit Rate costante";
 "call.status.variable_bitrate" = "Tasso Di Bit Rate";
 
-"call.participants.show_all" = "Mostra tutti (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Partecipanti";
 
 "call.overlay.switch_to.speakers" = "SPEAKER";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video in pausa";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Chiamata in arrivo da %@";
 "call.actions.label.toggle_mute_on" = "Silenzia";
 "call.actions.label.toggle_mute_off" = "Riattiva audio";
-"call.actions.label.flip_camera" = "Capovolgi fotocamera";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Attiva l'altoparlante";
 "call.actions.label.toggle_speaker_off" = "Disattiva l'altoparlante";
 "call.actions.label.accept_call" = "Accetta la chiamata";

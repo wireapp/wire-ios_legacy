@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "大家都已加入";
 "peoplepicker.no_matching_results.message.services" = "沒有符合結果。";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
@@ -455,7 +455,7 @@
 "content.system.conversation.you.left" = "%@離開了";
 "content.system.conversation.team.member-leave" = "%@從團隊中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "您已經加入";
 
 "content.system.conversation.invite.title" = "你的團隊以外的訪客和服務可以參加這個對話。";
 "content.system.conversation.invite.button" = "邀請朋友加入";
@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "接聽";
 "voice.decline_button.title" = "拒絕通話";
 "voice.hang_up_button.title" = "結束通話";
-"voice.mute_button.title" = "關閉訊息通知";
-"voice.video_button.title" = "影片";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "咪高峰";
+"voice.video_button.title" = "相機";
+"voice.flip_video_button.title" = "切換相機";
 "voice.speaker_button.title" = "擴音";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通話";
@@ -682,16 +682,17 @@
 "call.status.constant_bitrate" = "固定位元率";
 "call.status.variable_bitrate" = "可變位元率";
 
-"call.participants.show_all" = "全部顯示 (%@)";
+"call.participants.show_all" = "參與者 (%d)";
 "call.participants.list.title" = "參與者";
 
-"call.overlay.switch_to.speakers" = "擴音";
+"call.overlay.switch_to.speakers" = "發言者";
 "call.overlay.switch_to.all" = "全部";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "沒有人在視像通話中發言...";
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "影像已暫停";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "%@的來電";
 "call.actions.label.toggle_mute_on" = "靜音";
 "call.actions.label.toggle_mute_off" = "取消靜音";
-"call.actions.label.flip_camera" = "切換鏡頭";
+"call.actions.label.flip_camera" = "切換相機";
 "call.actions.label.toggle_speaker_on" = "開啟擴音器";
 "call.actions.label.toggle_speaker_off" = "停用擴音器";
 "call.actions.label.accept_call" = "接聽電話";

@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
-"voice.mute_button.title" = "Отключить уведомления";
-"voice.video_button.title" = "Видео";
-"voice.flip_video_button.title" = "Переключить";
+"voice.mute_button.title" = "Микрофон";
+"voice.video_button.title" = "Камера";
+"voice.flip_video_button.title" = "Переключить камеру";
 "voice.speaker_button.title" = "Динамик";
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Постоянный битрейт";
 "call.status.variable_bitrate" = "Переменный битрейт";
 
-"call.participants.show_all" = "Показать все (%@)";
+"call.participants.show_all" = "Участников (%d)";
 "call.participants.list.title" = "Участники";
 
 "call.overlay.switch_to.speakers" = "СПИКЕРЫ";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Дважды коснитесь плитки для перехода в полноэкранный режим";
 "call.grid.hints.go_back_or_zoom" = "Дважды коснитесь, чтобы вернуться, сведите или раздвиньте для изменения масштаба";
+"call.grid.hints.go_back" = "Двойное нажатие для возврата назад";
 "call.grid.hints.zoom" = "Сведите или раздвиньте для изменения масштаба";
 
 "call.video.paused" = "Видео приостановлено";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Входящий вызов от %@";
 "call.actions.label.toggle_mute_on" = "Отключить уведомления";
 "call.actions.label.toggle_mute_off" = "Включить уведомления";
-"call.actions.label.flip_camera" = "Смена камеры";
+"call.actions.label.flip_camera" = "Переключить камеру";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
 "call.actions.label.toggle_speaker_off" = "Отключить динамик";
 "call.actions.label.accept_call" = "Принять вызов";

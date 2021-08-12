@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Aceptar";
 "voice.decline_button.title" = "Rechazar";
 "voice.hang_up_button.title" = "Colgar";
-"voice.mute_button.title" = "Silenciar";
-"voice.video_button.title" = "Vídeo";
-"voice.flip_video_button.title" = "Switch";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Altavoz";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Llamar";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Tasa de bits constante";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Mostrar Todo (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Participantes";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pausado";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Llamada entrante de %@";
 "call.actions.label.toggle_mute_on" = "Silenciar";
 "call.actions.label.toggle_mute_off" = "No silenciar";
-"call.actions.label.flip_camera" = "Invertir cámara";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Habilitar altavoz";
 "call.actions.label.toggle_speaker_off" = "Deshabilitar altavoz";
 "call.actions.label.accept_call" = "¿Acepta la llamada?";

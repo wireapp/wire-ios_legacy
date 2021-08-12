@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Annehmen";
 "voice.decline_button.title" = "Ablehnen";
 "voice.hang_up_button.title" = "Beenden";
-"voice.mute_button.title" = "Stumm";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Wechseln";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
+"voice.flip_video_button.title" = "Kamera wechseln";
 "voice.speaker_button.title" = "Lautsprecher";
 "voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Konstante Bitrate";
 "call.status.variable_bitrate" = "Variable Bitrate";
 
-"call.participants.show_all" = "Alle anzeigen (%@)";
+"call.participants.show_all" = "Teilnehmer (%d)";
 "call.participants.list.title" = "Teilnehmer";
 
 "call.overlay.switch_to.speakers" = "SPRECHER";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Für Vollbildmodus auf eine Kachel doppeltippen";
 "call.grid.hints.go_back_or_zoom" = "Zum Zurückgehen doppeltippen, zum Zoomen auf- und zuziehen";
+"call.grid.hints.go_back" = "Zum Zurückgehen doppeltippen";
 "call.grid.hints.zoom" = "Zum Zoomen auf- und zuziehen";
 
 "call.video.paused" = "Video wurde angehalten";

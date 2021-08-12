@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Accepter";
 "voice.decline_button.title" = "Refuser";
 "voice.hang_up_button.title" = "Raccrocher";
-"voice.mute_button.title" = "Mettre en sourdine";
-"voice.video_button.title" = "Vidéo";
-"voice.flip_video_button.title" = "Inverser";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Haut-parleur";
 "voice.cancel_button.title" = "Annuler";
 "voice.call_button.title" = "Appeler";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Échantillonnage constant (CBR)";
 "call.status.variable_bitrate" = "Débit variable";
 
-"call.participants.show_all" = "Afficher tout le monde (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Participants";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Appuyez deux fois sur une cellule pour passer en plein écran";
 "call.grid.hints.go_back_or_zoom" = "Appuyez deux fois pour revenir en arrière, pincez pour zoomer";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pincez pour zoomer";
 
 "call.video.paused" = "Vidéo en pause";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Appel entrant de %@";
 "call.actions.label.toggle_mute_on" = "Sourdine";
 "call.actions.label.toggle_mute_off" = "Micro";
-"call.actions.label.flip_camera" = "Inverser";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Activer le haut-parleur";
 "call.actions.label.toggle_speaker_off" = "Haut-Parleur";
 "call.actions.label.accept_call" = "Décrocher";
