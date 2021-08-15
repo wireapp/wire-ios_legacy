@@ -119,7 +119,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let isConstantBitRate: Bool
     let title: String
     let isVideoCall: Bool
-    let variant: ColorSchemeVariant
     let canToggleMediaType: Bool
     let isMuted: Bool
     let mediaState: MediaState
@@ -157,7 +156,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
-        variant = ColorScheme.default.variant
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer

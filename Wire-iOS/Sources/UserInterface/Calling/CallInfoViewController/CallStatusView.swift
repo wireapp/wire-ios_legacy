@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
+protocol CallStatusViewInputType: CallTypeProvider, CBRSettingProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
     var title: String { get }
@@ -28,10 +28,6 @@ protocol CallTypeProvider {
     var isVideoCall: Bool { get }
 }
 
-protocol ColorVariantProvider {
-    var variant: ColorSchemeVariant { get }
-}
-
 protocol CBRSettingProvider {
     var userEnabledCBR: Bool { get }
 }
@@ -39,9 +35,8 @@ protocol CBRSettingProvider {
 extension CallStatusViewInputType {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
-        case (false, _): return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
         case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
-        case (true, _): return UIColor.black.withAlphaComponent(0.64)
+        case (true, _), (false, _): return UIColor.black.withAlphaComponent(0.64)
         }
     }
 }
@@ -156,8 +151,7 @@ extension CallStatusViewInputType {
     }
 
     var effectiveColorVariant: ColorSchemeVariant {
-        guard !isVideoCall else { return .dark }
-        return variant
+        .dark
     }
 
 }

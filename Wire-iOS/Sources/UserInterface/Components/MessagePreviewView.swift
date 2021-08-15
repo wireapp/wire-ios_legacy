@@ -178,7 +178,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 

@@ -180,7 +180,7 @@ internal enum L10n {
         internal enum Label {
           /// Accept call
           internal static let acceptCall = L10n.tr("Localizable", "call.actions.label.accept_call")
-          /// Flip camera
+          /// Switch camera
           internal static let flipCamera = L10n.tr("Localizable", "call.actions.label.flip_camera")
           /// Join call
           internal static let joinCall = L10n.tr("Localizable", "call.actions.label.join_call")
@@ -278,6 +278,8 @@ internal enum L10n {
         internal enum Hints {
           /// Double tap on a tile for fullscreen
           internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
+          /// Double tap to go back
+          internal static let goBack = L10n.tr("Localizable", "call.grid.hints.go_back")
           /// Double tap to go back, pinch to zoom
           internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
           /// Pinch to zoom
@@ -293,9 +295,9 @@ internal enum L10n {
         }
       }
       internal enum Participants {
-        /// Show All (%@)
-        internal static func showAll(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "call.participants.show_all", String(describing: p1))
+        /// Participants (%d)
+        internal static func showAll(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "call.participants.show_all", p1)
         }
         internal enum List {
           /// Participants
@@ -1737,6 +1739,14 @@ internal enum L10n {
         internal static let noEmailProvider = L10n.tr("Localizable", "error.invite.no_email_provider")
         /// Please configure your SMS to be able to send the invites via SMS
         internal static let noMessagingProvider = L10n.tr("Localizable", "error.invite.no_messaging_provider")
+      }
+      internal enum Message {
+        internal enum Send {
+          /// You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings
+          internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.message.send.missing_legalhold_consent")
+          /// Messages cannot be sent
+          internal static let title = L10n.tr("Localizable", "error.message.send.title")
+        }
       }
       internal enum Phone {
         /// Please enter a valid phone number
@@ -4421,7 +4431,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title")
       }
       internal enum FlipVideoButton {
-        /// Flip
+        /// Switch camera
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title")
       }
       internal enum HangUpButton {
@@ -4429,7 +4439,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.hang_up_button.title")
       }
       internal enum MuteButton {
-        /// Mute
+        /// Microphone
         internal static let title = L10n.tr("Localizable", "voice.mute_button.title")
       }
       internal enum NetworkError {
@@ -4481,7 +4491,7 @@ internal enum L10n {
         internal static let tapToReturn = L10n.tr("Localizable", "voice.top_overlay.tap_to_return")
       }
       internal enum VideoButton {
-        /// Video
+        /// Camera
         internal static let title = L10n.tr("Localizable", "voice.video_button.title")
       }
     }
