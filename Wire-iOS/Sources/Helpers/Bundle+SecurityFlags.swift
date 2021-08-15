@@ -22,7 +22,6 @@ enum SecurityFlags {
     case clipboard
     case generateLinkPreviews
     case forceConstantBitRateCalls
-    case openFilePreview
     case customBackend
     case cameraRoll
     case backup
@@ -39,8 +38,6 @@ enum SecurityFlags {
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:
             return "ForceCBREnabled"
-        case .openFilePreview:
-            return "OpenFilePreviewEnabled"
         case .customBackend:
             return "CustomBackendEnabled"
         case .cameraRoll:
