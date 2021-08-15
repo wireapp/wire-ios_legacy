@@ -126,7 +126,7 @@ final class ConversationReplyContentView: UIView {
                 return .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
 
             case let message? where message.isVideo && message.isRestricted:
-                let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground))
+                let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground))
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
                 return .text(initialString && attributes)
 
