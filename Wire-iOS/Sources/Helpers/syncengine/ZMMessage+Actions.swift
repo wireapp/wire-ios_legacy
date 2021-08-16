@@ -37,9 +37,11 @@ extension ZMConversationMessage {
 
     /// Whether the message can be copied.
     var canBeCopied: Bool {
+        guard !isRestricted else {
+            return false
+        }
         return SecurityFlags.clipboard.isEnabled
             && !isEphemeral
-            && !isRestricted
             && (isText || isImage || isLocation)
     }
 
