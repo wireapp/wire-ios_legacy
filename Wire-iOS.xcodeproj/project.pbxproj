@@ -496,6 +496,7 @@
 		639290A2252633E600046171 /* UIAlertController+DegradedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */; };
 		63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */; };
 		63A5E6F624C87E0000F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */; };
+		63A874FC26CBAF2B000D3F27 /* CallingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A874FB26CBAF2A000D3F27 /* CallingConfiguration.swift */; };
 		63AFE23825B6E16B0054B067 /* RoundedSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */; };
 		63B2366F251B634C009EDB02 /* UIAlertController+OutdatedClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */; };
 		63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */; };
@@ -2239,6 +2240,7 @@
 		639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+DegradedCall.swift"; sourceTree = "<group>"; };
 		63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Advanced.swift"; sourceTree = "<group>"; };
 		63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+SoundAlert.swift"; sourceTree = "<group>"; };
+		63A874FB26CBAF2A000D3F27 /* CallingConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingConfiguration.swift; sourceTree = "<group>"; };
 		63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSegmentedView.swift; sourceTree = "<group>"; };
 		63B2366E251B634C009EDB02 /* UIAlertController+OutdatedClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+OutdatedClient.swift"; sourceTree = "<group>"; };
 		63B9F5A425E528E70059020D /* ActiveSpeakerState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActiveSpeakerState+Helper.swift"; sourceTree = "<group>"; };
@@ -6524,6 +6526,7 @@
 				16A94AFA209C553A008A5718 /* CallViewController.swift */,
 				BFAC71F820A1CC5B002711C4 /* CallInfoConfiguration.swift */,
 				BFAC71FD20A1CE0D002711C4 /* CallGridConfiguration.swift */,
+				63A874FB26CBAF2A000D3F27 /* CallingConfiguration.swift */,
 			);
 			path = CallViewController;
 			sourceTree = "<group>";
@@ -8216,6 +8219,7 @@
 				F15650ED21DD1B4100210504 /* Reusable.swift in Sources */,
 				A9275F6324223FD3007CB2BC /* CGSize+Zoom.swift in Sources */,
 				A923F1C02428C12A003F361F /* URLs+zip.swift in Sources */,
+				63A874FC26CBAF2B000D3F27 /* CallingConfiguration.swift in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				16DD6E95228304B70090A74C /* LegalHoldDetailsViewController.swift in Sources */,
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,

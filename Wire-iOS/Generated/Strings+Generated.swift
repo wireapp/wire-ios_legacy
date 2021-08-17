@@ -1079,7 +1079,7 @@ internal enum L10n {
         internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_services_present")
         /// **Externals** are present
         internal static let externalsPresent = L10n.tr("Localizable", "conversation.banner.externals_present")
-        /// **External**s and **services** are present
+        /// **Externals** and **services** are present
         internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_services_present")
         /// **Guests** are present
         internal static let guestsPresent = L10n.tr("Localizable", "conversation.banner.guests_present")
