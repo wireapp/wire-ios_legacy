@@ -1791,7 +1791,7 @@ internal enum L10n {
         internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
         /// Receiving files restricted
         internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
-        /// Receiving pictures restricted
+        /// Receiving images restricted
         internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
         /// Receiving videos restricted
         internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
@@ -1805,12 +1805,12 @@ internal enum L10n {
         }
         internal enum FileSharing {
           internal enum Alert {
-            /// File sharing restrictions
+            /// There has been a change in Wire
             internal static let title = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.title")
             internal enum Message {
-              /// Sharing and receiving files of any type is disabled
+              /// Sharing and receiving files of any type is now disabled.
               internal static let disabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.disabled")
-              /// Sharing and receiving files of any type is enabled
+              /// Sharing and receiving files of any type is now enabled.
               internal static let enabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.enabled")
             }
           }
