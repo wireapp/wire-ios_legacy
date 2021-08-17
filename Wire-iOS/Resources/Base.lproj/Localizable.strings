@@ -1640,9 +1640,6 @@
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
-//Feature flag
-"feature_config.update.alert.base_message" = "The team admin changed the following features:\n%@";
-
 //Feature flag - File sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";

@@ -1797,12 +1797,6 @@ internal enum L10n {
         internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
       }
       internal enum Update {
-        internal enum Alert {
-          /// The team admin changed the following features:\n%@
-          internal static func baseMessage(_ p1: Any) -> String {
-            return L10n.tr("Localizable", "feature_config.update.alert.base_message", String(describing: p1))
-          }
-        }
         internal enum FileSharing {
           internal enum Alert {
             /// There has been a change in Wire
