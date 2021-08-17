@@ -26,7 +26,13 @@ struct CallingConfiguration {
     let canAudioCallHideOverlay: Bool
     let streamLimit: StreamLimit
 
-    static var config = Self.legacy
+    static var config = Self.default
+
+    private static let `default` = Self.legacy
+
+    static func resetDefaultConfig() {
+        config = Self.default
+    }
 
     enum StreamLimit {
         case noLimit
@@ -35,7 +41,7 @@ struct CallingConfiguration {
 }
 
 extension CallingConfiguration {
-    private static var legacy = CallingConfiguration(
+    static var legacy = CallingConfiguration(
         canSwipeToDismissCall: true,
         audioTilesEnabled: false,
         paginationEnabled: false,
@@ -44,7 +50,7 @@ extension CallingConfiguration {
         streamLimit: .limit(amount: 12)
     )
 
-    private static var largeConferenceCalls = CallingConfiguration(
+    static var largeConferenceCalls = CallingConfiguration(
         canSwipeToDismissCall: false,
         audioTilesEnabled: true,
         paginationEnabled: true,
