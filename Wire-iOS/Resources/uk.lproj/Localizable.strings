@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Прийняти";
 "voice.decline_button.title" = "Скасувати";
 "voice.hang_up_button.title" = "Завершити";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
-"voice.flip_video_button.title" = "Switch camera";
+"voice.mute_button.title" = "Мікрофон";
+"voice.video_button.title" = "Камера";
+"voice.flip_video_button.title" = "Змінити камеру";
 "voice.speaker_button.title" = "Гучномовець";
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
 "call.status.variable_bitrate" = "Змінний бітрейт";
 
-"call.participants.show_all" = "Participants (%d)";
+"call.participants.show_all" = "Учасники (%d)";
 "call.participants.list.title" = "Учасники";
 
 "call.overlay.switch_to.speakers" = "ДИНАМІКИ";
@@ -692,7 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Торкніться двічі для повноекранного режиму";
 "call.grid.hints.go_back_or_zoom" = "Токніться двічі, щоб повернутись. Розведіть/зведіть пальці для збільшення/зменшення";
-"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.go_back" = "Торкніться двічі, щоб повернутися";
 "call.grid.hints.zoom" = "Зведіть або розведіть пальці для зміни масштабу";
 
 "call.video.paused" = "Відео призупинено";
@@ -725,7 +725,7 @@
 "call.announcement.incoming" = "Вхідний дзвінок від %@";
 "call.actions.label.toggle_mute_on" = "Вимкнути звук";
 "call.actions.label.toggle_mute_off" = "Увімкнути звук";
-"call.actions.label.flip_camera" = "Switch camera";
+"call.actions.label.flip_camera" = "Змінити камеру";
 "call.actions.label.toggle_speaker_on" = "Увімкнути гучномовець";
 "call.actions.label.toggle_speaker_off" = "Вимкнути гучномовець";
 "call.actions.label.accept_call" = "Прийняти дзвінок";
@@ -1621,6 +1621,8 @@
 "error.conversation.too_many_members" = "Розмова переповнена";
 "error.conversation.offline" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
 "error.conversation.missing_legalhold_consent" = "Тільки члени команди можуть бути додані до цієї розмови через правовий захист.";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 

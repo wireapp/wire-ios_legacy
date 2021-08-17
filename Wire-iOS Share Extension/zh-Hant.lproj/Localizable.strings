@@ -34,7 +34,7 @@
 "share_extension.not_signed_in.close_button" = "關閉";
 
 // Custom app lock - unlock
-"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.title_label" = "請輸入登錄密碼解鎖Wire";
 "share_extension.unlock.submit_button.title" = "解除鎖定";
 "share_extension.unlock.textfield.placeholder" = "輸入您的通行密碼";
 "share_extension.unlock.hint_label" = "密碼";

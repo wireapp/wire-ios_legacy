@@ -89,7 +89,7 @@
 "peoplepicker.no_matching_results.action.manage_services" = "管理服务";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.users" = "通过名字或 @username 在Wire查找用户";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
@@ -279,12 +279,12 @@
 "conversation.invite_more_people.title" = "请大家告诉大家！";
 "conversation.invite_more_people.description" = "新增好友到此聊天室";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
-"conversation.invite_more_people.button_title" = "新增好友";
+"conversation.invite_more_people.button_title" = "添加好友";
 
 // Conversation names
 "conversation.displayname.emptygroup" = "空聊天室";
 
-"conversation.input_bar.verified" = "验证";
+"conversation.input_bar.verified" = "已验证";
 "conversation.input_bar.placeholder" = "键入一条消息";
 "conversation.input_bar.placeholder_ephemeral" = "阅后即焚";
 
@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "**Services** are active";
 "conversation.banner.externals_present" = "**Externals** are present";
 "conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
+"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
 "conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
 "conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
 
@@ -396,7 +396,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "关闭";
-"input.ephemeral.title" = "设置阅后即焚的显示时间";
+"input.ephemeral.title" = "设置消息消失的时间";
 
 // System messages
 "content.system.you_nominative" = "你";
@@ -1621,6 +1621,8 @@
 "error.conversation.too_many_members" = "对话人数已达上限";
 "error.conversation.offline" = "您的互联网连线似乎出现了问题。请确保您有网路连线。";
 "error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "点击颜色更换画笔大小";
 

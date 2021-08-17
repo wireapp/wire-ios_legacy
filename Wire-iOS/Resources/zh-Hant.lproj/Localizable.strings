@@ -89,12 +89,12 @@
 "peoplepicker.no_matching_results.action.manage_services" = "管理服務";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users" = "依照使用者名稱或@別名在Wire尋找";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "依照使用者名稱或@別名在Wire尋找\n依照使用者名稱或@別名@網域在其它網域尋找";
 "peoplepicker.no_matching_results.message.users_all_added" = "大家都已加入";
 "peoplepicker.no_matching_results.message.services" = "沒有符合結果。";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服務可改善你的工作流程。";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "服務可改善你的工作流程。如要啟用它們，請詢問您的管理員。";
 
 "peoplepicker.send_invitation.dialog.title" = "已送出邀請";
 "peoplepicker.send_invitation.dialog.message" = "連結兩週內有效。如逾期請重新發送。";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "此訊息已刪除。";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests_present" = "**訪客**在對話中";
+"conversation.banner.services_present" = "**服務**已啟動";
+"conversation.banner.externals_present" = "**外部人士**在對話中";
+"conversation.banner.guests_services_present" = "對話中有**訪客**和**服務**";
+"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
+"conversation.banner.externals_guests_present" = "對話中有**外部人士**和**訪客**";
+"conversation.banner.externals_guests_services_present" = "對話中有**外部人士**和**訪客**和**服務**";
 
 "conversation.action.search" = "搜索";
 
@@ -478,8 +478,8 @@
 "content.system.you_wanted_to_talk" = "您曾打電話";
 "content.system.ephemeral_time_remaining" = "餘下%@";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "**您**開始使用[新的設備](%@)";
+"content.system.self_user_new_self_client" = "**您**開始使用[此設備](%@)";
 
 "content.system.you_started" = "您";
 
@@ -549,8 +549,8 @@
 "content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
 "content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "**您的**設備識別已更改。信息無法送達。";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@的**設備識別已更改。信息無法送達。"; // possessive apostrophe - might differ in different languages
 
 "content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
 "content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
@@ -752,7 +752,7 @@
 "participants.section.services" = "服務 (%d)";
 "participants.section.settings" = "選項";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
+"participants.section.name.footer" = "最多%1$d位參與者可以加入群組對話。";
 "participants.section.admins.footer" = "沒有管理員";
 "participants.section.members.footer" = "沒有成員";
 
@@ -769,7 +769,7 @@
 "meta.menu.move_to_folder" = "移動到...";
 "meta.menu.remove_from_folder" = "從 \"%@\" 中移除";
 "meta.menu.silence.mute" = "關閉訊息通知";
-"meta.menu.silence.unmute" = "開啟訊息通知";
+"meta.menu.silence.unmute" = "取消靜音";
 "meta.menu.cancel" = "取消";
 "meta.menu.cancel_connection_request" = "取消請求";
 "meta.menu.mark_unread" = "標示為未讀";
@@ -1621,6 +1621,8 @@
 "error.conversation.too_many_members" = "對話人數已達上限";
 "error.conversation.offline" = "您的網路連線似乎有些問題，請確保網路正常運作。";
 "error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "點擊顏色塊來改變筆刷大小";
 
@@ -1643,10 +1645,10 @@
 "jailbrokendevice.alert.message" = "出於安全原因，Wire不能在此設備上使用，現有的所有Wire數據已被消除。";
 
 // Database Loading Failure alert
-"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.title" = "存儲空間不足。";
 "databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
 "databaseloadingfailure.alert.settings" = "前往設定";
-"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database" = "刪除資料庫";
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "繼續";
 
@@ -1745,12 +1747,12 @@
 "url_action.switch_backend.error.invalid_backend" = "請檢查您的網路連接，然後再試一次。";
 
 // Placeholder: conversation name
-"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.message" = "你被邀請參加一個對話";
 "url_action.join_conversation.confirmation.confirm_button" = "加入";
 
 "url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.converation_is_full" = "對話人數已達上限。";
+"url_action.join_conversation.error.link_is_invalid" = "對話連結無效。";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire找不到這個人。";
@@ -1849,7 +1851,7 @@
 
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "輸入您的通行密碼";
-"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.title_label" = "請輸入登錄密碼解鎖Wire";
 "unlock.wipe_button" = "重設為新設備使用";
 "unlock.error_label" = "錯誤的解鎖密碼";
 "unlock.submit_button.title" = "解除鎖定";
@@ -1863,7 +1865,7 @@
 // Wipe database
 
 "wipe_database.title_label" = "重設為新設備使用";
-"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label" = "存儲在此設備上的數據只能使用您的密碼存取。\n\n如果您忘記了密碼，您可以刪除數據庫，重新登錄為新設備。\n\n通過刪除數據庫，";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
 "wipe_database.button.title" = "I want to delete the database";
