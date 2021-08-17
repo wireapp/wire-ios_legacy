@@ -163,11 +163,7 @@ extension CallStatusViewInputType {
     var effectiveColorVariant: ColorSchemeVariant {
         guard callingConfig.isAudioCallColorSchemable else { return .dark }
 
-        if isVideoCall {
-            return .dark
-        } else {
-            return variant
-        }
+        return isVideoCall ? .dark : variant
     }
 
 }
