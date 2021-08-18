@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "Des **services** sont actifs";
 "conversation.banner.externals_present" = "Des **contacts externes** sont présents";
 "conversation.banner.guests_services_present" = "Des **invités** et des **services** sont présents";
-"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
+"conversation.banner.externals_services_present" = "Des **contacts externes** et des **services** sont présents";
 "conversation.banner.externals_guests_present" = "Des **contacts externes** et des **invités** sont présents";
 "conversation.banner.externals_guests_services_present" = "Des **contacts externes** , des **invités** et des **services** sont présents";
 
@@ -649,8 +649,8 @@
 "voice.decline_button.title" = "Refuser";
 "voice.hang_up_button.title" = "Raccrocher";
 "voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
-"voice.flip_video_button.title" = "Switch camera";
+"voice.video_button.title" = "Caméra";
+"voice.flip_video_button.title" = "Changer de caméra";
 "voice.speaker_button.title" = "Haut-parleur";
 "voice.cancel_button.title" = "Annuler";
 "voice.call_button.title" = "Appeler";
@@ -692,7 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Appuyez deux fois sur une cellule pour passer en plein écran";
 "call.grid.hints.go_back_or_zoom" = "Appuyez deux fois pour revenir en arrière, pincez pour zoomer";
-"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.go_back" = "Double tap pour revenir en arrière";
 "call.grid.hints.zoom" = "Pincez pour zoomer";
 
 "call.video.paused" = "Vidéo en pause";
@@ -725,7 +725,7 @@
 "call.announcement.incoming" = "Appel entrant de %@";
 "call.actions.label.toggle_mute_on" = "Sourdine";
 "call.actions.label.toggle_mute_off" = "Micro";
-"call.actions.label.flip_camera" = "Switch camera";
+"call.actions.label.flip_camera" = "Changer de caméra";
 "call.actions.label.toggle_speaker_on" = "Activer le haut-parleur";
 "call.actions.label.toggle_speaker_off" = "Haut-Parleur";
 "call.actions.label.accept_call" = "Décrocher";
@@ -1621,8 +1621,8 @@
 "error.conversation.too_many_members" = "Cette conversation est saturée";
 "error.conversation.offline" = "Il semble y avoir un problème avec votre connexion Internet. Merci de vous assurer de son bon fonctionnement.";
 "error.conversation.missing_legalhold_consent" = "A cause de la conservation à des fins juridiques, seuls les membres de l'équipe peuvent être ajoutés à cette conversation";
-"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
-"error.message.send.title" = "Messages cannot be sent";
+"error.message.send.missing_legalhold_consent" = "Vous ne pouvez pas envoyer ce message car vous avez au moins un appareil obsolète qui ne prend pas en charge la conservation à des fins juridiques. Veuillez mettre à jour tous vos appareils ou les supprimer via les paramètres de l'application";
+"error.message.send.title" = "Impossible d'envoyer de messages";
 
 "sketchpad.initial_hint" = "Appuyez sur les couleurs pour changer la taille du pinceau";
 
@@ -1639,6 +1639,15 @@
 "force.update.title" = "Mise à jour nécessaire";
 "force.update.message" = "Il vous manque de nouvelles fonctionnalités. Téléchargez la dernière version de Wire dans l’App Store.";
 "force.update.ok_button" = "Aller sur l'App Store";
+
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Le partage et la réception de fichiers de n'importe quel type est désactivé.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Le partage et la réception de fichiers de n'importe quel type est activé.";
+"feature_config.file_sharing_restrictions.file" = "La réception de fichiers est restreinte";
+"feature_config.file_sharing_restrictions.picture" = "La réception d'images est restreinte";
+"feature_config.file_sharing_restrictions.video" = "La réception de vidéos est restreinte";
+"feature_config.file_sharing_restrictions.audio" = "La réception de fichiers audio est restreinte";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";

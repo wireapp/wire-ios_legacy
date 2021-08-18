@@ -1640,6 +1640,15 @@
 "force.update.message" = "新しい機能を利用できていないようです。\n最新バージョンのWireをApp Storeでダウンロードしてください。";
 "force.update.ok_button" = "App Storeに行く";
 
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "脱獄/Root化 を検知しました。";
 "jailbrokendevice.alert.message" = "セキュリティ上の理由により、このデバイスではWireを使用できません。既存のWireデータはすべて消去されました。";

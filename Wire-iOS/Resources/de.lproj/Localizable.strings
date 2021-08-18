@@ -1640,6 +1640,15 @@
 "force.update.message" = "Sie verpassen neue Funktionen.\nLaden Sie die neueste Version von Wire herunter.";
 "force.update.ok_button" = "Zum App Store";
 
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
+"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
+"feature_config.file_sharing_restrictions.file" = "Empfang von Dateien eingeschränkt";
+"feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern eingeschränkt";
+"feature_config.file_sharing_restrictions.video" = "Empfang von Videos eingeschränkt";
+"feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien eingeschränkt";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
 "jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";

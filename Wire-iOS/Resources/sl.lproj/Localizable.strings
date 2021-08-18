@@ -1640,6 +1640,15 @@
 "force.update.message" = "Zamujate nove funkcije na Wire.\nPrenesite najnovejšo različico na App Store.";
 "force.update.ok_button" = "Pojdi na App Store";
 
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";

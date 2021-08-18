@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Ali še vedno želite poslati vaše sporočilo?";
 "meta.degraded.cancel_sending_button" = "Ne pošlji";
 "meta.degraded.send_anyway_button" = "Pošlji vseeno";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "This file could not be shared due to your file sharing restrictions.";
