@@ -263,8 +263,6 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Grid Update
 
     private func updateState() {
-        Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
-
         displaySpinnerIfNeeded()
         updateSelfCallParticipantView()
         updateFloatingView(with: configuration.floatingStream)
@@ -273,8 +271,6 @@ final class CallGridViewController: SpinnerCapableViewController {
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
         requestVideoStreamsIfNeeded(forPage: gridView.currentPage)
-
-        Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
     private func displaySpinnerIfNeeded() {
@@ -457,13 +453,6 @@ final class CallGridViewController: SpinnerCapableViewController {
             return nil
         }
         return viewCache[selfStreamId] as? SelfCallParticipantView
-    }
-
-    private func videoConfigurationDescription() -> String {
-        return """
-        showing self preview: \(selfCallParticipantView != nil)
-        videos in grid: [\(dataSource)]\n
-        """
     }
 
 }
