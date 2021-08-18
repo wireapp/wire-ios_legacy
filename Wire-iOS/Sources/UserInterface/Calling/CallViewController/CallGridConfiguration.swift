@@ -60,7 +60,11 @@ extension VoiceChannel {
 
         let participants = self.participants(forPresentationMode: videoGridPresentationMode)
 
-        let streams = activeStreams(from: participants)
+        var streams = activeStreams(from: participants)
+
+        if case let .limit(amount: amount) = callingConfig.streamLimit {
+            streams = Array(streams.prefix(amount))
+        }
 
         let selfStream = self.selfStream(
             from: streams,
@@ -108,6 +112,9 @@ extension VoiceChannel {
         return participants.compactMap { participant in
             switch participant.state {
             case .connected(let videoState, let microphoneState):
+                if !callingConfig.audioTilesEnabled && !videoState.isSending {
+                    return nil
+                }
                 return Stream(
                     streamId: participant.streamId,
                     user: participant.user,
@@ -167,6 +174,8 @@ extension VoiceChannel {
 
     // MARK: - Helpers
 
+    private var callingConfig: CallingConfiguration { .config }
+
     private var isEstablished: Bool {
         return state == .established
     }
@@ -193,6 +202,8 @@ private extension VideoGridPresentationMode {
         case .activeSpeakers:
             return .smoothedActiveSpeakers
         case .allVideoStreams:
+            return .all
+        @unknown default:
             return .all
         }
     }

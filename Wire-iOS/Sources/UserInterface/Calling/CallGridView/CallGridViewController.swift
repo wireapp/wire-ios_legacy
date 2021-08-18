@@ -32,7 +32,13 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
-    static let maxItemsPerPage = 8
+
+    static var maxItemsPerPage: Int {
+        switch CallingConfiguration.config.streamLimit {
+        case .limit(amount: let amount): return amount
+        case .noLimit: return 8
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -49,7 +55,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var visibleClientsSharingVideo: [AVSClient] = []
     private var dataSource: [Stream] = []
-    private let gridView = GridView(maxItemsPerPage: CallGridViewController.maxItemsPerPage)
+    private let gridView = GridView(maxItemsPerPage: maxItemsPerPage)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let pageIndicator = RoundedPageIndicator()
