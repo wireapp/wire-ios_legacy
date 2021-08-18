@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Вы все еще хотите отправить свое сообщение?";
 "meta.degraded.cancel_sending_button" = "Не отправлять";
 "meta.degraded.send_anyway_button" = "Отправить в любом случае";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "Ограничения на обмен файлами";
+"feature.flag.file_sharing.alert.message" = "Этим файлом нельзя поделиться из-за ограничений на совместное использование файлов.";

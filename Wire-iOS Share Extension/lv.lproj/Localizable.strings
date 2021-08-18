@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Vai joprojām vēlaties nosūtīt ziņojumus?";
 "meta.degraded.cancel_sending_button" = "Do not send";
 "meta.degraded.send_anyway_button" = "Send anyway";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "This file could not be shared due to your file sharing restrictions.";

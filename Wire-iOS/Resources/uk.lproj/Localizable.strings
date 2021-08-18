@@ -1640,6 +1640,15 @@
 "force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
 "force.update.ok_button" = "Перейти в App Store";
 
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
 "jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";

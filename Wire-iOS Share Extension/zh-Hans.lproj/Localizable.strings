@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "您仍然要发送您的信息吗？";
 "meta.degraded.cancel_sending_button" = "不发送";
 "meta.degraded.send_anyway_button" = "确定发送";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "This file could not be shared due to your file sharing restrictions.";
