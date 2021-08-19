@@ -52,7 +52,7 @@ extension ZClientViewController {
 extension ZClientViewController: FeatureServiceDelegate {
 
     func setUpFeatureChangeObservation() {
-        guard let featureService = ZMUserSession.shared().?featureService else { return }
+        guard let featureService = ZMUserSession.shared()?.featureService else { return }
         featureService.delegate = self
     }
 
