@@ -302,6 +302,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                         self.popConfigurationViewController()
                     }
                 }
+            case .fileSharingRestriction:
+                let alert = UIAlertController.alertWithOKButton(title: "feature.flag.file_sharing.alert.title".localized,
+                                                                message: "feature.flag.file_sharing.alert.message" .localized)
+                self.present(alert, animated: true)
             }
         }
     }

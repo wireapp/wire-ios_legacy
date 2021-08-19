@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "ألا زلت تريد إرسال رسالتك؟";
 "meta.degraded.cancel_sending_button" = "لا ترسل";
 "meta.degraded.send_anyway_button" = "أرسل على أي حال";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "This file could not be shared due to your file sharing restrictions.";

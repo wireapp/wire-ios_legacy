@@ -66,6 +66,10 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
 
 extension CallActionsViewInputType {
     var appearance: CallActionAppearance {
+        guard CallingConfiguration.config.isAudioCallColorSchemable else {
+            return .dark(blurred: true)
+        }
+
         switch (isVideoCall, variant) {
         case (true, _): return .dark(blurred: true)
         case (false, .light): return .light

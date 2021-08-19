@@ -127,4 +127,54 @@ final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtur
         XCTAssertTrue(supportsCopy)
     }
 
+    // MARK: - Save
+
+    func testThatItDoesNotShowSaveItemForAudioMessage_IfReceivingFilesIsRestricted() {
+        // GIVEN
+        let message = MockMessageFactory.audioMessage()
+        message!.senderUser = MockUserType.createUser(name: "Bob")
+        message!.conversation = otherUserConversation
+        message!.backingIsRestricted = true
+
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message!, context: .content, view: UIView())
+        let supportsSave = actionController.canPerformAction(#selector(ConversationMessageActionController.saveMessage))
+
+        // THEN
+        XCTAssertFalse(supportsSave)
+    }
+
+    // MARK: - Download
+
+    func testThatItDoesNotShowDownloadItemForAudioMessage_IfReceivingFilesIsRestricted() {
+        // GIVEN
+        let message = MockMessageFactory.audioMessage()
+        message!.senderUser = MockUserType.createUser(name: "Bob")
+        message!.conversation = otherUserConversation
+        message!.backingIsRestricted = true
+
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message!, context: .content, view: UIView())
+        let supportsDownload = actionController.canPerformAction(#selector(ConversationMessageActionController.downloadMessage))
+
+        // THEN
+        XCTAssertFalse(supportsDownload)
+    }
+
+    // MARK: - Forward
+
+    func testThatItDoesNotShowForwardItemForAudioMessage_IfReceivingFilesIsRestricted() {
+        // GIVEN
+        let message = MockMessageFactory.audioMessage()
+        message!.senderUser = MockUserType.createUser(name: "Bob")
+        message!.conversation = otherUserConversation
+        message!.backingIsRestricted = true
+
+        // WHEN
+        let actionController = ConversationMessageActionController(responder: nil, message: message!, context: .content, view: UIView())
+        let supportsForward = actionController.canPerformAction(#selector(ConversationMessageActionController.forwardMessage))
+
+        // THEN
+        XCTAssertFalse(supportsForward)
+    }
 }

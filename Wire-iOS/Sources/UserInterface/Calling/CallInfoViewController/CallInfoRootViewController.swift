@@ -37,7 +37,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     private let contentNavigationController: UINavigationController
     private let callDegradationController: CallDegradationController
 
-    private weak var participantsViewController: CallParticipantsViewController?
+    private weak var participantsViewController: CallParticipantsListViewController?
 
     var context: Context = .overview {
         didSet {
@@ -105,7 +105,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
 
     private func presentParticipantsList() {
         context = .participants
-        let participantsList = CallParticipantsViewController(scrollableWithConfiguration: configuration)
+        let participantsList = CallParticipantsListViewController(scrollableWithConfiguration: configuration)
         participantsViewController = participantsList
         contentNavigationController.pushViewController(participantsList, animated: true)
     }

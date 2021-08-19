@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Biztos, hogy még mindig el szeretnéd küldeni az üzenetedet?";
 "meta.degraded.cancel_sending_button" = "Ne küldje el";
 "meta.degraded.send_anyway_button" = "Küldés mindenképpen";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "This file could not be shared due to your file sharing restrictions.";

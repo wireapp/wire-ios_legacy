@@ -29,8 +29,10 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         }
     }
 
+    private var containerView = UIView()
     private let transferView = VideoMessageView(frame: .zero)
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
+    private let restrictionView = VideoMessageRestrictionView()
 
     weak var delegate: ConversationMessageCellDelegate?
     weak var message: ZMConversationMessage?
@@ -39,55 +41,75 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureSubviews()
+        configureSubview()
         configureConstraints()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configureSubviews()
+        configureSubview()
         configureConstraints()
     }
 
-    private func configureSubviews() {
+    private func configureSubview() {
         shape = .rounded(radius: 4)
         backgroundColor = .from(scheme: .placeholderBackground)
         clipsToBounds = true
 
-        transferView.delegate = self
-        obfuscationView.isHidden = true
-
-        addSubview(self.transferView)
-        addSubview(self.obfuscationView)
+        addSubview(containerView)
     }
 
     private func configureConstraints() {
-        transferView.translatesAutoresizingMaskIntoConstraints = false
-        obfuscationView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 160.0),
-
-            // transferView
-            transferView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            transferView.topAnchor.constraint(equalTo: topAnchor),
-            transferView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            transferView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            // obfuscationView
-            obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            obfuscationView.topAnchor.constraint(equalTo: topAnchor),
-            obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ])
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        transferView.configure(for: object.message, isInitial: false)
+        if object.isObfuscated {
+            setup(obfuscationView)
+        } else if object.message.isRestricted {
+            setup(restrictionView, heightMultiplier: 9/16)
+            restrictionView.configure()
+        } else {
+            transferView.delegate = self
+            setup(transferView)
+            transferView.configure(for: object.message, isInitial: false)
+        }
+    }
 
-        obfuscationView.isHidden = !object.isObfuscated
-        transferView.isHidden = object.isObfuscated
+    private func setup(_ view: UIView) {
+        containerView.removeSubviews()
+        containerView.addSubview(view)
 
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: 160),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+
+    private func setup(_ view: UIView, heightMultiplier: CGFloat) {
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalTo: widthAnchor, multiplier: heightMultiplier),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
     }
 
     override public var tintColor: UIColor! {

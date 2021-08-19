@@ -312,6 +312,17 @@ extension UIView {
 
 }
 
+extension UIView {
+    func fitIn(view: UIView, insets: UIEdgeInsets = .zero) {
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.leading),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.trailing),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom)
+        ])
+    }
+}
+
 extension Sequence where Element == UIView {
 	func prepareForLayout() {
 		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }

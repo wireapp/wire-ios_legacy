@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Усе одно надіслати ваше повідомлення?";
 "meta.degraded.cancel_sending_button" = "Не надсилати";
 "meta.degraded.send_anyway_button" = "Все одно надіслати";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "Обмеження на обмін файлами";
+"feature.flag.file_sharing.alert.message" = "Цим файлом неможливо поділитися через обмеження на обмін файлами.";

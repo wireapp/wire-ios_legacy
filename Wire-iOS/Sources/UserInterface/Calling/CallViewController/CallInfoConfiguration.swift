@@ -119,7 +119,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let isConstantBitRate: Bool
     let title: String
     let isVideoCall: Bool
-    let variant: ColorSchemeVariant
     let canToggleMediaType: Bool
     let isMuted: Bool
     let mediaState: MediaState
@@ -134,6 +133,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let callState: CallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
+    let variant: ColorSchemeVariant
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -157,7 +157,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
-        variant = ColorScheme.default.variant
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
@@ -165,6 +164,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         callState = voiceChannel.state
         videoGridPresentationMode = voiceChannel.videoGridPresentationMode
         allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
+        variant = ColorScheme.default.variant
     }
 
     // This property has to be computed in order to return the correct call duration

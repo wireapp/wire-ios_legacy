@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Möchten Sie die Nachricht noch senden?";
 "meta.degraded.cancel_sending_button" = "Nicht senden";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "Einschränkungen beim Teilen von Dateien";
+"feature.flag.file_sharing.alert.message" = "Diese Datei konnte aufgrund von Einschränkungen bei der Dateifreigabe nicht geteilt werden.";

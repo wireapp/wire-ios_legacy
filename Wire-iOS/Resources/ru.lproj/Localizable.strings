@@ -649,8 +649,8 @@
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
 "voice.mute_button.title" = "Микрофон";
-"voice.video_button.title" = "Видео";
-"voice.flip_video_button.title" = "Перевернуть";
+"voice.video_button.title" = "Камера";
+"voice.flip_video_button.title" = "Переключить камеру";
 "voice.speaker_button.title" = "Динамик";
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Постоянный битрейт";
 "call.status.variable_bitrate" = "Переменный битрейт";
 
-"call.participants.show_all" = "Показать все (%@)";
+"call.participants.show_all" = "Участников (%d)";
 "call.participants.list.title" = "Участники";
 
 "call.overlay.switch_to.speakers" = "СПИКЕРЫ";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Дважды коснитесь плитки для перехода в полноэкранный режим";
 "call.grid.hints.go_back_or_zoom" = "Дважды коснитесь, чтобы вернуться, сведите или раздвиньте для изменения масштаба";
+"call.grid.hints.go_back" = "Двойное нажатие для возврата назад";
 "call.grid.hints.zoom" = "Сведите или раздвиньте для изменения масштаба";
 
 "call.video.paused" = "Видео приостановлено";
@@ -724,7 +725,7 @@
 "call.announcement.incoming" = "Входящий вызов от %@";
 "call.actions.label.toggle_mute_on" = "Отключить уведомления";
 "call.actions.label.toggle_mute_off" = "Включить уведомления";
-"call.actions.label.flip_camera" = "Смена камеры";
+"call.actions.label.flip_camera" = "Переключить камеру";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
 "call.actions.label.toggle_speaker_off" = "Отключить динамик";
 "call.actions.label.accept_call" = "Принять вызов";
@@ -1448,7 +1449,7 @@
 "login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
 "login.sso.backend_switch.title" = "Перенаправление...";
 "login.sso.backend_switch.subtitle" = "Вы будете перенаправлены на специализированное обслуживание вашей организации.";
-"login.sso.backend_switch.information" = "Указывайте учетные данные, только если вы уверены, что это форма авторизации вашей организации.";
+"login.sso.backend_switch.information" = "Указывайте учетные данные, только если уверены, что это страница авторизации вашей организации.";
 
 
 // Restore In Progress Loading Titles
@@ -1620,6 +1621,8 @@
 "error.conversation.too_many_members" = "Беседа переполнена";
 "error.conversation.offline" = "Похоже, что есть проблема с вашим интернет-соединением. Пожалуйста, убедитесь, что оно работает.";
 "error.conversation.missing_legalhold_consent" = "Из-за юридических ограничений в эту беседу могут быть добавлены только члены команды";
+"error.message.send.missing_legalhold_consent" = "Вы не можете отправить это сообщение, поскольку у вас есть как минимум одно устаревшее устройство, которое не поддерживает юридические ограничения.  Обновите все свои устройства или удалите их из настроек приложения.";
+"error.message.send.title" = "Сообщения не могут быть отправлены";
 
 "sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 
@@ -1636,6 +1639,15 @@
 "force.update.title" = "Необходимо обновление";
 "force.update.message" = "Вы упускаете новые возможности.\nПолучите последнюю версию Wire в App Store.";
 "force.update.ok_button" = "Перейти в App Store";
+
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "В Wire произошли изменения";
+"feature_config.update.file_sharing.alert.message.disabled" = "Обмен и получение файлов любого типа теперь отключены";
+"feature_config.update.file_sharing.alert.message.enabled" = "Обмен и получение файлов любого типа теперь включены";
+"feature_config.file_sharing_restrictions.file" = "Получение файлов ограничено";
+"feature_config.file_sharing_restrictions.picture" = "Получение изображений ограничено";
+"feature_config.file_sharing_restrictions.video" = "Получение видео ограничено";
+"feature_config.file_sharing_restrictions.audio" = "Получение аудиофайлов ограничено";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
