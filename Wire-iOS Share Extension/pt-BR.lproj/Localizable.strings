@@ -34,10 +34,10 @@
 "share_extension.not_signed_in.close_button" = "Fechar";
 
 // Custom app lock - unlock
-"share_extension.unlock.title_label" = "Insira a senha para desbloquear o Wire";
+"share_extension.unlock.title_label" = "Insira o código de acesso para desbloquear o Wire";
 "share_extension.unlock.submit_button.title" = "desbloquear";
-"share_extension.unlock.textfield.placeholder" = "Digite sua senha";
-"share_extension.unlock.hint_label" = "Código de acesso";
+"share_extension.unlock.textfield.placeholder" = "Digite seu código de acesso";
+"share_extension.unlock.hint_label" = "Código de Acesso";
 "share_extension.unlock.error_label" = "Código de acesso incorreto";
 "share_extension.unlock.alert.message" = "Abra o Wire para criar um código de acesso";
 "share_extension.unlock.reveal_passcode" = "Revelar código de acesso";
@@ -62,4 +62,4 @@
 
 //Feature flag - File sharing
 "feature.flag.file_sharing.alert.title" = "Restrições de compartilhamento de arquivos";
-"feature.flag.file_sharing.alert.message" = "Este arquivo não pôde ser compartilhado devido às suas restrições de compartilhamento.";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

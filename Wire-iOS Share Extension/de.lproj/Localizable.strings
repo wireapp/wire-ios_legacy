@@ -62,4 +62,4 @@
 
 //Feature flag - File sharing
 "feature.flag.file_sharing.alert.title" = "Einschränkungen beim Teilen von Dateien";
-"feature.flag.file_sharing.alert.message" = "Diese Datei konnte aufgrund von Einschränkungen bei der Dateifreigabe nicht geteilt werden.";
+"feature.flag.file_sharing.alert.message" = "Sie können diese Datei nicht teilen, da diese Funktion deaktiviert ist.";

@@ -62,4 +62,4 @@
 
 //Feature flag - File sharing
 "feature.flag.file_sharing.alert.title" = "Обмеження на обмін файлами";
-"feature.flag.file_sharing.alert.message" = "Цим файлом неможливо поділитися через обмеження на обмін файлами.";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";
