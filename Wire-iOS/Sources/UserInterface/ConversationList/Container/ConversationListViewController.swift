@@ -206,7 +206,9 @@ final class ConversationListViewController: UIViewController {
 
     @objc
     func showErrorAlertForConnectionRequest() {
-        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Connection.missingLegalholdConsent)
+        typealias ErrorStrings = L10n.Localizable.Error
+        UIAlertController.showErrorAlert(title: ErrorStrings.Conversation.title,
+                                         message: ErrorStrings.Connection.missingLegalholdConsent)
     }
 
     private func setupTopBar() {

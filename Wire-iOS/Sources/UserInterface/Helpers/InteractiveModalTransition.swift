@@ -154,11 +154,13 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     private let interactionController = ModalInteractionController()
     private let configuration: ModalPresentationConfiguration
 
-    init(viewController: UIViewController, configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3)) {
+    init(viewController: UIViewController,
+         configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3),
+         enableDismissOnPan: Bool = true) {
         self.viewController = viewController
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
-        setupViews(with: viewController)
+        setupViews(with: viewController, enableDismissOnPan: enableDismissOnPan)
         createConstraints()
         modalPresentationCapturesStatusBarAppearance = true
     }
@@ -180,9 +182,11 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         return wr_supportedInterfaceOrientations
     }
 
-    private func setupViews(with viewController: UIViewController) {
+    private func setupViews(with viewController: UIViewController, enableDismissOnPan: Bool) {
         transitioningDelegate = self
-        interactionController.setupWith(viewController: self)
+        if enableDismissOnPan {
+            interactionController.setupWith(viewController: self)
+        }
         modalPresentationStyle = .overFullScreen
         view.addSubview(dimView)
         dimView.backgroundColor = .clear

@@ -24,10 +24,10 @@ protocol CallAccessoryViewControllerDelegate: class {
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)
 }
 
-final class CallAccessoryViewController: UIViewController, CallParticipantsViewControllerDelegate {
+final class CallAccessoryViewController: UIViewController, CallParticipantsListViewControllerDelegate {
 
     weak var delegate: CallAccessoryViewControllerDelegate?
-    private let participantsViewController: CallParticipantsViewController
+    private let participantsViewController: CallParticipantsListViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
     private let videoPlaceholderStatusLabel = UILabel(
         key: "video_call.camera_access.denied",
@@ -46,9 +46,11 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     init(configuration: CallInfoViewControllerInput,
          selfUser: UserType) {
         self.configuration = configuration
-        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants,
-                                                                    allowsScrolling: false,
-                                                                    selfUser: selfUser)
+        participantsViewController = CallParticipantsListViewController(
+            participants: configuration.accessoryType.participants,
+            showParticipants: false,
+            selfUser: selfUser
+        )
         super.init(nibName: nil, bundle: nil)
         participantsViewController.delegate = self
     }
@@ -106,7 +108,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
     }
 
-    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
+    func callParticipantsListViewControllerDidSelectShowMore(viewController: CallParticipantsListViewController) {
         delegate?.callAccessoryViewControllerDidSelectShowMore(viewController: self)
     }
 

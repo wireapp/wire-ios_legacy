@@ -17,14 +17,15 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
 import WireCommonComponents
 
 final class CollectionFileCell: CollectionCell {
+    private var containerView = UIView()
     private let fileTransferView = FileTransferView()
+    private let restrictionView = FileMessageRestrictionView()
     private let headerView = CollectionCellHeader()
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
@@ -33,8 +34,17 @@ final class CollectionFileCell: CollectionCell {
         guard let message = self.message else {
             return
         }
+
         headerView.message = message
-        fileTransferView.configure(for: message, isInitial: changeInfo == .none)
+        if message.isRestricted {
+            setup(restrictionView)
+            restrictionView.configure(for: message)
+        } else {
+            fileTransferView.delegate = self
+
+            setup(fileTransferView)
+            fileTransferView.configure(for: message, isInitial: changeInfo == .none)
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -48,31 +58,45 @@ final class CollectionFileCell: CollectionCell {
     }
 
     func loadView() {
-        self.fileTransferView.delegate = self
-        self.fileTransferView.layer.cornerRadius = 4
-        self.fileTransferView.clipsToBounds = true
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
-        self.secureContentsView.addSubview(self.headerView)
-        self.secureContentsView.addSubview(self.fileTransferView)
+        secureContentsView.addSubview(headerView)
+        secureContentsView.addSubview(containerView)
 
-        constrain(self.secureContentsView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
-            headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin + 12
-            headerView.trailing == contentView.trailingMargin - 12
+        NSLayoutConstraint.activate([
+            // headerView
+            headerView.topAnchor.constraint(equalTo: secureContentsView.topAnchor, constant: 16),
+            headerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor, constant: 16),
+            headerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor, constant: -16),
 
-            fileTransferView.top == headerView.bottom + 4
-
-            fileTransferView.left == contentView.leftMargin
-            fileTransferView.right == contentView.rightMargin
-            fileTransferView.bottom == contentView.bottomMargin
-        }
+            // containerView
+            containerView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 4),
+            containerView.leadingAnchor.constraint(equalTo: secureContentsView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: secureContentsView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: secureContentsView.bottomAnchor)
+        ])
     }
 
     override var obfuscationIcon: StyleKitIcon {
         return .document
     }
 
+    private func setup(_ view: UIView) {
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 4),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4)
+        ])
+    }
 }
 
 extension CollectionFileCell: TransferViewDelegate {

@@ -16,9 +16,9 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Мы используем данные о ваших контактах, чтобы вы могли найти людей, которых знаете. Мы анонимизируем всю информацию перед ее загрузкой на наш сервер и не делимся ею с кем-либо еще.";
+"NSContactsUsageDescription" = "Мы используем данные о ваших контактах, чтобы вы могли найти пользователей, которых знаете. Мы анонимизируем всю информацию перед ее загрузкой на наш сервер и не делимся ею с кем-либо еще.";
 "NSMicrophoneUsageDescription" = "Разрешить Wire доступ к микрофону для совершения звонков и отправки аудиосообщений.";
-"NSLocationWhenInUseUsageDescription" = "Разрешить Wire доступ к вашему местоположению, чтобы вы могли отправлять ваше местоположение другим людям.";
+"NSLocationWhenInUseUsageDescription" = "Разрешить Wire доступ к вашему местоположению, чтобы вы могли отправлять ваше местоположение другим пользователям.";
 "NSCameraUsageDescription" = "Разрешить Wire доступ к вашей камере, чтобы вы могли совершать видеозвонки и отправлять фотографии.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
 "NSPhotoLibraryAddUsageDescription" = "Разрешить Wire сохранять снимки в галерею.";

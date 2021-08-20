@@ -62,11 +62,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -86,11 +86,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -110,11 +110,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -134,11 +134,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -158,11 +158,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -182,11 +182,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -206,11 +206,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -230,11 +230,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -254,11 +254,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -280,11 +280,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -304,11 +304,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -328,11 +328,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -352,11 +352,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -376,11 +376,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -400,11 +400,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -424,11 +424,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -450,11 +450,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -474,11 +474,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -498,11 +498,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -522,11 +522,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -546,11 +546,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -570,11 +570,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -594,11 +594,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.name ?? "",
             isVideoCall: false,
-            variant: .light,
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -620,11 +620,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -644,11 +644,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -668,11 +668,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -692,11 +692,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -716,11 +716,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -740,11 +740,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -764,11 +764,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -788,11 +788,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -813,11 +813,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -838,11 +838,11 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.name ?? "",
             isVideoCall: true,
-            variant: .light,
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
