@@ -64,6 +64,16 @@ while [ "$1" != "" ]; do
     shift
 done
 
+BRANCH_EXISTS=$(git ls-remote --tags --heads ${REPO_URL} | grep "refs/tags/${BRANCH}")
+
+if [ -z "$BRANCH_EXISTS" ]
+then
+    echo "⚠️ Branch input not exist, use 'master'"
+    BRANCH=master
+else
+      echo "✅ Branch or tag $BRANCH exists in ${REPO_URL}"
+fi
+
 ##################################
 # Checout assets
 ##################################

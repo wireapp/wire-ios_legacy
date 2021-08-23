@@ -53,10 +53,11 @@ echo "ℹ️  Downloading AVS library..."
 ./Scripts/download-avs.sh
 echo ""
 
-echo "ℹ️  Downloading additional assets..."
 # get version from Wire-iOS/Resources/Configuration/Version.xcconfig
 VERSION=$(swift ./Scripts/readVersion.swift Wire-iOS/Resources/Configuration/Version.xcconfig)
 echo "ℹ️  version is $VERSION"
+
+echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh "$@" --branch release/$VERSION
 echo ""
 
