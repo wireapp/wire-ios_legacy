@@ -56,7 +56,9 @@ while [ "$1" != "" ]; do
         -h | --help )               usage
                                     exit
                                     ;;
-        * )                         usage
+        * )                         echo "invalid options: ${OPTION}"
+                                    usage
+
                                     exit 1
     esac
     shift

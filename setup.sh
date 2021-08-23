@@ -54,7 +54,7 @@ echo "ℹ️  Downloading AVS library..."
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh "$@" --b release/3.87
+./Scripts/download-assets.sh "$@" --branch release/3.87
 echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
