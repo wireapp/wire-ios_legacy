@@ -508,7 +508,7 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablished(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: false,
+            allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
@@ -556,7 +556,7 @@ struct CallInfoTestFixture {
 
     func groupAudioEstablishedVideoUnavailable(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: false,
+            allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
