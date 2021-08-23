@@ -51,7 +51,7 @@ while [ "$1" != "" ]; do
                                     echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
                                     ;;
         -b | --branch)              BRANCH=$1
-                                    echo "Using custom branch: ${BRANCH}"
+                                    echo "Using custom branch or tag: ${BRANCH}"
                                     ;;
         -h | --help )               usage
                                     exit
