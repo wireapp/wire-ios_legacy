@@ -269,10 +269,7 @@ fileprivate extension VoiceChannel {
 
     var allowPresentationModeUpdates: Bool {
         return connectedParticipants.count > 2
-            && internalIsVideoCall
-            && isActiveSpeakersTabEnabled
     }
-    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {
