@@ -71,7 +71,7 @@ then
     echo "⚠️ Branch input not exist, use 'master'"
     BRANCH=master
 else
-      echo "✅ Branch or tag $BRANCH exists in ${REPO_URL}"
+    echo "✅ Branch or tag $BRANCH exists in ${REPO_URL}"
 fi
 
 ##################################
