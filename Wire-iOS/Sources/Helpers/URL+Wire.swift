@@ -184,6 +184,14 @@ extension URL {
         return wr_support.appendingPathComponent("hc/articles/360002018278-What-is-legal-hold-")
     }
 
+    static var wr_wirePricingLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "pricing")
+    }
+
+    static var wr_wireEnterpriseLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
+    }
+
 }
 
 extension NSURL {
