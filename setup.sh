@@ -58,7 +58,7 @@ VERSION=$(swift ./Scripts/readVersion.swift Wire-iOS/Resources/Configuration/Ver
 echo "ℹ️  version is $VERSION"
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh "$@" --branch release/$VERSION
+./Scripts/download-assets.sh "$@" --branch $VERSION
 echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
