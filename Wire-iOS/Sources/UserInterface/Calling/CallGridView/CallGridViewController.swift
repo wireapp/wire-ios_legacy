@@ -527,7 +527,9 @@ extension ZMEditableUser {
             let userId = selfUser.remoteIdentifier,
             let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
-            fatal("Could not create self user stream which should always exist")
+            let reason = "Could not create self user stream which should always exist"
+            Log.calling.terminating(reason: reason)
+            fatal(reason)
         }
 
         return AVSClient(userId: userId, clientId: clientId)

@@ -54,7 +54,9 @@ final class GridView: UICollectionView {
 
     init(maxItemsPerPage: Int) {
         guard maxItemsPerPage > 0 else {
-            fatalError("maxItemsPerPage needs to be greater than zero")
+            let reason = "maxItemsPerPage needs to be greater than zero"
+            Log.calling.terminating(reason: reason)
+            fatalError(reason)
         }
 
         self.maxItemsPerPage = maxItemsPerPage

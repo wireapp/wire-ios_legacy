@@ -23,3 +23,9 @@ struct Log {
     static let haptics = ZMSLog(tag: "haptics")
     static let callTimestamps = ZMSLog(tag: "call-participant-timestamps")
 }
+
+extension ZMSLog {
+    func terminating(reason: String) {
+        debug("Terminating Wire: \(reason)")
+    }
+}

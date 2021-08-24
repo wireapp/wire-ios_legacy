@@ -363,7 +363,9 @@ extension CallViewController {
 
     fileprivate func acceptCallIfPossible() {
         guard let conversation = self.conversation else {
-            fatalError("Trying to accept a call for a voice channel without conversation.")
+            let reason = "Trying to accept a call for a voice channel without conversation."
+            Log.calling.terminating(reason: reason)
+            fatalError(reason)
         }
 
         permissions.requestOrWarnAboutAudioPermission { audioGranted in
