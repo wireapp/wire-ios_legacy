@@ -62,4 +62,4 @@
 
 //Feature flag - File sharing
 "feature.flag.file_sharing.alert.title" = "Restrições de compartilhamento de arquivos";
-"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";
+"feature.flag.file_sharing.alert.message" = "Você não pode compartilhar este arquivo porque este recurso está desativado.";
