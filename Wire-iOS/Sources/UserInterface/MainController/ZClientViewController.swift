@@ -89,6 +89,14 @@ final class ZClientViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
 
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { (note) in
+            guard let change = note.object as? Feature.FeatureChange else { return }
+            switch change {
+            case .conferenceCallingIsAvailable:
+                self.presentConferenceCallingAvailableAlert()
+            }
+        }
+
         setupAppearance()
 
         createLegalHoldDisclosureController()
@@ -164,7 +172,6 @@ final class ZClientViewController: UIViewController {
         }
 
         setupUserChangeInfoObserver()
-        setUpFeatureChangeObservation()
         setUpConferenceCallingUnavailableObserver()
     }
 
