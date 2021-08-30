@@ -248,7 +248,7 @@ final class CallViewController: UIViewController {
     }
 
     private func updateAppearance() {
-        view.backgroundColor = UIColor.from(scheme: .background, variant: .dark)
+        view.backgroundColor = UIColor.from(scheme: .background, variant: callInfoConfiguration.variant)
     }
 
     fileprivate func alertVideoUnavailable() {
@@ -471,12 +471,19 @@ extension CallViewController: CallGridViewControllerDelegate {
 
 extension CallViewController {
 
+    private var callingConfig: CallingConfiguration { .config }
+
     var isOverlayVisible: Bool {
         return callInfoRootViewController.view.alpha > 0
     }
 
     fileprivate var canHideOverlay: Bool {
         guard case .established = callInfoConfiguration.state else { return false }
+
+        guard callingConfig.canAudioCallHideOverlay else {
+            return callInfoConfiguration.isVideoCall
+        }
+
         return true
     }
 

@@ -58,6 +58,8 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         MockUser.mockSelf()?.remoteIdentifier = selfUserId
         MockUser.mockSelf()?.clients = [userClient]
         MockUser.mockSelf()?.isSelfUser = true
+
+        CallingConfiguration.config = .largeConferenceCalls
     }
 
     override func tearDown() {
@@ -65,6 +67,7 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         mockUser1 = nil
         mockUser2 = nil
         mockUser3 = nil
+        CallingConfiguration.resetDefaultConfig()
         super.tearDown()
     }
 

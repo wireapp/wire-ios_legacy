@@ -37,6 +37,7 @@ enum SendingState {
     case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
     case done // Sending either was cancelled (due to degradation for example) or finished.
     case error(Error) // When error occurs, e.g. file is over the size limit/conversation does not exist
+    case fileSharingRestriction // Fired when the selfUser isn't allowed to share files
 }
 
 /// This class encapsulates the preparation and sending of text an `NSItemProviders`.

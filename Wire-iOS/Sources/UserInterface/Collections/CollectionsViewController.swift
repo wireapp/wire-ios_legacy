@@ -151,6 +151,14 @@ final class CollectionsViewController: UIViewController {
         self.contentView.collectionView.prefetchDataSource = self
 
         self.updateNoElementsState()
+
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] note in
+            guard let featureUpdateEvent = note.object as? FeatureUpdateEventPayload,
+                  featureUpdateEvent.name == .fileSharing else {
+                return
+            }
+            self?.reloadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -209,6 +217,7 @@ final class CollectionsViewController: UIViewController {
         shouldTrackOnNextOpen = false
     }
 
+    @objc
     private func reloadData() {
         UIView.performWithoutAnimation {
             self.contentView.collectionView.performBatchUpdates({
@@ -697,7 +706,7 @@ extension CollectionsViewController: CollectionCellDelegate {
         case .present:
             self.selectedMessage = message
 
-            if message.isImage {
+            if message.isImage, !message.isRestricted {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
 
                 let backButton = CollectionsView.backButton()

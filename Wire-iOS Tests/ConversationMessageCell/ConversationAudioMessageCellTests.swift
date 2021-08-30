@@ -219,4 +219,13 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         verify(message: message)
     }
 
+    // MARK: - Receiving restrictions
+
+    func testRestrictionMessageCell() {
+        message.backingIsRestricted = true
+        message.backingFileMessageData.mimeType = "audio/x-m4a"
+
+        verify(message: message)
+    }
+
 }

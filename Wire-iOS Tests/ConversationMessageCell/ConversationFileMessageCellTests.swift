@@ -232,4 +232,13 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
+    // MARK: - Receiving restrictions
+
+    func testRestrictionMessageCell() {
+        message.backingIsRestricted = true
+        message.backingFileMessageData.mimeType = "application/pdf"
+
+        verify(message: message)
+    }
+
 }

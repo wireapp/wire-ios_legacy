@@ -104,7 +104,8 @@ final class ConversationListContentController: UICollectionViewController, Popov
 
     @objc
     func showErrorAlertForConversationRequest() {
-        UIAlertController.showErrorAlert(message: L10n.Localizable.Error.Conversation.missingLegalholdConsent)
+        typealias ConversationError = L10n.Localizable.Error.Conversation
+        UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.missingLegalholdConsent)
     }
 
     private func activeMediaPlayerChanged() {

@@ -141,11 +141,11 @@ final class FileTransferView: UIView, TransferView {
 
         let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size
-
-        let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
         let ext = filepath.pathExtension
 
         let dot = " " + String.MessageToolbox.middleDot + " " && labelFont && labelTextBlendedColor
+
+        guard let filename = message.filename else { return }
         let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
         let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
 

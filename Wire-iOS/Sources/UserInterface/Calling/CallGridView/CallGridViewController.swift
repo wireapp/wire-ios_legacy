@@ -32,7 +32,13 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
-    static let maxItemsPerPage = 8
+
+    static var maxItemsPerPage: Int {
+        switch CallingConfiguration.config.streamLimit {
+        case .limit(amount: let amount): return amount
+        case .noLimit: return 8
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -49,7 +55,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     private var visibleClientsSharingVideo: [AVSClient] = []
     private var dataSource: [Stream] = []
-    private let gridView = GridView(maxItemsPerPage: CallGridViewController.maxItemsPerPage)
+    private let gridView = GridView(maxItemsPerPage: maxItemsPerPage)
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let networkConditionView = NetworkConditionIndicatorView()
     private let pageIndicator = RoundedPageIndicator()
@@ -257,8 +263,6 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Grid Update
 
     private func updateState() {
-        Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
-
         displaySpinnerIfNeeded()
         updateSelfCallParticipantView()
         updateFloatingView(with: configuration.floatingStream)
@@ -267,8 +271,6 @@ final class CallGridViewController: SpinnerCapableViewController {
         updateGridViewAxis()
         updateHint(for: .configurationChanged)
         requestVideoStreamsIfNeeded(forPage: gridView.currentPage)
-
-        Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
     private func displaySpinnerIfNeeded() {
@@ -451,13 +453,6 @@ final class CallGridViewController: SpinnerCapableViewController {
             return nil
         }
         return viewCache[selfStreamId] as? SelfCallParticipantView
-    }
-
-    private func videoConfigurationDescription() -> String {
-        return """
-        showing self preview: \(selfCallParticipantView != nil)
-        videos in grid: [\(dataSource)]\n
-        """
     }
 
 }

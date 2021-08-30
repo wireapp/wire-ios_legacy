@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Annehmen";
 "voice.decline_button.title" = "Ablehnen";
 "voice.hang_up_button.title" = "Beenden";
-"voice.mute_button.title" = "Stumm";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Wechseln";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
+"voice.flip_video_button.title" = "Kamera wechseln";
 "voice.speaker_button.title" = "Lautsprecher";
 "voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Konstante Bitrate";
 "call.status.variable_bitrate" = "Variable Bitrate";
 
-"call.participants.show_all" = "Alle anzeigen (%@)";
+"call.participants.show_all" = "Teilnehmer (%d)";
 "call.participants.list.title" = "Teilnehmer";
 
 "call.overlay.switch_to.speakers" = "SPRECHER";
@@ -692,6 +692,7 @@
 
 "call.grid.hints.fullscreen" = "Für Vollbildmodus auf eine Kachel doppeltippen";
 "call.grid.hints.go_back_or_zoom" = "Zum Zurückgehen doppeltippen, zum Zoomen auf- und zuziehen";
+"call.grid.hints.go_back" = "Zum Zurückgehen doppeltippen";
 "call.grid.hints.zoom" = "Zum Zoomen auf- und zuziehen";
 
 "call.video.paused" = "Video wurde angehalten";
@@ -1620,6 +1621,8 @@
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
 "error.conversation.offline" = "Es scheint ein Problem mit der Internetverbindung zu geben. Bitte stellen Sie sicher, dass sie funktioniert.";
 "error.conversation.missing_legalhold_consent" = "Aufgrund der gesetzlichen Aufbewahrung können nur Team-Mitglieder zu dieser Unterhaltung hinzugefügt werden.";
+"error.message.send.missing_legalhold_consent" = "Sie können diese Nachricht nicht senden, weil Sie mindestens ein veraltetes Gerät haben, das die gesetzliche Aufbewahrung nicht unterstützt. Bitte aktualisieren Sie all Ihre Geräte oder entfernen Sie sie in den App-Einstellungen.";
+"error.message.send.title" = "Nachrichten können nicht gesendet werden";
 
 "sketchpad.initial_hint" = "Tippen Sie auf Farben, um die Pinselgröße zu ändern";
 
@@ -1636,6 +1639,15 @@
 "force.update.title" = "Aktualisierung erforderlich";
 "force.update.message" = "Sie verpassen neue Funktionen.\nLaden Sie die neueste Version von Wire herunter.";
 "force.update.ok_button" = "Zum App Store";
+
+//Feature flag - File sharing
+"feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
+"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
+"feature_config.file_sharing_restrictions.file" = "Empfang von Dateien eingeschränkt";
+"feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern eingeschränkt";
+"feature_config.file_sharing_restrictions.video" = "Empfang von Videos eingeschränkt";
+"feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien eingeschränkt";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";

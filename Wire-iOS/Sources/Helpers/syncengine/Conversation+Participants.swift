@@ -80,22 +80,24 @@ extension ZMConversation {
 
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
-            UIAlertController.showErrorAlert(message: ConversationError.tooManyMembers)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.tooManyMembers)
         case NetworkError.offline:
-            UIAlertController.showErrorAlert(message: ConversationError.offline)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.offline)
         case ConversationAddParticipantsError.missingLegalHoldConsent:
-            UIAlertController.showErrorAlert(message: ConversationError.missingLegalholdConsent)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.missingLegalholdConsent)
         default:
-            UIAlertController.showErrorAlert(message: ConversationError.cannotAdd)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.cannotAdd)
         }
     }
 
     private func showAlertForRemoval(for error: Error) {
+        typealias ConversationError = L10n.Localizable.Error.Conversation
+
         switch error {
         case NetworkError.offline:
-            UIAlertController.showErrorAlert(message: "error.conversation.offline".localized)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.offline.localized)
         default:
-            UIAlertController.showErrorAlert(message: "error.conversation.cannot_remove".localized)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.cannotRemove.localized)
         }
     }
 }
