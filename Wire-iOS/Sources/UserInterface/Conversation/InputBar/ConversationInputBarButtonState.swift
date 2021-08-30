@@ -47,7 +47,7 @@ final class ConversationInputBarButtonState {
     }
 
     var ephemeralIndicatorButtonEnabled: Bool {
-        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout
+        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout && !isEphemeralTimeoutForced
     }
 
     private var hasText: Bool {
@@ -83,6 +83,11 @@ final class ConversationInputBarButtonState {
     private var isEphemeralSendingDisabled: Bool {
         guard let session = ZMUserSession.shared() else { return false }
         return session.selfDeletingMessagesFeature.status == .disabled
+    }
+
+    private var isEphemeralTimeoutForced: Bool {
+        guard let session = ZMUserSession.shared() else { return false }
+        return session.selfDeletingMessagesFeature.config.enforcedTimeoutSeconds > 0
     }
 
 }
