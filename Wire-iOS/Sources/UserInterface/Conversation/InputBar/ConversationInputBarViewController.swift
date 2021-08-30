@@ -422,7 +422,6 @@ final class ConversationInputBarViewController: UIViewController,
                                editing: nil != editingMessage,
                                markingDown: inputBar.isMarkingDown,
                                destructionTimeout: conversation.messageDestructionTimeoutValue,
-                               conversationType: conversation.conversationType,
                                mode: mode,
                                syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
 

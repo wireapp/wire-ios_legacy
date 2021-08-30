@@ -19,8 +19,7 @@
 import Foundation
 import WireDataModel
 
-private let disableEphemeralSending = false
-private let disableEphemeralSendingInGroups = false
+private let disableEphemeralSending = true
 
 extension InputBarConversation {
     var hasSyncedMessageDestructionTimeout: Bool {
@@ -41,11 +40,11 @@ final class ConversationInputBarButtonState {
     }
 
     var hourglassButtonHidden: Bool {
-        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || ephemeral || disableEphemeralSending
+        return hasText || editing || ephemeral || disableEphemeralSending
     }
 
     var ephemeralIndicatorButtonHidden: Bool {
-        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
+        return editing || !ephemeral || disableEphemeralSending
     }
 
     var ephemeralIndicatorButtonEnabled: Bool {
@@ -64,7 +63,6 @@ final class ConversationInputBarButtonState {
     private var editing: Bool = false
     private var markingDown: Bool = false
     private var destructionTimeout: TimeInterval = 0
-    private var conversationType: ZMConversationType = .oneOnOne
     private var mode: ConversationInputBarViewControllerMode = .textInput
     private var syncedMessageDestructionTimeout: Bool = false
 
@@ -72,7 +70,6 @@ final class ConversationInputBarButtonState {
                 editing: Bool,
                 markingDown: Bool,
                 destructionTimeout: TimeInterval,
-                conversationType: ZMConversationType,
                 mode: ConversationInputBarViewControllerMode,
                 syncedMessageDestructionTimeout: Bool) {
 
@@ -80,7 +77,6 @@ final class ConversationInputBarButtonState {
         self.editing = editing
         self.markingDown = markingDown
         self.destructionTimeout = destructionTimeout
-        self.conversationType = conversationType
         self.mode = mode
         self.syncedMessageDestructionTimeout = syncedMessageDestructionTimeout
     }
