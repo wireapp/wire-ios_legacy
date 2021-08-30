@@ -93,31 +93,17 @@ final class CompanyLoginFlowHandler {
 
     // MARK: - Utilities
 
-    @available(iOS 11, *)
     private func openSafariAuthenticationSession(at url: URL) {
-        if #available(iOS 12, *) {
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
-                if let url = url {
-                    self.processURL(url)
-                }
-
-                self.currentAuthenticationSession = nil
+        let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
+            if let url = url {
+                self.processURL(url)
             }
 
-            currentAuthenticationSession = session
-            session.start()
-        } else {
-            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
-                if let url = url {
-                    self.processURL(url)
-                }
-
-                self.currentAuthenticationSession = nil
-            }
-
-            currentAuthenticationSession = session
-            session.start()
+            self.currentAuthenticationSession = nil
         }
+
+        currentAuthenticationSession = session
+        session.start()
     }
 
     private func processURL(_ url: URL) {

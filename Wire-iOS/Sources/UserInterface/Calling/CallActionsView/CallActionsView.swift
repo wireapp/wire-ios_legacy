@@ -52,7 +52,7 @@ enum MediaState: Equatable {
 }
 
 // This protocol describes the input for a `CallActionsView`.
-protocol CallActionsViewInputType: CallTypeProvider {
+protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
     var isMuted: Bool { get }
     var mediaState: MediaState { get }
@@ -66,7 +66,15 @@ protocol CallActionsViewInputType: CallTypeProvider {
 
 extension CallActionsViewInputType {
     var appearance: CallActionAppearance {
-        .dark(blurred: true)
+        guard CallingConfiguration.config.isAudioCallColorSchemable else {
+            return .dark(blurred: true)
+        }
+
+        switch (isVideoCall, variant) {
+        case (true, _): return .dark(blurred: true)
+        case (false, .light): return .light
+        case (false, .dark): return .dark(blurred: false)
+        }
     }
 }
 

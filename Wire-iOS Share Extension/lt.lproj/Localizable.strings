@@ -38,7 +38,7 @@
 "share_extension.unlock.submit_button.title" = "unlock";
 "share_extension.unlock.textfield.placeholder" = "Enter your passcode";
 "share_extension.unlock.hint_label" = "„Passcode“";
-"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.error_label" = "Neteisingas slaptažodis";
 "share_extension.unlock.alert.message" = "Open Wire to create a passcode";
 "share_extension.unlock.reveal_passcode" = "Reveal passcode";
 
@@ -59,3 +59,7 @@
 "meta.degraded.dialog_message" = "Ar vis dar norite išsiųsti savo žinutę?";
 "meta.degraded.cancel_sending_button" = "Nesiųsti";
 "meta.degraded.send_anyway_button" = "Vis tiek siųsti";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

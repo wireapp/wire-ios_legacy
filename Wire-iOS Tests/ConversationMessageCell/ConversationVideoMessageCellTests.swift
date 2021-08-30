@@ -218,4 +218,13 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         verify(message: message, waitForImagesToLoad: true)
     }
 
+    // MARK: - Receiving restrictions
+
+    func testRestrictionMessageCell() {
+        message.backingIsRestricted = true
+        message.backingFileMessageData.mimeType = "video/mp4"
+
+        verify(message: message)
+    }
+
 }

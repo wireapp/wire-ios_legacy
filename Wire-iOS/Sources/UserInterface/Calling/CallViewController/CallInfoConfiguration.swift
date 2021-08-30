@@ -115,6 +115,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let callState: CallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
+    let variant: ColorSchemeVariant
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -145,6 +146,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         callState = voiceChannel.state
         videoGridPresentationMode = voiceChannel.videoGridPresentationMode
         allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
+        variant = ColorScheme.default.variant
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -249,10 +251,7 @@ fileprivate extension VoiceChannel {
 
     var allowPresentationModeUpdates: Bool {
         return connectedParticipants.count > 2
-            && internalIsVideoCall
-            && isActiveSpeakersTabEnabled
     }
-    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {

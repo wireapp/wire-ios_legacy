@@ -71,7 +71,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -94,7 +95,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -117,7 +119,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -140,7 +143,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -163,7 +167,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -186,7 +191,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -209,7 +215,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -232,7 +239,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -255,7 +263,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -280,7 +289,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -303,7 +313,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -326,7 +337,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -349,7 +361,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -372,7 +385,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -395,7 +409,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -418,7 +433,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -443,7 +459,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -466,7 +483,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -489,13 +507,14 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
     func groupAudioEstablished(mockUsers: [UserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: false,
+            allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
@@ -512,7 +531,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -535,13 +555,14 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
     func groupAudioEstablishedVideoUnavailable(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
-            allowPresentationModeUpdates: false,
+            allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
@@ -558,7 +579,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -581,7 +603,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: false,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -606,7 +629,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -629,7 +653,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -652,7 +677,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -675,7 +701,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -698,7 +725,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .poor,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -721,7 +749,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            variant: .dark
         )
     }
 
@@ -744,7 +773,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -767,7 +797,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -791,7 +822,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 
@@ -815,7 +847,8 @@ struct CallInfoTestFixture {
             disableIdleTimer: true,
             cameraType: .front,
             networkQuality: .normal,
-            userEnabledCBR: true
+            userEnabledCBR: true,
+            variant: .dark
         )
     }
 

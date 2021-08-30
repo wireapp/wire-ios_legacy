@@ -21,6 +21,16 @@ import XCTest
 
 final class CallInfoViewControllerSnapshotTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        CallingConfiguration.config = .largeConferenceCalls
+    }
+
+    override func tearDown() {
+        CallingConfiguration.resetDefaultConfig()
+        super.tearDown()
+    }
+
     // MARK: - OneToOne Audio
 
     func testOneToOneIncomingAudioRinging() {

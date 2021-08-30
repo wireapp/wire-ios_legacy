@@ -11,10 +11,7 @@ jobs:
   synchronize-with-crowdin:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Config git user
-        run: git config --global user.email "iosx@wire.com"
-      
+    steps:      
       - name: Checkout
         uses: actions/checkout@v2
 
