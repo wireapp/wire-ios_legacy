@@ -1657,7 +1657,7 @@
 "feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to enterprise";
 "feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise for access to features such as starting conferences and more.";
 "feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wires pricing";
-"feature_config.conference_calling_restrictions.admins.upgrade_button.title" = "Upgrade now";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
 
 "feature_config.conference_calling_restrictions.members.alert.title" = "Feature not accessible";
 "feature_config.conference_calling_restrictions.members.alert.message" = "To use the conferencing feature your team admin needs to upgrade Wire.";

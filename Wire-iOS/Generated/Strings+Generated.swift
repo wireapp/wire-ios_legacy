@@ -1793,14 +1793,14 @@ internal enum L10n {
             internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message")
             /// Upgrade to enterprise
             internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.title")
+            internal enum Action {
+              /// Upgrade now
+              internal static let upgrade = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.action.upgrade")
+            }
             internal enum Message {
               /// Learn more about Wires pricing
               internal static let learnMore = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message.learn_more")
             }
-          }
-          internal enum UpgradeButton {
-            /// Upgrade now
-            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.upgrade_button.title")
           }
         }
         internal enum Members {

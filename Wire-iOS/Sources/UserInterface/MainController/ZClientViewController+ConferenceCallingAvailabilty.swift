@@ -21,22 +21,14 @@ import WireSyncEngine
 
 extension ZClientViewController {
 
-    // We need an alert that conference calling changed.
-    // Feature service could do this.
-    // So let's introduce Feature config change notificaitons, observed by the
-    // Feature Service, which will then post other notifications.
-
-    func presentConferenceCallingAvailableAlert() {
+     func presentConferenceCallingAvailableAlert() {
         typealias ConferenceCallingAlert = L10n.Localizable.FeatureConfig.Update.ConferenceCalling.Alert
         let title = ConferenceCallingAlert.title
         let message = ConferenceCallingAlert.message
         let learnMore = ConferenceCallingAlert.Message.learnMore
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: learnMore, style: .default, handler: { (_) in
-            let browserViewController = BrowserViewController(url: URL.wr_wireEnterpriseLearnMore)
-            self.present(browserViewController, animated: true)
-        }))
+        alert.addAction(UIAlertAction.link(title: learnMore, url: URL.wr_wireEnterpriseLearnMore, presenter: self))
         alert.addAction(UIAlertAction.ok(style: .default, handler: { [weak self] (_) in
             self?.confirmChanges()
         }))
@@ -45,23 +37,16 @@ extension ZClientViewController {
     }
 
     func presentConferenceCallingRestrictionAlertForAdmin() {
-        typealias ConferenceCallingRestrictions = L10n.Localizable.FeatureConfig.ConferenceCallingRestrictions.Admins
-        typealias ConferenceCallingAlert = ConferenceCallingRestrictions.Alert
+        typealias ConferenceCallingAlert = L10n.Localizable.FeatureConfig.ConferenceCallingRestrictions.Admins.Alert
         let title = ConferenceCallingAlert.title
         let message = ConferenceCallingAlert.message
         let learnMore = ConferenceCallingAlert.Message.learnMore
-        let upgradeButtonTitle = ConferenceCallingRestrictions.UpgradeButton.title
+        let upgradeActionTitle = ConferenceCallingAlert.Action.upgrade
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: learnMore, style: .default, handler: { (_) in
-            let browserViewController = BrowserViewController(url: URL.wr_wirePricingLearnMore)
-            self.present(browserViewController, animated: true)
-        }))
+        alert.addAction(UIAlertAction.link(title: learnMore, url: URL.wr_wirePricingLearnMore, presenter: self))
         alert.addAction(.cancel())
-        alert.addAction(.init(title: upgradeButtonTitle, style: .default, handler: { (_) in
-            let browserViewController = BrowserViewController(url: URL.manageTeam(source: .settings))
-            self.present(browserViewController, animated: true)
-        }))
+        alert.addAction(UIAlertAction.link(title: upgradeActionTitle, url: URL.manageTeam(source: .settings), presenter: self))
 
         present(alert, animated: true)
     }
@@ -97,6 +82,17 @@ extension ZClientViewController: ConferenceCallingUnavailableObserver {
             presentConferenceCallingRestrictionAlertForAdmin()
         } else {
             presentConferenceCallingRestrictionAlertForMember()
+        }
+    }
+
+}
+
+private extension UIAlertAction {
+
+    static func link(title: String, url: URL, presenter: UIViewController) -> Self {
+        return .init(title: title, style: .default) { _ in
+            let browserViewController = BrowserViewController(url: url)
+            presenter.present(browserViewController, animated: true)
         }
     }
 
