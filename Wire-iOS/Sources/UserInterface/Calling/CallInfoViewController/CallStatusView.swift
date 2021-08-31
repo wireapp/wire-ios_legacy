@@ -126,7 +126,7 @@ final class CallStatusView: UIView {
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
-        bitrateLabel.isHidden = !configuration.userEnabledCBR
+        bitrateLabel.isHidden = !configuration.isConstantBitRate
         bitrateLabel.bitRateStatus = BitRateStatus(configuration.isConstantBitRate)
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
