@@ -39,6 +39,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var networkQuality: NetworkQuality
     var userEnabledCBR: Bool
     var variant: ColorSchemeVariant
+    var isForcedCBR: Bool
 }
 
 extension MockCallInfoViewControllerInput: CustomDebugStringConvertible {}

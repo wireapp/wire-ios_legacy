@@ -130,6 +130,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
+    let isForcedCBR: Bool
     let callState: CallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
@@ -156,6 +157,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
+        isForcedCBR = SecurityFlags.forceConstantBitRateCalls.isEnabled
         title = voiceChannel.conversation?.displayName ?? ""
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
