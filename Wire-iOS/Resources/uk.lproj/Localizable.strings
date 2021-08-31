@@ -1621,8 +1621,8 @@
 "error.conversation.too_many_members" = "Розмова переповнена";
 "error.conversation.offline" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
 "error.conversation.missing_legalhold_consent" = "Тільки члени команди можуть бути додані до цієї розмови через правовий захист.";
-"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
-"error.message.send.title" = "Messages cannot be sent";
+"error.message.send.missing_legalhold_consent" = "Ви не можете надіслати це повідомлення, тому що у вас є хоча б один застарілий пристрій, який не підтримує правовий захист. Будь ласка, оновіть всі ваші пристрої, або видаліть їх з налаштувань додатку.";
+"error.message.send.title" = "Неможливо надіслати повідомлення";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 
@@ -1641,13 +1641,13 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 //Feature flag - File sharing
-"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
-"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
-"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
+"feature_config.update.file_sharing.alert.message.disabled" = "Отримання та надсилання файлів будь-якого типу було вимкнено.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Отримання та надсилання файлів будь-якого типу було увімкнено.";
+"feature_config.file_sharing_restrictions.file" = "Отримання файлів обмежене";
+"feature_config.file_sharing_restrictions.picture" = "Отримання картинок обмежене";
+"feature_config.file_sharing_restrictions.video" = "Отримання відео обмежене";
+"feature_config.file_sharing_restrictions.audio" = "Отримання аудіофайлів обмежене";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
