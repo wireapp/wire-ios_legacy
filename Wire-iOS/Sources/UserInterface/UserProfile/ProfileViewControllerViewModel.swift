@@ -196,8 +196,9 @@ final class ProfileViewControllerViewModel: NSObject {
     func sendConnectionRequest() {
         if user.isFederated {
             var conversation: ZMConversation?
-            ZMUserSession.shared()?.enqueue({
-                conversation = self.user.createFederatedOneToOne(in: ZMUserSession.shared()!)
+            guard let session = ZMUserSession.shared() else { return }
+            session.enqueue({
+                conversation = self.user.createFederatedOneToOne(in: session)
             }, completionHandler: {
                 guard let conversation = conversation else { return }
                 self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController,
