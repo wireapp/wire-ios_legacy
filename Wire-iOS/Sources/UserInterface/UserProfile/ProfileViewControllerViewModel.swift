@@ -194,11 +194,23 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: Connect
 
     func sendConnectionRequest() {
-        ZMUserSession.shared()?.enqueue {
-            let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
-            self.user.connect(message: messageText)
-            // update the footer view to display the cancel request button
-            self.viewModelDelegate?.updateFooterViews()
+        if user.isFederated {
+            var conversation: ZMConversation?
+            guard let session = ZMUserSession.shared() else { return }
+            session.enqueue({
+                conversation = self.user.createFederatedOneToOne(in: session)
+            }, completionHandler: {
+                guard let conversation = conversation else { return }
+                self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController,
+                                                     wantsToNavigateTo: conversation)
+            })
+        } else {
+            ZMUserSession.shared()?.enqueue {
+                let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
+                self.user.connect(message: messageText)
+                // update the footer view to display the cancel request button
+                self.viewModelDelegate?.updateFooterViews()
+            }
         }
     }
 
