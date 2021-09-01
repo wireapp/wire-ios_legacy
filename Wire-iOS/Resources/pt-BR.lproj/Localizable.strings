@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "**Serviços** estão ativos";
 "conversation.banner.externals_present" = "**Externos** estão presentes";
 "conversation.banner.guests_services_present" = "**Convidados** e **serviços** estão presentes";
-"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
+"conversation.banner.externals_services_present" = "**Externos** e **serviços** estão presentes";
 "conversation.banner.externals_guests_present" = "**Externos** e **convidados** estão presentes";
 "conversation.banner.externals_guests_services_present" = "**Externos**, **convidados** e **serviços** estão presentes";
 
@@ -569,7 +569,7 @@
 "content.file.save_audio" = "Salvar";
 "content.image.save_image" = "Salvar";
 
-"content.message.delete" = "Apagar";
+"content.message.delete" = "Excluir";
 "content.message.save" = "Salvar";
 "content.message.resend" = "Reenviar";
 
@@ -623,7 +623,7 @@
 "connection_request.send_button_title" = "Conectar";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
-"error.connection.missing_legalhold_consent" = "Você não pode se conectar a este usuário devido à uma retenção legal.";
+"error.connection.missing_legalhold_consent" = "Você não pode se conectar a este usuário devido à retenção legal.";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire precisa acessar suas Fotos";
@@ -648,9 +648,9 @@
 "voice.accept_button.title" = "Aceitar";
 "voice.decline_button.title" = "Rejeitar";
 "voice.hang_up_button.title" = "Desligar";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
-"voice.flip_video_button.title" = "Switch camera";
+"voice.mute_button.title" = "Microfone";
+"voice.video_button.title" = "Câmera";
+"voice.flip_video_button.title" = "Trocar câmera";
 "voice.speaker_button.title" = "Alto-falante";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Chamada";
@@ -682,7 +682,7 @@
 "call.status.constant_bitrate" = "Taxa de Bits Constante";
 "call.status.variable_bitrate" = "Taxa de bits variável";
 
-"call.participants.show_all" = "Participants (%d)";
+"call.participants.show_all" = "Participantes (%d)";
 "call.participants.list.title" = "Participantes";
 
 "call.overlay.switch_to.speakers" = "PALESTRANTES";
@@ -690,9 +690,9 @@
 
 "call.grid.no_active_speakers" = "Não há palestrantes de vídeo ativos...";
 
-"call.grid.hints.fullscreen" = "Toque duas vezes em um bloco para tela inteira";
+"call.grid.hints.fullscreen" = "Toque duas vezes em um bloco para tela cheia";
 "call.grid.hints.go_back_or_zoom" = "Toque duas vezes para voltar, aperte para dar zoom";
-"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.go_back" = "Toque duas vezes para voltar";
 "call.grid.hints.zoom" = "Aperte para dar zoom";
 
 "call.video.paused" = "Vídeo pausado";
@@ -725,7 +725,7 @@
 "call.announcement.incoming" = "Chamada de %@";
 "call.actions.label.toggle_mute_on" = "Silenciar";
 "call.actions.label.toggle_mute_off" = "Notificar";
-"call.actions.label.flip_camera" = "Switch camera";
+"call.actions.label.flip_camera" = "Trocar câmera";
 "call.actions.label.toggle_speaker_on" = "Ativar Alto-falante";
 "call.actions.label.toggle_speaker_off" = "Desativar Alto-falante";
 "call.actions.label.accept_call" = "Aceitar ligação";
@@ -879,7 +879,7 @@
 // User Details
 "profile.details.title" = "Detalhes";
 "profile.details.guest" = "Convidado";
-"profile.details.group_admin" = "Administrador do Grupo";
+"profile.details.group_admin" = "Administrador do grupo";
 "profile.details.partner" = "externo";
 "profile.details.blocking_reason" = "Este usuário está bloqueado devido à retenção legal. [SAIBA MAIS](%@)";
 
@@ -1186,7 +1186,7 @@
 "self.settings.privacy_security.lock_app" = "Bloquear Com Código";
 "self.settings.privacy_security.lock_app.subtitle.lock_description" = "Bloqueie o Wire após %@ no fundo.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Debloqueie com o Touch ID ou digite sua senha.";
-"self.settings.privacy_security.lock_app.subtitle.face_id" = "Debloqueie com o Face ID ou digite sua senha.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Desbloqueie com Face ID ou digite seu código de acesso";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Desbloquear digitando sua senha.";
 "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Se esquecida, sua senha não pode ser recuperada.";
 
@@ -1621,8 +1621,8 @@
 "error.conversation.too_many_members" = "A conversa está cheia";
 "error.conversation.offline" = "Parece que há um problema com sua conexão de Internet. Por favor, verifique se tudo está funcionando.";
 "error.conversation.missing_legalhold_consent" = "Devido à retenção legal, apenas membros da equipe podem ser adicionados a esta conversa";
-"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
-"error.message.send.title" = "Messages cannot be sent";
+"error.message.send.missing_legalhold_consent" = "Você não pode enviar esta mensagem porque tem pelo menos um dispositivo desatualizado que não é compatível com a retenção legal. Atualize todos os seus dispositivos ou remova-os das configurações do aplicativo";
+"error.message.send.title" = "As mensagens não podem ser enviadas";
 
 "sketchpad.initial_hint" = "Toque em cores para alterar o tamanho do pincel";
 
@@ -1641,13 +1641,13 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 //Feature flag - File sharing
-"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
-"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
-"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.update.file_sharing.alert.title" = "Houve uma mudança no Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Compartilhar e receber arquivos de qualquer tipo agora está desativado.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Compartilhar e receber arquivos de qualquer tipo agora está ativado.";
+"feature_config.file_sharing_restrictions.file" = "Recebendo arquivos restritos";
+"feature_config.file_sharing_restrictions.picture" = "Recebendo imagens restritas";
+"feature_config.file_sharing_restrictions.video" = "Recebendo vídeos restritos";
+"feature_config.file_sharing_restrictions.audio" = "Recebendo arquivos de áudio restritos";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detectado";
@@ -1656,7 +1656,7 @@
 // Database Loading Failure alert
 "databaseloadingfailure.alert.title" = "Sem espaço de armazenamento suficiente";
 "databaseloadingfailure.alert.message" = "O banco de dados não pôde ser carregado devido a armazenamento insuficiente. Revise o uso de armazenamento do dispositivo e tente novamente.";
-"databaseloadingfailure.alert.settings" = "Vá para os ajustes";
+"databaseloadingfailure.alert.settings" = "Ir para Configurações";
 "databaseloadingfailure.alert.delete_database" = "Excluir Banco de Dados";
 "databaseloadingfailure.alert.delete_database.message" = "Ao excluir o banco de dados, todos os dados e mensagens locais para esta conta serão excluídos permanentemente.";
 "databaseloadingfailure.alert.delete_database.continue" = "Continuar";
@@ -1894,9 +1894,9 @@
 
 // MARK: - App lock module
 
-"appLockModule.message.faceID" = "Desbloqueie o Wire com o Face ID ou Código";
-"appLockModule.message.touchID" = "Desbloqueie o Wire com o Touch ID ou Código";
-"appLockModule.message.passcode" = "Desbloquear Wire com senha";
+"appLockModule.message.faceID" = "Desbloqueie o Wire com Face ID ou Código de Acesso";
+"appLockModule.message.touchID" = "Desbloqueie o Wire com Touch ID ou Código de Acesso";
+"appLockModule.message.passcode" = "Desbloqueie o Wire com Código de Acesso";
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
 "appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Ir para as configurações";

@@ -28,7 +28,7 @@ struct CallingConfiguration {
 
     static var config = Self.default
 
-    private static let `default` = Self.legacy
+    private static let `default` = Self.largeConferenceCalls
 
     static func resetDefaultConfig() {
         config = Self.default

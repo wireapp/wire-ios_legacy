@@ -1813,13 +1813,13 @@ internal enum L10n {
         }
       }
       internal enum FileSharingRestrictions {
-        /// Receiving audio files restricted
+        /// Receiving audio files is prohibited
         internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
-        /// Receiving files restricted
+        /// Receiving files is prohibited
         internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
-        /// Receiving images restricted
+        /// Receiving images is prohibited
         internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
-        /// Receiving videos restricted
+        /// Receiving videos is prohibited
         internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
       }
       internal enum Update {
@@ -2951,6 +2951,8 @@ internal enum L10n {
         internal static func blockingReason(_ p1: Any) -> String {
           return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
         }
+        /// Federated
+        internal static let federated = L10n.tr("Localizable", "profile.details.federated")
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest

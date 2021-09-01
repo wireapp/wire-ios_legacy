@@ -55,11 +55,17 @@
 			<array>
 				<string>Production</string>
 				<string>Staging</string>
+				<string>Anta (Federated)</string>
+				<string>Bella (Federated)</string>
+				<string>Chala (Federated)</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>production</string>
 				<string>staging</string>
+				<string>anta</string>
+				<string>bella</string>
+				<string>chala</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
