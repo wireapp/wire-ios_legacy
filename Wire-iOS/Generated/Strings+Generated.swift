@@ -1787,13 +1787,13 @@ internal enum L10n {
     }
     internal enum FeatureConfig {
       internal enum FileSharingRestrictions {
-        /// Receiving audio files restricted
+        /// Receiving audio files is prohibited
         internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
-        /// Receiving files restricted
+        /// Receiving files is prohibited
         internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
-        /// Receiving images restricted
+        /// Receiving images is prohibited
         internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
-        /// Receiving videos restricted
+        /// Receiving videos is prohibited
         internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
       }
       internal enum Update {
