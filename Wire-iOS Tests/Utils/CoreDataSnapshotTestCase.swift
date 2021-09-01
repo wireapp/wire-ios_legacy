@@ -94,7 +94,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser = ZMUser.insertNewObject(in: uiMOC)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
-        otherUser.setHandle("bruno")
+        otherUser.handle = "bruno"
         otherUser.accentColorValue = .brightOrange
 
         otherUserConversation = ZMConversation.createOtherUserConversation(moc: uiMOC, otherUser: otherUser)
@@ -168,7 +168,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()
         serviceUser.name = "ServiceUser"
-        serviceUser.setHandle(serviceUser.name!.lowercased())
+        serviceUser.handle = serviceUser.name!.lowercased()
         serviceUser.accentColorValue = .brightOrange
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()
