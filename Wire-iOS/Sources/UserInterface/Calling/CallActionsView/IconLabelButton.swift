@@ -30,7 +30,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     private static let height: CGFloat = 88
 
     private(set) var iconButton = IconButton()
-    private(set) var subtitleLabel = TransformLabel()
+//    private(set) var subtitleLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
@@ -45,7 +45,11 @@ class IconLabelButton: ButtonWithLargerHitArea {
         createConstraints()
         iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
-        subtitleLabel.text = input.label
+        if #available(iOS 15.0, *) {
+            subtitleLabel?.text = input.label
+        } else {
+            // Fallback on earlier versions
+        }
         self.accessibilityIdentifier = input.accessibilityIdentifier
     }
 
@@ -68,11 +72,15 @@ class IconLabelButton: ButtonWithLargerHitArea {
         blurView.clipsToBounds = true
         blurView.layer.cornerRadius = IconLabelButton.width / 2
         blurView.isUserInteractionEnabled = false
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textTransform = .upper
-        subtitleLabel.textAlignment = .center
+        if #available(iOS 15.0, *) {
+            subtitleLabel?.translatesAutoresizingMaskIntoConstraints = false
+//            subtitleLabel?.textTransform = .upper
+            subtitleLabel?.textAlignment = .center
+        } else {
+            // Fallback on earlier versions
+        }
         titleLabel?.font = FontSpec(.small, .semibold).font!
-        [blurView, iconButton, subtitleLabel].forEach(addSubview)
+        [blurView, iconButton/*, subtitleLabel*/].forEach(addSubview)
     }
 
     private func createConstraints() {
@@ -88,16 +96,16 @@ class IconLabelButton: ButtonWithLargerHitArea {
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subtitleLabel.heightAnchor.constraint(equalToConstant: 16)
+//            subtitleLabel?.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            subtitleLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
 
     private func updateState() {
         apply(appearance)
-        subtitleLabel.font = titleLabel?.font
-        subtitleLabel.textColor = titleColor(for: state)
+//        subtitleLabel.font = titleLabel?.font
+//        subtitleLabel.textColor = titleColor(for: state)
     }
 
     override var isHighlighted: Bool {
