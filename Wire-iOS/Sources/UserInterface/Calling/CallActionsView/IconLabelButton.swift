@@ -45,11 +45,11 @@ class IconLabelButton: ButtonWithLargerHitArea {
         createConstraints()
         iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
         iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
-        if #available(iOS 15.0, *) {
-            subtitleLabel?.text = input.label
-        } else {
-            // Fallback on earlier versions
-        }
+//        if #available(iOS 15.0, *) {
+//            subtitleLabel?.text = input.label
+//        } else {
+//            // Fallback on earlier versions
+//        }
         self.accessibilityIdentifier = input.accessibilityIdentifier
     }
 
@@ -73,9 +73,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
         blurView.layer.cornerRadius = IconLabelButton.width / 2
         blurView.isUserInteractionEnabled = false
         if #available(iOS 15.0, *) {
-            subtitleLabel?.translatesAutoresizingMaskIntoConstraints = false
+//            subtitleLabel?.translatesAutoresizingMaskIntoConstraints = false
 //            subtitleLabel?.textTransform = .upper
-            subtitleLabel?.textAlignment = .center
+//            subtitleLabel?.textAlignment = .center
         } else {
             // Fallback on earlier versions
         }
