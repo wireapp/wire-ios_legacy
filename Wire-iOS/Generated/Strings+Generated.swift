@@ -422,7 +422,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "collections.section.files.title")
         }
         internal enum Images {
-          /// Pictures
+          /// Images
           internal static let title = L10n.tr("Localizable", "collections.section.images.title")
         }
         internal enum Links {
