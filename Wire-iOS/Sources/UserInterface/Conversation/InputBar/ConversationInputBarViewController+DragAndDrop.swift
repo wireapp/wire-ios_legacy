@@ -24,8 +24,7 @@ private let zmLog = ZMSLog(tag: "Drag and drop images")
 
 extension ConversationInputBarViewController: UIDropInteractionDelegate {
 
-    @available(iOS 11.0, *)
-    public func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
 
         for dragItem in session.items {
             dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { object, error in
@@ -59,13 +58,11 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
         }
     }
 
-    @available(iOS 11.0, *)
-    public func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .copy)
     }
 
-    @available(iOS 11.0, *)
-    public func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: UIImage.self)
     }
 

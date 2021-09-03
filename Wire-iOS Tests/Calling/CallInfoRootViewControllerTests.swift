@@ -103,7 +103,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
         // given
         let fixture = CallInfoTestFixture(otherUser: mockOtherUser, mockUsers: mockUsers)
