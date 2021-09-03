@@ -20,17 +20,6 @@ import Foundation
 import WireDataModel
 import WireSyncEngine
 
-extension InputBarConversation {
-    var hasSyncedMessageDestructionTimeout: Bool {
-        switch messageDestructionTimeout {
-        case .synced?:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 final class ConversationInputBarButtonState {
 
     var sendButtonHidden: Bool {
@@ -55,20 +44,20 @@ final class ConversationInputBarButtonState {
     }
 
     var ephemeral: Bool {
-        return destructionTimeout != 0
+        return destructionTimeout != nil
     }
 
     private var textLength: Int = 0
     private var editing: Bool = false
     private var markingDown: Bool = false
-    private var destructionTimeout: TimeInterval = 0
+    private var destructionTimeout: MessageDestructionTimeoutValue?
     private var mode: ConversationInputBarViewControllerMode = .textInput
     private var syncedMessageDestructionTimeout: Bool = false
 
     func update(textLength: Int,
                 editing: Bool,
                 markingDown: Bool,
-                destructionTimeout: TimeInterval,
+                destructionTimeout: MessageDestructionTimeoutValue?,
                 mode: ConversationInputBarViewControllerMode,
                 syncedMessageDestructionTimeout: Bool) {
 

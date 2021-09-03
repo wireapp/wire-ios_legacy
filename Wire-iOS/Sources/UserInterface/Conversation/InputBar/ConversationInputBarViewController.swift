@@ -421,7 +421,7 @@ final class ConversationInputBarViewController: UIViewController,
         sendButtonState.update(textLength: trimmed.count,
                                editing: nil != editingMessage,
                                markingDown: inputBar.isMarkingDown,
-                               destructionTimeout: conversation.messageDestructionTimeoutValue,
+                               destructionTimeout: conversation.activeMessageDestructionTimeoutValue,
                                mode: mode,
                                syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
 

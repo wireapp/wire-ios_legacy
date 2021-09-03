@@ -52,8 +52,8 @@ protocol InputBarConversation {
     var hasDraftMessage: Bool { get }
     var draftMessage: DraftMessage? { get }
 
-    var messageDestructionTimeoutValue: TimeInterval { get }
-    var messageDestructionTimeout: MessageDestructionTimeout? { get }
+    var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?  { get }
+    var hasSyncedMessageDestructionTimeout: Bool { get }
 
     var isReadOnly: Bool { get }
 }
@@ -75,6 +75,8 @@ protocol GroupDetailsConversation {
     var freeParticipantSlots: Int { get }
 
     var teamRemoteIdentifier: UUID? { get }
+
+    var syncedMessageDestructionTimeout: TimeInterval { get }
 }
 
 typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
@@ -85,4 +87,10 @@ extension ZMConversation: TypingStatusProvider {}
 extension ZMConversation: VoiceChannelProvider {}
 extension ZMConversation: CanManageAccessProvider {}
 
-extension ZMConversation: GroupDetailsConversation {}
+extension ZMConversation: GroupDetailsConversation {
+
+    var syncedMessageDestructionTimeout: TimeInterval {
+        return messageDestructionTimeoutValue(for: .groupConversation).rawValue
+    }
+
+}

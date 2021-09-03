@@ -45,11 +45,8 @@ extension Array where Element == ZMConversation {
 
     // Should be called inside ZMUserSession.shared().perform block
     func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
-        forEach {
-            let timeout = $0.messageDestructionTimeout
-            $0.messageDestructionTimeout = nil
-            block($0)
-            $0.messageDestructionTimeout = timeout
+        for conversation in self where conversation.activeMessageDestructionTimeoutValue == nil {
+            block(conversation)
         }
     }
 }
