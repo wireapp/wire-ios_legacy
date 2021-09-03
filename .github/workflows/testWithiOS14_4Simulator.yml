@@ -22,5 +22,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: snapshotResults
+        path: SnapshotResults
         retention-days: 5
-        path: ./SnapshotResults
