@@ -18,9 +18,9 @@ jobs:
     - name: Run tests
       run: xcodebuild test -scheme Wire-iOS -project Wire-iOS.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
 
-    - name: Archive production artifacts
+    - name: Archive SnapshotResults artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: dist-without-markdown
-        path: |
-            SnapshotResults
+        name: snapshotResults
+        retention-days: 5
+        path: ./SnapshotResults
