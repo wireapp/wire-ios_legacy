@@ -1,9 +1,9 @@
-name: iOS 15 Simulator Test
+name: Xcode 13 iOS 15 Simulator Test
 
 on: 
   workflow_dispatch:
 jobs:
-  Run_Tests_Xcode_13_iOS_15:
+  Run_Tests_Xcode_12_4_iOS_14_4:
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
