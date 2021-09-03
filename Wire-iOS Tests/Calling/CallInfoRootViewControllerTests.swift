@@ -112,7 +112,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished, selfUser: mockSelfUser)
 
         // then
-        _ = verifySnapshot(matching: sut, as: .image(on: SnapshotTesting.ViewImageConfig.iPhoneX))
+        _ = verifySnapshot(matching: sut,
+                           as: .image(on: SnapshotTesting.ViewImageConfig.iPhoneX),
+                           snapshotDirectory: snapshotDirectory(file: #file))
     }
 
     func testOneToOneAudioEstablishedPoorConnection() {
