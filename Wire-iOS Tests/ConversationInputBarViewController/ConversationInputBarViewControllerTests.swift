@@ -91,7 +91,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
             // WHEN
             sut.mode = .timeoutConfguration
-            self.mockConversation.messageDestructionTimeout = .local(.none)
+            self.mockConversation.activeMessageDestructionTimeoutValue = nil
             return sut
         }
 
@@ -99,8 +99,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     }
 
     private func setMessageDestructionTimeout(timeInterval: TimeInterval) {
-        mockConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeInterval))
-        mockConversation.messageDestructionTimeoutValue = timeInterval
+        mockConversation.activeMessageDestructionTimeoutValue = .init(rawValue: timeInterval)
     }
 
     func testEphemeralTime10Second() {
