@@ -37,7 +37,7 @@ extension ZMConversation {
 
         if Bundle.developerModeEnabled {
             newItems.append(.customValue)
-        }      
+        }
 
         return newItems
     }

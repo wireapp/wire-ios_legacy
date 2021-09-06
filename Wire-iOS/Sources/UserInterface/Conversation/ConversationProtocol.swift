@@ -52,7 +52,7 @@ protocol InputBarConversation {
     var hasDraftMessage: Bool { get }
     var draftMessage: DraftMessage? { get }
 
-    var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?  { get }
+    var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue? { get }
     var hasSyncedMessageDestructionTimeout: Bool { get }
 
     var isReadOnly: Bool { get }
