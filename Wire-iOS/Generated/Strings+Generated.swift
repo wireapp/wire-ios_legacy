@@ -4024,7 +4024,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "self.settings.technical_report_section.title")
         }
         internal enum Vbr {
-          /// This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.
+          /// This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.
           internal static let description = L10n.tr("Localizable", "self.settings.vbr.description")
           /// Variable Bit Rate Encoding
           internal static let title = L10n.tr("Localizable", "self.settings.vbr.title")
