@@ -1838,7 +1838,7 @@ internal enum L10n {
             /// Enterprise plan
             internal static let title = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.title")
             internal enum Message {
-              /// Learn more about Enterprise plan
+              /// Learn more about the Enterprise plan
               internal static let learnMore = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message.learn_more")
             }
           }
