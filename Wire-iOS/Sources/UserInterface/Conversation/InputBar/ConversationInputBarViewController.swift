@@ -421,9 +421,11 @@ final class ConversationInputBarViewController: UIViewController,
         sendButtonState.update(textLength: trimmed.count,
                                editing: nil != editingMessage,
                                markingDown: inputBar.isMarkingDown,
-                               destructionTimeout: conversation.messageDestructionTimeoutValue,
+                               destructionTimeout: conversation.activeMessageDestructionTimeoutValue,
                                mode: mode,
-                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout,
+                               isEphemeralSendingDisabled: conversation.isSelfDeletingMessageSendingDisabled,
+                               isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
         sendButton.isHidden = sendButtonState.sendButtonHidden
         hourglassButton.isHidden = sendButtonState.hourglassButtonHidden

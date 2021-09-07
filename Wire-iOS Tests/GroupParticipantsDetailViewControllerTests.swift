@@ -43,6 +43,8 @@ private final class MockConversation: MockStableRandomParticipantsConversation, 
     var hasReadReceiptsEnabled: Bool = false
 
     var freeParticipantSlots: Int = 1
+
+    var syncedMessageDestructionTimeout: TimeInterval = 0
 }
 
 final class GroupParticipantsDetailViewControllerTests: XCTestCase {
