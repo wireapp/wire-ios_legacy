@@ -381,6 +381,7 @@ final class CallInfoConfigurationTests: XCTestCase {
 
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: false)
         mockVoiceChannel.mockInitiator = mockOtherUser
+        mockVoiceChannel.mockIsConferenceCall = true
 
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
@@ -397,6 +398,7 @@ final class CallInfoConfigurationTests: XCTestCase {
 
         mockVoiceChannel.mockCallState = .outgoing(degraded: false)
         mockVoiceChannel.mockInitiator = mockSelfUser
+        mockVoiceChannel.mockIsConferenceCall = true
 
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
