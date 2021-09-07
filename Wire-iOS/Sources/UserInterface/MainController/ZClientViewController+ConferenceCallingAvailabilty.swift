@@ -60,6 +60,15 @@ extension ZClientViewController {
         present(alert, animated: true)
     }
 
+    func presentConferenceCallingRestrictionAlertForPersonalAccount() {
+        typealias ConferenceCallingAlert = L10n.Localizable.FeatureConfig.ConferenceCallingRestrictions.Personal.Alert
+        let title = ConferenceCallingAlert.title
+        let message = ConferenceCallingAlert.message
+
+        let alert = UIAlertController.alertWithOKButton(title: title, message: message)
+        present(alert, animated: true)
+    }
+
     private func confirmChanges() {
         guard let session = ZMUserSession.shared() else { return }
         session.featureService.setNeedsToNotifyUser(false, for: .conferenceCalling)
@@ -76,11 +85,15 @@ extension ZClientViewController: ConferenceCallingUnavailableObserver {
     }
 
     func callCenterDidNotStartConferenceCall() {
-        guard let selfUser = ZMUser.selfUser() else { return }
-
-        if selfUser.teamRole.isOne(of: .admin, .owner) {
+        guard let selfUser = ZMUser.selfUser(),
+              selfUser.hasTeam else {
+            presentConferenceCallingRestrictionAlertForPersonalAccount()
+            return
+        }
+        switch selfUser.teamRole {
+        case .admin, .owner:
             presentConferenceCallingRestrictionAlertForAdmin()
-        } else {
+        default:
             presentConferenceCallingRestrictionAlertForMember()
         }
     }
