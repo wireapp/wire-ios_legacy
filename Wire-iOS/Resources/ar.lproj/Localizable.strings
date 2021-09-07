@@ -881,6 +881,7 @@
 "profile.details.guest" = "ضيف";
 "profile.details.group_admin" = "مدير المجموعة";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "مُعرّف";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple.";
 
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
-"self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "مُكالمة Wire";
 "self.settings.sound_menu.sounds.wire_message" = "رسالة Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "ادعُ أُناسًا أكثر";
 
 // Collections
-"collections.section.images.title" = "صور";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "ملفّات";
 "collections.section.videos.title" = "مقاطع فيديو";
 "collections.section.links.title" = "روابط";

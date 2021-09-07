@@ -881,6 +881,7 @@
 "profile.details.guest" = "ゲスト";
 "profile.details.group_admin" = "グループ管理者";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "ユーザーネーム";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示します。もしiCloudが有効である場合、通話履歴はAppleに共有されます。";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
-"self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "脱獄/Root化 を検知しました。";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "さらに招待する";
 
 // Collections
-"collections.section.images.title" = "写真";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "ファイル";
 "collections.section.videos.title" = "ビデオ";
 "collections.section.links.title" = "リンク";

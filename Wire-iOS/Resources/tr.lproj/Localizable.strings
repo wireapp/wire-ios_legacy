@@ -881,6 +881,7 @@
 "profile.details.guest" = "Misafir";
 "profile.details.group_admin" = "Grup yöneticisi";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Kullanıcı Adı";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Wire aramalarını, kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktifse, arama geçmişiniz Apple ile paylaşılır.";
 
 "self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
-"self.settings.vbr.description" = "Bu sesli aramaların daha az veri kullanmasını sağlar, ayrıca yavaş internet bağlantılarında daha iyi çalışır. Sabit Bit Hızı Kodlamasını kullanmak isterseniz devre dışı bırakın.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Araması";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Mesajı";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak(root) algılandı";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "Daha fazla kişi davet et";
 
 // Collections
-"collections.section.images.title" = "Resimler";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Dosyalar";
 "collections.section.videos.title" = "Videolar";
 "collections.section.links.title" = "Bağlantılar";

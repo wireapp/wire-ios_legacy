@@ -881,6 +881,7 @@
 "profile.details.guest" = "Gost";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Korisničko Ime";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Pokaži pozive s Wirea na zaključanom zaslonu i u povijesti poziva na iOS uređaju. Ako je iCloud aktivan, povijest poziva se dijeli s Appleom.";
 
 "self.settings.vbr.title" = "Kodiranje promjenjivom bitnom brzinom (VBR)";
-"self.settings.vbr.description" = "Ova opcija omogućava da glasovni pozivi koriste manje podataka i bolje rade na sporijim mrežama. Za isključivanje koristite kodiranje konstantnom bitnom brzinom (CBE).";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Poziv s Wirea";
 "self.settings.sound_menu.sounds.wire_message" = "Poruka s Wirea";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "Pozovi više ljudi";
 
 // Collections
-"collections.section.images.title" = "Slike";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Dokumenti";
 "collections.section.videos.title" = "Videozapisi";
 "collections.section.links.title" = "Poveznice";

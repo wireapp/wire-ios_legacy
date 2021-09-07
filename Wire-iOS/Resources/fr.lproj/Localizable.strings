@@ -881,6 +881,7 @@
 "profile.details.guest" = "Contact externe";
 "profile.details.group_admin" = "Admin du groupe";
 "profile.details.partner" = "externe";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "Cet utilisateur est bloqué en raison de la conservation à des fins juridiques. [PLUS D'INFOS](%@)";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
-"self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Le partage et la réception de fichiers de n'importe quel type est désactivé.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Le partage et la réception de fichiers de n'importe quel type est activé.";
-"feature_config.file_sharing_restrictions.file" = "La réception de fichiers est restreinte";
-"feature_config.file_sharing_restrictions.picture" = "La réception d'images est restreinte";
-"feature_config.file_sharing_restrictions.video" = "La réception de vidéos est restreinte";
-"feature_config.file_sharing_restrictions.audio" = "La réception de fichiers audio est restreinte";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";

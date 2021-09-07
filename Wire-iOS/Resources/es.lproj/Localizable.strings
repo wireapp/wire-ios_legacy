@@ -881,6 +881,7 @@
 "profile.details.guest" = "Invitado";
 "profile.details.group_admin" = "Administración de grupo";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Nombre de usuario";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Mostrar llamadas de Wire en la pantalla de bloqueo y en el historial de llamadas de iOS. Si iCloud se encuentra habilitado, el historial de llamadas será compartido con Apple.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
-"self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "Invitar a más gente";
 
 // Collections
-"collections.section.images.title" = "Fotos";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Ficheros";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Enlaces";
