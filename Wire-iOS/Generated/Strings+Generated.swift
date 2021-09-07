@@ -1161,7 +1161,7 @@ internal enum L10n {
         internal static let closeReply = L10n.tr("Localizable", "conversation.input_bar.close_reply")
         /// Type a message
         internal static let placeholder = L10n.tr("Localizable", "conversation.input_bar.placeholder")
-        /// Timed message
+        /// Self-deleting message
         internal static let placeholderEphemeral = L10n.tr("Localizable", "conversation.input_bar.placeholder_ephemeral")
         /// Verified
         internal static let verified = L10n.tr("Localizable", "conversation.input_bar.verified")
@@ -1949,7 +1949,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "group_details.receipt_options_cell.title")
       }
       internal enum TimeoutOptionsCell {
-        /// Timed messages
+        /// Self-deleting messages
         internal static let title = L10n.tr("Localizable", "group_details.timeout_options_cell.title")
       }
     }
@@ -2161,9 +2161,9 @@ internal enum L10n {
       /// Legal hold details
       internal static let accessibility = L10n.tr("Localizable", "legalhold.accessibility")
       internal enum Header {
-        /// Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.
+        /// Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.
         internal static let otherDescription = L10n.tr("Localizable", "legalhold.header.other_description")
-        /// Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.
+        /// Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.
         internal static let selfDescription = L10n.tr("Localizable", "legalhold.header.self_description")
         /// Legal Hold
         internal static let title = L10n.tr("Localizable", "legalhold.header.title")
@@ -2179,7 +2179,7 @@ internal enum L10n {
       internal enum Alert {
         /// Learn More
         internal static let learnMore = L10n.tr("Localizable", "legalhold_active.alert.learn_more")
-        /// Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.
+        /// Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.
         internal static let message = L10n.tr("Localizable", "legalhold_active.alert.message")
         /// Legal Hold is Active
         internal static let title = L10n.tr("Localizable", "legalhold_active.alert.title")
@@ -2187,7 +2187,7 @@ internal enum L10n {
     }
     internal enum LegalholdRequest {
       internal enum Alert {
-        /// All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.
+        /// All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.
         internal static func detail(_ p1: Any) -> String {
           return L10n.tr("Localizable", "legalhold_request.alert.detail", String(describing: p1))
         }
