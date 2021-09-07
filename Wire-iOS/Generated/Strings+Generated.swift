@@ -1791,7 +1791,7 @@ internal enum L10n {
           internal enum Alert {
             /// Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.
             internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message")
-            /// Upgrade to enterprise
+            /// Upgrade to Enterprise
             internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.title")
             internal enum Action {
               /// Upgrade now
