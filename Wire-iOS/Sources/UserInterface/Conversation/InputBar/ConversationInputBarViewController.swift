@@ -423,7 +423,9 @@ final class ConversationInputBarViewController: UIViewController,
                                markingDown: inputBar.isMarkingDown,
                                destructionTimeout: conversation.activeMessageDestructionTimeoutValue,
                                mode: mode,
-                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+                               syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout,
+                               isEphemeralSendingDisabled: conversation.isSelfDeletingMessageSendingDisabled,
+                               isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
         sendButton.isHidden = sendButtonState.sendButtonHidden
         hourglassButton.isHidden = sendButtonState.hourglassButtonHidden

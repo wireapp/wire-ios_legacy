@@ -47,19 +47,23 @@ final class ConversationInputBarButtonState {
         return destructionTimeout != nil
     }
 
-    private var textLength: Int = 0
-    private var editing: Bool = false
-    private var markingDown: Bool = false
+    private var textLength = 0
+    private var editing = false
+    private var markingDown = false
     private var destructionTimeout: MessageDestructionTimeoutValue?
-    private var mode: ConversationInputBarViewControllerMode = .textInput
-    private var syncedMessageDestructionTimeout: Bool = false
+    private var mode = ConversationInputBarViewControllerMode.textInput
+    private var syncedMessageDestructionTimeout = false
+    private var isEphemeralSendingDisabled = false
+    private var isEphemeralTimeoutForced = false
 
     func update(textLength: Int,
                 editing: Bool,
                 markingDown: Bool,
                 destructionTimeout: MessageDestructionTimeoutValue?,
                 mode: ConversationInputBarViewControllerMode,
-                syncedMessageDestructionTimeout: Bool) {
+                syncedMessageDestructionTimeout: Bool,
+                isEphemeralSendingDisabled: Bool,
+                isEphemeralTimeoutForced: Bool) {
 
         self.textLength = textLength
         self.editing = editing
@@ -67,16 +71,8 @@ final class ConversationInputBarButtonState {
         self.destructionTimeout = destructionTimeout
         self.mode = mode
         self.syncedMessageDestructionTimeout = syncedMessageDestructionTimeout
-    }
-
-    private var isEphemeralSendingDisabled: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-        return session.selfDeletingMessagesFeature.status == .disabled
-    }
-
-    private var isEphemeralTimeoutForced: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-        return session.selfDeletingMessagesFeature.config.enforcedTimeoutSeconds > 0
+        self.isEphemeralSendingDisabled = isEphemeralSendingDisabled
+        self.isEphemeralTimeoutForced = isEphemeralTimeoutForced
     }
 
 }

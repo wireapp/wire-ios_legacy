@@ -54,13 +54,29 @@ protocol InputBarConversation {
 
     var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue? { get }
     var hasSyncedMessageDestructionTimeout: Bool { get }
+    var isSelfDeletingMessageSendingDisabled: Bool { get }
+    var isSelfDeletingMessageTimeoutForced: Bool { get }
 
     var isReadOnly: Bool { get }
 }
 
 typealias InputBarConversationType = InputBarConversation & TypingStatusProvider & ConversationLike
 
-extension ZMConversation: InputBarConversation {}
+extension ZMConversation: InputBarConversation {
+
+    var isSelfDeletingMessageSendingDisabled: Bool {
+        guard let context = managedObjectContext else { return false }
+        let feature = FeatureService(context: context).fetchSelfDeletingMesssages()
+        return feature.status == .disabled
+    }
+
+    var isSelfDeletingMessageTimeoutForced: Bool {
+        guard let context = managedObjectContext else { return false }
+        let feature = FeatureService(context: context).fetchSelfDeletingMesssages()
+        return feature.config.enforcedTimeoutSeconds > 0
+    }
+
+}
 
 // MARK: - GroupDetailsConversation View controllers and child VCs
 

@@ -92,6 +92,7 @@ final class MockInputBarConversationType: SwiftMockConversation, InputBarConvers
     var isReadOnly: Bool = false
 
     var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?
-
-    var hasSyncedMessageDestructionTimeout: Bool = false
+    var hasSyncedMessageDestructionTimeout = false
+    var isSelfDeletingMessageSendingDisabled = false
+    var isSelfDeletingMessageTimeoutForced = false
 }
