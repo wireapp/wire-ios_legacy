@@ -85,16 +85,14 @@ extension ZClientViewController: ConferenceCallingUnavailableObserver {
     }
 
     func callCenterDidNotStartConferenceCall() {
-        guard let selfUser = ZMUser.selfUser(),
-              selfUser.hasTeam else {
-            presentConferenceCallingRestrictionAlertForPersonalAccount()
-            return
-        }
+        guard let selfUser = ZMUser.selfUser() else { return }
         switch selfUser.teamRole {
         case .admin, .owner:
             presentConferenceCallingRestrictionAlertForAdmin()
-        default:
+        case .member, .partner:
             presentConferenceCallingRestrictionAlertForMember()
+        case  .none:
+            presentConferenceCallingRestrictionAlertForPersonalAccount()
         }
     }
 

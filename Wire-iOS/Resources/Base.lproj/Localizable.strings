@@ -1653,7 +1653,7 @@
 //Feature flag - Conference calling
 "feature_config.update.conference_calling.alert.title" = "Enterprise plan";
 "feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
-"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about Enterprise plan";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
 
 "feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
 "feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
