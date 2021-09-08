@@ -30,10 +30,9 @@ extension ZMConversation {
     fileprivate var timeoutItems: [Item] {
         var newItems = MessageDestructionTimeoutValue.all.map(Item.supportedValue)
 
-        if let timeout = self.messageDestructionTimeout,
-            case .synced(let value) = timeout,
-            case .custom = value {
-            newItems.append(.unsupportedValue(value))
+        let groupTimeout = messageDestructionTimeoutValue(for: .groupConversation)
+        if case .custom = groupTimeout {
+            newItems.append(.unsupportedValue(groupTimeout))
         }
 
         if Bundle.developerModeEnabled {
@@ -139,13 +138,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         func configure(_ cell: CheckmarkCell, for value: MessageDestructionTimeoutValue, disabled: Bool) {
             cell.title = value.displayString
             cell.disabled = disabled
-
-            switch conversation.messageDestructionTimeout {
-            case .synced(let currentValue)?:
-                cell.showCheckmark = value == currentValue
-            default:
-                cell.showCheckmark = value == 0
-            }
+            cell.showCheckmark = conversation.messageDestructionTimeoutValue(for: .groupConversation) == value
         }
 
         switch item {
@@ -211,15 +204,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     // MARK: Saving Changes
 
     private func canSelectItem(with value: MessageDestructionTimeoutValue) -> Bool {
-
-        guard let currentTimeout = conversation.messageDestructionTimeout else {
-            return value != .none
-        }
-
-        guard case .synced(let currentValue) = currentTimeout else {
-            return value != .none
-        }
-
+        let currentValue = conversation.messageDestructionTimeoutValue(for: .groupConversation)
         return value != currentValue
 
     }
