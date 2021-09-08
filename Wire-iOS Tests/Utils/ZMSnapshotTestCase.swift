@@ -387,7 +387,6 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    @available(iOS 11.0, *)
     func verifySafeAreas(
         viewController: UIViewController,
         tolerance: Float = 0,

@@ -151,7 +151,7 @@
 "conversation_list.voiceover.status.active_call" = "aktywne połączenie";
 "conversation_list.voiceover.status.missed_call" = "nieodebrane połączenie";
 "conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.play_media" = "odtwórz";
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
@@ -167,7 +167,7 @@
 "conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "aparat";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 "conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
@@ -196,7 +196,7 @@
 "folder.creation.name.footer" = "Maximum 64 characters";
 "folder.creation.name.placeholder" = "Folder name";
 
-"folder.picker.title" = "Move to";
+"folder.picker.title" = "Przenieś do";
 "folder.picker.empty.hint" = "Utwórz nowy folder naciskając przycisk +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -219,10 +219,10 @@
 
 "list.section.groups" = "Grupy";
 "list.section.contacts" = "Osoby";
-"list.section.requests" = "Requests";
+"list.section.requests" = "Prośby";
 "list.section.favorites" = "Ulubione ";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "Potwierdź";
 "conversation.voiceover.legalhold" = "legal hold";
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
@@ -256,7 +256,7 @@
 "conversation.status.message.ephemeral.reply" = "Replied to your message";
 "conversation.status.message.ephemeral.reply.group" = "Someone replied to your message";
 "conversation.status.message.ephemeral.knock" = "Zaczepiony/a";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Ktoś zapingował";
 
 "conversation.status.unsent" = "⚠ Wiadomość niewysłana";
 "conversation.status.you" = "Ty";
@@ -272,7 +272,7 @@
 "compose.contact.title" = "Rozmowa";
 "compose.message.title" = "Wiadomość";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "Kliknij dwukrotnie, aby wyświetlić szczegóły rozmowy.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -318,7 +318,7 @@
 
 "conversation.create.group_name.title" = "Załóż grupę";
 "conversation.create.group_name.placeholder" = "Nazwa grupy";
-"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.empty" = "Co najmniej 1 znak";
 "conversation.create.guidance.toolong" = "Zbyt wiele znaków";
 "conversation.create.options.title" = "Conversation options";
 "conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
@@ -346,14 +346,14 @@
 "conversation.action.search" = "Wyszukaj";
 
 // Reply message preview
-"conversation.input_bar.message_preview.image" = "Image";
+"conversation.input_bar.message_preview.image" = "Zdjęcie";
 "conversation.input_bar.message_preview.location" = "Lokalizacja";
 "conversation.input_bar.message_preview.video" = "Wideo";
-"conversation.input_bar.message_preview.audio" = "Audio Message";
-"conversation.input_bar.message_preview.file" = "File";
-"conversation.input_bar.close_reply" = "Cancel reply";
+"conversation.input_bar.message_preview.audio" = "Wiadomości audio";
+"conversation.input_bar.message_preview.file" = "Plik";
+"conversation.input_bar.close_reply" = "Anuluj odpowiedź";
 
-"conversation.input_bar.message_preview.accessibility_description" = "Replying to message: %@";
+"conversation.input_bar.message_preview.accessibility_description" = "Odpowiedz na wiadomość: %@";
 "conversation.input_bar.message_preview.accessibility.image_message" = "Image message";
 "conversation.input_bar.message_preview.accessibility.location_message" = "Location message";
 "conversation.input_bar.message_preview.accessibility.video_message" = "Video message";
@@ -405,7 +405,7 @@
 "content.system.you_accusative" = "ty";
 
 "content.system.continued_conversation" = "Rozpocznij konwersację z %@";
-"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people" = " i %@";
 "content.system.started_conversation.truncated_people.others" = "%@ others";
 "content.system.started_conversation.complete_team" = "all team members";
 "content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
@@ -429,9 +429,9 @@
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "Podgląd wideo z portalu YouTube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Podgląd utworu SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Podgląd playlisty utworów SoundCloud";
 
 // Digital signature
 "digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
@@ -881,6 +881,7 @@
 "profile.details.guest" = "Gość";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Nazwa użytkownika";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
-"self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Połączenie Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Wiadomość Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files restricted";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images restricted";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos restricted";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files restricted";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "Zaproś więcej osób";
 
 // Collections
-"collections.section.images.title" = "Zdjęcia";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Pliki";
 "collections.section.videos.title" = "Filmy";
 "collections.section.links.title" = "Linki";

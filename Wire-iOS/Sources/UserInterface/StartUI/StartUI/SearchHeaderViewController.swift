@@ -110,11 +110,7 @@ class SearchHeaderViewController: UIViewController {
 
         // pin to the bottom of the navigation bar
 
-        if #available(iOS 11.0, *) {
-            tokenFieldContainer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            tokenFieldContainer.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
-        }
+        tokenFieldContainer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
 
         constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
             tokenFieldContainer.bottom == view.bottom

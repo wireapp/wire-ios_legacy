@@ -71,9 +71,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
 
         [collectionView, footerView].forEach(view.addSubview)
 

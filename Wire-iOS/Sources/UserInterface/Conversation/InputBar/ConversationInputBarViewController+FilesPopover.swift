@@ -21,16 +21,9 @@ import WireSyncEngine
 
 extension ConversationInputBarViewController: UIDocumentPickerDelegate {
 
-    @available(iOS 11.0, *)
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         uploadFiles(at: urls)
     }
-
-    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Implement documentPicker:didPickDocumentsAtURLs: instead")
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        uploadItem(at: url)
-    }
-
 }
 
 extension ConversationInputBarViewController {
@@ -113,10 +106,7 @@ extension ConversationInputBarViewController {
             }
 
             documentPickerViewController.delegate = self
-
-            if #available(iOS 11.0, *) {
-                documentPickerViewController.allowsMultipleSelection = true
-            }
+            documentPickerViewController.allowsMultipleSelection = true
 
             self.parent?.present(documentPickerViewController, animated: true)
         }

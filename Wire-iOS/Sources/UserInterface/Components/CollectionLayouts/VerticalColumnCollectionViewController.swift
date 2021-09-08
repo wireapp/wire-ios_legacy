@@ -70,9 +70,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
         super.init(collectionViewLayout: layout)
         layout.delegate = self
 
-        if #available(iOS 11.0, *) {
-            collectionView?.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView?.contentInsetAdjustmentBehavior = .never
     }
 
     required init?(coder aDecoder: NSCoder) {

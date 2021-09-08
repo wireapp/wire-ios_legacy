@@ -41,10 +41,6 @@ struct AuthenticationTypeDetector: AuthenticationTypeProvider {
             return .passcode
         }
 
-        guard #available(iOS 11.0, *) else {
-            return .touchID
-        }
-
         switch context.biometryType {
         case .none:
             return .passcode

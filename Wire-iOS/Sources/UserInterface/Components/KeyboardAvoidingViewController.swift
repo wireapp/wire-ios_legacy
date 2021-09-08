@@ -95,11 +95,7 @@ class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
 
         topEdgeConstraint = constraints[.top]
 
-        if #available(iOS 11.0, *) {
-            bottomEdgeConstraint = viewController.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        } else {
-            bottomEdgeConstraint = viewController.bottomLayoutGuide.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0)
-        }
+        bottomEdgeConstraint = viewController.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
 
         bottomEdgeConstraint?.isActive = true
     }
@@ -121,12 +117,8 @@ class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
         var bottomOffset: CGFloat
 
-        if #available(iOS 11.0, *) {
-            // The keyboard frame includes the safe area so we need to substract it since the bottomEdgeConstraint is attached to the safe area.
-            bottomOffset = -keyboardFrameInView.intersection(view.safeAreaLayoutGuide.layoutFrame).height
-        } else {
-            bottomOffset = -abs(keyboardFrameInView.size.height)
-        }
+        // The keyboard frame includes the safe area so we need to substract it since the bottomEdgeConstraint is attached to the safe area.
+        bottomOffset = -keyboardFrameInView.intersection(view.safeAreaLayoutGuide.layoutFrame).height
 
         // When the keyboard is visible &
         // this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.

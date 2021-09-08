@@ -49,9 +49,7 @@ final class ConversationListTopBarViewController: UIViewController {
             observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: sharedSession)
         }
 
-        if #available(iOS 11.0, *) {
-            self.viewRespectsSystemMinimumLayoutMargins = false
-        }
+        viewRespectsSystemMinimumLayoutMargins = false
     }
 
     required init?(coder aDecoder: NSCoder) {
