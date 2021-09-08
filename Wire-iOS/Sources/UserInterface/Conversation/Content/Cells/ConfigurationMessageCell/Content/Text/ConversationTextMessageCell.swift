@@ -47,9 +47,7 @@ final class ConversationTextMessageCell: UIView,
         view.setContentCompressionResistancePriority(.required, for: .vertical)
         view.interactionDelegate = self
 
-        if #available(iOS 11.0, *) {
-            view.textDragInteraction?.isEnabled = false
-        }
+        view.textDragInteraction?.isEnabled = false
 
         return view
     }()

@@ -40,9 +40,7 @@ final class LinkInteractionTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
 
-        if #available(iOS 11.0, *) {
-            textDragDelegate = self
-        }
+        textDragDelegate = self
     }
 
     @available(*, unavailable)
@@ -173,7 +171,6 @@ extension LinkInteractionTextView: UITextViewDelegate {
 
 // MARK: - UITextDragDelegate
 
-@available(iOS 11.0, *)
 extension LinkInteractionTextView: UITextDragDelegate {
 
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {

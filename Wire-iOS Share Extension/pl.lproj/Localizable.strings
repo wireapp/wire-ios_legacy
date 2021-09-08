@@ -34,20 +34,20 @@
 "share_extension.not_signed_in.close_button" = "Zamknij";
 
 // Custom app lock - unlock
-"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
-"share_extension.unlock.submit_button.title" = "unlock";
-"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
-"share_extension.unlock.hint_label" = "Passcode";
-"share_extension.unlock.error_label" = "Wrong passcode";
-"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
-"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+"share_extension.unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
+"share_extension.unlock.submit_button.title" = "odblokuj";
+"share_extension.unlock.textfield.placeholder" = "Wprowadź swoje hasło";
+"share_extension.unlock.hint_label" = "Hasło";
+"share_extension.unlock.error_label" = "Błędne hasło";
+"share_extension.unlock.alert.message" = "Otwórz Wire aby utworzyć hasło";
+"share_extension.unlock.reveal_passcode" = "Odkryj hasło";
 
 "share_extension.timeout.title" = "Przekroczono limit czasu połączenia.";
 "share_extension.timeout.message" = "Sprawdź swoje połączenie internetowe i spróbuj ponownie. Załączniki zostały zapisane w konwersacji.";
 
 "content.file.too_big" = "Możesz wysyłać pliki do %@";
-"content.file.unsupported_attachment" = "Unsupported attachment";
-"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+"content.file.unsupported_attachment" = "Nieobsługiwany załącznik";
+"share_extension.error.conversation_does_not_exist.message" = "Wybierz konwersację do udostępnienia";
 
 "share_extension.privacy_security.lock_app.description" = "Odblokuj Wire";
 "share_extension.logged_out.title" = "Zostałeś wylogowany z tego konta.";
@@ -62,4 +62,4 @@
 
 //Feature flag - File sharing
 "feature.flag.file_sharing.alert.title" = "File sharing restrictions";
-"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";
+"feature.flag.file_sharing.alert.message" = "Nie możesz udostępnić tego pliku, ponieważ ta funkcja jest wyłączona.";

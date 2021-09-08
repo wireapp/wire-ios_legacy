@@ -1096,7 +1096,6 @@
 		BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */; };
 		BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */; };
 		BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */; };
-		BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */; };
 		BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */; };
 		BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */; };
 		BFE3FEEA209747D6003D9AB5 /* CallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */; };
@@ -2923,7 +2922,6 @@
 		BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentlyUsedEmojis.swift; path = Emoji/RecentlyUsedEmojis.swift; sourceTree = "<group>"; };
 		BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Options.swift"; sourceTree = "<group>"; };
 		BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeight.swift; sourceTree = "<group>"; };
-		BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cartography+SafeAreaHelper.swift"; sourceTree = "<group>"; };
 		BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsControllerTests.swift; sourceTree = "<group>"; };
 		BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageDeletion.swift"; sourceTree = "<group>"; };
 		BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusView.swift; sourceTree = "<group>"; };
@@ -5643,7 +5641,6 @@
 				87D5E4411C3E79C600EB8289 /* Data+Fingerprint.swift */,
 				BFAF4CB81CEDE82400780537 /* NumberHelper.swift */,
 				8719FD661C88802C005FBEC0 /* Delay.swift */,
-				BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */,
 				EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */,
 				7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */,
 				BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */,
@@ -8032,7 +8029,6 @@
 				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
 				7CCA7CC4221AF55300A7CA2A /* ProfileFooterView.swift in Sources */,
 				F15650DD21DD10DD00210504 /* ThreeDotsLoadingView.swift in Sources */,
-				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				634497D924A492140000131D /* CallParticipantDetailView.swift in Sources */,

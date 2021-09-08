@@ -225,7 +225,7 @@ final class ConversationAudioMessageCellTests: XCTestCase {
         message.backingIsRestricted = true
         message.backingFileMessageData.mimeType = "audio/x-m4a"
 
-        verify(message: message)
+        verify(message: message, allColorSchemes: true)
     }
 
 }

@@ -29,9 +29,7 @@ final class WebLinkTextView: UITextView {
     init() {
         super.init(frame: .zero, textContainer: nil)
 
-        if #available(iOS 11.0, *) {
-            textDragDelegate = self
-        }
+        textDragDelegate = self
 
         setup()
     }
@@ -78,7 +76,6 @@ final class WebLinkTextView: UITextView {
     }
 }
 
-@available(iOS 11.0, *)
 extension WebLinkTextView: UITextDragDelegate {
 
     public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {

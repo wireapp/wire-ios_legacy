@@ -103,7 +103,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
         // given
         let fixture = CallInfoTestFixture(otherUser: mockOtherUser, mockUsers: mockUsers)
@@ -112,7 +111,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished, selfUser: mockSelfUser)
 
         // then
-        _ = verifySnapshot(matching: sut, as: .image(on: SnapshotTesting.ViewImageConfig.iPhoneX))
+        _ = verifySnapshot(matching: sut,
+                           as: .image(on: SnapshotTesting.ViewImageConfig.iPhoneX),
+                           snapshotDirectory: snapshotDirectory(file: #file))
     }
 
     func testOneToOneAudioEstablishedPoorConnection() {

@@ -224,7 +224,7 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         message.backingIsRestricted = true
         message.backingFileMessageData.mimeType = "video/mp4"
 
-        verify(message: message)
+        verify(message: message, allColorSchemes: true)
     }
 
 }

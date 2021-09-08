@@ -29,15 +29,10 @@ extension UIAlertController {
             let url = URL.wr_termsOfServicesURL(forTeamAccount: forTeamAccount).appendingLocaleParameter
 
             let webViewController: BrowserViewController
-            if #available(iOS 11.0, *) {
-                let configuration = SFSafariViewController.Configuration()
-                configuration.entersReaderIfAvailable = true
-                webViewController = BrowserViewController(url: url,
-                                                              configuration: configuration)
-            } else {
-                webViewController = BrowserViewController(url: url,
-                                                          entersReaderIfAvailable: true)
-            }
+            let configuration = SFSafariViewController.Configuration()
+            configuration.entersReaderIfAvailable = true
+            webViewController = BrowserViewController(url: url,
+                                                          configuration: configuration)
             webViewController.completion = { [weak controller] in
                 if let controller = controller {
                     UIAlertController.requestTOSApproval(over: controller, forTeamAccount: forTeamAccount, completion: completion)

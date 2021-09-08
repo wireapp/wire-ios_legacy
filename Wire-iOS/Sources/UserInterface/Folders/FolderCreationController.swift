@@ -91,9 +91,7 @@ final class FolderCreationController: UIViewController {
         // TODO: if keyboard is open, it should scroll.
         let collectionView = UICollectionView(forGroupedSections: ())
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
 
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

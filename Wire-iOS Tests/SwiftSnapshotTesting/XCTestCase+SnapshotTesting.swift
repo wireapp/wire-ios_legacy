@@ -56,7 +56,9 @@ extension XCTestCase {
                               line: UInt = #line) {
 
         for(config, name) in XCTestCase.phoneConfigNames {
-            verify(matching: value, as: .image(on: config), named: name,
+            verify(matching: value,
+                   as: .image(on: config),
+                   named: name,
                    file: file,
                    testName: testName,
                    line: line)

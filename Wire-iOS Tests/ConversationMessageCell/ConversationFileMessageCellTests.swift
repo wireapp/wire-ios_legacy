@@ -238,7 +238,7 @@ final class ConversationFileMessageTests: XCTestCase {
         message.backingIsRestricted = true
         message.backingFileMessageData.mimeType = "application/pdf"
 
-        verify(message: message)
+        verify(message: message, allColorSchemes: true)
     }
 
 }

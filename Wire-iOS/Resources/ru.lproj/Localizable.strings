@@ -881,6 +881,7 @@
 "profile.details.guest" = "Гость";
 "profile.details.group_admin" = "Администратор группы";
 "profile.details.partner" = "внешний";
+"profile.details.federated" = "Федеративный";
 "profile.details.blocking_reason" = "Этот пользователь заблокирован из-за юридических ограничений. [ПОДРОБНЕЕ](%@)";
 
 "profile_view.accessibility.handle" = "Псевдоним";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если вы используете iCloud, история вызовов будет передана Apple.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
-"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
+"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом (CBR). Эта настройка влияет только на звонки 1:1; конференц-звонки всегда используют кодирование CBR.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "В Wire произошли изменения";
 "feature_config.update.file_sharing.alert.message.disabled" = "Обмен и получение файлов любого типа теперь отключены";
 "feature_config.update.file_sharing.alert.message.enabled" = "Обмен и получение файлов любого типа теперь включены";
-"feature_config.file_sharing_restrictions.file" = "Получение файлов ограничено";
-"feature_config.file_sharing_restrictions.picture" = "Получение изображений ограничено";
-"feature_config.file_sharing_restrictions.video" = "Получение видео ограничено";
-"feature_config.file_sharing_restrictions.audio" = "Получение аудиофайлов ограничено";
+"feature_config.file_sharing_restrictions.file" = "Получение файлов запрещено";
+"feature_config.file_sharing_restrictions.picture" = "Получение изображений запрещено";
+"feature_config.file_sharing_restrictions.video" = "Получение видео запрещено";
+"feature_config.file_sharing_restrictions.audio" = "Получение аудиофайлов запрещено";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
