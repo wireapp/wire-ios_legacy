@@ -1651,17 +1651,20 @@
 "feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Feature flag - Conference calling
-"feature_config.update.conference_calling.alert.title" = "Wire Enterprise";
-"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to Wire Enterprise, which gives you access to features such as conference calls and more.";
-"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about Wire Enterprise";
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
 
-"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to enterprise";
-"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise for access to features such as starting conferences and more.";
-"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wires pricing";
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
 "feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
 
-"feature_config.conference_calling_restrictions.members.alert.title" = "Feature not accessible";
-"feature_config.conference_calling_restrictions.members.alert.message" = "To use the conferencing feature your team admin needs to upgrade Wire.";
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";

@@ -1789,26 +1789,34 @@ internal enum L10n {
       internal enum ConferenceCallingRestrictions {
         internal enum Admins {
           internal enum Alert {
-            /// Your team is currently on the free Basic plan. Upgrade to Enterprise for access to features such as starting conferences and more.
+            /// Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.
             internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message")
-            /// Upgrade to enterprise
+            /// Upgrade to Enterprise
             internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.title")
             internal enum Action {
               /// Upgrade now
               internal static let upgrade = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.action.upgrade")
             }
             internal enum Message {
-              /// Learn more about Wires pricing
+              /// Learn more about Wire’s pricing
               internal static let learnMore = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message.learn_more")
             }
           }
         }
         internal enum Members {
           internal enum Alert {
-            /// To use the conferencing feature your team admin needs to upgrade Wire.
+            /// To start a conference call, your team needs to upgrade to the Enterprise plan.
             internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.message")
-            /// Feature not accessible
+            /// Feature unavailable
             internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.title")
+          }
+        }
+        internal enum Personal {
+          internal enum Alert {
+            /// The option to initiate a conference call is only available in the paid version of Wire.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.message")
+            /// Feature unavailable
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.title")
           }
         }
       }
@@ -1825,12 +1833,12 @@ internal enum L10n {
       internal enum Update {
         internal enum ConferenceCalling {
           internal enum Alert {
-            /// Your team was upgraded to Wire Enterprise, which gives you access to features such as conference calls and more.
+            /// Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.
             internal static let message = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message")
-            /// Wire Enterprise
+            /// Enterprise plan
             internal static let title = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.title")
             internal enum Message {
-              /// Learn more about Wire Enterprise
+              /// Learn more about the Enterprise plan
               internal static let learnMore = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message.learn_more")
             }
           }
