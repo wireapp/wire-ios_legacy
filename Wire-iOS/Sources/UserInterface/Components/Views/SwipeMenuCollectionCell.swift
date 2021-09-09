@@ -392,12 +392,10 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
 
         if #available(iOS 13.0, *) {
             return false
-        } else if #available(iOS 11.0, *) {
-            // pan recognizer should not require failure of any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
         }
 
-        return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
+        // pan recognizer should not require failure of any other recognizer
+        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
@@ -405,12 +403,10 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
 
         if #available(iOS 13.0, *) {
             return true
-        } else if #available(iOS 11.0, *) {
-            // pan recognizer should not recognize simultaneously with any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
         }
 
-        return true
+        // pan recognizer should not recognize simultaneously with any other recognizer
+        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
 }

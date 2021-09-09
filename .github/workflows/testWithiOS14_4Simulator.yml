@@ -1,4 +1,4 @@
-name: iOS 14.4 Simulator Test
+name: Xcode 13 iOS 15 Simulator Test
 
 on: 
   workflow_dispatch:
@@ -8,18 +8,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_12.4.app && /usr/bin/xcodebuild -version
+      run: sudo xcode-select -switch /Applications/Xcode_13.0.app && /usr/bin/xcodebuild -version
       
     - name: Carthage
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: bash setup.sh
 
-#     - name: Link to 15.0 Simulators
-#       run: |
-#         echo "Creating Runtimes folder if needed..."
-#         sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
-#         echo "Creating symlink of the iOS 15.0 runtime..."
-#         sudo ln -s /Applications/Xcode_13.0.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 15.0.simruntime
     - name: Run tests
-      run: xcodebuild test -scheme Wire-iOS -project Wire-iOS.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4' | xcpretty && exit ${PIPESTATUS[0]}
+      run: xcodebuild test -scheme Wire-iOS -project Wire-iOS.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}

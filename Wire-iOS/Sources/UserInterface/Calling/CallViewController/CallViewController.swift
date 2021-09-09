@@ -373,7 +373,8 @@ extension CallViewController {
 
             conversation.confirmJoiningCallIfNeeded(alertPresenter: self, forceAlertModal: true) {
                 self.checkVideoPermissions { videoGranted in
-                    conversation.joinVoiceChannel(video: videoGranted)
+                    let video = videoGranted && self.voiceChannel.videoState.isSending
+                    conversation.joinVoiceChannel(video: video)
                     self.disableVideoIfNeeded()
                 }
             }

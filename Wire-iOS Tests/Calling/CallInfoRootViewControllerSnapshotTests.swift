@@ -37,7 +37,7 @@ final class CallInfoViewControllerSnapshotTests: XCTestCase {
         // given
         let otherUser = MockUserType.createConnectedUser(name: "Bruno")
         let selfUser = MockUserType.createSelfUser(name: "Alice")
-        let fixture = CallInfoTestFixture(otherUser: otherUser, mockUsers: SwiftMockLoader.mockUsers())
+        let fixture = CallInfoTestFixture(otherUser: otherUser, selfUser: selfUser, mockUsers: SwiftMockLoader.mockUsers())
 
         // when
         let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, selfUser: selfUser)

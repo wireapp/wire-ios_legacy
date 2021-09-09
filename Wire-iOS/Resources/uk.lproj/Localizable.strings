@@ -881,6 +881,7 @@
 "profile.details.guest" = "Гість";
 "profile.details.group_admin" = "Адміністратор групи";
 "profile.details.partner" = "зовнішній";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "Цей користувач заблокований через правовий захист. [ДІЗНАТИСЯ БІЛЬШЕ](%@)";
 
 "profile_view.accessibility.handle" = "Нік";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
 
 "self.settings.vbr.title" = "Змінний бітрейт";
-"self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
 "feature_config.update.file_sharing.alert.message.disabled" = "Отримання та надсилання файлів будь-якого типу було вимкнено.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Отримання та надсилання файлів будь-якого типу було увімкнено.";
-"feature_config.file_sharing_restrictions.file" = "Отримання файлів обмежене";
-"feature_config.file_sharing_restrictions.picture" = "Отримання картинок обмежене";
-"feature_config.file_sharing_restrictions.video" = "Отримання відео обмежене";
-"feature_config.file_sharing_restrictions.audio" = "Отримання аудіофайлів обмежене";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
@@ -1676,7 +1677,7 @@
 "invite_banner.invite_button_title" = "Запросити більше людей";
 
 // Collections
-"collections.section.images.title" = "Картинки";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Файли";
 "collections.section.videos.title" = "Відео";
 "collections.section.links.title" = "Посилання";

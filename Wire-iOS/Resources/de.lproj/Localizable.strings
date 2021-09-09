@@ -881,6 +881,7 @@
 "profile.details.guest" = "Gast";
 "profile.details.group_admin" = "Gruppen-Admin";
 "profile.details.partner" = "extern";
+"profile.details.federated" = "Föderiert";
 "profile.details.blocking_reason" = "Dieser Nutzer ist aufgrund der gesetzlichen Aufbewahrung gesperrt. [MEHR ERFAHREN](%@)";
 
 "profile_view.accessibility.handle" = "Benutzername";
@@ -1128,7 +1129,7 @@
 "self.settings.callkit.description" = "Anrufe über Wire auf dem Sperrbildschirm und im iOS-Anrufverlauf anzeigen. Wenn iCloud aktiviert ist, wird der Anrufverlauf mit Apple geteilt.";
 
 "self.settings.vbr.title" = "Codierung mit variabler Bitrate";
-"self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
+"self.settings.vbr.description" = "Anrufe benötigen hierbei weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Schalten Sie diese Option aus, um die Kodierung mit konstanter Bitrate (CBR) zu verwenden. Diese Einstellung wirkt sich nur auf Einzelgespräche aus; Telefonkonferenzen verwenden immer CBR-Kodierung.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Anruf";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";
@@ -1644,10 +1645,10 @@
 "feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
 "feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
-"feature_config.file_sharing_restrictions.file" = "Empfang von Dateien eingeschränkt";
-"feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern eingeschränkt";
-"feature_config.file_sharing_restrictions.video" = "Empfang von Videos eingeschränkt";
-"feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien eingeschränkt";
+"feature_config.file_sharing_restrictions.file" = "Empfang von Dateien ist verboten";
+"feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern ist verboten";
+"feature_config.file_sharing_restrictions.video" = "Empfang von Videos ist verboten";
+"feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien ist verboten";
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";

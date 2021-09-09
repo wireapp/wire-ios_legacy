@@ -214,11 +214,11 @@ final class CallActionsView: UIView {
     }
 
     private func canToggleMuteButton(_ input: CallActionsViewInputType) -> Bool {
-        return input.callState.isConnected && !input.permissions.isAudioDisabledForever
+        return !input.permissions.isAudioDisabledForever
     }
 
     private func canToggleSpeakerButton(_ input: CallActionsViewInputType) -> Bool {
-        return input.callState.isConnected && input.mediaState.canSpeakerBeToggled
+        return input.mediaState.canSpeakerBeToggled
     }
 
     // MARK: - Action Output

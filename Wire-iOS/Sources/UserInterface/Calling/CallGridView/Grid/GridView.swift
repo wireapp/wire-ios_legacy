@@ -75,9 +75,7 @@ final class GridView: UICollectionView {
         showsHorizontalScrollIndicator = false
         isPagingEnabled = true
 
-        if #available(iOS 11.0, *) {
-            contentInsetAdjustmentBehavior = .never
-        }
+        contentInsetAdjustmentBehavior = .never
     }
 
     // MARK: - Public Interface
