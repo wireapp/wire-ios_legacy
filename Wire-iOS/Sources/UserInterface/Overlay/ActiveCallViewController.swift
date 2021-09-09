@@ -87,10 +87,6 @@ final class ActiveCallViewController: UIViewController {
         return visibleVoiceChannelViewController
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
     func updateVisibleVoiceChannelViewController() {
         guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {

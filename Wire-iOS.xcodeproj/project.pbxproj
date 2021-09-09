@@ -500,6 +500,9 @@
 		637387E026492833004FEF79 /* ScalableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637387DA2649277A004FEF79 /* ScalableViewTests.swift */; };
 		6375051B262477ED0083DC27 /* NotificationLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6375051A262477ED0083DC27 /* NotificationLabelTests.swift */; };
 		637C825C267CED69009457CA /* Stream+Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637C825B267CED68009457CA /* Stream+Video.swift */; };
+		63804BE926E7723B005E2B35 /* CallActionsViewInputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63804BE826E7723B005E2B35 /* CallActionsViewInputType.swift */; };
+		63804BED26E77274005E2B35 /* MediaState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63804BEC26E77274005E2B35 /* MediaState.swift */; };
+		63804BF526EA699C005E2B35 /* UITraitCollection+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63804BF426EA699B005E2B35 /* UITraitCollection+SizeClass.swift */; };
 		638332EA250282D200D18F42 /* OrientationDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638332E9250282D200D18F42 /* OrientationDelta.swift */; };
 		638C88C62680F92D0074D512 /* MockCallGridHintNotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C88C52680F92D0074D512 /* MockCallGridHintNotificationLabel.swift */; };
 		639290A2252633E600046171 /* UIAlertController+DegradedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */; };
@@ -2252,6 +2255,9 @@
 		637387DA2649277A004FEF79 /* ScalableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalableViewTests.swift; sourceTree = "<group>"; };
 		6375051A262477ED0083DC27 /* NotificationLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLabelTests.swift; sourceTree = "<group>"; };
 		637C825B267CED68009457CA /* Stream+Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stream+Video.swift"; sourceTree = "<group>"; };
+		63804BE826E7723B005E2B35 /* CallActionsViewInputType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionsViewInputType.swift; sourceTree = "<group>"; };
+		63804BEC26E77274005E2B35 /* MediaState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaState.swift; sourceTree = "<group>"; };
+		63804BF426EA699B005E2B35 /* UITraitCollection+SizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+SizeClass.swift"; sourceTree = "<group>"; };
 		638332E9250282D200D18F42 /* OrientationDelta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDelta.swift; sourceTree = "<group>"; };
 		638C88C52680F92D0074D512 /* MockCallGridHintNotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallGridHintNotificationLabel.swift; sourceTree = "<group>"; };
 		6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantViewTests.swift; sourceTree = "<group>"; };
@@ -4973,6 +4979,7 @@
 				1682AEB520480C80003A052A /* UIViewController+Navigation.swift */,
 				068500DE26BD4E4800721F80 /* UIView+Subviews.swift */,
 				EFA6E24B2056E0DA008AB47E /* UITraitEnvironment+SizeClass.swift */,
+				63804BF426EA699B005E2B35 /* UITraitCollection+SizeClass.swift */,
 				EF22DC7E224BC5C2001EDE8E /* UIViewController+Alert.swift */,
 				5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */,
 				5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */,
@@ -6715,6 +6722,8 @@
 				D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */,
 				631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */,
 				63AFE23725B6E16B0054B067 /* RoundedSegmentedView.swift */,
+				63804BE826E7723B005E2B35 /* CallActionsViewInputType.swift */,
+				63804BEC26E77274005E2B35 /* MediaState.swift */,
 			);
 			path = CallActionsView;
 			sourceTree = "<group>";
@@ -7895,6 +7904,7 @@
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
 				EEE81E9223E028EA00A1D035 /* TopPeopleCell.swift in Sources */,
 				8708C6821F50860100845C7D /* AccountSelectorView.swift in Sources */,
+				63804BF526EA699C005E2B35 /* UITraitCollection+SizeClass.swift in Sources */,
 				BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */,
 				87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */,
 				EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */,
@@ -8169,6 +8179,7 @@
 				5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */,
 				EF29CDC222D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift in Sources */,
 				A9859D6823FE955000DC3F36 /* LoadingSpinner.swift in Sources */,
+				63804BED26E77274005E2B35 /* MediaState.swift in Sources */,
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				A92CA24924323E2600A29896 /* Spinner.swift in Sources */,
@@ -8266,6 +8277,7 @@
 				F15650ED21DD1B4100210504 /* Reusable.swift in Sources */,
 				A9275F6324223FD3007CB2BC /* CGSize+Zoom.swift in Sources */,
 				A923F1C02428C12A003F361F /* URLs+zip.swift in Sources */,
+				63804BE926E7723B005E2B35 /* CallActionsViewInputType.swift in Sources */,
 				63A874FC26CBAF2B000D3F27 /* CallingConfiguration.swift in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				16DD6E95228304B70090A74C /* LegalHoldDetailsViewController.swift in Sources */,
