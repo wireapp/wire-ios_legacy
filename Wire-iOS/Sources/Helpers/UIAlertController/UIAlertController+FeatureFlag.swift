@@ -21,38 +21,64 @@ import WireSyncEngine
 
 extension UIAlertController {
 
-    fileprivate struct Configuration {
-        typealias FeatureFlag = L10n.Localizable.FeatureConfig.Update
-        typealias FileSharingAlert = FeatureFlag.FileSharing.Alert
+    static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
+        guard let viewController = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
-        var title: String?
-        var message: String?
+        switch (featureName, status) {
+        case (.fileSharing, .enabled):
+            viewController.presentAlert(.fileSharingEnabled)
 
-        init(featureName: Feature.Name, status: Feature.Status) {
-            switch (featureName, status) {
-            case (.fileSharing, .enabled):
-                title = FileSharingAlert.title
-                message = FileSharingAlert.Message.enabled
-            case (.fileSharing, .disabled):
-                title = FileSharingAlert.title
-                message = FileSharingAlert.Message.disabled
-            default:
-                break
-            }
+        case (.fileSharing, .disabled):
+            viewController.presentAlert(.fileSharingDisabled)
+
+        default:
+            break
         }
     }
 
-    public static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
-        let alertConfiguration = Configuration(featureName: featureName, status: status)
-        guard let title = alertConfiguration.title,
-              let message = alertConfiguration.message else {
-            return
-        }
-        let alertController = UIAlertController(title: title,
-                                                message: message,
-                                                alertAction: .ok(style: .cancel))
+}
 
-        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
+private extension UIViewController {
+
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+
+}
+
+
+private extension UIAlertController {
+
+    // MARK: - File sharing
+
+    static var fileSharingEnabled: UIAlertController {
+        return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.enabled)
+    }
+
+    static var fileSharingDisabled: UIAlertController {
+        return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.disabled)
+    }
+
+    // MARK: - Self-deleting messages
+
+    static var selfDeletingMessagesDisabled: UIAlertController {
+        return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.disabled)
+    }
+
+    static var selfDeletingMessagesForcedOn: UIAlertController {
+        return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.forcedOn)
+    }
+
+    // MARK: - Helpers
+
+    typealias Strings = L10n.Localizable.FeatureConfig
+
+    static func alertForFeatureChange(message: String) -> UIAlertController {
+        return confirmationAlert(title: Strings.Alert.genericTitle, message: message)
+    }
+
+    static func confirmationAlert(title: String?, message: String) -> UIAlertController {
+        return UIAlertController(title: title, message: message, alertAction: .ok())
     }
 
 }

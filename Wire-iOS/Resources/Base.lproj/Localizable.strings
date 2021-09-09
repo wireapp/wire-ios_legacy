@@ -1636,12 +1636,15 @@
 "push.notification.new_message" = "New message";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Update necessary";
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1666,7 +1669,11 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are forced-on (messages will be deleted after 1 day).";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
