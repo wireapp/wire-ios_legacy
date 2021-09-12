@@ -90,7 +90,9 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
 
         NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { (note) in
-            guard let change = note.object as? Feature.FeatureChange else { return }
+            guard let change = note.object as? Feature.FeatureChange,
+                  let session = SessionManager.shared,
+                  session.usePackagingFeatureConfig else { return }
             switch change {
             case .conferenceCallingIsAvailable:
                 self.presentConferenceCallingAvailableAlert()
