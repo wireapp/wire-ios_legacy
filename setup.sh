@@ -54,7 +54,7 @@ echo "ℹ️  Downloading AVS library..."
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
-./Scripts/download-assets.sh "$@"
+./Scripts/download-assets.sh --branch test/rm-server-pinning
 echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
