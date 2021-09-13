@@ -23,7 +23,8 @@ import WireCommonComponents
 enum LabelIndicatorContext {
     case guest,
          groupRole,
-         external
+         external,
+         federated
 
     var icon: StyleKitIcon {
         switch self {
@@ -33,6 +34,8 @@ enum LabelIndicatorContext {
             return .groupAdmin
         case .external:
             return .externalPartner
+        case .federated:
+            return .federated
         }
     }
 
@@ -44,6 +47,8 @@ enum LabelIndicatorContext {
             return "profile.details.group_admin"
         case .external:
             return "profile.details.partner"
+        case .federated:
+            return "profile.details.federated"
         }
 
     }
@@ -93,6 +98,8 @@ final class LabelIndicator: UIView, Themeable {
             accessibilityString = "group_role"
         case .external:
             accessibilityString = "team_role"
+        case .federated:
+            accessibilityString = "federated"
         }
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0

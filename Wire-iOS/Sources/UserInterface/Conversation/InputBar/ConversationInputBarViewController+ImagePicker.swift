@@ -52,9 +52,7 @@ extension ConversationInputBarViewController {
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
-            if #available(iOS 11.0, *) {
-                pickerController.videoExportPreset = AVURLAsset.defaultVideoQuality
-            }
+            pickerController.videoExportPreset = AVURLAsset.defaultVideoQuality
 
             if let popover = pickerController.popoverPresentationController,
                 let imageView = pointToView {

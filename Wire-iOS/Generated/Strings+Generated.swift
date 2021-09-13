@@ -422,7 +422,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "collections.section.files.title")
         }
         internal enum Images {
-          /// Pictures
+          /// Images
           internal static let title = L10n.tr("Localizable", "collections.section.images.title")
         }
         internal enum Links {
@@ -1786,17 +1786,63 @@ internal enum L10n {
       }
     }
     internal enum FeatureConfig {
+      internal enum ConferenceCallingRestrictions {
+        internal enum Admins {
+          internal enum Alert {
+            /// Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message")
+            /// Upgrade to Enterprise
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.title")
+            internal enum Action {
+              /// Upgrade now
+              internal static let upgrade = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.action.upgrade")
+            }
+            internal enum Message {
+              /// Learn more about Wire’s pricing
+              internal static let learnMore = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message.learn_more")
+            }
+          }
+        }
+        internal enum Members {
+          internal enum Alert {
+            /// To start a conference call, your team needs to upgrade to the Enterprise plan.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.message")
+            /// Feature unavailable
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.title")
+          }
+        }
+        internal enum Personal {
+          internal enum Alert {
+            /// The option to initiate a conference call is only available in the paid version of Wire.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.message")
+            /// Feature unavailable
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.title")
+          }
+        }
+      }
       internal enum FileSharingRestrictions {
-        /// Receiving audio files restricted
+        /// Receiving audio files is prohibited
         internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
-        /// Receiving files restricted
+        /// Receiving files is prohibited
         internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
-        /// Receiving images restricted
+        /// Receiving images is prohibited
         internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
-        /// Receiving videos restricted
+        /// Receiving videos is prohibited
         internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
       }
       internal enum Update {
+        internal enum ConferenceCalling {
+          internal enum Alert {
+            /// Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.
+            internal static let message = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message")
+            /// Enterprise plan
+            internal static let title = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.title")
+            internal enum Message {
+              /// Learn more about the Enterprise plan
+              internal static let learnMore = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message.learn_more")
+            }
+          }
+        }
         internal enum FileSharing {
           internal enum Alert {
             /// There has been a change in Wire
@@ -2913,6 +2959,8 @@ internal enum L10n {
         internal static func blockingReason(_ p1: Any) -> String {
           return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
         }
+        /// Federated
+        internal static let federated = L10n.tr("Localizable", "profile.details.federated")
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest
@@ -4022,7 +4070,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "self.settings.technical_report_section.title")
         }
         internal enum Vbr {
-          /// This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.
+          /// This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.
           internal static let description = L10n.tr("Localizable", "self.settings.vbr.description")
           /// Variable Bit Rate Encoding
           internal static let title = L10n.tr("Localizable", "self.settings.vbr.title")

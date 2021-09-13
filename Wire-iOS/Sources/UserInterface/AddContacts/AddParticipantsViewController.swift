@@ -268,7 +268,7 @@ final class AddParticipantsViewController: UIViewController {
             confirmButton.left == container.left + margin
             confirmButton.right == container.right - margin
 
-            self.bottomConstraint = confirmButton.bottom == container.safeAreaLayoutGuideOrFallback.bottom - bottomMargin
+            self.bottomConstraint = confirmButton.bottom == container.safeAreaLayoutGuide.bottom - bottomMargin
         }
 
         if viewModel.botCanBeAdded {

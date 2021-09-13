@@ -84,7 +84,7 @@ final class ConversationImageMessageTests: XCTestCase {
         createSut(imageName: "unsplash_matterhorn.jpg")
         message.backingIsRestricted = true
 
-        verify(message: message)
+        verify(message: message, allColorSchemes: true)
     }
 
 }

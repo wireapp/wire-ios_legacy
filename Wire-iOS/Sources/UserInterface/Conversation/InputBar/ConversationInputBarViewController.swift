@@ -320,10 +320,8 @@ final class ConversationInputBarViewController: UIViewController,
         setInputLanguage()
         setupStyle()
 
-        if #available(iOS 11.0, *) {
-            let interaction = UIDropInteraction(delegate: self)
-            inputBar.textView.addInteraction(interaction)
-        }
+        let interaction = UIDropInteraction(delegate: self)
+        inputBar.textView.addInteraction(interaction)
 
         setupObservers()
     }

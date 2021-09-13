@@ -228,12 +228,7 @@ final class CameraController {
             connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = false
 
-            let jpegType: Any
-            if #available(iOS 11.0, *) {
-                jpegType = AVVideoCodecType.jpeg
-            } else {
-                jpegType = AVVideoCodecJPEG
-            }
+            let jpegType = AVVideoCodecType.jpeg
 
             let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: jpegType,
                                                            AVVideoCompressionPropertiesKey: [AVVideoQualityKey: 0.9]])
@@ -266,7 +261,6 @@ final class CameraController {
             self.completion = completion
         }
 
-        @available(iOS 11.0, *)
         func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
             defer { completion() }
 
