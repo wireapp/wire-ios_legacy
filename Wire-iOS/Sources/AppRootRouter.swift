@@ -119,7 +119,6 @@ public class AppRootRouter: NSObject {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
-        setupFeatureConfigNotifications()
     }
 
     private func setupAdditionalWindows() {
@@ -552,13 +551,5 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
-    }
-}
-
-// MARK: - FeatureConfigChangeObserving
-
-extension AppRootRouter: FeatureConfigObserving {
-    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload) {
-        UIAlertController.showFeatureConfigDidChangeAlert(featureUpdateEvent.name, status: featureUpdateEvent.status)
     }
 }

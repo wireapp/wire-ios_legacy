@@ -64,6 +64,25 @@ class AuthenticatedRouter: NSObject {
                                          selfUser: selfUser,
                                          isComingFromRegistration: needToShowDataUsagePermissionDialog,
                                          needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+
+        super.init()
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
+                                               object: nil,
+                                               queue: .main,
+                                               using: notifyFeatureChange)
+    }
+
+    private func notifyFeatureChange(_ note: Notification) {
+        guard
+            let change = note.object as? FeatureService.FeatureChange,
+            let alert = UIAlertController.fromFeatureChange(change)
+        else {
+            return
+
+        }
+
+        _viewController?.presentAlert(alert)
     }
 }
 
@@ -116,4 +135,12 @@ struct AuthenticatedWireFrame {
         viewController.router =  router
         return viewController
     }
+}
+
+private extension UIViewController {
+
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+
 }

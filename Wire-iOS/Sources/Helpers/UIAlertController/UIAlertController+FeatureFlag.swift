@@ -21,31 +21,28 @@ import WireSyncEngine
 
 extension UIAlertController {
 
-    static func showFeatureConfigDidChangeAlert(_ featureName: Feature.Name, status: Feature.Status) {
-        guard let viewController = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
+    class func fromFeatureChange(_ change: FeatureService.FeatureChange) -> UIAlertController? {
+        switch change {
+        case .conferenceCallingIsAvailable:
+            guard SessionManager.shared?.usePackagingFeatureConfig == true else { return nil }
+            // TODO: implement
+            return nil
 
-        switch (featureName, status) {
-        case (.fileSharing, .enabled):
-            viewController.presentAlert(.fileSharingEnabled)
+        case .selfDeletingMessagesIsDisabled:
+            return selfDeletingMessagesDisabled
 
-        case (.fileSharing, .disabled):
-            viewController.presentAlert(.fileSharingDisabled)
+        case .selfDeletingMessagesIsEnabled(enforcedTimeout: let enforcedTimeout):
+            return selfDeletingMessagesForcedOn
 
-        default:
-            break
+        case .fileSharingEnabled:
+            return fileSharingEnabled
+
+        case .fileSharingDisabled:
+            return fileSharingDisabled
         }
     }
 
 }
-
-private extension UIViewController {
-
-    func presentAlert(_ alert: UIAlertController) {
-        present(alert, animated: true, completion: nil)
-    }
-
-}
-
 
 private extension UIAlertController {
 
@@ -79,6 +76,17 @@ private extension UIAlertController {
 
     static func confirmationAlert(title: String?, message: String) -> UIAlertController {
         return UIAlertController(title: title, message: message, alertAction: .ok())
+    }
+
+}
+
+private extension UIAlertAction {
+
+    static func link(title: String, url: URL, presenter: UIViewController) -> Self {
+        return .init(title: title, style: .default) { [weak presenter] _ in
+            let browserViewController = BrowserViewController(url: url)
+            presenter?.present(browserViewController, animated: true)
+        }
     }
 
 }
