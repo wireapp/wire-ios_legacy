@@ -61,7 +61,7 @@ final class CallActionsView: UIView {
         setupViews()
         setupAccessibility()
         createConstraints()
-        adaptToSizeClass()
+        updateToLayoutSize(layoutSize)
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
@@ -137,26 +137,26 @@ final class CallActionsView: UIView {
         ]
 
         compactConstraints = [
-            bottomStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -37),
             bottomStackView.topAnchor.constraint(equalTo: topStackView.topAnchor),
             bottomStackView.heightAnchor.constraint(equalTo: endCallButton.heightAnchor),
+            bottomStackView.trailingAnchor.constraint(lessThanOrEqualTo: topStackView.leadingAnchor),
+            bottomStackView.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 40),
             verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ]
     }
 
     // MARK: - Orientation
 
-    private func adaptToSizeClass(animated: Bool = false) {
-        let isCallConnected = input?.callState.isConnected ?? false
+    func updateToLayoutSize(_ layoutSize: LayoutSize, animated: Bool = false) {
         let canAcceptCall = input?.callState.canAccept ?? false
-        let isCompact = isCallConnected &&  traitCollection.verticalSizeClass == .compact
+        let isCompact = layoutSize == .compact
 
         let block = {
             NSLayoutConstraint.deactivate(isCompact ? self.regularConstraints : self.compactConstraints)
             NSLayoutConstraint.activate(isCompact ? self.compactConstraints : self.regularConstraints)
         }
 
-        if animated {
+        if animated && !ProcessInfo.processInfo.isRunningTests {
             UIView.animate(easing: .easeInOutSine, duration: 0.1, animations: block)
         } else {
             block()
@@ -168,10 +168,17 @@ final class CallActionsView: UIView {
         acceptCallButton.isHidden = isCompact || !canAcceptCall
     }
 
+    private var layoutSize: LayoutSize {
+        LayoutSize(
+            isConnected: input?.callState.isConnected ?? false,
+            isCompactVerticalSizeClass: traitCollection.verticalSizeClass == .compact
+        )
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
-        adaptToSizeClass()
+        updateToLayoutSize(layoutSize)
         setNeedsLayout()
         layoutIfNeeded()
     }
@@ -197,7 +204,7 @@ final class CallActionsView: UIView {
         [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.callState.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.callState.isTerminating
-        adaptToSizeClass(animated: true)
+        updateToLayoutSize(layoutSize, animated: true)
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
@@ -251,4 +258,17 @@ final class CallActionsView: UIView {
         speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }
 
+}
+
+extension CallActionsView {
+    enum LayoutSize {
+        case compact
+        case regular
+    }
+}
+
+extension CallActionsView.LayoutSize {
+    init(isConnected: Bool, isCompactVerticalSizeClass: Bool) {
+        self = (isConnected && isCompactVerticalSizeClass) ? .compact : .regular
+    }
 }
