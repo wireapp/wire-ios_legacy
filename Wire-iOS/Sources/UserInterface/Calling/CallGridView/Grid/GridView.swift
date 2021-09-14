@@ -36,7 +36,6 @@ final class GridView: UICollectionView {
 
     var layoutDirection: UICollectionView.ScrollDirection = .vertical {
         didSet {
-            layout.scrollDirection = layoutDirection
             reloadData()
         }
     }
