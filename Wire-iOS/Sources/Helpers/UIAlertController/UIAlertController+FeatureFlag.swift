@@ -19,9 +19,24 @@
 import Foundation
 import WireSyncEngine
 
+protocol FeatureChangeAcknowledger {
+
+    func acknowledgeChange(for featureName: Feature.Name)
+
+}
+
+extension FeatureService: FeatureChangeAcknowledger {
+
+    func acknowledgeChange(for featureName: Feature.Name) {
+        setNeedsToNotifyUser(false, for: featureName)
+    }
+
+}
+
 extension UIAlertController {
 
-    class func fromFeatureChange(_ change: FeatureService.FeatureChange) -> UIAlertController? {
+    class func fromFeatureChange(_ change: FeatureService.FeatureChange,
+                                 acknowledger: FeatureChangeAcknowledger) -> UIAlertController? {
         switch change {
         case .conferenceCallingIsAvailable:
             guard SessionManager.shared?.usePackagingFeatureConfig == true else { return nil }
@@ -29,16 +44,20 @@ extension UIAlertController {
             return nil
 
         case .selfDeletingMessagesIsDisabled:
-            return selfDeletingMessagesDisabled
+            return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.disabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .selfDeletingMessages) })
 
-        case .selfDeletingMessagesIsEnabled(enforcedTimeout: let enforcedTimeout):
-            return selfDeletingMessagesForcedOn
+        case .selfDeletingMessagesIsEnabled(enforcedTimeout: _):
+            return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.forcedOn,
+                                         onOK: { acknowledger.acknowledgeChange(for: .selfDeletingMessages) })
 
         case .fileSharingEnabled:
-            return fileSharingEnabled
+            return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.enabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .fileSharing) })
 
         case .fileSharingDisabled:
-            return fileSharingDisabled
+            return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.disabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .fileSharing) })
         }
     }
 
@@ -46,36 +65,25 @@ extension UIAlertController {
 
 private extension UIAlertController {
 
-    // MARK: - File sharing
-
-    static var fileSharingEnabled: UIAlertController {
-        return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.enabled)
-    }
-
-    static var fileSharingDisabled: UIAlertController {
-        return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.disabled)
-    }
-
-    // MARK: - Self-deleting messages
-
-    static var selfDeletingMessagesDisabled: UIAlertController {
-        return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.disabled)
-    }
-
-    static var selfDeletingMessagesForcedOn: UIAlertController {
-        return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.forcedOn)
-    }
-
     // MARK: - Helpers
 
     typealias Strings = L10n.Localizable.FeatureConfig
 
-    static func alertForFeatureChange(message: String) -> UIAlertController {
-        return confirmationAlert(title: Strings.Alert.genericTitle, message: message)
+    static func alertForFeatureChange(message: String,
+                                      onOK: @escaping () -> Void) -> UIAlertController {
+
+        return confirmationAlert(title: Strings.Alert.genericTitle,
+                                 message: message,
+                                 onOK: onOK)
     }
 
-    static func confirmationAlert(title: String?, message: String) -> UIAlertController {
-        return UIAlertController(title: title, message: message, alertAction: .ok())
+    static func confirmationAlert(title: String?,
+                                  message: String,
+                                  onOK: @escaping () -> Void) -> UIAlertController {
+
+        return UIAlertController(title: title,
+                                 message: message,
+                                 alertAction: .ok { _ in onOK() })
     }
 
 }

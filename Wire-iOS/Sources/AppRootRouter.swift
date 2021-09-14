@@ -384,7 +384,8 @@ extension AppRootRouter {
                                    account: account,
                                    selfUser: ZMUser.selfUser(),
                                    isComingFromRegistration: isComingFromRegistration,
-                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog,
+                                   featureServiceProvider: ZMUserSession.shared()!)
     }
 }
 
