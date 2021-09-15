@@ -123,8 +123,10 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
 }
 
 extension ConversationInputBarViewController {
+
     var ephemeralState: EphemeralState {
         var state = EphemeralState.none
+
         if !sendButtonState.ephemeral {
             state = .none
         } else if self.conversation.hasSyncedMessageDestructionTimeout {
@@ -136,11 +138,14 @@ extension ConversationInputBarViewController {
         return state
     }
 
-    func updateInputBar() {
+    func updateViewsForSelfDeletingMessageChanges() {
+        updateAccessoryViews()
+
         inputBar.changeEphemeralState(to: ephemeralState)
 
         if conversation.hasSyncedMessageDestructionTimeout {
             dismissEphemeralController()
         }
     }
+
 }
