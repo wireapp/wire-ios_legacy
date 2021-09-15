@@ -52,7 +52,7 @@ final class UIAlertControllerFeatureConfigSnapshotTests: XCTestCase {
 private class MockFeatureChangeAcknowledger: FeatureChangeAcknowledger {
 
     func acknowledgeChange(for featureName: Feature.Name) {
-
+        // no op
     }
 
 }
