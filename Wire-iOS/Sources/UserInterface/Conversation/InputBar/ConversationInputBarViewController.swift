@@ -322,6 +322,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         let interaction = UIDropInteraction(delegate: self)
         inputBar.textView.addInteraction(interaction)
+        inputBar.textView.textDragInteraction?.isEnabled = SecurityFlags.clipboard.isEnabled
 
         setupObservers()
     }
