@@ -8434,7 +8434,7 @@
 				EF1ABCA82310147C00496A1B /* UIViewController+Invite.swift in Sources */,
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
 				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
-				06B3091326AEDC990057AF9E /* UIAlertController+FeatureFlag.swift in Sources */,
+				06B3091326AEDC990057AF9E /* UIAlertController+FeatureConfig.swift in Sources */,
 				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
 				87B48EBE20A050AA00DBAD9D /* ViewControllerDismisser.swift in Sources */,
 				6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */,

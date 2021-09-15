@@ -1671,7 +1671,7 @@
 
 // Feature configs: self-deleting messages
 "feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
-"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are forced-on (messages will be deleted after 1 day).";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are forced-on (messages will be deleted after %@).";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";

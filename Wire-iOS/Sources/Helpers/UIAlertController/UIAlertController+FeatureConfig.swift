@@ -46,8 +46,13 @@ extension UIAlertController {
             return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.disabled,
                                          onOK: { acknowledger.acknowledgeChange(for: .selfDeletingMessages) })
 
-        case .selfDeletingMessagesIsEnabled(enforcedTimeout: _):
-            return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.forcedOn,
+        case .selfDeletingMessagesIsEnabled(let enforcedTimeout):
+            guard let enforcedTimeout = enforcedTimeout else { return nil }
+
+            let timeout = MessageDestructionTimeoutValue(rawValue: TimeInterval(enforcedTimeout))
+            guard let timeoutString = timeout.displayString else { return nil }
+
+            return alertForFeatureChange(message: Strings.Alert.SelfDeletingMessages.Message.forcedOn(timeoutString),
                                          onOK: { acknowledger.acknowledgeChange(for: .selfDeletingMessages) })
 
         case .fileSharingEnabled:
