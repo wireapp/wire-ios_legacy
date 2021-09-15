@@ -39,8 +39,7 @@ extension UIAlertController {
                                  acknowledger: FeatureChangeAcknowledger) -> UIAlertController? {
         switch change {
         case .conferenceCallingIsAvailable:
-            guard SessionManager.shared?.usePackagingFeatureConfig == true else { return nil }
-            // TODO: implement
+            // Handled elsewhere.
             return nil
 
         case .selfDeletingMessagesIsDisabled:
@@ -72,29 +71,9 @@ private extension UIAlertController {
     static func alertForFeatureChange(message: String,
                                       onOK: @escaping () -> Void) -> UIAlertController {
 
-        return confirmationAlert(title: Strings.Alert.genericTitle,
-                                 message: message,
-                                 onOK: onOK)
-    }
-
-    static func confirmationAlert(title: String?,
-                                  message: String,
-                                  onOK: @escaping () -> Void) -> UIAlertController {
-
-        return UIAlertController(title: title,
+        return UIAlertController(title: Strings.Alert.genericTitle,
                                  message: message,
                                  alertAction: .ok { _ in onOK() })
-    }
-
-}
-
-private extension UIAlertAction {
-
-    static func link(title: String, url: URL, presenter: UIViewController) -> Self {
-        return .init(title: title, style: .default) { [weak presenter] _ in
-            let browserViewController = BrowserViewController(url: url)
-            presenter?.present(browserViewController, animated: true)
-        }
     }
 
 }
