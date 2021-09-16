@@ -35,6 +35,10 @@ final class UIAlertControllerFeatureConfigSnapshotTests: XCTestCase {
         verify(matching: createSut(for: .selfDeletingMessagesIsDisabled)!)
     }
 
+    func testSelfDeletingMessagsIsEnabled() {
+        verify(matching: createSut(for: .selfDeletingMessagesIsEnabled(enforcedTimeout: nil))!)
+    }
+
     func testSelfDeletingMessagesIsForcedOn() {
         verify(matching: createSut(for: .selfDeletingMessagesIsEnabled(enforcedTimeout: 300))!)
     }
