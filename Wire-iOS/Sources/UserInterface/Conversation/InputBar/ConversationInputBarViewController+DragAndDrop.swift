@@ -69,14 +69,17 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
     }
 
     func dropProposal(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> UIDropProposal {
-        switch (isText, isClipboardEnabled, canFilesBeShared) {
-        case (true, true, _),
-             (false, _, true):
-            return UIDropProposal(operation: .copy)
-        default:
-            return UIDropProposal(operation: .forbidden)
-        }
+      return shouldAllowDropInteraction(isText: isText, isClipboardEnabled: isClipboardEnabled, canFilesBeShared: canFilesBeShared)
+        ? UIDropProposal(operation: .copy)
+        : UIDropProposal(operation: .forbidden)
+    }
 
+    private func shouldAllowDropInteraction(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> Bool {
+      if isText {
+        return isClipboardEnabled
+      } else {
+        return isClipboardEnabled && canFilesBeShared
+      }
     }
 
 }

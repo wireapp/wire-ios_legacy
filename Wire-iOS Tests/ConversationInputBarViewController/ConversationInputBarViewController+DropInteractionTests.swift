@@ -36,15 +36,27 @@ final class ConversationInputBarViewControllerDropInteractionTests: XCTestCase {
             output: .forbidden
         )
 
-        // Drop file and the file sharing feature is disabled.
+        // Drop file, the clipboard is disabled and the file sharing feature is disabled.
         assert(
             input: (isText: false, isClipboardEnabled: false, canFilesBeShared: false),
             output: .forbidden
         )
 
-        // Drop file and the file sharing feature is enabled.
+        // Drop file, the clipboard is disabled and the file sharing feature is enabled.
         assert(
             input: (isText: false, isClipboardEnabled: false, canFilesBeShared: true),
+            output: .forbidden
+        )
+
+        // Drop file, the clipboard is enabled and the file sharing feature is disabled.
+        assert(
+            input: (isText: false, isClipboardEnabled: true, canFilesBeShared: false),
+            output: .forbidden
+        )
+
+        // Drop file when the clipboard is enabled and the file sharing feature is enabled.
+        assert(
+            input: (isText: false, isClipboardEnabled: true, canFilesBeShared: true),
             output: .copy
         )
 
