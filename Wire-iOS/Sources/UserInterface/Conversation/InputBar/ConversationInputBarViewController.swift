@@ -30,7 +30,7 @@ enum ConversationInputBarViewControllerMode {
 }
 
 final class ConversationInputBarViewController: UIViewController,
-                                            UIPopoverPresentationControllerDelegate,
+                                                UIPopoverPresentationControllerDelegate,
                                                 PopoverPresenter {
     // MARK: PopoverPresenter    
     var presentedPopover: UIPopoverPresentationController?
@@ -628,7 +628,11 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - notification center
     private func setupNotificationCenter() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
+
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+
             guard let weakSelf = self else { return }
 
             let inRotation = weakSelf.inRotation
@@ -639,8 +643,18 @@ final class ConversationInputBarViewController: UIViewController,
             }
         }
 
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+
             self?.didEnterBackground()
+        }
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] _ in
+
+            self?.updateViewsForSelfDeletingMessageChanges()
         }
     }
 
@@ -778,8 +792,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
         }
 
         if change.destructionTimeoutChanged {
-            updateAccessoryViews()
-            updateInputBar()
+            updateViewsForSelfDeletingMessageChanges()
         }
     }
 }
