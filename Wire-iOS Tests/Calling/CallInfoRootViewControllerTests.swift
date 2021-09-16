@@ -237,15 +237,15 @@ final class CallInfoRootViewControllerTests: XCTestCase {
     }
 
     // MARK: - Landscape
-    func testOneToOneAudioOutgoingLandscape() {
+    func disable_testOneToOneAudioOutgoingLandscape() {
         testLandscape(configuration: defaultFixture.oneToOneOutgoingAudioRinging)
     }
 
-    func testOneToOneAudioIncomingLandscape() {
+    func disable_testOneToOneAudioIncomingLandscape() {
         testLandscape(configuration: defaultFixture.oneToOneIncomingAudioRinging)
     }
 
-    func testOneToOneAudioEstablishedLandscape() {
+    func disable_testOneToOneAudioEstablishedLandscape() {
         testLandscape(configuration: defaultFixture.oneToOneAudioEstablished)
     }
 
