@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,22 +18,12 @@
 
 import UIKit
 
-class ResizingTextView: DragInteractionRestrictionTextView {
-    override var contentSize: CGSize {
-        didSet {
-            invalidateIntrinsicContentSize()
-        }
+class DragInteractionRestrictionTextView: TextView {
+
+    convenience init() {
+        self.init(frame: .zero)
+
+        textDragInteraction?.isEnabled = SecurityFlags.clipboard.isEnabled
     }
 
-    override var intrinsicContentSize: CGSize {
-        return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
-    }
-
-    override func paste(_ sender: Any?) {
-        super.paste(sender)
-
-        // Work-around for text view scrolling too far when pasting text smaller
-        // than the maximum height of the text view.
-        setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-    }
 }

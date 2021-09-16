@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		060E5336257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */; };
 		061275D726F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */; };
+		061275DE26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */; };
 		061282632379C25500C1A53C /* UITextView+ReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */; };
 		0617001523E48B66005C262D /* VerticalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0617001423E48B66005C262D /* VerticalTransition.swift */; };
 		0619FBBB258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0619FBBA258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift */; };
@@ -1757,6 +1758,7 @@
 /* Begin PBXFileReference section */
 		060E5335257668EE00BDDEBB /* SettingsPropertyFactory+AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsPropertyFactory+AppLock.swift"; sourceTree = "<group>"; };
 		061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DropInteractionTests.swift"; sourceTree = "<group>"; };
+		061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInteractionRestrictionTextView.swift; sourceTree = "<group>"; };
 		061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ReplaceTests.swift"; sourceTree = "<group>"; };
 		0617001423E48B66005C262D /* VerticalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalTransition.swift; sourceTree = "<group>"; };
 		0619FBBA258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+FeatureChange.swift"; sourceTree = "<group>"; };
@@ -4882,6 +4884,7 @@
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */,
 				871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */,
+				061275DD26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift */,
 				870C97C21D670C9A00F6FD7D /* NextResponderTextView.swift */,
 				F14FB862214941050012A131 /* Mentions */,
 				EE8E926D2024F085000F4752 /* MarkdownTextView.swift */,
@@ -8716,6 +8719,7 @@
 				5E8FFC1621EF46600052DF03 /* AuthenticationCoordinator+Backup.swift in Sources */,
 				F14FB864214941160012A131 /* MentionsTextAttachment.swift in Sources */,
 				EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */,
+				061275DE26F304CB006E8D4C /* DragInteractionRestrictionTextView.swift in Sources */,
 				5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
 				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
