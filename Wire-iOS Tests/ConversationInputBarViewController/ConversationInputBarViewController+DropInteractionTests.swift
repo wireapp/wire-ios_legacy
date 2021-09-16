@@ -22,7 +22,7 @@ import WireCommonComponents
 
 final class ConversationInputBarViewControllerDropInteractionTests: XCTestCase {
 
-    func test_ItEvaluatesAuthentication() {
+    func testThatItHandlesDroppingFiles() {
 
         // Drop text and the clipboard is enabled.
         assert(
