@@ -63,13 +63,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
-        sut = CallActionsView()
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        widthConstraint = sut.widthAnchor.constraint(equalToConstant: 340)
-        widthConstraint.isActive = true
-        sut.setNeedsLayout()
-        sut.layoutIfNeeded()
+        snapshotBackgroundColor = .black
     }
 
     override func tearDown() {
@@ -78,101 +72,41 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    // MARK: - Light Theme
+    private func createSut(for layoutSize: CallActionsView.LayoutSize) {
+        sut = CallActionsView()
 
-    func testCallActionsView_LightTheme_WithSelectedButtons() {
-        snapshotBackgroundColor = .white
-
-        // Given
-        let input = CallActionsViewInput(
-            allowPresentationModeUpdates: false,
-            videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
-            isVideoCall: false,
-            isMuted: true,
-            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
-            variant: .light,
-            cameraType: .front,
-            callState: CallStateMock.incoming
-        )
-
-        // When
-        sut.update(with: input)
-
-        // Then
-        verify(view: sut)
+        switch layoutSize {
+        case .compact:
+            sut.frame = CGRect(origin: .zero, size: CGSize(width: 800, height: 150))
+        case .regular:
+            sut.translatesAutoresizingMaskIntoConstraints = false
+            widthConstraint = sut.widthAnchor.constraint(equalToConstant: 340)
+            widthConstraint.isActive = true
+            sut.setNeedsLayout()
+            sut.layoutIfNeeded()
+        }
     }
 
-    func testCallActionsView_LightTheme() {
-        snapshotBackgroundColor = .white
-
+    func testCallActionsView_Compact() {
         // Given
+       createSut(for: .compact)
+
         let input = CallActionsViewInput(
-            allowPresentationModeUpdates: false,
+            allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
             permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
-            isVideoCall: false,
-            isMuted: false,
-            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
-            cameraType: .front,
-            callState: CallStateMock.incoming
-        )
-
-        // When
-        sut.update(with: input)
-
-        // Then
-        verify(view: sut)
-    }
-
-    // MARK: - Dark Theme
-
-    func testCallActionsView_DarkTheme_WithSelectedButtons() {
-        snapshotBackgroundColor = .black
-
-        // Given
-        let input = CallActionsViewInput(
-            allowPresentationModeUpdates: false,
-            videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
-            isVideoCall: false,
-            isMuted: true,
-            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
-            variant: .dark,
-            cameraType: .front,
-            callState: CallStateMock.incoming
-        )
-
-        // When
-        sut.update(with: input)
-
-        // Then
-        verify(view: sut)
-    }
-
-    func testCallActionsView_DarkTheme() {
-        snapshotBackgroundColor = .black
-
-        // Given
-        let input = CallActionsViewInput(
-            allowPresentationModeUpdates: false,
-            videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.incoming
+            callState: CallStateMock.ongoing
         )
 
         // When
         sut.update(with: input)
+        sut.updateToLayoutSize(.compact)
 
         // Then
         verify(view: sut)
@@ -181,8 +115,9 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     // MARK: - Call State: Incoming
 
     func testCallActionsView_StateIncoming_Audio() {
-
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -191,7 +126,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.incoming
         )
@@ -205,6 +140,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateIncoming_Video() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -229,6 +166,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOutgoing_Audio() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -237,7 +176,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.outgoing
         )
@@ -251,6 +190,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOutgoing_Video() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -275,6 +216,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Audio() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -283,7 +226,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
@@ -297,6 +240,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Audio_Muted() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -305,7 +250,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: true,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
@@ -319,6 +264,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Audio_SpeakerUnavailable() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -327,7 +274,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanNotBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
@@ -341,6 +288,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Video() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -363,6 +312,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Video_PresentationMode_AllVideoStreams() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
@@ -385,6 +336,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateOngoing_Video_PresentationMode_ActiveSpeakers() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .activeSpeakers,
@@ -409,6 +362,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateTerminating_Audio() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -417,7 +372,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.terminating
         )
@@ -431,6 +386,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_StateTerminating_Video() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -455,6 +412,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_Permissions_NotDetermined() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -463,7 +422,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: true,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
@@ -477,6 +436,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
 
     func testCallActionsView_Permissions_NotAllowed() {
         // Given
+        createSut(for: .regular)
+
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
@@ -485,7 +446,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isVideoCall: true,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
-            variant: .light,
+            variant: .dark,
             cameraType: .front,
             callState: CallStateMock.ongoing
         )
