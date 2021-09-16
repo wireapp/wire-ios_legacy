@@ -341,8 +341,18 @@ final class ConversationInputBarViewController: UIViewController,
             userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, in: userSession)
         }
 
-        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.updateInputBarButtons()
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] note in
+            guard let change = note.object as? FeatureService.FeatureChange else { return }
+
+            switch change {
+            case .fileSharingEnabled, .fileSharingDisabled:
+                self?.updateInputBarButtons()
+
+            default:
+                break
+            }
         }
     }
 

@@ -40,6 +40,7 @@ class AuthenticatedRouter: NSObject {
     private let rootViewController: RootViewController
     private let activeCallRouter: ActiveCallRouter
     private weak var _viewController: ZClientViewController?
+    private let featureServiceProvider: FeatureServiceProvider
 
     // MARK: - Public Property
 
@@ -55,7 +56,8 @@ class AuthenticatedRouter: NSObject {
          account: Account,
          selfUser: SelfUserType,
          isComingFromRegistration: Bool,
-         needToShowDataUsagePermissionDialog: Bool) {
+         needToShowDataUsagePermissionDialog: Bool,
+         featureServiceProvider: FeatureServiceProvider) {
 
         self.rootViewController = rootViewController
         activeCallRouter = ActiveCallRouter(rootviewController: rootViewController)
@@ -64,6 +66,26 @@ class AuthenticatedRouter: NSObject {
                                          selfUser: selfUser,
                                          isComingFromRegistration: needToShowDataUsagePermissionDialog,
                                          needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+
+        self.featureServiceProvider = featureServiceProvider
+
+        super.init()
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
+                                               object: nil,
+                                               queue: .main,
+                                               using: notifyFeatureChange)
+    }
+
+    private func notifyFeatureChange(_ note: Notification) {
+        guard
+            let change = note.object as? FeatureService.FeatureChange,
+            let alert = UIAlertController.fromFeatureChange(change, acknowledger: featureServiceProvider.featureService)
+        else {
+            return
+        }
+
+        _viewController?.presentAlert(alert)
     }
 }
 
@@ -117,3 +139,19 @@ struct AuthenticatedWireFrame {
         return viewController
     }
 }
+
+private extension UIViewController {
+
+    func presentAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+
+}
+
+protocol FeatureServiceProvider {
+
+    var featureService: FeatureService { get }
+
+}
+
+extension ZMUserSession: FeatureServiceProvider {}
