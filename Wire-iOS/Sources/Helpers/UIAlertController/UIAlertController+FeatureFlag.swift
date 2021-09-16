@@ -36,7 +36,7 @@ extension UIAlertController {
             case (.fileSharing, .disabled):
                 title = FileSharingAlert.title
                 message = FileSharingAlert.Message.disabled
-            case (.appLock, _):
+            case (.appLock, _), (.conferenceCalling, _):
                 break
             }
         }

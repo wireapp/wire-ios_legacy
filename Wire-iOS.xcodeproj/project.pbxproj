@@ -1224,6 +1224,7 @@
 		EE52378F23F557A600D4FE79 /* MockServiceUserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378E23F557A600D4FE79 /* MockServiceUserType.swift */; };
 		EE52379123F557B900D4FE79 /* MockServiceUserType+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52379023F557B900D4FE79 /* MockServiceUserType+Creation.swift */; };
 		EE52379323F5588000D4FE79 /* MockUserType+CodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52379223F5588000D4FE79 /* MockUserType+CodingKeys.swift */; };
+		EE52989026B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52988F26B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift */; };
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
@@ -3054,6 +3055,7 @@
 		EE52378E23F557A600D4FE79 /* MockServiceUserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceUserType.swift; sourceTree = "<group>"; };
 		EE52379023F557B900D4FE79 /* MockServiceUserType+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServiceUserType+Creation.swift"; sourceTree = "<group>"; };
 		EE52379223F5588000D4FE79 /* MockUserType+CodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+CodingKeys.swift"; sourceTree = "<group>"; };
+		EE52988F26B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ConferenceCallingAvailabilty.swift"; sourceTree = "<group>"; };
 		EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsNotificationOptionsCell.swift; sourceTree = "<group>"; };
 		EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Interfaces.swift"; sourceTree = "<group>"; };
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
@@ -5944,6 +5946,7 @@
 			isa = PBXGroup;
 			children = (
 				877798AB205A8EF500898A5E /* ZClientViewController.swift */,
+				EE52988F26B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift */,
 				EFA145F5231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift */,
 				EF2C246E22AFA76C009389C6 /* ZClientViewController+ZMUserObserver.swift */,
 				EFF9404722414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift */,
@@ -8669,6 +8672,7 @@
 				63E128BB26208DDC009D9AF2 /* CallGridEvent.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
 				EF17B0D3223A6A36006252A8 /* LaunchImageViewController.swift in Sources */,
+				EE52989026B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
 				5EA952C722647B3100C83FDB /* IconButton.swift in Sources */,
