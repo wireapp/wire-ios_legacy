@@ -79,5 +79,5 @@ extension ConversationInputBarViewControllerDropInteractionTests {
 
         XCTAssertEqual(dropProposal.operation, output, file: file, line: line)
     }
-    
+
 }
