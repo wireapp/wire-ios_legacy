@@ -26,7 +26,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-final class MarkdownTextView: NextResponderTextView {
+final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
 
     enum ListType {
         case number, bullet
@@ -65,7 +65,11 @@ final class MarkdownTextView: NextResponderTextView {
         case #selector(UIResponderStandardEditActions.paste(_:)),
              #selector(UIResponderStandardEditActions.cut(_:)),
              #selector(UIResponderStandardEditActions.copy(_:)):
-            guard SecurityFlags.clipboard.isEnabled else { return false }
+
+            let pasteboard = UIPasteboard.general
+            guard shouldAllowPerformAction(isText: pasteboard.hasStrings,
+                                         isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
+                                         canFilesBeShared: canFilesBeShared) else { return false }
             fallthrough
         default:
             return super.canPerformAction(action, withSender: sender)
@@ -618,6 +622,18 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 
         activeMarkdown.subtract(markdown)
     }
+}
+
+// MARK: - Helpers
+
+extension MarkdownTextView {
+
+    /// Whether files can be shared and received
+    private var canFilesBeShared: Bool {
+        guard let session = ZMUserSession.shared() else { return true }
+        return session.fileSharingFeature.status == .enabled
+    }
+
 }
 
 // MARK: - DownStyle Presets

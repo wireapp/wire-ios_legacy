@@ -22,7 +22,7 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "Drag and drop images")
 
-extension ConversationInputBarViewController: UIDropInteractionDelegate {
+extension ConversationInputBarViewController: UIDropInteractionDelegate, PerformClipboardAction {
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
 
@@ -69,17 +69,9 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
     }
 
     func dropProposal(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> UIDropProposal {
-      return shouldAllowDropInteraction(isText: isText, isClipboardEnabled: isClipboardEnabled, canFilesBeShared: canFilesBeShared)
+      return shouldAllowPerformAction(isText: isText, isClipboardEnabled: isClipboardEnabled, canFilesBeShared: canFilesBeShared)
         ? UIDropProposal(operation: .copy)
         : UIDropProposal(operation: .forbidden)
-    }
-
-    private func shouldAllowDropInteraction(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> Bool {
-      if isText {
-        return isClipboardEnabled
-      } else {
-        return isClipboardEnabled && canFilesBeShared
-      }
     }
 
 }
