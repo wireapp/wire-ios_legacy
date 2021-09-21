@@ -324,11 +324,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     private var isiOSAppOnMac: Bool {
         let isiOSAppOnMac: Bool
         if #available(iOS 14.0, *) {
-            if ProcessInfo.processInfo.isiOSAppOnMac {
-                isiOSAppOnMac = true
-            } else {
-                isiOSAppOnMac = false
-            }
+            isiOSAppOnMac = ProcessInfo.processInfo.isiOSAppOnMac
         } else {
             isiOSAppOnMac = false
         }
