@@ -322,22 +322,19 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     }
 
     private var isiOSAppOnMac: Bool {
-        let isiOSAppOnMac: Bool
         if #available(iOS 14.0, *) {
-            isiOSAppOnMac = ProcessInfo.processInfo.isiOSAppOnMac
-        } else {
-            isiOSAppOnMac = false
+            return ProcessInfo.processInfo.isiOSAppOnMac
         }
-        
-        return isiOSAppOnMac
+
+        return false
     }
-    
+
     /// Update layoutSize for the change of traitCollection and the current orientation
     ///
     /// - Parameters:
     ///   - traitCollection: the new traitCollection
     private func updateLayoutSize(for traitCollection: UITraitCollection) {
-        
+
         switch (isiOSAppOnMac, traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
         case (true, _, true):
             layoutSize = .regularLandscape
