@@ -152,7 +152,9 @@ private extension GridView {
         case (.moreThanTwo, .proportionalSplit):
             return numberOfItemsInPage.evenlyCeiled / 2
         case (.moreThanTwo, .middleSplit):
-            return isOddLastRow(indexPath) ? 1 : 2
+            let isOddLastRow = self.isOddLastRow(indexPath)
+            let isLayoutDirectionVertical = layoutDirection == .vertical
+            return isOddLastRow && isLayoutDirectionVertical ? 1 : 2
         case (.twoOrLess, .proportionalSplit):
             return numberOfItemsInPage
         case (.twoOrLess, .middleSplit):
