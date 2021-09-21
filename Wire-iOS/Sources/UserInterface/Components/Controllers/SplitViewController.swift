@@ -309,7 +309,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
-    // MARK: - updte size
+    // MARK: - update size
 
     /// return true if right view (mostly conversation screen) is fully visible
     var isRightViewControllerRevealed: Bool {
@@ -321,18 +321,36 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
+    private var isiOSAppOnMac: Bool {
+        let isiOSAppOnMac: Bool
+        if #available(iOS 14.0, *) {
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                isiOSAppOnMac = true
+            } else {
+                isiOSAppOnMac = false
+            }
+        } else {
+            isiOSAppOnMac = false
+        }
+        
+        return isiOSAppOnMac
+    }
+    
     /// Update layoutSize for the change of traitCollection and the current orientation
     ///
     /// - Parameters:
     ///   - traitCollection: the new traitCollection
     private func updateLayoutSize(for traitCollection: UITraitCollection) {
-        switch (traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
-        case (.regular, true):
-            self.layoutSize = .regularPortrait
-        case (.regular, false):
-            self.layoutSize = .regularLandscape
+        
+        switch (isiOSAppOnMac, traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
+        case (true, _, true):
+            layoutSize = .regularLandscape
+        case (false, .regular, true):
+            layoutSize = .regularPortrait
+        case (false, .regular, false):
+            layoutSize = .regularLandscape
         default:
-            self.layoutSize = .compact
+            layoutSize = .compact
         }
     }
 
