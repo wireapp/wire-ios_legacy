@@ -29,7 +29,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate, Perform
         for dragItem in session.items {
             let itemProvider = dragItem.itemProvider
             if itemProvider.hasText() {
-                itemProvider.loadObject(ofClass: NSString.self) { [self] object, error in
+                itemProvider.loadObject(ofClass: NSString.self) { [self] object, _ in
                     guard let draggedText = object as? String else { return }
                     DispatchQueue.main.async {
                         self.inputBar.textView.text = draggedText
@@ -89,7 +89,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate, Perform
 private extension UIDropSession {
 
     func hasText() -> Bool {
-        /// Image dragged from browser can be both NSString and UIImage
+        // Image dragged from browser can be both NSString and UIImage
         return canLoadObjects(ofClass: NSString.self) && !canLoadObjects(ofClass: UIImage.self)
     }
 
@@ -98,7 +98,7 @@ private extension UIDropSession {
 private extension NSItemProvider {
 
     func hasText() -> Bool {
-        /// Image dragged from browser can be both NSString and UIImage
+        // Image dragged from browser can be both NSString and UIImage
         return canLoadObject(ofClass: NSString.self) && !canLoadObject(ofClass: UIImage.self)
     }
 

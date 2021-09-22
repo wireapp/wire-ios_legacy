@@ -721,7 +721,6 @@ private extension NSRange {
     }
 }
 
-
 private extension UIPasteboard {
 
     var hasText: Bool {
