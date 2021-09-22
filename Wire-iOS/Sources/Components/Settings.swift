@@ -123,6 +123,10 @@ class Settings {
         }
     }
 
+    var federationEnabled: Bool {
+        return defaults.bool(forKey: SettingKey.federationEnabled.rawValue)
+    }
+
     var blacklistDownloadInterval: TimeInterval {
         let HOURS_6 = 6 * 60 * 60
         let settingValue = defaults.integer(forKey: SettingKey.blackListDownloadInterval.rawValue)

@@ -179,10 +179,6 @@ final class CallViewController: UIViewController {
         return !isOverlayVisible
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
     @objc
     private func resumeVideoIfNeeded() {
         guard voiceChannel.videoState.isPaused else { return }
@@ -373,7 +369,8 @@ extension CallViewController {
 
             conversation.confirmJoiningCallIfNeeded(alertPresenter: self, forceAlertModal: true) {
                 self.checkVideoPermissions { videoGranted in
-                    conversation.joinVoiceChannel(video: videoGranted)
+                    let video = videoGranted && self.voiceChannel.videoState.isSending
+                    conversation.joinVoiceChannel(video: video)
                     self.disableVideoIfNeeded()
                 }
             }

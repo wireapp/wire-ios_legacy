@@ -18,7 +18,7 @@
 
 import UIKit
 
-class ResizingTextView: TextView {
+class ResizingTextView: DragInteractionRestrictionTextView {
     override var contentSize: CGSize {
         didSet {
             invalidateIntrinsicContentSize()

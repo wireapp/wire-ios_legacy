@@ -38,6 +38,7 @@ final class ZClientViewController: UIViewController {
     var legalHoldDisclosureController: LegalHoldDisclosureController?
 
     var userObserverToken: Any?
+    var conferenceCallingUnavailableObserverToken: Any?
 
     private let topOverlayContainer: UIView = UIView()
     private var topOverlayViewController: UIViewController?
@@ -87,6 +88,16 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { (note) in
+            guard let change = note.object as? Feature.FeatureChange,
+                  let session = SessionManager.shared,
+                  session.usePackagingFeatureConfig else { return }
+            switch change {
+            case .conferenceCallingIsAvailable:
+                self.presentConferenceCallingAvailableAlert()
+            }
+        }
 
         setupAppearance()
 
@@ -163,6 +174,7 @@ final class ZClientViewController: UIViewController {
         }
 
         setupUserChangeInfoObserver()
+        setUpConferenceCallingUnavailableObserver()
     }
 
     private func createBackgroundViewController() {

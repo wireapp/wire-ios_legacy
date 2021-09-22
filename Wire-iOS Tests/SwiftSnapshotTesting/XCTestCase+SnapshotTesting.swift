@@ -39,23 +39,27 @@ extension ViewImageConfig: Hashable {
 // MARK: - snapshoting all iPhone sizes
 extension XCTestCase {
     /// snapshot file name suffixs
-    static let phoneConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
-        .iPhoneSe: "iPhone-4_0_Inch",
-        .iPhone8: "iPhone-4_7_Inch",
-        .iPhone8Plus: "iPhone-5_5_Inch",
-        .iPhoneX: "iPhone-5_8_Inch",
-        .iPhoneXsMax: "iPhone-6_5_Inch"]
+    static func phoneConfigNames(orientation: ViewImageConfig.Orientation = .portrait) -> [ViewImageConfig: String] {
+        return [
+            .iPhoneSe(orientation): "iPhone-4_0_Inch",
+            .iPhone8(orientation): "iPhone-4_7_Inch",
+            .iPhone8Plus(orientation): "iPhone-5_5_Inch",
+            .iPhoneX(orientation): "iPhone-5_8_Inch",
+            .iPhoneXsMax(orientation): "iPhone-6_5_Inch"
+        ]
+    }
 
     static let padConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
         .iPadMini(.landscape): "iPad-landscape",
         .iPadMini(.portrait): "iPad-portrait"]
 
     func verifyAllIPhoneSizes(matching value: UIViewController,
+                              orientation: ViewImageConfig.Orientation = .portrait,
                               file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
 
-        for(config, name) in XCTestCase.phoneConfigNames {
+        for(config, name) in XCTestCase.phoneConfigNames(orientation: orientation) {
             verify(matching: value,
                    as: .image(on: config),
                    named: name,
@@ -70,7 +74,7 @@ extension XCTestCase {
                               testName: String = #function,
                               line: UInt = #line) {
 
-        for(config, name) in XCTestCase.phoneConfigNames {
+        for(config, name) in XCTestCase.phoneConfigNames() {
             verify(matching: createSut(config.size!),
                    as: .image(on: config),
                    named: name,
@@ -85,7 +89,7 @@ extension XCTestCase {
                                 testName: String = #function,
                                 line: UInt = #line) {
 
-        let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
+        let allDevices = XCTestCase.phoneConfigNames().merging(XCTestCase.padConfigNames) { (current, _) in current }
 
         for(config, name) in allDevices {
             if let deviceMockable = value as? DeviceMockable {
