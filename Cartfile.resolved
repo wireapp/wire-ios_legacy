@@ -29,4 +29,3 @@ github "wireapp/wire-ios-testing" "26.0.2"
 github "wireapp/wire-ios-transport" "chore/xcode13"
 github "wireapp/wire-ios-utilities" "43.1.2"
 github "wireapp/wire-ios-ziphy" "16.0.3"
-
