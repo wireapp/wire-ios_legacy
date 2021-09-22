@@ -1129,7 +1129,7 @@
 "self.settings.callkit.description" = "Mostrar as chamadas do Wire na tela de bloqueio e no histórico de chamadas do iOS. Se o Icloud estiver ativado, o histórico de chamadas é compartilhado com a Apple.";
 
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
+"self.settings.vbr.description" = "Isso faz com que as chamadas de áudio usem menos dados e funcionem melhor em redes mais lentas. Desligue para usar a codificação de taxa de bits constante (CBR). Essa configuração afeta apenas chamadas 1:1; as chamadas em conferência sempre usam a codificação CBR.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Chamada do Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Mensagem do Wire";
@@ -1650,6 +1650,22 @@
 "feature_config.file_sharing_restrictions.video" = "Receber vídeos é proibido";
 "feature_config.file_sharing_restrictions.audio" = "Receber arquivos de áudio é proibido";
 
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Plano Empresarial";
+"feature_config.update.conference_calling.alert.message" = "Sua equipe foi atualizada para o plano Empresarial. Agora você tem acesso a recursos como iniciar chamadas em conferência.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Saiba mais sobre o plano Empresarial";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Atualizar para o plano Empresarial";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Sua equipe está atualmente no plano Básico gratuito. Atualize para o plano Empresarial para ter acesso a recursos como iniciar chamadas em conferência.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Saiba mais sobre os preços do Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Atualizar agora";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Recurso indisponível";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Para iniciar uma chamada em conferência, sua equipe precisa ser atualizada para o plano Empresarial.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Recurso indisponível";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "A opção de iniciar uma chamada em conferência está disponível apenas na versão paga do Wire.";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detectado";
 "jailbrokendevice.alert.message" = "Por motivos de segurança, o Wire não pode ser usado neste dispositivo. Todos os dados existentes do Wire foram apagados.";
@@ -1677,7 +1693,7 @@
 "invite_banner.invite_button_title" = "Convidar mais pessoas";
 
 // Collections
-"collections.section.images.title" = "Images";
+"collections.section.images.title" = "Imagens";
 "collections.section.files.title" = "Arquivos";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Links";

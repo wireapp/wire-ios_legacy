@@ -1650,6 +1650,22 @@
 "feature_config.file_sharing_restrictions.video" = "Получение видео запрещено";
 "feature_config.file_sharing_restrictions.audio" = "Получение аудиофайлов запрещено";
 
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "План Enterprise";
+"feature_config.update.conference_calling.alert.message" = "Ваша команда была переведена на план Enterprise. Теперь у вас есть доступ к таким возможностям, как использование конференц-звонков.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Узнайте больше о плане Enterprise";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Перейти на Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "В настоящее время ваша команда работает на бесплатном плане Basic. Перейдите на план Enterprise, чтобы получить доступ к таким возможностям, как использование конференц-звонков.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Узнайте больше о тарифах Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Перейти сейчас";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Возможность недоступна";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Чтобы использовать конференц-связь, вашей команде необходимо перейти на план Enterprise.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Возможность недоступна";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Возможность инициировать конференц-связь доступна только в платной версии Wire.";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
 "jailbrokendevice.alert.message" = "С целью обеспечения безопасности Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";

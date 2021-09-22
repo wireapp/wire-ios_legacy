@@ -179,10 +179,6 @@ final class CallViewController: UIViewController {
         return !isOverlayVisible
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
     @objc
     private func resumeVideoIfNeeded() {
         guard voiceChannel.videoState.isPaused else { return }

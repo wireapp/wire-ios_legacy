@@ -23,61 +23,6 @@ protocol CallActionsViewDelegate: class {
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
-enum MediaState: Equatable {
-    struct SpeakerState: Equatable {
-        let isEnabled: Bool
-        let canBeToggled: Bool
-    }
-    case sendingVideo, notSendingVideo(speakerState: SpeakerState)
-
-    var isSendingVideo: Bool {
-        guard case .sendingVideo = self else { return false }
-        return true
-    }
-
-    var showSpeaker: Bool {
-        guard case .notSendingVideo = self else { return false }
-        return true
-    }
-
-    var isSpeakerEnabled: Bool {
-        guard case .notSendingVideo(let state) = self else { return false }
-        return state.isEnabled
-    }
-
-    var canSpeakerBeToggled: Bool {
-        guard case .notSendingVideo(let state) = self else { return false }
-        return state.canBeToggled
-    }
-}
-
-// This protocol describes the input for a `CallActionsView`.
-protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
-    var canToggleMediaType: Bool { get }
-    var isMuted: Bool { get }
-    var mediaState: MediaState { get }
-    var permissions: CallPermissionsConfiguration { get }
-    var cameraType: CaptureDevice { get }
-    var networkQuality: NetworkQuality { get }
-    var callState: CallStateExtending { get }
-    var videoGridPresentationMode: VideoGridPresentationMode { get }
-    var allowPresentationModeUpdates: Bool { get }
-}
-
-extension CallActionsViewInputType {
-    var appearance: CallActionAppearance {
-        guard CallingConfiguration.config.isAudioCallColorSchemable else {
-            return .dark(blurred: true)
-        }
-
-        switch (isVideoCall, variant) {
-        case (true, _): return .dark(blurred: true)
-        case (false, .light): return .light
-        case (false, .dark): return .dark(blurred: false)
-        }
-    }
-}
-
 // A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
 final class CallActionsView: UIView {
@@ -87,10 +32,10 @@ final class CallActionsView: UIView {
     private let verticalStackView = UIStackView(axis: .vertical)
     private let topStackView = UIStackView(axis: .horizontal)
     private let bottomStackView = UIStackView(axis: .horizontal)
-
-    private var lastInput: CallActionsViewInputType?
+    private var regularConstraints = [NSLayoutConstraint]()
+    private var compactConstraints = [NSLayoutConstraint]()
+    private var input: CallActionsViewInputType?
     private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
-
     private let speakersAllSegmentedView = RoundedSegmentedView()
 
     // Buttons
@@ -116,6 +61,7 @@ final class CallActionsView: UIView {
         setupViews()
         setupAccessibility()
         createConstraints()
+        updateToLayoutSize(layoutSize)
     }
 
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
@@ -131,13 +77,14 @@ final class CallActionsView: UIView {
         bottomStackView.alignment = .top
         bottomStackView.spacing = 32
         verticalStackView.alignment = .center
-        verticalStackView.spacing = 64
+        verticalStackView.spacing = 37
         addSubview(verticalStackView)
         [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
-        [speakersAllSegmentedView, topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
+        [speakersAllSegmentedView, topStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(cameraButtonDisabled)
+        addSubview(bottomStackView)
     }
 
     private func setupSegmentedView() {
@@ -161,16 +108,14 @@ final class CallActionsView: UIView {
     }
 
     private func createConstraints() {
-        [verticalStackView, cameraButtonDisabled, speakersAllSegmentedView].forEach {
-           $0.translatesAutoresizingMaskIntoConstraints = false
+        [verticalStackView, bottomStackView, cameraButtonDisabled, speakersAllSegmentedView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-            topAnchor.constraint(equalTo: verticalStackView.topAnchor),
-            trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-            bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor),
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor),
+            verticalStackView.widthAnchor.constraint(equalToConstant: 288),
+            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             topStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
-            bottomStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             firstBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
             firstBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height),
             secondBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
@@ -182,13 +127,67 @@ final class CallActionsView: UIView {
             speakersAllSegmentedView.widthAnchor.constraint(equalToConstant: 180),
             speakersAllSegmentedView.heightAnchor.constraint(equalToConstant: 25)
         ])
+
+        regularConstraints = [
+            bottomStackView.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 40),
+            bottomStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bottomStackView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
+            bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottomStackView.heightAnchor.constraint(equalTo: endCallButton.heightAnchor)
+        ]
+
+        compactConstraints = [
+            bottomStackView.topAnchor.constraint(equalTo: topStackView.topAnchor),
+            bottomStackView.heightAnchor.constraint(equalTo: endCallButton.heightAnchor),
+            bottomStackView.trailingAnchor.constraint(lessThanOrEqualTo: topStackView.leadingAnchor),
+            bottomStackView.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 40),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
     }
 
+    // MARK: - Orientation
+
+    func updateToLayoutSize(_ layoutSize: LayoutSize, animated: Bool = false) {
+        let canAcceptCall = input?.callState.canAccept ?? false
+        let isCompact = layoutSize == .compact
+
+        let block = {
+            NSLayoutConstraint.deactivate(isCompact ? self.regularConstraints : self.compactConstraints)
+            NSLayoutConstraint.activate(isCompact ? self.compactConstraints : self.regularConstraints)
+        }
+
+        if animated && !ProcessInfo.processInfo.isRunningTests {
+            UIView.animate(easing: .easeInOutSine, duration: 0.1, animations: block)
+        } else {
+            block()
+        }
+
+        bottomStackView.alignment = isCompact ? .trailing : .top
+        secondBottomRowSpacer.isHidden = isCompact
+        firstBottomRowSpacer.isHidden = isCompact || canAcceptCall
+        acceptCallButton.isHidden = isCompact || !canAcceptCall
+    }
+
+    private var layoutSize: LayoutSize {
+        LayoutSize(
+            isConnected: input?.callState.isConnected ?? false,
+            isCompactVerticalSizeClass: traitCollection.verticalSizeClass == .compact
+        )
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
+        updateToLayoutSize(layoutSize)
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
     // MARK: - State Input
 
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
+        self.input = input
         speakersAllSegmentedView.isHidden = !input.allowPresentationModeUpdates
         speakersAllSegmentedView.setSelected(true, forItemAt: input.videoGridPresentationMode.index)
         microphoneButton.isSelected = !input.isMuted
@@ -202,12 +201,10 @@ final class CallActionsView: UIView {
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
         speakerButton.isEnabled = canToggleSpeakerButton(input)
-        acceptCallButton.isHidden = !input.callState.canAccept
-        firstBottomRowSpacer.isHidden = input.callState.canAccept
         [microphoneButton, cameraButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.callState.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.callState.isTerminating
-        lastInput = input
+        updateToLayoutSize(layoutSize, animated: true)
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
@@ -261,4 +258,17 @@ final class CallActionsView: UIView {
         speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }
 
+}
+
+extension CallActionsView {
+    enum LayoutSize {
+        case compact
+        case regular
+    }
+}
+
+extension CallActionsView.LayoutSize {
+    init(isConnected: Bool, isCompactVerticalSizeClass: Bool) {
+        self = (isConnected && isCompactVerticalSizeClass) ? .compact : .regular
+    }
 }

@@ -387,7 +387,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
         thumbnailViewController.updateThumbnailContentSize(.previewSize(for: traitCollection), animated: false)
         updateGridViewAxis()
     }
@@ -406,7 +406,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     private func gridAxis(for traitCollection: UITraitCollection) -> UICollectionView.ScrollDirection {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
-        case (.pad, .regular, true):
+        case (.pad, .regular, true), (.phone, .regular, true):
             return .horizontal
         default:
             return .vertical
