@@ -724,7 +724,7 @@ private extension NSRange {
 
 private extension UIPasteboard {
 
-    func hasText() -> Bool {
+    var hasText: Bool {
         /// Image copied from browser can be both NSString and UIImage
         return hasStrings && !hasImages
     }
