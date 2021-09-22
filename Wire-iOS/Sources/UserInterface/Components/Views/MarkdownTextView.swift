@@ -67,7 +67,7 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
              #selector(UIResponderStandardEditActions.copy(_:)):
 
             let pasteboard = UIPasteboard.general
-            guard shouldAllowPerformAction(isText: pasteboard.hasStrings,
+            guard shouldAllowPerformAction(isText: pasteboard.hasText(),
                                          isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
                                          canFilesBeShared: canFilesBeShared) else { return false }
             fallthrough
@@ -719,4 +719,14 @@ private extension NSRange {
 
         return range
     }
+}
+
+
+private extension UIPasteboard {
+
+    func hasText() -> Bool {
+        /// Image copied from browser can be both NSString and UIImage
+        return hasStrings && !hasImages
+    }
+
 }
