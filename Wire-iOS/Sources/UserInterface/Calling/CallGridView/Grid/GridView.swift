@@ -44,6 +44,7 @@ final class GridView: UICollectionView {
 
     let maxItemsPerPage: Int
     private(set) var currentPage: Int = 0
+    private var firstVisibleIndexPath: IndexPath?
 
     // MARK: - Private Properties
 
@@ -87,6 +88,9 @@ final class GridView: UICollectionView {
         return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
     }
 
+    func saveFirstVisibleIndexPath() {
+        firstVisibleIndexPath = indexPathForItem(at: contentOffset)
+    }
 }
 
 // MARK: - Segment calculation
@@ -189,6 +193,15 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let height = maxHeight / CGFloat(itemsInColumn)
 
         return CGSize(width: width, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        guard
+            let indexPath = firstVisibleIndexPath,
+            let attributes = layoutAttributesForItem(at: indexPath)
+        else { return proposedContentOffset }
+
+        return attributes.frame.origin
     }
 
     func collectionView(
