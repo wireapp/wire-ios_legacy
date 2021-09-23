@@ -397,11 +397,6 @@ final class CallGridViewController: SpinnerCapableViewController {
         coordinator.animate(alongsideTransition: { [updateGridViewAxis] _ in updateGridViewAxis() })
     }
 
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        gridView.saveFirstVisibleIndexPath()
-    }
-
     private func updateGridViewAxis() {
         let newAxis = gridAxis(for: traitCollection)
         guard newAxis != gridView.layoutDirection else { return }

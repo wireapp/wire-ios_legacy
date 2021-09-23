@@ -88,8 +88,14 @@ final class GridView: UICollectionView {
         return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
     }
 
-    func saveFirstVisibleIndexPath() {
-        firstVisibleIndexPath = indexPathForItem(at: contentOffset)
+}
+
+// MARK: - Helpers
+
+private extension GridView {
+    func firstIndexPath(forPage page: Int) -> IndexPath? {
+        let yPosition = CGFloat(page) * bounds.height + 1
+        return indexPathForItem(at: CGPoint(x: 0, y: yPosition))
     }
 }
 
@@ -197,7 +203,7 @@ extension GridView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         guard
-            let indexPath = firstVisibleIndexPath,
+            let indexPath = firstIndexPath(forPage: currentPage),
             let attributes = layoutAttributesForItem(at: indexPath)
         else { return proposedContentOffset }
 
