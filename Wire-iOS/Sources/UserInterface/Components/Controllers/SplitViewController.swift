@@ -336,12 +336,10 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     private func updateLayoutSize(for traitCollection: UITraitCollection) {
 
         switch (isiOSAppOnMac, traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
-        case (true, _, true):
+        case (true, _, true), (false, .regular, false):
             layoutSize = .regularLandscape
         case (false, .regular, true):
             layoutSize = .regularPortrait
-        case (false, .regular, false):
-            layoutSize = .regularLandscape
         default:
             layoutSize = .compact
         }
