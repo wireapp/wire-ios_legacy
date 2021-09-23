@@ -406,7 +406,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     private func gridAxis(for traitCollection: UITraitCollection) -> UICollectionView.ScrollDirection {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
-        case (.pad, .regular, true), (.phone, .regular, true):
+        case (.pad, .regular, true), (.phone, _, true):
             return .horizontal
         default:
             return .vertical
