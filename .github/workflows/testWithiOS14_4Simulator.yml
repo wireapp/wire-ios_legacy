@@ -23,4 +23,3 @@ jobs:
       with:
         name: snapshotResults
         path: SnapshotResults
-        retention-days: 5
