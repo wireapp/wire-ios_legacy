@@ -156,7 +156,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
+            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
