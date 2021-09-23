@@ -539,5 +539,4 @@ class Build
             "Wire-iOS-Release-Candidate"
         end
     end
-
 end
