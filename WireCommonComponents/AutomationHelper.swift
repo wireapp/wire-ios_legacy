@@ -98,6 +98,9 @@ public final class AutomationHelper: NSObject {
     /// Whether the backend environment type should be persisted as a setting.
     public let shouldPersistBackendType: Bool
 
+    /// Whether federation support should be enabled
+    public let enableFederation: Bool
+
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
@@ -108,6 +111,7 @@ public final class AutomationHelper: NSObject {
         disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
+        enableFederation = arguments.hasFlag(AutomationKey.enableFederation)
         
         if let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
             useAppCenterLaunchOption = (value != "0")
@@ -148,6 +152,7 @@ public final class AutomationHelper: NSObject {
         case persistBackendType = "persist-backend-type"
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
         case useAppCenter = "use-app-center"
+        case enableFederation = "enable-federation"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
