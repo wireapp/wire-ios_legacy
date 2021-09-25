@@ -1,6 +1,6 @@
 ////
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
              #selector(UIResponderStandardEditActions.copy(_:)):
 
             let pasteboard = UIPasteboard.general
-            guard shouldAllowPerformAction(isText: pasteboard.hasStrings,
+            guard shouldAllowPerformAction(isText: pasteboard.hasText,
                                          isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
                                          canFilesBeShared: canFilesBeShared) else { return false }
             fallthrough
@@ -719,4 +719,13 @@ private extension NSRange {
 
         return range
     }
+}
+
+private extension UIPasteboard {
+
+    var hasText: Bool {
+        /// Image copied from browser can be both NSString and UIImage
+        return hasStrings && !hasImages
+    }
+
 }
