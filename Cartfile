@@ -4,7 +4,7 @@ github "wireapp/wire-ios-sync-engine" ~> 391.0.1
 github "wireapp/wire-ios-share-engine" ~> 227.0.1
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 13.0.2
-github "wireapp/appcenter-sdk-apple" "3.3.4_xcframework"
+github "wireapp/appcenter-sdk-apple" "4.3.0"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/Down" "v2.3.0_xcframework"
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
