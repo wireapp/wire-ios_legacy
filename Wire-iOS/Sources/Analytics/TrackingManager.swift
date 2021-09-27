@@ -61,10 +61,10 @@ final class TrackingManager: NSObject, TrackingInterface {
     private func updateAppCenterStateIfNeeded(oldState: Bool, _ newState: Bool) {
         switch (oldState, newState) {
         case (true, false):
-            MSAppCenter.setEnabled(true)
-            MSAppCenter.start()
+            AppCenter.enabled = true
+            AppCenter.start()
         case (false, true):
-            MSAppCenter.setEnabled(false)
+            AppCenter.enabled = false
         default:
             return
         }
