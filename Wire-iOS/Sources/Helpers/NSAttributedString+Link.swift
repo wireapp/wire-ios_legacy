@@ -24,13 +24,13 @@ extension NSAttributedString {
         guard range.location + range.length <= string.count else {
             return false
         }
-        
-        enumerateAttribute(.link, in: range, options: []) { (value, linkRange, pointee) in
+
+        enumerateAttribute(.link, in: range, options: []) { (value, linkRange, _) in
             if range == linkRange, value != nil {
                 downRangeFoundLink = true
             }
         }
-        
+
         return downRangeFoundLink
     }
 }
