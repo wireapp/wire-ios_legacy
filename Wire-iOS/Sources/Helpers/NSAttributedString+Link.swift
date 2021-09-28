@@ -21,9 +21,12 @@ import Foundation
 extension NSAttributedString {
     func containsLink(in range: NSRange) -> Bool {
         var downRangeFoundLink = false
+        guard range.location + range.length <= string.count else {
+            return false
+        }
         
         enumerateAttribute(.link, in: range, options: []) { (value, linkRange, pointee) in
-            if range == linkRange {
+            if range == linkRange, value != nil {
                 downRangeFoundLink = true
             }
         }

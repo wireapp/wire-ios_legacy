@@ -20,10 +20,8 @@ import XCTest
 @testable import Wire
 
 final class AttributedStringLinkDetectionTests: XCTestCase {
-    
-    func testThatLinkInMarkDownIsDetected() {
+    func testThatLinkBetweenSymbolsInMarkDownIsDetected() {
         // GIVEN
-        // length = 2
         let plainText = "*#[www.google.de](www.evil.com)**"
 
         let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
@@ -34,5 +32,33 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
         
         // THEN
         XCTAssert(result)
+    }
+
+    func testThatNormalLinkInMarkDownIsDetected() {
+        // GIVEN
+        let plainText = "[www.google.de](www.evil.com)"
+
+        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
+
+        // WHEN
+        let range = NSRange(location: 0, length: 13)
+        let result = sut.containsLink(in: range)
+        
+        // THEN
+        XCTAssert(result)
+    }
+    
+    func testThatNonLinkInMarkDownIsNotDetected() {
+        // GIVEN
+        let plainText = "abcd"
+
+        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
+
+        // WHEN
+        let range = NSRange(location: 0, length: 4)
+        let result = sut.containsLink(in: range)
+        
+        // THEN
+        XCTAssertFalse(result)
     }
 }
