@@ -163,7 +163,7 @@ enum DebugActions {
     }
 
     static func generateTestCrash(_ type: SettingsCellDescriptorType) {
-        MSCrashes.generateTestCrash()
+        Crashes.generateTestCrash()
     }
 
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
