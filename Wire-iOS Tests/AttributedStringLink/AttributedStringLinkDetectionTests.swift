@@ -32,6 +32,9 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // THEN
         XCTAssert(result)
+        
+        // compare with Down checker result
+        XCTAssertFalse(sut.ranges(containing: .link, inRange: range) == [range])
     }
 
     func testThatNormalLinkInMarkDownIsDetected() {
@@ -46,6 +49,9 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // THEN
         XCTAssert(result)
+
+        // compare with Down checker result
+        XCTAssert(sut.ranges(containing: .link, inRange: range) == [range])
     }
 
     func testThatInvalidRangeReturnsFalse() {
