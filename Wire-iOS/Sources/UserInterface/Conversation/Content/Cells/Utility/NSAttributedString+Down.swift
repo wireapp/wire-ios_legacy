@@ -21,7 +21,6 @@ import Down
 
 extension NSAttributedString {
 
-    @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
         let result: NSMutableAttributedString
@@ -38,7 +37,6 @@ extension NSAttributedString {
 
         return result
     }
-
 }
 
 extension NSAttributedString {

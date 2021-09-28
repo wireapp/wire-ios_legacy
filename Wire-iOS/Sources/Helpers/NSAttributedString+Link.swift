@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,13 +18,16 @@
 
 import Foundation
 
-extension NSAttributedString {    
-    func enumerateAttachment(block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        return enumerateAttachment(range: NSRange(location: 0, length: length), block: block)
-    }
-
-    func enumerateAttachment(range: NSRange,
-                             block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        enumerateAttribute(.attachment, in: range, options: [], using: block)
+extension NSAttributedString {
+    func containsLink(in range: NSRange) -> Bool {
+        var downRangeFoundLink = false
+        
+        enumerateAttribute(.link, in: range, options: []) { (value, linkRange, pointee) in
+            if range == linkRange {
+                downRangeFoundLink = true
+            }
+        }
+        
+        return downRangeFoundLink
     }
 }

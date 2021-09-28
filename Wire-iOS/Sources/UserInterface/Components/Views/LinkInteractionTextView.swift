@@ -79,15 +79,11 @@ final class LinkInteractionTextView: UITextView {
         return alert
     }
 
-    private func isMarkdownLink(in range: NSRange) -> Bool {
-        return attributedText.ranges(containing: .link, inRange: range) == [range]
-    }
-
     /// An alert is shown (asking the user if they wish to open the url) if the
     /// link in the specified range is a markdown link.
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
         // only show alert if the link is a markdown link
-        guard isMarkdownLink(in: range) else {
+        guard attributedText.containsLink(in: range) else {
             return false
         }
 
@@ -116,7 +112,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
         if #available(iOS 13.0, *),
             UIApplication.shared.canOpenURL(URL),
             interaction == .presentActions,
-            !isMarkdownLink(in: characterRange) {
+            !attributedText.containsLink(in: characterRange) {
             return true
         }
 
