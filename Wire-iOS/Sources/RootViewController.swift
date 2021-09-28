@@ -146,6 +146,9 @@ final class RootViewController: UIViewController {
 }
 
 extension RootViewController {
+    override func viewDidLoad() {
+        setUpView()
+    }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
@@ -175,6 +178,21 @@ extension RootViewController {
             }
         }
     }
+
+    private func setUpView() {
+        let shieldView = UIView.shieldView()
+        view.addSubview(shieldView)
+
+        shieldView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            shieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            shieldView.topAnchor.constraint(equalTo: view.topAnchor),
+            shieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            shieldView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+
 }
 
 extension RootViewController: SpinnerCapable { }

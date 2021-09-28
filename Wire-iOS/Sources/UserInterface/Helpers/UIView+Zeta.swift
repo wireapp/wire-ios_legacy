@@ -17,6 +17,7 @@
 // 
 
 import UIKit
+import WireCommonComponents
 
 private let WireLastCachedKeyboardHeightKey = "WireLastCachedKeyboardHeightKey"
 
@@ -98,12 +99,33 @@ extension UIView {
 // MARK: - factory methods
 
 extension UIView {
+//    static func shieldView1() -> UIView {
+//        let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
+//
+//        let nibView = loadedObjects.first as! UIView
+//
+//        return nibView
+//    }
+
     static func shieldView() -> UIView {
-        let loadedObjects = UINib(nibName: "LaunchScreen", bundle: nil).instantiate(withOwner: .none, options: .none)
+        let imageView = UIImageView()
+        imageView.image = WireStyleKit.imageOfShieldverified
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+//        verifiedIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+//        verifiedIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+//        verifiedIconView.accessibilityIdentifier = "img.shield"
+        let launchViewContainer = UIView()
+        launchViewContainer.backgroundColor = .red
+        launchViewContainer.addSubview(imageView)
+        launchViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        let nibView = loadedObjects.first as! UIView
-
-        return nibView
+        NSLayoutConstraint.activate([
+            imageView.centerYAnchor.constraint(equalTo: launchViewContainer.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: launchViewContainer.centerXAnchor)
+        ])
+//        wire-logo-shield
+        return launchViewContainer
     }
 }
 
@@ -111,5 +133,30 @@ extension UIVisualEffectView {
     static func blurView() -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: .dark)
         return UIVisualEffectView(effect: blurEffect)
+    }
+}
+
+class CustomSplashScreen: UIView {
+    init() {
+        super.init(frame: .zero)
+        self.setUpView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpView() {
+        let shieldView = UIView.shieldView()
+        self.addSubview(shieldView)
+
+        shieldView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            shieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            shieldView.topAnchor.constraint(equalTo: self.topAnchor),
+            shieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            shieldView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
     }
 }
