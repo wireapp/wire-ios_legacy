@@ -35,7 +35,10 @@ final class LinkInteractionTextViewTests: XCTestCase {
     }
 
     func testThatItOpensNormalLinks() {
-        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+        ["http://www.wire.com",
+         "x-apple-data-detectors:some-detected-data",
+         "tel:12345678",
+         "mailto:bob@example.com"].forEach {
             // GIVEN
             let str = $0
             let url = URL(string: str)!
@@ -43,7 +46,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
             // WHEN
             let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
             // THEN
-            XCTAssertTrue(shouldOpenURL)
+            XCTAssertTrue(shouldOpenURL, "failed SUT: \($0)")
         }
     }
 
@@ -73,7 +76,7 @@ final class LinkInteractionTextViewTests: XCTestCase {
             // WHEN
             let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
             // THEN
-            XCTAssertFalse(shouldOpenURL)
+            XCTAssertFalse(shouldOpenURL, "failed SUT: \($0)")
         }
     }
 
