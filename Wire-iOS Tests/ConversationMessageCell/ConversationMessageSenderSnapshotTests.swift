@@ -56,7 +56,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.teamRole = .partner
 
         // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -70,7 +70,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.teamRole = .partner
 
         // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -81,7 +81,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.isGuestInConversation = true
 
         // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -92,7 +92,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.mockedIsServiceUser = true
 
         // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -105,7 +105,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.mockedIsServiceUser = false
 
         // WHEN
-        sut.configure(with: mockUser, in: oneToOneConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -118,7 +118,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.teamRole = .partner
 
         // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -129,7 +129,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.isGuestInConversation = true
 
         // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -143,7 +143,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.isGuestInConversation = true
 
         // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -154,7 +154,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.mockedIsServiceUser = true
 
         // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
@@ -167,7 +167,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         mockUser.mockedIsServiceUser = false
 
         // WHEN
-        sut.configure(with: mockUser, in: groupConversation)
+        sut.configure(with: mockUser)
 
         // THEN
         verify(matching: sut)
