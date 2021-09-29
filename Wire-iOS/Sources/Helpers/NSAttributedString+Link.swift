@@ -19,22 +19,26 @@
 import Foundation
 
 extension NSAttributedString {
-    func containsMarkdownLink(in range: NSRange) -> Bool {
+    
+    /// Check this attributed string contains link that missing match the string in given range
+    ///  e.g. if the string is `www.google.de`, the link is `http://www.google.de`, it is a matched link and return false
+    ///  e.g. 2 if the string is `www.google.de`, the link is `http://www.evil.com`, it is not a matched link and return true
+    ///
+    /// - Parameter range: the range of the attritubed string to check
+    /// - Returns: return true if contains mismatch link, if the range is invalid, or not link in the given range, return false
+    func containsMismatchLink(in range: NSRange) -> Bool {
         guard range.location + range.length <= string.count else {
             return false
         }
         
-        let linkString: NSString = (string as NSString).substring(with: range) as NSString
+        let linkString: String = (string as NSString).substring(with: range)
 
         var mismatchLinkFound = false
 
         enumerateAttribute(.link, in: range, options: []) { (value, linkRange, _) in
-            print(value)
-            print(value as? NSString == linkString)
-            print(linkString)
             if range == linkRange,
-               let value = value as? NSString,
-                value != linkString {
+               let url = value as? URL,
+               url.urlWithoutScheme != linkString {
                 mismatchLinkFound = true
             }
         }

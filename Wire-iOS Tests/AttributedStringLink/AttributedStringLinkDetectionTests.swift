@@ -28,7 +28,7 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // WHEN
         let range = NSRange(location: 1, length: 13)
-        let result = sut.containsMarkdownLink(in: range)
+        let result = sut.containsMismatchLink(in: range)
 
         // THEN
         XCTAssert(result)
@@ -45,7 +45,7 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // WHEN
         let range = NSRange(location: 0, length: 13)
-        let result = sut.containsMarkdownLink(in: range)
+        let result = sut.containsMismatchLink(in: range)
 
         // THEN
         XCTAssert(result)
@@ -62,12 +62,26 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // WHEN
         let range = NSRange(location: 1, length: 13)
-        let result = sut.containsMarkdownLink(in: range)
+        let result = sut.containsMismatchLink(in: range)
 
         // THEN
         XCTAssertFalse(result)
     }
     
+    func testThatTextMatchesMarkDownLinkIsAllowed() {
+        // GIVEN
+        let plainText = "[www.google.de](www.google.de)"
+
+        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
+
+        // WHEN
+        let range = NSRange(location: 0, length: 13)
+        let result = sut.containsMismatchLink(in: range)
+
+        // THEN
+        XCTAssertFalse(result)
+    }
+
     func testThatURLStringIsNotDetected() {
         // GIVEN
         let plainText = "www.google.de"
@@ -76,7 +90,7 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // WHEN
         let range = NSRange(location: 0, length: 13)
-        let result = sut.containsMarkdownLink(in: range)
+        let result = sut.containsMismatchLink(in: range)
 
         // THEN
         XCTAssertFalse(result)
@@ -90,7 +104,7 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
 
         // WHEN
         let range = NSRange(location: 0, length: 4)
-        let result = sut.containsMarkdownLink(in: range)
+        let result = sut.containsMismatchLink(in: range)
 
         // THEN
         XCTAssertFalse(result)
