@@ -19,18 +19,26 @@
 import Foundation
 
 extension NSAttributedString {
-    func containsLink(in range: NSRange) -> Bool {
-        var downRangeFoundLink = false
+    func containsMarkdownLink(in range: NSRange) -> Bool {
         guard range.location + range.length <= string.count else {
             return false
         }
+        
+        let linkString: NSString = (string as NSString).substring(with: range) as NSString
+
+        var mismatchLinkFound = false
 
         enumerateAttribute(.link, in: range, options: []) { (value, linkRange, _) in
-            if range == linkRange, value != nil {
-                downRangeFoundLink = true
+            print(value)
+            print(value as? NSString == linkString)
+            print(linkString)
+            if range == linkRange,
+               let value = value as? NSString,
+                value != linkString {
+                mismatchLinkFound = true
             }
         }
 
-        return downRangeFoundLink
+        return mismatchLinkFound
     }
 }
