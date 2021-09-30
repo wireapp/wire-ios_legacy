@@ -36,7 +36,7 @@ final class GridView: UICollectionView {
 
     var layoutDirection: UICollectionView.ScrollDirection = .vertical {
         didSet {
-            reloadData()
+            layout.invalidateLayout()
         }
     }
 
@@ -44,6 +44,7 @@ final class GridView: UICollectionView {
 
     let maxItemsPerPage: Int
     private(set) var currentPage: Int = 0
+    private var firstVisibleIndexPath: IndexPath?
 
     // MARK: - Private Properties
 
@@ -87,6 +88,15 @@ final class GridView: UICollectionView {
         return numberOfItems / maxItemsPerPage + (numberOfItems % maxItemsPerPage == 0 ? 0 : 1)
     }
 
+}
+
+// MARK: - Helpers
+
+private extension GridView {
+    func firstIndexPath(forPage page: Int) -> IndexPath? {
+        let yPosition = CGFloat(page) * bounds.height + 1
+        return indexPathForItem(at: CGPoint(x: 0, y: yPosition))
+    }
 }
 
 // MARK: - Segment calculation
@@ -152,7 +162,9 @@ private extension GridView {
         case (.moreThanTwo, .proportionalSplit):
             return numberOfItemsInPage.evenlyCeiled / 2
         case (.moreThanTwo, .middleSplit):
-            return isOddLastRow(indexPath) ? 1 : 2
+            let isOddLastRow = self.isOddLastRow(indexPath)
+            let isLayoutDirectionVertical = layoutDirection == .vertical
+            return isOddLastRow && isLayoutDirectionVertical ? 1 : 2
         case (.twoOrLess, .proportionalSplit):
             return numberOfItemsInPage
         case (.twoOrLess, .middleSplit):
@@ -187,6 +199,15 @@ extension GridView: UICollectionViewDelegateFlowLayout {
         let height = maxHeight / CGFloat(itemsInColumn)
 
         return CGSize(width: width, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        guard
+            let indexPath = firstIndexPath(forPage: currentPage),
+            let attributes = layoutAttributesForItem(at: indexPath)
+        else { return proposedContentOffset }
+
+        return attributes.frame.origin
     }
 
     func collectionView(
