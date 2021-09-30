@@ -20,93 +20,37 @@ import XCTest
 @testable import Wire
 
 final class AttributedStringLinkDetectionTests: XCTestCase {
-    func testThatLinkBetweenSymbolsInMarkDownIsDetected() {
-        // GIVEN
-        let plainText = "*#[www.google.de](www.evil.com)**"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 1, length: 13)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssert(result)
-        
-        // compare with Down checker result
-        XCTAssertFalse(sut.ranges(containing: .link, inRange: range) == [range])
-    }
-
-    func testThatNormalLinkInMarkDownIsDetected() {
-        // GIVEN
-        let plainText = "[www.google.de](www.evil.com)"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 0, length: 13)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssert(result)
-
-        // compare with Down checker result
-        XCTAssert(sut.ranges(containing: .link, inRange: range) == [range])
-    }
-
-    func testThatInvalidRangeReturnsFalse() {
-        // GIVEN
-        let plainText = "[www.google.de](www.evil.com)"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 1, length: 13)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssertFalse(result)
+    private struct TestSet {
+        var plainText: String
+        var range: NSRange
+        var expectedResult: Bool
     }
     
-    func testThatTextMatchesMarkDownLinkIsAllowed() {
-        // GIVEN
-        let plainText = "[www.google.de](www.google.de)"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 0, length: 13)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssertFalse(result)
+    func testThatContainsMismatchLinkForDifferentCases() {
+        let testSets = [
+            TestSet(plainText: "*#[www.google.de](www.evil.com)**", range: NSRange(location: 1, length: 13), expectedResult: true),
+            TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 0, length: 13), expectedResult: true),
+            ///invalid range test
+            TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 1, length: 13), expectedResult: false),
+            TestSet(plainText: "[www.google.de](www.google.de)", range: NSRange(location: 0, length: 13), expectedResult: false),
+            TestSet(plainText: "[http://www.google.de](http://www.google.de)", range: NSRange(location: 0, length: 20), expectedResult: false),
+            TestSet(plainText: "[www.google.de](http://www.google.de)", range: NSRange(location: 0, length: 13), expectedResult: false),
+            TestSet(plainText: "[http://www.google.de](http://www.google.de)", range: NSRange(location: 0, length: 20), expectedResult: false),
+            TestSet(plainText: "www.google.de", range: NSRange(location: 0, length: 13), expectedResult: false),
+            TestSet(plainText: "abcd", range: NSRange(location: 0, length: 4), expectedResult: false)
+        ]
+        
+        testSets.forEach(){ testSet in
+            // GIVEN
+            let sut = NSMutableAttributedString.markdown(from: testSet.plainText, style: NSAttributedString.style)
+            
+            // WHEN
+            let result = sut.containsMismatchLink(in: testSet.range)
+            
+            // THEN
+            XCTAssertEqual(result, testSet.expectedResult, "failed SUT: \(testSet)")
+            
+        }
     }
-
-    func testThatURLStringIsNotDetected() {
-        // GIVEN
-        let plainText = "www.google.de"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 0, length: 13)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssertFalse(result)
-    }
-
-    func testThatNonLinkInMarkDownIsNotDetected() {
-        // GIVEN
-        let plainText = "abcd"
-
-        let sut = NSMutableAttributedString.markdown(from: plainText, style: NSAttributedString.style)
-
-        // WHEN
-        let range = NSRange(location: 0, length: 4)
-        let result = sut.containsMismatchLink(in: range)
-
-        // THEN
-        XCTAssertFalse(result)
-    }
+    
 }

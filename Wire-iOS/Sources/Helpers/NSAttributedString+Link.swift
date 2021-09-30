@@ -38,7 +38,8 @@ extension NSAttributedString {
         enumerateAttribute(.link, in: range, options: []) { (value, linkRange, _) in
             if range == linkRange,
                let url = value as? URL,
-               url.urlWithoutScheme != linkString {
+               url.urlWithoutScheme != linkString,
+               url.absoluteString != linkString {
                 mismatchLinkFound = true
             }
         }
