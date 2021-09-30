@@ -28,9 +28,11 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
     
     func testThatContainsMismatchLinkForDifferentCases() {
         let testSets = [
+            //MARK: true cases
             TestSet(plainText: "*#[www.google.de](www.evil.com)**", range: NSRange(location: 1, length: 13), expectedResult: true),
             TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 0, length: 13), expectedResult: true),
-            ///invalid range test
+            //MARK: false cases
+            ///invalid range
             TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 1, length: 13), expectedResult: false),
             TestSet(plainText: "[www.google.de](www.google.de)", range: NSRange(location: 0, length: 13), expectedResult: false),
             TestSet(plainText: "[http://www.google.de](http://www.google.de)", range: NSRange(location: 0, length: 20), expectedResult: false),
