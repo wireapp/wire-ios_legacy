@@ -88,7 +88,7 @@ final class LinkInteractionTextView: UITextView {
         }
 
         ZClientViewController.shared?.present(confirmationAlert(for: url), animated: true)
-        
+
         return true
     }
 }

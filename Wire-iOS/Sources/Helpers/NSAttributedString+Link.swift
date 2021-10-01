@@ -19,7 +19,7 @@
 import Foundation
 
 extension NSAttributedString {
-    
+
     /// Check this attributed string contains link that missing match the string in given range
     ///  e.g. if the string is `www.google.de`, the link is `http://www.google.de`, it is a matched link and return false
     ///  e.g. 2 if the string is `www.google.de`, the link is `http://www.evil.com`, it is not a matched link and return true
@@ -30,7 +30,7 @@ extension NSAttributedString {
         guard range.location + range.length <= string.count else {
             return false
         }
-        
+
         let linkString: String = (string as NSString).substring(with: range)
 
         var mismatchLinkFound = false

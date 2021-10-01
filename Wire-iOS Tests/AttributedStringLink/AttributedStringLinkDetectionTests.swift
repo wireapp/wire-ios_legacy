@@ -25,14 +25,14 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
         var range: NSRange
         var expectedResult: Bool
     }
-    
+
     func testThatContainsMismatchLinkForDifferentCases() {
         let testSets = [
-            //MARK: true cases
+            // MARK: true cases
             TestSet(plainText: "*#[www.google.de](www.evil.com)**", range: NSRange(location: 1, length: 13), expectedResult: true),
             TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 0, length: 13), expectedResult: true),
-            //MARK: false cases
-            ///invalid range
+            // MARK: false cases
+            /// invalid range
             TestSet(plainText: "[www.google.de](www.evil.com)", range: NSRange(location: 1, length: 13), expectedResult: false),
             TestSet(plainText: "[www.google.de](www.google.de)", range: NSRange(location: 0, length: 13), expectedResult: false),
             TestSet(plainText: "[http://www.google.de](http://www.google.de)", range: NSRange(location: 0, length: 20), expectedResult: false),
@@ -41,18 +41,18 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
             TestSet(plainText: "www.google.de", range: NSRange(location: 0, length: 13), expectedResult: false),
             TestSet(plainText: "abcd", range: NSRange(location: 0, length: 4), expectedResult: false)
         ]
-        
-        testSets.forEach(){ testSet in
+
+        testSets.forEach { testSet in
             // GIVEN
             let sut = NSMutableAttributedString.markdown(from: testSet.plainText, style: NSAttributedString.style)
-            
+
             // WHEN
             let result = sut.containsMismatchLink(in: testSet.range)
-            
+
             // THEN
             XCTAssertEqual(result, testSet.expectedResult, "failed SUT: \(testSet)")
-            
+
         }
     }
-    
+
 }
