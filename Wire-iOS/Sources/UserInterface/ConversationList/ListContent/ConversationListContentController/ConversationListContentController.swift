@@ -93,6 +93,12 @@ final class ConversationListContentController: UICollectionViewController, Popov
         }
     }
 
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        becomeFirstResponder()
+//    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -100,6 +106,10 @@ final class ConversationListContentController: UICollectionViewController, Popov
             NotificationCenter.default.removeObserver(token)
             self.token = nil
         }
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
     @objc
@@ -488,5 +498,28 @@ extension ConversationListContentController: ConversationListCellDelegate {
 
         startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()
+    }
+}
+
+extension ConversationListContentController: GlobalKeyboardShortcutRespondable {
+    func gotoBottom(_: Any?) {
+        print(#file)
+        scrollToBottom()
+    }
+
+    func scrollToBottom() {
+        collectionView.scrollToItem(at: collectionView.lastIndexPath, at: .centeredVertically, animated: true)
+    }
+    
+}
+
+extension UICollectionView {
+    
+    var lastIndexPath: IndexPath {
+        
+        let lastSectionIndex = max(0, numberOfSections - 1)
+        let lastRowIndex = max(0, numberOfItems(inSection: lastSectionIndex) - 1)
+        
+        return IndexPath(row: lastRowIndex, section: lastSectionIndex)
     }
 }

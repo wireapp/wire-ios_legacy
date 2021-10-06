@@ -335,6 +335,7 @@ final class ConversationListViewController: UIViewController {
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         topBarViewController.scrollViewDidScroll(scrollView: scrollView)
+        listContentController.becomeFirstResponder()
     }
 
     /// Scroll to the current selection
