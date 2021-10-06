@@ -112,10 +112,6 @@ final class ConversationRootViewController: UIViewController {
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 

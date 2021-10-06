@@ -194,11 +194,6 @@ final class ZClientViewController: UIViewController {
         return presentedViewController?.shouldAutorotate ?? true
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-
     // MARK: Status bar
     private var child: UIViewController? {
         // for iOS 13, only child of this VC can be use for childForStatusBar
