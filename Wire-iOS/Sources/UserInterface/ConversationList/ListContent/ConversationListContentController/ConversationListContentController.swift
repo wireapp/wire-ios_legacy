@@ -93,12 +93,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
         }
     }
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        becomeFirstResponder()
-//    }
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 

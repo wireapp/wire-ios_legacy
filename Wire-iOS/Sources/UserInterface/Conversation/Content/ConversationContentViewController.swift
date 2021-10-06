@@ -184,8 +184,6 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
         UIAccessibility.post(notification: .screenChanged, argument: nil)
         setNeedsStatusBarAppearanceUpdate()
-
-        tableView.becomeFirstResponder()
     }
 
     override func viewWillAppear(_ animated: Bool) {
