@@ -128,6 +128,10 @@ final class ConversationViewController: UIViewController {
         startCallController = ConversationCallController(conversation: conversation, target: self)
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

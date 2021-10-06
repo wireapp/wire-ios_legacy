@@ -143,6 +143,10 @@ final class RootViewController: UIViewController {
             completion?()
         }
     }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
 }
 
 extension RootViewController {

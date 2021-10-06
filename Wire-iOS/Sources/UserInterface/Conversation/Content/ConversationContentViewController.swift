@@ -131,6 +131,10 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         heightCollapsingConstraint.isActive = true
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

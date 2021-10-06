@@ -123,6 +123,10 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
     }
 
     // MARK: - override
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
