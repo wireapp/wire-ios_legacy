@@ -142,7 +142,7 @@ final class UpsideDownTableView: UITableView {
             return scrollPosition
         }
     }
-    
+
     override var canBecomeFirstResponder: Bool {
         return true
     }

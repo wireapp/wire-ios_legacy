@@ -510,16 +510,16 @@ extension ConversationListContentController: GlobalKeyboardShortcutRespondable {
     func scrollToBottom() {
         collectionView.scrollToItem(at: collectionView.lastIndexPath, at: .centeredVertically, animated: true)
     }
-    
+
 }
 
 extension UICollectionView {
-    
+
     var lastIndexPath: IndexPath {
-        
+
         let lastSectionIndex = max(0, numberOfSections - 1)
         let lastRowIndex = max(0, numberOfItems(inSection: lastSectionIndex) - 1)
-        
+
         return IndexPath(row: lastRowIndex, section: lastSectionIndex)
     }
 }

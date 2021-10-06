@@ -108,7 +108,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         super.loadView()
 
@@ -390,7 +390,6 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.endUpdates()
     }
 }
-
 
 // MARK: - TableView
 
