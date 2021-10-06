@@ -185,7 +185,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         UIAccessibility.post(notification: .screenChanged, argument: nil)
         setNeedsStatusBarAppearanceUpdate()
 
-        becomeFirstResponder()
+        tableView.becomeFirstResponder()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -454,18 +454,4 @@ private extension UIAlertController {
         topmostViewController?.present(alertController, animated: true)
     }
 
-}
-
-extension ConversationContentViewController: GlobalKeyboardShortcutRespondable {
-    func gotoBottom(_: Any?) {
-        tableView.scrollToBottom(animated: true)
-    }
-
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(gotoBottom) {
-            return true
-        }
-        
-        return super.canPerformAction(action, withSender: sender)
-    }
 }
