@@ -335,6 +335,9 @@ final class ConversationListViewController: UIViewController {
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         topBarViewController.scrollViewDidScroll(scrollView: scrollView)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         listContentController.becomeFirstResponder()
     }
 
