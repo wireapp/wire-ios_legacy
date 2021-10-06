@@ -228,7 +228,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             action: #selector(GlobalKeyboardShortcutRespondable.gotoBottom)
         )
 
-        gotoBottomItemCommand.title = "Go to bottom".localized
+        gotoBottomItemCommand.title = "Scroll to bottom".localized
 
         builder.replaceChildren(ofMenu: .standardEdit) { children in
             return [ gotoBottomItemCommand ] + children
