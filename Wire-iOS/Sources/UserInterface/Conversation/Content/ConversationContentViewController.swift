@@ -108,7 +108,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func loadView() {
         super.loadView()
 
@@ -389,8 +389,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.reloadRows(at: visibleRows, with: .none)
         tableView.endUpdates()
     }
-
 }
+
 
 // MARK: - TableView
 
@@ -454,4 +454,18 @@ private extension UIAlertController {
         topmostViewController?.present(alertController, animated: true)
     }
 
+}
+
+extension ConversationContentViewController: GlobalKeyboardShortcutRespondable {
+    func gotoBottom(_: Any?) {
+        tableView.scrollToBottom(animated: true)
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(gotoBottom) {
+            return true
+        }
+        
+        return super.canPerformAction(action, withSender: sender)
+    }
 }

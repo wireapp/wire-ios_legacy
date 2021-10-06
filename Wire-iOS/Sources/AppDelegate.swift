@@ -217,7 +217,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard appRootRouter == nil else { return }
         createAppRootRouterAndInitialiazeOperations(launchOptions: launchOptions)
     }
+    
+    // MARK: Menu builder and global keyboard shortcuts
+    
+    @available(iOS 13.0, *)
+    override func buildMenu(with builder: UIMenuBuilder) {
+        let gotoBottomItemCommand = UIKeyCommand(
+            input: UIKeyCommand.inputDownArrow,
+            modifierFlags: .command,
+            action: #selector(GlobalKeyboardShortcutRespondable.gotoBottom)
+        )
+        
+        gotoBottomItemCommand.title = "Go to bottom".localized
+        
+        
+        builder.replaceChildren(ofMenu: .standardEdit) { children in
+            return [ gotoBottomItemCommand ] + children
+        }
+    }
+
 }
+
+@objc
+protocol GlobalKeyboardShortcutRespondable: AnyObject {
+    /// Mapped to Command-Down
+    @objc
+    optional func gotoBottom(_: Any?)
+    
+}
+
 
 // MARK: - Private Helpers
 private extension AppDelegate {
@@ -283,3 +311,4 @@ private extension AppDelegate {
         appRootRouter?.start(launchOptions: launchOptions)
     }
 }
+
