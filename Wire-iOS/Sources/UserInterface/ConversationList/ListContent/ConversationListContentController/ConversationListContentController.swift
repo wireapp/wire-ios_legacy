@@ -257,6 +257,10 @@ final class ConversationListContentController: UICollectionViewController, Popov
         contentDelegate?.conversationListDidScroll(self)
     }
 
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        becomeFirstResponder()
+    }
+
     override func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
         selectionFeedbackGenerator.selectionChanged()
@@ -497,7 +501,6 @@ extension ConversationListContentController: ConversationListCellDelegate {
 
 extension ConversationListContentController: GlobalKeyboardShortcutRespondable {
     func gotoBottom(_: Any?) {
-        print(#file)
         scrollToBottom()
     }
 

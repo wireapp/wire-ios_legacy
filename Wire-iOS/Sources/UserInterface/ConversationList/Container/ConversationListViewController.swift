@@ -337,10 +337,6 @@ final class ConversationListViewController: UIViewController {
         topBarViewController.scrollViewDidScroll(scrollView: scrollView)
     }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        listContentController.becomeFirstResponder()
-    }
-
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not
