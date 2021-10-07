@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "与其他域连接";
 
 "peoplepicker.group.title.singular" = "添加参与者";
 "peoplepicker.group.title.plural" = "添加参与者(%d)";
@@ -335,8 +335,8 @@
 "conversation.alert.message_deleted" = "消息已删除。";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.guests_present" = "**访客**在对话中";
+"conversation.banner.services_present" = "**服务**已启动";
 "conversation.banner.externals_present" = "**Externals** are present";
 "conversation.banner.guests_services_present" = "**Guests** and **services** are present";
 "conversation.banner.externals_services_present" = "**Externals** and **services** are present";
