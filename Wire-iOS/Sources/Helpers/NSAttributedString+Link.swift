@@ -26,7 +26,7 @@ extension NSAttributedString {
     ///
     /// - Parameter range: the range of the attributed string to check
     /// - Returns: return true if contains mismatch link, if the range is invalid, or not link in the given range, return false
-    func containsMismatchLink(in range: NSRange) -> Bool {
+    func containsMismatchedLink(in range: NSRange) -> Bool {
         guard range.location + range.length <= string.count else {
             return false
         }
