@@ -30,10 +30,6 @@ final class ConversationViewController: UIViewController {
         ]
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     @objc
     func gotoBottom(_: Any?) {
         contentViewController.tableView.scrollToBottom(animated: true)
