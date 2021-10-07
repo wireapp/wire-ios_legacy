@@ -24,6 +24,23 @@ final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
     private let visibleMessage: ZMConversationMessage?
 
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized),
+        ]
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+
+    @objc
+    func gotoBottom(_: Any?) {
+        print(#function)
+        contentViewController.tableView.scrollToBottom(animated: true)
+    }
+
     var conversation: ZMConversation {
         didSet {
             if oldValue == conversation {

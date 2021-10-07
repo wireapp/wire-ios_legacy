@@ -143,13 +143,6 @@ final class UpsideDownTableView: UITableView {
         }
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-}
-
-extension UpsideDownTableView: GlobalKeyboardShortcutRespondable {
     func gotoBottom(_: Any?) {
         scrollToBottom(animated: true)
     }
