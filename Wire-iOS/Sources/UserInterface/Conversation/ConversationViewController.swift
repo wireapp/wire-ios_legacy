@@ -26,14 +26,13 @@ final class ConversationViewController: UIViewController {
 
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized)
         ]
     }
-    
+
     override var canBecomeFirstResponder: Bool {
         return true
     }
-
 
     @objc
     func gotoBottom(_: Any?) {
