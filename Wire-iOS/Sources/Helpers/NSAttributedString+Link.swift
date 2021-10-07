@@ -24,7 +24,7 @@ extension NSAttributedString {
     ///  e.g. if the string is `www.google.de`, the link is `http://www.google.de`, it is a matched link and return false
     ///  e.g. 2 if the string is `www.google.de`, the link is `http://www.evil.com`, it is not a matched link and return true
     ///
-    /// - Parameter range: the range of the attritubed string to check
+    /// - Parameter range: the range of the attributed string to check
     /// - Returns: return true if contains mismatch link, if the range is invalid, or not link in the given range, return false
     func containsMismatchLink(in range: NSRange) -> Bool {
         guard range.location + range.length <= string.count else {
