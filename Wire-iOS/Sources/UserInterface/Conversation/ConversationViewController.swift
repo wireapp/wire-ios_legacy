@@ -36,7 +36,6 @@ final class ConversationViewController: UIViewController {
 
     @objc
     func gotoBottom(_: Any?) {
-        print(#function)
         contentViewController.tableView.scrollToBottom(animated: true)
     }
 
