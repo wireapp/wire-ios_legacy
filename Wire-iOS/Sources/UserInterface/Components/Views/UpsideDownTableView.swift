@@ -142,8 +142,4 @@ final class UpsideDownTableView: UITableView {
             return scrollPosition
         }
     }
-
-    func gotoBottom(_: Any?) {
-        scrollToBottom(animated: true)
-    }
 }
