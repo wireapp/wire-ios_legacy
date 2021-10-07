@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "連絡人";
 "peoplepicker.header.contacts_personal" = "聯絡人";
 "peoplepicker.header.directory" = "加為連絡人";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "連接其他網域";
 
 "peoplepicker.group.title.singular" = "加入參與者";
 "peoplepicker.group.title.plural" = "加入參與者（%d）";
@@ -693,7 +693,7 @@
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
 "call.grid.hints.go_back" = "Double tap to go back";
-"call.grid.hints.zoom" = "Pinch to zoom";
+"call.grid.hints.zoom" = "捏合縮放";
 
 "call.video.paused" = "影像已暫停";
 "call.video.too_many.alert.title" = "已超過視像通話限定人數";
@@ -881,7 +881,7 @@
 "profile.details.guest" = "訪客";
 "profile.details.group_admin" = "群組管理員";
 "profile.details.partner" = "外部合作者";
-"profile.details.federated" = "Federated";
+"profile.details.federated" = "站台聯邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "使用者名稱";
@@ -1209,7 +1209,7 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
 "self.settings.advanced.debugging_tools.title" = "除錯工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一個未讀對話";
-"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "顯示我的用戶 ID";
 "self.settings.advanced.debugging_tools.enter_debug_command.title" = "輸入除錯指令";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助於Wire診斷通話問題，並改善整個應用體驗。";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
@@ -1651,14 +1651,14 @@
 "feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Feature flag - Conference calling
-"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.title" = "企業方案";
 "feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
 "feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
 
 "feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
 "feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
 "feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
-"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "立即升級";
 
 "feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
@@ -1693,7 +1693,7 @@
 "invite_banner.invite_button_title" = "邀請更多的人";
 
 // Collections
-"collections.section.images.title" = "Images";
+"collections.section.images.title" = "圖像";
 "collections.section.files.title" = "檔案";
 "collections.section.videos.title" = "影片";
 "collections.section.links.title" = "連結：";
