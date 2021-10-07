@@ -29,10 +29,6 @@ extension ConversationContentViewController: UIScrollViewDelegate {
         dataSource.didScroll(tableView: scrollView as! UITableView)
     }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        tableView.becomeFirstResponder()
-    }
-
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         dataSource.scrollViewDidEndDecelerating(scrollView)
     }

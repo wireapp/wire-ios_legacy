@@ -102,10 +102,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
         }
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     @objc
     func showErrorAlertForConversationRequest() {
         typealias ConversationError = L10n.Localizable.Error.Conversation
@@ -255,10 +251,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         contentDelegate?.conversationListDidScroll(self)
-    }
-
-    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        becomeFirstResponder()
     }
 
     override func collectionView(_ collectionView: UICollectionView,

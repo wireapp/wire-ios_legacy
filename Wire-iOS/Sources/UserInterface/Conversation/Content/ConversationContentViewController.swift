@@ -131,10 +131,6 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         heightCollapsingConstraint.isActive = true
     }
 
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -154,7 +150,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertToSendMessage), name: ZMConversation.failedToSendMessageNotificationName, object: .none)        
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertToSendMessage), name: ZMConversation.failedToSendMessageNotificationName, object: .none)
     }
 
     @objc
