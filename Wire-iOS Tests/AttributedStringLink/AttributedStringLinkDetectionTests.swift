@@ -47,7 +47,7 @@ final class AttributedStringLinkDetectionTests: XCTestCase {
             let sut = NSMutableAttributedString.markdown(from: testSet.plainText, style: NSAttributedString.style)
 
             // WHEN
-            let result = sut.containsMismatchLink(in: testSet.range)
+            let result = sut.containsMismatchedLink(in: testSet.range)
 
             // THEN
             XCTAssertEqual(result, testSet.expectedResult, "failed SUT: \(testSet)")
