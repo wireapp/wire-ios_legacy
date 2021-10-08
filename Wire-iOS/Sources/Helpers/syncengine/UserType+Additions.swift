@@ -32,13 +32,4 @@ extension UserType {
         #endif
     }
 
-    /// Blocks user if not already blocked and vice versa.
-    func toggleBlocked() {
-        if isBlocked {
-            accept()
-        } else {
-            block()
-        }
-    }
-
 }

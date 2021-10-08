@@ -1689,8 +1689,14 @@ internal enum L10n {
         }
       }
       internal enum Connection {
+        /// You cannot connect to because you reached the connection limit
+        internal static let connectionLimitReached = L10n.tr("Localizable", "error.connection.connection_limit_reached")
+        /// Something went wrong, please try again
+        internal static let genericError = L10n.tr("Localizable", "error.connection.generic_error")
         /// You cannot connect to this user due to legal hold.
         internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.connection.missing_legalhold_consent")
+        /// Error
+        internal static let title = L10n.tr("Localizable", "error.connection.title")
       }
       internal enum Conversation {
         /// Adding the participant failed
@@ -2128,6 +2134,10 @@ internal enum L10n {
           internal static let settings = L10n.tr("Localizable", "keyboard_photos_access.denied.keyboard.settings")
         }
       }
+    }
+    internal enum Keyboardshortcut {
+      /// Scroll to bottom
+      internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
     }
     internal enum Landing {
       /// Wire. Add your Account.

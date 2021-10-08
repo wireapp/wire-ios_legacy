@@ -50,22 +50,30 @@ final class IncomingConnectionViewController: UIViewController {
         connectionView = IncomingConnectionView(user: user)
         connectionView.onAccept = { [weak self] user in
             guard let weakSelf = self else { return }
-            weakSelf.userSession?.perform {
-                (weakSelf.user as? ZMUser)?.accept()
+
+            weakSelf.user.accept { error in
+                if let error = error as? LocalizedError {
+                    weakSelf.presentLocalizedErrorAlert(error)
+                } else {
+                    weakSelf.onAction?(.accept)
+                }
             }
-            weakSelf.onAction?(.accept)
         }
         connectionView.onIgnore = { [weak self] user in
             guard let weakSelf = self else { return }
-            weakSelf.userSession?.perform {
-                (weakSelf.user as? ZMUser)?.ignore()
-                weakSelf.onAction?(.ignore)
+
+            weakSelf.user.ignore { error in
+                if let error = error as? LocalizedError {
+                    weakSelf.presentLocalizedErrorAlert(error)
+                } else {
+                    weakSelf.onAction?(.ignore)
+                }
             }
         }
 
         view = connectionView
     }
-
+    
 }
 
 final class UserConnectionViewController: UIViewController {
