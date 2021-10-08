@@ -167,7 +167,7 @@ extension ConversationViewController {
     }
 
     @objc
-    private func onCollectionButtonPressed(_ sender: AnyObject!) {
+    func onCollectionButtonPressed(_ sender: AnyObject!) {
         if self.collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
