@@ -496,4 +496,44 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
             self.conversation.draftMessage = message
         }
     }
+    
+    var collectionsBarButtonItem: UIBarButtonItem {
+        let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
+        let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
+        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
+        button.accessibilityIdentifier = "collection"
+        button.accessibilityLabel = "conversation.action.search".localized
+
+        if showingSearchResults {
+            button.tintColor = UIColor.accent()
+        }
+
+        return button
+    }
+
+    @objc
+    fileprivate func onCollectionButtonPressed(_ sender: AnyObject!) {
+        if self.collectionController == .none {
+            let collections = CollectionsViewController(conversation: conversation)
+            collections.delegate = self
+
+            collections.onDismiss = { [weak self] _ in
+                guard let weakSelf = self else {
+                    return
+                }
+
+                weakSelf.collectionController?.dismiss(animated: true)
+            }
+            collectionController = collections
+        } else {
+            collectionController?.refetchCollection()
+        }
+
+        collectionController?.shouldTrackOnNextOpen = true
+
+        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
+
+        ZClientViewController.shared?.present(navigationController, animated: true)
+    }
+
 }
