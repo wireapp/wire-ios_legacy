@@ -27,7 +27,8 @@ final class ConversationViewController: UIViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized),
-            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: "keyboardshortcut.searchInConversation".localized)
+            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: "keyboardshortcut.searchInConversation".localized),
+            UIKeyCommand(input: "i", modifierFlags: [.command], action: #selector(titleViewTapped), discoverabilityTitle: "keyboardshortcut.conversationDetail".localized)
         ]///TODO: cmd+ i details, v call, voice call
     }
 
@@ -326,12 +327,16 @@ final class ConversationViewController: UIViewController {
         view.setNeedsLayout()
     }
 
+    @objc private func titleViewTapped() {
+        if let superview = titleView.superview,
+            let participantsController = participantsController {
+            presentParticipantsViewController(participantsController, from: superview)
+        }
+    }
+    
     private func setupNavigatiomItem() {
         titleView.tapHandler = { [weak self] _ in
-            if let superview = self?.titleView.superview,
-                let participantsController = self?.participantsController {
-                self?.presentParticipantsViewController(participantsController, from: superview)
-            }
+            self?.titleViewTapped()
         }
         titleView.configure()
 
