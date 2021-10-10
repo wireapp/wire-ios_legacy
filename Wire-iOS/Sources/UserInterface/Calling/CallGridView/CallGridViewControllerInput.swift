@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireSyncEngine
 
 protocol CallGridViewControllerInput {
@@ -29,27 +28,36 @@ protocol CallGridViewControllerInput {
     var presentationMode: VideoGridPresentationMode { get }
     var callHasTwoParticipants: Bool { get }
 
+    func isEqualTo(_ other: CallGridViewControllerInput) -> Bool
 }
 
-extension CallGridViewControllerInput {
-
-    var allStreamIds: Set<AVSClient> {
-        let streamIds = (streams + [floatingStream]).compactMap { $0?.streamId }
-        return Set(streamIds)
+extension CallGridViewControllerInput where Self: Equatable {
+    func isEqualTo(_ other: CallGridViewControllerInput) -> Bool {
+        guard let otherState = other as? Self else { return false }
+        return self == otherState
     }
-
-    // Workaround to make the protocol equatable, it might be possible to conform CallGridViewControllerInput
-    // to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
-    // the `CallGridViewController` generic to work around the `Self` requirement of
-    // `Equatable` which we want to avoid.
-    func isEqual(toConfiguration other: CallGridViewControllerInput) -> Bool {
-        return floatingStream == other.floatingStream &&
-            streams == other.streams &&
-            networkQuality == other.networkQuality &&
-            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
-            presentationMode == other.presentationMode &&
-            videoState == other.videoState &&
-            callHasTwoParticipants == other.callHasTwoParticipants
+    
+    func asEquatable() -> AnyCallGridViewControllerInput {
+        return AnyCallGridViewControllerInput(self)
     }
+}
 
+struct AnyCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
+    init(_ state: CallGridViewControllerInput) {
+        self.value = state
+    }
+    
+    var floatingStream: Stream? { return value.floatingStream }
+    var streams: [Stream] { return value.streams }
+    var videoState: VideoState { return value.videoState }
+    var networkQuality: NetworkQuality { return value.networkQuality }
+    var shouldShowActiveSpeakerFrame: Bool { return value.shouldShowActiveSpeakerFrame }
+    var presentationMode: VideoGridPresentationMode { return value.presentationMode }
+    var callHasTwoParticipants: Bool { return value.callHasTwoParticipants }
+
+    private let value: CallGridViewControllerInput
+
+    static func ==(lhs: AnyCallGridViewControllerInput, rhs: AnyCallGridViewControllerInput) -> Bool {
+            return lhs.value.isEqualTo(rhs.value)
+        }
 }
