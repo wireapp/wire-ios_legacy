@@ -37,6 +37,19 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
 // `Equatable` which we want to avoid.
 extension CallInfoViewControllerInput {
     func isEqual(toConfiguration other: CallInfoViewControllerInput) -> Bool {
+        guard videoGridPresentationMode == other.videoGridPresentationMode &&
+                allowPresentationModeUpdates == other.allowPresentationModeUpdates else {
+            return false
+        }
+        
+        guard networkQuality == other.networkQuality &&
+                userEnabledCBR == other.userEnabledCBR
+        else {
+            return false
+        }
+        
+        guard callState == other.callState else { return false }
+        
         return accessoryType == other.accessoryType &&
             degradationState == other.degradationState &&
             videoPlaceholderState == other.videoPlaceholderState &&
@@ -50,12 +63,7 @@ extension CallInfoViewControllerInput {
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
             title == other.title &&
-            cameraType == other.cameraType &&
-            networkQuality == other.networkQuality &&
-            userEnabledCBR == other.userEnabledCBR &&
-            callState.isEqual(toCallState: other.callState) &&
-            videoGridPresentationMode == other.videoGridPresentationMode &&
-            allowPresentationModeUpdates == other.allowPresentationModeUpdates
+            cameraType == other.cameraType
     }
 }
 

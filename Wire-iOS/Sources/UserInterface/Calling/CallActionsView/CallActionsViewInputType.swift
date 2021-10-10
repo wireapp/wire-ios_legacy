@@ -27,7 +27,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var permissions: CallPermissionsConfiguration { get }
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
-    var callState: CallStateExtending { get }
+    var callState: AnyCallStateExtending { get }
     var videoGridPresentationMode: VideoGridPresentationMode { get }
     var allowPresentationModeUpdates: Bool { get }
 }

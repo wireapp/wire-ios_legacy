@@ -112,7 +112,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
-    let callState: CallStateExtending
+    let callState: AnyCallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
     let variant: ColorSchemeVariant
@@ -143,7 +143,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
         networkQuality = voiceChannel.networkQuality
-        callState = voiceChannel.state
+        callState = voiceChannel.state.asEquatable()
         videoGridPresentationMode = voiceChannel.videoGridPresentationMode
         allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
         variant = ColorScheme.default.variant

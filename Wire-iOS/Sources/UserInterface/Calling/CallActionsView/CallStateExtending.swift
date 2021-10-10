@@ -19,20 +19,44 @@
 import WireSyncEngine
 
 protocol CallStateExtending {
+    
     var isConnected: Bool { get }
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
+    
+    func isEqualTo(_ other: CallStateExtending) -> Bool
 }
 
-extension CallStateExtending {
-    func isEqual(toCallState other: CallStateExtending) -> Bool {
-        return isConnected == other.isConnected &&
-            isTerminating == other.isTerminating &&
-            canAccept == other.canAccept
+extension CallStateExtending where Self: Equatable {
+    func isEqualTo(_ other: CallStateExtending) -> Bool {
+        guard let otherState = other as? Self else { return false }
+        return self == otherState
+    }
+    
+    func asEquatable() -> AnyCallStateExtending {
+        return AnyCallStateExtending(self)
     }
 }
 
+struct AnyCallStateExtending: CallStateExtending, Equatable {
+    init(_ state: CallStateExtending) {
+        self.value = state
+    }
+    
+        var isConnected: Bool { return value.isConnected }
+        var isTerminating: Bool { return value.isTerminating }
+        var canAccept: Bool { return value.canAccept }
+
+    
+    private let value: CallStateExtending
+
+    static func ==(lhs: AnyCallStateExtending, rhs: AnyCallStateExtending) -> Bool {
+            return lhs.value.isEqualTo(rhs.value)
+        }
+}
+
 extension CallState: CallStateExtending {
+    
     var isConnected: Bool {
         switch self {
         case .established, .establishedDataChannel: return true
