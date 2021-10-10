@@ -36,28 +36,13 @@ extension CallGridViewControllerInput where Self: Equatable {
         guard let otherState = other as? Self else { return false }
         return self == otherState
     }
-    
-    func asEquatable() -> AnyCallGridViewControllerInput {
-        return AnyCallGridViewControllerInput(self)
-    }
 }
 
-struct AnyCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
-    init(_ state: CallGridViewControllerInput) {
-        self.value = state
+extension CallGridViewControllerInput {
+
+    var allStreamIds: Set<AVSClient> {
+        let streamIds = (streams + [floatingStream]).compactMap { $0?.streamId }
+        return Set(streamIds)
+
     }
-    
-    var floatingStream: Stream? { return value.floatingStream }
-    var streams: [Stream] { return value.streams }
-    var videoState: VideoState { return value.videoState }
-    var networkQuality: NetworkQuality { return value.networkQuality }
-    var shouldShowActiveSpeakerFrame: Bool { return value.shouldShowActiveSpeakerFrame }
-    var presentationMode: VideoGridPresentationMode { return value.presentationMode }
-    var callHasTwoParticipants: Bool { return value.callHasTwoParticipants }
-
-    private let value: CallGridViewControllerInput
-
-    static func ==(lhs: AnyCallGridViewControllerInput, rhs: AnyCallGridViewControllerInput) -> Bool {
-            return lhs.value.isEqualTo(rhs.value)
-        }
 }
