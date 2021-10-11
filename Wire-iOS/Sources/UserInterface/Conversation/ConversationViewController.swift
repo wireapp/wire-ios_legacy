@@ -27,9 +27,9 @@ final class ConversationViewController: UIViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized),
-            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: "keyboardshortcut.searchInConversation".localized),
+            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: "conversation.action.search".localized),
             UIKeyCommand(input: "i", modifierFlags: [.command], action: #selector(titleViewTapped), discoverabilityTitle: "keyboardshortcut.conversationDetail".localized)
-        ]///TODO: cmd+ i details, v call, voice call
+        ]
     }
 
     @objc
