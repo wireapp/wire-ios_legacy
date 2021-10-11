@@ -59,18 +59,18 @@ final class MockCallPermissions: CallPermissionsConfiguration, Equatable {
 
 extension MockCallPermissions {
 
-    static var videoDeniedForever: MockCallPermissions {
+    static var videoDeniedForever: AnyCallPermissionsConfiguration {
         let permissions = MockCallPermissions()
         permissions.canAcceptVideoCalls = false
         permissions.isPendingVideoPermissionRequest = false
-        return permissions
+        return permissions.asEquatable()
     }
 
-    static var videoPendingApproval: MockCallPermissions {
+    static var videoPendingApproval: AnyCallPermissionsConfiguration {
         let permissions = MockCallPermissions()
         permissions.canAcceptVideoCalls = false
         permissions.isPendingVideoPermissionRequest = true
-        return permissions
+        return permissions.asEquatable()
     }
 
     static var videoAllowedForever: AnyCallPermissionsConfiguration {
