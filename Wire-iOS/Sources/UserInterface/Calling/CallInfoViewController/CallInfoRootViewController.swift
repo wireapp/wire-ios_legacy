@@ -47,7 +47,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
 
     var configuration: CallInfoViewControllerInput {
         didSet {
-            guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            guard !configuration.isEqual(to: oldValue) else { return }
             updateConfiguration(animated: true)
         }
     }

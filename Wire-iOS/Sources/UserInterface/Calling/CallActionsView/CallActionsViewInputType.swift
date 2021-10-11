@@ -24,7 +24,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
     var isMuted: Bool { get }
     var mediaState: MediaState { get }
-    var permissions: CallPermissionsConfiguration { get }
+    var permissions: AnyCallPermissionsConfiguration { get }
     var cameraType: CaptureDevice { get }
     var networkQuality: NetworkQuality { get }
     var callState: AnyCallStateExtending { get }

@@ -95,13 +95,10 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput, Equatable {
-//    static func == (lhs: CallInfoConfiguration, rhs: CallInfoConfiguration) -> Bool {
-//        return lhs.isEqual(toConfiguration: rhs)
-//    }
     
     fileprivate static let maxActiveSpeakers: Int = 4
 
-    let permissions: CallPermissionsConfiguration
+    let permissions: AnyCallPermissionsConfiguration
     let isConstantBitRate: Bool
     let title: String
     let isVideoCall: Bool
@@ -113,7 +110,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput, Equatable {
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
     let cameraType: CaptureDevice
-    let mediaManager: AVSMediaManagerInterface
+    let mediaManager: AnyAVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
     let callState: AnyCallStateExtending
@@ -126,9 +123,9 @@ struct CallInfoConfiguration: CallInfoViewControllerInput, Equatable {
     init(
         voiceChannel: VoiceChannel,
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
-        permissions: CallPermissionsConfiguration,
+        permissions: AnyCallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
+        mediaManager: AnyAVSMediaManagerInterface = AVSMediaManager.sharedInstance().asEquatable(),
         userEnabledCBR: Bool,
         selfUser: UserType) {
         self.permissions = permissions

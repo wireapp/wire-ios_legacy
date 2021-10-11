@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-protocol CallInfoViewControllerDelegate {
+protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
@@ -29,41 +29,14 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
+
+    func isEqual(to other: CallInfoViewControllerInput) -> Bool
 }
 
-// Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
-// to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
-// the `CallInfoRootViewController` generic to work around the `Self` requirement of
-// `Equatable` which we want to avoid.
-extension CallInfoViewControllerInput {
-    func isEqual(toConfiguration other: CallInfoViewControllerInput) -> Bool {
-        guard videoGridPresentationMode == other.videoGridPresentationMode &&
-                allowPresentationModeUpdates == other.allowPresentationModeUpdates else {
-            return false
-        }
-        
-        guard networkQuality == other.networkQuality &&
-                userEnabledCBR == other.userEnabledCBR
-        else {
-            return false
-        }
-        
-        guard callState == other.callState else { return false }
-        
-        return accessoryType == other.accessoryType &&
-            degradationState == other.degradationState &&
-            videoPlaceholderState == other.videoPlaceholderState &&
-            permissions == other.permissions &&
-            disableIdleTimer == other.disableIdleTimer &&
-            canToggleMediaType == other.canToggleMediaType &&
-            isMuted == other.isMuted &&
-            mediaState == other.mediaState &&
-            appearance == other.appearance &&
-            isVideoCall == other.isVideoCall &&
-            state == other.state &&
-            isConstantBitRate == other.isConstantBitRate &&
-            title == other.title &&
-            cameraType == other.cameraType
+extension CallInfoViewControllerInput where Self: Equatable {
+    func isEqual(to other: CallInfoViewControllerInput) -> Bool {
+        guard let otherState = other as? Self else { return false }
+        return self == otherState
     }
 }
 

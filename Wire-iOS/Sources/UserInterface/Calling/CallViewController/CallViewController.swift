@@ -29,7 +29,7 @@ final class CallViewController: UIViewController {
 
     weak var delegate: CallViewControllerDelegate?
     fileprivate var tapRecognizer: UITapGestureRecognizer!
-    fileprivate let mediaManager: AVSMediaManagerInterface
+    fileprivate let mediaManager: AnyAVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
@@ -52,7 +52,7 @@ final class CallViewController: UIViewController {
 
     private var proximityMonitorManager: ProximityMonitorManager?
 
-    fileprivate var permissions: CallPermissionsConfiguration {
+    fileprivate var permissions: AnyCallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
 
@@ -63,8 +63,8 @@ final class CallViewController: UIViewController {
     init(voiceChannel: VoiceChannel,
          selfUser: UserType,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
-         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
-         permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
+         mediaManager: AnyAVSMediaManagerInterface = AVSMediaManager.sharedInstance().asEquatable(),
+         permissionsConfiguration: AnyCallPermissionsConfiguration = CallPermissions().asEquatable()) {
 
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager

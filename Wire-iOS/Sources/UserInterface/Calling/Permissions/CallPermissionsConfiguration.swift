@@ -28,12 +28,18 @@ protocol CallPermissionsConfiguration: class {
     func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void)
     func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void)
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void)
+
+    func isEqual(to other: CallPermissionsConfiguration) -> Bool
 }
 
 extension CallPermissionsConfiguration where Self: Equatable {
     func isEqualTo(_ other: CallPermissionsConfiguration) -> Bool {
         guard let otherState = other as? Self else { return false }
         return self == otherState
+    }
+
+    func asEquatable() -> AnyCallPermissionsConfiguration {
+        return AnyCallPermissionsConfiguration(self)
     }
 }
 
@@ -54,9 +60,46 @@ extension CallPermissionsConfiguration {
 
 }
 
-//func == (lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
-//    return lhs.canAcceptAudioCalls == rhs.canAcceptAudioCalls &&
-//           lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest &&
-//           lhs.canAcceptVideoCalls == rhs.canAcceptVideoCalls &&
-//           lhs.isPendingVideoPermissionRequest == rhs.isPendingVideoPermissionRequest
-//}
+func == (lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
+    return lhs.canAcceptAudioCalls == rhs.canAcceptAudioCalls &&
+           lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest &&
+           lhs.canAcceptVideoCalls == rhs.canAcceptVideoCalls &&
+           lhs.isPendingVideoPermissionRequest == rhs.isPendingVideoPermissionRequest
+}
+
+final class AnyCallPermissionsConfiguration: CallPermissionsConfiguration, Equatable {
+    func isEqual(to other: CallPermissionsConfiguration) -> Bool {
+        guard let callPermissionsConfiguration = other as? Self else {
+            return false
+        }
+        return self == callPermissionsConfiguration
+    }
+    
+    init(_ state: CallPermissionsConfiguration) {
+        self.value = state
+    }
+    
+    var canAcceptAudioCalls: Bool { return value.canAcceptAudioCalls }
+    var isPendingAudioPermissionRequest: Bool { return value.isPendingAudioPermissionRequest }
+
+    var canAcceptVideoCalls: Bool { return value.canAcceptVideoCalls }
+    var isPendingVideoPermissionRequest: Bool { return value.isPendingVideoPermissionRequest }
+
+    func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void) {
+        value.requestVideoPermissionWithoutWarning(resultHandler: resultHandler)
+    }
+    
+    func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void) {
+        value.requestOrWarnAboutVideoPermission(resultHandler: resultHandler)
+    }
+    
+    func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
+        value.requestOrWarnAboutAudioPermission(resultHandler: resultHandler)
+    }
+
+    private let value: CallPermissionsConfiguration
+
+    static func ==(lhs: AnyCallPermissionsConfiguration, rhs: AnyCallPermissionsConfiguration) -> Bool {
+        return lhs.value.isEqual(to: rhs.value)
+        }
+}

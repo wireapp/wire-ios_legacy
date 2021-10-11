@@ -29,10 +29,47 @@ protocol TrackingInterface {
     var disableAnalyticsSharing: Bool { get set }
 }
 
-protocol AVSMediaManagerInterface: NSObjectProtocol {
+protocol AVSMediaManagerInterface {
     var intensityLevel: AVSIntensityLevel { get set }
     var isMicrophoneMuted: Bool { get set }
+
+    func isEqual(to other: AVSMediaManagerInterface) -> Bool
 }
+
+extension AVSMediaManagerInterface where Self: Equatable {
+    func isEqual(to other: AVSMediaManagerInterface) -> Bool {
+        guard let otherState = other as? Self else { return false }
+        return self == otherState
+    }
+    
+    func asEquatable() -> AnyAVSMediaManagerInterface {
+        return AnyAVSMediaManagerInterface(self)
+    }
+}
+
+
+struct AnyAVSMediaManagerInterface: AVSMediaManagerInterface, Equatable {
+    init(_ value: AVSMediaManagerInterface) {
+        self.value = value
+    }
+    
+    var intensityLevel: AVSIntensityLevel {
+        get { return value.intensityLevel }
+        set { value.intensityLevel = newValue }
+    }
+    
+    var isMicrophoneMuted: Bool {
+        get { return value.isMicrophoneMuted }
+        set { value.isMicrophoneMuted = newValue }
+    }
+    
+    private var value: AVSMediaManagerInterface
+
+    static func ==(lhs: AnyAVSMediaManagerInterface, rhs: AnyAVSMediaManagerInterface) -> Bool {
+        return lhs.value.isEqual(to: rhs.value)
+        }
+}
+
 
 extension AVSMediaManager: AVSMediaManagerInterface {}
 

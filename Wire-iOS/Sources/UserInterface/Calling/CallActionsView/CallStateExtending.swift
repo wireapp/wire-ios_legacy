@@ -43,9 +43,9 @@ struct AnyCallStateExtending: CallStateExtending, Equatable {
         self.value = state
     }
     
-        var isConnected: Bool { return value.isConnected }
-        var isTerminating: Bool { return value.isTerminating }
-        var canAccept: Bool { return value.canAccept }
+    var isConnected: Bool { return value.isConnected }
+    var isTerminating: Bool { return value.isTerminating }
+    var canAccept: Bool { return value.canAccept }
 
     
     private let value: CallStateExtending
