@@ -29,13 +29,12 @@ protocol TrackingInterface {
     var disableAnalyticsSharing: Bool { get set }
 }
 
-protocol AVSMediaManagerInterface {
+protocol AVSMediaManagerInterface: NSObjectProtocol {
     var intensityLevel: AVSIntensityLevel { get set }
     var isMicrophoneMuted: Bool { get set }
 }
 
-extension AVSMediaManager: AVSMediaManagerInterface {
-}
+extension AVSMediaManager: AVSMediaManagerInterface {}
 
 protocol ValidatorType {
     static func validate(name: inout String?) throws -> Bool

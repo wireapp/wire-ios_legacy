@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol CallPermissionsConfiguration {
+protocol CallPermissionsConfiguration: class {
     var canAcceptAudioCalls: Bool { get }
     var isPendingAudioPermissionRequest: Bool { get }
 
@@ -28,6 +28,13 @@ protocol CallPermissionsConfiguration {
     func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void)
     func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void)
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void)
+}
+
+extension CallPermissionsConfiguration where Self: Equatable {
+    func isEqualTo(_ other: CallPermissionsConfiguration) -> Bool {
+        guard let otherState = other as? Self else { return false }
+        return self == otherState
+    }
 }
 
 extension CallPermissionsConfiguration {
@@ -47,9 +54,9 @@ extension CallPermissionsConfiguration {
 
 }
 
-func == (lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
-    return lhs.canAcceptAudioCalls == rhs.canAcceptAudioCalls &&
-           lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest &&
-           lhs.canAcceptVideoCalls == rhs.canAcceptVideoCalls &&
-           lhs.isPendingVideoPermissionRequest == rhs.isPendingVideoPermissionRequest
-}
+//func == (lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
+//    return lhs.canAcceptAudioCalls == rhs.canAcceptAudioCalls &&
+//           lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest &&
+//           lhs.canAcceptVideoCalls == rhs.canAcceptVideoCalls &&
+//           lhs.isPendingVideoPermissionRequest == rhs.isPendingVideoPermissionRequest
+//}
