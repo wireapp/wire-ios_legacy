@@ -24,6 +24,41 @@ func == (lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> 
     return lhs.isEqual(to: rhs)
 }
 
+//MARK: For comparing mock and real CallStateExtending/CallInfoViewControllerInput are matching or not
+extension CallStateExtending {
+    func arePropertiesEqual(to other: CallStateExtending) -> Bool {
+        return isConnected == other.isConnected &&
+            isTerminating == other.isTerminating &&
+            canAccept == other.canAccept
+    }
+}
+extension CallInfoViewControllerInput {
+    func arePropertiesEqual(to other: CallInfoViewControllerInput) -> Bool {
+        guard callState.arePropertiesEqual(to: other.callState) else {
+            return false
+        }
+        
+        return accessoryType == other.accessoryType &&
+            degradationState == other.degradationState &&
+            videoPlaceholderState == other.videoPlaceholderState &&
+            permissions == other.permissions &&
+            disableIdleTimer == other.disableIdleTimer &&
+            canToggleMediaType == other.canToggleMediaType &&
+            isMuted == other.isMuted &&
+            mediaState == other.mediaState &&
+            appearance == other.appearance &&
+            isVideoCall == other.isVideoCall &&
+            state == other.state &&
+            isConstantBitRate == other.isConstantBitRate &&
+            title == other.title &&
+            cameraType == other.cameraType &&
+            networkQuality == other.networkQuality &&
+            userEnabledCBR == other.userEnabledCBR &&
+            videoGridPresentationMode == other.videoGridPresentationMode &&
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates
+    }
+}
+
 final class CallInfoConfigurationTests: XCTestCase {
 
     var mockOtherUser: MockUserType!
@@ -49,7 +84,7 @@ final class CallInfoConfigurationTests: XCTestCase {
     }
 
     func assertEquals(_ lhsConfig: CallInfoViewControllerInput, _ rhsConfig: CallInfoViewControllerInput, file: StaticString = #file, line: UInt = #line) {
-        XCTAssertTrue(lhsConfig == rhsConfig,
+        XCTAssert(lhsConfig.arePropertiesEqual(to: rhsConfig),
                       "\n\(lhsConfig)\n\nis not equal to\n\n\(rhsConfig)",
                       file: file,
                       line: line)
