@@ -74,11 +74,11 @@ extension MockCallPermissions {
         return permissions
     }
 
-    static var videoAllowedForever: MockCallPermissions {
+    static var videoAllowedForever: AnyCallPermissionsConfiguration {
         let permissions = MockCallPermissions()
         permissions.canAcceptVideoCalls = true
         permissions.isPendingVideoPermissionRequest = false
-        return permissions
+        return permissions.asEquatable()
     }
 
 }

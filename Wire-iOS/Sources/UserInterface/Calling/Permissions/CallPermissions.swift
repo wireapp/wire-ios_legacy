@@ -22,11 +22,11 @@ import UIKit
 
 final class CallPermissions: CallPermissionsConfiguration, Equatable {
     static func == (lhs: CallPermissions, rhs: CallPermissions) -> Bool {
-        return lhs.isEqual(to: rhs)
+        return true
     }
     
     func isEqual(to other: CallPermissionsConfiguration) -> Bool {
-        return self == other as? Self
+        return true ///TODO: check the bools? key path?? this class has no memeber
     }
 
     var isPendingAudioPermissionRequest: Bool {
