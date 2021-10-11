@@ -34,8 +34,7 @@ protocol CallPermissionsConfiguration: class {
 
 extension CallPermissionsConfiguration where Self: Equatable {
     func isEqualTo(_ other: CallPermissionsConfiguration) -> Bool {
-        guard let otherState = other as? Self else { return false }
-        return self == otherState
+        return self == other as? Self
     }
 
     func asEquatable() -> AnyCallPermissionsConfiguration {
@@ -70,10 +69,7 @@ func == (lhs: CallPermissionsConfiguration,
 
 final class AnyCallPermissionsConfiguration: CallPermissionsConfiguration, Equatable {
     func isEqual(to other: CallPermissionsConfiguration) -> Bool {
-        guard let callPermissionsConfiguration = other as? Self else {
-            return false
-        }
-        return self == callPermissionsConfiguration
+        return self == other as? Self
     }
     
     init(_ state: CallPermissionsConfiguration) {

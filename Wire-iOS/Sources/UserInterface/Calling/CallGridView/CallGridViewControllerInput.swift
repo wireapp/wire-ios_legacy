@@ -34,8 +34,7 @@ protocol CallGridViewControllerInput {
 
 extension CallGridViewControllerInput where Self: Equatable {
     func isEqual(to other: CallGridViewControllerInput) -> Bool {
-        guard let callGridViewControllerInput = other as? Self else { return false }
-        return self == callGridViewControllerInput
+        return self == other as? Self
     }
 }
 

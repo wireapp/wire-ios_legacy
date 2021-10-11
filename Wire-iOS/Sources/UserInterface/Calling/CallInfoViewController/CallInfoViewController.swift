@@ -35,8 +35,7 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
 
 extension CallInfoViewControllerInput where Self: Equatable {
     func isEqual(to other: CallInfoViewControllerInput) -> Bool {
-        guard let otherState = other as? Self else { return false }
-        return self == otherState
+        return self == other as? Self
     }
 }
 

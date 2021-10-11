@@ -29,8 +29,7 @@ protocol CallStateExtending {
 
 extension CallStateExtending where Self: Equatable {
     func isEqual(to other: CallStateExtending) -> Bool {
-        guard let otherState = other as? Self else { return false }
-        return self == otherState
+        return self == other as? Self
     }
     
     func asEquatable() -> AnyCallStateExtending {

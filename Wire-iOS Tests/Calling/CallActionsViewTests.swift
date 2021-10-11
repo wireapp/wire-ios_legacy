@@ -33,10 +33,6 @@ private struct CallActionsViewInput: CallActionsViewInputType {
 }
 
 struct CallStateMock: CallStateExtending, Equatable {
-//    func isEqual(to other: CallStateExtending) -> Bool {
-//        return self == other as? CallStateMock
-//    }
-    
     var isConnected: Bool
     var isTerminating: Bool
     var canAccept: Bool
@@ -60,7 +56,7 @@ extension CallStateMock {
     }
 }
 
-class CallActionsViewTests: ZMSnapshotTestCase {
+final class CallActionsViewTests: ZMSnapshotTestCase {
 
     fileprivate var sut: CallActionsView!
     fileprivate var widthConstraint: NSLayoutConstraint!
