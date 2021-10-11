@@ -39,20 +39,20 @@ struct CallStateMock: CallStateExtending, Equatable {
 }
 
 extension CallStateMock {
-    static var incoming: CallStateMock {
-        return CallStateMock(isConnected: false, isTerminating: false, canAccept: true)
+    static var incoming: AnyCallStateExtending {
+        return CallStateMock(isConnected: false, isTerminating: false, canAccept: true).asEquatable()
     }
 
-    static var outgoing: CallStateMock {
-        return CallStateMock(isConnected: false, isTerminating: false, canAccept: false)
+    static var outgoing: AnyCallStateExtending {
+        return CallStateMock(isConnected: false, isTerminating: false, canAccept: false).asEquatable()
     }
 
-    static var terminating: CallStateMock {
-        return CallStateMock(isConnected: false, isTerminating: true, canAccept: false)
+    static var terminating: AnyCallStateExtending {
+        return CallStateMock(isConnected: false, isTerminating: true, canAccept: false).asEquatable()
     }
 
-    static var ongoing: CallStateMock {
-        return CallStateMock(isConnected: true, isTerminating: false, canAccept: false)
+    static var ongoing: AnyCallStateExtending {
+        return CallStateMock(isConnected: true, isTerminating: false, canAccept: false).asEquatable()
     }
 }
 
@@ -94,7 +94,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
@@ -121,14 +121,14 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.incoming.asEquatable()
+            callState: CallStateMock.incoming
         )
 
         // When
@@ -145,14 +145,14 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.incoming.asEquatable()
+            callState: CallStateMock.incoming
         )
 
         // When
@@ -171,7 +171,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
@@ -195,7 +195,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -221,7 +221,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
@@ -245,7 +245,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: true,
@@ -269,7 +269,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
@@ -293,7 +293,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -317,7 +317,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -341,7 +341,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .activeSpeakers,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -367,7 +367,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
@@ -391,7 +391,7 @@ final class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,

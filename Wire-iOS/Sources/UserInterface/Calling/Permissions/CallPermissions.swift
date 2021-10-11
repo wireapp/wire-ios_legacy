@@ -24,9 +24,9 @@ final class CallPermissions: CallPermissionsConfiguration, Equatable {
     static func == (lhs: CallPermissions, rhs: CallPermissions) -> Bool {
         return true
     }
-    
+
     func isEqual(to other: CallPermissionsConfiguration) -> Bool {
-        return true ///TODO: check the bools? key path?? this class has no memeber
+        return true /// TODO: check the bools? key path?? this class has no memeber
     }
 
     var isPendingAudioPermissionRequest: Bool {

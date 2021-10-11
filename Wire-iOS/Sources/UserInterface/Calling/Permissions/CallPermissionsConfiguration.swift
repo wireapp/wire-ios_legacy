@@ -71,11 +71,11 @@ final class AnyCallPermissionsConfiguration: CallPermissionsConfiguration, Equat
     func isEqual(to other: CallPermissionsConfiguration) -> Bool {
         return self == other as? Self
     }
-    
+
     init(_ state: CallPermissionsConfiguration) {
         self.value = state
     }
-    
+
     var canAcceptAudioCalls: Bool { return value.canAcceptAudioCalls }
     var isPendingAudioPermissionRequest: Bool { return value.isPendingAudioPermissionRequest }
 
@@ -85,11 +85,11 @@ final class AnyCallPermissionsConfiguration: CallPermissionsConfiguration, Equat
     func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void) {
         value.requestVideoPermissionWithoutWarning(resultHandler: resultHandler)
     }
-    
+
     func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void) {
         value.requestOrWarnAboutVideoPermission(resultHandler: resultHandler)
     }
-    
+
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
         value.requestOrWarnAboutAudioPermission(resultHandler: resultHandler)
     }

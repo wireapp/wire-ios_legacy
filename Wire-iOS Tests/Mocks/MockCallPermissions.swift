@@ -28,13 +28,12 @@ extension MediaState.SpeakerState {
 
 final class MockCallPermissions: CallPermissionsConfiguration, Equatable {
     static func == (lhs: MockCallPermissions, rhs: MockCallPermissions) -> Bool {
-        return lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest ///TODO
+        return lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest /// TODO
     }
-    
+
     func isEqual(to other: CallPermissionsConfiguration) -> Bool {
         return self == other
     }
-
 
     var isPendingAudioPermissionRequest: Bool = true
     var isPendingVideoPermissionRequest: Bool = true

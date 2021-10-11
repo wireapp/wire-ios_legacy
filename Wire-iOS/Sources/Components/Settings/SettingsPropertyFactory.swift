@@ -40,35 +40,33 @@ extension AVSMediaManagerInterface where Self: Equatable {
     func isEqual(to other: AVSMediaManagerInterface) -> Bool {
         return self == other as? Self
     }
-    
+
     func asEquatable() -> AnyAVSMediaManagerInterface {
         return AnyAVSMediaManagerInterface(self)
     }
 }
 
-
 struct AnyAVSMediaManagerInterface: AVSMediaManagerInterface, Equatable {
     init(_ value: AVSMediaManagerInterface) {
         self.value = value
     }
-    
+
     var intensityLevel: AVSIntensityLevel {
         get { return value.intensityLevel }
         set { value.intensityLevel = newValue }
     }
-    
+
     var isMicrophoneMuted: Bool {
         get { return value.isMicrophoneMuted }
         set { value.isMicrophoneMuted = newValue }
     }
-    
+
     private var value: AVSMediaManagerInterface
 
     static func ==(lhs: AnyAVSMediaManagerInterface, rhs: AnyAVSMediaManagerInterface) -> Bool {
         return lhs.value.isEqual(to: rhs.value)
         }
 }
-
 
 extension AVSMediaManager: AVSMediaManagerInterface {}
 

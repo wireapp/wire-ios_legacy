@@ -18,12 +18,12 @@
 
 import WireSyncEngine
 
-protocol CallStateExtending {  
-    
+protocol CallStateExtending {
+
     var isConnected: Bool { get }
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
-    
+
     func isEqual(to other: CallStateExtending) -> Bool
 }
 
@@ -31,7 +31,7 @@ extension CallStateExtending where Self: Equatable {
     func isEqual(to other: CallStateExtending) -> Bool {
         return self == other as? Self
     }
-    
+
     func asEquatable() -> AnyCallStateExtending {
         return AnyCallStateExtending(self)
     }
@@ -41,12 +41,11 @@ struct AnyCallStateExtending: CallStateExtending, Equatable {
     init(_ state: CallStateExtending) {
         self.value = state
     }
-    
+
     var isConnected: Bool { return value.isConnected }
     var isTerminating: Bool { return value.isTerminating }
     var canAccept: Bool { return value.canAccept }
 
-    
     private let value: CallStateExtending
 
     static func ==(lhs: AnyCallStateExtending, rhs: AnyCallStateExtending) -> Bool {
@@ -55,7 +54,7 @@ struct AnyCallStateExtending: CallStateExtending, Equatable {
 }
 
 extension CallState: CallStateExtending {
-    
+
     var isConnected: Bool {
         switch self {
         case .established, .establishedDataChannel: return true

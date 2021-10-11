@@ -95,7 +95,7 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput, Equatable {
-    
+
     fileprivate static let maxActiveSpeakers: Int = 4
 
     let permissions: AnyCallPermissionsConfiguration

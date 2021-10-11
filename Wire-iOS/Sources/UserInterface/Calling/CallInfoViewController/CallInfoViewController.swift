@@ -22,7 +22,7 @@ import WireSyncEngine
 
 protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
-} 
+}
 
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
