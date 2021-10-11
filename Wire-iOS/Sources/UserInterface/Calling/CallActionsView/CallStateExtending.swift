@@ -18,7 +18,7 @@
 
 import WireSyncEngine
 
-protocol CallStateExtending {
+protocol CallStateExtending {  
     
     var isConnected: Bool { get }
     var isTerminating: Bool { get }

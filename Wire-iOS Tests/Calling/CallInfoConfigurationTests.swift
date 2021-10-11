@@ -32,16 +32,27 @@ extension CallStateExtending {
             canAccept == other.canAccept
     }
 }
+
+extension CallPermissionsConfiguration {
+    func arePropertiesEqual(to other: CallPermissionsConfiguration) -> Bool {
+        return canAcceptAudioCalls == other.canAcceptAudioCalls &&
+            isPendingAudioPermissionRequest == other.isPendingAudioPermissionRequest &&
+        canAcceptVideoCalls == other.canAcceptVideoCalls &&
+        isPendingVideoPermissionRequest == other.isPendingVideoPermissionRequest
+    }
+}
+
 extension CallInfoViewControllerInput {
     func arePropertiesEqual(to other: CallInfoViewControllerInput) -> Bool {
-        guard callState.arePropertiesEqual(to: other.callState) else {
+        guard callState.arePropertiesEqual(to: other.callState),
+              permissions.arePropertiesEqual(to: other.permissions) else {
             return false
         }
         
         return accessoryType == other.accessoryType &&
             degradationState == other.degradationState &&
             videoPlaceholderState == other.videoPlaceholderState &&
-            permissions == other.permissions &&
+//            permissions == other.permissions &&
             disableIdleTimer == other.disableIdleTimer &&
             canToggleMediaType == other.canToggleMediaType &&
             isMuted == other.isMuted &&
@@ -197,7 +208,8 @@ final class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockParticipants = mockCallParticipants(mockUsers: mockUsers, count: 2, state: .connected(videoState: .started, microphoneState: .unmuted))
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever.asEquatable(), cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
+                                                  cameraType: .front, userEnabledCBR: false, selfUser: mockSelfUser)
 
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
