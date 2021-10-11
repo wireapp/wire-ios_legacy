@@ -44,15 +44,16 @@ extension CallPermissionsConfiguration {
 
 extension CallInfoViewControllerInput {
     func arePropertiesEqual(to other: CallInfoViewControllerInput) -> Bool {
-        guard callState.arePropertiesEqual(to: other.callState),
-              permissions.arePropertiesEqual(to: other.permissions) else {
+        guard callState.arePropertiesEqual(to: other.callState) //,
+//              permissions.arePropertiesEqual(to: other.permissions)
+        else {
             return false
         }
         
         return accessoryType == other.accessoryType &&
             degradationState == other.degradationState &&
             videoPlaceholderState == other.videoPlaceholderState &&
-//            permissions == other.permissions &&
+            permissions == other.permissions &&
             disableIdleTimer == other.disableIdleTimer &&
             canToggleMediaType == other.canToggleMediaType &&
             isMuted == other.isMuted &&
