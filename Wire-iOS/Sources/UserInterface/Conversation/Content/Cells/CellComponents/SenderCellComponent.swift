@@ -38,7 +38,9 @@ private struct SenderCellConfiguration {
         } else if user.isFederated {
             textColor = user.nameAccentColor
             icon = .federated
-        } else if !user.isTeamMember && !user.isSelfUser {
+        } else if !user.isTeamMember,
+                  let selfUser = SelfUser.provider?.selfUser,
+                  selfUser.isTeamMember {
             textColor = user.nameAccentColor
             icon = .guest
         } else {
