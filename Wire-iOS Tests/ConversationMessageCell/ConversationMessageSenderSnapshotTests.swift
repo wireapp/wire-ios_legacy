@@ -27,10 +27,14 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
     var groupConversation: SwiftMockConversation!
     var oneToOneConversation: SwiftMockConversation!
     var mockUser: MockUserType!
+    var mockSelfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         mockUser = MockUserType.createUser(name: "Bruno", inTeam: teamID)
+        mockUser.isConnected = true
+        mockSelfUser = MockUserType.createSelfUser(name: "George Johnson", inTeam: teamID)
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
 
         groupConversation = createGroupConversation()
         oneToOneConversation = createOneOnOneConversation()
@@ -46,6 +50,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         groupConversation = nil
         oneToOneConversation = nil
         mockUser = nil
+        mockSelfUser = nil
         super.tearDown()
     }
 
@@ -79,6 +84,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
     func test_SenderIsGuest_OneOnOneConversation() {
         // GIVEN
         mockUser.isGuestInConversation = true
+        mockUser.teamIdentifier = nil
 
         // WHEN
         sut.configure(with: mockUser)
@@ -127,6 +133,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
     func test_SenderIsGuest_GroupConversation() {
         // GIVEN
         mockUser.isGuestInConversation = true
+        mockUser.teamIdentifier = nil
 
         // WHEN
         sut.configure(with: mockUser)
@@ -139,6 +146,7 @@ final class ConversationMessageSenderSnapshotTests: XCTestCase {
         // GIVEN
         ColorScheme.default.variant = .dark
         sut.backgroundColor = UIColor.from(scheme: .contentBackground)
+        mockUser.teamIdentifier = nil
 
         mockUser.isGuestInConversation = true
 
