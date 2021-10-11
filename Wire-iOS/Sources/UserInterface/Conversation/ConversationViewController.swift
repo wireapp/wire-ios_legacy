@@ -323,7 +323,8 @@ final class ConversationViewController: UIViewController {
         view.setNeedsLayout()
     }
 
-    @objc private func titleViewTapped() {
+    @objc 
+    private func titleViewTapped() {
         if let superview = titleView.superview,
             let participantsController = participantsController {
             presentParticipantsViewController(participantsController, from: superview)
