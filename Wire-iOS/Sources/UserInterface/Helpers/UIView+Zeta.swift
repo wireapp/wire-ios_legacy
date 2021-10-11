@@ -127,6 +127,23 @@ extension UIView {
 //        wire-logo-shield
         return launchViewContainer
     }
+
+    static func shieldView1() -> UIView {
+        let imageView = UIImageView()
+        imageView.image = WireStyleKit.imageOfShieldverified
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        let launchViewContainer = UIView()
+        launchViewContainer.backgroundColor = .blue
+        launchViewContainer.addSubview(imageView)
+        launchViewContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            imageView.centerYAnchor.constraint(equalTo: launchViewContainer.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: launchViewContainer.centerXAnchor)
+        ])
+        return launchViewContainer
+    }
 }
 
 extension UIVisualEffectView {
@@ -137,26 +154,24 @@ extension UIVisualEffectView {
 }
 
 class CustomSplashScreen: UIView {
-    init() {
-        super.init(frame: .zero)
-        self.setUpView()
-    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setUpView() {
+        backgroundColor = .white
         let shieldView = UIView.shieldView()
-        self.addSubview(shieldView)
 
         shieldView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(shieldView)
 
         NSLayoutConstraint.activate([
-            shieldView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            shieldView.topAnchor.constraint(equalTo: self.topAnchor),
-            shieldView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            shieldView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+            shieldView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            shieldView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            shieldView.topAnchor.constraint(equalTo: topAnchor),
+            shieldView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
