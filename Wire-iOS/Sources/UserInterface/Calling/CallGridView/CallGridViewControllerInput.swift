@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import WireSyncEngine
 
 protocol CallGridViewControllerInput {
@@ -28,13 +29,13 @@ protocol CallGridViewControllerInput {
     var presentationMode: VideoGridPresentationMode { get }
     var callHasTwoParticipants: Bool { get }
 
-    func isEqualTo(_ other: CallGridViewControllerInput) -> Bool
+    func isEqual(to other: CallGridViewControllerInput) -> Bool
 }
 
 extension CallGridViewControllerInput where Self: Equatable {
-    func isEqualTo(_ other: CallGridViewControllerInput) -> Bool {
-        guard let otherState = other as? Self else { return false }
-        return self == otherState
+    func isEqual(to other: CallGridViewControllerInput) -> Bool {
+        guard let callGridViewControllerInput = other as? Self else { return false }
+        return self == callGridViewControllerInput
     }
 }
 
@@ -43,6 +44,5 @@ extension CallGridViewControllerInput {
     var allStreamIds: Set<AVSClient> {
         let streamIds = (streams + [floatingStream]).compactMap { $0?.streamId }
         return Set(streamIds)
-
     }
 }

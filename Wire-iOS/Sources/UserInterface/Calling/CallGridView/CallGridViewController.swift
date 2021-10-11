@@ -71,7 +71,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     var configuration: CallGridViewControllerInput {
         didSet {
-            guard !configuration.isEqualTo(oldValue) else { return }
+            guard !configuration.isEqual(to: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
