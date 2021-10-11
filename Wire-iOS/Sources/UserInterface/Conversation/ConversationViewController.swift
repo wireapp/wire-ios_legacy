@@ -329,7 +329,7 @@ final class ConversationViewController: UIViewController {
             presentParticipantsViewController(participantsController, from: superview)
         }
     }
-    
+
     private func setupNavigatiomItem() {
         titleView.tapHandler = { [weak self] _ in
             self?.titleViewTapped()
@@ -497,7 +497,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
             self.conversation.draftMessage = message
         }
     }
-    
+
     var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
