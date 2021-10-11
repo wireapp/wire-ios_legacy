@@ -141,6 +141,17 @@ final class ZClientViewController: UIViewController {
     }
 
     // MARK: - Overloaded methods
+    
+    // MARK: keyboard shortcut
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(gotoPeopleTab(_:)), discoverabilityTitle: "People".localized)]
+    }
+
+    @objc
+    private func gotoPeopleTab(_ sender: Any?) {
+        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
