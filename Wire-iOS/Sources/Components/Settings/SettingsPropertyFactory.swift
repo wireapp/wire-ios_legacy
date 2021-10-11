@@ -119,14 +119,19 @@ final class SettingsPropertyFactory {
         self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
     }
 
-    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
+    init(userDefaults: UserDefaults,
+         tracking: TrackingInterface?,
+         mediaManager: AVSMediaManagerInterface?,
+         userSession: UserSessionInterface?,
+         selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
         self.mediaManager = mediaManager
         self.userSession = userSession
         self.selfUser = selfUser
 
-        if let user = self.selfUser as? ZMUser, let userSession = ZMUserSession.shared() {
+        if let user = selfUser as? ZMUser,
+           let userSession = ZMUserSession.shared() {
             user.fetchMarketingConsent(in: userSession, completion: { [weak self] result in
                 switch result {
                 case .failure:
@@ -235,20 +240,21 @@ final class SettingsPropertyFactory {
                                          setAction: setAction)
         case .soundAlerts:
             let getAction: GetAction = { [unowned self] _ in
-                if let mediaManager = self.mediaManager {
-                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
+                if let mediaManager = mediaManager {
+                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue) ///TODO: 0? none?? should be 0/50/100 only
                 }
-                else {
-                    return SettingsPropertyValue(0)
-                }
+
+                return SettingsPropertyValue(0)
             }
 
             let setAction: SetAction = { [unowned self] _, value in
                 switch value {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
-                        var mediaManager = self.mediaManager {
+                        var mediaManager = mediaManager {
+                        print(intensivityLevel.rawValue)
                         mediaManager.intensityLevel = intensivityLevel
+                        print(mediaManager.intensityLevel.rawValue) ///TODO: set not work?
                     }
                     else {
                         throw SettingsPropertyError.WrongValue("Cannot use value \(intValue) for AVSIntensivityLevel at \(propertyName)")

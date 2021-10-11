@@ -36,11 +36,13 @@ final class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
 
 }
 
-struct ZMMockAVSMediaManager: AVSMediaManagerInterface, Equatable {
-//    static func == (lhs: ZMMockAVSMediaManager, rhs: ZMMockAVSMediaManager) -> Bool {
-//        return lhs == rhs
-//    }
-
+final class ZMMockAVSMediaManager: AVSMediaManagerInterface, Equatable {
+    static func == (lhs: ZMMockAVSMediaManager, rhs: ZMMockAVSMediaManager) -> Bool {
+        return lhs.isMicrophoneMuted == rhs.isMicrophoneMuted &&
+            lhs.intensityLevel == rhs.intensityLevel
+    }
+    
+    
     var isMicrophoneMuted: Bool = false
 
     var intensityLevel: AVSIntensityLevel = .none
@@ -129,7 +131,11 @@ final class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
 
-        return SettingsPropertyFactory(userDefaults: userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+        return SettingsPropertyFactory(userDefaults: userDefaults,
+                                       tracking: tracking,
+                                       mediaManager: mediaManager,
+                                       userSession: userSession,
+                                       selfUser: selfUser)
     }
 
     func testThatDarkThemePropertySetsValue() {
@@ -147,7 +153,7 @@ final class SettingsPropertyTests: XCTestCase {
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
-        try! self.saveAndCheck(property, value: 1)
+        try! saveAndCheck(property, value: 1)
     }
 
     func testThatAnalyticsPropertySetsValue() {
@@ -171,7 +177,7 @@ final class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
