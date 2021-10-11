@@ -24,11 +24,11 @@ protocol CallStateExtending {
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
     
-    func isEqualTo(_ other: CallStateExtending) -> Bool
+    func isEqual(to other: CallStateExtending) -> Bool
 }
 
 extension CallStateExtending where Self: Equatable {
-    func isEqualTo(_ other: CallStateExtending) -> Bool {
+    func isEqual(to other: CallStateExtending) -> Bool {
         guard let otherState = other as? Self else { return false }
         return self == otherState
     }
@@ -51,7 +51,7 @@ struct AnyCallStateExtending: CallStateExtending, Equatable {
     private let value: CallStateExtending
 
     static func ==(lhs: AnyCallStateExtending, rhs: AnyCallStateExtending) -> Bool {
-            return lhs.value.isEqualTo(rhs.value)
+        return lhs.value.isEqual(to: rhs.value)
         }
 }
 

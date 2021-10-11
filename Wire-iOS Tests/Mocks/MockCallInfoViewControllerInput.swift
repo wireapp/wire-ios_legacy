@@ -19,16 +19,16 @@
 import Foundation
 @testable import Wire
 
-struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+struct MockCallInfoViewControllerInput: CallInfoViewControllerInput, Equatable {
     var allowPresentationModeUpdates: Bool
     var videoGridPresentationMode: VideoGridPresentationMode
     var videoPlaceholderState: CallVideoPlaceholderState
-    var permissions: CallPermissionsConfiguration
+    var permissions: AnyCallPermissionsConfiguration
     var degradationState: CallDegradationState
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
     var isMuted: Bool
-    var callState: CallStateExtending
+    var callState: AnyCallStateExtending
     var mediaState: MediaState
     var state: CallStatusViewState
     var isConstantBitRate: Bool

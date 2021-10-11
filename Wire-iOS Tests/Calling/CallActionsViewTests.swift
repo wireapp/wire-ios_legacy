@@ -23,16 +23,20 @@ import WireSyncEngine
 private struct CallActionsViewInput: CallActionsViewInputType {
     var allowPresentationModeUpdates: Bool
     var videoGridPresentationMode: VideoGridPresentationMode
-    var permissions: CallPermissionsConfiguration
+    var permissions: AnyCallPermissionsConfiguration
     let canToggleMediaType, isVideoCall, isMuted: Bool
     let mediaState: MediaState
     let variant: ColorSchemeVariant
     var cameraType: CaptureDevice
     let networkQuality: NetworkQuality = .normal
-    let callState: CallStateExtending
+    let callState: AnyCallStateExtending
 }
 
-struct CallStateMock: CallStateExtending {
+struct CallStateMock: CallStateExtending, Equatable {
+//    func isEqual(to other: CallStateExtending) -> Bool {
+//        return self == other as? CallStateMock
+//    }
+    
     var isConnected: Bool
     var isTerminating: Bool
     var canAccept: Bool
@@ -94,14 +98,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -121,14 +125,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.incoming
+            callState: CallStateMock.incoming.asEquatable()
         )
 
         // When
@@ -145,14 +149,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.incoming
+            callState: CallStateMock.incoming.asEquatable()
         )
 
         // When
@@ -171,14 +175,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.outgoing
+            callState: CallStateMock.outgoing.asEquatable()
         )
 
         // When
@@ -195,14 +199,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             mediaState: .sendingVideo,
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.outgoing
+            callState: CallStateMock.outgoing.asEquatable()
         )
 
         // When
@@ -221,14 +225,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -245,14 +249,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: true,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -269,14 +273,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanNotBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -293,14 +297,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             mediaState: .sendingVideo,
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -317,14 +321,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             mediaState: .sendingVideo,
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -341,14 +345,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: true,
             videoGridPresentationMode: .activeSpeakers,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             mediaState: .sendingVideo,
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -367,14 +371,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.terminating
+            callState: CallStateMock.terminating.asEquatable()
         )
 
         // When
@@ -391,14 +395,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoAllowedForever,
+            permissions: MockCallPermissions.videoAllowedForever.asEquatable(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             mediaState: .sendingVideo,
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.terminating
+            callState: CallStateMock.terminating.asEquatable()
         )
 
         // When
@@ -417,14 +421,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoPendingApproval,
+            permissions: MockCallPermissions.videoPendingApproval.asEquatable(),
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When
@@ -441,14 +445,14 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         let input = CallActionsViewInput(
             allowPresentationModeUpdates: false,
             videoGridPresentationMode: .allVideoStreams,
-            permissions: MockCallPermissions.videoDeniedForever,
+            permissions: MockCallPermissions.videoDeniedForever.asEquatable(),
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
             mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
             cameraType: .front,
-            callState: CallStateMock.ongoing
+            callState: CallStateMock.ongoing.asEquatable()
         )
 
         // When

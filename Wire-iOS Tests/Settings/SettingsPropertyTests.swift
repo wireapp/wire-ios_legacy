@@ -36,7 +36,11 @@ final class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
 
 }
 
-final class ZMMockAVSMediaManager: AVSMediaManagerInterface {
+struct ZMMockAVSMediaManager: AVSMediaManagerInterface, Equatable {
+//    static func == (lhs: ZMMockAVSMediaManager, rhs: ZMMockAVSMediaManager) -> Bool {
+//        return lhs == rhs
+//    }
+    
     var isMicrophoneMuted: Bool = false
 
     var intensityLevel: AVSIntensityLevel = .none

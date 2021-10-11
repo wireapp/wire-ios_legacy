@@ -26,7 +26,15 @@ extension MediaState.SpeakerState {
     static let selectedCanNotBeToggled = MediaState.SpeakerState(isEnabled: true, canBeToggled: false)
 }
 
-class MockCallPermissions: CallPermissionsConfiguration {
+final class MockCallPermissions: CallPermissionsConfiguration, Equatable {
+    static func == (lhs: MockCallPermissions, rhs: MockCallPermissions) -> Bool {
+        return lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest ///TODO
+    }
+    
+    func isEqual(to other: CallPermissionsConfiguration) -> Bool {
+        return self == other
+    }
+
 
     var isPendingAudioPermissionRequest: Bool = true
     var isPendingVideoPermissionRequest: Bool = true
