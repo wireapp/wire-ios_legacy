@@ -145,11 +145,11 @@ final class ZClientViewController: UIViewController {
     // MARK: keyboard shortcut
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(gotoPeopleTab(_:)), discoverabilityTitle: "People".localized)]
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: "keyboardshortcut.openPeople".localized)]
     }
 
     @objc
-    private func gotoPeopleTab(_ sender: Any?) {
+    private func openStartUI(_ sender: Any?) {
         conversationListViewController.bottomBarController.startUIButtonTapped(sender)
     }
 
