@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-
-
 // General strings
-"general.ok" = "OK";
+
+
+"general.ok" = "U redu";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
 "general.close" = "Close";
@@ -26,7 +26,7 @@
 "general.open_settings" = "Open Wire Settings";
 "general.edit" = "Edit";
 "general.done" = "Done";
-"general.confirm" = "OK";
+"general.confirm" = "U redu";
 "general.later" = "Later";
 "general.skip" = "Not Now";
 "general.accept" = "Accept";
@@ -98,7 +98,7 @@
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
-"peoplepicker.send_invitation.dialog.ok" = "OK";
+"peoplepicker.send_invitation.dialog.ok" = "U redu";
 
 "peoplepicker.invite_more_people" = "Invite more people";
 "peoplepicker.invite_team_members" = "Invite people to join the team";
@@ -362,7 +362,7 @@
 "conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
 "conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
 
-"image_confirmer.confirm" = "OK";
+"image_confirmer.confirm" = "U redu";
 "image_confirmer.cancel" = "Cancel";
 "image.add_sketch" = "Add a sketch";
 "image.add_emoji" = "Add an emoji";
@@ -375,7 +375,7 @@
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
 
 // Camera and photos access, keyboard
-"keyboard_photos_access.denied.keyboard.settings" = "Settings";
+"keyboard_photos_access.denied.keyboard.settings" = "Postavke";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
@@ -389,7 +389,7 @@
 "location.unauthorized_alert.title" = "Enable Location Services";
 "location.unauthorized_alert.message" = "To send your location, enable Location Services and allow Wire to access your location.";
 "location.unauthorized_alert.cancel" = "Cancel";
-"location.unauthorized_alert.settings" = "Settings";
+"location.unauthorized_alert.settings" = "Postavke";
 
 // Twitter
 "twitter_status.on_twitter" = "%@ on Twitter";
@@ -614,7 +614,7 @@
 "content.player.unable_to_play" = "UNABLE TO PLAY TRACK";
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
-"connection_request.title" = "Connect to %@"; //check UPPERCASE implementation in code
+"connection_request.title" = "Connect to %@"; // check UPPERCASE implementation in code
 
 // Default connect message to be shown
 "missive.connection_request.default_message" = "Hi %@,\nLet’s connect on Wire.\n%@";
@@ -661,7 +661,7 @@
 
 "voice.alert.call_in_progress.title" = "Call in progress";
 "voice.alert.call_in_progress.message" = "You can have only one active call at a time";
-"voice.alert.call_in_progress.confirm" = "OK";
+"voice.alert.call_in_progress.confirm" = "U redu";
 
 "voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
@@ -941,9 +941,9 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
-
 // Options menu contents
-"self.settings" = "Settings";
+
+"self.settings" = "Postavke";
 "self.profile" = "Profile";
 "self.account" = "Account";
 "self.help_center" = "Support";
@@ -963,11 +963,11 @@
 "self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
-"about.tos.title"="Terms of Use";
-"about.privacy.title"="Privacy Policy";
+"about.tos.title" = "Terms of Use";
+"about.privacy.title" = "Privacy Policy";
 "about.license.title" = "License Information";
-"about.website.title"="Wire Website";
-"about.copyright.title"="© Wire Swiss GmbH";
+"about.website.title" = "Wire Website";
+"about.copyright.title" = "© Wire Swiss GmbH";
 
 // Licenses screen
 "about.license.project_header" = "Details";
@@ -979,7 +979,7 @@
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Manage devices";
-"self.new_device_alert.trust_devices" = "OK";
+"self.new_device_alert.trust_devices" = "U redu";
 
 // Settings changed alert
 
@@ -1397,7 +1397,7 @@
 
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
-"registration.no_history.got_it" = "OK";
+"registration.no_history.got_it" = "U redu";
 "registration.no_history.restore_backup" = "Restore from backup";
 
 "registration.alert.account_exists.title" = "Account Exists";
@@ -1465,7 +1465,7 @@
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
-"registration.no_history.logged_out.got_it" = "OK";
+"registration.no_history.logged_out.got_it" = "U redu";
 
 "registration.enter_name.title" = "Edit Name";
 "registration.enter_name.hero" = "What should we call you?";
@@ -1487,14 +1487,14 @@
 "registration.country_select.title" = "Country";
 
 "registration.share_contacts.hero.title" = "Find people on Wire";
-"registration.share_contacts.hero.paragraph"  = "Share your contacts so we can connect you with others. We anonymize all information and do not share it with anyone else.";
+"registration.share_contacts.hero.paragraph" = "Share your contacts so we can connect you with others. We anonymize all information and do not share it with anyone else.";
 "registration.share_contacts.find_friends_button.title" = "Share contacts";
 "registration.share_contacts.skip_button.title" = "Not now";
 
 "registration.address_book_access_denied.hero.title" = "Wire does not have access to your contacts.";
 "registration.address_book_access_denied.hero.paragraph1" = "Wire helps find your friends if you share your contacts.";
 "registration.address_book_access_denied.hero.paragraph2" = "To enable access tap Settings and turn on Contacts.";
-"registration.address_book_access_denied.settings_button.title" = "Settings";
+"registration.address_book_access_denied.settings_button.title" = "Postavke";
 "registration.address_book_access_denied.maybe_later_button.title" = "Maybe later";
 
 "registration.push_access_denied.hero.title" = "Never miss a call or a message.";
@@ -1518,7 +1518,7 @@
 "registration.devices.active_list_header" = "Active";
 "registration.devices.current_list_header" = "Current";
 "registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password.";
-"registration.devices.activated"  = "Activated %@";
+"registration.devices.activated" = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";
@@ -1742,7 +1742,7 @@
 "availability.reminder.none.title" = "No status set";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "Do not display this information again";
-"availability.reminder.action.ok" = "OK";
+"availability.reminder.action.ok" = "U redu";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
@@ -1917,6 +1917,3 @@
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Unlock";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
-
-//MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
