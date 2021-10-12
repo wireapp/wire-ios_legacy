@@ -84,6 +84,8 @@ final class ImageToolbarView: UIView {
 
         addSubview(buttonContainer)
 
+        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
           buttonContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
           buttonContainer.topAnchor.constraint(equalTo: topAnchor),
@@ -123,7 +125,11 @@ final class ImageToolbarView: UIView {
 
     func createButtonConstraints() {
         let spacing: CGFloat = 16
+        
+        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
 
+        buttons.prepareForLayout()
+        
         if let firstButton = buttons.first {
             NSLayoutConstraint.activate([
               firstButton.leftAnchor.constraint(equalTo: leftAnchor, constant: spacing)

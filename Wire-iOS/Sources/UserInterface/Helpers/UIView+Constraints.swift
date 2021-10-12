@@ -328,3 +328,9 @@ extension Sequence where Element == UIView {
 		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 	}
 }
+
+extension Sequence where Element == IconButton {
+    func prepareForLayout() {
+        forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+    }
+}
