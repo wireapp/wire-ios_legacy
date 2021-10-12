@@ -122,7 +122,7 @@ final class WipeDatabaseViewController: UIViewController {
     private func createConstraints() {
 
         [stackView,
-         confirmButton].disableAutoresizingMaskTranslation()
+         confirmButton].prepareForLayout()
 
         let widthConstraint = stackView.widthAnchor.constraint(equalToConstant: CGFloat.iPhone4_7Inch.width)
         widthConstraint.priority = .defaultHigh

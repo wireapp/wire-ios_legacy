@@ -79,7 +79,7 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
     }
 
     private func createConstraints() {
-        [contentView, stackView, iconImageView].disableAutoresizingMaskTranslation()
+        [contentView, stackView, iconImageView].prepareForLayout()
         
         NSLayoutConstraint.activate([
           stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
