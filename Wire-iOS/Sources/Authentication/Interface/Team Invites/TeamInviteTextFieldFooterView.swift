@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Sugar
 
 final class TeamInviteTextFieldFooterView: UIView {
 
@@ -101,19 +100,18 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
 
     private func createConstraints() {
-        Constraint.on(
-          textField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-          textField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-          textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+        NSLayoutConstraint.activate([
+          textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+          textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+          textField.topAnchor.constraint(equalTo: topAnchor, constant: 4),
           textField.heightAnchor.constraint(equalToConstant: 56),
-          errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
           errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
           errorLabel.heightAnchor.constraint(equalToConstant: 20),
 
-          errorButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          errorButton.centerXAnchor.constraint(equalTo: centerXAnchor),
           errorButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 24),
-          errorButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12)
-        )
+          errorButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)])
     }
 
     func clearInput() {

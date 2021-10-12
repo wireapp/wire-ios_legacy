@@ -85,12 +85,12 @@ final class ImageToolbarView: UIView {
         addSubview(buttonContainer)
 
         NSLayoutConstraint.activate([
-          buttonContainer.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-          buttonContainer.topAnchor.constraint(equalTo: container.topAnchor),
-          buttonContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-          buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: container.leftAnchor),
-          buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: container.rightAnchor)
-        ])
+          buttonContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+          buttonContainer.topAnchor.constraint(equalTo: topAnchor),
+          buttonContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+          buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
+          buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor)
+        ]) 
 
         setupButtons()
         updateButtonConfiguration()
@@ -126,13 +126,13 @@ final class ImageToolbarView: UIView {
 
         if let firstButton = buttons.first {
             NSLayoutConstraint.activate([
-              firstButton.leftAnchor.constraint(equalTo: container.leftAnchor, constant: spacing)
+              firstButton.leftAnchor.constraint(equalTo: leftAnchor, constant: spacing)
             ])
         }
 
         if let lastButton = buttons.last {
             NSLayoutConstraint.activate([
-              lastButton.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -spacing)
+              lastButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -spacing)
             ])
         }
 
@@ -140,7 +140,7 @@ final class ImageToolbarView: UIView {
             NSLayoutConstraint.activate([
               button.widthAnchor.constraint(equalToConstant: 16),
               button.heightAnchor.constraint(equalToConstant: 16),
-              button.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+              button.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
         }
 
