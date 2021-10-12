@@ -49,6 +49,7 @@ class MockUserType: NSObject, UserType, Decodable {
     let legalHoldDataSource = MockLegalHoldDataSource()
 
     var teamIdentifier: UUID?
+    var remoteIdentifier: UUID?
 
     var canLeaveConversation = false
     var canCreateConversation = true
@@ -151,17 +152,21 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isPendingApprovalByOtherUser: Bool = false
 
-    func accept() {
+    func accept(completion: @escaping (Error?) -> Void) {
         isBlocked = false
     }
 
-    func block() {
+    func block(completion: @escaping (Error?) -> Void) {
         isBlocked = true
     }
 
-    func ignore() { }
+    func ignore(completion: @escaping (Error?) -> Void) {
 
-    func cancelConnectionRequest() { }
+    }
+
+    func cancelConnectionRequest(completion: @escaping (Error?) -> Void) {
+
+    }
 
     // MARK: - Wireless
 
@@ -257,7 +262,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Methods
 
-    func connect(message: String) {
+    func connect(completion: @escaping (Error?) -> Void) {
         // No op
     }
 

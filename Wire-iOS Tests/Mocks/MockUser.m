@@ -129,7 +129,6 @@ static id<UserType> mockSelfUser = nil;
 @synthesize accentColorValue;
 @synthesize previewImageData;
 @synthesize completeImageData;
-@synthesize connectionRequestMessage;
 @synthesize totalCommonConnections;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
