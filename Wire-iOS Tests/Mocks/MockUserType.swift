@@ -33,8 +33,6 @@ class MockUserType: NSObject, UserType, Decodable {
         initials = try? container.decode(String.self, forKey: .initials)
         handle = try? container.decode(String.self, forKey: .handle)
         isConnected = (try? container.decode(Bool.self, forKey: .isConnected)) ?? false
-        connectionRequestMessage = try? container.decode(String.self, forKey: .connectionRequestMessage)
-
         if let rawAccentColorValue = try? container.decode(Int16.self, forKey: .accentColorValue),
            let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue) {
             self.accentColorValue = accentColorValue
@@ -135,8 +133,6 @@ class MockUserType: NSObject, UserType, Decodable {
     var teamRole: TeamRole = .none
 
     // MARK: - Connections
-
-    var connectionRequestMessage: String?
 
     var canBeConnected: Bool = false
 
