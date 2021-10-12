@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
 "appLockModule.unlockButton.title" = "Розблокувати";
 "appLockModule.goToSettingsButton.title" = "Перейти до налаштувань";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";

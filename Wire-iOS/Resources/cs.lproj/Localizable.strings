@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "K odemknutí aplikace Wire, zapněte Heslo v nastavení zařízení";
 "appLockModule.unlockButton.title" = "Odemknout";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";

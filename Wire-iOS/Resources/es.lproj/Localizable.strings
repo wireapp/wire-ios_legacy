@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear Wire, habilite el uso de Passcode en la configuracion del dispositivo";
 "appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
