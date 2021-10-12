@@ -17,7 +17,7 @@
 //
 
 import UIKit
-import Cartography
+import Sugar
 
 final class TeamInviteTextFieldFooterView: UIView {
 
@@ -101,19 +101,19 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, textField, errorLabel, errorButton) { view, textField, errorLabel, errorButton in
-            textField.leading == view.leading
-            textField.trailing == view.trailing
-            textField.top == view.top + 4
-            textField.height == 56
-            errorLabel.centerX == view.centerX
-            errorLabel.top == textField.bottom + 8
-            errorLabel.height == 20
+        Constraint.on(
+          textField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          textField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          textField.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+          textField.heightAnchor.constraint(equalToConstant: 56),
+          errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
+          errorLabel.heightAnchor.constraint(equalToConstant: 20),
 
-            errorButton.centerX == view.centerX
-            errorButton.top == errorLabel.bottom + 24
-            errorButton.bottom == view.bottom - 12
-        }
+          errorButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          errorButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 24),
+          errorButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12)
+        )
     }
 
     func clearInput() {
