@@ -17,7 +17,7 @@
 //
 
 import UIKit
-
+import Cartography
 
 enum ImageToolbarConfiguration {
     case cell
@@ -84,15 +84,13 @@ final class ImageToolbarView: UIView {
 
         addSubview(buttonContainer)
 
-        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-          buttonContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
-          buttonContainer.topAnchor.constraint(equalTo: topAnchor),
-          buttonContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-          buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
-          buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor)
-        ]) 
+        constrain(self, buttonContainer) { container, buttonContainer in
+            buttonContainer.centerX == container.centerX
+            buttonContainer.top == container.top
+            buttonContainer.bottom == container.bottom
+            buttonContainer.left >= container.left
+            buttonContainer.right <= container.right
+        }
 
         setupButtons()
         updateButtonConfiguration()
@@ -125,38 +123,34 @@ final class ImageToolbarView: UIView {
 
     func createButtonConstraints() {
         let spacing: CGFloat = 16
-        
-        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        buttons.prepareForLayout()
-        
         if let firstButton = buttons.first {
-            NSLayoutConstraint.activate([
-              firstButton.leftAnchor.constraint(equalTo: leftAnchor, constant: spacing)
-            ])
+            constrain(buttonContainer, firstButton) { container, firstButton in
+                firstButton.left == container.left + spacing
+            }
         }
 
         if let lastButton = buttons.last {
-            NSLayoutConstraint.activate([
-              lastButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -spacing)
-            ])
+            constrain(buttonContainer, lastButton) { container, lastButton in
+                lastButton.right == container.right - spacing
+            }
         }
 
         for button in buttons {
-            NSLayoutConstraint.activate([
-              button.widthAnchor.constraint(equalToConstant: 16),
-              button.heightAnchor.constraint(equalToConstant: 16),
-              button.centerYAnchor.constraint(equalTo: centerYAnchor)
-            ])
+            constrain(buttonContainer, button) { container, button in
+                button.width == 16
+                button.height == 16
+                button.centerY == container.centerY
+            }
         }
 
         for i in 1..<buttons.count {
             let previousButton = buttons[i-1]
             let button = buttons[i]
 
-            NSLayoutConstraint.activate([
-              button.leftAnchor.constraint(equalTo: previousButton.rightAnchor, constant: spacing * 2)
-            ])
+            constrain(self, button, previousButton) { _, button, previousButton in
+                button.left == previousButton.right + spacing * 2
+            }
         }
     }
 
