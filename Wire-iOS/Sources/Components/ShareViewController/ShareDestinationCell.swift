@@ -17,16 +17,16 @@
 //
 
 import Foundation
-import Cartography
+
 import UIKit
 import WireCommonComponents
 
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
-//    let checkmarkSize: CGFloat = 24
+    let checkmarkSize: CGFloat = 24
     let avatarSize: CGFloat = 32
-//    let shieldSize: CGFloat = 20
+    let shieldSize: CGFloat = 20
     let margin: CGFloat = 16
 
     let stackView = UIStackView(axis: .horizontal)
@@ -76,7 +76,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             legalHoldIcon.isHidden = !destination.isUnderLegalHold
 
             if let avatarView = destination.avatarView {
-                avatarView.frame = CGRect(x: 0, y: 0, width: 32, height: avatarSize)
+                avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
                 avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
             }
@@ -111,62 +111,46 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         contentView.addSubview(stackView)
 
         stackView.addArrangedSubview(avatarViewContainer)
-        constrain(contentView, avatarViewContainer) { contentView, avatarView in
-            avatarView.centerY == contentView.centerY
-            avatarView.width == 32
-            avatarView.height == 32
-        }
+
+        [avatarViewContainer, shieldView, guestUserIcon, legalHoldIcon, stackView, titleLabel, checkImageView].prepareForLayout()
 
         titleLabel.backgroundColor = .clear
         titleLabel.textColor = .white
         titleLabel.font = .normalLightFont
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        stackView.addArrangedSubview(titleLabel)
-
-        stackView.addArrangedSubview(shieldView)
-
-        constrain(shieldView) { shieldView in
-            shieldView.width == 20
-            shieldView.height == 20
-        }
-
-        stackView.addArrangedSubview(guestUserIcon)
-
-        constrain(guestUserIcon) { guestUserIcon in
-            guestUserIcon.width == 20
-            guestUserIcon.height == 20
-        }
-
-        stackView.addArrangedSubview(legalHoldIcon)
-
-        constrain(legalHoldIcon) { legalHoldIcon in
-            legalHoldIcon.width == 20
-            legalHoldIcon.height == 20
+        [titleLabel, shieldView, guestUserIcon, legalHoldIcon, checkImageView].forEach {
+            stackView.addArrangedSubview($0)
         }
 
         checkImageView.layer.borderColor = UIColor.white.cgColor
         checkImageView.layer.borderWidth = 2
         checkImageView.contentMode = .center
-        checkImageView.layer.cornerRadius = 24 / 2.0
+        checkImageView.layer.cornerRadius = checkmarkSize / 2.0
 
-        stackView.addArrangedSubview(checkImageView)
+        NSLayoutConstraint.activate([
+            avatarViewContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            avatarViewContainer.widthAnchor.constraint(equalToConstant: avatarSize),
+            avatarViewContainer.heightAnchor.constraint(equalToConstant: avatarSize),
+            shieldView.widthAnchor.constraint(equalToConstant: shieldSize),
+            shieldView.heightAnchor.constraint(equalToConstant: shieldSize),
 
-        constrain(contentView, stackView, titleLabel, checkImageView) {
-            contentView, stackView, titleLabel, checkImageView in
+            guestUserIcon.widthAnchor.constraint(equalToConstant: shieldSize),
+            guestUserIcon.heightAnchor.constraint(equalToConstant: shieldSize),
+            legalHoldIcon.widthAnchor.constraint(equalToConstant: shieldSize),
+            legalHoldIcon.heightAnchor.constraint(equalToConstant: shieldSize),
+            stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: margin),
+            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -margin),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            stackView.left == contentView.left + 16
-            stackView.right == contentView.right - 16
-            stackView.top == contentView.top
-            stackView.bottom == contentView.bottom
+            titleLabel.heightAnchor.constraint(equalToConstant: 44),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            titleLabel.height == 44
-            titleLabel.centerY == contentView.centerY
-
-            checkImageView.centerY == contentView.centerY
-            checkImageView.width == 24
-            checkImageView.height == 24
-         }
+            checkImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkImageView.widthAnchor.constraint(equalToConstant: checkmarkSize),
+            checkImageView.heightAnchor.constraint(equalToConstant: checkmarkSize)
+        ])
 
     }
 
