@@ -24,9 +24,9 @@ import WireCommonComponents
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
-    let checkmarkSize: CGFloat = 24
+//    let checkmarkSize: CGFloat = 24
     let avatarSize: CGFloat = 32
-    let shieldSize: CGFloat = 20
+//    let shieldSize: CGFloat = 20
     let margin: CGFloat = 16
 
     let stackView = UIStackView(axis: .horizontal)
@@ -76,7 +76,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             self.legalHoldIcon.isHidden = !destination.isUnderLegalHold
 
             if let avatarView = destination.avatarView {
-                avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
+                avatarView.frame = CGRect(x: 0, y: 0, width: 32, height: avatarSize)
                 self.avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
             }
@@ -113,8 +113,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.stackView.addArrangedSubview(avatarViewContainer)
         constrain(self.contentView, self.avatarViewContainer) { contentView, avatarView in
             avatarView.centerY == contentView.centerY
-            avatarView.width == self.avatarSize
-            avatarView.height == self.avatarSize
+            avatarView.width == 32
+            avatarView.height == 32
         }
 
         self.titleLabel.backgroundColor = .clear
@@ -127,28 +127,28 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.stackView.addArrangedSubview(self.shieldView)
 
         constrain(shieldView) { shieldView in
-            shieldView.width == self.shieldSize
-            shieldView.height == self.shieldSize
+            shieldView.width == 20
+            shieldView.height == 20
         }
 
         self.stackView.addArrangedSubview(self.guestUserIcon)
 
         constrain(self.guestUserIcon) { guestUserIcon in
-            guestUserIcon.width == self.shieldSize
-            guestUserIcon.height == self.shieldSize
+            guestUserIcon.width == 20
+            guestUserIcon.height == 20
         }
 
         self.stackView.addArrangedSubview(self.legalHoldIcon)
 
         constrain(self.legalHoldIcon) { legalHoldIcon in
-            legalHoldIcon.width == self.shieldSize
-            legalHoldIcon.height == self.shieldSize
+            legalHoldIcon.width == 20
+            legalHoldIcon.height == 20
         }
 
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
-        self.checkImageView.layer.cornerRadius = self.checkmarkSize / 2.0
+        self.checkImageView.layer.cornerRadius = 24 / 2.0
 
         self.stackView.addArrangedSubview(self.checkImageView)
 
@@ -164,8 +164,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             titleLabel.centerY == contentView.centerY
 
             checkImageView.centerY == contentView.centerY
-            checkImageView.width == self.checkmarkSize
-            checkImageView.height == self.checkmarkSize
+            checkImageView.width == 24
+            checkImageView.height == 24
          }
 
     }
