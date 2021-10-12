@@ -101,7 +101,7 @@ final class TeamInviteTextFieldFooterView: UIView {
 
     private func createConstraints() {
         [textField, errorLabel, errorButton].prepareForLayout()
-        
+
         NSLayoutConstraint.activate([
           textField.leadingAnchor.constraint(equalTo: leadingAnchor),
           textField.trailingAnchor.constraint(equalTo: trailingAnchor),
