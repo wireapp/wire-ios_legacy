@@ -48,27 +48,13 @@ final class IncomingConnectionViewController: UIViewController {
 
     override func loadView() {
         connectionView = IncomingConnectionView(user: user)
-        connectionView.onAccept = { [weak self] user in
+        connectionView.onAccept = { [weak self] _ in
             guard let weakSelf = self else { return }
-
-            weakSelf.user.accept { error in
-                if let error = error as? LocalizedError {
-                    weakSelf.presentLocalizedErrorAlert(error)
-                } else {
-                    weakSelf.onAction?(.accept)
-                }
-            }
+            weakSelf.onAction?(.accept)
         }
-        connectionView.onIgnore = { [weak self] user in
+        connectionView.onIgnore = { [weak self] _ in
             guard let weakSelf = self else { return }
-
-            weakSelf.user.ignore { error in
-                if let error = error as? LocalizedError {
-                    weakSelf.presentLocalizedErrorAlert(error)
-                } else {
-                    weakSelf.onAction?(.ignore)
-                }
-            }
+            weakSelf.onAction?(.ignore)
         }
 
         view = connectionView
