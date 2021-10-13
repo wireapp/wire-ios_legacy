@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import UIKit
+import XCTest
+@testable import Wire
 
-extension CGSize {
-    enum iPhoneSize {
-        static let iPhone4_7: CGSize = CGSize(width: 375, height: 667)
-    }
-}
+final class DeveloperOptionsControllerSnapshotTests: XCTestCase {
 
-extension UIViewController {
-    func setBoundsSizeAsIPhone4_7Inch() {
-        view.bounds.size = CGSize.iPhoneSize.iPhone4_7
+    var sut: DeveloperOptionsController!
+
+    override func setUp() {
+        super.setUp()
+
+        sut = DeveloperOptionsController()
     }
+
+    override func tearDown() {
+        sut = nil
+
+        super.tearDown()
+    }
+
+    func testForInitState() {
+        // GIVEN & WHEN
+
+        // THEN
+        verify(matching: sut, customSize: CGSize.iPhoneSize.iPhone4_7)
+    }
+
 }
