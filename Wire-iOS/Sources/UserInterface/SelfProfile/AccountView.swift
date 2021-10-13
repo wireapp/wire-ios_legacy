@@ -176,7 +176,7 @@ class BaseAccountView: UIView {
 
         [selectionView, imageViewContainer].prepareForLayout()
 
-        selectionView.fitIn(view: imageViewContainer, insets: UIEdgeInsets(top: -1, left: -1, bottom: -1, right: -1))
+        selectionView.fitIn(view: imageViewContainer, inset: -1)
 
         accountView.createDotConstraints()
 
@@ -191,7 +191,7 @@ class BaseAccountView: UIView {
             iconWidth = CGFloat.AccountView.iconWidth
         }
 
-        [self, imageViewContainer, dotView].prepareForLayout()
+        [self, dotView].prepareForLayout()
         
         NSLayoutConstraint.activate([
           imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
@@ -292,7 +292,7 @@ final class PersonalAccountView: AccountView {
         
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        userImageView.fitIn(view: imageViewContainer, insets: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2))
+        userImageView.fitIn(view: imageViewContainer, inset: 2)
         
         update()
     }
