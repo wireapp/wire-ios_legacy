@@ -221,9 +221,10 @@ final class ProfileViewControllerViewModel: NSObject {
         user.accept { [weak self] error in
             if let error = error as? ConnectToUserError {
                 self?.viewModelDelegate?.presentError(error)
+            } else {
+                self?.user.refreshData()
+                self?.viewModelDelegate?.updateFooterViews()
             }
-            self?.user.refreshData()
-            self?.viewModelDelegate?.updateFooterViews()
         }
     }
 
