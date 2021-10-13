@@ -313,7 +313,7 @@ extension UIView {
 }
 
 extension UIView {
-    
+
     /// fit self in a container view
     /// - Parameters:
     ///   - view: the container view to fit in
@@ -322,7 +322,6 @@ extension UIView {
         fitIn(view: view, insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
 
-    
     /// fit self in a container view
     /// notice bottom and right inset no need to set to negative of top/left, e.g. if you want to add inset to self with 2 pt:
     ///
@@ -334,13 +333,13 @@ extension UIView {
     func fitIn(view: UIView, insets: UIEdgeInsets = .zero) {
         NSLayoutConstraint.activate(fitInConstraints(view: view, insets: insets))
     }
-    
+
     func fitInConstraints(view: UIView, inset: CGFloat) -> [NSLayoutConstraint] {
         return fitInConstraints(view: view, insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
-    
+
     func fitInConstraints(view: UIView, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
-        
+
         return [
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.leading),
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.trailing),

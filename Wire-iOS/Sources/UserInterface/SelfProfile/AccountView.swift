@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 class LayerHostView<LayerType: CALayer>: UIView {
@@ -174,7 +173,6 @@ class BaseAccountView: UIView {
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
-
         let dotConstraints = accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
@@ -190,7 +188,6 @@ class BaseAccountView: UIView {
 
         [self, dotView, selectionView, imageViewContainer].prepareForLayout()
 
-                
         NSLayoutConstraint.activate(
             dotConstraints +
             selectionView.fitInConstraints(view: imageViewContainer, inset: -1) +
@@ -290,11 +287,11 @@ final class PersonalAccountView: AccountView {
         }
 
         self.imageViewContainer.addSubview(userImageView)
-        
+
         userImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         userImageView.fitIn(view: imageViewContainer, inset: 2)
-        
+
         update()
     }
 
