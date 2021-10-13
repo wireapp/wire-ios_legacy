@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "要解鎖Wire，請在設置中選擇打開密碼";
 "appLockModule.unlockButton.title" = "解鎖";
 "appLockModule.goToSettingsButton.title" = "前往設定";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";

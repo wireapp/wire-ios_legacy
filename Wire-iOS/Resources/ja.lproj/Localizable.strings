@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Wire をロック解除するには、デバイス設定でパスコードを有効にしてください";
 "appLockModule.unlockButton.title" = "ロックを解除";
 "appLockModule.goToSettingsButton.title" = "設定を開く";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
