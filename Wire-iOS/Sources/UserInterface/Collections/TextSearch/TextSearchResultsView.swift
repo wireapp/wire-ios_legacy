@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final public class TextSearchResultsView: UIView {
     var tableView = UITableView()

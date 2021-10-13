@@ -172,13 +172,14 @@ class BaseAccountView: UIView {
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
         selectionView.hostedLayer.lineWidth = 1.5
 
-        [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
+        [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
+        //todo: test
         NSLayoutConstraint.activate([
-          selectionView.topAnchor.constraint(equalTo: inset(imageViewContainer.topAnchor),
-          selectionView.bottomAnchor.constraint(equalTo: inset(imageViewContainer.bottomAnchor),
-          selectionView.leftAnchor.constraint(equalTo: inset(imageViewContainer.leftAnchor),
-          selectionView.rightAnchor.constraint(equalTo: inset(imageViewContainer.rightAnchor)
+          selectionView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: 1),
+          selectionView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -1),
+          selectionView.leftAnchor.constraint(equalTo: imageViewContainer.leftAnchor, constant: 1),
+          selectionView.rightAnchor.constraint(equalTo: imageViewContainer.rightAnchor, constant: -1)
         ])
 
         accountView.createDotConstraints()
@@ -195,18 +196,18 @@ class BaseAccountView: UIView {
         }
 
         NSLayoutConstraint.activate([
-          imageViewContainer.topAnchor.constraint(equalTo: selfView.topAnchor, constant: containerInset),
-          imageViewContainer.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
-          selfView.widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
-          selfView.trailingAnchor.constraint(greaterThanOrEqualTo: dotView.trailingAnchor),
+          imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
+          imageViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+          widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
+          trailingAnchor.constraint(greaterThanOrEqualTo: dotView.trailingAnchor),
 
           imageViewContainer.widthAnchor.constraint(equalToConstant: iconWidth),
           imageViewContainer.heightAnchor.constraint(equalTo: imageViewContainer.widthAnchor),
 
-          imageViewContainer.bottomAnchor.constraint(equalTo: selfView.bottomAnchor, constant: -containerInset),
-          imageViewContainer.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: containerInset),
-          imageViewContainer.trailingAnchor.constraint(equalTo: selfView.trailingAnchor, constant: -containerInset),
-          selfView.widthAnchor.constraint(lessThanOrEqualToConstant: 128)
+          imageViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -containerInset),
+          imageViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: containerInset),
+          imageViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -containerInset),
+          widthAnchor.constraint(lessThanOrEqualToConstant: 128)
         ])
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))

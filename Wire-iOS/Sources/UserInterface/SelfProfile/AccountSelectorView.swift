@@ -49,9 +49,9 @@ class LineView: UIView {
         let inset: CGFloat = 6
 
         NSLayoutConstraint.activate([
-          first.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-          first.topAnchor.constraint(equalTo: selfView.topAnchor),
-          first.bottomAnchor.constraint(equalTo: selfView.bottomAnchor, constant: ~ 750.0)
+          first.leadingAnchor.constraint(equalTo: leadingAnchor),
+          first.topAnchor.constraint(equalTo: topAnchor),
+          first.bottomAnchor.constraint(equalTo: bottomAnchor, constant: ~ 750.0)
         ])
 
         var previous: UIView = first
@@ -59,8 +59,8 @@ class LineView: UIView {
         self.views.dropFirst().forEach {
             NSLayoutConstraint.activate([
               current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: inset),
-              current.topAnchor.constraint(equalTo: selfView.topAnchor),
-              current.bottomAnchor.constraint(equalTo: selfView.bottomAnchor)
+              current.topAnchor.constraint(equalTo: topAnchor),
+              current.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
             previous = $0
         }
@@ -70,7 +70,7 @@ class LineView: UIView {
         }
 
         NSLayoutConstraint.activate([
-          last.trailingAnchor.constraint(equalTo: selfView.trailingAnchor)
+          last.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }
@@ -108,14 +108,16 @@ final class AccountSelectorView: UIView {
     private var lineView: LineView? {
         didSet {
             oldValue?.removeFromSuperview()
-            if let newLineView = self.lineView {
-                self.addSubview(newLineView)
+            if let newLineView = lineView {
+                addSubview(newLineView)
+
+                topOffsetConstraint = newLineView.centerYAnchor.constraint(equalTo: centerYAnchor)
 
                 NSLayoutConstraint.activate([
-                  self.topOffsetConstraint = lineView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
-                  lineView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-                  lineView.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
-                  lineView.heightAnchor.constraint(equalTo: selfView.heightAnchor)
+                topOffsetConstraint,
+                    newLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    newLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    newLineView.heightAnchor.constraint(equalTo: heightAnchor)
                 ])
             }
         }

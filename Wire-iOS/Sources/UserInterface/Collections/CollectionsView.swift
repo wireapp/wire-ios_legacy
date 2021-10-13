@@ -102,24 +102,28 @@ final class CollectionsView: UIView {
         addSubview(searchViewController.searchBar)
 
         if let searchBar = searchViewController.searchBar {
+            
+            let centerYConstraint = noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            centerY.priority = UILayoutPriority.defaultLow
+            
         NSLayoutConstraint.activate([
-          searchBar.topAnchor.constraint(equalTo: selfView.topAnchor),
-          searchBar.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-          searchBar.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          searchBar.topAnchor.constraint(equalTo: topAnchor),
+          searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+          searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
           searchBar.heightAnchor.constraint(equalToConstant: 56),
 
           collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
 
-          collectionView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-          collectionView.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
-          collectionView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
           noResultsView.topAnchor.constraint(greaterThanOrEqualTo: searchBar.bottomAnchor, constant: 12),
-          noResultsView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
-          noResultsView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor, constant: ~ UILayoutPriority.defaultLow),
-          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: selfView.bottomAnchor, constant: -12),
-          noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: selfView.leadingAnchor, constant: 24),
-          noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: selfView.trailingAnchor, constant: -24)
+          noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerYConstraint,
+          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
+          noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 24),
+          noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -24)
         ])
         }
 
