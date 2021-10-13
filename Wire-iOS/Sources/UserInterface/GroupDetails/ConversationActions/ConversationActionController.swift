@@ -148,7 +148,6 @@ final class ConversationActionController {
 
     func presentError(_ error: LocalizedError) {
         target.presentLocalizedErrorAlert(error)
-
     }
 
     private func prepare(viewController: UIViewController, with context: PresentationContext) {
