@@ -27,13 +27,13 @@ final class CollectionLoadingCell: UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.contentView.addSubview(self.loadingView)
-        self.contentView.clipsToBounds = true
+        contentView.addSubview(loadingView)
+        contentView.clipsToBounds = true
 
-        self.loadingView.startAnimating()
-        self.loadingView.hidesWhenStopped = false
+        loadingView.startAnimating()
+        loadingView.hidesWhenStopped = false
 
-        constrain(self.contentView, self.loadingView) { contentView, loadingView in
+        constrain(contentView, loadingView) { contentView, loadingView in
             loadingView.center == contentView.center
         }
     }
@@ -45,14 +45,14 @@ final class CollectionLoadingCell: UICollectionViewCell {
     var containerWidth: CGFloat = 320
     var collapsed: Bool = false {
         didSet {
-            self.loadingView.isHidden = self.collapsed
+            loadingView.isHidden = collapsed
         }
     }
 
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         var newFrame = layoutAttributes.frame
-        newFrame.size.height = 24 + (self.collapsed ? 0 : 64)
-        newFrame.size.width = self.containerWidth
+        newFrame.size.height = 24 + (collapsed ? 0 : 64)
+        newFrame.size.width = containerWidth
         layoutAttributes.frame = newFrame
         return layoutAttributes
     }

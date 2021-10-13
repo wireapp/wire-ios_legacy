@@ -36,8 +36,8 @@ final class AccountSelectorController: UIViewController {
         })
 
         accountsView.delegate = self
-        self.view.addSubview(accountsView)
-        constrain(self.view, accountsView) { selfView, accountsView in
+        view.addSubview(accountsView)
+        constrain(view, accountsView) { selfView, accountsView in
             accountsView.edges == selfView.edges
         }
 
@@ -52,14 +52,14 @@ final class AccountSelectorController: UIViewController {
 
     func updateShowAccountsIfNeeded() {
         let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
-        guard showAccounts != self.showAccounts else { return }
+        guard showAccounts != showAccounts else { return }
         setShowAccounts(to: showAccounts)
     }
 
     private func setShowAccounts(to showAccounts: Bool) {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
-        self.view.frame.size = accountsView.frame.size
+        view.frame.size = accountsView.frame.size
     }
 }
 
