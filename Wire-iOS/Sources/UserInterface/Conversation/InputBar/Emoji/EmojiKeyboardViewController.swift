@@ -70,7 +70,8 @@ final class EmojiKeyboardViewController: UIViewController {
     }
 
     func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
+        if let sectionViewControllerView = sectionViewController.view {
+        constrain(view, collectionView, sectionViewControllerView) { view, collectionView, sectionView in
             collectionView.top == view.top
             collectionView.leading == view.leading
             collectionView.trailing == view.trailing
@@ -79,6 +80,7 @@ final class EmojiKeyboardViewController: UIViewController {
             sectionView.leading == view.leading
             sectionView.trailing == view.trailing - 32 ~ 750.0
             sectionView.width <= 400
+        }
         }
     }
 
