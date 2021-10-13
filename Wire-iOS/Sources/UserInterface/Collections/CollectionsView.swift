@@ -102,7 +102,8 @@ final class CollectionsView: UIView {
         addSubview(searchViewController.resultsView)
         addSubview(searchViewController.searchBar)
 
-        constrain(self, searchViewController.searchBar, collectionView, noResultsView) { selfView, searchBar, collectionView, noResultsView in
+        if let searchBar = searchViewController.searchBar {
+        constrain(self, searchBar, collectionView, noResultsView) { selfView, searchBar, collectionView, noResultsView in
 
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading
@@ -122,9 +123,12 @@ final class CollectionsView: UIView {
             noResultsView.leading >= selfView.leading + 24
             noResultsView.trailing <= selfView.trailing - 24
         }
+        }
 
-        constrain(collectionView, searchViewController.resultsView) { collectionView, resultsView in
+        if let resultsView = searchViewController.resultsView {
+        constrain(collectionView, resultsView) { collectionView, resultsView in
             resultsView.edges == collectionView.edges
+        }
         }
     }
 
