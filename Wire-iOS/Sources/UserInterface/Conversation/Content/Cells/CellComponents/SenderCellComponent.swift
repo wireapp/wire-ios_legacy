@@ -27,7 +27,7 @@ private struct SenderCellConfiguration {
     let textColor: UIColor
     let icon: StyleKitIcon?
 
-    init(user: UserType, in conversation: ConversationLike?) {
+    init(user: UserType) {
         fullName = user.name ?? ""
         if user.isServiceUser {
             textColor = .from(scheme: .textForeground)
@@ -38,8 +38,9 @@ private struct SenderCellConfiguration {
         } else if user.isFederated {
             textColor = user.nameAccentColor
             icon = .federated
-        } else if let conversation = conversation,
-                  user.isGuest(in: conversation) {
+        } else if !user.isTeamMember,
+                  let selfUser = SelfUser.provider?.selfUser,
+                  selfUser.isTeamMember {
             textColor = user.nameAccentColor
             icon = .guest
         } else {
@@ -61,15 +62,12 @@ final class SenderCellComponent: UIView {
     var avatarSpacerWidthConstraint: NSLayoutConstraint?
     var observerToken: Any?
 
-    var conversation: ConversationLike?
-
     // MARK: - Configuration
 
-    func configure(with user: UserType, in conversation: ConversationLike?) {
+    func configure(with user: UserType) {
         avatar.user = user
-        self.conversation = conversation
 
-        let configuration = SenderCellConfiguration(user: user, in: conversation)
+        let configuration = SenderCellConfiguration(user: user)
         configureViews(for: configuration)
 
         if !ProcessInfo.processInfo.isRunningTests,
@@ -164,7 +162,7 @@ extension SenderCellComponent: ZMUserObserver {
             return
         }
 
-        let configuration = SenderCellConfiguration(user: changeInfo.user, in: conversation)
+        let configuration = SenderCellConfiguration(user: changeInfo.user)
         configureNameLabel(for: configuration)
     }
 
