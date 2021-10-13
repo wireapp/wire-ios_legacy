@@ -58,8 +58,10 @@ extension ConversationListViewController {
         addToSelf(usernameTakeoverViewController)
         concealContentContainer()
 
-        constrain(view, usernameTakeoverViewController.view) { view, takeover in
+        if let takeover = usernameTakeoverViewController.view {
+        constrain(view, takeover) { view, takeover in
             takeover.edges == view.edges
+        }
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
