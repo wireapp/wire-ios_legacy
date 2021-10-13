@@ -193,9 +193,11 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     }
 
     private func createConstraints() {
-        constrain(view, viewController.view, dimView) { view, childViewControllerView, dimView in
+        if let childViewControllerView = viewController.view {
+        constrain(view, childViewControllerView, dimView) { view, childViewControllerView, dimView in
             childViewControllerView.edges == view.edges
             dimView.edges == view.edges
+        }
         }
     }
 
