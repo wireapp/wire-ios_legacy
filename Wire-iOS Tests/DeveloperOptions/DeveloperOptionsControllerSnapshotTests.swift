@@ -36,9 +36,7 @@ final class DeveloperOptionsControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState() {
-        // GIVEN & WHEN
-
-        // THEN
+        // GIVEN & WHEN & THEN
         verify(matching: sut, customSize: CGSize.iPhoneSize.iPhone4_7)
     }
 

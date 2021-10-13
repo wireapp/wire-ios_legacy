@@ -21,11 +21,13 @@ import UIKit
 
 extension CGSize {
     enum iPhoneSize {
+        static let iPhone4: CGSize = CGSize(width: 320, height: 568)
         static let iPhone4_7: CGSize = CGSize(width: 375, height: 667)
     }
 }
 
 extension UIViewController {
+
     func setBoundsSizeAsIPhone4_7Inch() {
         view.bounds.size = CGSize.iPhoneSize.iPhone4_7
     }
