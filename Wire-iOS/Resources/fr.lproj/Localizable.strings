@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
 "appLockModule.unlockButton.title" = "Déverrouiller";
 "appLockModule.goToSettingsButton.title" = "Ouvrir les paramètres";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";

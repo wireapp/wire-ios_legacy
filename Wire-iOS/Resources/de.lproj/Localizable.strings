@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, Kennwort in den Geräteeinstellungen aktivieren";
 "appLockModule.unlockButton.title" = "Entsperren";
 "appLockModule.goToSettingsButton.title" = "Einstellungen öffnen";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";

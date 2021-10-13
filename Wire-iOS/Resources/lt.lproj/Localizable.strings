@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
 "appLockModule.unlockButton.title" = "Atrakinti";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
