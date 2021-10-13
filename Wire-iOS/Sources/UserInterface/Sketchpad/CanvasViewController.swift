@@ -179,8 +179,9 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         colorPickerController.selectedColorIndex = colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0
     }
 
-    func createConstraints() {
-        constrain(view, canvas, colorPickerController.view, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
+    private func createConstraints() {
+        guard let colorPicker = colorPickerController.view else { return }
+        constrain(view, canvas, colorPicker, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
             colorPicker.top == container.top
             colorPicker.left == container.left
             colorPicker.right == container.right
@@ -201,7 +202,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
             toolbar.right == container.right
         }
 
-        constrain(view, colorPickerController.view, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
+        constrain(view, colorPicker, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
             hintImageView.center == container.center
             hintLabel.top == colorPicker.bottom + 16
             hintLabel.leftMargin == container.leftMargin
@@ -279,12 +280,12 @@ extension CanvasViewController: CanvasDelegate {
 extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
 
     func showEmojiKeyboard(animated: Bool) {
-        guard !isEmojiKeyboardInTransition else { return }
+        guard !isEmojiKeyboardInTransition, let emojiKeyboardView = emojiKeyboardViewController.view else { return }
 
         emojiKeyboardViewController.willMove(toParent: self)
         view.addSubview(emojiKeyboardViewController.view)
 
-        constrain(view, emojiKeyboardViewController.view) { container, emojiKeyboardView in
+        constrain(view, emojiKeyboardView) { container, emojiKeyboardView in
             emojiKeyboardView.height == KeyboardHeight.current
             emojiKeyboardView.left == container.left
             emojiKeyboardView.right == container.right

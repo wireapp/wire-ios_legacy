@@ -153,7 +153,7 @@ final class SettingsClientViewController: UIViewController,
     }
 
     private func createConstraints() {
-        constrain(tableView, self.view, self.topSeparator) { tableView, selfView, topSeparator in
+        constrain(tableView, view, topSeparator) { tableView, selfView, topSeparator in
             tableView.edges == selfView.edges
 
             topSeparator.left == tableView.left

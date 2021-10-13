@@ -306,8 +306,9 @@ final class SkeletonViewController: UIViewController {
         customSplitViewController.setLeftViewControllerRevealed(true, animated: false)
     }
 
-    func createConstraints() {
-        constrain(view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
+    private func createConstraints() {
+        guard let splitViewControllerView = customSplitViewController.view else { return }
+        constrain(view, blurEffectView, backgroundImageView, splitViewControllerView) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
             blurEffectView.edges == containerView.edges
             splitViewControllerView.edges == containerView.edges
             backgroundImageView.top == containerView.top
