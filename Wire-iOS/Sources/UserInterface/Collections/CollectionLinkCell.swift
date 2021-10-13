@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireCommonComponents
@@ -43,17 +42,16 @@ final class CollectionLinkCell: CollectionCell {
 
         contentView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
 
-        constrain(contentView, articleView, headerView) { contentView, articleView, headerView in
+        NSLayoutConstraint.activate([
+          headerView.topAnchor.constraint(equalTo: contentView.topMarginAnchor),
+          headerView.leadingAnchor.constraint(equalTo: contentView.leadingMarginAnchor, constant: 12),
+          headerView.trailingAnchor.constraint(equalTo: contentView.trailingMarginAnchor, constant: -12),
 
-            headerView.top == contentView.topMargin
-            headerView.leading == contentView.leadingMargin + 12
-            headerView.trailing == contentView.trailingMargin - 12
-
-            articleView.top >= headerView.bottom - 4
-            articleView.left == contentView.leftMargin
-            articleView.right == contentView.rightMargin
-            articleView.bottom == contentView.bottomMargin
-        }
+          articleView.topAnchor.constraint(greaterThanOrEqualTo: headerView.bottomAnchor, constant: -4),
+          articleView.leftAnchor.constraint(equalTo: contentView.leftMarginAnchor),
+          articleView.rightAnchor.constraint(equalTo: contentView.rightMarginAnchor),
+          articleView.bottomAnchor.constraint(equalTo: contentView.bottomMarginAnchor)
+        ])
 
         self.articleView = articleView
     }

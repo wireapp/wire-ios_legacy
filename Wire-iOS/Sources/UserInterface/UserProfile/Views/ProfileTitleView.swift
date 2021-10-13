@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireCommonComponents
 import WireDataModel
 
@@ -55,15 +54,15 @@ final class ProfileTitleView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, titleLabel, verifiedImageView) { container, titleLabel, verifiedImageView in
-            titleLabel.top == container.top
-            titleLabel.bottom == container.bottom
-            titleLabel.leading == container.leading
-            titleLabel.trailing == container.trailing
+        NSLayoutConstraint.activate([
+          titleLabel.topAnchor.constraint(equalTo: container.topAnchor),
+          titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
 
-            verifiedImageView.centerY == titleLabel.centerY
-            verifiedImageView.leading == titleLabel.trailing + 10
-        }
+          verifiedImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+          verifiedImageView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10)
+        ])
     }
 
     func configure(with user: UserType, variant: ColorSchemeVariant) {

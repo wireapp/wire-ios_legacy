@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireSyncEngine
@@ -258,63 +257,63 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     }
 
     private func createConstraints() {
-        constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-            contentView.left == view.left + 16
-            contentView.right == view.right - 16
-            contentView.bottom == view.bottom - 32
-            contentView.top >= view.top + 24
-            reviewInvitationTextView.top == contentView.top
-            reviewInvitationTextView.left == contentView.left
-            reviewInvitationTextView.right == contentView.right
-            reviewInvitationTextView.bottom == separatorLineView.top - 24
-            separatorLineView.left == contentView.left
-            separatorLineView.right == contentView.right
-            separatorLineView.height == .hairline
-        }
+        NSLayoutConstraint.activate([
+          contentView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+          contentView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+          contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
+          contentView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 24),
+          reviewInvitationTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          reviewInvitationTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          reviewInvitationTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          reviewInvitationTextView.bottomAnchor.constraint(equalTo: separatorLineView.topAnchor, constant: -24),
+          separatorLineView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          separatorLineView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          separatorLineView.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
 
-        constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in
-            typeLabel.left == contentView.left
-            typeLabel.right == contentView.right
-            typeLabel.top == separatorLineView.bottom + 24
-            IDLabel.left == contentView.left
-            IDLabel.right == contentView.right
-            IDLabel.top == typeLabel.bottom - 2
-            fullIDLabel.left == contentView.left
-            fullIDLabel.right == contentView.right
-            fullIDLabel.top == IDLabel.bottom + 24
-        }
+        NSLayoutConstraint.activate([
+          typeLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          typeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          typeLabel.topAnchor.constraint(equalTo: separatorLineView.bottomAnchor, constant: 24),
+          IDLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          IDLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          IDLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: -2),
+          fullIDLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          fullIDLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          fullIDLabel.topAnchor.constraint(equalTo: IDLabel.bottomAnchor, constant: 24)
+        ])
 
-        constrain(contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton) { contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton in
-            verifiedToggle.left == contentView.left
-            verifiedToggle.top == fullIDLabel.bottom + 32
-            verifiedToggle.bottom == contentView.bottom - UIScreen.safeArea.bottom
-            verifiedToggleLabel.left == verifiedToggle.right + 10
-            verifiedToggleLabel.centerY == verifiedToggle.centerY
-            resetButton.right == contentView.right
-            resetButton.centerY == verifiedToggle.centerY
-        }
+        NSLayoutConstraint.activate([
+          verifiedToggle.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          verifiedToggle.topAnchor.constraint(equalTo: fullIDLabel.bottomAnchor, constant: 32),
+          verifiedToggle.bottomAnchor.constraint(equalToConstant: contentView.bottom - UIScreen.safeArea.bottom),
+          verifiedToggleLabel.leftAnchor.constraint(equalTo: verifiedToggle.rightAnchor, constant: 10),
+          verifiedToggleLabel.centerYAnchor.constraint(equalTo: verifiedToggle.centerYAnchor),
+          resetButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          resetButton.centerYAnchor.constraint(equalTo: verifiedToggle.centerYAnchor)
+        ])
 
         let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0
 
-        constrain(contentView, backButton, view) { contentView, backButton, selfView in
-            backButton.left == contentView.left - 8
-            backButton.top == selfView.top + topMargin
-            backButton.width == 32
-            backButton.height == 32
-        }
+        NSLayoutConstraint.activate([
+          backButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: -8),
+          backButton.topAnchor.constraint(equalTo: selfView.topAnchor, constant: topMargin),
+          backButton.widthAnchor.constraint(equalToConstant: 32),
+          backButton.heightAnchor.constraint(equalToConstant: 32)
+        ])
 
-        constrain(contentView, spinner, verifiedToggle, IDLabel) { contentView, spinner, verifiedToggle, IDLabel in
-            spinner.centerX == contentView.centerX
-            spinner.top >= IDLabel.bottom + 24
-            spinner.bottom <= verifiedToggle.bottom - 32
-        }
+        NSLayoutConstraint.activate([
+          spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+          spinner.topAnchor.constraint(greaterThanOrEqualTo: IDLabel.bottomAnchor, constant: 24),
+          spinner.bottomAnchor.constraint(lessThanOrEqualTo: verifiedToggle.bottomAnchor, constant: -32)
+        ])
 
         if let debugMenuButton = self.debugMenuButton {
-            constrain(contentView, descriptionTextView, debugMenuButton) { contentView, reviewInvitationTextView, debugMenuButton in
-                debugMenuButton.right == contentView.right
-                debugMenuButton.left == contentView.left
-                debugMenuButton.top == reviewInvitationTextView.bottom + 10
-            }
+            NSLayoutConstraint.activate([
+              debugMenuButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+              debugMenuButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+              debugMenuButton.topAnchor.constraint(equalTo: reviewInvitationTextView.bottomAnchor, constant: 10)
+            ])
         }
     }
 

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class AccountSelectorController: UIViewController {
@@ -37,9 +36,12 @@ final class AccountSelectorController: UIViewController {
 
         accountsView.delegate = self
         view.addSubview(accountsView)
-        constrain(view, accountsView) { selfView, accountsView in
-            accountsView.edges == selfView.edges
-        }
+        NSLayoutConstraint.activate([
+          accountsView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          accountsView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          accountsView.leftAnchor.constraint(equalTo: selfView.leftAnchor),
+          accountsView.rightAnchor.constraint(equalTo: selfView.rightAnchor)
+        ])
 
         setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)
     }

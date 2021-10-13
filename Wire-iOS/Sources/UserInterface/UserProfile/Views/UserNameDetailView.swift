@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
  import WireDataModel
 
 private let smallLightFont = FontSpec(.small, .light).font!
@@ -146,16 +145,16 @@ final class UserNameDetailView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, subtitleLabel, correlationLabel) { view, subtitle, correlation in
-            subtitle.top == view.top
-            subtitle.centerX == view.centerX
-            subtitle.height == 16
+        NSLayoutConstraint.activate([
+          subtitle.topAnchor.constraint(equalTo: view.topAnchor),
+          subtitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          subtitle.heightAnchor.constraint(equalToConstant: 16),
 
-            correlation.top == subtitle.bottom
-            correlation.centerX == view.centerX
-            correlation.height == 16
-            correlation.bottom == view.bottom
-        }
+          correlation.topAnchor.constraint(equalTo: subtitle.bottomAnchor),
+          correlation.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          correlation.heightAnchor.constraint(equalToConstant: 16),
+          correlation.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
 }

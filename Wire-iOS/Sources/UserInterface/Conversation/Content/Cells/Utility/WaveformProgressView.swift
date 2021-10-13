@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final private class WaveformBarsView: UIView {
 
@@ -156,10 +155,16 @@ final public class WaveformProgressView: UIView {
         addSubview(backgroundWaveform)
         addSubview(foregroundWaveform)
 
-        constrain(backgroundWaveform, foregroundWaveform) { backgroundWaveform, foregroundWaveform in
-            backgroundWaveform.edges == backgroundWaveform.superview!.edges
-            foregroundWaveform.edges == backgroundWaveform.superview!.edges
-        }
+        NSLayoutConstraint.activate([
+          backgroundWaveform.topAnchor.constraint(equalTo: backgroundWaveform.superview!.topAnchor),
+          backgroundWaveform.bottomAnchor.constraint(equalTo: backgroundWaveform.superview!.bottomAnchor),
+          backgroundWaveform.leftAnchor.constraint(equalTo: backgroundWaveform.superview!.leftAnchor),
+          backgroundWaveform.rightAnchor.constraint(equalTo: backgroundWaveform.superview!.rightAnchor),
+          foregroundWaveform.topAnchor.constraint(equalTo: backgroundWaveform.superview!.topAnchor),
+          foregroundWaveform.bottomAnchor.constraint(equalTo: backgroundWaveform.superview!.bottomAnchor),
+          foregroundWaveform.leftAnchor.constraint(equalTo: backgroundWaveform.superview!.leftAnchor),
+          foregroundWaveform.rightAnchor.constraint(equalTo: backgroundWaveform.superview!.rightAnchor)
+        ])
     }
 
     required public init?(coder aDecoder: NSCoder) {

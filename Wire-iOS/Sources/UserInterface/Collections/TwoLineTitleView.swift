@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 public final class TwoLineTitleView: UIView {
 
@@ -51,15 +50,15 @@ public final class TwoLineTitleView: UIView {
         addSubview(subtitleLabel)
 
         translatesAutoresizingMaskIntoConstraints = false
-        constrain(self, titleLabel, subtitleLabel) { selfView, titleLabel, subtitleLabel in
-            titleLabel.leading == selfView.leading
-            titleLabel.trailing == selfView.trailing
-            titleLabel.top == selfView.top + 4
-            subtitleLabel.top == titleLabel.bottom
-            subtitleLabel.leading == selfView.leading
-            subtitleLabel.trailing == selfView.trailing
-            subtitleLabel.bottom == selfView.bottom
-        }
+        NSLayoutConstraint.activate([
+          titleLabel.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          titleLabel.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          titleLabel.topAnchor.constraint(equalTo: selfView.topAnchor, constant: 4),
+          subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+          subtitleLabel.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          subtitleLabel.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          subtitleLabel.bottomAnchor.constraint(equalTo: selfView.bottomAnchor)
+        ])
     }
 
     public required init?(coder aDecoder: NSCoder) {

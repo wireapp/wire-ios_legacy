@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
@@ -139,28 +138,28 @@ final class GiphyConfirmationViewController: UIViewController {
             imagePreview.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor)
         ])
 
-        constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
-            leftButton.height == 40
-            leftButton.width >= 100
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
+        NSLayoutConstraint.activate([
+          leftButton.heightAnchor.constraint(equalToConstant: 40),
+          leftButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 100),
+          leftButton.leftAnchor.constraint(equalTo: container.leftAnchor),
+          leftButton.topAnchor.constraint(equalTo: container.topAnchor),
+          leftButton.bottomAnchor.constraint(equalTo: container.bottomAnchor),
 
-            rightButton.height == 40
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
+          rightButton.heightAnchor.constraint(equalToConstant: 40),
+          rightButton.rightAnchor.constraint(equalTo: container.rightAnchor),
+          rightButton.topAnchor.constraint(equalTo: container.topAnchor),
+          rightButton.bottomAnchor.constraint(equalTo: container.bottomAnchor),
 
-            leftButton.width == rightButton.width
-            leftButton.right == rightButton.left - 16
-        }
+          leftButton.widthAnchor.constraint(equalTo: rightButton.widthAnchor),
+          leftButton.rightAnchor.constraint(equalTo: rightButton.leftAnchor, constant: -16)
+        ])
 
-        constrain(view, buttonContainer) { container, buttonContainer in
-            buttonContainer.left >= container.left + 32
-            buttonContainer.right <= container.right - 32
-            buttonContainer.bottom == container.bottom - 32
-            buttonContainer.width == 476 ~ 700.0
-            buttonContainer.centerX == container.centerX
-        }
+        NSLayoutConstraint.activate([
+          buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: container.leftAnchor, constant: 32),
+          buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: container.rightAnchor, constant: -32),
+          buttonContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -32),
+          buttonContainer.widthAnchor.constraint(equalToConstant: 476 ~ 700.0),
+          buttonContainer.centerXAnchor.constraint(equalTo: container.centerXAnchor)
+        ])
     }
 }

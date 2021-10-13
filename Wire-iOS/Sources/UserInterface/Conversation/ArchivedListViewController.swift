@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 import WireDataModel
 
 // MARK: ArchivedListViewControllerDelegate
@@ -89,15 +88,15 @@ final class ArchivedListViewController: UIViewController {
     }
 
     func createConstraints() {
-        constrain(view, archivedNavigationBar, collectionView) { view, navigationBar, collectionView in
-            navigationBar.top == view.top + UIScreen.safeArea.top
-            navigationBar.left == view.left
-            navigationBar.right == view.right
-            navigationBar.bottom == collectionView.top
-            collectionView.left == view.left
-            collectionView.bottom == view.bottom
-            collectionView.right == view.right
-        }
+        NSLayoutConstraint.activate([
+          navigationBar.topAnchor.constraint(equalToConstant: view.top + UIScreen.safeArea.top),
+          navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+          navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+          navigationBar.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
+          collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
     // MARK: - Accessibility

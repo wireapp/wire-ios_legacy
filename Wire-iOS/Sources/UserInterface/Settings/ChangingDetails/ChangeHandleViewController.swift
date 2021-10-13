@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -86,16 +85,16 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func createConstraints() {
-        constrain(self, prefixLabel, handleTextField) { view, prefixLabel, textField in
-            prefixLabel.top == view.top
-            prefixLabel.width == 16
-            prefixLabel.bottom == view.bottom
-            prefixLabel.leading == view.leading + 16
-            prefixLabel.trailing == textField.leading - 4
-            textField.top == view.top
-            textField.bottom == view.bottom
-            textField.trailing == view.trailing - 16
-        }
+        NSLayoutConstraint.activate([
+          prefixLabel.topAnchor.constraint(equalTo: view.topAnchor),
+          prefixLabel.widthAnchor.constraint(equalToConstant: 16),
+          prefixLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          prefixLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          prefixLabel.trailingAnchor.constraint(equalTo: textField.leadingAnchor, constant: -4),
+          textField.topAnchor.constraint(equalTo: view.topAnchor),
+          textField.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
     }
 
     func performWiggleAnimation() {

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -58,9 +57,12 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
 
     private func createConstraints() {
         if let contentViewControllerView = contentViewController.view {
-        constrain(view, contentViewControllerView) { view, conversationView in
-            conversationView.edges == view.edges
-        }
+        NSLayoutConstraint.activate([
+          conversationView.topAnchor.constraint(equalTo: view.topAnchor),
+          conversationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          conversationView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          conversationView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
         }
     }
 

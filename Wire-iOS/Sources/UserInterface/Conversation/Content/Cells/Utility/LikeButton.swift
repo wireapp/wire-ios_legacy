@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 final class LikeButton: IconButton {
     static var normalColor: UIColor {

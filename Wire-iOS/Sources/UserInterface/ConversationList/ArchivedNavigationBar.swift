@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final class ArchivedNavigationBar: UIView {
 
@@ -70,21 +69,21 @@ final class ArchivedNavigationBar: UIView {
     }
 
     func createConstraints() {
-        constrain(self, separatorView, titleLabel, dismissButton) { view, separator, title, button in
-            separator.height == .hairline
-            separator.left == view.left
-            separator.right == view.right
-            separator.bottom == view.bottom
+        NSLayoutConstraint.activate([
+          separator.heightAnchor.constraint(equalTo: .hairlineAnchor),
+          separator.leftAnchor.constraint(equalTo: view.leftAnchor),
+          separator.rightAnchor.constraint(equalTo: view.rightAnchor),
+          separator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            title.centerX == view.centerX
-            title.centerY == view.centerY
+          title.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          title.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            button.centerY == title.centerY
-            button.right == view.right - 16
-            button.left >= title.right + 8
+          button.centerYAnchor.constraint(equalTo: title.centerYAnchor),
+          button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+          button.leftAnchor.constraint(greaterThanOrEqualTo: title.rightAnchor, constant: 8),
 
-            view.height == barHeight
-        }
+          view.heightAnchor.constraint(equalToConstant: barHeight)
+        ])
     }
 
     @objc func dismissButtonTapped(_ sender: IconButton) {

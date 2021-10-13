@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 extension ConversationListViewController {
 
@@ -59,9 +58,12 @@ extension ConversationListViewController {
         concealContentContainer()
 
         if let takeover = usernameTakeoverViewController.view {
-        constrain(view, takeover) { view, takeover in
-            takeover.edges == view.edges
-        }
+        NSLayoutConstraint.activate([
+          takeover.topAnchor.constraint(equalTo: view.topAnchor),
+          takeover.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          takeover.leftAnchor.constraint(equalTo: view.leftAnchor),
+          takeover.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController

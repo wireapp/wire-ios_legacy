@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireCommonComponents
 
 class TitleView: UIView {
@@ -42,9 +41,12 @@ class TitleView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, titleButton) { view, button in
-            button.edges == view.edges
-        }
+        NSLayoutConstraint.activate([
+          button.topAnchor.constraint(equalTo: view.topAnchor),
+          button.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          button.leftAnchor.constraint(equalTo: view.leftAnchor),
+          button.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
     private func createViews() {

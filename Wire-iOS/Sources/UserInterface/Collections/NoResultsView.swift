@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireCommonComponents
 import UIKit
 import WireSystem
@@ -61,15 +60,15 @@ final class NoResultsView: UIView {
         iconView.contentMode = .scaleAspectFit
         addSubview(iconView)
 
-        constrain(self, label, iconView) { selfView, label, iconView in
-            iconView.top == selfView.top
-            iconView.centerX == selfView.centerX
+        NSLayoutConstraint.activate([
+          iconView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          iconView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
 
-            label.top == iconView.bottom + 24
-            label.bottom == selfView.bottom
-            label.leading == selfView.leading
-            label.trailing == selfView.trailing
-        }
+          label.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24),
+          label.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          label.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          label.trailingAnchor.constraint(equalTo: selfView.trailingAnchor)
+        ])
     }
 
     required public init?(coder aDecoder: NSCoder) {

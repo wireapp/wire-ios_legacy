@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireCommonComponents
 import UIKit
 import WireSystem
@@ -94,21 +93,21 @@ final class CollectionHeaderView: UICollectionReusableView {
         iconImageView.contentMode = .center
         addSubview(iconImageView)
 
-        constrain(self, titleLabel, actionButton, iconImageView) { selfView, titleLabel, actionButton, iconImageView in
-            iconImageView.leading == selfView.leading + 16
-            iconImageView.centerY == selfView.centerY
-            iconImageView.width == 16
-            iconImageView.height == 16
+        NSLayoutConstraint.activate([
+          iconImageView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: 16),
+          iconImageView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          iconImageView.widthAnchor.constraint(equalToConstant: 16),
+          iconImageView.heightAnchor.constraint(equalToConstant: 16),
 
-            titleLabel.leading == iconImageView.trailing + 8
-            titleLabel.centerY == selfView.centerY
-            titleLabel.trailing == selfView.trailing
+          titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
+          titleLabel.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          titleLabel.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
 
-            actionButton.leading == selfView.leading
-            actionButton.top == selfView.top
-            actionButton.trailing == selfView.trailing - 16
-            actionButton.bottom == selfView.bottom
-        }
+          actionButton.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          actionButton.topAnchor.constraint(equalTo: selfView.topAnchor),
+          actionButton.trailingAnchor.constraint(equalTo: selfView.trailingAnchor, constant: -16),
+          actionButton.bottomAnchor.constraint(equalTo: selfView.bottomAnchor)
+        ])
     }
 
     public var desiredWidth: CGFloat = 0

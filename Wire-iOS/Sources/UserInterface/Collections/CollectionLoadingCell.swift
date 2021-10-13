@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 
@@ -33,9 +32,10 @@ final class CollectionLoadingCell: UICollectionViewCell {
         loadingView.startAnimating()
         loadingView.hidesWhenStopped = false
 
-        constrain(contentView, loadingView) { contentView, loadingView in
-            loadingView.center == contentView.center
-        }
+        NSLayoutConstraint.activate([
+          loadingView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+          loadingView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
 
     required public init?(coder aDecoder: NSCoder) {

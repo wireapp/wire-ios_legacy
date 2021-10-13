@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 protocol CharacterInputFieldDelegate: class {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
@@ -125,9 +124,10 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
             label.font = UIFont.systemFont(ofSize: 32)
             self.addSubview(label)
 
-            constrain(self, label) { selfView, label in
-                label.center == selfView.center
-            }
+            NSLayoutConstraint.activate([
+              label.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+              label.centerYAnchor.constraint(equalTo: selfView.centerYAnchor)
+            ])
         }
 
         required init?(coder aDecoder: NSCoder) {
@@ -171,9 +171,12 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
         self.addSubview(stackView)
 
-        constrain(self, stackView) { selfView, stackView in
-            stackView.edges == selfView.edges
-        }
+        NSLayoutConstraint.activate([
+          stackView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          stackView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          stackView.leftAnchor.constraint(equalTo: selfView.leftAnchor),
+          stackView.rightAnchor.constraint(equalTo: selfView.rightAnchor)
+        ])
 
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
         self.addGestureRecognizer(longPressGestureRecognizer)

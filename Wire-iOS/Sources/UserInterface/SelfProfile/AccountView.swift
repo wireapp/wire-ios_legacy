@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 import WireSyncEngine
 
@@ -175,9 +174,12 @@ class BaseAccountView: UIView {
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
 
-        constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
-            selectionView.edges == inset(imageViewContainer.edges, -1, -1)
-        }
+        NSLayoutConstraint.activate([
+          selectionView.topAnchor.constraint(equalTo: inset(imageViewContainer.topAnchor),
+          selectionView.bottomAnchor.constraint(equalTo: inset(imageViewContainer.bottomAnchor),
+          selectionView.leftAnchor.constraint(equalTo: inset(imageViewContainer.leftAnchor),
+          selectionView.rightAnchor.constraint(equalTo: inset(imageViewContainer.rightAnchor)
+        ])
 
         accountView.createDotConstraints()
 
@@ -192,20 +194,20 @@ class BaseAccountView: UIView {
             iconWidth = CGFloat.AccountView.iconWidth
         }
 
-        constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + containerInset
-            imageViewContainer.centerX == selfView.centerX
-            selfView.width >= imageViewContainer.width
-            selfView.trailing >= dotView.trailing
+        NSLayoutConstraint.activate([
+          imageViewContainer.topAnchor.constraint(equalTo: selfView.topAnchor, constant: containerInset),
+          imageViewContainer.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+          selfView.widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
+          selfView.trailingAnchor.constraint(greaterThanOrEqualTo: dotView.trailingAnchor),
 
-            imageViewContainer.width == iconWidth
-            imageViewContainer.height == imageViewContainer.width
+          imageViewContainer.widthAnchor.constraint(equalToConstant: iconWidth),
+          imageViewContainer.heightAnchor.constraint(equalTo: imageViewContainer.widthAnchor),
 
-            imageViewContainer.bottom == selfView.bottom - containerInset
-            imageViewContainer.leading == selfView.leading + containerInset
-            imageViewContainer.trailing == selfView.trailing - containerInset
-            selfView.width <= 128
-        }
+          imageViewContainer.bottomAnchor.constraint(equalTo: selfView.bottomAnchor, constant: -containerInset),
+          imageViewContainer.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: containerInset),
+          imageViewContainer.trailingAnchor.constraint(equalTo: selfView.trailingAnchor, constant: -containerInset),
+          selfView.widthAnchor.constraint(lessThanOrEqualToConstant: 128)
+        ])
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -288,9 +290,12 @@ final class PersonalAccountView: AccountView {
         }
 
         self.imageViewContainer.addSubview(userImageView)
-        constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
-            userImageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
+        NSLayoutConstraint.activate([
+          userImageView.topAnchor.constraint(equalTo: inset(imageViewContainer.topAnchor),
+          userImageView.bottomAnchor.constraint(equalTo: inset(imageViewContainer.bottomAnchor),
+          userImageView.leftAnchor.constraint(equalTo: inset(imageViewContainer.leftAnchor),
+          userImageView.rightAnchor.constraint(equalTo: inset(imageViewContainer.rightAnchor)
+        ])
 
         update()
     }

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class UINavigationBarContainer: UIViewController {
 
@@ -41,12 +40,12 @@ final class UINavigationBarContainer: UIViewController {
     }
 
     func createConstraints() {
-        constrain(navigationBar, view) { navigationBar, view in
-            self.navHeight = navigationBar.height == portraitNavbarHeight
-            navigationBar.left == view.left
-            navigationBar.right == view.right
-            view.bottom == navigationBar.bottom
-        }
+        NSLayoutConstraint.activate([
+          self.navHeight = navigationBar.heightAnchor.constraint(equalToConstant: portraitNavbarHeight),
+          navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+          navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+          view.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor)
+        ])
 
         navigationBar.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
     }

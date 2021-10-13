@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
 import WireSyncEngine
 import WireSystem
 
@@ -153,13 +152,16 @@ final class SettingsClientViewController: UIViewController,
     }
 
     private func createConstraints() {
-        constrain(tableView, view, topSeparator) { tableView, selfView, topSeparator in
-            tableView.edges == selfView.edges
+        NSLayoutConstraint.activate([
+          tableView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          tableView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          tableView.leftAnchor.constraint(equalTo: selfView.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: selfView.rightAnchor),
 
-            topSeparator.left == tableView.left
-            topSeparator.right == tableView.right
-            topSeparator.top == tableView.top
-        }
+          topSeparator.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          topSeparator.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          topSeparator.topAnchor.constraint(equalTo: tableView.topAnchor)
+        ])
     }
 
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

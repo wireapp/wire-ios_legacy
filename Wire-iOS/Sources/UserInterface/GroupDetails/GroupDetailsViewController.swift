@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
@@ -75,15 +74,15 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         [collectionView, footerView].forEach(view.addSubview)
 
-        constrain(view, collectionView, footerView) { container, collectionView, footerView in
-            collectionView.top == container.top
-            collectionView.leading == container.leading
-            collectionView.trailing == container.trailing
-            collectionView.bottom == footerView.top
-            footerView.leading == container.leading
-            footerView.trailing == container.trailing
-            footerView.bottom == container.bottom
-        }
+        NSLayoutConstraint.activate([
+          collectionView.topAnchor.constraint(equalTo: container.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+          footerView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          footerView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ])
 
         collectionViewController.collectionView = collectionView
         footerView.delegate = self

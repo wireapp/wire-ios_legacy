@@ -16,7 +16,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamImageView: UIImageView {
 
@@ -79,10 +78,10 @@ final class TeamImageView: UIImageView {
         self.addSubview(self.initialLabel)
         self.accessibilityElements = [initialLabel]
 
-        constrain(self, initialLabel) { selfView, initialLabel in
-            initialLabel.centerY == selfView.centerY
-            initialLabel.centerX == selfView.centerX
-        }
+        NSLayoutConstraint.activate([
+          initialLabel.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          initialLabel.centerXAnchor.constraint(equalTo: selfView.centerXAnchor)
+        ])
 
         self.updateImage()
 

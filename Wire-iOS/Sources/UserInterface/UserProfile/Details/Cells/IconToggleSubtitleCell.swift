@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     private let imageContainer = UIView()
@@ -65,27 +64,27 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func createConstraints() {
-        constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
-            self.imageContainerWidthConstraint = imageContainer.width == CGFloat.IconCell.IconWidth
-            iconImageView.centerY == topContainer.centerY
-            titleLabel.leading == iconImageView.trailing + CGFloat.IconCell.IconSpacing
-            self.iconImageViewLeadingConstraint = iconImageView.leading == topContainer.leading + CGFloat.IconCell.IconSpacing
+        NSLayoutConstraint.activate([
+          self.imageContainerWidthConstraint = imageContainer.widthAnchor.constraint(equalTo: CGFloat.IconCell.IconWidthAnchor),
+          iconImageView.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: CGFloat.IconCell.IconSpacing),
+          self.iconImageViewLeadingConstraint = iconImageView.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: CGFloat.IconCell.IconSpacing),
 
-            toggle.centerY == topContainer.centerY
-            toggle.trailing == topContainer.trailing - CGFloat.IconCell.IconSpacing
-            titleLabel.centerY == topContainer.centerY
-        }
-        constrain(contentView, topContainer, subtitleLabel) { contentView, topContainer, subtitleLabel in
-            topContainer.top == contentView.top
-            topContainer.leading == contentView.leading
-            topContainer.trailing == contentView.trailing
-            topContainer.height == 56
+          toggle.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+          toggle.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -CGFloat.IconCell.IconSpacing),
+          titleLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+          topContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+          topContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+          topContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          topContainer.heightAnchor.constraint(equalToConstant: 56),
 
-            subtitleLabel.leading == contentView.leading + self.subtitleInsets.leading
-            subtitleLabel.trailing == contentView.trailing - self.subtitleInsets.trailing
-            self.subtitleTopConstraint = subtitleLabel.top == topContainer.bottom + self.subtitleInsets.top
-            self.subtitleBottomConstraint = subtitleLabel.bottom == contentView.bottom - self.subtitleInsets.bottom
-        }
+          subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: self.subtitleInsets.leading),
+          subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -self.subtitleInsets.trailing),
+          self.subtitleTopConstraint = subtitleLabel.topAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: self.subtitleInsets.top),
+          self.subtitleBottomConstraint = subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -self.subtitleInsets.bottom)
+        ])
     }
 
     private func styleViews() {

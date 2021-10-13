@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import Cartography
 
 class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
@@ -70,20 +69,20 @@ class FingerprintTableViewCell: UITableViewCell {
         contentView.addSubview(fingerprintLabel)
         contentView.addSubview(spinner)
 
-        constrain(contentView, titleLabel, fingerprintLabel, spinner) { contentView, titleLabel, fingerprintLabel, spinner in
-            titleLabel.top == contentView.top + 16
-            titleLabel.left == contentView.left + 16
-            titleLabel.right <= contentView.right - 16
+        NSLayoutConstraint.activate([
+          titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+          titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          titleLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-            fingerprintLabel.top == titleLabel.bottom + 4
-            fingerprintLabel.left == contentView.left + 16
-            fingerprintLabel.right == contentView.right - 16
-            fingerprintLabel.bottom == contentView.bottom - 16
+          fingerprintLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+          fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          fingerprintLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+          fingerprintLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
-            spinner.centerX == contentView.centerX
-            spinner.top >= titleLabel.bottom + 4
-            spinner.bottom <= contentView.bottom - 16
-        }
+          spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+          spinner.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor, constant: 4),
+          spinner.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
+        ])
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
 

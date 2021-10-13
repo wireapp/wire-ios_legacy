@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 public final class FeedbackOverlayView: UIView {
 
@@ -44,12 +43,12 @@ public final class FeedbackOverlayView: UIView {
     }
 
     fileprivate func constrainViews() {
-        constrain(self, titleLabel) { container, label in
-            label.centerX == container.centerX
-            label.centerY == container.centerY
-            label.left >= container.left + 24
-            label.right <= container.right - 24
-        }
+        NSLayoutConstraint.activate([
+          label.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+          label.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+          label.leftAnchor.constraint(greaterThanOrEqualTo: container.leftAnchor, constant: 24),
+          label.rightAnchor.constraint(lessThanOrEqualTo: container.rightAnchor, constant: -24)
+        ])
     }
 
     public func show(text: String) {

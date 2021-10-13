@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireSystem
 import WireDataModel
 import UIKit
@@ -51,14 +50,14 @@ public final class TextSearchResultFooter: UIView {
         addSubview(nameLabel)
         addSubview(dateLabel)
 
-        constrain(self, nameLabel, dateLabel) { selfView, nameLabel, dateLabel in
-            nameLabel.leading == selfView.leading
-            nameLabel.trailing == dateLabel.leading - 4
-            dateLabel.trailing <= selfView.trailing
-            nameLabel.top == selfView.top
-            nameLabel.bottom == selfView.bottom
-            dateLabel.centerY == nameLabel.centerY
-        }
+        NSLayoutConstraint.activate([
+          nameLabel.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          nameLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -4),
+          dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: selfView.trailingAnchor),
+          nameLabel.topAnchor.constraint(equalTo: selfView.topAnchor),
+          nameLabel.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          dateLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
+        ])
     }
 
     public var nameLabel: UILabel = {

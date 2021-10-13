@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
@@ -131,38 +130,40 @@ final class AudioMessageView: UIView, TransferView {
     }
 
     private func createConstraints() {
-        constrain(self, playButton, timeLabel) { selfView, playButton, timeLabel in
-            selfView.height == 56
+        NSLayoutConstraint.activate([
+          selfView.heightAnchor.constraint(equalToConstant: 56),
 
-            playButton.left == selfView.left + 12
-            playButton.centerY == selfView.centerY
-            playButton.width == 32
-            playButton.height == playButton.width
+          playButton.leftAnchor.constraint(equalTo: selfView.leftAnchor, constant: 12),
+          playButton.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          playButton.widthAnchor.constraint(equalToConstant: 32),
+          playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor),
 
-            timeLabel.left == playButton.right + 12
-            timeLabel.centerY == selfView.centerY
-            timeLabel.width >= 32
-        }
+          timeLabel.leftAnchor.constraint(equalTo: playButton.rightAnchor, constant: 12),
+          timeLabel.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          timeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 32)
+        ])
 
-        constrain(downloadProgressView, playButton) { downloadProgressView, playButton in
-            downloadProgressView.center == playButton.center
-            downloadProgressView.width == playButton.width - 2
-            downloadProgressView.height == playButton.height - 2
-        }
+        NSLayoutConstraint.activate([
+          downloadProgressView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor),
+          downloadProgressView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
+          downloadProgressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+          downloadProgressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2)
+        ])
 
-        constrain(self, playerProgressView, timeLabel, waveformProgressView, loadingView) { selfView, playerProgressView, timeLabel, waveformProgressView, loadingView in
-            playerProgressView.centerY == selfView.centerY
-            playerProgressView.left == timeLabel.right + 12
-            playerProgressView.right == selfView.right - 12
-            playerProgressView.height == 1
+        NSLayoutConstraint.activate([
+          playerProgressView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          playerProgressView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 12),
+          playerProgressView.rightAnchor.constraint(equalTo: selfView.rightAnchor, constant: -12),
+          playerProgressView.heightAnchor.constraint(equalToConstant: 1),
 
-            waveformProgressView.centerY == selfView.centerY
-            waveformProgressView.left == playerProgressView.left
-            waveformProgressView.right == playerProgressView.right
-            waveformProgressView.height == 32
+          waveformProgressView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          waveformProgressView.leftAnchor.constraint(equalTo: playerProgressView.leftAnchor),
+          waveformProgressView.rightAnchor.constraint(equalTo: playerProgressView.rightAnchor),
+          waveformProgressView.heightAnchor.constraint(equalToConstant: 32),
 
-            loadingView.center == selfView.center
-        }
+          loadingView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+          loadingView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor)
+        ])
 
     }
 

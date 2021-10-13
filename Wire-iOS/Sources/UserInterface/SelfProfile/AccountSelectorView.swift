@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 import WireSyncEngine
 
@@ -49,20 +48,20 @@ class LineView: UIView {
 
         let inset: CGFloat = 6
 
-        constrain(self, first) { selfView, first in
-            first.leading == selfView.leading
-            first.top == selfView.top
-            first.bottom == selfView.bottom ~ 750.0
-        }
+        NSLayoutConstraint.activate([
+          first.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          first.topAnchor.constraint(equalTo: selfView.topAnchor),
+          first.bottomAnchor.constraint(equalTo: selfView.bottomAnchor, constant: ~ 750.0)
+        ])
 
         var previous: UIView = first
 
         self.views.dropFirst().forEach {
-            constrain(previous, $0, self) { previous, current, selfView in
-                current.leading == previous.trailing + inset
-                current.top == selfView.top
-                current.bottom == selfView.bottom
-            }
+            NSLayoutConstraint.activate([
+              current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: inset),
+              current.topAnchor.constraint(equalTo: selfView.topAnchor),
+              current.bottomAnchor.constraint(equalTo: selfView.bottomAnchor)
+            ])
             previous = $0
         }
 
@@ -70,9 +69,9 @@ class LineView: UIView {
             return
         }
 
-        constrain(self, last) { selfView, last in
-            last.trailing == selfView.trailing
-        }
+        NSLayoutConstraint.activate([
+          last.trailingAnchor.constraint(equalTo: selfView.trailingAnchor)
+        ])
     }
 }
 
@@ -112,12 +111,12 @@ final class AccountSelectorView: UIView {
             if let newLineView = self.lineView {
                 self.addSubview(newLineView)
 
-                constrain(self, newLineView) { selfView, lineView in
-                    self.topOffsetConstraint = lineView.centerY == selfView.centerY
-                    lineView.leading == selfView.leading
-                    lineView.trailing == selfView.trailing
-                    lineView.height == selfView.height
-                }
+                NSLayoutConstraint.activate([
+                  self.topOffsetConstraint = lineView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+                  lineView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+                  lineView.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+                  lineView.heightAnchor.constraint(equalTo: selfView.heightAnchor)
+                ])
             }
         }
     }

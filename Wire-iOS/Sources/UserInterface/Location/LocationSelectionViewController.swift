@@ -17,7 +17,6 @@
 // 
 
 import WireDataModel
-import Cartography
 import MapKit
 import CoreLocation
 import UIKit
@@ -102,30 +101,30 @@ final class LocationSelectionViewController: UIViewController {
 
     fileprivate func createConstraints() {
         if let sendController = sendViewController.view {
-        constrain(view, mapView, sendController, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
-            mapView.trailing == view.trailing
-            mapView.leading == view.leading
-            mapView.top == view.top + UIScreen.safeArea.top
-            mapView.bottom == view.bottom  - UIScreen.safeArea.bottom
-            sendController.leading == view.leading
-            sendController.trailing == view.trailing
-            sendController.bottom == view.bottom
-            sendController.height == 56 + UIScreen.safeArea.bottom
-            toolBar.leading == view.leading
-            toolBar.top == view.top
-            toolBar.trailing == view.trailing
-            pin.centerX == mapView.centerX + 8.5
-            pin.bottom == mapView.centerY + 5
-            pin.height == 39
-            pin.width == 32
-        }
+        NSLayoutConstraint.activate([
+          mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          mapView.topAnchor.constraint(equalToConstant: view.top + UIScreen.safeArea.top),
+          mapView.bottomAnchor.constraint(equalToConstant: view.bottom  - UIScreen.safeArea.bottom),
+          sendController.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          sendController.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          sendController.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          sendController.heightAnchor.constraint(equalToConstant: 56 + UIScreen.safeArea.bottom),
+          toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          toolBar.topAnchor.constraint(equalTo: view.topAnchor),
+          toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          pin.centerXAnchor.constraint(equalTo: mapView.centerXAnchor, constant: 8.5),
+          pin.bottomAnchor.constraint(equalTo: mapView.centerYAnchor, constant: 5),
+          pin.heightAnchor.constraint(equalToConstant: 39),
+          pin.widthAnchor.constraint(equalToConstant: 32)
+        ])
 
-        constrain(view, sendController, locationButton) { view, sendController, button in
-            button.leading == view.leading + 16
-            button.bottom == sendController.top - 16
-            button.width == 28
-            button.height == 28
-        }
+        NSLayoutConstraint.activate([
+          button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          button.bottomAnchor.constraint(equalTo: sendController.topAnchor, constant: -16),
+          button.widthAnchor.constraint(equalToConstant: 28),
+          button.heightAnchor.constraint(equalToConstant: 28)
+        ])
         }
     }
 

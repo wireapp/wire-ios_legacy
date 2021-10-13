@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireCommonComponents
 
 class StartUIIconCell: UICollectionViewCell {
@@ -65,22 +64,22 @@ class StartUIIconCell: UICollectionViewCell {
     fileprivate  func createConstraints() {
         let iconSize: CGFloat = 32.0
 
-        constrain(contentView, iconView, titleLabel, separator) { container, iconView, titleLabel, separator in
-            iconView.width == iconSize
-            iconView.height == iconSize
-            iconView.leading == container.leading + 16
-            iconView.centerY == container.centerY
+        NSLayoutConstraint.activate([
+          iconView.widthAnchor.constraint(equalToConstant: iconSize),
+          iconView.heightAnchor.constraint(equalToConstant: iconSize),
+          iconView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+          iconView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
-            titleLabel.leading == container.leading + 64
-            titleLabel.trailing == container.trailing
-            titleLabel.top == container.top
-            titleLabel.bottom == container.bottom
+          titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 64),
+          titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          titleLabel.topAnchor.constraint(equalTo: container.topAnchor),
+          titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
 
-            separator.leading == titleLabel.leading
-            separator.trailing == container.trailing
-            separator.bottom == container.bottom
-            separator.height == .hairline
-        }
+          separator.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+          separator.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          separator.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          separator.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
     }
 
 }

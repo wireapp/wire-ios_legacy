@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -280,12 +279,12 @@ final class CollectionsViewController: UIViewController {
         let titleView = ConversationTitleView(conversation: collection.conversation, interactive: false)
         titleViewWrapper.addSubview(titleView)
 
-        constrain(titleView, titleViewWrapper) { titleView, titleViewWrapper in
-            titleView.top == titleViewWrapper.top + 4
-            titleView.left == titleViewWrapper.left
-            titleView.right == titleViewWrapper.right
-            titleView.bottom == titleViewWrapper.bottom
-        }
+        NSLayoutConstraint.activate([
+          titleView.topAnchor.constraint(equalTo: titleViewWrapper.topAnchor, constant: 4),
+          titleView.leftAnchor.constraint(equalTo: titleViewWrapper.leftAnchor),
+          titleView.rightAnchor.constraint(equalTo: titleViewWrapper.rightAnchor),
+          titleView.bottomAnchor.constraint(equalTo: titleViewWrapper.bottomAnchor)
+        ])
 
         titleViewWrapper.setNeedsLayout()
         titleViewWrapper.layoutIfNeeded()

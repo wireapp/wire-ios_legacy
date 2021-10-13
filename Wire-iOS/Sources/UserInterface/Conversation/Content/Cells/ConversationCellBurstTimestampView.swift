@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 
 final class ConversationCellBurstTimestampView: UIView {
 
@@ -95,36 +94,35 @@ final class ConversationCellBurstTimestampView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, label, leftSeparator, rightSeparator) { view, label, leftSeparator, rightSeparator in
-            view.height == 40
+        NSLayoutConstraint.activate([
+          view.heightAnchor.constraint(equalToConstant: 40),
 
-            leftSeparator.leading == view.leading
-            leftSeparator.width == conversationHorizontalMargins.left - inset
-            leftSeparator.centerY == view.centerY
+          leftSeparator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          leftSeparator.widthAnchor.constraint(equalTo: conversationHorizontalMargins.leftAnchor, constant: -inset),
+          leftSeparator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            label.centerY == view.centerY
-            label.leading == leftSeparator.trailing + inset
+          label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          label.leadingAnchor.constraint(equalTo: leftSeparator.trailingAnchor, constant: inset),
 
-            rightSeparator.leading == label.trailing + inset
-            rightSeparator.trailing == view.trailing
-            rightSeparator.centerY == view.centerY
+          rightSeparator.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: inset),
+          rightSeparator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          rightSeparator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
-            heightConstraints = [
-                leftSeparator.height == separatorHeight,
-                rightSeparator.height == separatorHeight
-            ]
-        }
+          leftSeparator.heightAnchor.constraint(equalToConstant: separatorHeight,),
+          rightSeparator.heightAnchor.constraint(equalToConstant: separatorHeight)
+        ])
 
-        constrain(self, unreadDotContainer, unreadDot, label) { view, unreadDotContainer, unreadDot, label in
-            unreadDotContainer.leading == view.leading
-            unreadDotContainer.trailing == label.leading
-            unreadDotContainer.top == view.top
-            unreadDotContainer.bottom == view.bottom
+        NSLayoutConstraint.activate([
+          unreadDotContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          unreadDotContainer.trailingAnchor.constraint(equalTo: label.leadingAnchor),
+          unreadDotContainer.topAnchor.constraint(equalTo: view.topAnchor),
+          unreadDotContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            unreadDot.center == unreadDotContainer.center
-            unreadDot.height == unreadDotHeight
-            unreadDot.width == unreadDotHeight
-        }
+          unreadDot.centerXAnchor.constraint(equalTo: unreadDotContainer.centerXAnchor),
+          unreadDot.centerYAnchor.constraint(equalTo: unreadDotContainer.centerYAnchor),
+          unreadDot.heightAnchor.constraint(equalToConstant: unreadDotHeight),
+          unreadDot.widthAnchor.constraint(equalToConstant: unreadDotHeight)
+        ])
     }
 
     func setupStyle() {

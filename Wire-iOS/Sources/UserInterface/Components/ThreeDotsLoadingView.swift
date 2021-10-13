@@ -18,7 +18,6 @@
 
 import UIKit
 import Foundation
-import Cartography
 
 final class ThreeDotsLoadingView: UIView {
 
@@ -58,23 +57,23 @@ final class ThreeDotsLoadingView: UIView {
 
     func setupConstraints() {
 
-        constrain(self, dot1, dot3) { container, leadingDot, trailingDot in
-            leadingDot.left == container.left
-            trailingDot.right == container.right
-        }
+        NSLayoutConstraint.activate([
+          leadingDot.leftAnchor.constraint(equalTo: container.leftAnchor),
+          trailingDot.rightAnchor.constraint(equalTo: container.rightAnchor)
+        ])
 
         [dot1, dot2, dot3].forEach { (dot) in
-            constrain(self, dot) { container, dot in
-                dot.top == container.top
-                dot.bottom == container.bottom
-                dot.width == CGFloat(dotRadius * 2)
-                dot.height == CGFloat(dotRadius * 2)
-            }
+            NSLayoutConstraint.activate([
+              dot.topAnchor.constraint(equalTo: container.topAnchor),
+              dot.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+              dot.widthAnchor.constraint(equalToConstant: CGFloat(dotRadius * 2)),
+              dot.heightAnchor.constraint(equalToConstant: CGFloat(dotRadius * 2))
+            ])
         }
 
-        constrain(dot1, dot2, dot3) { dot1, dot2, dot3 in
-            distribute(by: 4, horizontally: dot1, dot2, dot3)
-        }
+        NSLayoutConstraint.activate([
+
+        ])
     }
 
     override var isHidden: Bool {

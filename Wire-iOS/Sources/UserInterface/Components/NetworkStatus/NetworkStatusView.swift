@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 enum NetworkStatusViewState {
@@ -131,17 +130,17 @@ class NetworkStatusView: UIView {
     }
 
     func createConstraints() {
-        constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            offlineView.left == containerView.left + CGFloat.NetworkStatusBar.horizontalMargin
-            offlineView.right == containerView.right - CGFloat.NetworkStatusBar.horizontalMargin
-            offlineViewTopMargin = offlineView.top == containerView.top
-            offlineViewBottomMargin = offlineView.bottom == containerView.bottom
+        NSLayoutConstraint.activate([
+          offlineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: CGFloat.NetworkStatusBar.horizontalMargin),
+          offlineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -CGFloat.NetworkStatusBar.horizontalMargin),
+          offlineViewTopMargin = offlineView.topAnchor.constraint(equalTo: containerView.topAnchor),
+          offlineViewBottomMargin = offlineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 
-            connectingView.left == offlineView.left
-            connectingView.right == offlineView.right
-            connectingView.top == offlineView.top
-            connectingViewBottomMargin = connectingView.bottom == containerView.bottom
-        }
+          connectingView.leftAnchor.constraint(equalTo: offlineView.leftAnchor),
+          connectingView.rightAnchor.constraint(equalTo: offlineView.rightAnchor),
+          connectingView.topAnchor.constraint(equalTo: offlineView.topAnchor),
+          connectingViewBottomMargin = connectingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
     }
 
     private func updateViewState(animated: Bool) {
