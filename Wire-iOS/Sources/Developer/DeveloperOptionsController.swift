@@ -123,19 +123,19 @@ final class DeveloperOptionsController: UIViewController {
         label.text = labelText
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        [label, view].forEach() {
+        [label, view].forEach {
             cell.contentView.addSubview($0)
         }
 
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
             label.leftAnchor.constraint(equalTo: cell.contentView.leftAnchor, constant: 20),
-            
+
             view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -20),
             label.trailingAnchor.constraint(equalTo: view.leadingAnchor),
             view.centerYAnchor.constraint(equalTo: label.centerYAnchor)
         ])
-        
+
         return cell
     }
 
