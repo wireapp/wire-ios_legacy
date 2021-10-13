@@ -56,9 +56,11 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
         view.backgroundColor = contentViewController.tableView.backgroundColor
     }
 
-    func createConstraints() {
-        constrain(view, contentViewController.view) { view, conversationView in
+    private func createConstraints() {
+        if let contentViewControllerView = contentViewController.view {
+        constrain(view, contentViewControllerView) { view, conversationView in
             conversationView.edges == view.edges
+        }
         }
     }
 
