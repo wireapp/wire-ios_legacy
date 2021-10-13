@@ -174,18 +174,9 @@ class BaseAccountView: UIView {
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
-//        [selectionView, imageViewContainer].prepareForLayout()
-//
-//        NSLayoutConstraint.activate([
-//          selectionView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: -1),
-//          selectionView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: 1),
-//          selectionView.leftAnchor.constraint(equalTo: imageViewContainer.leftAnchor, constant: -1),
-//          selectionView.rightAnchor.constraint(equalTo: imageViewContainer.rightAnchor, constant: 1)
-//        ])
-        
-        constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
-            selectionView.edges == inset(imageViewContainer.edges, -1, -1)
-        }
+        [selectionView, imageViewContainer].prepareForLayout()
+
+        selectionView.fitIn(view: imageViewContainer, insets: UIEdgeInsets(top: -1, left: -1, bottom: -1, right: -1))
 
         accountView.createDotConstraints()
 
@@ -299,13 +290,9 @@ final class PersonalAccountView: AccountView {
 
         self.imageViewContainer.addSubview(userImageView)
         
-//        userImageView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        imageViewContainer.fitIn(view: userImageView, insets: UIEdgeInsets(top: 2, left: 2, bottom: -2, right: -2))
-
-        constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
-            userImageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        userImageView.fitIn(view: imageViewContainer, insets: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2))
         
         update()
     }
