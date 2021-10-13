@@ -101,7 +101,8 @@ final class LocationSelectionViewController: UIViewController {
     }
 
     fileprivate func createConstraints() {
-        constrain(view, mapView, sendViewController.view, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
+        if let sendController = sendViewController.view {
+        constrain(view, mapView, sendController, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
             mapView.trailing == view.trailing
             mapView.leading == view.leading
             mapView.top == view.top + UIScreen.safeArea.top
@@ -119,11 +120,12 @@ final class LocationSelectionViewController: UIViewController {
             pin.width == 32
         }
 
-        constrain(view, sendViewController.view, locationButton) { view, sendController, button in
+        constrain(view, sendController, locationButton) { view, sendController, button in
             button.leading == view.leading + 16
             button.bottom == sendController.top - 16
             button.width == 28
             button.height == 28
+        }
         }
     }
 
