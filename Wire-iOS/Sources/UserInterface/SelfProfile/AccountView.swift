@@ -64,7 +64,7 @@ protocol AccountViewType {
     func update()
     var account: Account { get }
 
-    func createDotConstraints()
+    func createDotConstraints() -> [NSLayoutConstraint]
 }
 
 enum AccountViewFactory {
@@ -174,11 +174,8 @@ class BaseAccountView: UIView {
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
-        [selectionView, imageViewContainer].prepareForLayout()
 
-        selectionView.fitIn(view: imageViewContainer, inset: -1)
-
-        accountView.createDotConstraints()
+        let dotConstraints = accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
 
@@ -191,9 +188,13 @@ class BaseAccountView: UIView {
             iconWidth = CGFloat.AccountView.iconWidth
         }
 
-        [self, dotView].prepareForLayout()
-        
-        NSLayoutConstraint.activate([
+        [self, dotView, selectionView, imageViewContainer].prepareForLayout()
+
+                
+        NSLayoutConstraint.activate(
+            dotConstraints +
+            selectionView.fitInConstraints(view: imageViewContainer, inset: -1) +
+            [
           imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
           imageViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
           widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
@@ -312,16 +313,16 @@ final class PersonalAccountView: AccountView {
         }
     }
 
-    func createDotConstraints() {
+    func createDotConstraints() -> [NSLayoutConstraint] {
         let dotSize: CGFloat = 9
 
         [dotView, imageViewContainer].prepareForLayout()
 
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+        return [ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
+            ]
     }
 }
 

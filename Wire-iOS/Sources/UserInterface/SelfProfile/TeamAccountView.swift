@@ -92,18 +92,18 @@ final class TeamAccountView: AccountView {
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
 
-    func createDotConstraints() {
+    func createDotConstraints() -> [NSLayoutConstraint] {
         let dotSize: CGFloat = 9
         let dotInset: CGFloat = 2
 
         [dotView, imageViewContainer].prepareForLayout()
 
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -dotInset),
+        return [ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -dotInset),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: dotInset),
 
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
+            ]
     }
 }
 
