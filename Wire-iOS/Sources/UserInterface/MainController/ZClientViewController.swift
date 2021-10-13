@@ -142,17 +142,6 @@ final class ZClientViewController: UIViewController {
 
     // MARK: - Overloaded methods
     
-    // MARK: keyboard shortcut
-    override var keyCommands: [UIKeyCommand]? {
-        return [
-            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: "keyboardshortcut.openPeople".localized)]
-    }
-
-    @objc
-    private func openStartUI(_ sender: Any?) {
-        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -188,6 +177,26 @@ final class ZClientViewController: UIViewController {
         setUpConferenceCallingUnavailableObserver()
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
+    override var shouldAutorotate: Bool {
+        return presentedViewController?.shouldAutorotate ?? true
+    }
+
+    // MARK: keyboard shortcut
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: "keyboardshortcut.openPeople".localized)]
+    }
+
+    @objc
+    private func openStartUI(_ sender: Any?) {
+        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
+//        conversationListViewController.
+    }
+
     private func createBackgroundViewController() {
         backgroundViewController.addToSelf(conversationListViewController)
 
@@ -195,14 +204,6 @@ final class ZClientViewController: UIViewController {
         conversationListViewController.view.frame = backgroundViewController.view.bounds
 
         wireSplitViewController.leftViewController = backgroundViewController
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
-    override var shouldAutorotate: Bool {
-        return presentedViewController?.shouldAutorotate ?? true
     }
 
     // MARK: Status bar
