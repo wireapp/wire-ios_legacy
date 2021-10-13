@@ -136,7 +136,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // scroll to bottom to show the next request
-            tableView.setContentOffset(CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: animated)
+            let indexPath = IndexPath(row: connectionRequests.count - 1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
 
