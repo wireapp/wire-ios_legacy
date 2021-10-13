@@ -1917,3 +1917,6 @@
 "appLockModule.message.passcodeUnavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
 "appLockModule.unlockButton.title" = "Разблокировать";
 "appLockModule.goToSettingsButton.title" = "Перейти в настройки";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
