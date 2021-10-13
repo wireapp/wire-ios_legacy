@@ -38,7 +38,7 @@ final class NoResultsView: UIView {
 
     public var icon: StyleKitIcon? = nil {
         didSet {
-            self.iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
+            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }
     }
 
@@ -50,18 +50,18 @@ final class NoResultsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.accessibilityElements = [self.label]
+        accessibilityElements = [label]
 
-        self.label.numberOfLines = 0
-        self.label.textColor = placeholderColor
-        self.label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = placeholderColor
+        label.textAlignment = .center
         label.font = .mediumSemiboldFont
-        self.addSubview(self.label)
+        addSubview(label)
 
-        self.iconView.contentMode = .scaleAspectFit
-        self.addSubview(self.iconView)
+        iconView.contentMode = .scaleAspectFit
+        addSubview(iconView)
 
-        constrain(self, self.label, self.iconView) { selfView, label, iconView in
+        constrain(self, label, iconView) { selfView, label, iconView in
             iconView.top == selfView.top
             iconView.centerX == selfView.centerX
 

@@ -32,21 +32,21 @@ final public class TextSearchResultsView: UIView {
     }
 
     func setupViews() {
-        self.tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
-        self.tableView.estimatedRowHeight = 44
-        self.tableView.separatorStyle = .none
-        self.tableView.keyboardDismissMode = .interactive
-        self.tableView.backgroundColor = .clear
-        self.addSubview(self.tableView)
+        tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
+        tableView.estimatedRowHeight = 44
+        tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .interactive
+        tableView.backgroundColor = .clear
+        addSubview(tableView)
 
-        self.noResultsView.label.accessibilityLabel = "no text messages"
-        self.noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
-        self.noResultsView.icon = .search
-        self.addSubview(self.noResultsView)
+        noResultsView.label.accessibilityLabel = "no text messages"
+        noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
+        noResultsView.icon = .search
+        addSubview(noResultsView)
     }
 
     func createConstraints() {
-        constrain(self, self.tableView, self.noResultsView) { resultsView, tableView, noResultsView in
+        constrain(self, tableView, noResultsView) { resultsView, tableView, noResultsView in
             tableView.edges == resultsView.edges
 
             noResultsView.top >= resultsView.top + 12
