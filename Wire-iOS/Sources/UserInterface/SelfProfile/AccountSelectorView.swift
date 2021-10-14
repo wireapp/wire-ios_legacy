@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 protocol AccountSelectorViewDelegate: class {
@@ -27,9 +26,9 @@ protocol AccountSelectorViewDelegate: class {
 }
 
 class LineView: UIView {
-    public let views: [UIView]
+    let views: [UIView]
     init(views: [UIView]) {
-        self.views = views
+        views = views
         super.init(frame: .zero)
         layoutViews()
     }
@@ -40,32 +39,34 @@ class LineView: UIView {
 
     private func layoutViews() {
 
-        self.views.forEach(self.addSubview)
+        views.forEach(addSubview)
 
-        guard let first = self.views.first else {
+        guard let first = views.first else {
             return
         }
 
         let inset: CGFloat = 6
 
+        let bottomConstraint = first.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomConstraint.priority = UILayoutPriority(rawValue: 750)
         NSLayoutConstraint.activate([
           first.leadingAnchor.constraint(equalTo: leadingAnchor),
           first.topAnchor.constraint(equalTo: topAnchor),
-          first.bottomAnchor.constraint(equalTo: bottomAnchor, constant: ~ 750.0)
+            bottomConstraint
         ])
 
         var previous: UIView = first
 
-        self.views.dropFirst().forEach {
+        views.dropFirst().forEach { current in
             NSLayoutConstraint.activate([
               current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: inset),
               current.topAnchor.constraint(equalTo: topAnchor),
               current.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
-            previous = $0
+            previous = current
         }
 
-        guard let last = self.views.last else {
+        guard let last = views.last else {
             return
         }
 
@@ -98,9 +99,9 @@ final class AccountSelectorView: UIView {
                 }
             }
 
-            self.lineView = LineView(views: self.accountViews)
-            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
-            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
+            lineView = LineView(views: accountViews)
+            topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            accountViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
 
@@ -123,13 +124,13 @@ final class AccountSelectorView: UIView {
         }
     }
     private var topOffsetConstraint: NSLayoutConstraint!
-    public var imagesCollapsed: Bool = false {
+    var imagesCollapsed: Bool = false {
         didSet {
-            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
 
-            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
+            accountViews.forEach { $0.collapsed = imagesCollapsed }
 
-            self.layoutIfNeeded()
+            layoutIfNeeded()
         }
     }
 
@@ -140,7 +141,7 @@ final class AccountSelectorView: UIView {
             self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
 
-        self.update(with: SessionManager.shared?.accountManager.accounts)
+        update(with: SessionManager.shared?.accountManager.accounts)
     }
 
     required init?(coder aDecoder: NSCoder) {
