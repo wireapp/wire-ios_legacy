@@ -26,7 +26,9 @@ final class ConversationViewController: UIViewController {
 
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized)
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: "keyboardshortcut.scrollToBottom".localized),
+            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: "keyboardshortcut.searchInConversation".localized),
+            UIKeyCommand(input: "i", modifierFlags: [.command], action: #selector(titleViewTapped), discoverabilityTitle: "keyboardshortcut.conversationDetail".localized)
         ]
     }
 
@@ -321,12 +323,17 @@ final class ConversationViewController: UIViewController {
         view.setNeedsLayout()
     }
 
+    @objc
+    private func titleViewTapped() {
+        if let superview = titleView.superview,
+            let participantsController = participantsController {
+            presentParticipantsViewController(participantsController, from: superview)
+        }
+    }
+
     private func setupNavigatiomItem() {
         titleView.tapHandler = { [weak self] _ in
-            if let superview = self?.titleView.superview,
-                let participantsController = self?.participantsController {
-                self?.presentParticipantsViewController(participantsController, from: superview)
-            }
+            self?.titleViewTapped()
         }
         titleView.configure()
 
@@ -491,4 +498,44 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
             self.conversation.draftMessage = message
         }
     }
+
+    var collectionsBarButtonItem: UIBarButtonItem {
+        let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
+        let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
+        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
+        button.accessibilityIdentifier = "collection"
+        button.accessibilityLabel = "conversation.action.search".localized
+
+        if showingSearchResults {
+            button.tintColor = UIColor.accent()
+        }
+
+        return button
+    }
+
+    @objc
+    fileprivate func onCollectionButtonPressed(_ sender: AnyObject!) {
+        if self.collectionController == .none {
+            let collections = CollectionsViewController(conversation: conversation)
+            collections.delegate = self
+
+            collections.onDismiss = { [weak self] _ in
+                guard let weakSelf = self else {
+                    return
+                }
+
+                weakSelf.collectionController?.dismiss(animated: true)
+            }
+            collectionController = collections
+        } else {
+            collectionController?.refetchCollection()
+        }
+
+        collectionController?.shouldTrackOnNextOpen = true
+
+        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
+
+        ZClientViewController.shared?.present(navigationController, animated: true)
+    }
+
 }

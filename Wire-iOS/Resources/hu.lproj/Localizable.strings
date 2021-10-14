@@ -1920,3 +1920,5 @@
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Scroll to bottom";
+"keyboardshortcut.conversationDetail" = "Conversation detail...";
+"keyboardshortcut.searchInConversation" = "Search in conversation...";
