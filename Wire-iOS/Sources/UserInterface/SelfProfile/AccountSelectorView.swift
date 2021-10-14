@@ -23,58 +23,6 @@ protocol AccountSelectorViewDelegate: class {
     func accountSelectorDidSelect(account: Account)
 }
 
-class LineView: UIView {
-    let views: [UIView]
-    private let inset: CGFloat = 6
-
-    init(views: [UIView]) {
-        self.views = views
-        super.init(frame: .zero)
-        layoutViews()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func layoutViews() {
-
-        views.forEach(addSubview)
-
-        guard let first = views.first else {
-            return
-        }
-
-        let bottomConstraint = first.bottomAnchor.constraint(equalTo: bottomAnchor)
-        bottomConstraint.priority = UILayoutPriority(rawValue: 750)
-        NSLayoutConstraint.activate([
-          first.leadingAnchor.constraint(equalTo: leadingAnchor),
-          first.topAnchor.constraint(equalTo: topAnchor),
-            bottomConstraint
-        ])
-
-        var previous: UIView = first
-
-        var constraints = [NSLayoutConstraint]()
-        
-        views.dropFirst().forEach { current in
-            constraints += [
-              current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: inset),
-              current.topAnchor.constraint(equalTo: topAnchor),
-              current.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ]
-            previous = current
-        }
-
-        if let last = views.last {
-            constraints.append(last.trailingAnchor.constraint(equalTo: trailingAnchor))
-        }
-
-        NSLayoutConstraint.activate(constraints)
-    }
-}
-
 final class AccountSelectorView: UIView {
     weak var delegate: AccountSelectorViewDelegate?
 
@@ -83,14 +31,13 @@ final class AccountSelectorView: UIView {
 
     fileprivate var accounts: [Account]? = nil {
         didSet {
-            guard ZMUserSession.shared()  != nil else {
+            guard ZMUserSession.shared() != nil else {
                 return
             }
 
             accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0, displayContext: .accountSelector) }) ?? []
 
             accountViews.forEach { (accountView) in
-
                 accountView.unreadCountStyle = accountView.account.isActive ? .none : .current
                 accountView.onTap = { [weak self] account in
                     guard let account = account else { return }
@@ -98,31 +45,29 @@ final class AccountSelectorView: UIView {
                 }
             }
 
-            lineView = LineView(views: accountViews)
+            lineView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+            
+            accountViews.forEach() {
+                lineView.addArrangedSubview($0)
+            }
             topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
             accountViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
 
     private var accountViews: [BaseAccountView] = []
-    private var lineView: LineView? {
-        didSet {
-            oldValue?.removeFromSuperview()
-            if let newLineView = lineView {
-                addSubview(newLineView)
+    private lazy var lineView: UIStackView = {
+        let view = UIStackView(axis: .horizontal)
+        view.spacing = 6
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
 
-                topOffsetConstraint = newLineView.centerYAnchor.constraint(equalTo: centerYAnchor)
-
-                NSLayoutConstraint.activate([
-                topOffsetConstraint,
-                    newLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                    newLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                    newLineView.heightAnchor.constraint(equalTo: heightAnchor)
-                ])
-            }
-        }
-    }
+        return view
+    }()
+    
     private var topOffsetConstraint: NSLayoutConstraint!
+    
     var imagesCollapsed: Bool = false {
         didSet {
             topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
@@ -135,23 +80,36 @@ final class AccountSelectorView: UIView {
 
     init() {
         super.init(frame: .zero)
+        
+        addSubview(lineView)
+
+        topOffsetConstraint = lineView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        
+        NSLayoutConstraint.activate([
+            topOffsetConstraint,
+            lineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lineView.heightAnchor.constraint(equalTo: heightAnchor)
+        ])
 
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
-            self?.update(with: SessionManager.shared?.accountManager.accounts)
+            self?.updateAccounts()
         })
 
-        update(with: SessionManager.shared?.accountManager.accounts)
+        updateAccounts()
+    }
+    
+    fileprivate func updateAccounts() {
+        accounts = SessionManager.shared?.accountManager.accounts
     }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    fileprivate func update(with accounts: [Account]?) {
-        self.accounts = accounts
+    
+    private func createConstraints() {
     }
-
 }
 
 private extension Account {
