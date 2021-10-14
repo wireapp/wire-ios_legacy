@@ -59,7 +59,6 @@ final class AccountSelectorView: UIView {
     private lazy var lineView: UIStackView = {
         let view = UIStackView(axis: .horizontal)
         view.spacing = 6
-
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
@@ -98,18 +97,17 @@ final class AccountSelectorView: UIView {
         updateAccounts()
     }
 
-    fileprivate func updateAccounts() {
-        accounts = SessionManager.shared?.accountManager.accounts
-    }
-
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    fileprivate func updateAccounts() {
+        accounts = SessionManager.shared?.accountManager.accounts
+    }
 }
 
 private extension Account {
-
     var isActive: Bool {
         return SessionManager.shared?.accountManager.selectedAccount == self
     }
