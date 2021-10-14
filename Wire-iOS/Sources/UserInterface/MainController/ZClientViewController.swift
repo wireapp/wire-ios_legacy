@@ -194,7 +194,6 @@ final class ZClientViewController: UIViewController {
     @objc
     private func openStartUI(_ sender: Any?) {
         conversationListViewController.bottomBarController.startUIButtonTapped(sender)
-//        conversationListViewController.
     }
 
     private func createBackgroundViewController() {
