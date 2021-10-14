@@ -46,8 +46,8 @@ final class AccountSelectorView: UIView {
             }
 
             lineView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-            
-            accountViews.forEach() {
+
+            accountViews.forEach {
                 lineView.addArrangedSubview($0)
             }
             topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
@@ -59,15 +59,14 @@ final class AccountSelectorView: UIView {
     private lazy var lineView: UIStackView = {
         let view = UIStackView(axis: .horizontal)
         view.spacing = 6
-        
+
         view.translatesAutoresizingMaskIntoConstraints = false
-        
 
         return view
     }()
-    
+
     private var topOffsetConstraint: NSLayoutConstraint!
-    
+
     var imagesCollapsed: Bool = false {
         didSet {
             topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
@@ -80,11 +79,11 @@ final class AccountSelectorView: UIView {
 
     init() {
         super.init(frame: .zero)
-        
+
         addSubview(lineView)
 
         topOffsetConstraint = lineView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        
+
         NSLayoutConstraint.activate([
             topOffsetConstraint,
             lineView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -98,7 +97,7 @@ final class AccountSelectorView: UIView {
 
         updateAccounts()
     }
-    
+
     fileprivate func updateAccounts() {
         accounts = SessionManager.shared?.accountManager.accounts
     }
@@ -106,9 +105,6 @@ final class AccountSelectorView: UIView {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func createConstraints() {
     }
 }
 
