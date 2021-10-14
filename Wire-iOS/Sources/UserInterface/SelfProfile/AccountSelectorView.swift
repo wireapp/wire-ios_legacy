@@ -17,62 +17,61 @@
 //
 
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 protocol AccountSelectorViewDelegate: class {
-
     func accountSelectorDidSelect(account: Account)
-
 }
 
 class LineView: UIView {
-    public let views: [UIView]
+    let views: [UIView]
+    private let inset: CGFloat = 6
+
     init(views: [UIView]) {
         self.views = views
         super.init(frame: .zero)
         layoutViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func layoutViews() {
 
-        self.views.forEach(self.addSubview)
+        views.forEach(addSubview)
 
-        guard let first = self.views.first else {
+        guard let first = views.first else {
             return
         }
 
-        let inset: CGFloat = 6
-
-        constrain(self, first) { selfView, first in
-            first.leading == selfView.leading
-            first.top == selfView.top
-            first.bottom == selfView.bottom ~ 750.0
-        }
+        let bottomConstraint = first.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomConstraint.priority = UILayoutPriority(rawValue: 750)
+        NSLayoutConstraint.activate([
+          first.leadingAnchor.constraint(equalTo: leadingAnchor),
+          first.topAnchor.constraint(equalTo: topAnchor),
+            bottomConstraint
+        ])
 
         var previous: UIView = first
 
-        self.views.dropFirst().forEach {
-            constrain(previous, $0, self) { previous, current, selfView in
-                current.leading == previous.trailing + inset
-                current.top == selfView.top
-                current.bottom == selfView.bottom
-            }
-            previous = $0
+        var constraints = [NSLayoutConstraint]()
+        
+        views.dropFirst().forEach { current in
+            constraints += [
+              current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: inset),
+              current.topAnchor.constraint(equalTo: topAnchor),
+              current.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ]
+            previous = current
         }
 
-        guard let last = self.views.last else {
-            return
+        if let last = views.last {
+            constraints.append(last.trailingAnchor.constraint(equalTo: trailingAnchor))
         }
 
-        constrain(self, last) { selfView, last in
-            last.trailing == selfView.trailing
-        }
+        NSLayoutConstraint.activate(constraints)
     }
 }
 
@@ -99,9 +98,9 @@ final class AccountSelectorView: UIView {
                 }
             }
 
-            self.lineView = LineView(views: self.accountViews)
-            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
-            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
+            lineView = LineView(views: accountViews)
+            topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            accountViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
 
@@ -109,26 +108,28 @@ final class AccountSelectorView: UIView {
     private var lineView: LineView? {
         didSet {
             oldValue?.removeFromSuperview()
-            if let newLineView = self.lineView {
-                self.addSubview(newLineView)
+            if let newLineView = lineView {
+                addSubview(newLineView)
 
-                constrain(self, newLineView) { selfView, lineView in
-                    self.topOffsetConstraint = lineView.centerY == selfView.centerY
-                    lineView.leading == selfView.leading
-                    lineView.trailing == selfView.trailing
-                    lineView.height == selfView.height
-                }
+                topOffsetConstraint = newLineView.centerYAnchor.constraint(equalTo: centerYAnchor)
+
+                NSLayoutConstraint.activate([
+                topOffsetConstraint,
+                    newLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    newLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    newLineView.heightAnchor.constraint(equalTo: heightAnchor)
+                ])
             }
         }
     }
     private var topOffsetConstraint: NSLayoutConstraint!
-    public var imagesCollapsed: Bool = false {
+    var imagesCollapsed: Bool = false {
         didSet {
-            self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
+            topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
 
-            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
+            accountViews.forEach { $0.collapsed = imagesCollapsed }
 
-            self.layoutIfNeeded()
+            layoutIfNeeded()
         }
     }
 
@@ -139,9 +140,10 @@ final class AccountSelectorView: UIView {
             self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
 
-        self.update(with: SessionManager.shared?.accountManager.accounts)
+        update(with: SessionManager.shared?.accountManager.accounts)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
