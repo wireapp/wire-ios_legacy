@@ -37,21 +37,21 @@ final class ConversationCellBurstTimestampView: UIView {
     private let burstNormalFont = UIFont.smallLightFont
     private let burstBoldFont = UIFont.smallSemiboldFont
 
-    var isShowingUnreadDot: Bool = true {
+    private var isShowingUnreadDot: Bool = true {
         didSet {
             leftSeparator.isHidden = isShowingUnreadDot
             unreadDot.isHidden = !isShowingUnreadDot
         }
     }
 
-    var isSeparatorHidden: Bool = false {
+    private var isSeparatorHidden: Bool = false {
         didSet {
             leftSeparator.isHidden = isSeparatorHidden || isShowingUnreadDot
             rightSeparator.isHidden = isSeparatorHidden
         }
     }
 
-    var isSeparatorExpanded: Bool = false {
+    private var isSeparatorExpanded: Bool = false {
         didSet {
             separatorHeight = isSeparatorExpanded ? 4 : .hairline
             let color = isSeparatorExpanded ? separatorColorExpanded : separatorColor

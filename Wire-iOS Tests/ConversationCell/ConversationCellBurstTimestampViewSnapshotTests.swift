@@ -52,8 +52,7 @@ final class ConversationCellBurstTimestampViewSnapshotTests: XCTestCase {
         // GIVEN
 
         // WHEN
-        sut.isSeparatorHidden = true
-        sut.isSeparatorExpanded = true
+        sut.configure(with: Date(timeIntervalSinceReferenceDate: 0), includeDayOfWeek: true, showUnreadDot: true)
         
         // THEN
         verify(matching: sut)
