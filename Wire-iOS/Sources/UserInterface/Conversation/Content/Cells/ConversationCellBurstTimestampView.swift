@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
+import UIKit
 
 final class ConversationCellBurstTimestampView: UIView {
 
     let unreadDot = UIView()
-    public let label: UILabel = UILabel()
+    let label: UILabel = UILabel()
 
     var separatorColor: UIColor?
     var separatorColorExpanded: UIColor?
@@ -80,6 +80,7 @@ final class ConversationCellBurstTimestampView: UIView {
         setupStyle()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -95,36 +96,35 @@ final class ConversationCellBurstTimestampView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, label, leftSeparator, rightSeparator) { view, label, leftSeparator, rightSeparator in
-            view.height == 40
 
-            leftSeparator.leading == view.leading
-            leftSeparator.width == conversationHorizontalMargins.left - inset
-            leftSeparator.centerY == view.centerY
+        heightConstraints = [          leftSeparator.heightAnchor.constraint(equalToConstant: separatorHeight),
+            rightSeparator.heightAnchor.constraint(equalToConstant: separatorHeight)
+        ]
 
-            label.centerY == view.centerY
-            label.leading == leftSeparator.trailing + inset
+        NSLayoutConstraint.activate(heightConstraints + [
+            heightAnchor.constraint(equalToConstant: 40),
 
-            rightSeparator.leading == label.trailing + inset
-            rightSeparator.trailing == view.trailing
-            rightSeparator.centerY == view.centerY
+            leftSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
+            leftSeparator.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left - inset),
+            leftSeparator.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            heightConstraints = [
-                leftSeparator.height == separatorHeight,
-                rightSeparator.height == separatorHeight
-            ]
-        }
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: leftSeparator.trailingAnchor, constant: inset),
 
-        constrain(self, unreadDotContainer, unreadDot, label) { view, unreadDotContainer, unreadDot, label in
-            unreadDotContainer.leading == view.leading
-            unreadDotContainer.trailing == label.leading
-            unreadDotContainer.top == view.top
-            unreadDotContainer.bottom == view.bottom
+            rightSeparator.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: inset),
+            rightSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            rightSeparator.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            unreadDot.center == unreadDotContainer.center
-            unreadDot.height == unreadDotHeight
-            unreadDot.width == unreadDotHeight
-        }
+            unreadDotContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            unreadDotContainer.trailingAnchor.constraint(equalTo: label.leadingAnchor),
+            unreadDotContainer.topAnchor.constraint(equalTo: topAnchor),
+            unreadDotContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            unreadDot.centerXAnchor.constraint(equalTo: unreadDotContainer.centerXAnchor),
+            unreadDot.centerYAnchor.constraint(equalTo: unreadDotContainer.centerYAnchor),
+            unreadDot.heightAnchor.constraint(equalToConstant: unreadDotHeight),
+            unreadDot.widthAnchor.constraint(equalToConstant: unreadDotHeight)
+        ])
     }
 
     func setupStyle() {
