@@ -21,7 +21,7 @@ import XCTest
 import SnapshotTesting
 
 struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
-    
+
     var shouldShowActiveSpeakerFrame: Bool = true
 
     var floatingStream: Wire.Stream?
