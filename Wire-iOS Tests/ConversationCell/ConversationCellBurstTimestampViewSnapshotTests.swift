@@ -43,7 +43,7 @@ final class ConversationCellBurstTimestampViewSnapshotTests: XCTestCase {
         // GIVEN
 
         // WHEN
-        
+
         // THEN
         verify(matching: sut)
     }
@@ -53,17 +53,17 @@ final class ConversationCellBurstTimestampViewSnapshotTests: XCTestCase {
 
         // WHEN
         sut.configure(with: Date(timeIntervalSinceReferenceDate: 0), includeDayOfWeek: true, showUnreadDot: true)
-        
+
         // THEN
         verify(matching: sut)
     }
-    
+
     func testForNotIncludeDayOfWeekAndDot() {
         // GIVEN
 
         // WHEN
         sut.configure(with: Date(timeIntervalSinceReferenceDate: 0), includeDayOfWeek: false, showUnreadDot: false)
-        
+
         // THEN
         verify(matching: sut)
     }
