@@ -20,14 +20,41 @@ import XCTest
 @testable import Wire
 
 final class ConversationCellBurstTimestampViewSnapshotTests: XCTestCase {
+    var sut: ConversationCellBurstTimestampView!
+
+    override func setUp() {
+        super.setUp()
+
+        sut = ConversationCellBurstTimestampView()
+        sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 40))
+        sut.unreadDot.backgroundColor = .red
+        sut.backgroundColor = .white
+        sut.separatorColor = .gray
+        sut.separatorColorExpanded = .darkGray
+    }
+
+    override func tearDown() {
+        sut = nil
+
+        super.tearDown()
+    }
 
     func testForInitState() {
         // GIVEN
-        let sut = ConversationCellBurstTimestampView()
 
         // WHEN
-//        sut.configure(with: mockUser)
+        
+        // THEN
+        verify(matching: sut)
+    }
 
+    func testForSeperatorShown() {
+        // GIVEN
+
+        // WHEN
+        sut.isSeparatorHidden = true
+        sut.isSeparatorExpanded = true
+        
         // THEN
         verify(matching: sut)
     }
