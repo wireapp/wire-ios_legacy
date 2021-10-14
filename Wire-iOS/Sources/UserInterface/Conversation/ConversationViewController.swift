@@ -189,7 +189,6 @@ final class ConversationViewController: UIViewController {
                     self?.conversation.isArchived = true
                 })
             }
-            
             self?.openConversationList()
         }
     }
