@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 class LayerHostView<LayerType: CALayer>: UIView {
@@ -64,7 +63,7 @@ protocol AccountViewType {
     func update()
     var account: Account { get }
 
-    func createDotConstraints()
+    func createDotConstraints() -> [NSLayoutConstraint]
 }
 
 enum AccountViewFactory {
@@ -174,15 +173,7 @@ class BaseAccountView: UIView {
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
-        //todo: test
-        NSLayoutConstraint.activate([
-          selectionView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: 1),
-          selectionView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -1),
-          selectionView.leftAnchor.constraint(equalTo: imageViewContainer.leftAnchor, constant: 1),
-          selectionView.rightAnchor.constraint(equalTo: imageViewContainer.rightAnchor, constant: -1)
-        ])
-
-        accountView.createDotConstraints()
+        let dotConstraints = accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
 
@@ -195,7 +186,12 @@ class BaseAccountView: UIView {
             iconWidth = CGFloat.AccountView.iconWidth
         }
 
-        NSLayoutConstraint.activate([
+        [self, dotView, selectionView, imageViewContainer].prepareForLayout()
+
+        NSLayoutConstraint.activate(
+            dotConstraints +
+            selectionView.fitInConstraints(view: imageViewContainer, inset: -1) +
+            [
           imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
           imageViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
           widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
@@ -291,12 +287,10 @@ final class PersonalAccountView: AccountView {
         }
 
         self.imageViewContainer.addSubview(userImageView)
-        NSLayoutConstraint.activate([
-          userImageView.topAnchor.constraint(equalTo: inset(imageViewContainer.topAnchor),
-          userImageView.bottomAnchor.constraint(equalTo: inset(imageViewContainer.bottomAnchor),
-          userImageView.leftAnchor.constraint(equalTo: inset(imageViewContainer.leftAnchor),
-          userImageView.rightAnchor.constraint(equalTo: inset(imageViewContainer.rightAnchor)
-        ])
+
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        userImageView.fitIn(view: imageViewContainer, inset: 2)
 
         update()
     }
@@ -316,16 +310,16 @@ final class PersonalAccountView: AccountView {
         }
     }
 
-    func createDotConstraints() {
+    func createDotConstraints() -> [NSLayoutConstraint] {
         let dotSize: CGFloat = 9
 
         [dotView, imageViewContainer].prepareForLayout()
 
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+        return [ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
+            ]
     }
 }
 
