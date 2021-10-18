@@ -60,8 +60,7 @@ final class ProfileViewControllerViewModel: NSObject {
 
         super.init()
 
-        if let user = user as? ZMUser,
-           let userSession = ZMUserSession.shared() {
+        if let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
     }
@@ -254,7 +253,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
             viewModelDelegate?.updateTitleView()
         }
 
-        if note.user.isAccountDeleted {
+        if note.user.isAccountDeleted || note.connectionStateChanged {
             viewModelDelegate?.updateFooterViews()
         }
     }
