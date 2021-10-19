@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
+"error.connection.title" = "Ошибка";
 "error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
+"error.connection.connection_limit_reached" = "Вы не можете подключиться, поскольку достигли лимита подключения";
+"error.connection.generic_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";

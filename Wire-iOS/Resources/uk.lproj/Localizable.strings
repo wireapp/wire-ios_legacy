@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Додати";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
+"error.connection.title" = "Помилка";
 "error.connection.missing_legalhold_consent" = "Ви не можете додати цього користувача через правовий захист.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire потребує доступу до ваших фотографій";

@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Se connecter";
 "inbox.connection_request.connect_button_title" = "Se connecter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
+"error.connection.title" = "Erreur";
 "error.connection.missing_legalhold_consent" = "Vous ne pouvez pas vous connecter à cet utilisateur à cause de la conservation à des fins juridiques.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Une erreur s'est produite, veuillez réessayer";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire a besoin d'accéder à vos photos";
