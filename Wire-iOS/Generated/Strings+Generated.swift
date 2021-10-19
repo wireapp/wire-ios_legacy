@@ -2129,6 +2129,14 @@ internal enum L10n {
         }
       }
     }
+    internal enum Keyboardshortcut {
+      /// Conversation detail...
+      internal static let conversationDetail = L10n.tr("Localizable", "keyboardshortcut.conversationDetail")
+      /// Scroll to bottom
+      internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
+      /// Search in conversation...
+      internal static let searchInConversation = L10n.tr("Localizable", "keyboardshortcut.searchInConversation")
+    }
     internal enum Landing {
       /// Wire. Add your Account.
       internal static let header = L10n.tr("Localizable", "landing.header")

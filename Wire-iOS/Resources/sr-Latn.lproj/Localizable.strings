@@ -18,7 +18,7 @@
 // General strings
 
 
-"general.ok" = "אוקיי";
+"general.ok" = "U redu";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
 "general.close" = "Close";
@@ -26,13 +26,13 @@
 "general.open_settings" = "Open Wire Settings";
 "general.edit" = "Edit";
 "general.done" = "Done";
-"general.confirm" = "אוקיי";
+"general.confirm" = "U redu";
 "general.later" = "Later";
 "general.skip" = "Not Now";
 "general.accept" = "Accept";
 "general.decline" = "No, thanks";
-"general.failure" = "משהו השתבש";
-"general.failure.try_again" = "נא לנסות שוב.";
+"general.failure" = "Something went wrong";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Service";
 "general.off" = "Off";
 "general.on" = "On";
@@ -98,7 +98,7 @@
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
-"peoplepicker.send_invitation.dialog.ok" = "אוקיי";
+"peoplepicker.send_invitation.dialog.ok" = "U redu";
 
 "peoplepicker.invite_more_people" = "Invite more people";
 "peoplepicker.invite_team_members" = "Invite people to join the team";
@@ -362,7 +362,7 @@
 "conversation.input_bar.message_preview.accessibility.unknown_message" = "Unknown message";
 "conversation.input_bar.message_preview.accessibility.message_from" = "%@ from %@";
 
-"image_confirmer.confirm" = "אוקיי";
+"image_confirmer.confirm" = "U redu";
 "image_confirmer.cancel" = "Cancel";
 "image.add_sketch" = "Add a sketch";
 "image.add_emoji" = "Add an emoji";
@@ -375,7 +375,7 @@
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
 
 // Camera and photos access, keyboard
-"keyboard_photos_access.denied.keyboard.settings" = "Settings";
+"keyboard_photos_access.denied.keyboard.settings" = "Postavke";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
@@ -389,7 +389,7 @@
 "location.unauthorized_alert.title" = "Enable Location Services";
 "location.unauthorized_alert.message" = "To send your location, enable Location Services and allow Wire to access your location.";
 "location.unauthorized_alert.cancel" = "Cancel";
-"location.unauthorized_alert.settings" = "Settings";
+"location.unauthorized_alert.settings" = "Postavke";
 
 // Twitter
 "twitter_status.on_twitter" = "%@ on Twitter";
@@ -661,7 +661,7 @@
 
 "voice.alert.call_in_progress.title" = "Call in progress";
 "voice.alert.call_in_progress.message" = "You can have only one active call at a time";
-"voice.alert.call_in_progress.confirm" = "אוקיי";
+"voice.alert.call_in_progress.confirm" = "U redu";
 
 "voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
@@ -943,7 +943,7 @@
 // Self profile
 // Options menu contents
 
-"self.settings" = "Settings";
+"self.settings" = "Postavke";
 "self.profile" = "Profile";
 "self.account" = "Account";
 "self.help_center" = "Support";
@@ -979,7 +979,7 @@
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Manage devices";
-"self.new_device_alert.trust_devices" = "אוקיי";
+"self.new_device_alert.trust_devices" = "U redu";
 
 // Settings changed alert
 
@@ -1006,7 +1006,7 @@
 "self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Name";
-"self.settings.account_section.email.title" = "דוא\"ל";
+"self.settings.account_section.email.title" = "Email";
 "self.settings.account_section.phone.title" = "Phone";
 "self.settings.account_section.handle.title" = "Username";
 "self.settings.account_section.add_handle.title" = "Add username";
@@ -1017,7 +1017,7 @@
 "self.settings.account_details.remove_device.title" = "Remove Device";
 "self.settings.account_details.key_fingerprint.title" = "Key Fingerprint";
 "self.settings.account_details.remove_device.message" = "Your password is required to remove the device";
-"self.settings.account_details.remove_device.password" = "סיסמה";
+"self.settings.account_details.remove_device.password" = "Password";
 "self.settings.account_details.remove_device.password.error" = "Wrong password";
 
 "self.settings.account_appearance_group.title" = "Appearance";
@@ -1049,7 +1049,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Log out";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
-"self.settings.account_details.log_out.alert.password" = "סיסמה";
+"self.settings.account_details.log_out.alert.password" = "Password";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
@@ -1079,7 +1079,7 @@
 
 // Change Email
 
-"self.settings.account_section.email.change.title" = "דוא\"ל";
+"self.settings.account_section.email.change.title" = "Email";
 "self.settings.account_section.email.change.save" = "Save";
 
 "self.settings.account_section.email.change.verify.title" = "Verify email";
@@ -1251,7 +1251,7 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Cancel";
 "self.settings.history_backup.password.next" = "Next";
-"self.settings.history_backup.password.placeholder" = "סיסמה";
+"self.settings.history_backup.password.placeholder" = "Password";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1266,15 +1266,15 @@
 "name.guidance.tooshort" = "At least 2 characters";
 "name.guidance.toolong" = "Too many characters";
 
-"email.placeholder" = "דוא\"ל";
+"email.placeholder" = "Email";
 "email.guidance.invalid" = "Invalid email address";
 "email.guidance.tooshort" = "Email is too short";
 "email.guidance.toolong" = "Too many characters";
 
-"password.placeholder" = "סיסמה";
+"password.placeholder" = "Password";
 "password.guidance.toolong" = "Too many characters";
 
-"phone.guidance.invalid" = "מספר טלפון לא תקין";
+"phone.guidance.invalid" = "Invalid phone number";
 "phone.guidance.tooshort" = "Phone number is too short";
 "phone.guidance.toolong" = "Too many characters";
 
@@ -1353,7 +1353,7 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "משהו השתבש";
+"guest_room.error.generic.title" = "Something went wrong";
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "Invite others with a link";
@@ -1382,7 +1382,7 @@
 "registration.close_phone_invitation_button.phone_title" = "Use another phone";
 
 "registration.register_by_phone" = "Phone";
-"registration.register_by_email" = "דוא\"ל";
+"registration.register_by_email" = "Email";
 
 "registration.enter_phone_number.title" = "Edit phone number";
 "registration.enter_phone_number.placeholder" = "Phone number";
@@ -1393,11 +1393,11 @@
 
 "registration.verify_email.instructions" = "We sent an email to %@.\n Follow the link to verify your address.";
 "registration.verify_email.resend.instructions" = "Didn’t get the message?";
-"registration.verify_email.resend.button_title" = "שלח מחדש";
+"registration.verify_email.resend.button_title" = "Re-send";
 
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
-"registration.no_history.got_it" = "אוקיי";
+"registration.no_history.got_it" = "U redu";
 "registration.no_history.restore_backup" = "Restore from backup";
 
 "registration.alert.account_exists.title" = "Account Exists";
@@ -1416,7 +1416,7 @@
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 // Generic
-"registration.no_history.restore_backup_failed.title" = "משהו השתבש";
+"registration.no_history.restore_backup_failed.title" = "Something went wrong";
 "registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
 
 // Wrong Account
@@ -1460,12 +1460,12 @@
 // Password Import Alert
 "registration.no_history.restore_backup.password.title" = "This backup is password protected.";
 "registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
-"registration.no_history.restore_backup.password.placeholder" = "סיסמה";
+"registration.no_history.restore_backup.password.placeholder" = "Password";
 "registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
-"registration.no_history.logged_out.got_it" = "אוקיי";
+"registration.no_history.logged_out.got_it" = "U redu";
 
 "registration.enter_name.title" = "Edit Name";
 "registration.enter_name.hero" = "What should we call you?";
@@ -1494,7 +1494,7 @@
 "registration.address_book_access_denied.hero.title" = "Wire does not have access to your contacts.";
 "registration.address_book_access_denied.hero.paragraph1" = "Wire helps find your friends if you share your contacts.";
 "registration.address_book_access_denied.hero.paragraph2" = "To enable access tap Settings and turn on Contacts.";
-"registration.address_book_access_denied.settings_button.title" = "Settings";
+"registration.address_book_access_denied.settings_button.title" = "Postavke";
 "registration.address_book_access_denied.maybe_later_button.title" = "Maybe later";
 
 "registration.push_access_denied.hero.title" = "Never miss a call or a message.";
@@ -1502,7 +1502,7 @@
 "registration.push_access_denied.settings_button.title" = "Go to Settings";
 "registration.push_access_denied.maybe_later_button.title" = "Maybe later";
 
-"registration.personal.title" = "צור חשבון";
+"registration.personal.title" = "Create an account";
 "registration.signin.title" = "Log in";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
@@ -1742,7 +1742,7 @@
 "availability.reminder.none.title" = "No status set";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "Do not display this information again";
-"availability.reminder.action.ok" = "אוקיי";
+"availability.reminder.action.ok" = "U redu";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey

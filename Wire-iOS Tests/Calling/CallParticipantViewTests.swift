@@ -141,35 +141,6 @@ class CallParticipantViewTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testOrientationUpsideDown() {
-        testOrientation(.portraitUpsideDown)
-    }
-
-    func testOrientationLandscapeLeft() {
-        testOrientation(.landscapeLeft)
-    }
-
-    func testOrientationLandscapeRight() {
-        testOrientation(.landscapeRight)
-    }
-
-    func testOrientation(_ deviceOrientation: UIDeviceOrientation,
-                         file: StaticString = #file,
-                         testName: String = #function,
-                         line: UInt = #line) {
-        // GIVEN
-        sut = createView(from: unmutedStream, isCovered: false)
-
-        let view = UIView(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone5))
-        view.addSubview(sut)
-
-        // WHEN
-        sut.layout(forInterfaceOrientation: .portrait, deviceOrientation: deviceOrientation)
-
-        // THEN
-        verify(matching: view, file: file, testName: testName, line: line)
-    }
-
     func testThat_ScalingIsDisabled_WhenRuleIs_EnableWhenFitted_And_ShouldFill_IsTrue() {
         // given - view is not maximized and videoState is .started, shouldFill will compute to true
         let stream = stubProvider.stream(videoState: .started)
