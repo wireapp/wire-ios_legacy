@@ -32,6 +32,7 @@ final class AccountSelectorController: UIViewController {
 
         accountsView.delegate = self
         view.addSubview(accountsView)
+        accountsView.translatesAutoresizingMaskIntoConstraints = false
         accountsView.fitIn(view: view)
 
         setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)

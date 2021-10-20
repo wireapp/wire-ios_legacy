@@ -136,7 +136,7 @@ class BaseAccountView: UIView {
         selectionView.isHidden = !selected || collapsed
         dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
-        self.layoutSubviews()
+        layoutSubviews()
     }
 
     var onTap: ((Account?) -> Void)? = .none
