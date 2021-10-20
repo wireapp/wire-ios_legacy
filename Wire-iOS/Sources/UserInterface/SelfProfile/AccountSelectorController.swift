@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import UIKit
+import Cartography
 import WireSyncEngine
 
 final class AccountSelectorController: UIViewController {
@@ -27,17 +29,21 @@ final class AccountSelectorController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
-            self?.updateShowAccountsIfNeeded()
+            guard let `self` = self else {
+                return
+            }
+            self.updateShowAccountsIfNeeded()
         })
 
         accountsView.delegate = self
-        view.addSubview(accountsView)
-        accountsView.fitIn(view: view)
+        self.view.addSubview(accountsView)
+        constrain(self.view, accountsView) { selfView, accountsView in
+            accountsView.edges == selfView.edges
+        }
 
         setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)
     }
 
-    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,7 +59,7 @@ final class AccountSelectorController: UIViewController {
     private func setShowAccounts(to showAccounts: Bool) {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
-        view.frame.size = accountsView.frame.size
+        self.view.frame.size = accountsView.frame.size
     }
 }
 
