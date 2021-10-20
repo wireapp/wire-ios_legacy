@@ -170,7 +170,7 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     @objc
-    private func startUIButtonTapped(_ sender: IconButton) {
+    func startUIButtonTapped(_ sender: Any?) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 

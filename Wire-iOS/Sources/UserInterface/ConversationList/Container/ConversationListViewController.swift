@@ -84,10 +84,6 @@ final class ConversationListViewController: UIViewController {
         return conversationListOnboardingHint
     }()
 
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
-    }
-
     convenience init(account: Account, selfUser: SelfUserType) {
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
 
@@ -201,14 +197,6 @@ final class ConversationListViewController: UIViewController {
 
     private func setupObservers() {
         viewModel.setupObservers()
-        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConnectionRequest), name: ZMConnectionNotification.missingLegalHoldConsent, object: nil)
-    }
-
-    @objc
-    func showErrorAlertForConnectionRequest() {
-        typealias ErrorStrings = L10n.Localizable.Error
-        UIAlertController.showErrorAlert(title: ErrorStrings.Conversation.title,
-                                         message: ErrorStrings.Connection.missingLegalholdConsent)
     }
 
     private func setupTopBar() {

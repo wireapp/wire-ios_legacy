@@ -151,7 +151,7 @@ final class ConversationListCellTests: XCTestCase {
 
     func testThatItRendersBlockedConversation() {
         // when
-        otherUserConversation.connectedUserType?.toggleBlocked()
+        otherUserConversation.connectedUserType?.block(completion: { _ in })
 
         let status = ConversationStatus(isGroup: false,
                                         hasMessages: false,

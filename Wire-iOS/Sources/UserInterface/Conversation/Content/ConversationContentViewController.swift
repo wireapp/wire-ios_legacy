@@ -383,7 +383,6 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.reloadRows(at: visibleRows, with: .none)
         tableView.endUpdates()
     }
-
 }
 
 // MARK: - TableView

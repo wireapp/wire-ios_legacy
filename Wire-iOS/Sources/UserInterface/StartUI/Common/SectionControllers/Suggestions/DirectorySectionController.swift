@@ -71,11 +71,28 @@ final class DirectorySectionController: SearchSectionController {
         let indexPath = IndexPath(row: button.tag, section: 0)
         let user = suggestions[indexPath.row]
 
-        ZMUserSession.shared()?.enqueue {
-            let username = user.name ?? ""
-            let selfUsername = SelfUser.current.name ?? ""
-            let messageText = "missive.connection_request.default_message".localized(args: username, selfUsername)
-            user.connect(message: messageText)
+        if user.isBlocked {
+            user.accept { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? UpdateConnectionError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
+        } else {
+            user.connect { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? ConnectToUserError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
         }
     }
 
