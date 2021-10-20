@@ -104,7 +104,8 @@ final class ConversationCellBurstTimestampView: UIView {
          unreadDotContainer,
          unreadDot].prepareForLayout()
 
-        heightConstraints = [          leftSeparator.heightAnchor.constraint(equalToConstant: separatorHeight),
+        heightConstraints = [
+            leftSeparator.heightAnchor.constraint(equalToConstant: separatorHeight),
             rightSeparator.heightAnchor.constraint(equalToConstant: separatorHeight)
         ]
 
