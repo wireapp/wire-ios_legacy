@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Контакты";
 "peoplepicker.header.services" = "Сервисы";
 "peoplepicker.services.open_conversation.item" = "Открыть беседу";
 "peoplepicker.services.add_service.button" = "Добавить сервис";
@@ -1925,3 +1925,4 @@
 "keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
 "keyboardshortcut.conversationDetail" = "Информация о беседе...";
 "keyboardshortcut.searchInConversation" = "Поиск в беседе...";
+"keyboardshortcut.openPeople" = "Контакты";
