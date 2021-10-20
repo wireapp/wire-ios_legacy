@@ -26,26 +26,32 @@ private struct SenderCellConfiguration {
     let fullName: String
     let textColor: UIColor
     let icon: StyleKitIcon?
+    let accessibilityIdentifier: String
 
     init(user: UserType) {
         fullName = user.name ?? ""
         if user.isServiceUser {
             textColor = .from(scheme: .textForeground)
             icon = .bot
+            accessibilityIdentifier = "img.serviceUser"
         } else if user.isExternalPartner {
             textColor = user.nameAccentColor
             icon = .externalPartner
+            accessibilityIdentifier = "img.externalPartner"
         } else if user.isFederated {
             textColor = user.nameAccentColor
             icon = .federated
+            accessibilityIdentifier = "img.federatedUser"
         } else if !user.isTeamMember,
                   let selfUser = SelfUser.provider?.selfUser,
                   selfUser.isTeamMember {
             textColor = user.nameAccentColor
             icon = .guest
+            accessibilityIdentifier = "img.guest"
         } else {
             textColor = user.nameAccentColor
             icon = .none
+            accessibilityIdentifier = "img.member"
         }
     }
 
@@ -133,6 +139,7 @@ final class SenderCellComponent: UIView {
     }
 
     private func configureTeamRoleIndicator(for configuration: SenderCellConfiguration) {
+        teamRoleIndicator.accessibilityIdentifier = configuration.accessibilityIdentifier
         teamRoleIndicator.isHidden = configuration.icon == nil
         if let icon = configuration.icon {
             teamRoleIndicator.setIcon(icon, size: iconSize(for: icon), color: UIColor.from(scheme: .iconGuest))

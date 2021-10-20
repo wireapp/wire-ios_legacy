@@ -60,8 +60,7 @@ final class ProfileViewControllerViewModel: NSObject {
 
         super.init()
 
-        if let user = user as? ZMUser,
-           let userSession = ZMUserSession.shared() {
+        if let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
     }
@@ -96,14 +95,29 @@ final class ProfileViewControllerViewModel: NSObject {
     }
 
     func cancelConnectionRequest(completion: @escaping Completion) {
-        ZMUserSession.shared()?.enqueue({
-            self.user.cancelConnectionRequest()
-            completion()
-        })
+        self.user.cancelConnectionRequest { [weak self] error in
+            if let error = error as? ConnectToUserError {
+                self?.viewModelDelegate?.presentError(error)
+            } else {
+                completion()
+            }
+        }
     }
 
     func toggleBlocked() {
-        user.toggleBlocked()
+        if user.isBlocked {
+            user.accept { [weak self] error in
+                if let error = error as? LocalizedError {
+                    self?.viewModelDelegate?.presentError(error)
+                }
+            }
+        } else {
+            user.block { [weak self] error in
+                if let error = error as? LocalizedError {
+                    self?.viewModelDelegate?.presentError(error)
+                }
+            }
+        }
     }
 
     func openOneToOneConversation() {
@@ -194,38 +208,32 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: Connect
 
     func sendConnectionRequest() {
-        if user.isFederated {
-            var conversation: ZMConversation?
-            guard let session = ZMUserSession.shared() else { return }
-            session.enqueue({
-                conversation = self.user.createFederatedOneToOne(in: session)
-            }, completionHandler: {
-                guard let conversation = conversation else { return }
-                self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController,
-                                                     wantsToNavigateTo: conversation)
-            })
-        } else {
-            ZMUserSession.shared()?.enqueue {
-                let messageText = "missive.connection_request.default_message".localized(args: self.user.name ?? "", self.viewer.name ?? "")
-                self.user.connect(message: messageText)
-                // update the footer view to display the cancel request button
-                self.viewModelDelegate?.updateFooterViews()
+        user.connect { [weak self] error in
+            if let error = error as? ConnectToUserError {
+                self?.viewModelDelegate?.presentError(error)
             }
+            self?.viewModelDelegate?.updateFooterViews()
         }
     }
 
     func acceptConnectionRequest() {
-        ZMUserSession.shared()?.enqueue {
-            self.user.accept()
-            self.user.refreshData()
-            self.viewModelDelegate?.updateFooterViews()
+        user.accept { [weak self] error in
+            if let error = error as? ConnectToUserError {
+                self?.viewModelDelegate?.presentError(error)
+            } else {
+                self?.user.refreshData()
+                self?.viewModelDelegate?.updateFooterViews()
+            }
         }
     }
 
     func ignoreConnectionRequest() {
-        ZMUserSession.shared()?.enqueue {
-            self.user.ignore()
-            self.viewModelDelegate?.returnToPreviousScreen()
+        user.ignore { [weak self] error in
+            if let error = error as? ConnectToUserError {
+                self?.viewModelDelegate?.presentError(error)
+            } else {
+                self?.viewModelDelegate?.returnToPreviousScreen()
+            }
         }
     }
 
@@ -245,7 +253,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
             viewModelDelegate?.updateTitleView()
         }
 
-        if note.user.isAccountDeleted {
+        if note.user.isAccountDeleted || note.connectionStateChanged {
             viewModelDelegate?.updateFooterViews()
         }
     }
@@ -263,4 +271,5 @@ protocol ProfileViewControllerViewModelDelegate: class {
     func updateFooterViews()
     func updateTitleView()
     func returnToPreviousScreen()
+    func presentError(_ error: LocalizedError)
 }

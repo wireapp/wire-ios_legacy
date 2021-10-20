@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Повежи се";
 "inbox.connection_request.connect_button_title" = "Повежи се";
 "inbox.connection_request.ignore_button_title" = "Игнориши";
+"error.connection.title" = "Грешка";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Нешто је пошло наопако. Покушајте поново";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";

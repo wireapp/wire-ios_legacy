@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "接続";
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
+"error.connection.title" = "エラー";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "問題が生じたようです。もう一度やり直してください。";
 
 // Save image errors
 "library.alert.permission_warning.title" = "\"Wire\"が 写真へのアクセスを求めています。";

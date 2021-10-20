@@ -17,8 +17,6 @@
 //
 
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 class LayerHostView<LayerType: CALayer>: UIView {
@@ -65,7 +63,7 @@ protocol AccountViewType {
     func update()
     var account: Account { get }
 
-    func createDotConstraints()
+    func createDotConstraints() -> [NSLayoutConstraint]
 }
 
 enum AccountViewFactory {
@@ -173,13 +171,9 @@ class BaseAccountView: UIView {
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
         selectionView.hostedLayer.lineWidth = 1.5
 
-        [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
+        [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
-        constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
-            selectionView.edges == inset(imageViewContainer.edges, -1, -1)
-        }
-
-        accountView.createDotConstraints()
+        let dotConstraints = accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
 
@@ -192,20 +186,25 @@ class BaseAccountView: UIView {
             iconWidth = CGFloat.AccountView.iconWidth
         }
 
-        constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + containerInset
-            imageViewContainer.centerX == selfView.centerX
-            selfView.width >= imageViewContainer.width
-            selfView.trailing >= dotView.trailing
+        [self, dotView, selectionView, imageViewContainer].prepareForLayout()
 
-            imageViewContainer.width == iconWidth
-            imageViewContainer.height == imageViewContainer.width
+        NSLayoutConstraint.activate(
+            dotConstraints +
+            selectionView.fitInConstraints(view: imageViewContainer, inset: -1) +
+            [
+          imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
+          imageViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+          widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
+          trailingAnchor.constraint(greaterThanOrEqualTo: dotView.trailingAnchor),
 
-            imageViewContainer.bottom == selfView.bottom - containerInset
-            imageViewContainer.leading == selfView.leading + containerInset
-            imageViewContainer.trailing == selfView.trailing - containerInset
-            selfView.width <= 128
-        }
+          imageViewContainer.widthAnchor.constraint(equalToConstant: iconWidth),
+          imageViewContainer.heightAnchor.constraint(equalTo: imageViewContainer.widthAnchor),
+
+          imageViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -containerInset),
+          imageViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: containerInset),
+          imageViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -containerInset),
+          widthAnchor.constraint(lessThanOrEqualToConstant: 128)
+        ])
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -288,9 +287,10 @@ final class PersonalAccountView: AccountView {
         }
 
         self.imageViewContainer.addSubview(userImageView)
-        constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
-            userImageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
+
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        userImageView.fitIn(view: imageViewContainer, inset: 2)
 
         update()
     }
@@ -310,16 +310,16 @@ final class PersonalAccountView: AccountView {
         }
     }
 
-    func createDotConstraints() {
+    func createDotConstraints() -> [NSLayoutConstraint] {
         let dotSize: CGFloat = 9
 
         [dotView, imageViewContainer].prepareForLayout()
 
-        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+        return [ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
                                       dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
                                       dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
                                       dotView.widthAnchor.constraint(equalToConstant: dotSize)
-            ])
+            ]
     }
 }
 
