@@ -116,3 +116,45 @@ extension ConmpanyLoginRequestError: LocalizedError {
         }
     }
 }
+
+extension ConnectToUserError: LocalizedError {
+
+    typealias ConnectionError = L10n.Localizable.Error.Connection
+
+    public var errorDescription: String? {
+        return ConnectionError.title
+    }
+
+    public var failureReason: String? {
+        switch self {
+        case .missingLegalholdConsent:
+            return ConnectionError.missingLegalholdConsent
+        case .connectionLimitReached:
+            return ConnectionError.connectionLimitReached
+        default:
+            return ConnectionError.genericError
+        }
+    }
+
+}
+
+extension UpdateConnectionError: LocalizedError {
+
+    typealias ConnectionError = L10n.Localizable.Error.Connection
+
+    public var errorDescription: String? {
+        return ConnectionError.title
+    }
+
+    public var failureReason: String? {
+        switch self {
+        case .missingLegalholdConsent:
+            return ConnectionError.missingLegalholdConsent
+        case .connectionLimitReached:
+            return ConnectionError.connectionLimitReached
+        default:
+            return ConnectionError.genericError
+        }
+    }
+
+}

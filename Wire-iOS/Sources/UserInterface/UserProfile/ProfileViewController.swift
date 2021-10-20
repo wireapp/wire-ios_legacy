@@ -525,4 +525,8 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
             self.dismiss(animated: true, completion: nil)
         }
     }
+
+    func presentError(_ error: LocalizedError) {
+        presentLocalizedErrorAlert(error)
+    }
 }

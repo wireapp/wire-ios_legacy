@@ -68,9 +68,14 @@ extension ConversationActionController {
 
     func handleBlockResult(_ result: BlockResult, for conversation: ZMConversation) {
         guard case .block = result else { return }
-        transitionToListAndEnqueue {
-            conversation.connectedUser?.toggleBlocked()
-        }
+
+        conversation.connectedUser?.block(completion: { [weak self] error in
+            if let error = error as? LocalizedError {
+                self?.presentError(error)
+            } else {
+                self?.transitionToListAndEnqueue {}
+            }
+        })
     }
 
 }

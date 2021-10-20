@@ -44,6 +44,12 @@ extension UIViewController {
         return alert
     }
 
+    func presentLocalizedErrorAlert(_ error: LocalizedError) {
+        let alertController = UIAlertController(error, preferredStyle: .alert)
+        alertController.addAction(.ok())
+        present(alertController, animated: true, completion: nil)
+    }
+
     // MARK: - user profile deep link
 
     @discardableResult
