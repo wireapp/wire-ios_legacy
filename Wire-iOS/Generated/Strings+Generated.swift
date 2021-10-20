@@ -2138,6 +2138,8 @@ internal enum L10n {
     internal enum Keyboardshortcut {
       /// Conversation detail...
       internal static let conversationDetail = L10n.tr("Localizable", "keyboardshortcut.conversationDetail")
+      /// People
+      internal static let openPeople = L10n.tr("Localizable", "keyboardshortcut.openPeople")
       /// Scroll to bottom
       internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
       /// Search in conversation...
