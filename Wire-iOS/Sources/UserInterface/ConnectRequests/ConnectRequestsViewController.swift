@@ -26,6 +26,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     private var pendingConnectionsListObserverToken: Any?
     private let tableView: UITableView = UITableView(frame: .zero)
     private var lastLayoutBounds = CGRect.zero
+    private var isAccepting = false
+    private var isIgnoring = false
 
     override func loadView() {
         view = tableView
@@ -116,19 +118,43 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
 
         cell.acceptBlock = { [weak self] in
-            guard self?.connectionRequests.isEmpty == true else { return }
-
-            ZClientViewController.shared?.hideIncomingContactRequests {
-                if let oneToOneConversation = user?.oneToOneConversation {
-                    ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
-                }
-            }
+            self?.acceptConnectionRequest(from: cell.user)
         }
 
         cell.ignoreBlock = { [weak self] in
-            self?.hideRequestsOrShowNextRequest()
+            self?.ignoreConnectionRequest(from: cell.user)
         }
 
+    }
+
+    private func acceptConnectionRequest(from user: UserType) {
+        isAccepting = true
+        user.accept { [weak self] error in
+            self?.isAccepting = false
+            if let error = error as? LocalizedError {
+                self?.presentLocalizedErrorAlert(error)
+            } else {
+                guard self?.connectionRequests.isEmpty == true else { return }
+
+                ZClientViewController.shared?.hideIncomingContactRequests {
+                    if let oneToOneConversation = user.oneToOneConversation {
+                        ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
+                    }
+                }
+            }
+        }
+    }
+
+    private func ignoreConnectionRequest(from user: UserType) {
+        isIgnoring = true
+        user.ignore { [weak self] error in
+            self?.isIgnoring = false
+            if let error = error as? LocalizedError {
+                self?.presentLocalizedErrorAlert(error)
+            } else {
+                self?.hideRequestsOrShowNextRequest()
+            }
+        }
     }
 
     private func hideRequestsOrShowNextRequest(animated: Bool = true) {
@@ -136,7 +162,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // scroll to bottom to show the next request
-            tableView.setContentOffset(CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: animated)
+            let indexPath = IndexPath(row: connectionRequests.count - 1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
 
@@ -148,7 +175,10 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         }
 
         tableView.reloadData()
-        hideRequestsOrShowNextRequest()
+
+        if !isAccepting && !isIgnoring {
+            hideRequestsOrShowNextRequest()
+        }
     }
 }
 

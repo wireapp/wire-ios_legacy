@@ -178,15 +178,19 @@ final class ConversationViewController: UIViewController {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         outgoingConnectionViewController.buttonCallback = { [weak self] action in
-            self?.session.enqueue({
-                switch action {
-                case .cancel:
-                    self?.conversation.connectedUser?.cancelConnectionRequest()
-                case .archive:
-                    self?.conversation.isArchived = true
-                }
-            })
 
+            switch action {
+            case .cancel:
+                self?.conversation.connectedUser?.cancelConnectionRequest(completion: { (error) in
+                    if let error = error as? LocalizedError {
+                        self?.presentLocalizedErrorAlert(error)
+                    }
+                })
+            case .archive:
+                self?.session.enqueue({
+                    self?.conversation.isArchived = true
+                })
+            }
             self?.openConversationList()
         }
     }
