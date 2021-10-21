@@ -41,7 +41,7 @@ final class RoundedBlurViewTests: XCTestCase {
         sut.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
 
         // WHEN
-        // put the blur view in fornt of an image
+        // put the blur view in front of an image
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
         let container = UIView(frame: frame)
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
