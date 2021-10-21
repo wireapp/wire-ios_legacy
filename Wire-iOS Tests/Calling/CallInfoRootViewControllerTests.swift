@@ -236,6 +236,30 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
+    // MARK: - Landscape
+    func disable_testOneToOneAudioOutgoingLandscape() {
+        testLandscape(configuration: defaultFixture.oneToOneOutgoingAudioRinging)
+    }
+
+    func disable_testOneToOneAudioIncomingLandscape() {
+        testLandscape(configuration: defaultFixture.oneToOneIncomingAudioRinging)
+    }
+
+    func disable_testOneToOneAudioEstablishedLandscape() {
+        testLandscape(configuration: defaultFixture.oneToOneAudioEstablished)
+    }
+
+    func testLandscape(configuration: CallInfoViewControllerInput, testName: String = #function) {
+        sut = CallInfoRootViewController(configuration: configuration, selfUser: mockSelfUser)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let mockParentViewController = UIViewController()
+        mockParentViewController.addToSelf(sut)
+        mockParentViewController.setOverrideTraitCollection(UITraitCollection(verticalSizeClass: .compact), forChild: sut)
+
+        // then
+        verifyAllIPhoneSizes(matching: mockParentViewController, orientation: .landscape, testName: testName)
+    }
+
     // MARK: - Missing Video Permissions
 
     func testGroupVideoUndeterminedVideoPermissions() {

@@ -28,6 +28,8 @@ protocol SearchSectionControllerDelegate: class {
 
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectRow row: CreateGroupSection.Row, at indexPath: IndexPath)
 
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, wantsToDisplayError error: LocalizedError)
+
 }
 
 class SearchSectionController: NSObject, CollectionViewSectionController {

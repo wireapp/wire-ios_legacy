@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Контакты";
 "peoplepicker.header.services" = "Сервисы";
 "peoplepicker.services.open_conversation.item" = "Открыть беседу";
 "peoplepicker.services.add_service.button" = "Добавить сервис";
@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
+"error.connection.title" = "Ошибка";
 "error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
+"error.connection.connection_limit_reached" = "Вы не можете подключиться, поскольку достигли лимита подключения";
+"error.connection.generic_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";
@@ -1650,6 +1653,22 @@
 "feature_config.file_sharing_restrictions.video" = "Получение видео запрещено";
 "feature_config.file_sharing_restrictions.audio" = "Получение аудиофайлов запрещено";
 
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "План Enterprise";
+"feature_config.update.conference_calling.alert.message" = "Ваша команда была переведена на план Enterprise. Теперь у вас есть доступ к таким возможностям, как использование конференц-звонков.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Узнайте больше о плане Enterprise";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Перейти на Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "В настоящее время ваша команда работает на бесплатном плане Basic. Перейдите на план Enterprise, чтобы получить доступ к таким возможностям, как использование конференц-звонков.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Узнайте больше о тарифах Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Перейти сейчас";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Возможность недоступна";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Чтобы использовать конференц-связь, вашей команде необходимо перейти на план Enterprise.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Возможность недоступна";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Возможность инициировать конференц-связь доступна только в платной версии Wire.";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
 "jailbrokendevice.alert.message" = "С целью обеспечения безопасности Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";
@@ -1901,3 +1920,9 @@
 "appLockModule.message.passcodeUnavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
 "appLockModule.unlockButton.title" = "Разблокировать";
 "appLockModule.goToSettingsButton.title" = "Перейти в настройки";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
+"keyboardshortcut.conversationDetail" = "Информация о беседе...";
+"keyboardshortcut.searchInConversation" = "Поиск в беседе...";
+"keyboardshortcut.openPeople" = "Контакты";

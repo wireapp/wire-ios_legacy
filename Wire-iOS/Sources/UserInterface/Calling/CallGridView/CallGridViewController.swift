@@ -71,7 +71,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     var configuration: CallGridViewControllerInput {
         didSet {
-            guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            guard !configuration.isEqual(to: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
@@ -156,7 +156,7 @@ final class CallGridViewController: SpinnerCapableViewController {
             topStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             pageIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             pageIndicator.heightAnchor.constraint(equalToConstant: CGFloat.pageIndicatorHeight),
-            pageIndicator.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
+            pageIndicator.centerXAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -22) // (pageIndicatorHeight / 2 + 10)
         ])
 
         pageIndicator.transform = pageIndicator.transform.rotated(by: .pi/2)
@@ -387,7 +387,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
         thumbnailViewController.updateThumbnailContentSize(.previewSize(for: traitCollection), animated: false)
         updateGridViewAxis()
     }
@@ -406,7 +406,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     private func gridAxis(for traitCollection: UITraitCollection) -> UICollectionView.ScrollDirection {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
-        case (.pad, .regular, true):
+        case (.pad, .regular, true), (.phone, _, true):
             return .horizontal
         default:
             return .vertical

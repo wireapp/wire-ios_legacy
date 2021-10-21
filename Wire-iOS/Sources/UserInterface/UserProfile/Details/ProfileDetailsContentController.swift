@@ -159,7 +159,7 @@ final class ProfileDetailsContentController: NSObject,
 
             if let conversation = conversation {
                 let viewerCanChangeOtherRoles = viewer.canModifyOtherMember(in: conversation)
-                let userCanHaveRoleChanged = !user.isWirelessUser
+                let userCanHaveRoleChanged = !user.isWirelessUser && !user.isFederated
 
                 if viewerCanChangeOtherRoles && userCanHaveRoleChanged {
                     items.append(.groupAdminStatus(enabled: groupAdminEnabled))

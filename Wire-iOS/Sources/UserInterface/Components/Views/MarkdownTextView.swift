@@ -1,6 +1,6 @@
 ////
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-final class MarkdownTextView: NextResponderTextView {
+final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
 
     enum ListType {
         case number, bullet
@@ -65,7 +65,11 @@ final class MarkdownTextView: NextResponderTextView {
         case #selector(UIResponderStandardEditActions.paste(_:)),
              #selector(UIResponderStandardEditActions.cut(_:)),
              #selector(UIResponderStandardEditActions.copy(_:)):
-            guard SecurityFlags.clipboard.isEnabled else { return false }
+
+            let pasteboard = UIPasteboard.general
+            guard shouldAllowPerformAction(isText: pasteboard.hasText,
+                                         isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
+                                         canFilesBeShared: canFilesBeShared) else { return false }
             fallthrough
         default:
             return super.canPerformAction(action, withSender: sender)
@@ -620,6 +624,18 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     }
 }
 
+// MARK: - Helpers
+
+extension MarkdownTextView {
+
+    /// Whether files can be shared and received
+    private var canFilesBeShared: Bool {
+        guard let session = ZMUserSession.shared() else { return true }
+        return session.fileSharingFeature.status == .enabled
+    }
+
+}
+
 // MARK: - DownStyle Presets
 
 extension DownStyle {
@@ -703,4 +719,13 @@ private extension NSRange {
 
         return range
     }
+}
+
+private extension UIPasteboard {
+
+    var hasText: Bool {
+        /// Image copied from browser can be both NSString and UIImage
+        return hasStrings && !hasImages
+    }
+
 }

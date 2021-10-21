@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Kontaktanfrage";
 "inbox.connection_request.connect_button_title" = "Verbinden";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
+"error.connection.title" = "Fehler";
 "error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -1650,6 +1653,22 @@
 "feature_config.file_sharing_restrictions.video" = "Empfang von Videos ist verboten";
 "feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien ist verboten";
 
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise-Abo";
+"feature_config.update.conference_calling.alert.message" = "Ihr Team nutzt jetzt das Enterprise-Abo. Dadurch haben Sie nun Zugriff auf Funktionen wie das Starten von Telefonkonferenzen.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Erfahren Sie mehr über das Enterprise-Abo";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Auf Enterprise upgraden";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Ihr Team nutzt derzeit das kostenlose Basis-Abo. Upgraden Sie auf Enterprise für den Zugriff auf weitere Funktionen wie das Starten von Telefonkonferenzen.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Erfahren Sie mehr über Wires Preise";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Jetzt upgraden";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Funktion nicht verfügbar";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Um eine Telefonkonferenz zu starten, muss Ihr Team auf das Enterprise-Abo upgraden.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Funktion nicht verfügbar";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Die Option, eine Telefonkonferenz zu starten, ist nur in der kostenpflichtigen Version verfügbar.";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
 "jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";
@@ -1901,3 +1920,9 @@
 "appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, Kennwort in den Geräteeinstellungen aktivieren";
 "appLockModule.unlockButton.title" = "Entsperren";
 "appLockModule.goToSettingsButton.title" = "Einstellungen öffnen";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
+"keyboardshortcut.conversationDetail" = "Conversation detail...";
+"keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.openPeople" = "Kontakte";

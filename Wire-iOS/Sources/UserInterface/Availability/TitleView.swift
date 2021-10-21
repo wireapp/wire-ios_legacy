@@ -52,7 +52,8 @@ class TitleView: UIView {
         addSubview(titleButton)
     }
 
-    @objc func titleButtonTapped(_ sender: UIButton) {
+    @objc
+    func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
 

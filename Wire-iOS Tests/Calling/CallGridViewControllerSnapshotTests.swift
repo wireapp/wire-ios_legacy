@@ -20,7 +20,8 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class MockCallGridViewControllerInput: CallGridViewControllerInput {
+struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
+
     var shouldShowActiveSpeakerFrame: Bool = true
 
     var floatingStream: Wire.Stream?
@@ -258,7 +259,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         let mockDelegate = MockCallGridViewControllerDelegate()
         createSut(delegate: mockDelegate)
 
-        let configuration = MockCallGridViewControllerInput()
+        var configuration = MockCallGridViewControllerInput()
 
         // Page 1 - video enabled
         for _ in 0..<CallGridViewController.maxItemsPerPage {
@@ -291,7 +292,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
     func testThatItDoesntRequestVideoStreams_IfPageIsInvalid() {
         // given
         let mockDelegate = MockCallGridViewControllerDelegate()
-        let configuration = MockCallGridViewControllerInput()
+        var configuration = MockCallGridViewControllerInput()
 
         createSut(delegate: mockDelegate)
 

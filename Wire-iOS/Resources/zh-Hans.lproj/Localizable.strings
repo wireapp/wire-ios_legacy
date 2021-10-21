@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "与其他域连接";
 
 "peoplepicker.group.title.singular" = "添加参与者";
 "peoplepicker.group.title.plural" = "添加参与者(%d)";
@@ -335,8 +335,8 @@
 "conversation.alert.message_deleted" = "消息已删除。";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.guests_present" = "**访客**在对话中";
+"conversation.banner.services_present" = "**服务**已启动";
 "conversation.banner.externals_present" = "**Externals** are present";
 "conversation.banner.guests_services_present" = "**Guests** and **services** are present";
 "conversation.banner.externals_services_present" = "**Externals** and **services** are present";
@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "新增好友";
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
+"error.connection.title" = "错误";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "出了点问题，请再试一次";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
@@ -1650,6 +1653,22 @@
 "feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
 "feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "检测到越狱";
 "jailbrokendevice.alert.message" = "出于安全原因，Wire不能在此设备上使用，现有的所有Wire数据已被擦除。";
@@ -1901,3 +1920,9 @@
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
 "appLockModule.unlockButton.title" = "解锁";
 "appLockModule.goToSettingsButton.title" = "前往设置";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
+"keyboardshortcut.conversationDetail" = "Conversation detail...";
+"keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.openPeople" = "联系人";

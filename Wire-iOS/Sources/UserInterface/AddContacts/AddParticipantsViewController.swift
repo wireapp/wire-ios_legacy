@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 extension ConversationLike where Self: SwiftConversationLike {
     var canAddGuest: Bool {
@@ -144,7 +145,7 @@ final class AddParticipantsViewController: UIViewController {
 
     init(context: Context,
          variant: ColorSchemeVariant = ColorScheme.default.variant,
-         isFederationEnabled: Bool = Settings.shared[.federationEnabled] == true) {
+         isFederationEnabled: Bool = Settings.shared.federationEnabled || AutomationHelper.sharedHelper.enableFederation) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)

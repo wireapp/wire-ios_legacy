@@ -216,8 +216,7 @@ class BaseCallParticipantView: OrientableView, AVSIdentifierProvider {
                 deviceOrientation: UIDeviceOrientation) {
         guard let superview = superview else { return }
 
-        delta = OrientationDelta(interfaceOrientation: interfaceOrientation,
-                                 deviceOrientation: deviceOrientation)
+        delta = .equal
 
         transform = CGAffineTransform(rotationAngle: delta.radians)
         frame = superview.bounds

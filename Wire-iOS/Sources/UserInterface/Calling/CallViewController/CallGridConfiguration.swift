@@ -18,7 +18,7 @@
 
 import WireSyncEngine
 
-struct CallGridConfiguration: CallGridViewControllerInput {
+struct CallGridConfiguration: CallGridViewControllerInput, Equatable {
 
     fileprivate static let maxActiveSpeakers: Int = 4
 

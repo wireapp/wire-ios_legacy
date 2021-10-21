@@ -41,6 +41,11 @@ final class RootViewController: UIViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if let viewController = presentedViewController,
+           viewController is ModalPresentationViewController,
+           !viewController.isBeingDismissed {
+            return viewController.supportedInterfaceOrientations
+        }
         return wr_supportedInterfaceOrientations
     }
 

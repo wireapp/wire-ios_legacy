@@ -89,13 +89,14 @@ final class ZClientViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
 
-        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { (note) in
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { [weak self] (note) in
             guard let change = note.object as? FeatureService.FeatureChange else { return }
 
             switch change {
             case .conferenceCallingIsAvailable:
-                guard SessionManager.shared?.usePackagingFeatureConfig == true else { break }
-                self.presentConferenceCallingAvailableAlert()
+                guard let session = SessionManager.shared,
+                      session.usePackagingFeatureConfig else { break }
+                self?.presentConferenceCallingAvailableAlert()
 
             default:
                 break
@@ -180,6 +181,25 @@ final class ZClientViewController: UIViewController {
         setUpConferenceCallingUnavailableObserver()
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
+    override var shouldAutorotate: Bool {
+        return presentedViewController?.shouldAutorotate ?? true
+    }
+
+    // MARK: keyboard shortcut
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.openPeople)]
+    }
+
+    @objc
+    private func openStartUI(_ sender: Any?) {
+        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
+    }
+
     private func createBackgroundViewController() {
         backgroundViewController.addToSelf(conversationListViewController)
 
@@ -187,14 +207,6 @@ final class ZClientViewController: UIViewController {
         conversationListViewController.view.frame = backgroundViewController.view.bounds
 
         wireSplitViewController.leftViewController = backgroundViewController
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
-    override var shouldAutorotate: Bool {
-        return presentedViewController?.shouldAutorotate ?? true
     }
 
     // MARK: Status bar
