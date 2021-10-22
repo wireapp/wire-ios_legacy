@@ -218,11 +218,11 @@ final class ListSkeletonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [topBar,
          buttonRowView,
          listContentView].prepareForLayout()
-        
+
         NSLayoutConstraint.activate([
             topBar.topAnchor.constraint(equalTo: safeTopAnchor),
             topBar.leftAnchor.constraint(equalTo: leftAnchor),
@@ -231,7 +231,7 @@ final class ListSkeletonView: UIView {
 
           buttonRowView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
           buttonRowView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-          buttonRowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant:  -UIScreen.safeArea.bottom),
+          buttonRowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UIScreen.safeArea.bottom),
           buttonRowView.heightAnchor.constraint(equalToConstant: 55),
 
           listContentView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -303,9 +303,9 @@ final class SkeletonViewController: UIViewController {
 
     private func createConstraints() {
         guard let splitViewControllerView = customSplitViewController.view else { return }
-        
+
         [blurEffectView, backgroundImageView, splitViewControllerView].prepareForLayout()
-        
+
         NSLayoutConstraint.activate([
           blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
           blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
