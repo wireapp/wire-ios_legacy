@@ -38,8 +38,8 @@ final class ListSkeletonCellNameItemView: UIView {
 
 final class ListSkeletonCellView: UIView {
 
-    let avatarView: UIView
-    let lineView: ListSkeletonCellNameItemView
+    let avatarView = UIView()
+    let lineView = ListSkeletonCellNameItemView()
 
     lazy var lineConstraint: NSLayoutConstraint = lineView.rightAnchor.constraint(equalTo: rightAnchor)
 
@@ -55,10 +55,7 @@ final class ListSkeletonCellView: UIView {
     }
 
     init() {
-        avatarView = UIView()
-        lineView = ListSkeletonCellNameItemView()
-
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         avatarView.layer.cornerRadius = 14
         avatarView.backgroundColor = .white
@@ -74,7 +71,7 @@ final class ListSkeletonCellView: UIView {
     }
 
     private func createConstraints() {
-        
+        [avatarView, lineView].prepareForLayout()
 
         NSLayoutConstraint.activate([
           avatarView.widthAnchor.constraint(equalToConstant: CGFloat(28)),
@@ -108,7 +105,7 @@ final class ListSkeletonCell: UITableViewCell {
         backgroundColor = .clear
 
         contentView.addSubview(skeletonCellView)
-
+        skeletonCellView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           skeletonCellView.topAnchor.constraint(equalTo: contentView.topAnchor),
           skeletonCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -186,7 +183,8 @@ final class ListSkeletonView: UIView {
     }()
 
     let listContentView: ListSkeletonContentView
-    var buttonRowView: UIStackView!
+    lazy var buttonRowView: UIStackView = { UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
+    }()
 
     init(_ account: Account, randomizeDummyItem: Bool) {
         let accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
@@ -196,7 +194,6 @@ final class ListSkeletonView: UIView {
 
         super.init(frame: CGRect.zero)
 
-        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
         buttonRowView.distribution = .equalCentering
 
         [topBar,
@@ -222,15 +219,16 @@ final class ListSkeletonView: UIView {
     }
 
     func createConstraints() {
-        topBar.translatesAutoresizingMaskIntoConstraints = false
-
+        [topBar,
+         buttonRowView,
+         listContentView].prepareForLayout()
+        
         NSLayoutConstraint.activate([
             topBar.topAnchor.constraint(equalTo: safeTopAnchor),
             topBar.leftAnchor.constraint(equalTo: leftAnchor),
             topBar.rightAnchor.constraint(equalTo: rightAnchor),
-            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10)])
+            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10),
 
-        NSLayoutConstraint.activate([
           buttonRowView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
           buttonRowView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
           buttonRowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant:  -UIScreen.safeArea.bottom),
@@ -241,7 +239,6 @@ final class ListSkeletonView: UIView {
           listContentView.bottomAnchor.constraint(equalTo: buttonRowView.topAnchor)
         ])
     }
-
 }
 
 final class SkeletonViewController: UIViewController {
@@ -306,6 +303,9 @@ final class SkeletonViewController: UIViewController {
 
     private func createConstraints() {
         guard let splitViewControllerView = customSplitViewController.view else { return }
+        
+        [blurEffectView, backgroundImageView, splitViewControllerView].prepareForLayout()
+        
         NSLayoutConstraint.activate([
           blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
           blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
