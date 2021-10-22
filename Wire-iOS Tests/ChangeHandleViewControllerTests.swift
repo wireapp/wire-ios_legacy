@@ -23,6 +23,12 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        mockSelfUser.handle = nil
+        mockSelfUser.domain = "wire.com"
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
+recordMode = true
         snapshotBackgroundColor = .darkGray
     }
 

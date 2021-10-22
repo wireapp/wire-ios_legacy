@@ -34,8 +34,14 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         coreDataFixture = CoreDataFixture()
         userSessionMock = MockZMUserSession()
         selfUser = MockZMEditableUser()
+        selfUser.teamName = "Wire"
+        selfUser.handle = "johndoe"
+        selfUser.name = "John Doe"
+        selfUser.phoneNumber = "+123456789"
+        selfUser.domain = "wire.com"
+        selfUser.emailAddress = "john.doe@wire.com"
 
-		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: nil)
+		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: selfUser)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
 
 		MockUserRight.isPermitted = true
