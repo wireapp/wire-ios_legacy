@@ -354,11 +354,3 @@ extension Sequence where Element == UIView {
 		forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 	}
 }
-
-extension Array where Element == UIView {
-    func disableAutoresizingMaskTranslation() {
-        for view in self {
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-}

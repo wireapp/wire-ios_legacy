@@ -16,44 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
-import SnapshotTesting
 @testable import Wire
 
-final class RoundedBlurViewTests: XCTestCase {
+final class DeveloperOptionsControllerSnapshotTests: XCTestCase {
 
-    private var sut: RoundedBlurView!
+    var sut: DeveloperOptionsController!
 
     override func setUp() {
         super.setUp()
-        sut = RoundedBlurView()
+
+        sut = DeveloperOptionsController()
     }
 
     override func tearDown() {
         sut = nil
+
         super.tearDown()
     }
 
-    func testThat_ItBlursTheImageInTheBackground() {
-        // GIVEN
-        sut.setCornerRadius(12)
-        sut.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
-
-        // WHEN
-        // put the blur view in front of an image
-        let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let container = UIView(frame: frame)
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let imageView = UIImageView(image: image)
-        imageView.frame = frame
-        imageView.contentMode = .scaleAspectFill
-
-        container.addSubview(imageView)
-        container.addSubview(sut)
-
-        // THEN
-        verify(matching: container)
+    func testForInitState() {
+        // GIVEN & WHEN & THEN
+        verify(matching: sut, customSize: CGSize.iPhoneSize.iPhone4_7)
     }
 
 }

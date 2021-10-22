@@ -65,7 +65,7 @@ final class GuestsBarController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(self.view, container, label) { view, container, label in
+        constrain(view, container, label) { view, container, label in
             label.leading == view.leading
             bottomLabelConstraint = label.bottom == view.bottom - 3
             label.trailing == view.trailing

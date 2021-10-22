@@ -29,7 +29,7 @@ final class CollectionsView: UIView {
 
     var noItemsInLibrary: Bool = false {
         didSet {
-            self.noResultsView.isHidden = !self.noItemsInLibrary
+            noResultsView.isHidden = !noItemsInLibrary
         }
     }
 
@@ -37,30 +37,30 @@ final class CollectionsView: UIView {
         super.init(frame: frame)
         backgroundColor = .from(scheme: .contentBackground)
 
-        self.recreateLayout()
-        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout)
+        recreateLayout()
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
 
-        self.collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
-        self.collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
-        self.collectionView.register(CollectionAudioCell.self, forCellWithReuseIdentifier: CollectionAudioCell.reuseIdentifier)
-        self.collectionView.register(CollectionVideoCell.self, forCellWithReuseIdentifier: CollectionVideoCell.reuseIdentifier)
-        self.collectionView.register(CollectionLinkCell.self, forCellWithReuseIdentifier: CollectionLinkCell.reuseIdentifier)
-        self.collectionView.register(CollectionLoadingCell.self, forCellWithReuseIdentifier: CollectionLoadingCell.reuseIdentifier)
-        self.collectionView.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
-        self.collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.allowsMultipleSelection = false
-        self.collectionView.allowsSelection = true
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.isScrollEnabled = true
-        self.collectionView.backgroundColor = UIColor.clear
-        self.addSubview(self.collectionView)
+        collectionView.register(CollectionImageCell.self, forCellWithReuseIdentifier: CollectionImageCell.reuseIdentifier)
+        collectionView.register(CollectionFileCell.self, forCellWithReuseIdentifier: CollectionFileCell.reuseIdentifier)
+        collectionView.register(CollectionAudioCell.self, forCellWithReuseIdentifier: CollectionAudioCell.reuseIdentifier)
+        collectionView.register(CollectionVideoCell.self, forCellWithReuseIdentifier: CollectionVideoCell.reuseIdentifier)
+        collectionView.register(CollectionLinkCell.self, forCellWithReuseIdentifier: CollectionLinkCell.reuseIdentifier)
+        collectionView.register(CollectionLoadingCell.self, forCellWithReuseIdentifier: CollectionLoadingCell.reuseIdentifier)
+        collectionView.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.allowsSelection = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.isScrollEnabled = true
+        collectionView.backgroundColor = UIColor.clear
+        addSubview(collectionView)
 
-        self.noResultsView.label.accessibilityLabel = "no items"
-        self.noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
-        self.noResultsView.icon = .library
-        self.noResultsView.isHidden = true
-        self.addSubview(self.noResultsView)
+        noResultsView.label.accessibilityLabel = "no items"
+        noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
+        noResultsView.icon = .library
+        noResultsView.isHidden = true
+        addSubview(noResultsView)
     }
 
     private func recreateLayout() {
@@ -73,7 +73,7 @@ final class CollectionsView: UIView {
             layout.estimatedItemSize = CGSize(width: 64, height: 64)
         }
 
-        self.collectionViewLayout = layout
+        collectionViewLayout = layout
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -102,7 +102,7 @@ final class CollectionsView: UIView {
         addSubview(searchViewController.resultsView)
         addSubview(searchViewController.searchBar)
 
-        constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { selfView, searchBar, collectionView, noResultsView in
+        constrain(self, searchViewController.searchBar, collectionView, noResultsView) { selfView, searchBar, collectionView, noResultsView in
 
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading
@@ -123,7 +123,7 @@ final class CollectionsView: UIView {
             noResultsView.trailing <= selfView.trailing - 24
         }
 
-        constrain(self.collectionView, searchViewController.resultsView) { collectionView, resultsView in
+        constrain(collectionView, searchViewController.resultsView) { collectionView, resultsView in
             resultsView.edges == collectionView.edges
         }
     }

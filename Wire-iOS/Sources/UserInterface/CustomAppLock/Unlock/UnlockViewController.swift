@@ -188,7 +188,7 @@ final class UnlockViewController: UIViewController {
          blurView,
          contentView,
          upperStackView,
-         stackView].disableAutoresizingMaskTranslation()
+         stackView].prepareForLayout()
 
         let widthConstraint = contentView.createContentWidthConstraint()
 

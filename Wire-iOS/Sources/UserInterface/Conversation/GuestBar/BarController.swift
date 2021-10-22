@@ -87,7 +87,7 @@ final class BarController: UIViewController {
 
         view.addSubview(stackView)
 
-        constrain(self.view, stackView) { view, stackView in
+        constrain(view, stackView) { view, stackView in
             stackView.edges == view.edges
         }
     }
