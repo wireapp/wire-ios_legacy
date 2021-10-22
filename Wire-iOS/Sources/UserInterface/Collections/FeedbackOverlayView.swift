@@ -17,11 +17,10 @@
 //
 
 import UIKit
-import Cartography
 
-public final class FeedbackOverlayView: UIView {
+final class FeedbackOverlayView: UIView {
 
-    public let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
         label.textColor = .from(scheme: .textForeground)
@@ -29,7 +28,7 @@ public final class FeedbackOverlayView: UIView {
         return label
     }()
 
-    override public init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -39,20 +38,21 @@ public final class FeedbackOverlayView: UIView {
         backgroundColor = .from(scheme: .background)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     fileprivate func constrainViews() {
-        constrain(self, titleLabel) { container, label in
-            label.centerX == container.centerX
-            label.centerY == container.centerY
-            label.left >= container.left + 24
-            label.right <= container.right - 24
-        }
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 24),
+            titleLabel.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -24)
+        ])
     }
 
-    public func show(text: String) {
+    func show(text: String) {
         titleLabel.text = text
         UIView.animateKeyframes(withDuration: 2, delay: 0, options: [], animations: {
             let fadeOutDuration = 0.015
