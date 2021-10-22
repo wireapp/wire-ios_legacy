@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -86,16 +85,17 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func createConstraints() {
-        constrain(self, prefixLabel, handleTextField) { view, prefixLabel, textField in
-            prefixLabel.top == view.top
-            prefixLabel.width == 16
-            prefixLabel.bottom == view.bottom
-            prefixLabel.leading == view.leading + 16
-            prefixLabel.trailing == textField.leading - 4
-            textField.top == view.top
-            textField.bottom == view.bottom
-            textField.trailing == view.trailing - 16
-        }
+        [prefixLabel, handleTextField].prepareForLayout()
+        NSLayoutConstraint.activate([
+          prefixLabel.topAnchor.constraint(equalTo: topAnchor),
+          prefixLabel.widthAnchor.constraint(equalToConstant: 16),
+          prefixLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+          prefixLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+          prefixLabel.trailingAnchor.constraint(equalTo: handleTextField.leadingAnchor, constant: -4),
+          handleTextField.topAnchor.constraint(equalTo: topAnchor),
+          handleTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
+          handleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
     }
 
     func performWiggleAnimation() {
@@ -107,14 +107,14 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     // MARK: - UITextField
 
     @objc func editingChanged(textField: UITextField) {
-        let lowercase = textField.text?.lowercased() ?? ""
-        textField.text = lowercase
+        let lowercase = handleTextField.text?.lowercased() ?? ""
+        handleTextField.text = lowercase
         delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let delegate = delegate else { return false }
-        let current = (textField.text ?? "") as NSString
+        let current = (handleTextField.text ?? "") as NSString
         let replacement = current.replacingCharacters(in: range, with: string)
         if delegate.tableViewCell(cell: self, shouldAllowEditingText: replacement) {
             return true
@@ -127,7 +127,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 /// This struct represents the current state of a handle
 /// change operation and performs necessary validation steps of
-/// a new handle. The `ChangeHandleViewController` uses this state 
+/// a new handle. The `ChangeHandleViewController` uses this state
 /// to layout its interface.
 struct HandleChangeState {
 
