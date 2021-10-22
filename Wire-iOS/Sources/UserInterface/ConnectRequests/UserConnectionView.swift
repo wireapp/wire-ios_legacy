@@ -112,29 +112,29 @@ final class UserConnectionView: UIView, Copyable {
 
     private func createConstraints() {
         NSLayoutConstraint.activate([
-          labelContainer.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
-          labelContainer.topAnchor.constraint(equalTo: selfView.topAnchor),
-          labelContainer.leftAnchor.constraint(greaterThanOrEqualTo: selfView.leftAnchor),
+          labelContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+          labelContainer.topAnchor.constraint(equalTo: topAnchor),
+          labelContainer.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
 
           userImageView.topAnchor.constraint(greaterThanOrEqualTo: labelContainer.bottomAnchor),
-          userImageView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
-          userImageView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
-          userImageView.leftAnchor.constraint(greaterThanOrEqualTo: selfView.leftAnchor, constant: 54),
+          userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+          userImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+          userImageView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 54),
           userImageView.widthAnchor.constraint(equalTo: userImageView.heightAnchor),
           userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 264),
-          userImageView.bottomAnchor.constraint(lessThanOrEqualTo: selfView.bottomAnchor)
+          userImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
         ])
 
         let verticalMargin = CGFloat(16)
 
         NSLayoutConstraint.activate([
-          handleLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalMargin),
-          handleLabel.heightAnchor.constraint(equalToConstant: 16),
-          correlationLabel.topAnchor.constraint(equalTo: handleLabel.bottomAnchor),
-          handleLabel.heightAnchor.constraint(equalToConstant: 16),
-          correlationLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalMargin),
+          firstLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalMargin),
+          firstLabel.heightAnchor.constraint(equalToConstant: 16),
+          secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor),
+          firstLabel.heightAnchor.constraint(equalToConstant: 16),
+          secondLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalMargin),
 
-          [handleLabel, correlationLabel].forEach {,
+          [firstLabel, secondLabel].forEach {,
           $0.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor),
           $0.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor)
         ])

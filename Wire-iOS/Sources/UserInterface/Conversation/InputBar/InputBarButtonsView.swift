@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
 
 private struct InputBarRowConstants {
     let titleTopMargin: CGFloat = 10
@@ -86,20 +87,20 @@ final class InputBarButtonsView: UIView {
 
     func createConstraints() {
         NSLayoutConstraint.activate([
-          self.buttonRowTopInset = outerContainer.topAnchor.constraint(equalTo: innerContainer.topAnchor),
-          innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor),
-          innerContainer.trailingAnchor.constraint(equalTo: outerContainer.trailingAnchor),
-          innerContainer.bottomAnchor.constraint(equalTo: outerContainer.bottomAnchor),
-          buttonRowHeight = innerContainer.heightAnchor.constraint(equalToConstant: 0),
+          self.buttonRowTopInset = buttonOuterContainer.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor),
+          buttonInnerContainer.leadingAnchor.constraint(equalTo: buttonOuterContainer.leadingAnchor),
+          buttonInnerContainer.trailingAnchor.constraint(equalTo: buttonOuterContainer.trailingAnchor),
+          buttonInnerContainer.bottomAnchor.constraint(equalTo: buttonOuterContainer.bottomAnchor),
+          buttonRowHeight = buttonInnerContainer.heightAnchor.constraint(equalToConstant: 0),
 
-          outerContainer.heightAnchor.constraint(equalTo: innerContainer.heightAnchor),
-          outerContainer.bottomAnchor.constraint(equalToConstant: view.bottom - UIScreen.safeArea.bottom),
-          outerContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-          outerContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-          outerContainer.topAnchor.constraint(equalTo: view.topAnchor),
+          buttonOuterContainer.heightAnchor.constraint(equalTo: buttonInnerContainer.heightAnchor),
+          buttonOuterContainer.bottomAnchor.constraint(equalToConstant: bottom - UIScreen.safeArea.bottom),
+          buttonOuterContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+          buttonOuterContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+          buttonOuterContainer.topAnchor.constraint(equalTo: topAnchor),
 
-          view.heightAnchor.constraint(equalToConstant: outerContainer.height + UIScreen.safeArea.bottom),
-          view.widthAnchor.constraint(equalToConstant: 600 ~ 750.0)
+          heightAnchor.constraint(equalToConstant: buttonOuterContainer.height + UIScreen.safeArea.bottom),
+          widthAnchor.constraint(equalToConstant: 600 ~ 750.0)
         ])
     }
 
@@ -179,12 +180,12 @@ final class InputBarButtonsView: UIView {
         for button in buttons {
             if button == expandRowButton {
                 NSLayoutConstraint.activate([
-                  button.topAnchor.constraint(equalTo: view.topAnchor),
+                  button.topAnchor.constraint(equalTo: topAnchor),
                   button.heightAnchor.constraint(equalTo: constants.buttonsBarHeightAnchor)
                 ])
             } else {
                 NSLayoutConstraint.activate([
-                  button.topAnchor.constraint(equalTo: container.topAnchor, constant: inset),
+                  button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset),
                   button.heightAnchor.constraint(equalTo: constants.buttonsBarHeightAnchor)
                 ])
             }
