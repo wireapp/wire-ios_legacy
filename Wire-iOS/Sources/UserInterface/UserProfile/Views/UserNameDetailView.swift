@@ -17,8 +17,7 @@
 //
 
 import UIKit
-import Cartography
- import WireDataModel
+import WireDataModel
 
 private let smallLightFont = FontSpec(.small, .light).font!
 private let smallBoldFont = FontSpec(.small, .medium).font!
@@ -37,7 +36,7 @@ final class AddressBookCorrelationFormatter: NSObject {
 
     private func addressBookText(for user: UserType, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser, let userName = user.name else { return nil }
-        let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
+        let suffix = "conversation.connection_in_address_book".localized && lightFont && color
         if addressBookName.lowercased() == userName.lowercased() {
             return suffix
         }
@@ -146,16 +145,17 @@ final class UserNameDetailView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, subtitleLabel, correlationLabel) { view, subtitle, correlation in
-            subtitle.top == view.top
-            subtitle.centerX == view.centerX
-            subtitle.height == 16
+        [subtitleLabel, correlationLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          subtitleLabel.topAnchor.constraint(equalTo: topAnchor),
+          subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          subtitleLabel.heightAnchor.constraint(equalToConstant: 16),
 
-            correlation.top == subtitle.bottom
-            correlation.centerX == view.centerX
-            correlation.height == 16
-            correlation.bottom == view.bottom
-        }
+          correlationLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
+          correlationLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          correlationLabel.heightAnchor.constraint(equalToConstant: 16),
+          correlationLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
 }
