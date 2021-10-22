@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import UIKit
 
 struct ModalPresentationConfiguration {
@@ -193,9 +192,18 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     }
 
     private func createConstraints() {
-        constrain(view, viewController.view, dimView) { view, childViewControllerView, dimView in
-            childViewControllerView.edges == view.edges
-            dimView.edges == view.edges
+        if let childViewControllerView = viewController.view {
+        [childViewControllerView, dimView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          childViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
+          childViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          childViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          childViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          dimView.topAnchor.constraint(equalTo: view.topAnchor),
+          dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          dimView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          dimView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
         }
     }
 
