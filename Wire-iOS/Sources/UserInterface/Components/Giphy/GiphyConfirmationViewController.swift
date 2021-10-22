@@ -62,6 +62,7 @@ final class GiphyConfirmationViewController: UIViewController {
         view.backgroundColor = .from(scheme: .background)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
