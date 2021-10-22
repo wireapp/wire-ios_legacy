@@ -73,13 +73,17 @@ extension SettingsCellDescriptorFactory {
                            handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
 
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
-            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true),
+            if user.hasTeam || !(user.phoneNumber?.isEmpty ?? true),
                let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }
 
             cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
+
+        cellDescriptors.append(teamElement())
+        cellDescriptors.append(domainElement())
+
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
@@ -206,6 +210,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func handleElement(enabled: Bool = true) -> SettingsCellDescriptorType {
+        typealias AccountSection = L10n.Localizable.Self.Settings.AccountSection
         if enabled {
             let presentation: () -> ChangeHandleViewController = {
                 return ChangeHandleViewController()
@@ -217,7 +222,7 @@ extension SettingsCellDescriptorFactory {
                     return .text(handleDisplayString)
                 }
                 return SettingsExternalScreenCellDescriptor(
-                    title: "self.settings.account_section.handle.title".localized,
+                    title: AccountSection.Handle.title,
                     isDestructive: false,
                     presentationStyle: .navigation,
                     presentationAction: presentation,
@@ -227,12 +232,20 @@ extension SettingsCellDescriptorFactory {
             }
 
             return SettingsExternalScreenCellDescriptor(
-                title: "self.settings.account_section.add_handle.title".localized,
+                title: AccountSection.AddHandle.title,
                 presentationAction: presentation
             )
         } else {
             return textValueCellDescriptor(propertyName: .handle, enabled: enabled)
         }
+    }
+
+    func teamElement() -> SettingsCellDescriptorType {
+        return textValueCellDescriptor(propertyName: .team, enabled: false)
+    }
+
+    func domainElement() -> SettingsCellDescriptorType {
+        return textValueCellDescriptor(propertyName: .domain, enabled: false)
     }
 
     func pictureElement() -> SettingsCellDescriptorType {
