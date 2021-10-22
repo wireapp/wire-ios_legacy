@@ -437,6 +437,10 @@ extension SearchResultsViewController: SearchSectionControllerDelegate {
 
     }
 
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, wantsToDisplayError error: LocalizedError) {
+        presentLocalizedErrorAlert(error)
+    }
+
 }
 
 extension SearchResultsViewController: InviteTeamMemberSectionDelegate {

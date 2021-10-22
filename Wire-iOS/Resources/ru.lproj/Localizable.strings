@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Контакты";
 "peoplepicker.header.services" = "Сервисы";
 "peoplepicker.services.open_conversation.item" = "Открыть беседу";
 "peoplepicker.services.add_service.button" = "Добавить сервис";
@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
+"error.connection.title" = "Ошибка";
 "error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
+"error.connection.connection_limit_reached" = "Вы не можете подключиться, поскольку достигли лимита подключения";
+"error.connection.generic_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";
@@ -1922,3 +1925,4 @@
 "keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
 "keyboardshortcut.conversationDetail" = "Информация о беседе...";
 "keyboardshortcut.searchInConversation" = "Поиск в беседе...";
+"keyboardshortcut.openPeople" = "Контакты";

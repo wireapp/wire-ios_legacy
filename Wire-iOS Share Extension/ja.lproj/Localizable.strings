@@ -61,5 +61,5 @@
 "meta.degraded.send_anyway_button" = "このまま送信";
 
 //Feature flag - File sharing
-"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.title" = "ファイル共有制限";
 "feature.flag.file_sharing.alert.message" = "この機能が無効になっているため、このファイルを共有できません。";
