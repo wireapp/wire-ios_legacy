@@ -73,7 +73,7 @@ extension SettingsCellDescriptorFactory {
                            handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
 
         if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
-            if user.hasTeam || !(user.phoneNumber?.isEmpty ?? true),
+            if !user.hasTeam || !(user.phoneNumber?.isEmpty ?? true),
                let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }
