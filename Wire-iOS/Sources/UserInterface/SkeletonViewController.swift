@@ -38,10 +38,10 @@ final class ListSkeletonCellNameItemView: UIView {
 
 final class ListSkeletonCellView: UIView {
 
-    let avatarView = UIView()
-    let lineView = ListSkeletonCellNameItemView()
+    private let avatarView = UIView()
+    private let lineView = ListSkeletonCellNameItemView()
 
-    lazy var lineConstraint: NSLayoutConstraint = lineView.rightAnchor.constraint(equalTo: rightAnchor)
+    private lazy var lineConstraint: NSLayoutConstraint = lineView.rightAnchor.constraint(equalTo: rightAnchor)
 
     var lineInset: Float {
         get {
@@ -74,13 +74,13 @@ final class ListSkeletonCellView: UIView {
         [avatarView, lineView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          avatarView.widthAnchor.constraint(equalToConstant: CGFloat(28)),
-          avatarView.heightAnchor.constraint(equalToConstant: CGFloat(28)),
+          avatarView.widthAnchor.constraint(equalToConstant: 28),
+          avatarView.heightAnchor.constraint(equalToConstant: 28),
           avatarView.leftAnchor.constraint(equalTo: leftAnchor, constant: 18),
           avatarView.topAnchor.constraint(equalTo: topAnchor, constant: 18),
           avatarView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -17.5),
 
-          lineView.heightAnchor.constraint(equalToConstant: CGFloat(14)),
+          lineView.heightAnchor.constraint(equalToConstant: 14),
           lineView.leftAnchor.constraint(equalTo: avatarView.rightAnchor, constant: 16),
           lineConstraint,
           lineView.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor)
