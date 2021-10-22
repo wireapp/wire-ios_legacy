@@ -205,6 +205,12 @@ class SettingsCellDescriptorFactory {
                    selectAction: DebugActions.findUnreadConversationContributingToBackArrowDot)
         )
 
+        developerCellDescriptors.append(
+            Button(title: "Delete invalid conversations",
+                   isDestructive: false,
+                   selectAction: DebugActions.deleteInvalidConversations)
+        )
+
         developerCellDescriptors.append(SettingsShareDatabaseCellDescriptor())
         developerCellDescriptors.append(SettingsShareCryptoboxCellDescriptor())
 

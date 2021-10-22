@@ -43,6 +43,7 @@ final class AssetCell: UICollectionViewCell {
         durationView.font = FontSpec(.small, .light).font!
         contentView.addSubview(durationView)
 
+<<<<<<< HEAD
         NSLayoutConstraint.activate([
           imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
           imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -53,6 +54,15 @@ final class AssetCell: UICollectionViewCell {
           durationView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
           durationView.heightAnchor.constraint(equalToConstant: 20)
         ])
+=======
+        constrain(contentView, imageView, durationView) { contentView, imageView, durationView in
+            imageView.edges == contentView.edges
+            durationView.bottom == contentView.bottom
+            durationView.left == contentView.left
+            durationView.right == contentView.right
+            durationView.height == 20
+        }
+>>>>>>> develop
     }
 
     required init?(coder aDecoder: NSCoder) {
