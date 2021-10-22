@@ -31,8 +31,7 @@ final class CollectionLoadingCell: UICollectionViewCell {
 
         loadingView.startAnimating()
         loadingView.hidesWhenStopped = false
-
-        [contentView, loadingView].prepareForLayout()
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           loadingView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
           loadingView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
