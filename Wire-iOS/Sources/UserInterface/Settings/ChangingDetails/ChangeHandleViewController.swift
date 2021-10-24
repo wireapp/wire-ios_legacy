@@ -107,8 +107,8 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     // MARK: - UITextField
 
     @objc func editingChanged(textField: UITextField) {
-        let lowercase = handleTextField.text?.lowercased() ?? ""
-        handleTextField.text = lowercase
+        let lowercase = textField.text?.lowercased() ?? ""
+        textField.text = lowercase
         delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
     }
 
