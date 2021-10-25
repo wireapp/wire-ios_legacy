@@ -72,8 +72,10 @@ extension SettingsCellDescriptorFactory {
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
                            handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
 
-        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
-            if !user.hasTeam || !(user.phoneNumber?.isEmpty ?? true),
+        let user = SelfUser.current
+
+        if !user.usesCompanyLogin {
+            if !user.hasTeam || !user.phoneNumber.isEmpty,
                let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }
@@ -81,7 +83,10 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
 
-        cellDescriptors.append(teamElement())
+        if user.hasTeam {
+            cellDescriptors.append(teamElement())
+        }
+
         cellDescriptors.append(domainElement())
 
         return SettingsSectionDescriptor(
