@@ -39,29 +39,29 @@ final class AudioEffectCell: UICollectionViewCell {
 
     var borders: AudioEffectCellBorders = [.None] {
         didSet {
-            self.updateBorders()
+            updateBorders()
         }
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.backgroundColor = UIColor.clear
-        self.contentView.backgroundColor = UIColor.clear
-        self.clipsToBounds = false
+        backgroundColor = UIColor.clear
+        contentView.backgroundColor = UIColor.clear
+        clipsToBounds = false
 
-        self.iconView.isUserInteractionEnabled = false
-        [self.iconView, self.borderRightView, self.borderBottomView].forEach(self.contentView.addSubview)
+        iconView.isUserInteractionEnabled = false
+        [iconView, borderRightView, borderBottomView].forEach(contentView.addSubview)
 
-        [self.borderRightView, self.borderBottomView].forEach { v in
+        [borderRightView, borderBottomView].forEach { v in
             v.backgroundColor = UIColor(white: 1, alpha: 0.16)
         }
 
-        constrain(self.contentView, self.iconView) { contentView, iconView in
+        constrain(contentView, iconView) { contentView, iconView in
             iconView.edges == contentView.edges
         }
 
-        constrain(self.contentView, self.borderRightView, self.borderBottomView) { contentView, borderRightView, borderBottomView in
+        constrain(contentView, borderRightView, borderBottomView) { contentView, borderRightView, borderBottomView in
 
             borderRightView.bottom == contentView.bottom
             borderRightView.top == contentView.top
@@ -74,7 +74,7 @@ final class AudioEffectCell: UICollectionViewCell {
             borderBottomView.height == .hairline
         }
 
-        self.updateForSelectedState()
+        updateForSelectedState()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -83,31 +83,31 @@ final class AudioEffectCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            self.updateForSelectedState()
+            updateForSelectedState()
         }
     }
 
     fileprivate func updateBorders() {
-        self.borderRightView.isHidden = !self.borders.contains(.Right)
-        self.borderBottomView.isHidden = !self.borders.contains(.Bottom)
+        borderRightView.isHidden = !borders.contains(.Right)
+        borderBottomView.isHidden = !borders.contains(.Bottom)
     }
 
     fileprivate func updateForSelectedState() {
-        let color: UIColor = self.isSelected ? UIColor.accent() : UIColor.white
-        self.iconView.setIconColor(color, for: .normal)
+        let color: UIColor = isSelected ? UIColor.accent() : UIColor.white
+        iconView.setIconColor(color, for: .normal)
     }
 
     var effect: AVSAudioEffectType = .none {
         didSet {
-            self.iconView.setIcon(effect.icon, size: .small, for: .normal)
-            self.accessibilityLabel = effect.description
+            iconView.setIcon(effect.icon, size: .small, for: .normal)
+            accessibilityLabel = effect.description
         }
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.effect = .none
-        self.borders = .None
-        self.updateForSelectedState()
+        effect = .none
+        borders = .None
+        updateForSelectedState()
     }
 }

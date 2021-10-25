@@ -39,8 +39,8 @@ final class IncomingConnectionView: UIView {
 
     var user: UserType {
         didSet {
-            self.setupLabelText()
-            self.userImageView.user = self.user
+            setupLabelText()
+            userImageView.user = user
         }
     }
 
@@ -54,8 +54,8 @@ final class IncomingConnectionView: UIView {
 
         userImageView.userSession = ZMUserSession.shared()
         userImageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
-        self.setup()
-        self.createConstraints()
+        setup()
+        createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -63,24 +63,24 @@ final class IncomingConnectionView: UIView {
     }
 
     private func setup() {
-        self.acceptButton.accessibilityLabel = "accept"
-        self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized(uppercased: true), for: .normal)
-        self.acceptButton.addTarget(self, action: #selector(onAcceptButton), for: .touchUpInside)
+        acceptButton.accessibilityLabel = "accept"
+        acceptButton.setTitle("inbox.connection_request.connect_button_title".localized(uppercased: true), for: .normal)
+        acceptButton.addTarget(self, action: #selector(onAcceptButton), for: .touchUpInside)
 
-        self.ignoreButton.accessibilityLabel = "ignore"
-        self.ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized(uppercased: true), for: .normal)
-        self.ignoreButton.addTarget(self, action: #selector(onIgnoreButton), for: .touchUpInside)
+        ignoreButton.accessibilityLabel = "ignore"
+        ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized(uppercased: true), for: .normal)
+        ignoreButton.addTarget(self, action: #selector(onIgnoreButton), for: .touchUpInside)
 
-        self.userImageView.accessibilityLabel = "user image"
-        self.userImageView.shouldDesaturate = false
-        self.userImageView.size = .big
-        self.userImageView.user = self.user
+        userImageView.accessibilityLabel = "user image"
+        userImageView.shouldDesaturate = false
+        userImageView.size = .big
+        userImageView.user = user
 
-        self.incomingConnectionFooter.addSubview(self.acceptButton)
-        self.incomingConnectionFooter.addSubview(self.ignoreButton)
+        incomingConnectionFooter.addSubview(acceptButton)
+        incomingConnectionFooter.addSubview(ignoreButton)
 
-        [self.usernameLabel, self.userDetailView, self.userImageView, self.incomingConnectionFooter].forEach(self.addSubview)
-        self.setupLabelText()
+        [usernameLabel, userDetailView, userImageView, incomingConnectionFooter].forEach(addSubview)
+        setupLabelText()
     }
 
     private func setupLabelText() {
@@ -96,7 +96,7 @@ final class IncomingConnectionView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self.incomingConnectionFooter, self.acceptButton, self.ignoreButton) { incomingConnectionFooter, acceptButton, ignoreButton in
+        constrain(incomingConnectionFooter, acceptButton, ignoreButton) { incomingConnectionFooter, acceptButton, ignoreButton in
             ignoreButton.left == incomingConnectionFooter.left + 16
             ignoreButton.top == incomingConnectionFooter.top + 12
             ignoreButton.bottom == incomingConnectionFooter.bottom - 16
@@ -109,7 +109,7 @@ final class IncomingConnectionView: UIView {
             acceptButton.height == ignoreButton.height
         }
 
-        constrain(self, self.usernameLabel, self.userDetailView, self.incomingConnectionFooter, self.userImageView) { selfView, usernameLabel, userDetailView, incomingConnectionFooter, userImageView in
+        constrain(self, usernameLabel, userDetailView, incomingConnectionFooter, userImageView) { selfView, usernameLabel, userDetailView, incomingConnectionFooter, userImageView in
             usernameLabel.top == selfView.top + 18
             usernameLabel.centerX == selfView.centerX
             usernameLabel.left >= selfView.left
@@ -135,7 +135,7 @@ final class IncomingConnectionView: UIView {
 
     @objc
     private func onAcceptButton(sender: AnyObject!) {
-        onAccept?(self.user)
+        onAccept?(user)
     }
 
     @objc

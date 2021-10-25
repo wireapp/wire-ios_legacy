@@ -42,35 +42,35 @@ class FingerprintTableViewCell: UITableViewCell {
 
     var fingerprintLabelFont: UIFont? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
     var fingerprintLabelBoldFont: UIFont? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
 
     var fingerprint: Data? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
-        self.titleLabel.accessibilityIdentifier = "fingerprint title"
-        self.fingerprintLabel.numberOfLines = 0
-        self.fingerprintLabel.accessibilityIdentifier = "fingerprint"
-        self.spinner.hidesWhenStopped = true
+        titleLabel.text = "self.settings.account_details.key_fingerprint.title".localized
+        titleLabel.accessibilityIdentifier = "fingerprint title"
+        fingerprintLabel.numberOfLines = 0
+        fingerprintLabel.accessibilityIdentifier = "fingerprint"
+        spinner.hidesWhenStopped = true
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.contentView.addSubview(self.titleLabel)
-        self.contentView.addSubview(self.fingerprintLabel)
-        self.contentView.addSubview(self.spinner)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(fingerprintLabel)
+        contentView.addSubview(spinner)
 
-        constrain(self.contentView, self.titleLabel, self.fingerprintLabel, self.spinner) { contentView, titleLabel, fingerprintLabel, spinner in
+        constrain(contentView, titleLabel, fingerprintLabel, spinner) { contentView, titleLabel, fingerprintLabel, spinner in
             titleLabel.top == contentView.top + 16
             titleLabel.left == contentView.left + 16
             titleLabel.right <= contentView.right - 16
@@ -87,9 +87,9 @@ class FingerprintTableViewCell: UITableViewCell {
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
 
-        self.backgroundColor = UIColor.clear
-        self.backgroundView = UIView()
-        self.selectedBackgroundView = UIView()
+        backgroundColor = UIColor.clear
+        backgroundView = UIView()
+        selectedBackgroundView = UIView()
 
         setupStyle()
     }
@@ -107,20 +107,20 @@ class FingerprintTableViewCell: UITableViewCell {
 
     func updateFingerprint() {
 
-        if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospaced(),
-            let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospaced(),
-            let attributedFingerprint = self.fingerprint?.attributedFingerprint(
+        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.monospaced(),
+            let fingerprintLabelMonoFont = fingerprintLabelFont?.monospaced(),
+            let attributedFingerprint = fingerprint?.attributedFingerprint(
                 attributes: [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 uppercase: false) {
 
-                    self.fingerprintLabel.attributedText = attributedFingerprint
-                    self.spinner.stopAnimating()
+                    fingerprintLabel.attributedText = attributedFingerprint
+                    spinner.stopAnimating()
         }
         else {
-            self.fingerprintLabel.attributedText = .none
-            self.spinner.startAnimating()
+            fingerprintLabel.attributedText = .none
+            spinner.startAnimating()
         }
-        self.layoutIfNeeded()
+        layoutIfNeeded()
     }
 }

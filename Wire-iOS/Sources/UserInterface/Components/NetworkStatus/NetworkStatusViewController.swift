@@ -79,13 +79,13 @@ final class NetworkStatusViewController: UIViewController {
     override func loadView() {
         let passthroughTouchesView = PassthroughTouchesView()
         passthroughTouchesView.clipsToBounds = true
-        self.view = passthroughTouchesView
+        view = passthroughTouchesView
     }
 
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
 
-        constrain(self.view, networkStatusView) { containerView, networkStatusView in
+        constrain(view, networkStatusView) { containerView, networkStatusView in
             networkStatusView.leading == containerView.leading
             networkStatusView.trailing == containerView.trailing
             networkStatusView.top == containerView.top
@@ -178,7 +178,7 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 extension NetworkStatusViewController {
     func shouldShowOnIPad() -> Bool {
         guard isIPadRegular(device: device) else { return true }
-        guard let delegate = self.delegate else { return true }
+        guard let delegate = delegate else { return true }
 
         let newOrientation = application.statusBarOrientation
 
@@ -188,7 +188,7 @@ extension NetworkStatusViewController {
     @objc func updateStateForIPad() {
         guard device.userInterfaceIdiom == .pad else { return }
 
-        switch self.traitCollection.horizontalSizeClass {
+        switch traitCollection.horizontalSizeClass {
         case .regular:
             if shouldShowOnIPad() {
                 networkStatusView.update(state: state, animated: false)

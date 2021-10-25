@@ -17,9 +17,7 @@
 //
 
 import UIKit
-import Cartography
 import WireCommonComponents
-import WireDataModel
 import WireSyncEngine
 
 fileprivate extension InviteResult {
@@ -81,12 +79,14 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
     }
 
     private func createConstraints() {
-        constrain(contentView, stackView, iconImageView) { contentView, stackView, iconImageView in
-            stackView.leading == contentView.leading + 24
-            stackView.centerY == contentView.centerY
-            stackView.trailing <= iconImageView.leading - 8
-            iconImageView.centerY == contentView.centerY
-            iconImageView.trailing == contentView.trailing - 24
-        }
+        [contentView, stackView, iconImageView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+          stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+          stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+          stackView.trailingAnchor.constraint(lessThanOrEqualTo: iconImageView.leadingAnchor, constant: -8),
+          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+          iconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24)
+        ])
     }
 }

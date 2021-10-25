@@ -25,16 +25,16 @@ import UIKit
 public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.senderUser else {
+            guard let message = message, let serverTimestamp = message.serverTimestamp, let sender = message.senderUser else {
                 return
             }
 
-            self.nameLabel.textColor = sender.nameAccentColor
-            self.nameLabel.text = sender.name
-            self.nameLabel.accessibilityValue = self.nameLabel.text
+            nameLabel.textColor = sender.nameAccentColor
+            nameLabel.text = sender.name
+            nameLabel.accessibilityValue = nameLabel.text
 
-            self.dateLabel.text = serverTimestamp.formattedDate
-            self.dateLabel.accessibilityValue = self.dateLabel.text
+            dateLabel.text = serverTimestamp.formattedDate
+            dateLabel.accessibilityValue = dateLabel.text
         }
     }
 
@@ -45,13 +45,13 @@ public final class TextSearchResultFooter: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.nameLabel.accessibilityLabel = "sender name"
-        self.dateLabel.accessibilityLabel = "sent on"
+        nameLabel.accessibilityLabel = "sender name"
+        dateLabel.accessibilityLabel = "sent on"
 
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.dateLabel)
+        addSubview(nameLabel)
+        addSubview(dateLabel)
 
-        constrain(self, self.nameLabel, self.dateLabel) { selfView, nameLabel, dateLabel in
+        constrain(self, nameLabel, dateLabel) { selfView, nameLabel, dateLabel in
             nameLabel.leading == selfView.leading
             nameLabel.trailing == dateLabel.leading - 4
             dateLabel.trailing <= selfView.trailing

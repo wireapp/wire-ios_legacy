@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+
 import UIKit
 import WireCommonComponents
 
@@ -61,7 +61,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
     var allowsMultipleSelection: Bool = true {
         didSet {
-            self.checkImageView.isHidden = !allowsMultipleSelection
+            checkImageView.isHidden = !allowsMultipleSelection
         }
     }
 
@@ -70,14 +70,14 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
             guard let destination = destination else { return }
 
-            self.titleLabel.text = destination.displayName
-            self.shieldView.isHidden = destination.securityLevel != .secure
-            self.guestUserIcon.isHidden = !destination.showsGuestIcon
-            self.legalHoldIcon.isHidden = !destination.isUnderLegalHold
+            titleLabel.text = destination.displayName
+            shieldView.isHidden = destination.securityLevel != .secure
+            guestUserIcon.isHidden = !destination.showsGuestIcon
+            legalHoldIcon.isHidden = !destination.isUnderLegalHold
 
             if let avatarView = destination.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
-                self.avatarViewContainer.addSubview(avatarView)
+                avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
             }
         }
@@ -87,86 +87,70 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         super.prepareForReuse()
 
         UIView.performWithoutAnimation {
-            self.avatarView?.removeFromSuperview()
-            self.guestUserIcon.isHidden = true
-            self.legalHoldIcon.isHidden = true
-            self.shieldView.isHidden = true
-            self.checkImageView.isHidden = true
+            avatarView?.removeFromSuperview()
+            guestUserIcon.isHidden = true
+            legalHoldIcon.isHidden = true
+            shieldView.isHidden = true
+            checkImageView.isHidden = true
         }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.backgroundColor = .clear
+        backgroundColor = .clear
 
-        self.selectionStyle = .none
-        self.contentView.backgroundColor = .clear
-        self.stackView.backgroundColor = .clear
-        self.stackView.spacing = margin
-        self.stackView.alignment = .center
-        self.backgroundView = UIView()
-        self.selectedBackgroundView = UIView()
+        selectionStyle = .none
+        contentView.backgroundColor = .clear
+        stackView.backgroundColor = .clear
+        stackView.spacing = margin
+        stackView.alignment = .center
+        backgroundView = UIView()
+        selectedBackgroundView = UIView()
 
-        self.contentView.addSubview(self.stackView)
+        contentView.addSubview(stackView)
 
-        self.stackView.addArrangedSubview(avatarViewContainer)
-        constrain(self.contentView, self.avatarViewContainer) { contentView, avatarView in
-            avatarView.centerY == contentView.centerY
-            avatarView.width == self.avatarSize
-            avatarView.height == self.avatarSize
-        }
+        stackView.addArrangedSubview(avatarViewContainer)
 
-        self.titleLabel.backgroundColor = .clear
-        self.titleLabel.textColor = .white
+        [avatarViewContainer, shieldView, guestUserIcon, legalHoldIcon, stackView, titleLabel, checkImageView].prepareForLayout()
+
+        titleLabel.backgroundColor = .clear
+        titleLabel.textColor = .white
         titleLabel.font = .normalLightFont
-        self.titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        self.stackView.addArrangedSubview(self.titleLabel)
-
-        self.stackView.addArrangedSubview(self.shieldView)
-
-        constrain(shieldView) { shieldView in
-            shieldView.width == self.shieldSize
-            shieldView.height == self.shieldSize
+        [titleLabel, shieldView, guestUserIcon, legalHoldIcon, checkImageView].forEach {
+            stackView.addArrangedSubview($0)
         }
 
-        self.stackView.addArrangedSubview(self.guestUserIcon)
+        checkImageView.layer.borderColor = UIColor.white.cgColor
+        checkImageView.layer.borderWidth = 2
+        checkImageView.contentMode = .center
+        checkImageView.layer.cornerRadius = checkmarkSize / 2.0
 
-        constrain(self.guestUserIcon) { guestUserIcon in
-            guestUserIcon.width == self.shieldSize
-            guestUserIcon.height == self.shieldSize
-        }
+        NSLayoutConstraint.activate([
+            avatarViewContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            avatarViewContainer.widthAnchor.constraint(equalToConstant: avatarSize),
+            avatarViewContainer.heightAnchor.constraint(equalToConstant: avatarSize),
+            shieldView.widthAnchor.constraint(equalToConstant: shieldSize),
+            shieldView.heightAnchor.constraint(equalToConstant: shieldSize),
 
-        self.stackView.addArrangedSubview(self.legalHoldIcon)
+            guestUserIcon.widthAnchor.constraint(equalToConstant: shieldSize),
+            guestUserIcon.heightAnchor.constraint(equalToConstant: shieldSize),
+            legalHoldIcon.widthAnchor.constraint(equalToConstant: shieldSize),
+            legalHoldIcon.heightAnchor.constraint(equalToConstant: shieldSize),
+            stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: margin),
+            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -margin),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-        constrain(self.legalHoldIcon) { legalHoldIcon in
-            legalHoldIcon.width == self.shieldSize
-            legalHoldIcon.height == self.shieldSize
-        }
+            titleLabel.heightAnchor.constraint(equalToConstant: 44),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-        self.checkImageView.layer.borderColor = UIColor.white.cgColor
-        self.checkImageView.layer.borderWidth = 2
-        self.checkImageView.contentMode = .center
-        self.checkImageView.layer.cornerRadius = self.checkmarkSize / 2.0
-
-        self.stackView.addArrangedSubview(self.checkImageView)
-
-        constrain(self.contentView, self.stackView, self.titleLabel, self.checkImageView) {
-            contentView, stackView, titleLabel, checkImageView in
-
-            stackView.left == contentView.left + margin
-            stackView.right == contentView.right - margin
-            stackView.top == contentView.top
-            stackView.bottom == contentView.bottom
-
-            titleLabel.height == 44
-            titleLabel.centerY == contentView.centerY
-
-            checkImageView.centerY == contentView.centerY
-            checkImageView.width == self.checkmarkSize
-            checkImageView.height == self.checkmarkSize
-         }
+            checkImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkImageView.widthAnchor.constraint(equalToConstant: checkmarkSize),
+            checkImageView.heightAnchor.constraint(equalToConstant: checkmarkSize)
+        ])
 
     }
 
@@ -177,7 +161,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        self.checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white) : nil
-        self.checkImageView.backgroundColor = selected ? .accent() : .clear
+        checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white) : nil
+        checkImageView.backgroundColor = selected ? .accent() : .clear
     }
 }

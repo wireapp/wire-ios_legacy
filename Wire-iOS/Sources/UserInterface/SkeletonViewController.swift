@@ -59,8 +59,8 @@ final class ListSkeletonCellView: UIView {
     }
 
     init() {
-        self.avatarView = UIView()
-        self.lineView = ListSkeletonCellNameItemView()
+        avatarView = UIView()
+        lineView = ListSkeletonCellNameItemView()
 
         super.init(frame: CGRect.zero)
 
@@ -87,7 +87,7 @@ final class ListSkeletonCellView: UIView {
 
             lineView.height == CGFloat(14)
             lineView.left == avatarView.right + 16
-            self.lineConstraint = lineView.right == containerView.right
+            lineConstraint = lineView.right == containerView.right
             lineView.centerY == avatarView.centerY
         }
 
@@ -107,7 +107,7 @@ final class ListSkeletonCell: UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.backgroundColor = .clear
+        backgroundColor = .clear
 
         contentView.addSubview(skeletonCellView)
 
@@ -140,13 +140,13 @@ final class ListSkeletonContentView: UITableView, UITableViewDataSource {
 
         super.init(frame: CGRect.zero, style: .plain)
 
-        self.dataSource = self
-        self.backgroundColor = .clear
-        self.rowHeight = UITableView.automaticDimension
-        self.estimatedRowHeight = 28
-        self.separatorColor = .clear
-        self.isScrollEnabled = false
-        self.allowsSelection = false
+        dataSource = self
+        backgroundColor = .clear
+        rowHeight = UITableView.automaticDimension
+        estimatedRowHeight = 28
+        separatorColor = .clear
+        isScrollEnabled = false
+        allowsSelection = false
 
         register(ListSkeletonCell.self, forCellReuseIdentifier: "ListSkeletonCell")
     }
@@ -191,7 +191,7 @@ final class ListSkeletonView: UIView {
         let accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
         accountView.selected = false
 
-        self.listContentView = ListSkeletonContentView(randomizeDummyItem: randomizeDummyItem)
+        listContentView = ListSkeletonContentView(randomizeDummyItem: randomizeDummyItem)
 
         super.init(frame: CGRect.zero)
 
@@ -265,10 +265,10 @@ final class SkeletonViewController: UIViewController {
             account = to
         }
 
-        self.blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        self.backgroundImageView = UIImageView()
-        self.customSplitViewController = SplitViewController()
-        self.listView = ListSkeletonView(account, randomizeDummyItem: randomizeDummyItem)
+        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        backgroundImageView = UIImageView()
+        customSplitViewController = SplitViewController()
+        listView = ListSkeletonView(account, randomizeDummyItem: randomizeDummyItem)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -293,7 +293,7 @@ final class SkeletonViewController: UIViewController {
         customSplitViewController.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(customSplitViewController)
 
-        [backgroundImageView, blurEffectView, customSplitViewController.view].forEach(self.view.addSubview)
+        [backgroundImageView, blurEffectView, customSplitViewController.view].forEach(view.addSubview)
 
         createConstraints()
 
@@ -307,7 +307,7 @@ final class SkeletonViewController: UIViewController {
     }
 
     func createConstraints() {
-        constrain(self.view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
+        constrain(view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
             blurEffectView.edges == containerView.edges
             splitViewControllerView.edges == containerView.edges
             backgroundImageView.top == containerView.top

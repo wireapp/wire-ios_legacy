@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
