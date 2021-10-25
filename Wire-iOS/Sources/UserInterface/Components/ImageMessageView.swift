@@ -33,7 +33,7 @@ final class ImageMessageView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.createViews()
+        createViews()
     }
 
     @available(*, unavailable)
@@ -43,18 +43,18 @@ final class ImageMessageView: UIView {
 
     private var user: UserType? {
         didSet {
-            if let user = self.user {
+            if let user = user {
 
-                self.userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.name
-                self.userImageView.user = user
+                userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
+                userNameLabel.text = user.name
+                userImageView.user = user
             }
         }
     }
 
     var message: ZMConversationMessage? {
         didSet {
-            if let message = self.message {
+            if let message = message {
                 user = message.senderUser
 
                 updateForImage()
@@ -63,67 +63,67 @@ final class ImageMessageView: UIView {
     }
 
     func updateForImage() {
-        if let message = self.message,
+        if let message = message,
             let imageMessageData = message.imageMessageData,
             let imageData = imageMessageData.imageData,
             imageData.count > 0 {
 
-            self.dotsLoadingView.stopProgressAnimation()
-            self.dotsLoadingView.isHidden = true
+            dotsLoadingView.stopProgressAnimation()
+            dotsLoadingView.isHidden = true
 
             if imageMessageData.isAnimatedGIF {
                 let image = FLAnimatedImage(animatedGIFData: imageData)
-                self.imageSize = image?.size ?? .zero
-                self.imageView.animatedImage = image
+                imageSize = image?.size ?? .zero
+                imageView.animatedImage = image
             }
             else {
                 let image = UIImage(data: imageData, scale: 2.0)
-                self.imageSize = image?.size ?? .zero
-                self.imageView.image = image
+                imageSize = image?.size ?? .zero
+                imageView.image = image
             }
         }
         else {
-            self.dotsLoadingView.isHidden = false
-            self.dotsLoadingView.startProgressAnimation()
+            dotsLoadingView.isHidden = false
+            dotsLoadingView.startProgressAnimation()
         }
-        self.updateImageLayout()
+        updateImageLayout()
     }
 
     private func updateImageLayout() {
-        guard self.bounds.width != 0, self.aspectRatioConstraint == .none, self.imageSize.width != 0 else {
+        guard bounds.width != 0, aspectRatioConstraint == .none, imageSize.width != 0 else {
             return
         }
 
-        if self.imageSize.width / 2.0 > self.imageView.bounds.width {
+        if imageSize.width / 2.0 > imageView.bounds.width {
 
-            constrain(self.imageView) { imageView in
-                self.aspectRatioConstraint = imageView.height == imageView.width * (self.imageSize.height / self.imageSize.width)
+            constrain(imageView) { imageView in
+                aspectRatioConstraint = imageView.height == imageView.width * (imageSize.height / imageSize.width)
             }
         }
         else {
-            self.imageView.contentMode = .left
+            imageView.contentMode = .left
 
-            constrain(self.imageView) { imageView in
-                self.aspectRatioConstraint = imageView.height == self.imageSize.height
+            constrain(imageView) { imageView in
+                aspectRatioConstraint = imageView.height == imageSize.height
             }
         }
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 
     private func createViews() {
 
-        self.userImageViewContainer.addSubview(self.userImageView)
+        userImageViewContainer.addSubview(userImageView)
 
-        [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.addSubview)
+        [imageView, userImageViewContainer, userNameLabel].forEach(addSubview)
 
-        self.imageView.contentMode = .scaleAspectFit
-        self.imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
 
-        self.userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
-        self.userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
+        userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
+        userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
 
-        constrain(self, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
+        constrain(self, imageView, userImageView, userImageViewContainer, userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
             userImageViewContainer.leading == selfView.leading
             userImageViewContainer.width == 48
             userImageViewContainer.height == 24
@@ -145,18 +145,18 @@ final class ImageMessageView: UIView {
             imageView.height >= 64
         }
 
-        self.addSubview(self.dotsLoadingView)
+        addSubview(dotsLoadingView)
 
-        constrain(self, self.dotsLoadingView) { selfView, dotsLoadingView in
+        constrain(self, dotsLoadingView) { selfView, dotsLoadingView in
             dotsLoadingView.center == selfView.center
         }
 
-        self.updateForImage()
+        updateForImage()
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.updateImageLayout()
+        updateImageLayout()
     }
 }

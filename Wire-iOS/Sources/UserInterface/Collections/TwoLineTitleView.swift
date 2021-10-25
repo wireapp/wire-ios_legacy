@@ -39,19 +39,19 @@ public final class TwoLineTitleView: UIView {
 
     init(first: String, second: String) {
         super.init(frame: CGRect.zero)
-        self.isAccessibilityElement = true
+        isAccessibilityElement = true
 
-        self.titleLabel.textAlignment = .center
-        self.subtitleLabel.textAlignment = .center
+        titleLabel.textAlignment = .center
+        subtitleLabel.textAlignment = .center
 
-        self.titleLabel.text = first
-        self.subtitleLabel.text = second
+        titleLabel.text = first
+        subtitleLabel.text = second
 
-        self.addSubview(self.titleLabel)
-        self.addSubview(self.subtitleLabel)
+        addSubview(titleLabel)
+        addSubview(subtitleLabel)
 
         translatesAutoresizingMaskIntoConstraints = false
-        constrain(self, self.titleLabel, self.subtitleLabel) { selfView, titleLabel, subtitleLabel in
+        constrain(self, titleLabel, subtitleLabel) { selfView, titleLabel, subtitleLabel in
             titleLabel.leading == selfView.leading
             titleLabel.trailing == selfView.trailing
             titleLabel.top == selfView.top + 4

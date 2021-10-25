@@ -30,30 +30,30 @@ final class CollectionHeaderView: UICollectionReusableView {
 
             switch section {
             case CollectionsSectionSet.images:
-                self.titleLabel.text = "collections.section.images.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.images.title".localized(uppercased: true)
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                self.titleLabel.text = "collections.section.files.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.files.title".localized(uppercased: true)
                 icon = .document
             case CollectionsSectionSet.videos:
-                self.titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
                 icon = .movie
             case CollectionsSectionSet.links:
-                self.titleLabel.text = "collections.section.links.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.links.title".localized(uppercased: true)
                 icon = .link
             default: fatal("Unknown section")
             }
 
-            self.iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
+            iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
         }
     }
 
     public var totalItemsCount: UInt = 0 {
         didSet {
-            self.actionButton.isHidden = totalItemsCount == 0
+            actionButton.isHidden = totalItemsCount == 0
 
             let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount)
-            self.actionButton.setTitle(totalCountText, for: .normal)
+            actionButton.setTitle(totalCountText, for: .normal)
         }
     }
 
@@ -84,17 +84,17 @@ final class CollectionHeaderView: UICollectionReusableView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.addSubview(self.titleLabel)
+        addSubview(titleLabel)
 
-        self.actionButton.contentHorizontalAlignment = .right
-        self.actionButton.accessibilityLabel = "open all"
-        self.actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
-        self.addSubview(self.actionButton)
+        actionButton.contentHorizontalAlignment = .right
+        actionButton.accessibilityLabel = "open all"
+        actionButton.addTarget(self, action: #selector(CollectionHeaderView.didSelect(_:)), for: .touchUpInside)
+        addSubview(actionButton)
 
-        self.iconImageView.contentMode = .center
-        self.addSubview(self.iconImageView)
+        iconImageView.contentMode = .center
+        addSubview(iconImageView)
 
-        constrain(self, self.titleLabel, self.actionButton, self.iconImageView) { selfView, titleLabel, actionButton, iconImageView in
+        constrain(self, titleLabel, actionButton, iconImageView) { selfView, titleLabel, actionButton, iconImageView in
             iconImageView.leading == selfView.leading + 16
             iconImageView.centerY == selfView.centerY
             iconImageView.width == 16
@@ -115,7 +115,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     public var desiredHeight: CGFloat = 0
 
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: self.desiredWidth, height: self.desiredHeight)
+        return CGSize(width: desiredWidth, height: desiredHeight)
     }
 
     override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -127,6 +127,6 @@ final class CollectionHeaderView: UICollectionReusableView {
     }
 
     @objc func didSelect(_ button: UIButton!) {
-        self.selectionAction?(self.section)
+        selectionAction?(section)
     }
 }

@@ -44,10 +44,10 @@ final class CollectionCellHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.dateLabel)
+        addSubview(nameLabel)
+        addSubview(dateLabel)
 
-        constrain(self, self.nameLabel, self.dateLabel) { selfView, nameLabel, dateLabel in
+        constrain(self, nameLabel, dateLabel) { selfView, nameLabel, dateLabel in
             nameLabel.leading == selfView.leading
             nameLabel.trailing <= dateLabel.leading
             dateLabel.trailing == selfView.trailing

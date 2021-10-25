@@ -29,6 +29,6 @@ extension CGSize {
 extension UIViewController {
 
     func setBoundsSizeAsIPhone4_7Inch() {
-        self.view.bounds.size = CGSize.iPhoneSize.iPhone4_7
+        view.bounds.size = CGSize.iPhoneSize.iPhone4_7
     }
 }

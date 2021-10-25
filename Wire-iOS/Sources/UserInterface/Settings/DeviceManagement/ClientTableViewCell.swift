@@ -35,53 +35,53 @@ class ClientTableViewCell: UITableViewCell {
 
     var showVerified: Bool = false {
         didSet {
-            self.updateVerifiedLabel()
+            updateVerifiedLabel()
         }
     }
 
     var showLabel: Bool = false {
         didSet {
-            self.updateLabel()
+            updateLabel()
         }
     }
 
     var fingerprintLabelFont: UIFont? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
     var fingerprintLabelBoldFont: UIFont? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
     var fingerprintTextColor: UIColor? {
         didSet {
-            self.updateFingerprint()
+            updateFingerprint()
         }
     }
 
     var userClient: UserClient? {
         didSet {
-            guard let userClient = self.userClient else { return }
+            guard let userClient = userClient else { return }
             if let userClientModel = userClient.model {
                 nameLabel.text = userClientModel
             } else if userClient.isLegalHoldDevice {
                 nameLabel.text = "device.class.legalhold".localized
             }
 
-            self.updateLabel()
+            updateLabel()
 
-            self.activationLabel.text = ""
+            activationLabel.text = ""
             if let date = userClient.activationDate?.formattedDate {
                 let text = "registration.devices.activated".localized(args: date)
                 var attrText = NSAttributedString(string: text) && activationLabelFont
                 attrText = attrText.adding(font: activationLabelDateFont, to: date)
-                self.activationLabel.attributedText = attrText
+                activationLabel.attributedText = attrText
             }
 
-            self.updateFingerprint()
-            self.updateVerifiedLabel()
+            updateFingerprint()
+            updateVerifiedLabel()
         }
     }
 
@@ -91,14 +91,14 @@ class ClientTableViewCell: UITableViewCell {
         didSet {
             switch variant {
             case .dark?, .none:
-                self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
+                verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
                 fingerprintTextColor = .white
                 nameLabel.textColor = .white
                 labelLabel.textColor = .white
                 activationLabel.textColor = .white
             case .light?:
                 let textColor = UIColor.from(scheme: .textForeground, variant: .light)
-                self.verifiedLabel.textColor = textColor
+                verifiedLabel.textColor = textColor
                 fingerprintTextColor = textColor
                 nameLabel.textColor = textColor
                 labelLabel.textColor = textColor
@@ -108,7 +108,7 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        self.wr_editable = true
+        wr_editable = true
 
         nameLabel.accessibilityIdentifier = "device name"
         labelLabel.accessibilityIdentifier = "device label"
@@ -119,9 +119,9 @@ class ClientTableViewCell: UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        [self.nameLabel, self.labelLabel, self.activationLabel, self.fingerprintLabel, self.verifiedLabel].forEach(self.contentView.addSubview)
+        [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].forEach(contentView.addSubview)
 
-        constrain(self.contentView, self.nameLabel, self.labelLabel) { contentView, nameLabel, labelLabel in
+        constrain(contentView, nameLabel, labelLabel) { contentView, nameLabel, labelLabel in
             nameLabel.top == contentView.top + 16
             nameLabel.left == contentView.left + 16
             nameLabel.right <= contentView.right - 16
@@ -131,7 +131,7 @@ class ClientTableViewCell: UITableViewCell {
             labelLabel.right <= contentView.right - 16
         }
 
-        constrain(self.contentView, self.labelLabel, self.activationLabel, self.fingerprintLabel, self.verifiedLabel) { contentView, labelLabel, activationLabel, fingerprintLabel, verifiedLabel in
+        constrain(contentView, labelLabel, activationLabel, fingerprintLabel, verifiedLabel) { contentView, labelLabel, activationLabel, fingerprintLabel, verifiedLabel in
 
             fingerprintLabel.top == labelLabel.bottom + 4
             fingerprintLabel.left == contentView.left + 16
@@ -148,9 +148,9 @@ class ClientTableViewCell: UITableViewCell {
             verifiedLabel.bottom == contentView.bottom - 16
         }
 
-        self.backgroundColor = UIColor.clear
-        self.backgroundView = UIView()
-        self.selectedBackgroundView = UIView()
+        backgroundColor = UIColor.clear
+        backgroundView = UIView()
+        selectedBackgroundView = UIView()
 
         setupStyle()
     }
@@ -160,7 +160,7 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        if self.wr_editable {
+        if wr_editable {
             super.setEditing(editing, animated: animated)
         }
     }
@@ -174,28 +174,28 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     func updateVerifiedLabel() {
-        if let userClient = self.userClient,
-            self.showVerified {
+        if let userClient = userClient,
+            showVerified {
 
             if userClient.verified {
-                self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "")
+                verifiedLabel.text = NSLocalizedString("device.verified", comment: "")
             }
             else {
-                self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "")
+                verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "")
             }
         }
         else {
-            self.verifiedLabel.text = ""
+            verifiedLabel.text = ""
         }
     }
 
     func updateFingerprint() {
-        if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospaced(),
-            let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospaced(),
-            let fingerprintLabelTextColor = self.fingerprintTextColor,
-            let userClient = self.userClient, userClient.remoteIdentifier != nil {
+        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.monospaced(),
+            let fingerprintLabelMonoFont = fingerprintLabelFont?.monospaced(),
+            let fingerprintLabelTextColor = fingerprintTextColor,
+            let userClient = userClient, userClient.remoteIdentifier != nil {
 
-                self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
+                fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
                     [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabelTextColor],
                     boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabelTextColor],
                     uppercase: true
@@ -204,11 +204,11 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     func updateLabel() {
-        if let userClientLabel = self.userClient?.label, self.showLabel {
-            self.labelLabel.text = userClientLabel
+        if let userClientLabel = userClient?.label, showLabel {
+            labelLabel.text = userClientLabel
         }
         else {
-            self.labelLabel.text = ""
+            labelLabel.text = ""
         }
     }
 }
