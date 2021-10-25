@@ -88,7 +88,7 @@ final class ArchivedListViewController: UIViewController {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(view, archivedNavigationBar, collectionView) { view, navigationBar, collectionView in
             navigationBar.top == view.top + UIScreen.safeArea.top
             navigationBar.left == view.left

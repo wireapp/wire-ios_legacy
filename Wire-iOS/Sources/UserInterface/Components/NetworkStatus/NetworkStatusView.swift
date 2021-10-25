@@ -130,7 +130,7 @@ class NetworkStatusView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
             offlineView.left == containerView.left + CGFloat.NetworkStatusBar.horizontalMargin
             offlineView.right == containerView.right - CGFloat.NetworkStatusBar.horizontalMargin

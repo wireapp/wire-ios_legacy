@@ -115,6 +115,30 @@ final class ConversationListItemView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(otherConversationListItemDidScroll(_:)), name: .conversationListItemDidScroll, object: nil)
     }
 
+    static private let minHeight: CGFloat = 64
+
+    private func createConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // height
+            heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight),
+
+            // avatar
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
+            contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+
+            // lineView
+            lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
+            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
+        ])
+    }
+
     private func setupLabelsStack() {
         labelsStack.axis = NSLayoutConstraint.Axis.vertical
         labelsStack.alignment = UIStackView.Alignment.leading

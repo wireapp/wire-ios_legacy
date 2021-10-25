@@ -133,7 +133,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         callQualityStackView.translatesAutoresizingMaskIntoConstraints = false

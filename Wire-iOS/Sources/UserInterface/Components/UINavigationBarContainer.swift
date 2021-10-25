@@ -40,7 +40,7 @@ final class UINavigationBarContainer: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(navigationBar, view) { navigationBar, view in
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left

@@ -177,7 +177,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         applyColorScheme(ColorScheme.default.variant)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
 
         let buttonMargin: CGFloat = 16
 

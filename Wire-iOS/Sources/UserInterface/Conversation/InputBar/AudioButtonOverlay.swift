@@ -87,7 +87,7 @@ final class AudioButtonOverlay: UIView {
         sendButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let initialViewWidth: CGFloat = 40
 
         constrain(self, audioButton, playButton, sendButton, backgroundView) { view, audioButton, playButton, sendButton, backgroundView in

@@ -77,7 +77,7 @@ final class ListSkeletonCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, avatarView, lineView) { (containerView, avatarView, lineView) in
             avatarView.width == CGFloat(28)
             avatarView.height == CGFloat(28)
@@ -220,7 +220,7 @@ final class ListSkeletonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         topBar.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -306,7 +306,7 @@ final class SkeletonViewController: UIViewController {
         customSplitViewController.setLeftViewControllerRevealed(true, animated: false)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
             blurEffectView.edges == containerView.edges
             splitViewControllerView.edges == containerView.edges

@@ -45,7 +45,7 @@ final public class TextSearchResultsView: UIView {
         self.addSubview(self.noResultsView)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, self.tableView, self.noResultsView) { resultsView, tableView, noResultsView in
             tableView.edges == resultsView.edges
 

@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 
 extension StartUIViewController {
-    func createConstraints() {
+    private func createConstraints() {
         [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach { $0?.translatesAutoresizingMaskIntoConstraints = false }
 
         searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])

@@ -214,7 +214,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         self.cancelButton.accessibilityLabel = "cancelRecording"
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [self.audioPreviewView,
          self.timeLabel,
          self.tipLabel,

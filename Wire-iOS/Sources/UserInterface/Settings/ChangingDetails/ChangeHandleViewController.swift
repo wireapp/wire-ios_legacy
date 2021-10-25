@@ -85,7 +85,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         [prefixLabel, handleTextField].forEach(addSubview)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, prefixLabel, handleTextField) { view, prefixLabel, textField in
             prefixLabel.top == view.top
             prefixLabel.width == 16
