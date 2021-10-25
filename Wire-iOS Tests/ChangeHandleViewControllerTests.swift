@@ -28,7 +28,6 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
         mockSelfUser.handle = nil
         mockSelfUser.domain = "wire.com"
         SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
-recordMode = true
         snapshotBackgroundColor = .darkGray
     }
 
