@@ -146,9 +146,10 @@ final class RootViewController: UIViewController {
 }
 
 extension RootViewController {
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
         setUpView()
     }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
@@ -180,7 +181,7 @@ extension RootViewController {
     }
 
     private func setUpView() {
-        let shieldView = UIView.shieldView()
+        let shieldView = UIView.shieldView1()
         view.addSubview(shieldView)
 
         shieldView.translatesAutoresizingMaskIntoConstraints = false

@@ -66,7 +66,7 @@ final class TeamAccountView: AccountView {
 
         if let team = user?.team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
-            team.requestImage()
+            team.requestLogoImage()
         }
     }
 
@@ -109,8 +109,8 @@ final class TeamAccountView: AccountView {
 
 extension TeamAccountView: TeamObserver {
     func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        if changeInfo.imageDataChanged {
-            changeInfo.team.requestImage()
+        if changeInfo.logoImageDataChanged {
+            changeInfo.team.requestLogoImage()
         }
 
         guard let content = changeInfo.team.teamImageViewContent else { return }

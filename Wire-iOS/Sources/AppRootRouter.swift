@@ -282,6 +282,7 @@ extension AppRootRouter {
     }
 
     private func showLaunchScreen(isLoading: Bool = false, completion: @escaping () -> Void) {
+        // TODO:
         let launchViewController = LaunchImageViewController()
         isLoading
             ? launchViewController.showLoadingScreen()
