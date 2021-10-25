@@ -26,6 +26,9 @@ extension Notification.Name {
 }
 
 final class ConversationListItemView: UIView {
+    //MARK: UI constants
+    static let minHeight: CGFloat = 64
+
     // Please use `updateForConversation:` to set conversation.
     private var conversation: ConversationAvatarViewConversation?
 
@@ -114,8 +117,6 @@ final class ConversationListItemView: UIView {
 
         NotificationCenter.default.addObserver(self, selector: #selector(otherConversationListItemDidScroll(_:)), name: .conversationListItemDidScroll, object: nil)
     }
-
-    static private let minHeight: CGFloat = 64
 
     private func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
