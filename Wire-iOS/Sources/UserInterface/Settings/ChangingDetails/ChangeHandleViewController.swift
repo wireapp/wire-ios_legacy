@@ -49,12 +49,22 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
         return label
     }()
+
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
         textField.textColor = .from(scheme: .textForeground, variant: .dark)
 
         return textField
+    }()
+
+    let domainLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalSemiboldFont
+        label.textColor = UIColor.from(scheme: .textDimmed, variant: .dark)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -69,6 +79,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         backgroundColor = .clear
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -80,21 +91,26 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         handleTextField.accessibilityLabel = "handleTextField"
         handleTextField.autocorrectionType = .no
         handleTextField.spellCheckingType = .no
+        handleTextField.textAlignment = .right
         prefixLabel.text = "@"
-        [prefixLabel, handleTextField].forEach(addSubview)
+        [prefixLabel, handleTextField, domainLabel].forEach(addSubview)
     }
 
     func createConstraints() {
-        [prefixLabel, handleTextField].prepareForLayout()
+        [prefixLabel, handleTextField, domainLabel].prepareForLayout()
+
         NSLayoutConstraint.activate([
-          prefixLabel.topAnchor.constraint(equalTo: topAnchor),
-          prefixLabel.widthAnchor.constraint(equalToConstant: 16),
-          prefixLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-          prefixLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-          prefixLabel.trailingAnchor.constraint(equalTo: handleTextField.leadingAnchor, constant: -4),
-          handleTextField.topAnchor.constraint(equalTo: topAnchor),
-          handleTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
-          handleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            prefixLabel.topAnchor.constraint(equalTo: topAnchor),
+            prefixLabel.widthAnchor.constraint(equalToConstant: 16),
+            prefixLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            prefixLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            prefixLabel.trailingAnchor.constraint(equalTo: handleTextField.leadingAnchor, constant: -4),
+            handleTextField.topAnchor.constraint(equalTo: topAnchor),
+            handleTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
+            handleTextField.trailingAnchor.constraint(equalTo: domainLabel.leadingAnchor, constant: -4),
+            domainLabel.topAnchor.constraint(equalTo: topAnchor),
+            domainLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            domainLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16)
         ])
     }
 
@@ -183,6 +199,7 @@ struct HandleChangeState {
 }
 
 final class ChangeHandleViewController: SettingsBaseTableViewController {
+    private typealias HandleChange = L10n.Localizable.Self.Settings.AccountSection.Handle.Change
 
     var footerFont: UIFont = .smallFont
     var state: HandleChangeState
@@ -209,6 +226,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -225,7 +243,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = "self.settings.account_section.handle.change.title".localized(uppercased: true)
+        title = HandleChange.title.uppercased()
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false
@@ -236,7 +254,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         updateUI()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.handle.change.save".localized.localizedUppercase,
+            title: HandleChange.save.uppercased(),
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
@@ -251,8 +269,8 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
-        let infoText = "self.settings.account_section.handle.change.footer".localized.attributedString && UIColor(white: 1, alpha: 0.4)
-        let alreadyTakenText = "self.settings.account_section.handle.change.footer.unavailable".localized && UIColor.vividRed
+        let infoText = HandleChange.footer.attributedString && UIColor(white: 1, alpha: 0.4)
+        let alreadyTakenText = HandleChange.Footer.unavailable && UIColor.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }
@@ -288,6 +306,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         cell.delegate = self
         cell.handleTextField.text = state.displayHandle
         cell.handleTextField.becomeFirstResponder()
+        cell.domainLabel.text =  SelfUser.current.handleDomainString
         return cell
     }
 
@@ -366,12 +385,12 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 
     private func presentFailureAlert() {
         let alert = UIAlertController(
-            title: "self.settings.account_section.handle.change.failure_alert.title".localized,
-            message: "self.settings.account_section.handle.change.failure_alert.message".localized,
+            title: HandleChange.FailureAlert.title,
+            message: HandleChange.FailureAlert.message,
             preferredStyle: .alert
         )
 
-        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+        alert.addAction(.init(title: L10n.Localizable.General.ok, style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }

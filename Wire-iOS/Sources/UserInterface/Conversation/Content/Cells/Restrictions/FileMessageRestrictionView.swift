@@ -36,6 +36,7 @@ final class FileMessageRestrictionView: BaseMessageRestrictionView {
         super.init(messageType: .file)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

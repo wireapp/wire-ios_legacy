@@ -62,6 +62,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -325,6 +326,7 @@ class QualityScoreSelectorView: UIView {
         return NSLocalizedString("calling.quality_survey.answer.\(score)", comment: "")
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

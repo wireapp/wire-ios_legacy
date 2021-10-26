@@ -154,6 +154,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

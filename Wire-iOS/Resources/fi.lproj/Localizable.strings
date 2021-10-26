@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Puhelinnumero";
 "self.settings.account_section.handle.title" = "Käyttäjänimi";
 "self.settings.account_section.add_handle.title" = "Lisää käyttäjänimi";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Ihmiset voivat löytää sinut näillä tiedoilla.";
 "self.settings.account_details_group.personal.footer" = "Tämä tieto ei näy.";

@@ -94,6 +94,8 @@
 	<string>$(FORCE_ENCRYPTION_AT_REST_ENABLED)</string>
 	<key>GenerateLinkPreviewEnabled</key>
 	<string>${GENERATE_LINK_PREVIEW_ENABLED}</string>
+	<key>FederationEnabled</key>
+	<string>${FEDERATION_ENABLED}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -115,18 +117,18 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-     <dict>
-       <key>NSAllowsArbitraryLoads</key>
-       <false/>
-       <key>NSExceptionDomains</key>
-       <dict>
-        <key>*</key>
-       <dict>
-           <key>NSExceptionAllowsInsecureHTTPLoads</key>
-           <false/>
-       </dict>
-     </dict>
-    </dict>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>*</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow Wire to access your camera so you can place video calls and send photos.</string>
 	<key>NSContactsUsageDescription</key>

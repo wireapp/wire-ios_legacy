@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Uporabniško ime";
 "self.settings.account_section.add_handle.title" = "Dodaj uporabniško ime";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Osebe vas lahko najdejo s temi podrobnostmi.";
 "self.settings.account_details_group.personal.footer" = "Ta informacija ni vidna.";

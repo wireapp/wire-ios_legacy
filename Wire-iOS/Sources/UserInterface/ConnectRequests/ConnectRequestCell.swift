@@ -61,6 +61,7 @@ final class ConnectRequestCell: UITableViewCell {
         backgroundColor = UIColor.clear
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

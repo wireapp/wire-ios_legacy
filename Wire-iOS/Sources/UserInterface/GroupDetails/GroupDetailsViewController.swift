@@ -76,13 +76,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         [collectionView, footerView].prepareForLayout()
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
           collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+          footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         collectionViewController.collectionView = collectionView

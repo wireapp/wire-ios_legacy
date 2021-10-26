@@ -59,7 +59,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
     init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
-         isFederationEnabled: Bool = Settings.shared.federationEnabled || AutomationHelper.sharedHelper.enableFederation) {
+         isFederationEnabled: Bool = Settings.shared.federationEnabled) {
         self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
