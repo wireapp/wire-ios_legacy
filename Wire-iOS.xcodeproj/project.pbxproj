@@ -1001,6 +1001,7 @@
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
 		A9EDC143252225B2009DB9E1 /* AnalyticsCallingTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDC142252225B2009DB9E1 /* AnalyticsCallingTrackerTests.swift */; };
 		A9F57E3D2419A83100EEA912 /* TokenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F57E3C2419A83100EEA912 /* TokenContainer.swift */; };
+		A9FAF4AC2723017F00C96AF4 /* SkeletonViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */; };
 		AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */; };
 		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */; };
 		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */; };
@@ -9063,6 +9064,7 @@
 				5EF7BA61221AB89300815625 /* ProfileViewTests.swift in Sources */,
 				87C39A90206BF00A008DA100 /* BackupViewControllerTests.swift in Sources */,
 				061282632379C25500C1A53C /* UITextView+ReplaceTests.swift in Sources */,
+				A9FAF4AC2723017F00C96AF4 /* SkeletonViewControllerTests.swift in Sources */,
 				EF27CD9F20C161500077FE55 /* ProfileClientViewControllerTests.swift in Sources */,
 				EF2A8DE7214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift in Sources */,
 				164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */,

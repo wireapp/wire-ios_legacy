@@ -17,8 +17,6 @@
 //
 
 import UIKit
-import Cartography
-import WireUtilities
 import WireCommonComponents
 import WireDataModel
 
@@ -39,30 +37,24 @@ final class ListSkeletonCellNameItemView: UIView {
 
 final class ListSkeletonCellView: UIView {
 
-    let avatarView: UIView
-    let lineView: ListSkeletonCellNameItemView
+    private let avatarView = UIView()
+    private let lineView = ListSkeletonCellNameItemView()
 
-    var lineConstraint: NSLayoutConstraint?
+    private lazy var lineConstraint: NSLayoutConstraint = lineView.rightAnchor.constraint(equalTo: rightAnchor)
 
     var lineInset: Float {
         get {
-            if let inset = lineConstraint?.constant {
-                return -(Float)(inset)
-            } else {
-                return 0
-            }
+            let inset = lineConstraint.constant
+            return -(Float)(inset)
         }
 
         set {
-            lineConstraint?.constant = -CGFloat(newValue + 16)
+            lineConstraint.constant = -CGFloat(newValue + 16)
         }
     }
 
     init() {
-        avatarView = UIView()
-        lineView = ListSkeletonCellNameItemView()
-
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
 
         avatarView.layer.cornerRadius = 14
         avatarView.backgroundColor = .white
@@ -77,19 +69,21 @@ final class ListSkeletonCellView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
-        constrain(self, avatarView, lineView) { (containerView, avatarView, lineView) in
-            avatarView.width == CGFloat(28)
-            avatarView.height == CGFloat(28)
-            avatarView.left == containerView.left + 18
-            avatarView.top == containerView.top + 18
-            avatarView.bottom == containerView.bottom - 17.5
+    private func createConstraints() {
+        [avatarView, lineView].prepareForLayout()
 
-            lineView.height == CGFloat(14)
-            lineView.left == avatarView.right + 16
-            lineConstraint = lineView.right == containerView.right
-            lineView.centerY == avatarView.centerY
-        }
+        NSLayoutConstraint.activate([
+          avatarView.widthAnchor.constraint(equalToConstant: 28),
+          avatarView.heightAnchor.constraint(equalToConstant: 28),
+          avatarView.leftAnchor.constraint(equalTo: leftAnchor, constant: 18),
+          avatarView.topAnchor.constraint(equalTo: topAnchor, constant: 18),
+          avatarView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -17.5),
+
+          lineView.heightAnchor.constraint(equalToConstant: 14),
+          lineView.leftAnchor.constraint(equalTo: avatarView.rightAnchor, constant: 16),
+          lineConstraint,
+          lineView.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor)
+        ])
 
         lineInset = 0
     }
@@ -110,10 +104,13 @@ final class ListSkeletonCell: UITableViewCell {
         backgroundColor = .clear
 
         contentView.addSubview(skeletonCellView)
-
-        constrain(contentView, skeletonCellView) { (containerView, skeletonCellView) in
-            skeletonCellView.edges == containerView.edges
-        }
+        skeletonCellView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          skeletonCellView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          skeletonCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          skeletonCellView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          skeletonCellView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+        ])
     }
 
     var lineInset: Float {
@@ -185,7 +182,8 @@ final class ListSkeletonView: UIView {
     }()
 
     let listContentView: ListSkeletonContentView
-    var buttonRowView: UIStackView!
+    lazy var buttonRowView: UIStackView = { UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
+    }()
 
     init(_ account: Account, randomizeDummyItem: Bool) {
         let accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
@@ -195,7 +193,6 @@ final class ListSkeletonView: UIView {
 
         super.init(frame: CGRect.zero)
 
-        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
         buttonRowView.distribution = .equalCentering
 
         [topBar,
@@ -220,30 +217,27 @@ final class ListSkeletonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
-        topBar.translatesAutoresizingMaskIntoConstraints = false
+    private func createConstraints() {
+        [topBar,
+         buttonRowView,
+         listContentView].prepareForLayout()
 
         NSLayoutConstraint.activate([
             topBar.topAnchor.constraint(equalTo: safeTopAnchor),
             topBar.leftAnchor.constraint(equalTo: leftAnchor),
             topBar.rightAnchor.constraint(equalTo: rightAnchor),
-            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10)])
+            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10),
 
-        constrain(self,
-                  buttonRowView, listContentView) { (containerView,
-                    buttonRowView, listContentView) in
+          buttonRowView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
+          buttonRowView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+          buttonRowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UIScreen.safeArea.bottom),
+          buttonRowView.heightAnchor.constraint(equalToConstant: 55),
 
-                    buttonRowView.left == containerView.left + 16
-                    buttonRowView.right == containerView.right - 16
-                    buttonRowView.bottom == containerView.bottom - UIScreen.safeArea.bottom
-                    buttonRowView.height == 55
-
-                    listContentView.left == containerView.left
-                    listContentView.right == containerView.right
-                    listContentView.bottom == buttonRowView.top
-        }
+          listContentView.leftAnchor.constraint(equalTo: leftAnchor),
+          listContentView.rightAnchor.constraint(equalTo: rightAnchor),
+          listContentView.bottomAnchor.constraint(equalTo: buttonRowView.topAnchor)
+        ])
     }
-
 }
 
 final class SkeletonViewController: UIViewController {
@@ -306,15 +300,25 @@ final class SkeletonViewController: UIViewController {
         customSplitViewController.setLeftViewControllerRevealed(true, animated: false)
     }
 
-    func createConstraints() {
-        constrain(view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
-            blurEffectView.edges == containerView.edges
-            splitViewControllerView.edges == containerView.edges
-            backgroundImageView.top == containerView.top
-            backgroundImageView.left == containerView.left - 100
-            backgroundImageView.right == containerView.right + 100
-            backgroundImageView.bottom == containerView.bottom
-        }
+    private func createConstraints() {
+        guard let splitViewControllerView = customSplitViewController.view else { return }
+
+        [blurEffectView, backgroundImageView, splitViewControllerView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+          blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+          blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          blurEffectView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          blurEffectView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          splitViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
+          splitViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          splitViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          splitViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+          backgroundImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: -100),
+          backgroundImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 100),
+          backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
