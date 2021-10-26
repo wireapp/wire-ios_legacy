@@ -1013,8 +1013,8 @@
 "self.settings.account_section.phone.title" = "Телефон";
 "self.settings.account_section.handle.title" = "Псевдоним";
 "self.settings.account_section.add_handle.title" = "Добавить псевдоним";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "Команда";
+"self.settings.account_section.domain.title" = "Домен";
 
 "self.settings.account_details_group.info.footer" = "Пользователи могут вас найти по этим данным.";
 "self.settings.account_details_group.personal.footer" = "Эта информация не видна.";
