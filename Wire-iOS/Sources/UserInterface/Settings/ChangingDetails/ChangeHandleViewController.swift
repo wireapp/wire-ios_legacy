@@ -107,14 +107,14 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     // MARK: - UITextField
 
     @objc func editingChanged(textField: UITextField) {
-        let lowercase = handleTextField.text?.lowercased() ?? ""
-        handleTextField.text = lowercase
+        let lowercase = textField.text?.lowercased() ?? ""
+        textField.text = lowercase
         delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let delegate = delegate else { return false }
-        let current = (handleTextField.text ?? "") as NSString
+        let current = (textField.text ?? "") as NSString
         let replacement = current.replacingCharacters(in: range, with: string)
         if delegate.tableViewCell(cell: self, shouldAllowEditingText: replacement) {
             return true
