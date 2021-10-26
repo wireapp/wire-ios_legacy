@@ -51,12 +51,12 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [topSeparator, titleLabel, subtitleLabel].prepareForLayout()
         NSLayoutConstraint.activate([
           topSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
           topSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
           topSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-          topSeparator.heightAnchor.constraint(equalTo: .hairlineAnchor),
+          topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
 
           titleLabel.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 24),
           titleLabel.leadingAnchor.constraint(equalTo: topSeparator.leadingAnchor),

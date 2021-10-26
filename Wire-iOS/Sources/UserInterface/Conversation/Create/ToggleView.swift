@@ -69,13 +69,13 @@ final class ToggleView: UIView, Themeable {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [titleLabel, toggle].prepareForLayout()
         NSLayoutConstraint.activate([
-          titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-          toggle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-          toggle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-          view.heightAnchor.constraint(equalToConstant: 56)
+          titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+          toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
+          toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+          heightAnchor.constraint(equalToConstant: 56)
         ])
     }
 

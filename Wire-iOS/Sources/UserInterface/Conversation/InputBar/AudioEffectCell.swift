@@ -56,25 +56,22 @@ final class AudioEffectCell: UICollectionViewCell {
             v.backgroundColor = UIColor(white: 1, alpha: 0.16)
         }
 
-        [<#views#>].prepareForLayout()
+        [iconView, borderRightView, borderBottomView].prepareForLayout()
         NSLayoutConstraint.activate([
           iconView.topAnchor.constraint(equalTo: contentView.topAnchor),
           iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
           iconView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-          iconView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
-        ])
+          iconView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
 
-        [<#views#>].prepareForLayout()
-        NSLayoutConstraint.activate([
           borderRightView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
           borderRightView.topAnchor.constraint(equalTo: contentView.topAnchor),
           borderRightView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0.5),
-          borderRightView.widthAnchor.constraint(equalTo: .hairlineAnchor),
+          borderRightView.widthAnchor.constraint(equalToConstant: .hairline),
 
           borderBottomView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
           borderBottomView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0.5),
           borderBottomView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-          borderBottomView.heightAnchor.constraint(equalTo: .hairlineAnchor)
+          borderBottomView.heightAnchor.constraint(equalToConstant: .hairline)
         ])
 
         updateForSelectedState()

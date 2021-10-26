@@ -42,16 +42,16 @@ final class CollectionLinkCell: CollectionCell {
 
         contentView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
 
-        [<#views#>].prepareForLayout()
+        [articleView, headerView].prepareForLayout()
         NSLayoutConstraint.activate([
-          headerView.topAnchor.constraint(equalTo: contentView.topMarginAnchor),
-          headerView.leadingAnchor.constraint(equalTo: contentView.leadingMarginAnchor, constant: 12),
-          headerView.trailingAnchor.constraint(equalTo: contentView.trailingMarginAnchor, constant: -12),
+            headerView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: 12),
+            headerView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: -12),
 
           articleView.topAnchor.constraint(greaterThanOrEqualTo: headerView.bottomAnchor, constant: -4),
-          articleView.leftAnchor.constraint(equalTo: contentView.leftMarginAnchor),
-          articleView.rightAnchor.constraint(equalTo: contentView.rightMarginAnchor),
-          articleView.bottomAnchor.constraint(equalTo: contentView.bottomMarginAnchor)
+            articleView.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
+            articleView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
+            articleView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor)
         ])
 
         self.articleView = articleView

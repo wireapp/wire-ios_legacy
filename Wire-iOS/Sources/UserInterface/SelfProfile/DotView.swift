@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import Cartography
 import WireSyncEngine
 
 final class DotView: UIView {
@@ -32,11 +33,11 @@ final class DotView: UIView {
 
     var showIndicator: Bool {
         get {
-            return !self.isHidden
+            return !isHidden
         }
 
         set {
-            self.isHidden = !newValue
+            isHidden = !newValue
         }
     }
 
@@ -58,17 +59,10 @@ final class DotView: UIView {
 
         addSubview(circleView)
         addSubview(centerView)
-        [<#views#>].prepareForLayout()
-        NSLayoutConstraint.activate([
-          backingView.topAnchor.constraint(equalTo: selfView.topAnchor),
-          backingView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
-          backingView.leftAnchor.constraint(equalTo: selfView.leftAnchor),
-          backingView.rightAnchor.constraint(equalTo: selfView.rightAnchor),
-          centerView.topAnchor.constraint(equalTo: inset(selfView.topAnchor),
-          centerView.bottomAnchor.constraint(equalTo: inset(selfView.bottomAnchor),
-          centerView.leftAnchor.constraint(equalTo: inset(selfView.leftAnchor),
-          centerView.rightAnchor.constraint(equalTo: inset(selfView.rightAnchor)
-        ])
+        constrain(self, circleView, centerView) { selfView, backingView, centerView in
+            backingView.edges == selfView.edges
+            centerView.edges == inset(selfView.edges, 1, 1, 1, 1)
+        }
 
         if let userSession = ZMUserSession.shared(), let user = user {
             userObserver = UserChangeInfo.add(observer: self, for: user, in: userSession)

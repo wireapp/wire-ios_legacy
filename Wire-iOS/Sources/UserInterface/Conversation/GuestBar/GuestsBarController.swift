@@ -29,9 +29,9 @@ final class GuestsBarController: UIViewController {
 
     private let label = UILabel()
     private let container = UIView()
-    private var containerHeightConstraint: NSLayoutConstraint!
-    private var heightConstraint: NSLayoutConstraint!
-    private var bottomLabelConstraint: NSLayoutConstraint!
+    private lazy var containerHeightConstraint: NSLayoutConstraint = container.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var heightConstraint: NSLayoutConstraint = view.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var bottomLabelConstraint: NSLayoutConstraint = label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
 
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
@@ -64,17 +64,17 @@ final class GuestsBarController: UIViewController {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [container, label].prepareForLayout()
         NSLayoutConstraint.activate([
           label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-          bottomLabelConstraint = label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3),
+          bottomLabelConstraint,
           label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
           view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
           view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
           container.topAnchor.constraint(equalTo: view.topAnchor),
 
-          heightConstraint = view.heightAnchor.constraint(equalTo: GuestsBarController.expandedHeightAnchor),
-          containerHeightConstraint = container.heightAnchor.constraint(equalTo: GuestsBarController.expandedHeightAnchor)
+          heightConstraint,
+          containerHeightConstraint
         ])
     }
 

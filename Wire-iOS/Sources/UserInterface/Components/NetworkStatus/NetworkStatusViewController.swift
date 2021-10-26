@@ -65,6 +65,20 @@ final class NetworkStatusViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIApplication.didChangeStatusBarOrientationNotification, object: .none)
+
+        view.addSubview(networkStatusView)
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        networkStatusView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          networkStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          networkStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          networkStatusView.topAnchor.constraint(equalTo: view.topAnchor),
+          networkStatusView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -82,15 +96,6 @@ final class NetworkStatusViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        view.addSubview(networkStatusView)
-
-        [<#views#>].prepareForLayout()
-        NSLayoutConstraint.activate([
-          networkStatusView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-          networkStatusView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-          networkStatusView.topAnchor.constraint(equalTo: containerView.topAnchor),
-          networkStatusView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
-        ])
 
         if let userSession = ZMUserSession.shared() {
             enqueue(state: viewState(from: userSession.networkState))

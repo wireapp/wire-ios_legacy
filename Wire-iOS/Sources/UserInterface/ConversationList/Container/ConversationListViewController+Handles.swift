@@ -58,7 +58,7 @@ extension ConversationListViewController {
         concealContentContainer()
 
         if let takeover = usernameTakeoverViewController.view {
-        [<#views#>].prepareForLayout()
+            takeover.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           takeover.topAnchor.constraint(equalTo: view.topAnchor),
           takeover.bottomAnchor.constraint(equalTo: view.bottomAnchor),

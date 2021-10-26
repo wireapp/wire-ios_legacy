@@ -46,14 +46,14 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [label, imageContainer, iconImageView].prepareForLayout()
         NSLayoutConstraint.activate([
           imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
           imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
           imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
           imageContainer.widthAnchor.constraint(equalToConstant: 64),
-          imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
-          imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
+            iconImageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
           label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
           label.topAnchor.constraint(equalTo: contentView.topAnchor),
           label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

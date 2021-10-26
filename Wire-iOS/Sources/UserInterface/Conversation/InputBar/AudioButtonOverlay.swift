@@ -36,8 +36,10 @@ final class AudioButtonOverlay: UIView {
         didSet { updateWithPlayingState(playingState) }
     }
 
-    fileprivate var heightConstraint: NSLayoutConstraint?
-    fileprivate var widthConstraint: NSLayoutConstraint?
+    private let initialViewWidth: CGFloat = 40
+
+    fileprivate lazy var heightConstraint: NSLayoutConstraint = heightAnchor.constraint(equalToConstant: 96)
+    fileprivate lazy var widthConstraint: NSLayoutConstraint = widthAnchor.constraint(equalToConstant: initialViewWidth)
 
     let darkColor = UIColor.from(scheme: .textForeground)
     let brightColor = UIColor.from(scheme: .textBackground)
@@ -52,17 +54,17 @@ final class AudioButtonOverlay: UIView {
     var buttonHandler: ButtonPressHandler?
 
     init() {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         configureViews()
         createConstraints()
         updateWithRecordingState(recordingState)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         backgroundView.layer.cornerRadius = bounds.width / 2
     }
@@ -87,32 +89,30 @@ final class AudioButtonOverlay: UIView {
     }
 
     func createConstraints() {
-        let initialViewWidth: CGFloat = 40
-
-        [<#views#>].prepareForLayout()
+        [audioButton, playButton, sendButton, backgroundView].prepareForLayout()
         NSLayoutConstraint.activate([
-          audioButton.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -initialViewWidth / 2),
-          audioButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          audioButton.centerYAnchor.constraint(equalTo: bottomAnchor, constant: -initialViewWidth / 2),
+          audioButton.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-          playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          playButton.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -initialViewWidth / 2),
+          playButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+          playButton.centerYAnchor.constraint(equalTo: bottomAnchor, constant: -initialViewWidth / 2),
 
-          sendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          sendButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: initialViewWidth / 2),
+          sendButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+          sendButton.centerYAnchor.constraint(equalTo: topAnchor, constant: initialViewWidth / 2),
 
-          widthConstraint = view.widthAnchor.constraint(equalToConstant: initialViewWidth),
-          heightConstraint = view.heightAnchor.constraint(equalToConstant: 96),
-          backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-          backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor)
+          widthConstraint,
+          heightConstraint,
+            backgroundView.topAnchor.constraint(equalTo: topAnchor),
+          backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          backgroundView.leftAnchor.constraint(equalTo: leftAnchor),
+          backgroundView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }
 
     func setOverlayState(_ state: AudioButtonOverlayState) {
         defer { layoutIfNeeded() }
-        heightConstraint?.constant = state.height
-        widthConstraint?.constant = state.width
+        heightConstraint.constant = state.height
+        widthConstraint.constant = state.width
         alpha = state.alpha
 
         let blendedGray = grayColor.removeAlphaByBlending(with: superviewColor)

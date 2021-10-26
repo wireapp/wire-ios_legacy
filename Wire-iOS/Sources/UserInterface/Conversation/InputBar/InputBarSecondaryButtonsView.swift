@@ -21,7 +21,7 @@ import UIKit
 // Acts as a container for InputBarEditView & MarkdownBarView, however
 // only one of the views will be in the view hierarchy at a time.
 //
-class InputBarSecondaryButtonsView: UIView {
+final class InputBarSecondaryButtonsView: UIView {
 
     let editBarView: InputBarEditView
     let markdownBarView: MarkdownBarView
@@ -44,12 +44,12 @@ class InputBarSecondaryButtonsView: UIView {
         subviews.forEach { $0.removeFromSuperview() }
         addSubview(newView)
 
-        [<#views#>].prepareForLayout()
+        newView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          newView.topAnchor.constraint(equalTo: view.topAnchor),
-          newView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          newView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          newView.rightAnchor.constraint(equalTo: view.rightAnchor)
+          newView.topAnchor.constraint(equalTo: topAnchor),
+          newView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          newView.leftAnchor.constraint(equalTo: leftAnchor),
+          newView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }
 

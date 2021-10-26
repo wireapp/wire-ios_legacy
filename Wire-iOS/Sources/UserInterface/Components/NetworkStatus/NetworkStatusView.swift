@@ -59,7 +59,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
     }
 }
 
-class NetworkStatusView: UIView {
+final class NetworkStatusView: UIView {
     let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
@@ -74,9 +74,9 @@ class NetworkStatusView: UIView {
 
     weak var delegate: NetworkStatusViewDelegate?
 
-    var offlineViewTopMargin: NSLayoutConstraint?
-    var offlineViewBottomMargin: NSLayoutConstraint?
-    var connectingViewBottomMargin: NSLayoutConstraint?
+    private lazy var offlineViewTopMargin: NSLayoutConstraint = offlineView.topAnchor.constraint(equalTo: topAnchor)
+    private lazy var offlineViewBottomMargin: NSLayoutConstraint = offlineView.bottomAnchor.constraint(equalTo: bottomAnchor)
+    private lazy var connectingViewBottomMargin: NSLayoutConstraint = connectingView.bottomAnchor.constraint(equalTo: bottomAnchor)
     fileprivate var application: ApplicationProtocol = UIApplication.shared
 
     var state: NetworkStatusViewState {
@@ -130,17 +130,17 @@ class NetworkStatusView: UIView {
     }
 
     func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [offlineView, connectingView].prepareForLayout()
         NSLayoutConstraint.activate([
-          offlineView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: CGFloat.NetworkStatusBar.horizontalMargin),
-          offlineView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -CGFloat.NetworkStatusBar.horizontalMargin),
-          offlineViewTopMargin = offlineView.topAnchor.constraint(equalTo: containerView.topAnchor),
-          offlineViewBottomMargin = offlineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+          offlineView.leftAnchor.constraint(equalTo: leftAnchor, constant: CGFloat.NetworkStatusBar.horizontalMargin),
+          offlineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -CGFloat.NetworkStatusBar.horizontalMargin),
+          offlineViewTopMargin,
+          offlineViewBottomMargin,
 
           connectingView.leftAnchor.constraint(equalTo: offlineView.leftAnchor),
           connectingView.rightAnchor.constraint(equalTo: offlineView.rightAnchor),
           connectingView.topAnchor.constraint(equalTo: offlineView.topAnchor),
-          connectingViewBottomMargin = connectingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+          connectingViewBottomMargin
         ])
     }
 
@@ -186,24 +186,24 @@ class NetworkStatusView: UIView {
 
         switch networkStatusViewState {
         case .online:
-            connectingViewBottomMargin?.constant = 0
-            offlineViewBottomMargin?.constant = 0
-            offlineViewTopMargin?.constant = 0
+            connectingViewBottomMargin.constant = 0
+            offlineViewBottomMargin.constant = 0
+            offlineViewTopMargin.constant = 0
 
-            connectingViewBottomMargin?.isActive = false
-            offlineViewBottomMargin?.isActive = true
+            connectingViewBottomMargin.isActive = false
+            offlineViewBottomMargin.isActive = true
         case .onlineSynchronizing:
-            connectingViewBottomMargin?.constant = -bottomMargin
-            offlineViewTopMargin?.constant = topMargin
+            connectingViewBottomMargin.constant = -bottomMargin
+            offlineViewTopMargin.constant = topMargin
 
-            offlineViewBottomMargin?.isActive = false
-            connectingViewBottomMargin?.isActive = true
+            offlineViewBottomMargin.isActive = false
+            connectingViewBottomMargin.isActive = true
         case .offlineExpanded:
-            offlineViewBottomMargin?.constant = -bottomMargin
-            offlineViewTopMargin?.constant = topMargin
+            offlineViewBottomMargin.constant = -bottomMargin
+            offlineViewTopMargin.constant = topMargin
 
-            connectingViewBottomMargin?.isActive = false
-            offlineViewBottomMargin?.isActive = true
+            connectingViewBottomMargin.isActive = false
+            offlineViewBottomMargin.isActive = true
         }
     }
 

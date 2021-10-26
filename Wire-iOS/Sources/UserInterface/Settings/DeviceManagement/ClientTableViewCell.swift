@@ -120,7 +120,7 @@ class ClientTableViewCell: UITableViewCell {
 
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].forEach(contentView.addSubview)
 
-        [<#views#>].prepareForLayout()
+        [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].prepareForLayout()
         NSLayoutConstraint.activate([
           nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
           nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
@@ -128,11 +128,8 @@ class ClientTableViewCell: UITableViewCell {
 
           labelLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
           labelLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          labelLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16)
-        ])
+          labelLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-        [<#views#>].prepareForLayout()
-        NSLayoutConstraint.activate([
           fingerprintLabel.topAnchor.constraint(equalTo: labelLabel.bottomAnchor, constant: 4),
           fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
           fingerprintLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),

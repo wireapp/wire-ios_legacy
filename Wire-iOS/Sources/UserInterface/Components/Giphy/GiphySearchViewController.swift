@@ -132,10 +132,10 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          noResultsLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-          noResultsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+          noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 

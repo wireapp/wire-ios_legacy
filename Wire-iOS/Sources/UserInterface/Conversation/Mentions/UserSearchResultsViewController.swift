@@ -52,7 +52,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
         }
     }
     private var query: String = ""
-    private var collectionViewHeight: NSLayoutConstraint?
+    private lazy var collectionViewHeight: NSLayoutConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
 
@@ -130,12 +130,12 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func setupConstraints() {
-        [<#views#>].prepareForLayout()
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          collectionView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
-          collectionView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-          collectionView.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
-          collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionViewHeight
         ])
     }
 
@@ -158,7 +158,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     private func resizeTable() {
         let viewHeight = view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        collectionViewHeight?.constant = minValue
+        collectionViewHeight.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
     }
 

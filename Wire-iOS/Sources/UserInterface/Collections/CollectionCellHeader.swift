@@ -46,13 +46,13 @@ final class CollectionCellHeader: UIView {
         addSubview(nameLabel)
         addSubview(dateLabel)
 
-        [<#views#>].prepareForLayout()
+        [nameLabel, dateLabel].prepareForLayout()
         NSLayoutConstraint.activate([
-          nameLabel.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
           nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: dateLabel.leadingAnchor),
-          dateLabel.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
-          nameLabel.topAnchor.constraint(equalTo: selfView.topAnchor),
-          nameLabel.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+          nameLabel.topAnchor.constraint(equalTo: topAnchor),
+          nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
           dateLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
         ])
     }

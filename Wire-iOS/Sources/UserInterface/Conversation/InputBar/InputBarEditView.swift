@@ -41,6 +41,8 @@ final class InputBarEditView: UIView {
     let confirmButton = InputBarEditView.iconButtonTemplate
     let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
+    private let margin: CGFloat = 16
+    private lazy var buttonMargin: CGFloat = margin + iconSize / 2
 
     weak var delegate: InputBarEditViewDelegate?
 
@@ -72,17 +74,15 @@ final class InputBarEditView: UIView {
     }
 
     fileprivate func createConstraints() {
-        let margin: CGFloat = 16
-        let buttonMargin: CGFloat = margin + iconSize / 2
-        [<#views#>].prepareForLayout()
+        [undoButton, confirmButton, cancelButton].prepareForLayout()
         NSLayoutConstraint.activate([
-          undoButton.centerXAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonMargin),
-          undoButton.widthAnchor.constraint(equalTo: view.heightAnchor),
+          undoButton.centerXAnchor.constraint(equalTo: leadingAnchor, constant: buttonMargin),
+          undoButton.widthAnchor.constraint(equalTo: heightAnchor),
 
-          confirmButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          confirmButton.widthAnchor.constraint(equalTo: view.heightAnchor),
-          cancelButton.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonMargin),
-          cancelButton.widthAnchor.constraint(equalTo: view.heightAnchor)
+          confirmButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+          confirmButton.widthAnchor.constraint(equalTo: heightAnchor),
+          cancelButton.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -buttonMargin),
+          cancelButton.widthAnchor.constraint(equalTo: heightAnchor)
         ])
     }
 

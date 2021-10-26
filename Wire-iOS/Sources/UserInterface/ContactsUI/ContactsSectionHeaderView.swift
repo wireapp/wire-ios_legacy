@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-class ContactsSectionHeaderView: UITableViewHeaderFooterView {
+final class ContactsSectionHeaderView: UITableViewHeaderFooterView {
     let label: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
@@ -48,8 +49,7 @@ class ContactsSectionHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupSubviews() {
-
+    private func setupSubviews() {
         contentView.addSubview(label)
     }
 
@@ -57,12 +57,12 @@ class ContactsSectionHeaderView: UITableViewHeaderFooterView {
         self.textLabel?.isHidden = true
     }
 
-    func setupConstraints() {
+    private func setupConstraints() {
 
-        [<#views#>].prepareForLayout()
+        label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          label.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
-          label.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: 24)
+          label.centerYAnchor.constraint(equalTo: centerYAnchor),
+          label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24)
         ])
     }
 

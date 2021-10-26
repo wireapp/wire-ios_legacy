@@ -56,15 +56,16 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
     }
 
     private func createConstraints() {
-        if let contentViewControllerView = contentViewController.view {
-        [<#views#>].prepareForLayout()
+        guard let conversationView = contentViewController.view else { return }
+
+        conversationView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
           conversationView.topAnchor.constraint(equalTo: view.topAnchor),
           conversationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
           conversationView.leftAnchor.constraint(equalTo: view.leftAnchor),
           conversationView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

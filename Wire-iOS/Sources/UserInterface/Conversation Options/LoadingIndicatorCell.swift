@@ -27,7 +27,8 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
         contentView.addSubview(spinner)
         backgroundColor = .clear
         spinner.hidesWhenStopped = false
-        [<#views#>].prepareForLayout()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
           spinner.topAnchor.constraint(equalTo: contentView.topAnchor),
           spinner.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),

@@ -139,7 +139,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         view.addSubview(statusBoxView)
         view.addSubview(collectionView)
 
-        [<#views#>].prepareForLayout()
+        [collectionView, progressView, subtitleLabel, statusBoxView].prepareForLayout()
         NSLayoutConstraint.activate([
           collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
           collectionView.topAnchor.constraint(equalTo: view.topAnchor),

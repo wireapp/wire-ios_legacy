@@ -86,7 +86,7 @@ final class BarController: UIViewController {
 
         view.addSubview(stackView)
 
-        [<#views#>].prepareForLayout()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           stackView.topAnchor.constraint(equalTo: view.topAnchor),
           stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

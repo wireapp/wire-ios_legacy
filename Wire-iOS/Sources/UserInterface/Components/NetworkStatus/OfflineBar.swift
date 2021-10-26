@@ -17,11 +17,12 @@
 //
 
 import Foundation
+import UIKit
 
-class OfflineBar: UIView {
+final class OfflineBar: UIView {
 
     private let offlineLabel: UILabel
-    private var heightConstraint: NSLayoutConstraint?
+    private lazy var heightConstraint: NSLayoutConstraint = heightAnchor.constraint(equalToConstant: 0)
 
     var state: NetworkStatusViewState = .online {
         didSet {
@@ -32,7 +33,7 @@ class OfflineBar: UIView {
     }
 
     convenience init() {
-        self.init(frame: CGRect.zero)
+        self.init(frame: .zero)
     }
 
     override init(frame: CGRect) {
@@ -59,29 +60,29 @@ class OfflineBar: UIView {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        offlineLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          offlineLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-          offlineLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-          offlineLabel.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftMarginAnchor),
-          offlineLabel.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightMarginAnchor),
+          offlineLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          offlineLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            offlineLabel.leftAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leftAnchor),
+            offlineLabel.rightAnchor.constraint(lessThanOrEqualTo: layoutMarginsGuide.rightAnchor),
 
-          heightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
+          heightConstraint
         ])
     }
 
     private func updateView() {
         switch state {
         case .online:
-            heightConstraint?.constant = 0
+            heightConstraint.constant = 0
             offlineLabel.alpha = 0
             layer.cornerRadius = 0
         case .onlineSynchronizing:
-            heightConstraint?.constant = CGFloat.SyncBar.height
+            heightConstraint.constant = CGFloat.SyncBar.height
             offlineLabel.alpha = 0
             layer.cornerRadius = CGFloat.SyncBar.cornerRadius
         case .offlineExpanded:
-            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            heightConstraint.constant = CGFloat.OfflineBar.expandedHeight
             offlineLabel.alpha = 1
             layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         }

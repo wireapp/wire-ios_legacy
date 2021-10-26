@@ -62,7 +62,7 @@ final class OutgoingConnectionViewController: UIViewController {
     }
 
     private func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [cancelButton, archiveButton].prepareForLayout()
         NSLayoutConstraint.activate([
           cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
           cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),

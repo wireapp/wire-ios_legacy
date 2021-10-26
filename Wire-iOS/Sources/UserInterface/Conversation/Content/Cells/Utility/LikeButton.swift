@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class LikeButton: IconButton {
     static var normalColor: UIColor {

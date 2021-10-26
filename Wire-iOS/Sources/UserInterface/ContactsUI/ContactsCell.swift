@@ -17,13 +17,12 @@
 //
 
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> Void
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with table view index bar
-class ContactsCell: UITableViewCell, SeparatorViewProtocol {
+final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     var user: UserType? = nil {
         didSet {
             avatar.user = user
@@ -193,7 +192,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
             ])
 
-        [<#views#>].prepareForLayout()
+        [actionButton, buttonSpacer].prepareForLayout()
         NSLayoutConstraint.activate([
           buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
           buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),

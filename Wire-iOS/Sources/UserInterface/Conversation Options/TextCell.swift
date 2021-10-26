@@ -31,7 +31,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
-        [<#views#>].prepareForLayout()
+        [container, label].prepareForLayout()
         NSLayoutConstraint.activate([
           container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
           container.topAnchor.constraint(equalTo: contentView.topAnchor),

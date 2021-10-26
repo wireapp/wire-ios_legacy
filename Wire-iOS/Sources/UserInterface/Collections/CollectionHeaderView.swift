@@ -23,7 +23,7 @@ import WireSystem
 
 final class CollectionHeaderView: UICollectionReusableView {
 
-    public var section: CollectionsSectionSet = .none {
+    var section: CollectionsSectionSet = .none {
         didSet {
             let icon: StyleKitIcon
 
@@ -47,7 +47,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         }
     }
 
-    public var totalItemsCount: UInt = 0 {
+    var totalItemsCount: UInt = 0 {
         didSet {
             actionButton.isHidden = totalItemsCount == 0
 
@@ -56,7 +56,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         }
     }
 
-    public let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
         label.textColor = .from(scheme: .textForeground)
@@ -64,7 +64,7 @@ final class CollectionHeaderView: UICollectionReusableView {
         return label
     }()
 
-    public let actionButton: UIButton = {
+    let actionButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.strongBlue, for: .normal)
         button.titleLabel?.font = .smallSemiboldFont
@@ -72,15 +72,15 @@ final class CollectionHeaderView: UICollectionReusableView {
         return button
     }()
 
-    public let iconImageView = UIImageView()
+    let iconImageView = UIImageView()
 
-    public var selectionAction: ((CollectionsSectionSet) -> Void)? = .none
+    var selectionAction: ((CollectionsSectionSet) -> Void)? = .none
 
-    public required init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubview(titleLabel)
@@ -93,32 +93,32 @@ final class CollectionHeaderView: UICollectionReusableView {
         iconImageView.contentMode = .center
         addSubview(iconImageView)
 
-        [<#views#>].prepareForLayout()
+        [titleLabel, actionButton, iconImageView].prepareForLayout()
         NSLayoutConstraint.activate([
-          iconImageView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: 16),
-          iconImageView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+          iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
           iconImageView.widthAnchor.constraint(equalToConstant: 16),
           iconImageView.heightAnchor.constraint(equalToConstant: 16),
 
           titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 8),
-          titleLabel.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
-          titleLabel.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+          titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-          actionButton.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
-          actionButton.topAnchor.constraint(equalTo: selfView.topAnchor),
-          actionButton.trailingAnchor.constraint(equalTo: selfView.trailingAnchor, constant: -16),
-          actionButton.bottomAnchor.constraint(equalTo: selfView.bottomAnchor)
+          actionButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+          actionButton.topAnchor.constraint(equalTo: topAnchor),
+          actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+          actionButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
-    public var desiredWidth: CGFloat = 0
-    public var desiredHeight: CGFloat = 0
+    var desiredWidth: CGFloat = 0
+    var desiredHeight: CGFloat = 0
 
-    override public var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: desiredWidth, height: desiredHeight)
     }
 
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         var newFrame = layoutAttributes.frame
         newFrame.size.width = intrinsicContentSize.width
         newFrame.size.height = intrinsicContentSize.height

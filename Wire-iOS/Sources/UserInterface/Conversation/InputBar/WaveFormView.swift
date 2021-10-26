@@ -24,13 +24,13 @@ final class WaveFormView: UIView {
     fileprivate let leftGradient = GradientView()
     fileprivate let rightGradient = GradientView()
 
-    fileprivate var leftGradientWidthConstraint: NSLayoutConstraint?
-    fileprivate var rightGradientWidthConstraint: NSLayoutConstraint?
+    fileprivate lazy var leftGradientWidthConstraint: NSLayoutConstraint = leftGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
+    fileprivate lazy var rightGradientWidthConstraint: NSLayoutConstraint = rightGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
 
     var gradientWidth: CGFloat = 25 {
         didSet {
-            leftGradientWidthConstraint?.constant = gradientWidth
-            rightGradientWidthConstraint?.constant = gradientWidth
+            leftGradientWidthConstraint.constant = gradientWidth
+            rightGradientWidthConstraint.constant = gradientWidth
         }
     }
 
@@ -78,16 +78,16 @@ final class WaveFormView: UIView {
     }
 
     fileprivate func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [visualizationView, leftGradient, rightGradient].prepareForLayout()
         NSLayoutConstraint.activate([
-          visualizationView.topAnchor.constraint(equalTo: view.topAnchor),
-          visualizationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          visualizationView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          visualizationView.rightAnchor.constraint(equalTo: view.rightAnchor),
-          view.leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
-          view.rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
-          leftGradientWidthConstraint = leftGradient.widthAnchor.constraint(equalToConstant: gradientWidth),
-          rightGradientWidthConstraint = rightGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
+          visualizationView.topAnchor.constraint(equalTo: topAnchor),
+          visualizationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          visualizationView.leftAnchor.constraint(equalTo: leftAnchor),
+          visualizationView.rightAnchor.constraint(equalTo: rightAnchor),
+          leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
+          rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
+          leftGradientWidthConstraint,
+          rightGradientWidthConstraint
         ])
     }
 

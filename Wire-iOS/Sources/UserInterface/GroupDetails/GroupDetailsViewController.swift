@@ -66,7 +66,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSubviews() {
+    private func createSubviews() {
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
@@ -74,15 +74,15 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         [collectionView, footerView].forEach(view.addSubview)
 
-        [<#views#>].prepareForLayout()
+        [collectionView, footerView].prepareForLayout()
         NSLayoutConstraint.activate([
-          collectionView.topAnchor.constraint(equalTo: container.topAnchor),
-          collectionView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-          collectionView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
           collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
-          footerView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-          footerView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-          footerView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         collectionViewController.collectionView = collectionView

@@ -69,21 +69,25 @@ final class ArchivedNavigationBar: UIView {
     }
 
     func createConstraints() {
-        [<#views#>].prepareForLayout()
+        [separatorView, titleLabel, dismissButton].prepareForLayout()
         NSLayoutConstraint.activate([
-          separator.heightAnchor.constraint(equalTo: .hairlineAnchor),
-          separator.leftAnchor.constraint(equalTo: view.leftAnchor),
-          separator.rightAnchor.constraint(equalTo: view.rightAnchor),
-          separator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          separatorView.heightAnchor.constraint(equalToConstant: .hairline),
+          separatorView.leftAnchor.constraint(equalTo: leftAnchor),
+          separatorView.rightAnchor.constraint(equalTo: rightAnchor),
+          separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-          title.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          title.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          titleLabel
+            .centerXAnchor.constraint(equalTo: centerXAnchor),
+          titleLabel
+            .centerYAnchor.constraint(equalTo: centerYAnchor),
 
-          button.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-          button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
-          button.leftAnchor.constraint(greaterThanOrEqualTo: title.rightAnchor, constant: 8),
+          dismissButton.centerYAnchor.constraint(equalTo: titleLabel
+                                            .centerYAnchor),
+          dismissButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+          dismissButton.leftAnchor.constraint(greaterThanOrEqualTo: titleLabel
+                                        .rightAnchor, constant: 8),
 
-          view.heightAnchor.constraint(equalToConstant: barHeight)
+          heightAnchor.constraint(equalToConstant: barHeight)
         ])
     }
 

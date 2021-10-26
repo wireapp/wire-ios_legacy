@@ -18,6 +18,7 @@
 
 import Foundation
 import Photos
+import UIKit
 
 final class AssetCell: UICollectionViewCell {
 
@@ -43,7 +44,7 @@ final class AssetCell: UICollectionViewCell {
         durationView.font = FontSpec(.small, .light).font!
         contentView.addSubview(durationView)
 
-        [<#views#>].prepareForLayout()
+        [imageView, durationView].prepareForLayout()
         NSLayoutConstraint.activate([
           imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
           imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
