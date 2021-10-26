@@ -34,6 +34,7 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -57,6 +57,7 @@ final class ServiceDetailView: UIView {
         updateForService()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -110,6 +111,7 @@ final class ServiceView: UIView {
         updateForService()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

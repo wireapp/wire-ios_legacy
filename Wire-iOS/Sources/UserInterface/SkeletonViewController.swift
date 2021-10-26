@@ -32,6 +32,7 @@ final class ListSkeletonCellNameItemView: UIView {
         alpha = 0.16
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -73,6 +74,7 @@ final class ListSkeletonCellView: UIView {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -126,6 +128,7 @@ final class ListSkeletonCell: UITableViewCell {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -151,6 +154,7 @@ final class ListSkeletonContentView: UITableView, UITableViewDataSource {
         register(ListSkeletonCell.self, forCellReuseIdentifier: "ListSkeletonCell")
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -216,6 +220,7 @@ final class ListSkeletonView: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -282,6 +287,7 @@ final class SkeletonViewController: UIViewController {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

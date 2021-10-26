@@ -46,6 +46,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
         observerToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

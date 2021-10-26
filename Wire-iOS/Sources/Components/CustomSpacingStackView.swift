@@ -119,6 +119,7 @@ final class SpacingView: UIView {
         setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -154,6 +155,7 @@ final class ContentInsetView: UIView {
         ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
