@@ -20,8 +20,6 @@ import XCTest
 @testable import Wire
 
 final class SettingsTableViewControllerSnapshotTests: XCTestCase {
-    var coreDataFixture: CoreDataFixture!
-
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
     var settingsPropertyFactory: SettingsPropertyFactory!
@@ -31,11 +29,17 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 
-        coreDataFixture = CoreDataFixture()
         userSessionMock = MockZMUserSession()
         selfUser = MockZMEditableUser()
+        selfUser.teamName = "Wire"
+        selfUser.handle = "johndoe"
+        selfUser.name = "John Doe"
+        selfUser.domain = "wire.com"
+        selfUser.emailAddress = "john.doe@wire.com"
 
-		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: nil)
+        SelfUser.provider = SelfProvider(selfUser: selfUser)
+
+		settingsPropertyFactory = SettingsPropertyFactory(userSession: userSessionMock, selfUser: selfUser)
 		settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: MockUserRight.self)
 
 		MockUserRight.isPermitted = true
@@ -46,9 +50,9 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 		settingsCellDescriptorFactory = nil
 		settingsPropertyFactory = nil
 
-        coreDataFixture = nil
         userSessionMock = nil
         selfUser = nil
+        SelfUser.provider = nil
 
         super.tearDown()
 	}
@@ -56,19 +60,19 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
     func testForSettingGroup() {
         // prevent app crash when checking Analytics.shared.isOptout
         Analytics.shared = Analytics(optedOut: true)
-        let group = settingsCellDescriptorFactory.settingsGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
+        let group = settingsCellDescriptorFactory.settingsGroup(isTeamMember: true)
         verify(group: group)
     }
 
     func testForAccountGroup() {
-        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)
         verify(group: group)
     }
 
     func testForAccountGroupWithDisabledEditing() {
 		MockUserRight.isPermitted = false
 
-        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: coreDataFixture.selfUser.isTeamMember)
+        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)
         verify(group: group)
     }
 

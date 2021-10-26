@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "携帯電話";
 "self.settings.account_section.handle.title" = "ユーザーネーム";
 "self.settings.account_section.add_handle.title" = "ユーザーネームを追加する";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "この情報で他の人があなたを見つけることができます。";
 "self.settings.account_details_group.personal.footer" = "この情報は表示されません。";

@@ -105,7 +105,10 @@ final class SettingsPropertyFactory {
         }
     }
 
-    private func getOnlyProperty(propertyName: SettingsPropertyName, getAction: @escaping GetAction) -> SettingsBlockProperty {
+    private func getOnlyProperty(propertyName: SettingsPropertyName, value: String?) -> SettingsBlockProperty {
+        let getAction: GetAction = { _ in
+            return SettingsPropertyValue.string(value: value ?? "")
+        }
         let setAction: SetAction = { _, _ in }
         return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
     }
@@ -136,25 +139,19 @@ final class SettingsPropertyFactory {
 
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .email:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.emailAddress ?? "")
-            }
-
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.emailAddress)
 
         case .phone:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.phoneNumber ?? "")
-            }
-
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.handleDisplayString ?? "")
-            }
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString)
 
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+        case .team:
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)
+
+        case .domain:
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.domain)
 
         case .accentColor:
             let getAction: GetAction = { [unowned self] _ in

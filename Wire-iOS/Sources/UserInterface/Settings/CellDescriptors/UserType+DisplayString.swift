@@ -21,7 +21,17 @@ import WireDataModel
 
 extension UserType {
     var handleDisplayString: String? {
-        guard let handle = handle else { return .none }
-        return "@" + handle
+        guard
+            let handle = handle,
+            let domainString = handleDomainString
+        else { return .none }
+
+        return "@" + handle + domainString
+    }
+
+    var handleDomainString: String? {
+        guard let domain = domain else { return .none }
+
+        return "@" + domain
     }
 }

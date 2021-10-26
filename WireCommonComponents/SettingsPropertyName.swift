@@ -47,9 +47,10 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     // Profile
     case profileName = "ProfileName"
     case handle = "handle"
-
     case email = "email"
     case phone = "phone"
+    case domain = "domain"
+    case team = "team"
 
     case accentColor = "AccentColor"
     

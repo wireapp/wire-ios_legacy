@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Κινητό Τηλέφωνο";
 "self.settings.account_section.handle.title" = "Όνομα Χρήστη";
 "self.settings.account_section.add_handle.title" = "Προσθέστε όνομα χρήστη";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Τα άτομα μπορούν να σας βρουν με αυτές τις λεπτομέρειες.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";

@@ -124,7 +124,9 @@ class Settings {
     }
 
     var federationEnabled: Bool {
-        return defaults.bool(forKey: SettingKey.federationEnabled.rawValue)
+        return SecurityFlags.federation.isEnabled ||
+               AutomationHelper.sharedHelper.enableFederation ||
+               defaults.bool(forKey: SettingKey.federationEnabled.rawValue)
     }
 
     var blacklistDownloadInterval: TimeInterval {

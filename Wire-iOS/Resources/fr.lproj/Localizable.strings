@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
 "self.settings.account_section.add_handle.title" = "Choisir un identifiant";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Vos contacts peuvent vous retrouver grâce à ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
