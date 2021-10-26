@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 protocol EmojiKeyboardViewControllerDelegate: class {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String)
@@ -70,15 +69,18 @@ final class EmojiKeyboardViewController: UIViewController {
     }
 
     func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
-            collectionView.top == view.top
-            collectionView.leading == view.leading
-            collectionView.trailing == view.trailing
-            collectionView.bottom == sectionView.top
-            sectionView.bottom == view.bottom - UIScreen.safeArea.bottom
-            sectionView.leading == view.leading
-            sectionView.trailing == view.trailing - 32 ~ 750.0
-            sectionView.width <= 400
+        if let sectionViewControllerView = sectionViewController.view {
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: sectionView.topAnchor),
+          sectionView.bottomAnchor.constraint(equalToConstant: view.bottom - UIScreen.safeArea.bottom),
+          sectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          sectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32 ~ 750.0),
+          sectionView.widthAnchor.constraint(lessThanOrEqualToConstant: 400)
+        ])
         }
     }
 
@@ -187,9 +189,13 @@ class EmojiCollectionViewCell: UICollectionViewCell {
     }
 
     func createConstraints() {
-        constrain(self, titleLabel) { view, label in
-            label.edges == view.edges
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          label.topAnchor.constraint(equalTo: view.topAnchor),
+          label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          label.leftAnchor.constraint(equalTo: view.leftAnchor),
+          label.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
 }

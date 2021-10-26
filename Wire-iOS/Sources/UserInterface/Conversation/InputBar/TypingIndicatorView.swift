@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 
 final class AnimatedPenView: UIView {
@@ -67,18 +66,18 @@ final class AnimatedPenView: UIView {
     }
 
     func setupConstraints() {
-        constrain(self, dots, pen) { container, dots, pen in
-            // Lower the priority to prevent this breaks when TypingIndicatorView's width = 0
-            distribute(by: 2, horizontally: dots, pen) ~ .defaultHigh
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          distribute(by: 2, horizontally: dots, pen) ~ .defaultHigh,
 
-            dots.left == container.left
-            dots.top == container.top
-            dots.bottom == container.bottom
+          dots.leftAnchor.constraint(equalTo: container.leftAnchor),
+          dots.topAnchor.constraint(equalTo: container.topAnchor),
+          dots.bottomAnchor.constraint(equalTo: container.bottomAnchor),
 
-            pen.right == container.right
-            pen.top == container.top
-            pen.bottom == container.bottom
-        }
+          pen.rightAnchor.constraint(equalTo: container.rightAnchor),
+          pen.topAnchor.constraint(equalTo: container.topAnchor),
+          pen.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ])
     }
 
     func startWritingAnimation() {
@@ -159,24 +158,27 @@ final class TypingIndicatorView: UIView {
     }
 
     func setupConstraints() {
-        constrain(self, container, nameLabel, animatedPen, expandingLine) { view, container, nameLabel, animatedPen, expandingLine in
-            container.edges == view.edges
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          container.topAnchor.constraint(equalTo: view.topAnchor),
+          container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          container.leftAnchor.constraint(equalTo: view.leftAnchor),
+          container.rightAnchor.constraint(equalTo: view.rightAnchor),
 
-            // Lower the priority to prevent this breaks when TypingIndicatorView's width = 0
-            distribute(by: 4, horizontally: animatedPen, nameLabel) ~ .defaultHigh
+          distribute(by: 4, horizontally: animatedPen, nameLabel) ~ .defaultHigh,
 
-            animatedPen.left == container.left + 8
-            animatedPen.centerY == container.centerY
+          animatedPen.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 8),
+          animatedPen.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
-            nameLabel.top == container.top + 4
-            // Lower the priority to prevent this breaks when container's height = 0
-            nameLabel.bottom == container.bottom - 4 ~ .defaultHigh
-            nameLabel.right == container.right - 8
+          nameLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 4),
+          nameLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -4 ~ .defaultHigh),
+          nameLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -8),
 
-            expandingLine.center == view.center
-            expandingLine.height == 1
-            expandingLineWidth = expandingLine.width == 0
-        }
+          expandingLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          expandingLine.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          expandingLine.heightAnchor.constraint(equalToConstant: 1),
+          expandingLineWidth = expandingLine.widthAnchor.constraint(equalToConstant: 0)
+        ])
     }
 
     func updateNameLabel() {

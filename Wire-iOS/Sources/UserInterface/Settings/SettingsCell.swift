@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 import WireCommonComponents
 
 enum SettingsCellPreview {
@@ -184,22 +183,24 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         iconImageView.contentMode = .center
         contentView.addSubview(iconImageView)
 
-        constrain(contentView, iconImageView) { contentView, iconImageView in
-            iconImageView.leading == contentView.leading + 24
-            iconImageView.width == 16
-            iconImageView.height == iconImageView.height
-            iconImageView.centerY == contentView.centerY
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+          iconImageView.widthAnchor.constraint(equalToConstant: 16),
+          iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
+          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
 
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         contentView.addSubview(cellNameLabel)
 
-        constrain(contentView, cellNameLabel, iconImageView) { contentView, cellNameLabel, iconImageView in
-            cellNameLabelToIconInset = cellNameLabel.leading == iconImageView.trailing + 24
-            cellNameLabel.leading == contentView.leading + 16 ~ 750.0
-            cellNameLabel.top == contentView.top + 12
-            cellNameLabel.bottom == contentView.bottom - 12
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          cellNameLabelToIconInset = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24),
+          cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16 ~ 750.0),
+          cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+          cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+        ])
 
         cellNameLabelToIconInset.isActive = false
 
@@ -221,22 +222,25 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         let trailingBoundaryView = accessoryView ?? contentView
 
-        constrain(contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
-            valueLabel.top == contentView.top - 8
-            valueLabel.bottom == contentView.bottom + 8
-            valueLabel.leading >= cellNameLabel.trailing + 8
-            valueLabel.trailing == trailingBoundaryView.trailing - 16
-            badge.center == valueLabel.center
-            badge.height == 20
-            badge.width >= 28
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+          valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+          valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
+          valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
+          badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
+          badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
+          badge.heightAnchor.constraint(equalToConstant: 20),
+          badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28)
+        ])
 
-        constrain(badge, badgeLabel) { badge, badgeLabel in
-            badgeLabel.leading == badge.leading + 6
-            badgeLabel.trailing == badge.trailing - 6
-            badgeLabel.top == badge.top
-            badgeLabel.bottom == badge.bottom
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
+          badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
+          badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
+          badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor)
+        ])
 
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -244,34 +248,37 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         imagePreview.accessibilityIdentifier = "imagePreview"
         contentView.addSubview(imagePreview)
 
-        constrain(contentView, imagePreview) { contentView, imagePreview in
-            imagePreview.width == imagePreview.height
-            imagePreview.height == 24
-            imagePreview.trailing == contentView.trailing - 16
-            imagePreview.centerY == contentView.centerY
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
+          imagePreview.heightAnchor.constraint(equalToConstant: 24),
+          imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+          imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
 
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         separatorLine.isAccessibilityElement = false
         addSubview(separatorLine)
 
-        constrain(self, separatorLine, cellNameLabel) { selfView, separatorLine, cellNameLabel in
-            separatorLine.leading == cellNameLabel.leading
-            separatorLine.trailing == selfView.trailing
-            separatorLine.bottom == selfView.bottom
-            separatorLine.height == .hairline
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+          separatorLine.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          separatorLine.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          separatorLine.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
 
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
 
-        constrain(self, topSeparatorLine, cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
-            topSeparatorLine.leading == cellNameLabel.leading
-            topSeparatorLine.trailing == selfView.trailing
-            topSeparatorLine.top == selfView.top
-            topSeparatorLine.height == .hairline
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+          topSeparatorLine.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          topSeparatorLine.topAnchor.constraint(equalTo: selfView.topAnchor),
+          topSeparatorLine.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
@@ -390,11 +397,12 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         let textInputSpacing = CGFloat(16)
 
         let trailingBoundaryView = accessoryView ?? contentView
-        constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
-            textInput.top == contentView.top - 8
-            textInput.bottom == contentView.bottom + 8
-            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+          textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+          textInput.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -textInputSpacing)
+        ])
 
         NSLayoutConstraint.activate([
             cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)

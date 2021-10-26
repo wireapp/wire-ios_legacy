@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireSyncEngine
@@ -66,39 +65,43 @@ class TextSearchResultCell: UITableViewCell {
         resultCountView.textLabel.accessibilityIdentifier = "count of matches"
         contentView.addSubview(resultCountView)
 
-        constrain(userImageView, userImageViewContainer) { userImageView, userImageViewContainer in
-            userImageView.height == 24
-            userImageView.width == userImageView.height
-            userImageView.center == userImageViewContainer.center
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          userImageView.heightAnchor.constraint(equalToConstant: 24),
+          userImageView.widthAnchor.constraint(equalTo: userImageView.heightAnchor),
+          userImageView.centerXAnchor.constraint(equalTo: userImageViewContainer.centerXAnchor),
+          userImageView.centerYAnchor.constraint(equalTo: userImageViewContainer.centerYAnchor)
+        ])
 
-        constrain(contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView) { contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView in
-            userImageViewContainer.leading == contentView.leading
-            userImageViewContainer.top == contentView.top
-            userImageViewContainer.bottom == contentView.bottom
-            userImageViewContainer.width == 48
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          userImageViewContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+          userImageViewContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+          userImageViewContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          userImageViewContainer.widthAnchor.constraint(equalToConstant: 48),
 
-            messageTextLabel.top == contentView.top + 10
-            messageTextLabel.leading == userImageViewContainer.trailing
-            messageTextLabel.trailing == resultCountView.leading - 16
-            messageTextLabel.bottom == footerView.top - 4
+          messageTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+          messageTextLabel.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+          messageTextLabel.trailingAnchor.constraint(equalTo: resultCountView.leadingAnchor, constant: -16),
+          messageTextLabel.bottomAnchor.constraint(equalTo: footerView.topAnchor, constant: -4),
 
-            footerView.leading == userImageViewContainer.trailing
-            footerView.trailing == contentView.trailing - 16
-            footerView.bottom == contentView.bottom - 10
+          footerView.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+          footerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
 
-            resultCountView.trailing == contentView.trailing - 16
-            resultCountView.centerY == contentView.centerY
-            resultCountView.height == 20
-            resultCountView.width >= 24
-        }
+          resultCountView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+          resultCountView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+          resultCountView.heightAnchor.constraint(equalToConstant: 20),
+          resultCountView.widthAnchor.constraint(greaterThanOrEqualToConstant: 24)
+        ])
 
-        constrain(contentView, separatorView, userImageViewContainer) { contentView, separatorView, userImageViewContainer in
-            separatorView.leading == userImageViewContainer.trailing
-            separatorView.trailing == contentView.trailing
-            separatorView.bottom == contentView.bottom
-            separatorView.height == CGFloat.hairline
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          separatorView.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+          separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          separatorView.heightAnchor.constraint(equalTo: CGFloat.hairlineAnchor)
+        ])
 
         textLabel?.textColor = .from(scheme: .background)
         textLabel?.font = .smallSemiboldFont

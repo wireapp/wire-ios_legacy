@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireSyncEngine
 
 final class IncomingConnectionView: UIView {
@@ -96,39 +95,42 @@ final class IncomingConnectionView: UIView {
     }
 
     private func createConstraints() {
-        constrain(incomingConnectionFooter, acceptButton, ignoreButton) { incomingConnectionFooter, acceptButton, ignoreButton in
-            ignoreButton.left == incomingConnectionFooter.left + 16
-            ignoreButton.top == incomingConnectionFooter.top + 12
-            ignoreButton.bottom == incomingConnectionFooter.bottom - 16
-            ignoreButton.height == 40
-            ignoreButton.right == incomingConnectionFooter.centerX - 8
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          ignoreButton.leftAnchor.constraint(equalTo: incomingConnectionFooter.leftAnchor, constant: 16),
+          ignoreButton.topAnchor.constraint(equalTo: incomingConnectionFooter.topAnchor, constant: 12),
+          ignoreButton.bottomAnchor.constraint(equalTo: incomingConnectionFooter.bottomAnchor, constant: -16),
+          ignoreButton.heightAnchor.constraint(equalToConstant: 40),
+          ignoreButton.rightAnchor.constraint(equalTo: incomingConnectionFooter.centerXAnchor, constant: -8),
 
-            acceptButton.right == incomingConnectionFooter.right - 16
-            acceptButton.left == incomingConnectionFooter.centerX + 8
-            acceptButton.centerY == ignoreButton.centerY
-            acceptButton.height == ignoreButton.height
-        }
+          acceptButton.rightAnchor.constraint(equalTo: incomingConnectionFooter.rightAnchor, constant: -16),
+          acceptButton.leftAnchor.constraint(equalTo: incomingConnectionFooter.centerXAnchor, constant: 8),
+          acceptButton.centerYAnchor.constraint(equalTo: ignoreButton.centerYAnchor),
+          acceptButton.heightAnchor.constraint(equalTo: ignoreButton.heightAnchor)
+        ])
 
-        constrain(self, usernameLabel, userDetailView, incomingConnectionFooter, userImageView) { selfView, usernameLabel, userDetailView, incomingConnectionFooter, userImageView in
-            usernameLabel.top == selfView.top + 18
-            usernameLabel.centerX == selfView.centerX
-            usernameLabel.left >= selfView.left
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          usernameLabel.topAnchor.constraint(equalTo: selfView.topAnchor, constant: 18),
+          usernameLabel.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+          usernameLabel.leftAnchor.constraint(greaterThanOrEqualTo: selfView.leftAnchor),
 
-            userDetailView.centerX == selfView.centerX
-            userDetailView.top == usernameLabel.bottom + 4
-            userDetailView.left >= selfView.left
-            userDetailView.bottom <= userImageView.top
+          userDetailView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+          userDetailView.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 4),
+          userDetailView.leftAnchor.constraint(greaterThanOrEqualTo: selfView.leftAnchor),
+          userDetailView.bottomAnchor.constraint(lessThanOrEqualTo: userImageView.topAnchor),
 
-            userImageView.center == selfView.center
-            userImageView.left >= selfView.left + 54
-            userImageView.width == userImageView.height
-            userImageView.height <= 264
+          userImageView.centerXAnchor.constraint(equalTo: selfView.centerXAnchor),
+          userImageView.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          userImageView.leftAnchor.constraint(greaterThanOrEqualTo: selfView.leftAnchor, constant: 54),
+          userImageView.widthAnchor.constraint(equalTo: userImageView.heightAnchor),
+          userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 264),
 
-            incomingConnectionFooter.top >= userImageView.bottom
-            incomingConnectionFooter.left == selfView.left
-            incomingConnectionFooter.bottom == selfView.bottom
-            incomingConnectionFooter.right == selfView.right
-        }
+          incomingConnectionFooter.topAnchor.constraint(greaterThanOrEqualTo: userImageView.bottomAnchor),
+          incomingConnectionFooter.leftAnchor.constraint(equalTo: selfView.leftAnchor),
+          incomingConnectionFooter.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          incomingConnectionFooter.rightAnchor.constraint(equalTo: selfView.rightAnchor)
+        ])
     }
 
     // MARK: - Actions
