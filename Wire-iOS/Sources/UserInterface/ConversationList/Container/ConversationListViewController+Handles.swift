@@ -59,12 +59,12 @@ extension ConversationListViewController {
 
         if let takeover = usernameTakeoverViewController.view {
             takeover.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-          takeover.topAnchor.constraint(equalTo: view.topAnchor),
-          takeover.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          takeover.leftAnchor.constraint(equalTo: view.leftAnchor),
-          takeover.rightAnchor.constraint(equalTo: view.rightAnchor)
-        ])
+            NSLayoutConstraint.activate([
+              takeover.topAnchor.constraint(equalTo: view.topAnchor),
+              takeover.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+              takeover.leftAnchor.constraint(equalTo: view.leftAnchor),
+              takeover.rightAnchor.constraint(equalTo: view.rightAnchor)
+            ])
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
