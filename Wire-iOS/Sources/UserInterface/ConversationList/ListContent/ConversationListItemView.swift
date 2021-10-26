@@ -26,7 +26,7 @@ extension Notification.Name {
 }
 
 final class ConversationListItemView: UIView {
-    //MARK: UI constants
+    // MARK: UI constants
     static let minHeight: CGFloat = 64
 
     // Please use `updateForConversation:` to set conversation.

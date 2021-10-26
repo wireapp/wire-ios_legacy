@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "电话";
 "self.settings.account_section.handle.title" = "用户名";
 "self.settings.account_section.add_handle.title" = "添加用户名";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息查找到您。";
 "self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";

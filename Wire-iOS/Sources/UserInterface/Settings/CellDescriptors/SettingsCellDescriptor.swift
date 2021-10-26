@@ -198,73 +198,82 @@ final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType
 // MARK: - Helpers
 
 extension SettingsPropertyName {
+
     var settingsPropertyLabelText: String {
+        typealias Settings = L10n.Localizable.Self.Settings
+        typealias Notifications = Settings.Notifications
+        typealias Account = Settings.AccountSection
+        typealias SoundMenu = Settings.SoundMenu
+        typealias LinkOptions = Settings.LinkOptions
+
         switch self {
         case .chatHeadsDisabled:
-            return "self.settings.notifications.chat_alerts.toggle".localized
+            return Notifications.ChatAlerts.toggle
         case .notificationContentVisible:
-            return "self.settings.notifications.push_notification.toogle".localized
+            return Notifications.PushNotification.toogle
         case .disableMarkdown:
             return "Disable Markdown support"
-
         case .darkMode:
-            return "self.settings.account_picture_group.theme".localized
-            // Profile
+            return Settings.AccountPictureGroup.theme
+
+        // Profile
         case .profileName:
-            return "self.settings.account_section.name.title".localized
-
+            return Account.Name.title
         case .handle:
-            return "self.settings.account_section.handle.title".localized
-
+            return Account.Handle.title
         case .email:
-            return "self.settings.account_section.email.title".localized
+            return Account.Email.title
         case .phone:
-            return "self.settings.account_section.phone.title".localized
+            return Account.Phone.title
+        case .team:
+            return Account.Team.title
+        case .domain:
+            return Account.Domain.title
 
-            // AVS
+        // AVS
         case .soundAlerts:
-            return "self.settings.sound_menu.title".localized
-
+            return SoundMenu.title
         case .messageSoundName:
-            return "self.settings.sound_menu.message.title".localized
+            return SoundMenu.Message.title
         case .callSoundName:
-            return "self.settings.sound_menu.ringtone.title".localized
+            return SoundMenu.Ringtone.title
         case .pingSoundName:
-            return "self.settings.sound_menu.ping.title".localized
+            return SoundMenu.Ping.title
+
         case .accentColor:
-            return "self.settings.account_picture_group.color".localized
+            return Settings.AccountPictureGroup.color
         case .disableSendButton:
-            return "self.settings.popular_demand.send_button.title".localized
+            return Settings.PopularDemand.SendButton.title
         case .disableCallKit:
-            return "self.settings.callkit.caption".localized
+            return Settings.Callkit.caption
         case .tweetOpeningOption:
-            return "self.settings.link_options.twitter.title".localized
+            return LinkOptions.Twitter.title
         case .mapsOpeningOption:
-            return "self.settings.link_options.maps.title".localized
+            return LinkOptions.Maps.title
         case .browserOpeningOption:
-            return "self.settings.link_options.browser.title".localized
+            return LinkOptions.Browser.title
         case .callingProtocolStrategy:
             return "Calling protocol"
         case .enableBatchCollections:
             return "Use AssetCollectionBatched"
         case .lockApp:
-            return "self.settings.privacy_security.lock_app".localized
+            return Settings.PrivacySecurity.lockApp
         case .callingConstantBitRate:
-            return "self.settings.vbr.title".localized
+            return Settings.Vbr.title
         case .disableLinkPreviews:
-            return "self.settings.privacy_security.disable_link_previews.title".localized
+            return Settings.PrivacySecurity.DisableLinkPreviews.title
 
             // personal information - Analytics
         case .disableCrashSharing:
-            return "self.settings.privacy_crash.title".localized
+            return Settings.PrivacyCrash.title
         case .disableAnalyticsSharing:
-            return "self.settings.privacy_analytics.title".localized
+            return Settings.PrivacyAnalytics.title
         case .receiveNewsAndOffers:
-            return "self.settings.receiveNews_and_offers.title".localized
+            return Settings.ReceiveNewsAndOffers.title
         case .readReceiptsEnabled:
-            return "self.settings.enable_read_receipts.title".localized
+            return Settings.EnableReadReceipts.title
         case .encryptMessagesAtRest:
-            return "self.settings.encrypt_messages_at_rest.title".localized
+            return Settings.EncryptMessagesAtRest.title
         case .federationEnabled:
             return "Federate with other domains"
         }

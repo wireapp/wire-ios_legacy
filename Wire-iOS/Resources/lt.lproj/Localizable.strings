@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefonas";
 "self.settings.account_section.handle.title" = "Naudotojo vardas";
 "self.settings.account_section.add_handle.title" = "Pridėti naudotojo vardą";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Žmonės gali jus rasti pagal šią informaciją.";
 "self.settings.account_details_group.personal.footer" = "Ši informacija nerodoma.";

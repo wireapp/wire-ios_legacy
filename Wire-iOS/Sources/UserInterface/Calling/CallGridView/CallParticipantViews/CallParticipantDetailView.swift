@@ -54,7 +54,8 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     override func createConstraints() {
-        super.createConstraints() ///TODO: Bill activate super constraints in 1 batch
+        /// TODO: Bill activate super constraints in 1 batch
+        super.createConstraints()
 
         NSLayoutConstraint.activate([
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
