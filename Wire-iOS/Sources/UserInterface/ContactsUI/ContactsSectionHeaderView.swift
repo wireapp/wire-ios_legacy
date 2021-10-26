@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 class ContactsSectionHeaderView: UITableViewHeaderFooterView {
     let label: UILabel = {
@@ -60,10 +59,11 @@ class ContactsSectionHeaderView: UITableViewHeaderFooterView {
 
     func setupConstraints() {
 
-        constrain(label, self) { label, selfView in
-            label.centerY == selfView.centerY
-            label.leading == selfView.leading + 24
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          label.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          label.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: 24)
+        ])
     }
 
     override var intrinsicContentSize: CGSize {

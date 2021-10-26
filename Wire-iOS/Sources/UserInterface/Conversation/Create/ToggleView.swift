@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class ToggleView: UIView, Themeable {
 
@@ -70,13 +69,14 @@ final class ToggleView: UIView, Themeable {
     }
 
     private func createConstraints() {
-        constrain(self, titleLabel, toggle) { view, titleLabel, toggle in
-            titleLabel.centerY == view.centerY
-            titleLabel.leading == view.leading + 16
-            toggle.centerY == view.centerY
-            toggle.trailing == view.trailing - 16
-            view.height == 56
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          toggle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          toggle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+          view.heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
 
     @objc private func toggleValueChanged(_ sender: UISwitch) {

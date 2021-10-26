@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 protocol CallQualityViewControllerDelegate: class {
@@ -300,9 +299,13 @@ class QualityScoreSelectorView: UIView {
             .forEach(scoreStackView.addArrangedSubview)
 
         addSubview(scoreStackView)
-        constrain(self, scoreStackView) { selfView, scoreStackView in
-            scoreStackView.edges == selfView.edges
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          scoreStackView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          scoreStackView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          scoreStackView.leftAnchor.constraint(equalTo: selfView.leftAnchor),
+          scoreStackView.rightAnchor.constraint(equalTo: selfView.rightAnchor)
+        ])
     }
 
     override func layoutSubviews() {

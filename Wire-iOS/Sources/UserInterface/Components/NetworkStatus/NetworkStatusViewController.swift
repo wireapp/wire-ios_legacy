@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -85,12 +84,13 @@ final class NetworkStatusViewController: UIViewController {
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
 
-        constrain(view, networkStatusView) { containerView, networkStatusView in
-            networkStatusView.leading == containerView.leading
-            networkStatusView.trailing == containerView.trailing
-            networkStatusView.top == containerView.top
-            networkStatusView.height == containerView.height
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          networkStatusView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+          networkStatusView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+          networkStatusView.topAnchor.constraint(equalTo: containerView.topAnchor),
+          networkStatusView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+        ])
 
         if let userSession = ZMUserSession.shared() {
             enqueue(state: viewState(from: userSession.networkState))

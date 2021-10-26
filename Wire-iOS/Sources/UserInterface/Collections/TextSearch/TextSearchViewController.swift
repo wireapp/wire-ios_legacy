@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 
 final class TextSearchViewController: NSObject {
     var resultsView: TextSearchResultsView!

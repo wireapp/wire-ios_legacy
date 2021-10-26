@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import WireCommonComponents
 import UIKit
 
@@ -75,18 +74,16 @@ final class InputBarEditView: UIView {
     fileprivate func createConstraints() {
         let margin: CGFloat = 16
         let buttonMargin: CGFloat = margin + iconSize / 2
-        constrain(self, undoButton, confirmButton, cancelButton) { view, undoButton, confirmButton, cancelButton in
-            align(top: view, undoButton, confirmButton, cancelButton)
-            align(bottom: view, undoButton, confirmButton, cancelButton)
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          undoButton.centerXAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonMargin),
+          undoButton.widthAnchor.constraint(equalTo: view.heightAnchor),
 
-            undoButton.centerX == view.leading + buttonMargin
-            undoButton.width == view.height
-
-            confirmButton.centerX == view.centerX
-            confirmButton.width == view.height
-            cancelButton.centerX == view.trailing - buttonMargin
-            cancelButton.width == view.height
-        }
+          confirmButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          confirmButton.widthAnchor.constraint(equalTo: view.heightAnchor),
+          cancelButton.centerXAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonMargin),
+          cancelButton.widthAnchor.constraint(equalTo: view.heightAnchor)
+        ])
     }
 
     @objc func buttonTapped(_ sender: IconButton) {

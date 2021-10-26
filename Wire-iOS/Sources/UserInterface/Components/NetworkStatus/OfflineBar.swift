@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 
 class OfflineBar: UIView {
 
@@ -60,13 +59,15 @@ class OfflineBar: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, offlineLabel) { containerView, offlineLabel in
-            offlineLabel.center == containerView.center
-            offlineLabel.left >= containerView.leftMargin
-            offlineLabel.right <= containerView.rightMargin
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          offlineLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+          offlineLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+          offlineLabel.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftMarginAnchor),
+          offlineLabel.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightMarginAnchor),
 
-            heightConstraint = containerView.height == 0
-        }
+          heightConstraint = containerView.heightAnchor.constraint(equalToConstant: 0)
+        ])
     }
 
     private func updateView() {

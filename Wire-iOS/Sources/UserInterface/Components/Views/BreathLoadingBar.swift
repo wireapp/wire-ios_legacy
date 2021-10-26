@@ -18,7 +18,6 @@
 
 import UIKit
 import QuartzCore
-import Cartography
 
 protocol BreathLoadingBarDelegate: class {
     func animationDidStarted()
@@ -102,9 +101,10 @@ final class BreathLoadingBar: UIView {
     }
 
     private func createConstraints() {
-        constrain(self) { selfView in
-            heightConstraint = selfView.height == 0
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          heightConstraint = selfView.heightAnchor.constraint(equalToConstant: 0)
+        ])
     }
 
     override func layoutSubviews() {

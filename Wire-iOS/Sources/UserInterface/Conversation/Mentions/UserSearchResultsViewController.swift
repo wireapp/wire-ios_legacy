@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 
 protocol UserSearchResultsViewControllerDelegate: class {
@@ -131,12 +130,13 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func setupConstraints() {
-        constrain(view, collectionView) { (selfView, collectionView) in
-            collectionView.bottom == selfView.bottom
-            collectionView.leading == selfView.leading
-            collectionView.trailing == selfView.trailing
-            collectionViewHeight = collectionView.height == 0
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: selfView.trailingAnchor),
+          collectionViewHeight = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        ])
     }
 
     @objc func reloadTable(with results: [UserType]) {

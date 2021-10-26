@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import Cartography
 import UIKit
 import WireCommonComponents
 
@@ -90,20 +89,24 @@ final class AudioButtonOverlay: UIView {
     func createConstraints() {
         let initialViewWidth: CGFloat = 40
 
-        constrain(self, audioButton, playButton, sendButton, backgroundView) { view, audioButton, playButton, sendButton, backgroundView in
-            audioButton.centerY == view.bottom - initialViewWidth / 2
-            audioButton.centerX == view.centerX
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          audioButton.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -initialViewWidth / 2),
+          audioButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            playButton.centerX == view.centerX
-            playButton.centerY == view.bottom - initialViewWidth / 2
+          playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          playButton.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -initialViewWidth / 2),
 
-            sendButton.centerX == view.centerX
-            sendButton.centerY == view.top + initialViewWidth / 2
+          sendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          sendButton.centerYAnchor.constraint(equalTo: view.topAnchor, constant: initialViewWidth / 2),
 
-            widthConstraint = view.width == initialViewWidth
-            heightConstraint = view.height == 96
-            backgroundView.edges == view.edges
-        }
+          widthConstraint = view.widthAnchor.constraint(equalToConstant: initialViewWidth),
+          heightConstraint = view.heightAnchor.constraint(equalToConstant: 96),
+          backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+          backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
     func setOverlayState(_ state: AudioButtonOverlayState) {

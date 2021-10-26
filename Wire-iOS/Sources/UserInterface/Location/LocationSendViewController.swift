@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Cartography
 import UIKit
 
 protocol LocationSendViewControllerDelegate: class {
@@ -65,20 +64,24 @@ final class LocationSendViewController: UIViewController {
     }
 
     fileprivate func createConstraints() {
-        constrain(view, containerView, separatorView, addressLabel, sendButton) { view, container, separator, label, button in
-            container.edges == inset(view.edges, 24, 0)
-            label.leading == container.leading
-            label.trailing <= button.leading - 12 ~ 1000.0
-            label.top == container.top
-            label.bottom == container.bottom - UIScreen.safeArea.bottom
-            button.trailing == container.trailing
-            button.centerY == label.centerY
-            button.height == 28
-            separator.leading == view.leading
-            separator.trailing == view.trailing
-            separator.top == container.top
-            separator.height == .hairline
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          container.topAnchor.constraint(equalTo: inset(view.topAnchor),
+          container.bottomAnchor.constraint(equalTo: inset(view.bottomAnchor),
+          container.leftAnchor.constraint(equalTo: inset(view.leftAnchor),
+          container.rightAnchor.constraint(equalTo: inset(view.rightAnchor),
+          label.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          label.trailingAnchor.constraint(lessThanOrEqualTo: button.leadingAnchor, constant: -12 ~ 1000.0),
+          label.topAnchor.constraint(equalTo: container.topAnchor),
+          label.bottomAnchor.constraint(equalToConstant: container.bottom - UIScreen.safeArea.bottom),
+          button.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          button.centerYAnchor.constraint(equalTo: label.centerYAnchor),
+          button.heightAnchor.constraint(equalToConstant: 28),
+          separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          separator.topAnchor.constraint(equalTo: container.topAnchor),
+          separator.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
 
         sendButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         addressLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)

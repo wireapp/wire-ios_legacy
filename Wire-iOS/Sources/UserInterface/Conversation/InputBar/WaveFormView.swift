@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final class WaveFormView: UIView {
 
@@ -79,15 +78,17 @@ final class WaveFormView: UIView {
     }
 
     fileprivate func createConstraints() {
-        constrain(self, visualizationView, leftGradient, rightGradient) { view, visualizationView, leftGradient, rightGradient in
-            visualizationView.edges == view.edges
-            align(top: view, leftGradient, rightGradient)
-            align(bottom: view, leftGradient, rightGradient)
-            view.left == leftGradient.left
-            view.right == rightGradient.right
-            leftGradientWidthConstraint = leftGradient.width == gradientWidth
-            rightGradientWidthConstraint = rightGradient.width == gradientWidth
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          visualizationView.topAnchor.constraint(equalTo: view.topAnchor),
+          visualizationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          visualizationView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          visualizationView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          view.leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
+          view.rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
+          leftGradientWidthConstraint = leftGradient.widthAnchor.constraint(equalToConstant: gradientWidth),
+          rightGradientWidthConstraint = rightGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
+        ])
     }
 
     fileprivate func updateWaveFormColor() {
