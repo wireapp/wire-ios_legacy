@@ -54,7 +54,6 @@ final class CallParticipantDetailsView: RoundedBlurView {
     }
 
     override func createConstraints() {
-        /// TODO: Bill activate super constraints in 1 batch
         super.createConstraints()
 
         NSLayoutConstraint.activate([
