@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Kullanıcı Adı";
 "self.settings.account_section.add_handle.title" = "Kullanıcı adı ekle";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "İnsanlar sizi bu bilgiler ile bulabilirler.";
 "self.settings.account_details_group.personal.footer" = "Bu bilgi görüntülenebilir değil.";

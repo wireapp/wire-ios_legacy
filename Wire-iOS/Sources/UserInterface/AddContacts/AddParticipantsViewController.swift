@@ -126,6 +126,7 @@ final class AddParticipantsViewController: UIViewController {
         userSelection.remove(observer: self)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -145,7 +146,7 @@ final class AddParticipantsViewController: UIViewController {
 
     init(context: Context,
          variant: ColorSchemeVariant = ColorScheme.default.variant,
-         isFederationEnabled: Bool = Settings.shared.federationEnabled || AutomationHelper.sharedHelper.enableFederation) {
+         isFederationEnabled: Bool = Settings.shared.federationEnabled) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)

@@ -27,6 +27,7 @@ final class ImageMessageRestrictionView: BaseMessageRestrictionView {
         super.init(messageType: .image)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

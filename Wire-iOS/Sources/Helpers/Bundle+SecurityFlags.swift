@@ -25,6 +25,7 @@ enum SecurityFlags {
     case customBackend
     case cameraRoll
     case backup
+    case federation
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -46,6 +47,8 @@ enum SecurityFlags {
             return "BackupEnabled"
         case .forceEncryptionAtRest:
             return "ForceEncryptionAtRestEnabled"
+        case .federation:
+            return "FederationEnabled"
         }
     }
 

@@ -77,6 +77,7 @@ final class TabBar: UIView {
         updateButtonSelection()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

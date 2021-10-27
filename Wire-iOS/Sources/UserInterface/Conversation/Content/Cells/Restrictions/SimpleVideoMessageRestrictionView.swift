@@ -27,6 +27,7 @@ final class SimpleVideoMessageRestrictionView: BaseMessageRestrictionView {
         super.init(messageType: .video)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

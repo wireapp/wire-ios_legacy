@@ -31,6 +31,7 @@ final class CopyableLabel: UILabel {
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

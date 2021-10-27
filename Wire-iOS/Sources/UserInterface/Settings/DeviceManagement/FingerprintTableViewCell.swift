@@ -1,25 +1,25 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import Foundation
-import Cartography
+import UIKit
 
-class FingerprintTableViewCell: UITableViewCell {
+final class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(style: .gray)
@@ -70,20 +70,21 @@ class FingerprintTableViewCell: UITableViewCell {
         contentView.addSubview(fingerprintLabel)
         contentView.addSubview(spinner)
 
-        constrain(contentView, titleLabel, fingerprintLabel, spinner) { contentView, titleLabel, fingerprintLabel, spinner in
-            titleLabel.top == contentView.top + 16
-            titleLabel.left == contentView.left + 16
-            titleLabel.right <= contentView.right - 16
+        [titleLabel, fingerprintLabel, spinner].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+          titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          titleLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-            fingerprintLabel.top == titleLabel.bottom + 4
-            fingerprintLabel.left == contentView.left + 16
-            fingerprintLabel.right == contentView.right - 16
-            fingerprintLabel.bottom == contentView.bottom - 16
+          fingerprintLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+          fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          fingerprintLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+          fingerprintLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
 
-            spinner.centerX == contentView.centerX
-            spinner.top >= titleLabel.bottom + 4
-            spinner.bottom <= contentView.bottom - 16
-        }
+          spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+          spinner.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor, constant: 4),
+          spinner.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
+        ])
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
 

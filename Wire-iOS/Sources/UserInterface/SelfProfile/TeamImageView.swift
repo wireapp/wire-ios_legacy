@@ -16,16 +16,15 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamImageView: UIImageView {
 
-    public enum TeamImageViewStyle {
+    enum TeamImageViewStyle {
         case small
         case big
     }
 
-    public enum Content {
+    enum Content {
         case teamImage(Data)
         case teamName(String)
 
@@ -48,7 +47,7 @@ final class TeamImageView: UIImageView {
 
     private var lastLayoutBounds: CGRect = .zero
     let initialLabel = UILabel()
-    public var style: TeamImageViewStyle = .small {
+    var style: TeamImageViewStyle = .small {
         didSet {
             applyStyle(style: style)
         }
@@ -79,10 +78,12 @@ final class TeamImageView: UIImageView {
         self.addSubview(self.initialLabel)
         self.accessibilityElements = [initialLabel]
 
-        constrain(self, initialLabel) { selfView, initialLabel in
-            initialLabel.centerY == selfView.centerY
-            initialLabel.centerX == selfView.centerX
-        }
+        initialLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+          initialLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+          initialLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
 
         self.updateImage()
 
@@ -93,7 +94,7 @@ final class TeamImageView: UIImageView {
         applyStyle(style: style)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

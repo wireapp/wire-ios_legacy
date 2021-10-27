@@ -253,7 +253,7 @@ private extension AppDelegate {
         }
 
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
-        configuration.supportFederation = configuration.supportFederation || Settings.shared.federationEnabled || AutomationHelper.sharedHelper.enableFederation
+        configuration.supportFederation = Settings.shared.federationEnabled
         let jailbreakDetector = JailbreakDetector()
 
         let sessionManager = SessionManager(appVersion: appVersion,

@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "ফোন";
 "self.settings.account_section.handle.title" = "Username";
 "self.settings.account_section.add_handle.title" = "Add username";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "মানুষজন আপনাকে এই তথ্যগুলি দিয়ে খুঁজে পাবে।";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";

@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefoonnummer";
 "self.settings.account_section.handle.title" = "Gebruikersnaam";
 "self.settings.account_section.add_handle.title" = "Voeg gebruikersnaam toe";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Mensen kunnen jou vinden met deze gegevens.";
 "self.settings.account_details_group.personal.footer" = "Deze informatie is niet zichtbaar.";

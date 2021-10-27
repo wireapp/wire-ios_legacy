@@ -17,16 +17,15 @@
 //
 
 import Foundation
-import Cartography
 import WireCommonComponents
 import UIKit
 import WireSystem
 
 final class NoResultsView: UIView {
-    public let label = UILabel()
+    let label = UILabel()
     private let iconView = UIImageView()
 
-    public var placeholderText: String? {
+    var placeholderText: String? {
         get {
             return label.text
         }
@@ -36,13 +35,13 @@ final class NoResultsView: UIView {
         }
     }
 
-    public var icon: StyleKitIcon? = nil {
+    var icon: StyleKitIcon? = nil {
         didSet {
-            self.iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
+            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }
     }
 
-    public var placeholderColor: UIColor {
+    var placeholderColor: UIColor {
         let backgroundColor = UIColor.from(scheme: .background)
         return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
     }
@@ -50,29 +49,30 @@ final class NoResultsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.accessibilityElements = [self.label]
+        accessibilityElements = [label]
 
-        self.label.numberOfLines = 0
-        self.label.textColor = placeholderColor
-        self.label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = placeholderColor
+        label.textAlignment = .center
         label.font = .mediumSemiboldFont
-        self.addSubview(self.label)
+        addSubview(label)
 
-        self.iconView.contentMode = .scaleAspectFit
-        self.addSubview(self.iconView)
+        iconView.contentMode = .scaleAspectFit
+        addSubview(iconView)
 
-        constrain(self, self.label, self.iconView) { selfView, label, iconView in
-            iconView.top == selfView.top
-            iconView.centerX == selfView.centerX
+        [label, iconView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          iconView.topAnchor.constraint(equalTo: topAnchor),
+          iconView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            label.top == iconView.bottom + 24
-            label.bottom == selfView.bottom
-            label.leading == selfView.leading
-            label.trailing == selfView.trailing
-        }
+          label.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24),
+          label.bottomAnchor.constraint(equalTo: bottomAnchor),
+          label.leadingAnchor.constraint(equalTo: leadingAnchor),
+          label.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }
 }

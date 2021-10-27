@@ -35,6 +35,7 @@ fileprivate final class ResponderContainer<Child: UIView>: UIView {
         self.addSubview(self.responder)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

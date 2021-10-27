@@ -3614,6 +3614,10 @@ internal enum L10n {
             /// Add username
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.add_handle.title")
           }
+          internal enum Domain {
+            /// Domain
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.domain.title")
+          }
           internal enum Email {
             /// Email
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.email.title")
@@ -3709,6 +3713,10 @@ internal enum L10n {
                 internal static let title = L10n.tr("Localizable", "self.settings.account_section.phone_number.change.verify.title")
               }
             }
+          }
+          internal enum Team {
+            /// Team
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.team.title")
           }
         }
         internal enum AddAccount {
