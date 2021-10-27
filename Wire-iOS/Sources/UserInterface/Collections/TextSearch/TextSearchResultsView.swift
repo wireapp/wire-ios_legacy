@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+import UIKit
 
 final class TextSearchResultsView: UIView {
     let tableView = UITableView()
@@ -46,13 +46,18 @@ final class TextSearchResultsView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, tableView, noResultsView) { resultsView, tableView, noResultsView in
-            tableView.edges == resultsView.edges
+        [tableView, noResultsView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          tableView.topAnchor.constraint(equalTo: topAnchor),
+          tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          tableView.leftAnchor.constraint(equalTo: leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: rightAnchor),
 
-            noResultsView.top >= resultsView.top + 12
-            noResultsView.bottom <= resultsView.bottom - 12
-            noResultsView.center == resultsView.center
-        }
+          noResultsView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12),
+          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
+          noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+          noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     @available(*, unavailable)
