@@ -44,13 +44,12 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
         configureSubview()
         configureConstraints()
     }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubview()
-        configureConstraints()
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func configureSubview() {
         shape = .rounded(radius: 4)
         backgroundColor = .from(scheme: .placeholderBackground)

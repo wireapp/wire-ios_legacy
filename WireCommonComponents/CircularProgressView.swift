@@ -27,9 +27,9 @@ public class CircularProgressView: UIView {
         self.setup()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     fileprivate func setup() {

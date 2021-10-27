@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
+final class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
 
     struct Configuration {
         let message: ZMConversationMessage
@@ -45,12 +45,11 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
         configureConstraints()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubview()
-        configureConstraints()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func configureSubview() {
         shape = .rounded(radius: 4)
         backgroundColor = .from(scheme: .placeholderBackground)
