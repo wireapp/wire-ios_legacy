@@ -20,8 +20,8 @@ import Foundation
 import Cartography
 
 final class TextSearchResultsView: UIView {
-    var tableView = UITableView()
-    var noResultsView = NoResultsView()
+    let tableView = UITableView()
+    let noResultsView = NoResultsView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +31,7 @@ final class TextSearchResultsView: UIView {
         backgroundColor = .from(scheme: .contentBackground)
     }
 
-    func setupViews() {
+    private func setupViews() {
         tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
         tableView.estimatedRowHeight = 44
         tableView.separatorStyle = .none
@@ -45,7 +45,7 @@ final class TextSearchResultsView: UIView {
         addSubview(noResultsView)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, tableView, noResultsView) { resultsView, tableView, noResultsView in
             tableView.edges == resultsView.edges
 
@@ -55,7 +55,8 @@ final class TextSearchResultsView: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
