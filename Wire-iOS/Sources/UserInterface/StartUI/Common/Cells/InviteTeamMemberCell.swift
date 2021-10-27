@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+import UIKit
 import WireCommonComponents
 
 class StartUIIconCell: UICollectionViewCell {
@@ -63,25 +63,26 @@ class StartUIIconCell: UICollectionViewCell {
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: .dark)
     }
 
-    fileprivate  func createConstraints() {
+    fileprivate func createConstraints() {
         let iconSize: CGFloat = 32.0
 
-        constrain(contentView, iconView, titleLabel, separator) { container, iconView, titleLabel, separator in
-            iconView.width == iconSize
-            iconView.height == iconSize
-            iconView.leading == container.leading + 16
-            iconView.centerY == container.centerY
+        [iconView, titleLabel, separator].prepareForLayout()
+        NSLayoutConstraint.activate([
+          iconView.widthAnchor.constraint(equalToConstant: iconSize),
+          iconView.heightAnchor.constraint(equalToConstant: iconSize),
+          iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            titleLabel.leading == container.leading + 64
-            titleLabel.trailing == container.trailing
-            titleLabel.top == container.top
-            titleLabel.bottom == container.bottom
+          titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
+          titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+          titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            separator.leading == titleLabel.leading
-            separator.trailing == container.trailing
-            separator.bottom == container.bottom
-            separator.height == .hairline
-        }
+          separator.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+          separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          separator.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
     }
 
 }

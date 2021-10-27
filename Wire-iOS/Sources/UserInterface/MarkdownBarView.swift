@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Down
 import WireCommonComponents
 
@@ -86,9 +85,13 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
-        constrain(self, stackView) { view, stackView in
-            stackView.edges == view.edges
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = true
+        NSLayoutConstraint.activate([
+          stackView.topAnchor.constraint(equalTo: topAnchor),
+          stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          stackView.leftAnchor.constraint(equalTo: leftAnchor),
+          stackView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
 
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
         headerButton.delegate = self

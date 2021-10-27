@@ -75,7 +75,7 @@ extension SettingsCellDescriptorFactory {
         let user = SelfUser.current
 
         if !user.usesCompanyLogin {
-            if !user.hasTeam || !user.phoneNumber.isEmpty,
+            if !user.hasTeam || user.phoneNumber?.isEmpty == false,
                let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }

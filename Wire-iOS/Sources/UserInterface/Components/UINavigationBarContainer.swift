@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class UINavigationBarContainer: UIViewController {
 
@@ -26,7 +25,7 @@ final class UINavigationBarContainer: UIViewController {
     let portraitNavbarHeight: CGFloat = 44.0
 
     var navigationBar: UINavigationBar
-    var navHeight: NSLayoutConstraint?
+    lazy var navHeight: NSLayoutConstraint =   navigationBar.heightAnchor.constraint(equalToConstant: portraitNavbarHeight)
 
     init(_ navigationBar: UINavigationBar) {
         self.navigationBar = navigationBar
@@ -42,20 +41,19 @@ final class UINavigationBarContainer: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(navigationBar, view) { navigationBar, view in
-            self.navHeight = navigationBar.height == portraitNavbarHeight
-            navigationBar.left == view.left
-            navigationBar.right == view.right
-            view.bottom == navigationBar.bottom
-        }
+        [navigationBar, view].prepareForLayout()
+        NSLayoutConstraint.activate([
+          navHeight,
+          navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+          navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+          view.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor)
+        ])
 
         navigationBar.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        guard let navHeight = navHeight else { return }
 
         let orientation = UIApplication.shared.statusBarOrientation
         let deviceType = UIDevice.current.userInterfaceIdiom

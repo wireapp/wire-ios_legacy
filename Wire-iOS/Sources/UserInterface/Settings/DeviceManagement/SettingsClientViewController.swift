@@ -1,26 +1,24 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import Foundation
 import UIKit
-import Cartography
 import WireSyncEngine
-import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -153,13 +151,17 @@ final class SettingsClientViewController: UIViewController,
     }
 
     private func createConstraints() {
-        constrain(tableView, self.view, self.topSeparator) { tableView, selfView, topSeparator in
-            tableView.edges == selfView.edges
+        [tableView, topSeparator].prepareForLayout()
+        NSLayoutConstraint.activate([
+          tableView.topAnchor.constraint(equalTo: view.topAnchor),
+          tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
 
-            topSeparator.left == tableView.left
-            topSeparator.right == tableView.right
-            topSeparator.top == tableView.top
-        }
+          topSeparator.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          topSeparator.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          topSeparator.topAnchor.constraint(equalTo: tableView.topAnchor)
+        ])
     }
 
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

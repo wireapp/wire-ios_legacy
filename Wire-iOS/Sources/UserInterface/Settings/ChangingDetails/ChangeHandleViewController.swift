@@ -97,7 +97,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     private func createConstraints() {
-        [prefixLabel, handleTextField, domainLabel].forEach({ $0.translatesAutoresizingMaskIntoConstraints = false })
+        [prefixLabel, handleTextField, domainLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             prefixLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -143,7 +143,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 /// This struct represents the current state of a handle
 /// change operation and performs necessary validation steps of
-/// a new handle. The `ChangeHandleViewController` uses this state 
+/// a new handle. The `ChangeHandleViewController` uses this state
 /// to layout its interface.
 struct HandleChangeState {
 
