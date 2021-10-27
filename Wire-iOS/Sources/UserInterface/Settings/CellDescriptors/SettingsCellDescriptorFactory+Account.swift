@@ -68,9 +68,13 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
+        let federationEnabled = Settings.shared.federationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
-                           handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
+                           handleElement(
+                            enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle),
+                            federationEnabled: federationEnabled
+                           )]
 
         let user = SelfUser.current
 
@@ -87,7 +91,9 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(teamElement())
         }
 
-        cellDescriptors.append(domainElement())
+        if federationEnabled {
+            cellDescriptors.append(domainElement())
+        }
 
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
@@ -214,7 +220,7 @@ extension SettingsCellDescriptorFactory {
         }
     }
 
-    func handleElement(enabled: Bool = true) -> SettingsCellDescriptorType {
+    func handleElement(enabled: Bool = true, federationEnabled: Bool) -> SettingsCellDescriptorType {
         typealias AccountSection = L10n.Localizable.Self.Settings.AccountSection
         if enabled {
             let presentation: () -> ChangeHandleViewController = {
@@ -223,7 +229,9 @@ extension SettingsCellDescriptorFactory {
 
             if nil != ZMUser.selfUser().handle {
                 let preview: PreviewGeneratorType = { _ in
-                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString else { return .none }
+                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString(federationEnabled: federationEnabled) else {
+                        return .none
+                    }
                     return .text(handleDisplayString)
                 }
                 return SettingsExternalScreenCellDescriptor(
