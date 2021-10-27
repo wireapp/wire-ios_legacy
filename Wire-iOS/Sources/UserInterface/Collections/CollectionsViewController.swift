@@ -28,25 +28,17 @@ final class CollectionsViewController: UIViewController {
     let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
     var isShowingSearchResults: Bool {
-        guard let textSearchController = self.textSearchController,
-              let resultsView = textSearchController.resultsView else {
-            return false
-        }
-        return !resultsView.isHidden
+        return !textSearchController.resultsView.isHidden
     }
 
     var shouldTrackOnNextOpen = false
 
     var currentTextSearchQuery: [String] {
-        guard let textSearchController = self.textSearchController else {
-            return []
-        }
-
         return textSearchController.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? []
     }
 
     fileprivate var contentView: CollectionsView! {
-        return self.view as? CollectionsView
+        return view as? CollectionsView
     }
     fileprivate let messagePresenter = MessagePresenter()
     fileprivate weak var selectedMessage: ZMConversationMessage? = .none
@@ -76,7 +68,7 @@ final class CollectionsViewController: UIViewController {
         return self.sections == .all
     }
 
-    fileprivate var textSearchController: TextSearchViewController!
+    fileprivate lazy var textSearchController: TextSearchViewController =  TextSearchViewController(conversation: collection.conversation)
 
     convenience init(conversation: ZMConversation) {
         let matchImages = CategoryMatch(including: .image, excluding: .GIF)
@@ -139,7 +131,6 @@ final class CollectionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.textSearchController = TextSearchViewController(conversation: collection.conversation)
         self.textSearchController.delegate = self
         self.contentView.constrainViews(searchViewController: textSearchController)
 
