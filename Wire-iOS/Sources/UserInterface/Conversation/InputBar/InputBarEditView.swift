@@ -77,13 +77,21 @@ final class InputBarEditView: UIView {
     fileprivate func createConstraints() {
         [undoButton, confirmButton, cancelButton].prepareForLayout()
         NSLayoutConstraint.activate([
-          undoButton.centerXAnchor.constraint(equalTo: leadingAnchor, constant: buttonMargin),
-          undoButton.widthAnchor.constraint(equalTo: heightAnchor),
+            topAnchor.constraint(equalTo: undoButton.topAnchor),
+            topAnchor.constraint(equalTo: confirmButton.topAnchor),
+            topAnchor.constraint(equalTo: cancelButton.topAnchor),
 
-          confirmButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-          confirmButton.widthAnchor.constraint(equalTo: heightAnchor),
-          cancelButton.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -buttonMargin),
-          cancelButton.widthAnchor.constraint(equalTo: heightAnchor)
+            bottomAnchor.constraint(equalTo: undoButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: confirmButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: cancelButton.bottomAnchor),
+
+            undoButton.centerXAnchor.constraint(equalTo: leadingAnchor, constant: buttonMargin),
+            undoButton.widthAnchor.constraint(equalTo: heightAnchor),
+
+            confirmButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            confirmButton.widthAnchor.constraint(equalTo: heightAnchor),
+            cancelButton.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -buttonMargin),
+            cancelButton.widthAnchor.constraint(equalTo: heightAnchor)
         ])
     }
 
