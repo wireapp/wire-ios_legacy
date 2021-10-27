@@ -81,14 +81,20 @@ final class WaveFormView: UIView {
     fileprivate func createConstraints() {
         [visualizationView, leftGradient, rightGradient].prepareForLayout()
         NSLayoutConstraint.activate([
-          visualizationView.topAnchor.constraint(equalTo: topAnchor),
-          visualizationView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          visualizationView.leftAnchor.constraint(equalTo: leftAnchor),
-          visualizationView.rightAnchor.constraint(equalTo: rightAnchor),
-          leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
-          rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
-          leftGradientWidthConstraint,
-          rightGradientWidthConstraint
+            visualizationView.topAnchor.constraint(equalTo: topAnchor),
+            visualizationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            visualizationView.leftAnchor.constraint(equalTo: leftAnchor),
+            visualizationView.rightAnchor.constraint(equalTo: rightAnchor),
+
+            topAnchor.constraint(equalTo: leftGradient.topAnchor),
+            topAnchor.constraint(equalTo: rightGradient.topAnchor),
+            bottomAnchor.constraint(equalTo: leftGradient.bottomAnchor),
+            bottomAnchor.constraint(equalTo: rightGradient.bottomAnchor),
+
+            leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
+            rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
+            leftGradientWidthConstraint,
+            rightGradientWidthConstraint
         ])
     }
 
