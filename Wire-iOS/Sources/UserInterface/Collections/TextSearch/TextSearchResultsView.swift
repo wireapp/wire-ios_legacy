@@ -19,8 +19,8 @@
 import UIKit
 
 final class TextSearchResultsView: UIView {
-    private let tableView = UITableView()
-    private let noResultsView = NoResultsView()
+    let tableView = UITableView()
+    let noResultsView = NoResultsView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,15 +47,15 @@ final class TextSearchResultsView: UIView {
     private func createConstraints() {
         [tableView, noResultsView].prepareForLayout()
         NSLayoutConstraint.activate([
-          tableView.topAnchor.constraint(equalTo: tableView.topAnchor),
-          tableView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
-          tableView.leftAnchor.constraint(equalTo: tableView.leftAnchor),
-          tableView.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          tableView.topAnchor.constraint(equalTo: noResultsView.topAnchor),
+          tableView.bottomAnchor.constraint(equalTo: noResultsView.bottomAnchor),
+          tableView.leftAnchor.constraint(equalTo: noResultsView.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: noResultsView.rightAnchor),
 
-          noResultsView.topAnchor.constraint(greaterThanOrEqualTo: tableView.topAnchor, constant: 12),
-          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: tableView.bottomAnchor, constant: -12),
-          noResultsView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-          noResultsView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
+          noResultsView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12),
+          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
+          noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+          noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
