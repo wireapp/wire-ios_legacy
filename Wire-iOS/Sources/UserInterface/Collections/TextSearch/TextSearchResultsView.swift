@@ -19,8 +19,8 @@
 import UIKit
 
 final class TextSearchResultsView: UIView {
-    var tableView = UITableView()
-    var noResultsView = NoResultsView()
+    private let tableView = UITableView()
+    private let noResultsView = NoResultsView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,7 +30,7 @@ final class TextSearchResultsView: UIView {
         backgroundColor = .from(scheme: .contentBackground)
     }
 
-    func setupViews() {
+    private func setupViews() {
         tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
         tableView.estimatedRowHeight = 44
         tableView.separatorStyle = .none
@@ -44,7 +44,7 @@ final class TextSearchResultsView: UIView {
         addSubview(noResultsView)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [tableView, noResultsView].prepareForLayout()
         NSLayoutConstraint.activate([
           tableView.topAnchor.constraint(equalTo: tableView.topAnchor),
@@ -59,6 +59,7 @@ final class TextSearchResultsView: UIView {
         ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
