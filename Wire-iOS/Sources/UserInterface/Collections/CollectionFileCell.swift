@@ -45,7 +45,7 @@ final class CollectionFileCell: CollectionCell {
             fileTransferView.configure(for: message, isInitial: changeInfo == .none)
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -55,7 +55,7 @@ final class CollectionFileCell: CollectionCell {
         super.init(frame: frame)
         loadView()
     }
-    
+
     func loadView() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false

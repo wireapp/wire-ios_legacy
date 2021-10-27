@@ -26,7 +26,7 @@ final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
     private let restrictionView = AudioMessageRestrictionView()
     private let headerView = CollectionCellHeader()
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -36,7 +36,7 @@ final class CollectionAudioCell: CollectionCell {
         super.init(frame: frame)
         self.loadView()
     }
-    
+
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
 
