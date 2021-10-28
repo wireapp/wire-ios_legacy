@@ -102,13 +102,13 @@ final class CollectionsView: UIView {
 
         let searchBar = searchViewController.searchBar
         let resultsView = searchViewController.resultsView
-        [searchBar, resultsView].forEach() {
+        [searchBar, resultsView].forEach {
             addSubview($0)
         }
-        
+
         let centerYConstraint = noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
         centerYConstraint.priority = .defaultLow
-            
+
         [searchBar, resultsView, collectionView, noResultsView].prepareForLayout()
         NSLayoutConstraint.activate([
           searchBar.topAnchor.constraint(equalTo: topAnchor),
@@ -128,8 +128,7 @@ final class CollectionsView: UIView {
           noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
           noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 24),
           noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -24),
-            
-            
+
           resultsView.topAnchor.constraint(equalTo: collectionView.topAnchor),
           resultsView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
           resultsView.leftAnchor.constraint(equalTo: collectionView.leftAnchor),

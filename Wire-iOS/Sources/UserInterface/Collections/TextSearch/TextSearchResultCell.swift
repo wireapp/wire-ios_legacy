@@ -65,11 +65,11 @@ final class TextSearchResultCell: UITableViewCell {
         contentView.addSubview(resultCountView)
 
         createConstraints()
-        
+
         textLabel?.textColor = .from(scheme: .background)
         textLabel?.font = .smallSemiboldFont
     }
-    
+
     fileprivate func createConstraints() {
         [userImageView, userImageViewContainer, footerView, messageTextLabel, resultCountView, separatorView].prepareForLayout()
         NSLayoutConstraint.activate([
@@ -96,7 +96,7 @@ final class TextSearchResultCell: UITableViewCell {
           resultCountView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
           resultCountView.heightAnchor.constraint(equalToConstant: 20),
           resultCountView.widthAnchor.constraint(greaterThanOrEqualToConstant: 24),
-            
+
           separatorView.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
           separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
           separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
