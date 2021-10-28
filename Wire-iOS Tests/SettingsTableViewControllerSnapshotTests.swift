@@ -53,7 +53,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         userSessionMock = nil
         selfUser = nil
         SelfUser.provider = nil
-
+        Settings.shared.reset()
         super.tearDown()
 	}
 
@@ -64,16 +64,32 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         verify(group: group)
     }
 
-    func testForAccountGroup() {
+    private func testForAccountGroup(federated: Bool,
+                                     disabledEditing: Bool = false,
+                                     file: StaticString = #file,
+                                     testName: String = #function,
+                                     line: UInt = #line) {
+        Settings.shared[.federationEnabled] = federated
+
+        MockUserRight.isPermitted = !disabledEditing
         let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)
-        verify(group: group)
+        verify(group: group, file: file, testName: testName, line: line)
     }
 
-    func testForAccountGroupWithDisabledEditing() {
-		MockUserRight.isPermitted = false
+    func testForAccountGroup_Federated() {
+        testForAccountGroup(federated: true)
+    }
 
-        let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)
-        verify(group: group)
+    func testForAccountGroup_NotFederated() {
+        testForAccountGroup(federated: false)
+    }
+
+    func testForAccountGroupWithDisabledEditing_Federated() {
+        testForAccountGroup(federated: true, disabledEditing: true)
+    }
+
+    func testForAccountGroupWithDisabledEditing_NotFederated() {
+        testForAccountGroup(federated: false, disabledEditing: true)
     }
 
     // MARK: - options

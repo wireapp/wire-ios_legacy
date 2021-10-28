@@ -16,11 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
+import Cartography
 
-final class TextSearchResultsView: UIView {
-    let tableView = UITableView()
-    let noResultsView = NoResultsView()
+final public class TextSearchResultsView: UIView {
+    var tableView = UITableView()
+    var noResultsView = NoResultsView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,37 +31,31 @@ final class TextSearchResultsView: UIView {
         backgroundColor = .from(scheme: .contentBackground)
     }
 
-    private func setupViews() {
-        tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
-        tableView.estimatedRowHeight = 44
-        tableView.separatorStyle = .none
-        tableView.keyboardDismissMode = .interactive
-        tableView.backgroundColor = .clear
-        addSubview(tableView)
+    func setupViews() {
+        self.tableView.register(TextSearchResultCell.self, forCellReuseIdentifier: TextSearchResultCell.reuseIdentifier)
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.separatorStyle = .none
+        self.tableView.keyboardDismissMode = .interactive
+        self.tableView.backgroundColor = .clear
+        self.addSubview(self.tableView)
 
-        noResultsView.label.accessibilityLabel = "no text messages"
-        noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
-        noResultsView.icon = .search
-        addSubview(noResultsView)
+        self.noResultsView.label.accessibilityLabel = "no text messages"
+        self.noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
+        self.noResultsView.icon = .search
+        self.addSubview(self.noResultsView)
     }
 
-    private func createConstraints() {
-        [tableView, noResultsView].prepareForLayout()
-        NSLayoutConstraint.activate([
-          tableView.topAnchor.constraint(equalTo: noResultsView.topAnchor),
-          tableView.bottomAnchor.constraint(equalTo: noResultsView.bottomAnchor),
-          tableView.leftAnchor.constraint(equalTo: noResultsView.leftAnchor),
-          tableView.rightAnchor.constraint(equalTo: noResultsView.rightAnchor),
+    func createConstraints() {
+        constrain(self, self.tableView, self.noResultsView) { resultsView, tableView, noResultsView in
+            tableView.edges == resultsView.edges
 
-          noResultsView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12),
-          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
-          noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
-          noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+            noResultsView.top >= resultsView.top + 12
+            noResultsView.bottom <= resultsView.bottom - 12
+            noResultsView.center == resultsView.center
+        }
     }
 
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
