@@ -264,6 +264,12 @@ class SettingsCellDescriptorFactory {
         )
 
         developerCellDescriptors.append(
+            Button(title: "Check for AppCenter update",
+                   isDestructive: false,
+                   selectAction: DebugActions.checkAppCenterUpdate)
+        )
+
+        developerCellDescriptors.append(
             Button(title: "Trigger slow sync",
                    isDestructive: false,
                    selectAction: DebugActions.triggerSlowSync)

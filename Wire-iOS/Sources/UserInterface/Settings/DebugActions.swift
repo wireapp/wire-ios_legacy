@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import AppCenterCrashes
+import AppCenterDistribute
 
 enum DebugActions {
 
@@ -174,6 +175,10 @@ enum DebugActions {
         Crashes.generateTestCrash()
     }
 
+    static func checkAppCenterUpdate(_ type: SettingsCellDescriptorType) {
+        Distribute.checkForUpdate()
+    }
+    
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
         guard let appRootRouter = (UIApplication.shared.delegate as? AppDelegate)?.appRootRouter else {
             return
