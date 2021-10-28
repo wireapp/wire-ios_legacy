@@ -207,6 +207,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     private var observerToken: Any?
     var popOnSuccess = true
+    private var federationEnabled: Bool
 
     convenience init() {
         self.init(state: HandleChangeState(currentHandle: SelfUser.current.handle ?? nil, newHandle: nil, availability: .unknown))
@@ -219,8 +220,9 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     /// Used to inject a specific `HandleChangeState` in tests. See `ChangeHandleViewControllerTests`.
-    init(state: HandleChangeState) {
+    init(state: HandleChangeState, federationEnabled: Bool = Settings.shared.federationEnabled) {
         self.state = state
+        self.federationEnabled = federationEnabled
         super.init(style: .grouped)
 
         setupViews()
@@ -306,7 +308,8 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         cell.delegate = self
         cell.handleTextField.text = state.displayHandle
         cell.handleTextField.becomeFirstResponder()
-        cell.domainLabel.text =  SelfUser.current.handleDomainString
+        cell.domainLabel.isHidden = !federationEnabled
+        cell.domainLabel.text = federationEnabled ? SelfUser.current.handleDomainString : ""
         return cell
     }
 
