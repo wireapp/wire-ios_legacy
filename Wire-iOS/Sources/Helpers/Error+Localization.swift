@@ -129,8 +129,6 @@ extension ConnectToUserError: LocalizedError {
         switch self {
         case .missingLegalholdConsent:
             return ConnectionError.missingLegalholdConsent
-        case .connectionLimitReached:
-            return ConnectionError.connectionLimitReached
         default:
             return ConnectionError.genericError
         }
@@ -150,8 +148,6 @@ extension UpdateConnectionError: LocalizedError {
         switch self {
         case .missingLegalholdConsent:
             return ConnectionError.missingLegalholdConsent
-        case .connectionLimitReached:
-            return ConnectionError.connectionLimitReached
         default:
             return ConnectionError.genericError
         }
