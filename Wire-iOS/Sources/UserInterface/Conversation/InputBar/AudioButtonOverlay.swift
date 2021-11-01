@@ -103,7 +103,7 @@ final class AudioButtonOverlay: UIView {
 
           widthConstraint,
           heightConstraint,
-            backgroundView.topAnchor.constraint(equalTo: topAnchor),
+          backgroundView.topAnchor.constraint(equalTo: topAnchor),
           backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
           backgroundView.leftAnchor.constraint(equalTo: leftAnchor),
           backgroundView.rightAnchor.constraint(equalTo: rightAnchor)
