@@ -27,6 +27,7 @@ final class AudioMessageRestrictionView: BaseMessageRestrictionView {
         super.init(messageType: .audio)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

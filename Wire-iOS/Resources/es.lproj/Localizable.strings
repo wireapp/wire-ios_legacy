@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Teléfono";
 "self.settings.account_section.handle.title" = "Nombre de usuario";
 "self.settings.account_section.add_handle.title" = "Añadir nombre de usuario";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Otros usuarios de Wire pueden encontrarte con estos datos.";
 "self.settings.account_details_group.personal.footer" = "Esta información no es visible.";

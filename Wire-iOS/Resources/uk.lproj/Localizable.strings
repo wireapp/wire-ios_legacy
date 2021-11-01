@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Номер телефону";
 "self.settings.account_section.handle.title" = "Нік";
 "self.settings.account_section.add_handle.title" = "Додати нік";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";

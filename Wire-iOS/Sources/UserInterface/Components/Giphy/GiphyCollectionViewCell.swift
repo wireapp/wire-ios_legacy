@@ -36,20 +36,21 @@ final class GiphyCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         contentView.addSubview(imageView)
 
-        constrain(self.contentView, self.imageView) { contentView, imageView in
+        constrain(contentView, imageView) { contentView, imageView in
             imageView.edges == contentView.edges
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func prepareForReuse() {
-        self.imageView.animatedImage = nil
-        self.ziph = nil
-        self.representation = nil
-        self.backgroundColor = nil
+        imageView.animatedImage = nil
+        ziph = nil
+        representation = nil
+        backgroundColor = nil
     }
 
 }

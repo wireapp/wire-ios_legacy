@@ -45,6 +45,7 @@ final class ThreeDotsLoadingView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(ThreeDotsLoadingView.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

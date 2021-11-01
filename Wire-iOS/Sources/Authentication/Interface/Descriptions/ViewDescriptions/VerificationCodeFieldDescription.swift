@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
@@ -36,6 +35,7 @@ fileprivate final class ResponderContainer<Child: UIView>: UIView {
         self.addSubview(self.responder)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

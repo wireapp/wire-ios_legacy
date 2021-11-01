@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Användarnanm";
 "self.settings.account_section.add_handle.title" = "Lägg till användarnamn";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Andra kan hitta dig med dessa uppgifter.";
 "self.settings.account_details_group.personal.footer" = "Denna information är inte synlig.";

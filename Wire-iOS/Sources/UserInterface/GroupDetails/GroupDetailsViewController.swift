@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
@@ -67,7 +66,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSubviews() {
+    private func createSubviews() {
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
@@ -75,15 +74,17 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         [collectionView, footerView].forEach(view.addSubview)
 
-        constrain(view, collectionView, footerView) { container, collectionView, footerView in
-            collectionView.top == container.top
-            collectionView.leading == container.leading
-            collectionView.trailing == container.trailing
-            collectionView.bottom == footerView.top
-            footerView.leading == container.leading
-            footerView.trailing == container.trailing
-            footerView.bottom == container.bottom
-        }
+        [collectionView, footerView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+          footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
