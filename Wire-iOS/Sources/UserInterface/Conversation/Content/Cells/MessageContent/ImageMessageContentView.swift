@@ -48,6 +48,7 @@ final class ImageContentView: UIView {
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefone";
 "self.settings.account_section.handle.title" = "Nome de utilizador";
 "self.settings.account_section.add_handle.title" = "Adicionar o nome de utilizador";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "As pessoas podem encontrá-lo com estes detalhes.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";

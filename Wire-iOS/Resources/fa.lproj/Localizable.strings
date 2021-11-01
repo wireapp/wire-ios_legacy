@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "تلفن";
 "self.settings.account_section.handle.title" = "نام کاربری";
 "self.settings.account_section.add_handle.title" = "اضافه کردن نام کاربری";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "مردم شما را با این جزئیات پیدا خواهند کرد.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";

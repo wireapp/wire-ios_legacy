@@ -1013,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "手機";
 "self.settings.account_section.handle.title" = "使用者名稱";
 "self.settings.account_section.add_handle.title" = "添加使用者名稱";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能透過這些資料找到您。";
 "self.settings.account_details_group.personal.footer" = "這個信息是隱藏的。";

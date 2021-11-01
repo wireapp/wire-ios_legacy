@@ -20,8 +20,32 @@ import Foundation
 import WireDataModel
 
 extension UserType {
-    var handleDisplayString: String? {
+    func handleDisplayString(federationEnabled: Bool) -> String? {
+        if federationEnabled {
+            return federatedHandleDisplayString
+        } else {
+            return handleDisplayString
+        }
+    }
+
+    private var federatedHandleDisplayString: String? {
+        guard
+            let handleString = handleDisplayString,
+            let domainString = handleDomainString
+        else { return .none }
+
+        return handleString + domainString
+    }
+
+    private var handleDisplayString: String? {
         guard let handle = handle else { return .none }
+
         return "@" + handle
+    }
+
+    var handleDomainString: String? {
+        guard let domain = domain else { return .none }
+
+        return "@" + domain
     }
 }

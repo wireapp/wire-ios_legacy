@@ -17,14 +17,13 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 
 final class CollectionLoadingCell: UICollectionViewCell {
     let loadingView = UIActivityIndicatorView(style: .gray)
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         contentView.addSubview(loadingView)
@@ -32,13 +31,14 @@ final class CollectionLoadingCell: UICollectionViewCell {
 
         loadingView.startAnimating()
         loadingView.hidesWhenStopped = false
-
-        constrain(contentView, loadingView) { contentView, loadingView in
-            loadingView.center == contentView.center
-        }
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          loadingView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+          loadingView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -49,7 +49,7 @@ final class CollectionLoadingCell: UICollectionViewCell {
         }
     }
 
-    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         var newFrame = layoutAttributes.frame
         newFrame.size.height = 24 + (collapsed ? 0 : 64)
         newFrame.size.width = containerWidth
