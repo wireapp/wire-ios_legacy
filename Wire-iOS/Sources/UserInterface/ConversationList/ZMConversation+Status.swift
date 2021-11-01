@@ -712,18 +712,18 @@ final class StartConversationMatcher: TypedConversationStatusMatcher {
 }
 
 // Fallback for empty conversations: showing the handle.
-final class UnsernameMatcher: ConversationStatusMatcher {
+final class UsernameMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages
     }
 
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
+        guard
+            let user = conversation.connectedUserType,
+            let handle = user.handleDisplayString(withDomain: user.isFederated)
+        else { return .none }
 
-        guard let handle = conversation.connectedUserType?.handle else {
-            return .none
-        }
-
-        return "@" + handle && type(of: self).regularStyle
+        return handle && type(of: self).regularStyle
     }
 
     var combinesWith: [ConversationStatusMatcher] = []
@@ -761,7 +761,8 @@ private var allMatchers: [ConversationStatusMatcher] = {
             newMessageMatcher,
             failedSendMatcher,
             groupActivityMatcher,
-            StartConversationMatcher(), UnsernameMatcher()]
+            StartConversationMatcher(),
+            UsernameMatcher()]
 }()
 
 extension ConversationStatus {

@@ -97,8 +97,9 @@ final class UserConnectionView: UIView, Copyable {
     }
 
     private var handleLabelText: NSAttributedString? {
-        guard let handle = user.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && [
+        guard let handle = user.handleDisplayString(withDomain: user.isFederated), !handle.isEmpty else { return nil }
+
+        return handle && [
             .foregroundColor: UIColor.from(scheme: .textDimmed),
             .font: FontSpec(.small, .semibold).font!
         ]

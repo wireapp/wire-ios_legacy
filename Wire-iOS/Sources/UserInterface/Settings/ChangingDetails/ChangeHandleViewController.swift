@@ -309,7 +309,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         cell.handleTextField.text = state.displayHandle
         cell.handleTextField.becomeFirstResponder()
         cell.domainLabel.isHidden = !federationEnabled
-        cell.domainLabel.text = federationEnabled ? SelfUser.current.handleDomainString : ""
+        cell.domainLabel.text = federationEnabled ? SelfUser.current.domainString : ""
         return cell
     }
 

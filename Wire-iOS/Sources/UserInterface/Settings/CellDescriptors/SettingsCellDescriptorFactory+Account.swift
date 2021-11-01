@@ -227,9 +227,9 @@ extension SettingsCellDescriptorFactory {
                 return ChangeHandleViewController()
             }
 
-            if nil != ZMUser.selfUser().handle {
+            if let selfUser = ZMUser.selfUser(), nil != selfUser.handle {
                 let preview: PreviewGeneratorType = { _ in
-                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString(federationEnabled: federationEnabled) else {
+                    guard let handleDisplayString = selfUser.handleDisplayString(withDomain: federationEnabled) else {
                         return .none
                     }
                     return .text(handleDisplayString)
