@@ -916,6 +916,7 @@
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A9730DDA250274150061BF36 /* AnalyticsCountlyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9730DD9250274150061BF36 /* AnalyticsCountlyProvider.swift */; };
 		A9730DDC250287360061BF36 /* Bundle+ThirdPartyKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9730DDB250287360061BF36 /* Bundle+ThirdPartyKeys.swift */; };
+		A97559F42729AA7100217714 /* TextSearchResultsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97559F32729AA7100217714 /* TextSearchResultsViewSnapshotTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
 		A97BC011241EA2660069E145 /* NSAttributedString+EnumerateAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */; };
 		A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */; };
@@ -2659,6 +2660,7 @@
 		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A9730DD9250274150061BF36 /* AnalyticsCountlyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCountlyProvider.swift; sourceTree = "<group>"; };
 		A9730DDB250287360061BF36 /* Bundle+ThirdPartyKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+ThirdPartyKeys.swift"; sourceTree = "<group>"; };
+		A97559F32729AA7100217714 /* TextSearchResultsViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchResultsViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
 		A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+EnumerateAttachment.swift"; sourceTree = "<group>"; };
 		A97CC15124DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -6164,6 +6166,15 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
+		A97559F22729AA4500217714 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */,
+				A97559F32729AA7100217714 /* TextSearchResultsViewSnapshotTests.swift */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
 		A984AAE424099239002CFF2E /* LinkOpeningOption */ = {
 			isa = PBXGroup;
 			children = (
@@ -6298,6 +6309,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A97559F22729AA4500217714 /* Collection */,
 				A9207B2A2715E7D2008C1F22 /* DeveloperOptions */,
 				63750519262477BE0083DC27 /* Components */,
 				87BEB0D71C734D550094BFE9 /* Mocks */,
@@ -6353,7 +6365,6 @@
 				EF21A06A21305C4000B9120C /* ConversationTitleViewTests.swift */,
 				7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */,
 				5EF7BA60221AB89300815625 /* ProfileViewTests.swift */,
-				F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */,
 				BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */,
 				BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */,
 				D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */,
@@ -9054,6 +9065,7 @@
 				BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */,
 				A9E5725924C6413700CBE0D7 /* UnlockViewControllerTests.swift in Sources */,
 				D58192052091F34E003BA7EC /* CallActionsViewTests.swift in Sources */,
+				A97559F42729AA7100217714 /* TextSearchResultsViewSnapshotTests.swift in Sources */,
 				EF17B0D2223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift in Sources */,
 				EE52378723F556DE00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift in Sources */,
 				63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */,
