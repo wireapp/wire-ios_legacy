@@ -133,6 +133,14 @@ final class AppCenterOperation: NSObject, LaunchSequenceOperation {
 }
 
 extension AppCenterOperation: DistributeDelegate {
+	func distributeNoReleaseAvailable(_ distribute: Distribute) {
+		print(distribute)
+	}
+
+	func distributeWillExitApp(_ distribute: Distribute) {
+		print(distribute)
+	}
+
     func distribute(_ distribute: Distribute, releaseAvailableWith details: ReleaseDetails) -> Bool {
 
         guard
@@ -165,6 +173,7 @@ extension AppCenterOperation: DistributeDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default) {_ in })
 
         window.endEditing(true)
+		///TODO: works for iPad?
         rootViewController.present(alertController, animated: true)
 
         return true

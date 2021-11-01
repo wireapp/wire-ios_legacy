@@ -179,6 +179,12 @@ class SettingsCellDescriptorFactory {
             ExternalScreen(title: "Logging") { DeveloperOptionsController() }
         )
 
+		developerCellDescriptors.append(
+			Button(title: "Check for AppCenter update",
+				   isDestructive: false,
+				   selectAction: DebugActions.checkAppCenterUpdate)
+		)
+
         developerCellDescriptors.append(
             Toggle(settingsProperty: settingsPropertyFactory.property(.enableBatchCollections))
         )
@@ -261,12 +267,6 @@ class SettingsCellDescriptorFactory {
             Button(title: "Generate test crash",
                    isDestructive: false,
                    selectAction: DebugActions.generateTestCrash)
-        )
-
-        developerCellDescriptors.append(
-            Button(title: "Check for AppCenter update",
-                   isDestructive: false,
-                   selectAction: DebugActions.checkAppCenterUpdate)
         )
 
         developerCellDescriptors.append(
