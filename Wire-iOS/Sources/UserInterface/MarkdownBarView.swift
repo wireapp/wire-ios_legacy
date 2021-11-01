@@ -85,7 +85,7 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
-        stackView.translatesAutoresizingMaskIntoConstraints = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           stackView.topAnchor.constraint(equalTo: topAnchor),
           stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
