@@ -34,16 +34,16 @@ final class CollectionLinkCell: CollectionCell {
         articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData,
                               obfuscated: false)
-        self.secureContentsView.addSubview(articleView)
+        secureContentsView.addSubview(articleView)
         // Reconstraint the header
-        self.headerView.removeFromSuperview()
-        self.headerView.message = self.message!
+        headerView.removeFromSuperview()
+        headerView.message = message!
 
-        self.secureContentsView.addSubview(self.headerView)
+        secureContentsView.addSubview(headerView)
 
-        self.contentView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
+        contentView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
 
-        constrain(self.contentView, articleView, headerView) { contentView, articleView, headerView in
+        constrain(contentView, articleView, headerView) { contentView, articleView, headerView in
 
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
@@ -65,7 +65,7 @@ final class CollectionLinkCell: CollectionCell {
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
 
-        guard let message = self.message, let textMessageData = message.textMessageData, textMessageData.linkPreview != nil else {
+        guard let message = message, let textMessageData = message.textMessageData, textMessageData.linkPreview != nil else {
             return
         }
 
@@ -79,10 +79,10 @@ final class CollectionLinkCell: CollectionCell {
         }
 
         if shouldReload {
-            self.articleView?.removeFromSuperview()
-            self.articleView = nil
+            articleView?.removeFromSuperview()
+            articleView = nil
 
-            self.createArticleView(with: textMessageData)
+            createArticleView(with: textMessageData)
         }
     }
 
@@ -93,6 +93,6 @@ final class CollectionLinkCell: CollectionCell {
 
     public override func prepareForReuse() {
         super.prepareForReuse()
-        self.message = .none
+        message = .none
     }
 }

@@ -64,7 +64,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
         }
         set {
             if let newValue = newValue {
-                self._collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
+                _collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
             } else {
                 _collectionViewSelectedIndex = newValue
             }
@@ -131,7 +131,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func setupConstraints() {
-        constrain(self.view, collectionView) { (selfView, collectionView) in
+        constrain(view, collectionView) { (selfView, collectionView) in
             collectionView.bottom == selfView.bottom
             collectionView.leading == selfView.leading
             collectionView.trailing == selfView.trailing
@@ -156,7 +156,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func resizeTable() {
-        let viewHeight = self.view.bounds.size.height
+        let viewHeight = view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
         collectionViewHeight?.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
@@ -194,7 +194,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
 
 extension UserSearchResultsViewController: Dismissable {
     func dismiss() {
-        self.view.isHidden = true
+        view.isHidden = true
         collectionViewSelectedIndex = .none
     }
 }

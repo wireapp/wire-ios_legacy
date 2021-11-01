@@ -343,7 +343,7 @@ final class LandingViewController: AuthenticationStepViewController {
             messageLabel,
             subMessageLabel,
             createAccoutInfoLabel
-            ].disableAutoresizingMaskTranslation()
+            ].prepareForLayout()
     }
 
     private func createAndAddConstraints() {

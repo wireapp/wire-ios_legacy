@@ -29,6 +29,14 @@ protocol CallGridViewControllerInput {
     var presentationMode: VideoGridPresentationMode { get }
     var callHasTwoParticipants: Bool { get }
 
+    func isEqual(to other: CallGridViewControllerInput) -> Bool
+}
+
+extension CallGridViewControllerInput where Self: Equatable {
+    func isEqual(to other: CallGridViewControllerInput) -> Bool {
+        guard let callGridViewControllerInput = other as? Self else { return false }
+        return self == callGridViewControllerInput
+    }
 }
 
 extension CallGridViewControllerInput {
@@ -37,19 +45,4 @@ extension CallGridViewControllerInput {
         let streamIds = (streams + [floatingStream]).compactMap { $0?.streamId }
         return Set(streamIds)
     }
-
-    // Workaround to make the protocol equatable, it might be possible to conform CallGridViewControllerInput
-    // to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
-    // the `CallGridViewController` generic to work around the `Self` requirement of
-    // `Equatable` which we want to avoid.
-    func isEqual(toConfiguration other: CallGridViewControllerInput) -> Bool {
-        return floatingStream == other.floatingStream &&
-            streams == other.streams &&
-            networkQuality == other.networkQuality &&
-            shouldShowActiveSpeakerFrame == other.shouldShowActiveSpeakerFrame &&
-            presentationMode == other.presentationMode &&
-            videoState == other.videoState &&
-            callHasTwoParticipants == other.callHasTwoParticipants
-    }
-
 }

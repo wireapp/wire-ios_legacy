@@ -18,8 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 protocol FolderCreationValuesConfigurable: class {
@@ -59,6 +57,7 @@ final class FolderCreationController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

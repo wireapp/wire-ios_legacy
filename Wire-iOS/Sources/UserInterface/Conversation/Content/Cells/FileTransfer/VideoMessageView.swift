@@ -88,6 +88,7 @@ final class VideoMessageView: UIView, TransferView {
         layoutIfNeeded()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

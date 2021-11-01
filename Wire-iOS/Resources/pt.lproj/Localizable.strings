@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Ligar";
 "inbox.connection_request.connect_button_title" = "Ligar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
+"error.connection.title" = "Erro";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Algo correu mal. Por favor, tente de novo";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -1010,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefone";
 "self.settings.account_section.handle.title" = "Nome de utilizador";
 "self.settings.account_section.add_handle.title" = "Adicionar o nome de utilizador";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "As pessoas podem encontrá-lo com estes detalhes.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";
@@ -1922,3 +1927,4 @@
 "keyboardshortcut.scrollToBottom" = "Scroll to bottom";
 "keyboardshortcut.conversationDetail" = "Conversation detail...";
 "keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.openPeople" = "Pessoas";

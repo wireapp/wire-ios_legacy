@@ -71,7 +71,7 @@ final class CallGridViewController: SpinnerCapableViewController {
 
     var configuration: CallGridViewControllerInput {
         didSet {
-            guard !configuration.isEqual(toConfiguration: oldValue) else { return }
+            guard !configuration.isEqual(to: oldValue) else { return }
             dismissMaximizedViewIfNeeded(oldPresentationMode: oldValue.presentationMode)
             updateState()
         }
@@ -112,6 +112,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         displayIndicatorViewsIfNeeded()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

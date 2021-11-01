@@ -1689,8 +1689,12 @@ internal enum L10n {
         }
       }
       internal enum Connection {
+        /// Something went wrong, please try again
+        internal static let genericError = L10n.tr("Localizable", "error.connection.generic_error")
         /// You cannot connect to this user due to legal hold.
         internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.connection.missing_legalhold_consent")
+        /// Error
+        internal static let title = L10n.tr("Localizable", "error.connection.title")
       }
       internal enum Conversation {
         /// Adding the participant failed
@@ -2128,6 +2132,16 @@ internal enum L10n {
           internal static let settings = L10n.tr("Localizable", "keyboard_photos_access.denied.keyboard.settings")
         }
       }
+    }
+    internal enum Keyboardshortcut {
+      /// Conversation detail...
+      internal static let conversationDetail = L10n.tr("Localizable", "keyboardshortcut.conversationDetail")
+      /// People
+      internal static let openPeople = L10n.tr("Localizable", "keyboardshortcut.openPeople")
+      /// Scroll to bottom
+      internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
+      /// Search in conversation...
+      internal static let searchInConversation = L10n.tr("Localizable", "keyboardshortcut.searchInConversation")
     }
     internal enum Landing {
       /// Wire. Add your Account.
@@ -3598,6 +3612,10 @@ internal enum L10n {
             /// Add username
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.add_handle.title")
           }
+          internal enum Domain {
+            /// Domain
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.domain.title")
+          }
           internal enum Email {
             /// Email
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.email.title")
@@ -3693,6 +3711,10 @@ internal enum L10n {
                 internal static let title = L10n.tr("Localizable", "self.settings.account_section.phone_number.change.verify.title")
               }
             }
+          }
+          internal enum Team {
+            /// Team
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.team.title")
           }
         }
         internal enum AddAccount {

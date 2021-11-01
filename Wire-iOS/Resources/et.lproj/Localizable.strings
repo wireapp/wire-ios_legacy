@@ -623,7 +623,10 @@
 "connection_request.send_button_title" = "Lisa kontakt";
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
 "inbox.connection_request.ignore_button_title" = "Ignoreeri";
+"error.connection.title" = "Viga";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
+"error.connection.generic_error" = "Midagi läks valesti, palun proovi uuesti";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
@@ -1010,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Kasutajanimi";
 "self.settings.account_section.add_handle.title" = "Lisa kasutajanimi";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Inimesed leiavad sind nende andmete põhjal.";
 "self.settings.account_details_group.personal.footer" = "Need andmed pole avalikud.";
@@ -1922,3 +1927,4 @@
 "keyboardshortcut.scrollToBottom" = "Scroll to bottom";
 "keyboardshortcut.conversationDetail" = "Conversation detail...";
 "keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.openPeople" = "Inimesed";
