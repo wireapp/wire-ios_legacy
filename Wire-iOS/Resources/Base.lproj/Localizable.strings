@@ -1924,6 +1924,6 @@
 
 //MARK: - Keyboard shortcut
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
-"keyboardshortcut.conversationDetail" = "Conversation Detail...";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "People";
