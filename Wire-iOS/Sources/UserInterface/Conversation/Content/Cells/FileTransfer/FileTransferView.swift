@@ -109,6 +109,7 @@ final class FileTransferView: UIView, TransferView {
             topLabel.leftAnchor.constraint(equalTo: actionButton.rightAnchor, constant: 12),
             topLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
 
+            actionButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             actionButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
             actionButton.heightAnchor.constraint(equalToConstant: 32),
             actionButton.widthAnchor.constraint(equalToConstant: 32),
