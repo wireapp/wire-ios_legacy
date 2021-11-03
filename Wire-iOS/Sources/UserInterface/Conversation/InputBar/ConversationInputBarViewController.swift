@@ -92,6 +92,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         button.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
         button.isAccessibilityElement = true
+        button.accessibilityElementsHidden = false
         button.adjustsTitleWhenHighlighted = true
         button.adjustsBorderColorWhenHighlighted = true
 
