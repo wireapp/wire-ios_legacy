@@ -26,27 +26,27 @@ final class FileTransferView: UIView, TransferView {
 
     weak var delegate: TransferViewDelegate?
 
-    let progressView = CircularProgressView()
-    let topLabel = UILabel()
-    let bottomLabel = UILabel()
-    let fileTypeIconView: UIImageView = {
+    private let progressView = CircularProgressView()
+    private let topLabel = UILabel()
+    private let bottomLabel = UILabel()
+    private let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
-    let fileEyeView: UIImageView = {
+    private let fileEyeView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
-    let actionButton = IconButton()
+    private let actionButton = IconButton()
 
-    let labelTextColor: UIColor = .from(scheme: .textForeground)
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
-    let labelBoldFont: UIFont = .smallSemiboldFont
+    private let labelTextColor: UIColor = .from(scheme: .textForeground)
+    private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    private let labelFont: UIFont = .smallLightFont
+    private let labelBoldFont: UIFont = .smallSemiboldFont
 
     private var allViews: [UIView] = []
 
@@ -137,7 +137,7 @@ final class FileTransferView: UIView, TransferView {
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         fileMessage = message
         guard let fileMessageData = message.fileMessageData else {
-            return            
+            return
         }
 
         configureVisibleViews(with: message, isInitial: isInitial)
