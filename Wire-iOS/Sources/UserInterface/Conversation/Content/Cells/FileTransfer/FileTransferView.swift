@@ -17,251 +17,252 @@
 //
 
 import Foundation
-import Cartography
 import WireDataModel
 import UIKit
 import WireCommonComponents
 
 final class FileTransferView: UIView, TransferView {
-    var fileMessage: ZMConversationMessage?
+	var fileMessage: ZMConversationMessage?
 
-    weak var delegate: TransferViewDelegate?
+	weak var delegate: TransferViewDelegate?
 
-    let progressView = CircularProgressView()
-    let topLabel = UILabel()
-    let bottomLabel = UILabel()
-    let fileTypeIconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .textForeground)
-        return imageView
-    }()
-    let fileEyeView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.tintColor = .from(scheme: .background)
-        return imageView
-    }()
+	let progressView = CircularProgressView()
+	let topLabel = UILabel()
+	let bottomLabel = UILabel()
+	let fileTypeIconView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.tintColor = .from(scheme: .textForeground)
+		return imageView
+	}()
+	let fileEyeView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.tintColor = .from(scheme: .background)
+		return imageView
+	}()
 
-    private let loadingView = ThreeDotsLoadingView()
-    let actionButton = IconButton()
+	private let loadingView = ThreeDotsLoadingView()
+	let actionButton = IconButton()
 
-    let labelTextColor: UIColor = .from(scheme: .textForeground)
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
-    let labelBoldFont: UIFont = .smallSemiboldFont
+	let labelTextColor: UIColor = .from(scheme: .textForeground)
+	let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+	let labelFont: UIFont = .smallLightFont
+	let labelBoldFont: UIFont = .smallSemiboldFont
 
-    private var allViews: [UIView] = []
+	private var allViews: [UIView] = []
 
-    required override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .from(scheme: .placeholderBackground)
+	required override init(frame: CGRect) {
+		super.init(frame: frame)
+		backgroundColor = .from(scheme: .placeholderBackground)
 
-        topLabel.numberOfLines = 1
-        topLabel.lineBreakMode = .byTruncatingMiddle
-        topLabel.accessibilityIdentifier = "FileTransferTopLabel"
+		topLabel.numberOfLines = 1
+		topLabel.lineBreakMode = .byTruncatingMiddle
+		topLabel.accessibilityIdentifier = "FileTransferTopLabel"
 
-        bottomLabel.numberOfLines = 1
-        bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
+		bottomLabel.numberOfLines = 1
+		bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
 
-        fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
+		fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
 
-        fileEyeView.setTemplateIcon(.eye, size: 8)
+		fileEyeView.setTemplateIcon(.eye, size: 8)
 
-        actionButton.contentMode = .scaleAspectFit
-        actionButton.setIconColor(.white, for: .normal)
-        actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
-        actionButton.accessibilityIdentifier = "FileTransferActionButton"
+		actionButton.contentMode = .scaleAspectFit
+		actionButton.setIconColor(.white, for: .normal)
+		actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
+		actionButton.accessibilityIdentifier = "FileTransferActionButton"
 
-        progressView.accessibilityIdentifier = "FileTransferProgressView"
-        progressView.isUserInteractionEnabled = false
+		progressView.accessibilityIdentifier = "FileTransferProgressView"
+		progressView.isUserInteractionEnabled = false
 
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.isHidden = true
+		loadingView.translatesAutoresizingMaskIntoConstraints = false
+		loadingView.isHidden = true
 
-        allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
-        allViews.forEach(addSubview)
+		allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
+		allViews.forEach(addSubview)
 
-        createConstraints()
+		createConstraints()
 
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
-        accessibilityElements = currentElements
-    }
+		var currentElements = accessibilityElements ?? []
+		currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
+		accessibilityElements = currentElements
+	}
 
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	@available(*, unavailable)
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
-    }
+	override var intrinsicContentSize: CGSize {
+		return CGSize(width: UIView.noIntrinsicMetric, height: 56)
+	}
 
-    private func createConstraints() {
-        constrain(self, topLabel, actionButton) { selfView, topLabel, actionButton in
-            topLabel.top == selfView.top + 12
-            topLabel.left == actionButton.right + 12
-            topLabel.right == selfView.right - 12
-        }
+	private func createConstraints() {
+		[topLabel,
+		 actionButton,
+		 fileTypeIconView,
+		 fileEyeView,
+		 progressView,
+		 bottomLabel,
+		 loadingView].prepareForLayout()
 
-        constrain(fileTypeIconView, actionButton, self) { fileTypeIconView, actionButton, selfView in
-            actionButton.centerY == selfView.centerY
-            actionButton.left == selfView.left + 12
-            actionButton.height == 32
-            actionButton.width == 32
+		NSLayoutConstraint.activate([
+			topLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+			topLabel.leftAnchor.constraint(equalTo: actionButton.rightAnchor, constant: 12),
+			topLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
 
-            fileTypeIconView.width == 32
-            fileTypeIconView.height == 32
-            fileTypeIconView.center == actionButton.center
-        }
+			actionButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+			actionButton.heightAnchor.constraint(equalToConstant: 32),
+			actionButton.widthAnchor.constraint(equalToConstant: 32),
 
-        constrain(fileTypeIconView, fileEyeView) { fileTypeIconView, fileEyeView in
-            fileEyeView.centerX == fileTypeIconView.centerX
-            fileEyeView.centerY == fileTypeIconView.centerY + 3
-        }
+			fileTypeIconView.widthAnchor.constraint(equalToConstant: 32),
+			fileTypeIconView.heightAnchor.constraint(equalToConstant: 32),
+			fileTypeIconView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+			fileTypeIconView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
 
-        constrain(progressView, actionButton) { progressView, actionButton in
-            progressView.center == actionButton.center
-            progressView.width == actionButton.width - 2
-            progressView.height == actionButton.height - 2
-        }
+			fileEyeView.centerXAnchor.constraint(equalTo: fileTypeIconView.centerXAnchor),
+			fileEyeView.centerYAnchor.constraint(equalTo: fileTypeIconView.centerYAnchor, constant: 3),
 
-        constrain(self, topLabel, bottomLabel, loadingView) { _, topLabel, bottomLabel, loadingView in
-            bottomLabel.top == topLabel.bottom + 2
-            bottomLabel.left == topLabel.left
-            bottomLabel.right == topLabel.right
-            loadingView.center == loadingView.superview!.center
-        }
-    }
+			progressView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+			progressView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
+			progressView.widthAnchor.constraint(equalTo: actionButton.widthAnchor, constant: -2),
+			progressView.heightAnchor.constraint(equalTo: actionButton.heightAnchor, constant: -2),
 
-    func configure(for message: ZMConversationMessage, isInitial: Bool) {
-        fileMessage = message
-        guard let fileMessageData = message.fileMessageData
-            else { return }
+			bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 2),
+			bottomLabel.leftAnchor.constraint(equalTo: topLabel.leftAnchor),
+			bottomLabel.rightAnchor.constraint(equalTo: topLabel.rightAnchor),
+			loadingView.centerXAnchor.constraint(equalTo: loadingView.superview!.centerXAnchor),
+			loadingView.centerYAnchor.constraint(equalTo: loadingView.superview!.centerYAnchor)
+		])
+	}
 
-        configureVisibleViews(with: message, isInitial: isInitial)
+	func configure(for message: ZMConversationMessage, isInitial: Bool) {
+		fileMessage = message
+		guard let fileMessageData = message.fileMessageData
+		else { return }
 
-        let filepath = (fileMessageData.filename ?? "") as NSString
-        let filesize: UInt64 = fileMessageData.size
-        let ext = filepath.pathExtension
+		configureVisibleViews(with: message, isInitial: isInitial)
 
-        let dot = " " + String.MessageToolbox.middleDot + " " && labelFont && labelTextBlendedColor
+		let filepath = (fileMessageData.filename ?? "") as NSString
+		let filesize: UInt64 = fileMessageData.size
+		let ext = filepath.pathExtension
 
-        guard let filename = message.filename else { return }
-        let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
-        let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
+		let dot = " " + String.MessageToolbox.middleDot + " " && labelFont && labelTextBlendedColor
 
-        let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
-        let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
+		guard let filename = message.filename else { return }
+		let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
+		let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
 
-        fileTypeIconView.contentMode = .center
-        fileTypeIconView.setTemplateIcon(.document, size: .small)
+		let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
+		let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
 
-        fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
-            guard let image = image else { return }
+		fileTypeIconView.contentMode = .center
+		fileTypeIconView.setTemplateIcon(.document, size: .small)
 
-            self?.fileTypeIconView.contentMode = .scaleAspectFit
-            self?.fileTypeIconView.mediaAsset = image
-        }
+		fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
+			guard let image = image else { return }
 
-        actionButton.isUserInteractionEnabled = true
+			self?.fileTypeIconView.contentMode = .scaleAspectFit
+			self?.fileTypeIconView.mediaAsset = image
+		}
 
-        switch fileMessageData.transferState {
+		actionButton.isUserInteractionEnabled = true
 
-        case .uploading:
-            if fileMessageData.size == 0 { fallthrough }
-            let statusText = "content.file.uploading".localized(uppercased: true) && labelFont && labelTextBlendedColor
-            let firstLine = fileNameAttributed
-            let secondLine = fileSizeAttributed + dot + statusText
-            topLabel.attributedText = firstLine
-            bottomLabel.attributedText = secondLine
-        case .uploaded:
-            switch fileMessageData.downloadState {
-            case .downloaded, .remote:
-                let firstLine = fileNameAttributed
-                let secondLine = fileSizeAttributed + dot + extAttributed
-                topLabel.attributedText = firstLine
-                bottomLabel.attributedText = secondLine
-            case .downloading:
-                let statusText = "content.file.downloading".localized(uppercased: true) && labelFont && labelTextBlendedColor
-                let firstLine = fileNameAttributed
-                let secondLine = fileSizeAttributed + dot + statusText
-                topLabel.attributedText = firstLine
-                bottomLabel.attributedText = secondLine
-            }
-        case .uploadingFailed, .uploadingCancelled:
-            let statusText = fileMessageData.transferState == .uploadingFailed ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
-            let attributedStatusText = statusText.localizedUppercase && labelFont && UIColor.vividRed
+		switch fileMessageData.transferState {
 
-            let firstLine = fileNameAttributed
-            let secondLine = fileSizeAttributed + dot + attributedStatusText
-            topLabel.attributedText = firstLine
-            bottomLabel.attributedText = secondLine
-        }
+		case .uploading:
+			if fileMessageData.size == 0 { fallthrough }
+			let statusText = "content.file.uploading".localized(uppercased: true) && labelFont && labelTextBlendedColor
+			let firstLine = fileNameAttributed
+			let secondLine = fileSizeAttributed + dot + statusText
+			topLabel.attributedText = firstLine
+			bottomLabel.attributedText = secondLine
+		case .uploaded:
+			switch fileMessageData.downloadState {
+			case .downloaded, .remote:
+				let firstLine = fileNameAttributed
+				let secondLine = fileSizeAttributed + dot + extAttributed
+				topLabel.attributedText = firstLine
+				bottomLabel.attributedText = secondLine
+			case .downloading:
+				let statusText = "content.file.downloading".localized(uppercased: true) && labelFont && labelTextBlendedColor
+				let firstLine = fileNameAttributed
+				let secondLine = fileSizeAttributed + dot + statusText
+				topLabel.attributedText = firstLine
+				bottomLabel.attributedText = secondLine
+			}
+		case .uploadingFailed, .uploadingCancelled:
+			let statusText = fileMessageData.transferState == .uploadingFailed ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
+			let attributedStatusText = statusText.localizedUppercase && labelFont && UIColor.vividRed
 
-        topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
-        bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
-    }
+			let firstLine = fileNameAttributed
+			let secondLine = fileSizeAttributed + dot + attributedStatusText
+			topLabel.attributedText = firstLine
+			bottomLabel.attributedText = secondLine
+		}
 
-    fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
-        guard let state = FileMessageViewState.fromConversationMessage(message) else { return }
+		topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
+		bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
+	}
 
-        var visibleViews: [UIView] = [topLabel, bottomLabel]
+	fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
+		guard let state = FileMessageViewState.fromConversationMessage(message) else { return }
 
-        switch state {
-        case .obfuscated:
-            visibleViews = []
-        case .unavailable:
-            visibleViews = [loadingView]
-        case .uploading, .downloading:
-            visibleViews.append(progressView)
-            progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
-        case .uploaded, .downloaded:
-            visibleViews.append(contentsOf: [fileTypeIconView, fileEyeView])
-        default:
-            break
-        }
+		var visibleViews: [UIView] = [topLabel, bottomLabel]
 
-        if let viewsState = state.viewsStateForFile() {
-            visibleViews.append(actionButton)
-            actionButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
-            actionButton.backgroundColor = viewsState.playButtonBackgroundColor
-        }
+		switch state {
+		case .obfuscated:
+			visibleViews = []
+		case .unavailable:
+			visibleViews = [loadingView]
+		case .uploading, .downloading:
+			visibleViews.append(progressView)
+			progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
+		case .uploaded, .downloaded:
+			visibleViews.append(contentsOf: [fileTypeIconView, fileEyeView])
+		default:
+			break
+		}
 
-        updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
-    }
+		if let viewsState = state.viewsStateForFile() {
+			visibleViews.append(actionButton)
+			actionButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
+			actionButton.backgroundColor = viewsState.playButtonBackgroundColor
+		}
 
-    override var tintColor: UIColor! {
-        didSet {
-            progressView.tintColor = tintColor
-        }
-    }
+		updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
+	}
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        actionButton.layer.cornerRadius = actionButton.bounds.size.width / 2.0
-    }
+	override var tintColor: UIColor! {
+		didSet {
+			progressView.tintColor = tintColor
+		}
+	}
 
-    // MARK: - Actions
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		actionButton.layer.cornerRadius = actionButton.bounds.size.width / 2.0
+	}
 
-    @objc func onActionButtonPressed(_ sender: UIButton) {
-        guard let message = fileMessage, let fileMessageData = message.fileMessageData else {
-            return
-        }
+	// MARK: - Actions
 
-        switch fileMessageData.transferState {
-        case .uploading:
-            if .none != message.fileMessageData!.fileURL {
-                delegate?.transferView(self, didSelect: .cancel)
-            }
-        case .uploadingFailed, .uploadingCancelled:
-            delegate?.transferView(self, didSelect: .resend)
-        case .uploaded:
-            if case .downloading = fileMessageData.downloadState {
-                progressView.setProgress(0, animated: false)
-                delegate?.transferView(self, didSelect: .cancel)
-            } else {
-                delegate?.transferView(self, didSelect: .present)
-            }
-        }
-    }
+	@objc func onActionButtonPressed(_ sender: UIButton) {
+		guard let message = fileMessage, let fileMessageData = message.fileMessageData else {
+			return
+		}
+
+		switch fileMessageData.transferState {
+		case .uploading:
+			if .none != message.fileMessageData!.fileURL {
+				delegate?.transferView(self, didSelect: .cancel)
+			}
+		case .uploadingFailed, .uploadingCancelled:
+			delegate?.transferView(self, didSelect: .resend)
+		case .uploaded:
+			if case .downloading = fileMessageData.downloadState {
+				progressView.setProgress(0, animated: false)
+				delegate?.transferView(self, didSelect: .cancel)
+			} else {
+				delegate?.transferView(self, didSelect: .present)
+			}
+		}
+	}
 }
