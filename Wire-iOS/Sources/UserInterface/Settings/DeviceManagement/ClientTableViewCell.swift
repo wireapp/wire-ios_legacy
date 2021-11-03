@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import CoreLocation
 import Contacts
 import WireDataModel
@@ -121,32 +120,30 @@ class ClientTableViewCell: UITableViewCell {
 
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].forEach(contentView.addSubview)
 
-        constrain(contentView, nameLabel, labelLabel) { contentView, nameLabel, labelLabel in
-            nameLabel.top == contentView.top + 16
-            nameLabel.left == contentView.left + 16
-            nameLabel.right <= contentView.right - 16
+        [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+          nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          nameLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-            labelLabel.top == nameLabel.bottom + 2
-            labelLabel.left == contentView.left + 16
-            labelLabel.right <= contentView.right - 16
-        }
+          labelLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
+          labelLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          labelLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-        constrain(contentView, labelLabel, activationLabel, fingerprintLabel, verifiedLabel) { contentView, labelLabel, activationLabel, fingerprintLabel, verifiedLabel in
+          fingerprintLabel.topAnchor.constraint(equalTo: labelLabel.bottomAnchor, constant: 4),
+          fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          fingerprintLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+          fingerprintLabel.heightAnchor.constraint(equalToConstant: 16),
 
-            fingerprintLabel.top == labelLabel.bottom + 4
-            fingerprintLabel.left == contentView.left + 16
-            fingerprintLabel.right <= contentView.right - 16
-            fingerprintLabel.height == 16
+          activationLabel.topAnchor.constraint(equalTo: fingerprintLabel.bottomAnchor, constant: 8),
+          activationLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          activationLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-            activationLabel.top == fingerprintLabel.bottom + 8
-            activationLabel.left == contentView.left + 16
-            activationLabel.right <= contentView.right - 16
-
-            verifiedLabel.top == activationLabel.bottom + 4
-            verifiedLabel.left == contentView.left + 16
-            verifiedLabel.right <= contentView.right - 16
-            verifiedLabel.bottom == contentView.bottom - 16
-        }
+          verifiedLabel.topAnchor.constraint(equalTo: activationLabel.bottomAnchor, constant: 4),
+          verifiedLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+          verifiedLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+          verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+        ])
 
         backgroundColor = UIColor.clear
         backgroundView = UIView()
