@@ -173,8 +173,7 @@ extension AppCenterOperation: DistributeDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default) {_ in })
 
         window.endEditing(true)
-		///TODO: works for iPad?
-        rootViewController.present(alertController, animated: true)
+		UIApplication.shared.topmostViewController(onlyFullScreen: true)?.present(alertController, animated: true)
 
         return true
     }
