@@ -17,14 +17,12 @@
 //
 
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> Void
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with table view index bar
-class ContactsCell: UITableViewCell, SeparatorViewProtocol {
+final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     var user: UserType? = nil {
         didSet {
             avatar.user = user
@@ -195,14 +193,15 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
             ])
 
-        constrain(actionButton, buttonSpacer) { actionButton, buttonSpacer in
-            buttonSpacer.top == actionButton.top
-            buttonSpacer.bottom == actionButton.bottom
+        [actionButton, buttonSpacer].prepareForLayout()
+        NSLayoutConstraint.activate([
+          buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
+          buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),
 
-            actionButton.width == actionButtonWidth
-            buttonSpacer.trailing == actionButton.trailing
-            buttonSpacer.leading == actionButton.leading - buttonMargin
-        }
+          actionButton.widthAnchor.constraint(equalToConstant: actionButtonWidth),
+          buttonSpacer.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
+          buttonSpacer.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -buttonMargin)
+        ])
     }
 
     func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key: Any]?) -> Float {

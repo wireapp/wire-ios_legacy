@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Cartography
 import WireCommonComponents
 import UIKit
 import avs
@@ -140,20 +139,27 @@ final class AudioEffectsPickerViewController: UIViewController {
         view.addSubview(statusBoxView)
         view.addSubview(collectionView)
 
-        constrain(view, collectionView, progressView, subtitleLabel, statusBoxView) { view, collectionView, progressView, subtitleLabel, statusBoxView in
-            collectionView.left == view.left
-            collectionView.top == view.top
-            collectionView.right == view.right
+        [collectionView, progressView, subtitleLabel, statusBoxView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
 
-            statusBoxView.top == collectionView.bottom + 8
-            statusBoxView.height == 24
-            statusBoxView.left == collectionView.left + 48
-            statusBoxView.right == collectionView.right - 48
-            statusBoxView.bottom == view.bottom
+          statusBoxView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 8),
+          statusBoxView.heightAnchor.constraint(equalToConstant: 24),
+          statusBoxView.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 48),
+          statusBoxView.rightAnchor.constraint(equalTo: collectionView.rightAnchor, constant: -48),
+          statusBoxView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            progressView.edges == statusBoxView.edges
-            subtitleLabel.edges == statusBoxView.edges
-        }
+          progressView.topAnchor.constraint(equalTo: statusBoxView.topAnchor),
+          progressView.bottomAnchor.constraint(equalTo: statusBoxView.bottomAnchor),
+          progressView.leftAnchor.constraint(equalTo: statusBoxView.leftAnchor),
+          progressView.rightAnchor.constraint(equalTo: statusBoxView.rightAnchor),
+          subtitleLabel.topAnchor.constraint(equalTo: statusBoxView.topAnchor),
+          subtitleLabel.bottomAnchor.constraint(equalTo: statusBoxView.bottomAnchor),
+          subtitleLabel.leftAnchor.constraint(equalTo: statusBoxView.leftAnchor),
+          subtitleLabel.rightAnchor.constraint(equalTo: statusBoxView.rightAnchor)
+        ])
 
         // Do not load in tests, which may cause exception break point to break when loading audio assets
         if !ProcessInfo.processInfo.isRunningTests {

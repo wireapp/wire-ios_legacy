@@ -18,7 +18,6 @@
 
 import UIKit
 import WireCommonComponents
-import Cartography
 import WireDataModel
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
@@ -175,15 +174,16 @@ final class EphemeralKeyboardViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, picker, titleLabel) { view, picker, label in
-            label.leading == view.leading + 16
-            label.trailing == view.trailing - 16
-            label.top == view.top + 16
-            picker.top == label.bottom
-            picker.bottom == view.bottom - 16
-            picker.leading == view.leading + 32
-            picker.trailing == view.trailing - 32
-        }
+        [picker, titleLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+          titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+          picker.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+          picker.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+          picker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+          picker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+        ])
     }
 
     fileprivate func displayCustomPicker() {
