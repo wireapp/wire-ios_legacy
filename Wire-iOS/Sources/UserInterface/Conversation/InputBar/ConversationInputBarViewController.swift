@@ -821,8 +821,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         return session.fileSharingFeature.status == .enabled
     }
 
-    //MARK: setup views
-    
+    // MARK: setup views
+
     private func setupViews() {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
