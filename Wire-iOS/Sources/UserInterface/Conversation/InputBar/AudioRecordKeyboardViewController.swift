@@ -98,7 +98,8 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

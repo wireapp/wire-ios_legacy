@@ -1689,8 +1689,6 @@ internal enum L10n {
         }
       }
       internal enum Connection {
-        /// You cannot connect to because you reached the connection limit
-        internal static let connectionLimitReached = L10n.tr("Localizable", "error.connection.connection_limit_reached")
         /// Something went wrong, please try again
         internal static let genericError = L10n.tr("Localizable", "error.connection.generic_error")
         /// You cannot connect to this user due to legal hold.

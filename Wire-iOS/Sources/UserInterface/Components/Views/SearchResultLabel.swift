@@ -63,7 +63,8 @@ final public class SearchResultLabel: UILabel, Copyable {
         textColor = .from(scheme: .textForeground)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }
 
