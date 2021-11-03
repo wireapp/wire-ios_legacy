@@ -1539,7 +1539,6 @@
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
-		EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */; };
 		EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */; };
 		EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */; };
 		EFD4B9C822F08297008CA042 /* UIImage+DownsizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD4B9C722F08297008CA042 /* UIImage+DownsizeTests.swift */; };
@@ -3369,7 +3368,6 @@
 		EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
-		EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+CreateViews.swift"; sourceTree = "<group>"; };
 		EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DeviceSize.swift"; sourceTree = "<group>"; };
 		EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EFD4B9C722F08297008CA042 /* UIImage+DownsizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DownsizeTests.swift"; sourceTree = "<group>"; };
@@ -5897,7 +5895,6 @@
 				A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */,
 				EF95B053227C782D005A060A /* ConversationInputBarViewController+TypingIndicator.swift */,
 				06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */,
-				EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */,
 				EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */,
 				EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */,
 				EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */,
@@ -8630,7 +8627,6 @@
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
-				EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */,
 				A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */,
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */,
