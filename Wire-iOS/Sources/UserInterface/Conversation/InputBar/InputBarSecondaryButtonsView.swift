@@ -17,12 +17,11 @@
 //
 
 import UIKit
-import Cartography
 
 // Acts as a container for InputBarEditView & MarkdownBarView, however
 // only one of the views will be in the view hierarchy at a time.
 //
-class InputBarSecondaryButtonsView: UIView {
+final class InputBarSecondaryButtonsView: UIView {
 
     let editBarView: InputBarEditView
     let markdownBarView: MarkdownBarView
@@ -46,9 +45,13 @@ class InputBarSecondaryButtonsView: UIView {
         subviews.forEach { $0.removeFromSuperview() }
         addSubview(newView)
 
-        constrain(self, newView) { view, newView in
-            newView.edges == view.edges
-        }
+        newView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          newView.topAnchor.constraint(equalTo: topAnchor),
+          newView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          newView.leftAnchor.constraint(equalTo: leftAnchor),
+          newView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
     }
 
     func setEditBarView() {

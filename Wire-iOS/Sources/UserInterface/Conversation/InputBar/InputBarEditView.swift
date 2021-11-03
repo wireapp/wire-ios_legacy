@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import WireCommonComponents
 import UIKit
 
@@ -42,6 +41,8 @@ final class InputBarEditView: UIView {
     let confirmButton = InputBarEditView.iconButtonTemplate
     let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
+    private let margin: CGFloat = 16
+    private lazy var buttonMargin: CGFloat = margin + iconSize / 2
 
     weak var delegate: InputBarEditViewDelegate?
 
@@ -74,20 +75,24 @@ final class InputBarEditView: UIView {
     }
 
     fileprivate func createConstraints() {
-        let margin: CGFloat = 16
-        let buttonMargin: CGFloat = margin + iconSize / 2
-        constrain(self, undoButton, confirmButton, cancelButton) { view, undoButton, confirmButton, cancelButton in
-            align(top: view, undoButton, confirmButton, cancelButton)
-            align(bottom: view, undoButton, confirmButton, cancelButton)
+        [undoButton, confirmButton, cancelButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: undoButton.topAnchor),
+            topAnchor.constraint(equalTo: confirmButton.topAnchor),
+            topAnchor.constraint(equalTo: cancelButton.topAnchor),
 
-            undoButton.centerX == view.leading + buttonMargin
-            undoButton.width == view.height
+            bottomAnchor.constraint(equalTo: undoButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: confirmButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: cancelButton.bottomAnchor),
 
-            confirmButton.centerX == view.centerX
-            confirmButton.width == view.height
-            cancelButton.centerX == view.trailing - buttonMargin
-            cancelButton.width == view.height
-        }
+            undoButton.centerXAnchor.constraint(equalTo: leadingAnchor, constant: buttonMargin),
+            undoButton.widthAnchor.constraint(equalTo: heightAnchor),
+
+            confirmButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            confirmButton.widthAnchor.constraint(equalTo: heightAnchor),
+            cancelButton.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -buttonMargin),
+            cancelButton.widthAnchor.constraint(equalTo: heightAnchor)
+        ])
     }
 
     @objc func buttonTapped(_ sender: IconButton) {

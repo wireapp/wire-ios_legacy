@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final private class WaveformBarsView: UIView {
 
@@ -81,45 +80,45 @@ final private class WaveformBarsView: UIView {
     }
 }
 
-final public class WaveformProgressView: UIView {
+final class WaveformProgressView: UIView {
 
     fileprivate let backgroundWaveform = WaveformBarsView()
     fileprivate let foregroundWaveform = WaveformBarsView()
     fileprivate var maskShape = CAShapeLayer()
 
-    public var samples: [Float] = [] {
+    var samples: [Float] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples
         }
     }
 
-    public var barColor: UIColor = UIColor.gray {
+    var barColor: UIColor = UIColor.gray {
         didSet {
             backgroundWaveform.barColor = barColor
         }
     }
 
-    public var highlightedBarColor: UIColor = UIColor.accent() {
+    var highlightedBarColor: UIColor = UIColor.accent() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
     }
 
-    public var progress: Float = 0.0 {
+    var progress: Float = 0.0 {
         didSet {
             setProgress(progress, animated: false)
         }
     }
 
-    public override var backgroundColor: UIColor? {
+    override var backgroundColor: UIColor? {
         didSet {
             backgroundWaveform.backgroundColor = backgroundColor
             foregroundWaveform.backgroundColor = backgroundColor
         }
     }
 
-    public func setProgress(_ progress: Float, animated: Bool) {
+    func setProgress(_ progress: Float, animated: Bool) {
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
 
         if animated {
@@ -135,13 +134,13 @@ final public class WaveformProgressView: UIView {
         maskShape.path = path
     }
 
-    public override var bounds: CGRect {
+    override var bounds: CGRect {
         didSet {
             maskShape.path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         }
     }
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         maskShape.fillColor = UIColor.white.cgColor
@@ -156,10 +155,24 @@ final public class WaveformProgressView: UIView {
         addSubview(backgroundWaveform)
         addSubview(foregroundWaveform)
 
-        constrain(backgroundWaveform, foregroundWaveform) { backgroundWaveform, foregroundWaveform in
-            backgroundWaveform.edges == backgroundWaveform.superview!.edges
-            foregroundWaveform.edges == backgroundWaveform.superview!.edges
-        }
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        guard let superview = backgroundWaveform.superview else { return }
+
+        [backgroundWaveform, foregroundWaveform].prepareForLayout()
+        NSLayoutConstraint.activate([
+          backgroundWaveform.topAnchor.constraint(equalTo: superview.topAnchor),
+          backgroundWaveform.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+          backgroundWaveform.leftAnchor.constraint(equalTo: superview.leftAnchor),
+          backgroundWaveform.rightAnchor.constraint(equalTo: superview.rightAnchor),
+          foregroundWaveform.topAnchor.constraint(equalTo: superview.topAnchor),
+          foregroundWaveform.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+          foregroundWaveform.leftAnchor.constraint(equalTo: superview.leftAnchor),
+          foregroundWaveform.rightAnchor.constraint(equalTo: superview.rightAnchor)
+        ])
+
     }
 
     @available(*, unavailable)

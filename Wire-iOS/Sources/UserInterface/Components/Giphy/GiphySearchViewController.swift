@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
@@ -134,9 +133,11 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     }
 
     private func createConstraints() {
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func applyStyle() {
