@@ -20,14 +20,17 @@ import UIKit
 
 extension UIViewController {
 
-    /// Returns whether the view controller can be dismissed.
+    /// Returns whether the view controller can be dismissed. i.e. this VC is presented by other VC, or this VC's navigation VC is presented by other VC
     var canBeDismissed: Bool {
         return presentedViewController != nil ||
             presentingViewController?.presentedViewController == self
             || (navigationController != nil && navigationController?.presentingViewController?.presentedViewController == navigationController)
     }
 
-    /// Dismisses the view controller if needed before performing the specified actions.
+	/// Dismisses the view controller if needed before performing the specified actions.
+	/// - Parameters:
+	///   - animated: Pass true to animate the transition.
+	///   - completion: The block to execute after the view controller is dismissed. This block has no return value and takes no parameters. You may specify nil for this parameter.
     func dismissIfNeeded(animated: Bool = true,
                          completion: (() -> Void)? = nil) {
         if canBeDismissed {

@@ -145,8 +145,7 @@ extension AppCenterOperation: DistributeDelegate {
 
         guard
             let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let window = appDelegate.window,
-            let rootViewController = appDelegate.appRootRouter?.rootViewController
+            let window = appDelegate.window
         else {
             return false
         }
@@ -173,7 +172,12 @@ extension AppCenterOperation: DistributeDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default) {_ in })
 
         window.endEditing(true)
-		UIApplication.shared.topmostViewController(onlyFullScreen: true)?.present(alertController, animated: true)
+
+		let topmostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: true)
+
+		topmostViewController?.dismissIfNeeded(animated: true, completion: {
+			topmostViewController?.present(alertController, animated: true)
+		})
 
         return true
     }
