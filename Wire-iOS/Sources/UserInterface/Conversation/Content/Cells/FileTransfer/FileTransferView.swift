@@ -73,7 +73,6 @@ final class FileTransferView: UIView, TransferView {
         progressView.accessibilityIdentifier = "FileTransferProgressView"
         progressView.isUserInteractionEnabled = false
 
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
         loadingView.isHidden = true
 
         allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
@@ -130,15 +129,16 @@ final class FileTransferView: UIView, TransferView {
             bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 2),
             bottomLabel.leftAnchor.constraint(equalTo: topLabel.leftAnchor),
             bottomLabel.rightAnchor.constraint(equalTo: topLabel.rightAnchor),
-            loadingView.centerXAnchor.constraint(equalTo: loadingView.superview!.centerXAnchor),
-            loadingView.centerYAnchor.constraint(equalTo: loadingView.superview!.centerYAnchor)
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         fileMessage = message
-        guard let fileMessageData = message.fileMessageData
-        else { return }
+        guard let fileMessageData = message.fileMessageData else {
+            return            
+        }
 
         configureVisibleViews(with: message, isInitial: isInitial)
 
