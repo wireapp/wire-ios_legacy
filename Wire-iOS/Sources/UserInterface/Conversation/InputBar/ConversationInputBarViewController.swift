@@ -91,8 +91,6 @@ final class ConversationInputBarViewController: UIViewController,
         button.layer.borderWidth = 0.5
 
         button.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
-        button.isAccessibilityElement = true
-        button.accessibilityElementsHidden = false
         button.adjustsTitleWhenHighlighted = true
         button.adjustsBorderColorWhenHighlighted = true
 
