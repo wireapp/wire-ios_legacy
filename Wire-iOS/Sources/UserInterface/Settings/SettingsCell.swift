@@ -38,7 +38,7 @@ protocol SettingsCellType: class {
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
-    public let cellNameLabel: UILabel = {
+    let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -139,7 +139,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var titleColor: UIColor = UIColor.white {
+    var titleColor: UIColor = .white {
         didSet {
             cellNameLabel.textColor = titleColor
         }
@@ -164,10 +164,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         setupAccessibiltyElements()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-        setupAccessibiltyElements()
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func prepareForReuse() {
@@ -176,7 +175,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func setup() {
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
@@ -202,7 +201,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         badge.isHidden = true
         contentView.addSubview(badge)
 
-
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
         imagePreview.contentMode = .scaleAspectFill
@@ -223,7 +221,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         let cellNameLabelLeadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         cellNameLabelLeadingConstraint.priority = UILayoutPriority(rawValue: 750)
-
 
         [iconImageView,
          cellNameLabel,
@@ -389,7 +386,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
 
     override func createConstraints() {
         super.createConstraints()
-        let textInputSpacing = CGFloat(16)
+        let textInputSpacing: CGFloat = 16
 
         let trailingBoundaryView = accessoryView ?? contentView
         [textInput, trailingBoundaryView].prepareForLayout()
@@ -443,7 +440,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     }
 }
 
-class SettingsStaticTextTableCell: SettingsTableCell {
+final class SettingsStaticTextTableCell: SettingsTableCell {
 
     override func setup() {
         super.setup()
