@@ -39,8 +39,8 @@ final class InputBarButtonsView: UIView {
     fileprivate(set) var multilineLayout: Bool = false
     fileprivate(set) var currentRow: RowIndex = 0
 
-    fileprivate var buttonRowTopInset: NSLayoutConstraint!
-    fileprivate var buttonRowHeight: NSLayoutConstraint!
+    fileprivate lazy var buttonRowTopInset: NSLayoutConstraint = buttonOuterContainer.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor)
+    fileprivate lazy var buttonRowHeight: NSLayoutConstraint = buttonInnerContainer.heightAnchor.constraint(equalToConstant: 0)
     fileprivate var lastLayoutWidth: CGFloat = 0
 
     let expandRowButton = IconButton()
@@ -87,9 +87,6 @@ final class InputBarButtonsView: UIView {
     }
 
     private func createConstraints() {
-        buttonRowHeight = buttonInnerContainer.heightAnchor.constraint(equalToConstant: 0)
-        buttonRowTopInset = buttonOuterContainer.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor)
-
         let widthConstraint = widthAnchor.constraint(equalToConstant: 600)
         widthConstraint.priority = UILayoutPriority(rawValue: 750)
 
@@ -169,7 +166,7 @@ final class InputBarButtonsView: UIView {
         constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
     }
 
-    fileprivate func constrainRowOfButtons(_ buttons: [UIButton],
+    private func constrainRowOfButtons(_ buttons: [UIButton],
                                            inset: CGFloat,
                                            rowIsFull: Bool,
                                            referenceButton: UIButton?) {
@@ -211,17 +208,21 @@ final class InputBarButtonsView: UIView {
 
             [previous, current].prepareForLayout()
 
+            NSLayoutConstraint.activate([
+                previous.trailingAnchor.constraint(equalTo: current.leadingAnchor)
+            ])
+
             if isFirstButton {
-                NSLayoutConstraint.activate([
-                    previous.trailingAnchor.constraint(equalTo: current.leadingAnchor)
-                ])
-            } else if isLastButton {
                 NSLayoutConstraint.activate([
                     previous.widthAnchor.constraint(equalTo: current.widthAnchor, multiplier: 0.5, constant: offset)
                 ])
+            } else if isLastButton {
+                NSLayoutConstraint.activate([
+                    current.widthAnchor.constraint(equalTo: previous.widthAnchor, multiplier: 0.5, constant: offset)
+                ])
             } else {
                 NSLayoutConstraint.activate([
-                    previous.widthAnchor.constraint(equalTo: current.widthAnchor)
+                    current.widthAnchor.constraint(equalTo: previous.widthAnchor)
                 ])
             }
 
@@ -238,7 +239,7 @@ final class InputBarButtonsView: UIView {
         setupInsets(forButtons: buttons, rowIsFull: rowIsFull)
     }
 
-    fileprivate func setupInsets(forButtons buttons: [UIButton], rowIsFull: Bool) {
+    private func setupInsets(forButtons buttons: [UIButton], rowIsFull: Bool) {
         let firstButton = buttons.first!
         let firstButtonLabelSize = firstButton.titleLabel!.intrinsicContentSize
         let firstTitleMargin = (conversationHorizontalMargins.left / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
