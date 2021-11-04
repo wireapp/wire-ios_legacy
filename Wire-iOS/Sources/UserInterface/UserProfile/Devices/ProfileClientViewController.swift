@@ -22,19 +22,19 @@ import WireSyncEngine
 
 final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
-    fileprivate let userClient: UserClient
-    fileprivate let contentView = UIView()
-    fileprivate let backButton = IconButton(style: .circular)
-    fileprivate let showMyDeviceButton = ButtonWithLargerHitArea()
-    fileprivate let descriptionTextView = UITextView()
-    fileprivate let separatorLineView = UIView()
-    fileprivate let typeLabel = UILabel()
-    fileprivate let IDLabel = UILabel()
-    fileprivate let spinner = UIActivityIndicatorView(style: .gray)
-    fileprivate let fullIDLabel = CopyableLabel()
-    fileprivate let verifiedToggle = UISwitch()
-    fileprivate let verifiedToggleLabel = UILabel()
-    fileprivate let resetButton = ButtonWithLargerHitArea()
+    private let userClient: UserClient
+    private let contentView = UIView()
+    private let backButton = IconButton(style: .circular)
+    private let showMyDeviceButton = ButtonWithLargerHitArea()
+    private let descriptionTextView = UITextView()
+    private let separatorLineView = UIView()
+    private let typeLabel = UILabel()
+    private let IDLabel = UILabel()
+    let spinner = UIActivityIndicatorView(style: .gray)
+    private let fullIDLabel = CopyableLabel()
+    private let verifiedToggle = UISwitch()
+    private let verifiedToggleLabel = UILabel()
+    private let resetButton = ButtonWithLargerHitArea()
 
     var dismissSpinner: SpinnerCompletion?
 
@@ -42,7 +42,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
-    fileprivate var debugMenuButton: ButtonWithLargerHitArea?
+    private var debugMenuButton: ButtonWithLargerHitArea?
 
     var showBackButton: Bool = true {
         didSet {
@@ -50,10 +50,10 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         }
     }
 
-    fileprivate let fingerprintSmallFont = FontSpec(.small, .light).font!
-    fileprivate let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
-    fileprivate let fingerprintFont = FontSpec(.normal, .none).font!
-    fileprivate let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
+    private let fingerprintSmallFont = FontSpec(.small, .light).font!
+    private let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
+    private let fingerprintFont = FontSpec(.normal, .none).font!
+    private let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
 
     convenience init(client: UserClient,
                      fromConversation: Bool) {
@@ -206,7 +206,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         contentView.addSubview(spinner)
     }
 
-    fileprivate func updateFingerprintLabel() {
+    private func updateFingerprintLabel() {
         let fingerprintMonospaceFont = fingerprintFont.monospaced()
         let fingerprintBoldMonospaceFont = fingerprintBoldFont.monospaced()
 
