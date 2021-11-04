@@ -195,16 +195,21 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        let buttons: [IconButton?] = [canFilesBeShared ? photoButton : nil,
-                                      mentionButton,
-                                      canFilesBeShared ? sketchButton : nil,
-                                      canFilesBeShared ? gifButton : nil,
-                                      canFilesBeShared ? audioButton : nil,
-                                      pingButton,
-                                      canFilesBeShared ? uploadFileButton : nil,
-                                      locationButton,
-                                      canFilesBeShared ? videoButton : nil]
-        return buttons.compactMap { $0 }
+        return canFilesBeShared ? [
+            photoButton,
+            mentionButton,
+            sketchButton,
+            gifButton,
+            audioButton,
+            pingButton,
+            uploadFileButton,
+            locationButton,
+            videoButton
+        ] : [
+            mentionButton,
+            pingButton,
+            locationButton
+        ]
     }
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
