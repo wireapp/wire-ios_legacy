@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "nos Contatos";
 
 "conversation.input_bar.shortcut.send" = "Enviar mensagem";
-"conversation.input_bar.shortcut.newline" = "Inserir quebra de linha";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Escolha a menção anterior";
@@ -625,7 +625,6 @@
 "inbox.connection_request.ignore_button_title" = "Ignorar";
 "error.connection.title" = "Erro";
 "error.connection.missing_legalhold_consent" = "Você não pode se conectar a este usuário devido à retenção legal.";
-"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
 "error.connection.generic_error" = "Algo deu errado, por favor tente novamente";
 
 // Save image errors
@@ -1013,8 +1012,8 @@
 "self.settings.account_section.phone.title" = "Telefone";
 "self.settings.account_section.handle.title" = "Nome de usuário";
 "self.settings.account_section.add_handle.title" = "Adicionar nome de usuário";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "Equipe";
+"self.settings.account_section.domain.title" = "Domínio";
 
 "self.settings.account_details_group.info.footer" = "Pessoas podem te encontrar com esses detalhes.";
 "self.settings.account_details_group.personal.footer" = "Esta informação ainda não está disponível .";
@@ -1924,7 +1923,7 @@
 "appLockModule.goToSettingsButton.title" = "Ir para as configurações";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Rolar para baixo";
-"keyboardshortcut.conversationDetail" = "Detalhe da conversa...";
-"keyboardshortcut.searchInConversation" = "Buscar na conversa...";
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "Pessoas";
