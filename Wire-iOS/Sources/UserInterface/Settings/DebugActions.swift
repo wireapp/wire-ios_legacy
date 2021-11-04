@@ -176,7 +176,8 @@ enum DebugActions {
     }
 
     static func checkAppCenterUpdate(_ type: SettingsCellDescriptorType) {
-        Distribute.checkForUpdate()
+        Distribute.notify(.update)
+//        Distribute.checkForUpdate()
     }
     
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {

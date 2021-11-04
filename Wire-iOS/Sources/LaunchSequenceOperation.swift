@@ -143,12 +143,13 @@ extension AppCenterOperation: DistributeDelegate {
 
     func distribute(_ distribute: Distribute, releaseAvailableWith details: ReleaseDetails) -> Bool {
 
-        guard
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let window = appDelegate.window
-        else {
-            return false
-        }
+//        guard
+//            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//            let window = appDelegate.window
+//        else {
+//            fatal("no delegate or window")
+//            return false
+//        }
 
         let alertController = UIAlertController(title: "Update available \(details.shortVersion ?? "") (\(details.version ?? ""))",
                                                 message: "Release Note:\n\n\(details.releaseNotes ?? "")\n\nDo you want to update?",
@@ -171,7 +172,7 @@ extension AppCenterOperation: DistributeDelegate {
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default) {_ in })
 
-        window.endEditing(true)
+//        window.endEditing(true)
 
 		let topmostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: true)
 
