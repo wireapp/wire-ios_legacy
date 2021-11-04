@@ -148,9 +148,7 @@ extension UnlockViewController {
     
     private func createConstraints() {
         [contentView,
-         stackView].forEach { (view) in
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
+         stackView].prepareForLayout()
         
         let widthConstraint = contentView.createContentWidthConstraint()
         
