@@ -64,8 +64,8 @@ final class ThreeDotsLoadingView: UIView {
             dot1.leftAnchor.constraint(equalTo: leftAnchor),
             dot3.rightAnchor.constraint(equalTo: rightAnchor),
 
-            dot2.leftAnchor.constraint(equalTo: dot1.rightAnchor, constant: -4),
-            dot3.leftAnchor.constraint(equalTo: dot2.rightAnchor, constant: -4)
+            dot2.leftAnchor.constraint(equalTo: dot1.rightAnchor, constant: 4),
+            dot3.leftAnchor.constraint(equalTo: dot2.rightAnchor, constant: 4)
         ]
 
         [dot1, dot2, dot3].forEach { dot in
