@@ -167,7 +167,7 @@ final class InputBarButtonsView: UIView {
         defer {
             NSLayoutConstraint.activate(constraints)
         }
-        
+
         guard !secondRow.isEmpty else { return }
 
         let filled = secondRow.count == numberOfButtons
@@ -254,7 +254,7 @@ final class InputBarButtonsView: UIView {
         }
 
         setupInsets(forButtons: buttons, rowIsFull: rowIsFull)
-        
+
         return constraints
     }
 
