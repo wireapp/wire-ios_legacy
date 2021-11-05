@@ -18,39 +18,6 @@
 
 import UIKit
 
-protocol CallStatusViewInputType: CallTypeProvider, CBRSettingProvider, ColorVariantProvider {
-    var state: CallStatusViewState { get }
-    var isConstantBitRate: Bool { get }
-    var title: String { get }
-}
-
-protocol ColorVariantProvider {
-    var variant: ColorSchemeVariant { get }
-}
-
-protocol CallTypeProvider {
-    var isVideoCall: Bool { get }
-}
-
-protocol CBRSettingProvider {
-    var userEnabledCBR: Bool { get }
-}
-
-extension CallStatusViewInputType {
-    var callingConfig: CallingConfiguration { .config }
-
-    var overlayBackgroundColor: UIColor {
-        switch (isVideoCall, state, callingConfig.isAudioCallColorSchemable) {
-        case (true, .ringingOutgoing, _), (true, .ringingIncoming, _):
-            return UIColor.black.withAlphaComponent(0.4)
-        case (true, _, _), (false, _, false):
-            return UIColor.black.withAlphaComponent(0.64)
-        case (false, _, true):
-            return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
-        }
-    }
-}
-
 enum CallStatusViewState: Equatable {
     case none
     case connecting
@@ -126,7 +93,7 @@ final class CallStatusView: UIView {
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
-        bitrateLabel.isHidden = !configuration.userEnabledCBR
+        bitrateLabel.isHidden = !configuration.shouldShowBitrateLabel
         bitrateLabel.bitRateStatus = BitRateStatus(configuration.isConstantBitRate)
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
@@ -145,8 +112,7 @@ private let callDurationFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
-extension CallStatusViewInputType {
-
+private extension CallStatusViewInputType {
     var displayString: String {
         switch state {
         case .none: return ""
@@ -159,11 +125,4 @@ extension CallStatusViewInputType {
         case .terminating: return "call.status.terminating".localized
         }
     }
-
-    var effectiveColorVariant: ColorSchemeVariant {
-        guard callingConfig.isAudioCallColorSchemable else { return .dark }
-
-        return isVideoCall ? .dark : variant
-    }
-
 }

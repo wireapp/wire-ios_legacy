@@ -107,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "建立訪客聊天室";
 "peoplepicker.quick-action.admin-services" = "管理服務";
 
-"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
+"peoplepicker.federation.domain_unvailable" = "聯合域當前不可用。 [了解更多](%@)";
 
 "add_participants.alert.title" = "此群組參與者已達上限";
 "add_participants.alert.message.new_conversation" = "最多%d人可以加入對話。";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "在連絡人中";
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "換行";
 "conversation.input_bar.shortcut.edit_last_message" = "編輯最近訊息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 "conversation.input_bar.shortcut.choose_previous_mention" = "選擇前一個提及";
@@ -339,7 +339,7 @@
 "conversation.banner.services_present" = "**服務**已啟動";
 "conversation.banner.externals_present" = "**外部人士**在對話中";
 "conversation.banner.guests_services_present" = "對話中有**訪客**和**服務**";
-"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
+"conversation.banner.externals_services_present" = "對話中有**外部人士**和**服務**";
 "conversation.banner.externals_guests_present" = "對話中有**外部人士**和**訪客**";
 "conversation.banner.externals_guests_services_present" = "對話中有**外部人士**和**訪客**和**服務**";
 
@@ -692,7 +692,7 @@
 
 "call.grid.no_active_speakers" = "沒有人在視像通話中發言...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.fullscreen" = "雙擊方格以全屏顯示";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
 "call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "捏合縮放";
@@ -1012,8 +1012,8 @@
 "self.settings.account_section.phone.title" = "手機";
 "self.settings.account_section.handle.title" = "使用者名稱";
 "self.settings.account_section.add_handle.title" = "添加使用者名稱";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "團隊";
+"self.settings.account_section.domain.title" = "網域";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能透過這些資料找到您。";
 "self.settings.account_details_group.personal.footer" = "這個信息是隱藏的。";
@@ -1664,10 +1664,10 @@
 "feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
 "feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "立即升級";
 
-"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.title" = "功能無法使用";
 "feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
 
-"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.title" = "功能無法使用";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
 //Jailbroken alert
