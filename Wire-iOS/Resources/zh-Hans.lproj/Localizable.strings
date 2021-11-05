@@ -90,7 +90,7 @@
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
 "peoplepicker.no_matching_results.message.users" = "通过名字或 @username 在Wire查找用户";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "用 @username@domainname 在 Wire 查找用户\n\n通过@username@domainname 在另一个域查找人员";
 "peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
@@ -307,11 +307,11 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "插入断行";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 "conversation.input_bar.shortcut.choose_previous_mention" = "选择前面的引用";
-"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "选择下一个引用";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
@@ -883,7 +883,7 @@
 "profile.details.guest" = "游客";
 "profile.details.group_admin" = "群组管理员";
 "profile.details.partner" = "外部合作者";
-"profile.details.federated" = "Federated";
+"profile.details.federated" = "联邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "用户名";
@@ -1012,8 +1012,8 @@
 "self.settings.account_section.phone.title" = "电话";
 "self.settings.account_section.handle.title" = "用户名";
 "self.settings.account_section.add_handle.title" = "添加用户名";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "团队";
+"self.settings.account_section.domain.title" = "域";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息查找到您。";
 "self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";
