@@ -180,16 +180,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         selectedBackgroundView = UIView()
 
         iconImageView.contentMode = .center
-        contentView.addSubview(iconImageView)
 
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        contentView.addSubview(cellNameLabel)
 
         valueLabel.textColor = .lightGray
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
-
-        contentView.addSubview(valueLabel)
 
         badgeLabel.font = FontSpec(.small, .medium).font
         badgeLabel.textAlignment = .center
@@ -199,13 +195,15 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         badge.backgroundColor = .white
         badge.isHidden = true
-        contentView.addSubview(badge)
 
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.accessibilityIdentifier = "imagePreview"
-        contentView.addSubview(imagePreview)
+
+        [iconImageView, cellNameLabel, valueLabel, badge, imagePreview].forEach {
+            contentView.addSubview($0)
+        }
 
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
