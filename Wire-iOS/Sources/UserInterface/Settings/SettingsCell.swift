@@ -211,10 +211,10 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         variant = .none
 
-        createConstraints()
+        createBaseConstraints()
     }
 
-    func createConstraints() {
+    private func createBaseConstraints() {
         let trailingBoundaryView = accessoryView ?? contentView
 
         let cellNameLabelLeadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
@@ -382,8 +382,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    override func createConstraints() {
-        super.createConstraints()
+    private func createConstraints() {
         let textInputSpacing: CGFloat = 16
 
         let trailingBoundaryView = accessoryView ?? contentView
@@ -395,7 +394,6 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
 
             cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
-
     }
 
     override func setupAccessibiltyElements() {
