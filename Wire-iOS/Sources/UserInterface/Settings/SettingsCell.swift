@@ -45,12 +45,22 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         return label
     }()
-    let valueLabel = UILabel()
+
+    let valueLabel: UILabel = {
+        let valueLabel = UILabel()
+
+        valueLabel.textColor = .lightGray
+        valueLabel.font = UIFont.systemFont(ofSize: 17)
+        valueLabel.textAlignment = .right
+
+        return valueLabel
+    }()
+
     let badge = RoundedBadge(view: UIView())
     var badgeLabel = UILabel()
     let imagePreview = UIImageView()
-    let separatorLine = UIView()
-    let topSeparatorLine = UIView()
+    private let separatorLine = UIView()
+    private let topSeparatorLine = UIView()
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
     var variant: ColorSchemeVariant? = .none {
@@ -183,10 +193,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
-        valueLabel.textColor = .lightGray
-        valueLabel.font = UIFont.systemFont(ofSize: 17)
-        valueLabel.textAlignment = .right
-
         badgeLabel.font = FontSpec(.small, .medium).font
         badgeLabel.textAlignment = .center
         badgeLabel.textColor = .black
@@ -205,6 +211,10 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             contentView.addSubview($0)
         }
 
+        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        separatorLine.isAccessibilityElement = false
+        addSubview(separatorLine)
+
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
@@ -221,11 +231,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         cellNameLabelLeadingConstraint.priority = UILayoutPriority(rawValue: 750)
 
         [iconImageView,
-         cellNameLabel,
-         valueLabel,
+//         cellNameLabel,
+//         valueLabel,
          trailingBoundaryView,
          badge,
-         badgeLabel,
+//         badgeLabel,
          separatorLine,
          topSeparatorLine].prepareForLayout()
 
