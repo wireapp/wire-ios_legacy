@@ -509,6 +509,8 @@
 		638332EA250282D200D18F42 /* OrientationDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638332E9250282D200D18F42 /* OrientationDelta.swift */; };
 		638C88C62680F92D0074D512 /* MockCallGridHintNotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C88C52680F92D0074D512 /* MockCallGridHintNotificationLabel.swift */; };
 		639290A2252633E600046171 /* UIAlertController+DegradedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */; };
+		639A8F2D26DE41ED0080B8FE /* CallStatusViewInputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A8F2C26DE41EC0080B8FE /* CallStatusViewInputType.swift */; };
+		639A8F3A26DE42AF0080B8FE /* CallStatusViewInputTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A8F3626DE429F0080B8FE /* CallStatusViewInputTypeTests.swift */; };
 		63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */; };
 		63A5E6F624C87E0000F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */; };
 		63A874FC26CBAF2B000D3F27 /* CallingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A874FB26CBAF2A000D3F27 /* CallingConfiguration.swift */; };
@@ -2269,6 +2271,8 @@
 		638C88C52680F92D0074D512 /* MockCallGridHintNotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallGridHintNotificationLabel.swift; sourceTree = "<group>"; };
 		6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantViewTests.swift; sourceTree = "<group>"; };
 		639290A1252633E600046171 /* UIAlertController+DegradedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+DegradedCall.swift"; sourceTree = "<group>"; };
+		639A8F2C26DE41EC0080B8FE /* CallStatusViewInputType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusViewInputType.swift; sourceTree = "<group>"; };
+		639A8F3626DE429F0080B8FE /* CallStatusViewInputTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusViewInputTypeTests.swift; sourceTree = "<group>"; };
 		63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Advanced.swift"; sourceTree = "<group>"; };
 		63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+SoundAlert.swift"; sourceTree = "<group>"; };
 		63A874FB26CBAF2A000D3F27 /* CallingConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingConfiguration.swift; sourceTree = "<group>"; };
@@ -4569,6 +4573,7 @@
 				634FDB86263AF418002D6B94 /* ActiveCallRouterTests.swift */,
 				637387DA2649277A004FEF79 /* ScalableViewTests.swift */,
 				6314DC5B266F68D8005E3139 /* RoundedPageIndicatorTests.swift */,
+				639A8F3626DE429F0080B8FE /* CallStatusViewInputTypeTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -6648,6 +6653,7 @@
 				BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */,
 				BFCCA4FD20A0A03D000A4F33 /* CallInfoRootViewController.swift */,
 				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
+				639A8F2C26DE41EC0080B8FE /* CallStatusViewInputType.swift */,
 				BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */,
 				BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */,
 				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
@@ -7839,6 +7845,7 @@
 				1639A80F225F863000868AB9 /* ProfileHeaderViewController.swift in Sources */,
 				6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */,
 				5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */,
+				639A8F2D26DE41ED0080B8FE /* CallStatusViewInputType.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				EF58B557218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift in Sources */,
 				5E8DA76A211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift in Sources */,
@@ -8986,6 +8993,7 @@
 				06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				6340EF96237AE93500EF8506 /* VoiceChannelStreamArrangmentTests.swift in Sources */,
+				639A8F3A26DE42AF0080B8FE /* CallStatusViewInputTypeTests.swift in Sources */,
 				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,

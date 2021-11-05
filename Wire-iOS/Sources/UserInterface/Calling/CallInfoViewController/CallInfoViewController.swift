@@ -55,7 +55,8 @@ extension CallInfoViewControllerInput {
             userEnabledCBR == other.userEnabledCBR &&
             callState.isEqual(toCallState: other.callState) &&
             videoGridPresentationMode == other.videoGridPresentationMode &&
-            allowPresentationModeUpdates == other.allowPresentationModeUpdates
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates &&
+            isForcedCBR == other.isForcedCBR
     }
 }
 
