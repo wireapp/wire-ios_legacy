@@ -160,9 +160,9 @@ final class InputBarButtonsView: UIView {
         }
 
         var constraints = constrainRowOfButtons(firstRow,
-                              inset: 0,
-                              rowIsFull: true,
-                              referenceButton: .none)
+                                                inset: 0,
+                                                rowIsFull: true,
+                                                referenceButton: .none)
 
         defer {
             NSLayoutConstraint.activate(constraints)
@@ -178,9 +178,9 @@ final class InputBarButtonsView: UIView {
     }
 
     private func constrainRowOfButtons(_ buttons: [UIButton],
-                                           inset: CGFloat,
-                                           rowIsFull: Bool,
-                                           referenceButton: UIButton?) -> [NSLayoutConstraint] {
+                                       inset: CGFloat,
+                                       rowIsFull: Bool,
+                                       referenceButton: UIButton?) -> [NSLayoutConstraint] {
         guard let firstButton = buttons.first,
               let lastButton = buttons.last else { return [] }
 
