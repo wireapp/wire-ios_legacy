@@ -159,23 +159,30 @@ final class InputBarButtonsView: UIView {
             buttonRowHeight.constant = constants.buttonsBarHeight
         }
 
-        constrainRowOfButtons(firstRow,
+        var constraints = constrainRowOfButtons(firstRow,
                               inset: 0,
                               rowIsFull: true,
                               referenceButton: .none)
 
+        defer {
+            NSLayoutConstraint.activate(constraints)
+        }
+        
         guard !secondRow.isEmpty else { return }
 
         let filled = secondRow.count == numberOfButtons
         let referenceButton = firstRow.count > 1 ? firstRow[1] : firstRow[0]
-        constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
+
+        constraints.append(contentsOf: constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
+        )
     }
 
     private func constrainRowOfButtons(_ buttons: [UIButton],
                                            inset: CGFloat,
                                            rowIsFull: Bool,
-                                           referenceButton: UIButton?) {
-        guard let firstButton = buttons.first, let lastButton = buttons.last else { return }
+                                           referenceButton: UIButton?) -> [NSLayoutConstraint] {
+        guard let firstButton = buttons.first,
+              let lastButton = buttons.last else { return [] }
 
         var constraints = [NSLayoutConstraint]()
 
@@ -246,9 +253,9 @@ final class InputBarButtonsView: UIView {
             )
         }
 
-        NSLayoutConstraint.activate(constraints)
-
         setupInsets(forButtons: buttons, rowIsFull: rowIsFull)
+        
+        return constraints
     }
 
     private func setupInsets(forButtons buttons: [UIButton], rowIsFull: Bool) {
