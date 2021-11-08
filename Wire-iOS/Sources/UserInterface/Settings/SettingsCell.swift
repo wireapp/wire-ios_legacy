@@ -404,12 +404,11 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         let textInputSpacing: CGFloat = 16
 
         let trailingBoundaryView = accessoryView ?? contentView
-        [contentView, textInput, trailingBoundaryView].prepareForLayout()
-        NSLayoutConstraint.activate([
-          textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
-          textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
-          textInput.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -textInputSpacing)
-        ])
+        constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
+            textInput.top == contentView.top - 8
+            textInput.bottom == contentView.bottom + 8
+            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
+        }
 
         NSLayoutConstraint.activate([
             cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)
