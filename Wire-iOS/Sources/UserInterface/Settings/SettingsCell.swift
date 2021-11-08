@@ -59,9 +59,32 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let badge = RoundedBadge(view: UIView())
     var badgeLabel = UILabel()
-    let imagePreview = UIImageView()
-    private let separatorLine = UIView()
-    private let topSeparatorLine = UIView()
+    let imagePreview: UIImageView = {
+        let imagePreview = UIImageView()
+        imagePreview.clipsToBounds = true
+        imagePreview.layer.cornerRadius = 12
+        imagePreview.contentMode = .scaleAspectFill
+        imagePreview.accessibilityIdentifier = "imagePreview"
+
+        return imagePreview
+    }()
+
+    private let separatorLine: UIView = {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        separatorLine.isAccessibilityElement = false
+
+        return separatorLine
+    }()
+
+    private let topSeparatorLine: UIView = {
+        let topSeparatorLine = UIView()
+        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        topSeparatorLine.isAccessibilityElement = false
+
+        return topSeparatorLine
+    }()
+
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
     var variant: ColorSchemeVariant? = .none {
@@ -225,36 +248,19 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         if trailingBoundaryView != contentView {
             [trailingBoundaryView].prepareForLayout()
         }
-        [badge, badgeLabel].prepareForLayout()
 
-        imagePreview.clipsToBounds = true
-        imagePreview.layer.cornerRadius = 12
-        imagePreview.contentMode = .scaleAspectFill
-        imagePreview.accessibilityIdentifier = "imagePreview"
         contentView.addSubview(imagePreview)
 
-        [imagePreview].prepareForLayout()
-
-        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        separatorLine.isAccessibilityElement = false
-        addSubview(separatorLine)
-
-        [separatorLine, cellNameLabel].prepareForLayout()
-
-        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        topSeparatorLine.isAccessibilityElement = false
-        addSubview(topSeparatorLine)
-
-        [topSeparatorLine, cellNameLabel].prepareForLayout()
+        [badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-          iconImageView.widthAnchor.constraint(equalToConstant: 16),
-          iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
-          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            iconImageView.widthAnchor.constraint(equalToConstant: 16),
+            iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             leadingConstraint,
-          cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-          cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
 
             valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
             valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
