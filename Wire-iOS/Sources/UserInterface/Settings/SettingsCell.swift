@@ -235,22 +235,30 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         let trailingBoundaryView = accessoryView ?? contentView
 
-        constrain(contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
-            valueLabel.top == contentView.top - 8
-            valueLabel.bottom == contentView.bottom + 8
-            valueLabel.leading >= cellNameLabel.trailing + 8
-            valueLabel.trailing == trailingBoundaryView.trailing - 16
-            badge.center == valueLabel.center
-            badge.height == 20
-            badge.width >= 28
+        [cellNameLabel, valueLabel, badge].prepareForLayout()
+
+        if trailingBoundaryView != contentView {
+            [trailingBoundaryView].prepareForLayout()
         }
 
-        constrain(badge, badgeLabel) { badge, badgeLabel in
-            badgeLabel.leading == badge.leading + 6
-            badgeLabel.trailing == badge.trailing - 6
-            badgeLabel.top == badge.top
-            badgeLabel.bottom == badge.bottom
-        }
+        NSLayoutConstraint.activate([
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
+            valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
+            badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
+            badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
+            badge.heightAnchor.constraint(equalToConstant: 20),
+            badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28)
+        ])
+
+        [badge, badgeLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+            badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
+            badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
+            badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
+            badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor)
+        ])
 
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -404,13 +412,17 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         let textInputSpacing: CGFloat = 16
 
         let trailingBoundaryView = accessoryView ?? contentView
-        constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
-            textInput.top == contentView.top - 8
-            textInput.bottom == contentView.bottom + 8
-            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
+
+        [textInput].prepareForLayout()
+        if trailingBoundaryView != contentView {
+            [trailingBoundaryView].prepareForLayout()
         }
 
         NSLayoutConstraint.activate([
+            textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+            textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            textInput.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -textInputSpacing),
+
             cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
 
