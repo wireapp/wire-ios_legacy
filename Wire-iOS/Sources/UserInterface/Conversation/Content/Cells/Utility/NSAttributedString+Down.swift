@@ -21,13 +21,31 @@ import Down
 
 extension NSAttributedString {
 
+    enum Symbol: String, CaseIterable {
+        case empty = ""
+        // For when user types only either #,##,###, *** etc
+        case newline = "\n"
+        // For when user types only *
+        case tabWithDot = "•\t"
+        // For when user types only **
+        case newlineWithStar = "**\n"
+        // For when user types only { }
+        case bracket = "{ }\n"
+    }
+
     @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
         let result: NSMutableAttributedString
 
         if let attrStr = try? down.toAttributedString(using: style) {
-            result = NSMutableAttributedString(attributedString: attrStr)
+            let symbols = Symbol.allCases.map { $0.rawValue }
+
+            if symbols.contains(attrStr.string), !symbols.contains(text) {
+                result = NSMutableAttributedString(string: text)
+            } else {
+                result = NSMutableAttributedString(attributedString: attrStr)
+            }
         } else {
             result = NSMutableAttributedString(string: text)
         }
