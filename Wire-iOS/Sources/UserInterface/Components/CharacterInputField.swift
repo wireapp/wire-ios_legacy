@@ -119,12 +119,16 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
             super.init(frame: .zero)
 
-            self.layer.cornerRadius = 4
-            self.backgroundColor = .white
+            layer.cornerRadius = 4
+            backgroundColor = .white
 
             label.font = UIFont.systemFont(ofSize: 32)
-            self.addSubview(label)
+            addSubview(label)
 
+            createConstraints()
+        }
+
+        private func createConstraints() {
             label.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 label.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -174,6 +178,15 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
         addSubview(stackView)
 
+        createConstraints()
+
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+        addGestureRecognizer(longPressGestureRecognizer)
+
+        storage = String()
+    }
+
+    private func createConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -183,10 +196,6 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
             stackView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
 
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
-        self.addGestureRecognizer(longPressGestureRecognizer)
-
-        self.storage = String()
     }
 
     @available(*, unavailable)
