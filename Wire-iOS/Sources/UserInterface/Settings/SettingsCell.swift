@@ -49,6 +49,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         let label = UILabel()
         label.font = .normalLightFont
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         return label
     }()
@@ -234,29 +235,29 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
-        [iconImageView].prepareForLayout()
-        cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-
-        let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
-        leadingConstraint.priority = .defaultHigh
-
         badge.containedView.addSubview(badgeLabel)
 
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(cellNameLabel)
-        contentView.addSubview(valueLabel)
-        contentView.addSubview(badge)
-        contentView.addSubview(imagePreview)
-
+        [iconImageView, cellNameLabel, valueLabel, badge, imagePreview].forEach {
+            contentView.addSubview($0)
+        }
 
         [separatorLine, topSeparatorLine].forEach {
             addSubview($0)
         }
 
+        variant = .none
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+        leadingConstraint.priority = .defaultHigh
+
         let trailingBoundaryView = accessoryView ?? contentView
 
         if trailingBoundaryView != contentView {
-            [trailingBoundaryView].prepareForLayout()
+            trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
         [iconImageView, valueLabel, badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
@@ -301,8 +302,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
-
-        variant = .none
     }
 
     func setupAccessibiltyElements() {
@@ -392,7 +391,8 @@ final class SettingsValueCell: SettingsTableCell {
     }
 }
 
-final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
+final class SettingsTextCell: SettingsTableCell,
+                              UITextFieldDelegate {
     var textInput: UITextField!
 
     override func setup() {
@@ -419,9 +419,9 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
 
         let trailingBoundaryView = accessoryView ?? contentView
 
-        [textInput].prepareForLayout()
+        textInput.translatesAutoresizingMaskIntoConstraints = false
         if trailingBoundaryView != contentView {
-            [trailingBoundaryView].prepareForLayout()
+            trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
         NSLayoutConstraint.activate([
