@@ -18,7 +18,6 @@
 
 import UIKit
 import MapKit
-import Cartography
 import WireDataModel
 
 /// Displays the preview of a location message.
@@ -92,20 +91,28 @@ final class LocationPreviewController: TintColorCorrectedViewController {
     }
 
     private func createConstraints() {
-        constrain(view, containerView, mapView) { contentView, container, mapView in
-            container.edges == contentView.edges
-            mapView.edges == container.edges
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          container.topAnchor.constraint(equalTo: contentView.topAnchor),
+          container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          container.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          container.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          mapView.topAnchor.constraint(equalTo: container.topAnchor),
+          mapView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          mapView.leftAnchor.constraint(equalTo: container.leftAnchor),
+          mapView.rightAnchor.constraint(equalTo: container.rightAnchor)
+        ])
 
-        constrain(containerView, addressContainerView, addressLabel) { container, addressContainer, addressLabel in
-            addressContainer.left == container.left
-            addressContainer.bottom == container.bottom
-            addressContainer.right == container.right
-            addressContainer.top == addressLabel.top - 12
-            addressLabel.bottom == addressContainer.bottom - 12
-            addressLabel.left == addressContainer.left + 12
-            addressLabel.right == addressContainer.right - 12
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          addressContainer.leftAnchor.constraint(equalTo: container.leftAnchor),
+          addressContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          addressContainer.rightAnchor.constraint(equalTo: container.rightAnchor),
+          addressContainer.topAnchor.constraint(equalTo: addressLabel.topAnchor, constant: -12),
+          addressLabel.bottomAnchor.constraint(equalTo: addressContainer.bottomAnchor, constant: -12),
+          addressLabel.leftAnchor.constraint(equalTo: addressContainer.leftAnchor, constant: 12),
+          addressLabel.rightAnchor.constraint(equalTo: addressContainer.rightAnchor, constant: -12)
+        ])
     }
 
     // MARK: - Map

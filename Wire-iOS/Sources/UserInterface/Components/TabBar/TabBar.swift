@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Cartography
 
 protocol TabBarDelegate: class {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
@@ -94,13 +93,14 @@ final class TabBar: UIView {
         addSubview(selectionLineView)
         selectionLineView.backgroundColor = style == .dark ? .white : .black
 
-        constrain(self, selectionLineView) { selfView, selectionLineView in
-            lineLeadingConstraint = selectionLineView.leading == selfView.leading + tabInset
-            selectionLineView.height == 1
-            selectionLineView.bottom == selfView.bottom
-            let widthInset = tabInset * 2 / CGFloat(items.count)
-            selectionLineView.width == selfView.width / CGFloat(items.count) - widthInset
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          lineLeadingConstraint = selectionLineView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: tabInset),
+          selectionLineView.heightAnchor.constraint(equalToConstant: 1),
+          selectionLineView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+          let widthInset = tabInset * 2 / CGFloat(items.count),
+          selectionLineView.widthAnchor.constraint(equalTo: selfView.widthAnchor, constant: / CGFloat(items.count) -widthInset)
+        ])
     }
 
     override func layoutSubviews() {
@@ -138,14 +138,15 @@ final class TabBar: UIView {
     }
 
     fileprivate func createConstraints() {
-        constrain(self, stackView) { selfView, stackView in
-            stackView.left == selfView.left + tabInset
-            stackView.right == selfView.right - tabInset
-            stackView.top == selfView.top
-            stackView.height == 48
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          stackView.leftAnchor.constraint(equalTo: selfView.leftAnchor, constant: tabInset),
+          stackView.rightAnchor.constraint(equalTo: selfView.rightAnchor, constant: -tabInset),
+          stackView.topAnchor.constraint(equalTo: selfView.topAnchor),
+          stackView.heightAnchor.constraint(equalToConstant: 48),
 
-            selfView.bottom == stackView.bottom
-        }
+          selfView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+        ])
     }
 
     fileprivate func makeButtonForItem(_ index: Int, _ item: UITabBarItem) -> Tab {

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 public enum DeniedAuthorizationType {
@@ -102,13 +101,14 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
 
-        constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { selfView, container, description, _, _ in
-            description.leading == container.leading + 16
-            description.trailing == container.trailing - 16
-            container.centerY == selfView.centerY
-            container.leading == selfView.leading
-            container.trailing == selfView.trailing
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          description.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+          description.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
+          container.centerYAnchor.constraint(equalTo: selfView.centerYAnchor),
+          container.leadingAnchor.constraint(equalTo: selfView.leadingAnchor),
+          container.trailingAnchor.constraint(equalTo: selfView.trailingAnchor)
+        ])
 
         if deniedAuthorization == .ongoingCall {
             createConstraintsForOngoingCallAlert()
@@ -124,13 +124,14 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         containerView.addSubview(settingsButton)
 
-        constrain(self, containerView, descriptionLabel, settingsButton) { _, container, description, settings in
-            settings.bottom == container.bottom
-            settings.top == description.bottom + 24
-            settings.height == 44.0
-            settings.centerX == container.centerX
-            description.top == container.top
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          settings.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          settings.topAnchor.constraint(equalTo: description.bottomAnchor, constant: 24),
+          settings.heightAnchor.constraint(equalTo: 44.0Anchor),
+          settings.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+          description.topAnchor.constraint(equalTo: container.topAnchor)
+        ])
     }
 
     private func createConstraintsForOngoingCallAlert() {
@@ -140,12 +141,13 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         containerView.addSubview(cameraIcon)
 
-        constrain(self, containerView, descriptionLabel, cameraIcon) { _, container, description, cameraIcon in
-            description.bottom == container.bottom
-            description.top == cameraIcon.bottom + 16
-            cameraIcon.top == container.top
-            cameraIcon.centerX == container.centerX
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          description.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          description.topAnchor.constraint(equalTo: cameraIcon.bottomAnchor, constant: 16),
+          cameraIcon.topAnchor.constraint(equalTo: container.topAnchor),
+          cameraIcon.centerXAnchor.constraint(equalTo: container.centerXAnchor)
+        ])
     }
 
 }

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 class SketchToolbar: UIView {
 
@@ -60,41 +59,44 @@ class SketchToolbar: UIView {
 
     func createButtonContraints(buttons: [UIButton]) {
         for button in buttons {
-            constrain(button) { button in
-                button.width == 32
-                button.height == 32
-            }
+            [<#views#>].prepareForLayout()
+            NSLayoutConstraint.activate([
+              button.widthAnchor.constraint(equalToConstant: 32),
+              button.heightAnchor.constraint(equalToConstant: 32)
+            ])
         }
     }
 
     private func createConstraints() {
         let buttonSpacing: CGFloat = 8
 
-        constrain(self, containerView) { parentView, container in
-            container.left == parentView.left
-            container.right == parentView.right
-            container.top == parentView.top
-            container.bottom == parentView.bottom - UIScreen.safeArea.bottom
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          container.leftAnchor.constraint(equalTo: parentView.leftAnchor),
+          container.rightAnchor.constraint(equalTo: parentView.rightAnchor),
+          container.topAnchor.constraint(equalTo: parentView.topAnchor),
+          container.bottomAnchor.constraint(equalToConstant: parentView.bottom - UIScreen.safeArea.bottom)
+        ])
 
-        constrain(containerView, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
-            container.height == 56
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          container.heightAnchor.constraint(equalToConstant: 56),
 
-            leftButton.left == container.left + buttonSpacing
-            leftButton.centerY == container.centerY
+          leftButton.leftAnchor.constraint(equalTo: container.leftAnchor, constant: buttonSpacing),
+          leftButton.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
-            rightButton.right == container.right - buttonSpacing
-            rightButton.centerY == container.centerY
+          rightButton.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -buttonSpacing),
+          rightButton.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
-            centerButtonContainer.centerX == container.centerX
-            centerButtonContainer.top == container.top
-            centerButtonContainer.bottom == container.bottom
+          centerButtonContainer.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+          centerButtonContainer.topAnchor.constraint(equalTo: container.topAnchor),
+          centerButtonContainer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
 
-            separatorLine.top == container.top
-            separatorLine.left == container.left
-            separatorLine.right == container.right
-            separatorLine.height == .hairline
-        }
+          separatorLine.topAnchor.constraint(equalTo: container.topAnchor),
+          separatorLine.leftAnchor.constraint(equalTo: container.leftAnchor),
+          separatorLine.rightAnchor.constraint(equalTo: container.rightAnchor),
+          separatorLine.heightAnchor.constraint(equalTo: .hairlineAnchor)
+        ])
 
         createCenterButtonConstraints()
     }
@@ -106,22 +108,24 @@ class SketchToolbar: UIView {
         let leftButton = centerButtons.first!
         let rightButton = centerButtons.last!
 
-        constrain(centerButtonContainer, leftButton, rightButton) { container, leftButton, rightButton in
-            leftButton.left == container.left + buttonSpacing
-            leftButton.centerY == container.centerY
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          leftButton.leftAnchor.constraint(equalTo: container.leftAnchor, constant: buttonSpacing),
+          leftButton.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
-            rightButton.right == container.right - buttonSpacing
-            rightButton.centerY == container.centerY
-        }
+          rightButton.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -buttonSpacing),
+          rightButton.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+        ])
 
         for i in 1..<centerButtons.count {
             let previousButton = centerButtons[i-1]
             let button = centerButtons[i]
 
-            constrain(centerButtonContainer, button, previousButton) { container, button, previousButton in
-                button.left == previousButton.right + buttonSpacing
-                button.centerY == container.centerY
-            }
+            [<#views#>].prepareForLayout()
+            NSLayoutConstraint.activate([
+              button.leftAnchor.constraint(equalTo: previousButton.rightAnchor, constant: buttonSpacing),
+              button.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+            ])
         }
     }
 

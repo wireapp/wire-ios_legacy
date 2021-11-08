@@ -18,7 +18,6 @@
 
 import UIKit
 import WireCanvas
-import Cartography
 import WireCommonComponents
 
 protocol CanvasViewControllerDelegate: class {
@@ -181,33 +180,36 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
     private func createConstraints() {
         let colorPickerControllerView = colorPickerController.view
-        constrain(view, canvas, colorPickerControllerView, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
-            colorPicker.top == container.top
-            colorPicker.left == container.left
-            colorPicker.right == container.right
-            colorPicker.height == 48
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          colorPicker.topAnchor.constraint(equalTo: container.topAnchor),
+          colorPicker.leftAnchor.constraint(equalTo: container.leftAnchor),
+          colorPicker.rightAnchor.constraint(equalTo: container.rightAnchor),
+          colorPicker.heightAnchor.constraint(equalToConstant: 48),
 
-            separatorLine.top == colorPicker.bottom
-            separatorLine.left == colorPicker.left
-            separatorLine.right == colorPicker.right
-            separatorLine.height == .hairline
+          separatorLine.topAnchor.constraint(equalTo: colorPicker.bottomAnchor),
+          separatorLine.leftAnchor.constraint(equalTo: colorPicker.leftAnchor),
+          separatorLine.rightAnchor.constraint(equalTo: colorPicker.rightAnchor),
+          separatorLine.heightAnchor.constraint(equalTo: .hairlineAnchor),
 
-            canvas.top == colorPicker.bottom
-            canvas.left == container.left
-            canvas.right == container.right
+          canvas.topAnchor.constraint(equalTo: colorPicker.bottomAnchor),
+          canvas.leftAnchor.constraint(equalTo: container.leftAnchor),
+          canvas.rightAnchor.constraint(equalTo: container.rightAnchor),
 
-            toolbar.top == canvas.bottom
-            toolbar.bottom == container.bottom
-            toolbar.left == container.left
-            toolbar.right == container.right
-        }
+          toolbar.topAnchor.constraint(equalTo: canvas.bottomAnchor),
+          toolbar.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+          toolbar.leftAnchor.constraint(equalTo: container.leftAnchor),
+          toolbar.rightAnchor.constraint(equalTo: container.rightAnchor)
+        ])
 
-        constrain(view, colorPickerControllerView, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
-            hintImageView.center == container.center
-            hintLabel.top == colorPicker.bottom + 16
-            hintLabel.leftMargin == container.leftMargin
-            hintLabel.rightMargin == container.rightMargin
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          hintImageView.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+          hintImageView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+          hintLabel.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 16),
+          hintLabel.leftMarginAnchor.constraint(equalTo: container.leftMarginAnchor),
+          hintLabel.rightMarginAnchor.constraint(equalTo: container.rightMarginAnchor)
+        ])
     }
 
     func updateButtonSelection() {
@@ -286,12 +288,13 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
         view.addSubview(emojiKeyboardViewController.view)
 
         let emojiKeyboardViewControllerView = emojiKeyboardViewController.view
-        constrain(view, emojiKeyboardViewControllerView) { container, emojiKeyboardView in
-            emojiKeyboardView.height == KeyboardHeight.current
-            emojiKeyboardView.left == container.left
-            emojiKeyboardView.right == container.right
-            emojiKeyboardView.bottom == container.bottom
-        }
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+          emojiKeyboardView.heightAnchor.constraint(equalTo: KeyboardHeight.currentAnchor),
+          emojiKeyboardView.leftAnchor.constraint(equalTo: container.leftAnchor),
+          emojiKeyboardView.rightAnchor.constraint(equalTo: container.rightAnchor),
+          emojiKeyboardView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ])
 
         addChild(emojiKeyboardViewController)
 
