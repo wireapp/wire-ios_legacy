@@ -27,7 +27,7 @@ NS_CLASS_DEPRECATED_IOS(4_0, 13_0, "Use SwiftMockConversation instead")
 @property (nonatomic, copy) NSString *displayName;
 @property (nonatomic) id<LabelType> folder;
 @property (nonatomic) ZMUser *creator;
-@property (nonatomic) id<UserType> connectedUser;
+@property (nonatomic) id<UserType> connectedUserType;
 @property (nonatomic) ZMConversationType conversationType;
 @property (nonatomic) NSArray *sortedActiveParticipants;
 @property (nonatomic) ZMConversationSecurityLevel securityLevel;

@@ -46,7 +46,7 @@ extension MockConversation {
         let mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
         mockConversation.displayName = otherUser.name
-        mockConversation.connectedUser = otherUser
+        mockConversation.connectedUserType = otherUser
         mockConversation.sortedActiveParticipants = [selfUser, otherUser]
         mockConversation.isConversationEligibleForVideoCalls = true
 
