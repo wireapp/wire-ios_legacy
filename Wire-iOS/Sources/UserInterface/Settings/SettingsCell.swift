@@ -266,34 +266,37 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         imagePreview.accessibilityIdentifier = "imagePreview"
         contentView.addSubview(imagePreview)
 
-        constrain(contentView, imagePreview) { contentView, imagePreview in
-            imagePreview.width == imagePreview.height
-            imagePreview.height == 24
-            imagePreview.trailing == contentView.trailing - 16
-            imagePreview.centerY == contentView.centerY
-        }
+        [imagePreview].prepareForLayout()
+        NSLayoutConstraint.activate([
+            imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
+            imagePreview.heightAnchor.constraint(equalToConstant: 24),
+            imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
 
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         separatorLine.isAccessibilityElement = false
         addSubview(separatorLine)
 
-        constrain(self, separatorLine, cellNameLabel) { selfView, separatorLine, cellNameLabel in
-            separatorLine.leading == cellNameLabel.leading
-            separatorLine.trailing == selfView.trailing
-            separatorLine.bottom == selfView.bottom
-            separatorLine.height == .hairline
-        }
+        [separatorLine, cellNameLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separatorLine.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
 
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
 
-        constrain(self, topSeparatorLine, cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
-            topSeparatorLine.leading == cellNameLabel.leading
-            topSeparatorLine.trailing == selfView.trailing
-            topSeparatorLine.top == selfView.top
-            topSeparatorLine.height == .hairline
-        }
+        [topSeparatorLine, cellNameLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+            topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+            topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
+            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
