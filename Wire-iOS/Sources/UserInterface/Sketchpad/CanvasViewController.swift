@@ -285,7 +285,8 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
         emojiKeyboardViewController.willMove(toParent: self)
         view.addSubview(emojiKeyboardViewController.view)
 
-        constrain(view, emojiKeyboardViewController.view) { container, emojiKeyboardView in
+        let emojiKeyboardViewControllerView = emojiKeyboardViewController.view
+        constrain(view, emojiKeyboardViewControllerView) { container, emojiKeyboardView in
             emojiKeyboardView.height == KeyboardHeight.current
             emojiKeyboardView.left == container.left
             emojiKeyboardView.right == container.right
