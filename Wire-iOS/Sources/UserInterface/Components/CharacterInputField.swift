@@ -133,7 +133,6 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         }
 
         @available(*, unavailable)
-        required init?(coder aDecoder: NSCoder)
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -190,6 +189,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.storage = String()
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
