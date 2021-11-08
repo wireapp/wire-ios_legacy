@@ -185,7 +185,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         preview = .none
     }
 
-    private func setup() {
+    func setup() {
         backgroundColor = .clear
         backgroundView = UIView()
         selectedBackgroundView = UIView()
@@ -206,8 +206,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         leadingConstraint.priority = .defaultHigh
-        ///TODO: mv
-        cellNameLabelToIconInset = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
         [cellNameLabel, iconImageView].prepareForLayout()
         NSLayoutConstraint.activate([
@@ -237,25 +235,22 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         let trailingBoundaryView = accessoryView ?? contentView
 
-        [cellNameLabel, valueLabel, trailingBoundaryView, badge].prepareForLayout()
-        NSLayoutConstraint.activate([
-          valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
-          valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
-          valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
-          valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
-          badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
-          badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
-          badge.heightAnchor.constraint(equalToConstant: 20),
-          badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28)
-        ])
+        constrain(contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
+            valueLabel.top == contentView.top - 8
+            valueLabel.bottom == contentView.bottom + 8
+            valueLabel.leading >= cellNameLabel.trailing + 8
+            valueLabel.trailing == trailingBoundaryView.trailing - 16
+            badge.center == valueLabel.center
+            badge.height == 20
+            badge.width >= 28
+        }
 
-        [badge, badgeLabel].prepareForLayout()
-        NSLayoutConstraint.activate([
-          badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
-          badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
-          badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
-          badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor)
-        ])
+        constrain(badge, badgeLabel) { badge, badgeLabel in
+            badgeLabel.leading == badge.leading + 6
+            badgeLabel.trailing == badge.trailing - 6
+            badgeLabel.top == badge.top
+            badgeLabel.bottom == badge.bottom
+        }
 
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -263,37 +258,34 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         imagePreview.accessibilityIdentifier = "imagePreview"
         contentView.addSubview(imagePreview)
 
-        [imagePreview].prepareForLayout()
-        NSLayoutConstraint.activate([
-          imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
-          imagePreview.heightAnchor.constraint(equalToConstant: 24),
-          imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-          imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
+        constrain(contentView, imagePreview) { contentView, imagePreview in
+            imagePreview.width == imagePreview.height
+            imagePreview.height == 24
+            imagePreview.trailing == contentView.trailing - 16
+            imagePreview.centerY == contentView.centerY
+        }
 
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         separatorLine.isAccessibilityElement = false
         addSubview(separatorLine)
 
-        [separatorLine, cellNameLabel].prepareForLayout()
-        NSLayoutConstraint.activate([
-          separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-          separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-          separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
-          separatorLine.heightAnchor.constraint(equalToConstant: .hairline)
-        ])
+        constrain(self, separatorLine, cellNameLabel) { selfView, separatorLine, cellNameLabel in
+            separatorLine.leading == cellNameLabel.leading
+            separatorLine.trailing == selfView.trailing
+            separatorLine.bottom == selfView.bottom
+            separatorLine.height == .hairline
+        }
 
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
 
-        [topSeparatorLine, cellNameLabel].prepareForLayout()
-        NSLayoutConstraint.activate([
-          topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-          topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-          topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
-          topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)
-        ])
+        constrain(self, topSeparatorLine, cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
+            topSeparatorLine.leading == cellNameLabel.leading
+            topSeparatorLine.trailing == selfView.trailing
+            topSeparatorLine.top == selfView.top
+            topSeparatorLine.height == .hairline
+        }
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
