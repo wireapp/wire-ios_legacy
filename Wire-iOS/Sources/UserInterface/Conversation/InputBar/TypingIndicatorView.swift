@@ -69,7 +69,7 @@ final class AnimatedPenView: UIView {
     private func setupConstraints() {
         [dots, pen].prepareForLayout()
 
-        let distributeConstraint = dots.rightAnchor.constraint(equalTo: pen.leftAnchor, constant: 2)
+        let distributeConstraint = pen.leftAnchor.constraint(equalTo: dots.rightAnchor, constant: 2)
 
         distributeConstraint.priority = .defaultHigh
 
@@ -164,17 +164,19 @@ final class TypingIndicatorView: UIView {
     }
 
     private func setupConstraints() {
-        [nameLabel,
+        [//nameLabel,
+            container,
          animatedPen,
          expandingLine].prepareForLayout()
 
-        let distributeConstraint = animatedPen.leftAnchor.constraint(equalTo: nameLabel.rightAnchor, constant: 4)
+        let distributeConstraint = nameLabel.leftAnchor.constraint(equalTo: animatedPen.rightAnchor, constant: 4)
 
         distributeConstraint.priority = .defaultHigh
 
-        let bottomConstraint = nameLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -4)
+        // Lower the priority to prevent this breaks when container's height = 0
+        let nameLabelBottomConstraint = nameLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -4)
 
-        bottomConstraint.priority = .defaultHigh
+        nameLabelBottomConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor),
@@ -188,7 +190,7 @@ final class TypingIndicatorView: UIView {
             animatedPen.centerYAnchor.constraint(equalTo: container.centerYAnchor),
 
             nameLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 4),
-            bottomConstraint,
+            nameLabelBottomConstraint,
             nameLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -8),
 
             expandingLine.centerXAnchor.constraint(equalTo: centerXAnchor),
