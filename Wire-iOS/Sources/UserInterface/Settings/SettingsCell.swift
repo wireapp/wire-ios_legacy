@@ -38,7 +38,13 @@ protocol SettingsCellType: class {
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
-    let iconImageView = UIImageView()
+    private let iconImageView: UIImageView = {
+        let iconImageView = UIImageView()
+        iconImageView.contentMode = .center
+
+        return iconImageView
+    }()
+
     let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
@@ -57,9 +63,24 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return valueLabel
     }()
 
-    let badge = RoundedBadge(view: UIView())
-    var badgeLabel = UILabel()
-    let imagePreview: UIImageView = {
+    let badge: RoundedBadge = {
+        let badge = RoundedBadge(view: UIView())
+        badge.backgroundColor = .white
+        badge.isHidden = true
+
+        return badge
+    }()
+
+    private let badgeLabel: UILabel = {
+        let badgeLabel = UILabel()
+        badgeLabel.font = FontSpec(.small, .medium).font
+        badgeLabel.textAlignment = .center
+        badgeLabel.textColor = .black
+
+        return badgeLabel
+    }()
+
+    private let imagePreview: UIImageView = {
         let imagePreview = UIImageView()
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -213,45 +234,32 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
-        iconImageView.contentMode = .center
-        contentView.addSubview(iconImageView)
-
         [iconImageView].prepareForLayout()
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        contentView.addSubview(cellNameLabel)
 
         let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         leadingConstraint.priority = .defaultHigh
 
-        [cellNameLabel, iconImageView].prepareForLayout()
-
-        valueLabel.textColor = UIColor.lightGray
-        valueLabel.font = UIFont.systemFont(ofSize: 17)
-        valueLabel.textAlignment = .right
-
-        contentView.addSubview(valueLabel)
-
-        badgeLabel.font = FontSpec(.small, .medium).font
-        badgeLabel.textAlignment = .center
-        badgeLabel.textColor = .black
-
         badge.containedView.addSubview(badgeLabel)
 
-        badge.backgroundColor = .white
-        badge.isHidden = true
+        contentView.addSubview(iconImageView)
+        contentView.addSubview(cellNameLabel)
+        contentView.addSubview(valueLabel)
         contentView.addSubview(badge)
+        contentView.addSubview(imagePreview)
+
+
+        [separatorLine, topSeparatorLine].forEach {
+            addSubview($0)
+        }
 
         let trailingBoundaryView = accessoryView ?? contentView
-
-        [cellNameLabel, valueLabel, badge].prepareForLayout()
 
         if trailingBoundaryView != contentView {
             [trailingBoundaryView].prepareForLayout()
         }
 
-        contentView.addSubview(imagePreview)
-
-        [badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
+        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
