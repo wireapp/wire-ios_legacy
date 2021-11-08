@@ -62,6 +62,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -133,7 +134,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         callQualityStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -300,9 +301,13 @@ class QualityScoreSelectorView: UIView {
             .forEach(scoreStackView.addArrangedSubview)
 
         addSubview(scoreStackView)
-        constrain(self, scoreStackView) { selfView, scoreStackView in
-            scoreStackView.edges == selfView.edges
-        }
+        scoreStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          scoreStackView.topAnchor.constraint(equalTo: topAnchor),
+          scoreStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          scoreStackView.leftAnchor.constraint(equalTo: leftAnchor),
+          scoreStackView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
     }
 
     override func layoutSubviews() {
@@ -321,6 +326,7 @@ class QualityScoreSelectorView: UIView {
         return NSLocalizedString("calling.quality_survey.answer.\(score)", comment: "")
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -92,6 +92,14 @@ enum DebugActions {
         }
     }
 
+    static func deleteInvalidConversations(_ type: SettingsCellDescriptorType) {
+        guard let context = ZMUserSession.shared()?.managedObjectContext else { return }
+
+        let predicate = NSPredicate(format: "domain = ''")
+        try? context.batchDeleteEntities(named: ZMConversation.entityName(), matching: predicate)
+        context.saveOrRollback()
+    }
+
     /// Sends a message that will fail to decode on every other device, on the first conversation of the list
     static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
         guard

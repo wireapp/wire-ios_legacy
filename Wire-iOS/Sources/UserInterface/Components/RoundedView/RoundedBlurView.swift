@@ -35,10 +35,11 @@ class RoundedBlurView: RoundedView {
 
     func setupViews() {
         addSubview(blurView)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    /// TODO: Bill activate super constraints in 1 batch.
     func createConstraints() {
+        blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.fitIn(view: self)
     }
 }

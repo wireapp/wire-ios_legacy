@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Контакты";
 "peoplepicker.header.services" = "Сервисы";
 "peoplepicker.services.open_conversation.item" = "Открыть беседу";
 "peoplepicker.services.add_service.button" = "Добавить сервис";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
-"conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Изменить последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Выбрать предыдущее упоминание";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Связаться";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
+"error.connection.title" = "Ошибка";
 "error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
+"error.connection.generic_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Телефон";
 "self.settings.account_section.handle.title" = "Псевдоним";
 "self.settings.account_section.add_handle.title" = "Добавить псевдоним";
+"self.settings.account_section.team.title" = "Команда";
+"self.settings.account_section.domain.title" = "Домен";
 
 "self.settings.account_details_group.info.footer" = "Пользователи могут вас найти по этим данным.";
 "self.settings.account_details_group.personal.footer" = "Эта информация не видна.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
 "appLockModule.unlockButton.title" = "Разблокировать";
 "appLockModule.goToSettingsButton.title" = "Перейти в настройки";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Контакты";

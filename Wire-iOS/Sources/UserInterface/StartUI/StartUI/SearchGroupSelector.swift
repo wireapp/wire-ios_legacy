@@ -53,6 +53,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

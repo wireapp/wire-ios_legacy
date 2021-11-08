@@ -50,6 +50,7 @@ final class UserNameTakeOverViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -106,7 +107,7 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.delegate = self
     }
 
-    func createConstraints() {
+    private func createConstraints() {
 
         [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].prepareForLayout()
 

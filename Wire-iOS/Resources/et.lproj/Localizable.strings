@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 "conversation.input_bar.shortcut.send" = "Saada teade";
-"conversation.input_bar.shortcut.newline" = "Lisa reavahetus";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Viimase sõnumi muutmine";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Tühista";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Lisa kontakt";
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
 "inbox.connection_request.ignore_button_title" = "Ignoreeri";
+"error.connection.title" = "Viga";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Midagi läks valesti, palun proovi uuesti";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Kasutajanimi";
 "self.settings.account_section.add_handle.title" = "Lisa kasutajanimi";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Inimesed leiavad sind nende andmete põhjal.";
 "self.settings.account_details_group.personal.footer" = "Need andmed pole avalikud.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Vabasta lukust";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Inimesed";

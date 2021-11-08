@@ -1031,6 +1031,25 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
                        expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
+    func test_Group_ViewIsAdmin_OtherIsFederated() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = false
+        otherUser.isFederated = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
     // MARK: - Pending Connection
 
     func test_Group_ConnectionRequest() {

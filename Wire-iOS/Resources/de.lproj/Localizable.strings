@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
-"conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
+"conversation.input_bar.shortcut.newline" = "Zeilenumbruch Einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Vorherige Erwähnung auswählen";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Kontaktanfrage";
 "inbox.connection_request.connect_button_title" = "Verbinden";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
+"error.connection.title" = "Fehler";
 "error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
+"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Benutzername";
 "self.settings.account_section.add_handle.title" = "Benutzernamen hinzufügen";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Mit diesen Angaben kann man Sie finden.";
 "self.settings.account_details_group.personal.footer" = "Diese Informationen sind nicht sichtbar.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, Kennwort in den Geräteeinstellungen aktivieren";
 "appLockModule.unlockButton.title" = "Entsperren";
 "appLockModule.goToSettingsButton.title" = "Einstellungen öffnen";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Nach Unten Scrollen";
+"keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
+"keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
+"keyboardshortcut.openPeople" = "Kontakte";

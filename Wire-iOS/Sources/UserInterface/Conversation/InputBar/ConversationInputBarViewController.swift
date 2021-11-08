@@ -194,6 +194,24 @@ final class ConversationInputBarViewController: UIViewController,
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
 
+    private var inputBarButtons: [IconButton] {
+        return canFilesBeShared ? [
+            photoButton,
+            mentionButton,
+            sketchButton,
+            gifButton,
+            audioButton,
+            pingButton,
+            uploadFileButton,
+            locationButton,
+            videoButton
+        ] : [
+            mentionButton,
+            pingButton,
+            locationButton
+        ]
+    }
+
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
             guard oldValue != mode else {
@@ -703,7 +721,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         }
     }
 
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         statusBarBlinksRedFix()
 
         parent?.dismiss(animated: true) {
@@ -760,7 +778,7 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 // MARK: - ZMConversationObserver
 
 extension ConversationInputBarViewController: ZMConversationObserver {
-    public func conversationDidChange(_ change: ConversationChangeInfo) {
+    func conversationDidChange(_ change: ConversationChangeInfo) {
         if change.participantsChanged ||
             change.connectionStateChanged {
             updateInputBarVisibility()
@@ -776,7 +794,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
 // MARK: - ZMUserObserver
 
 extension ConversationInputBarViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.availabilityChanged {
             updateAvailabilityPlaceholder()
         }
@@ -786,11 +804,11 @@ extension ConversationInputBarViewController: ZMUserObserver {
 // MARK: - UIGestureRecognizerDelegate
 
 extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return singleTapGestureRecognizer == gestureRecognizer || singleTapGestureRecognizer == otherGestureRecognizer
     }
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if singleTapGestureRecognizer == gestureRecognizer {
             return true
         }
@@ -798,7 +816,89 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         return gestureRecognizer.view?.bounds.contains(touch.location(in: gestureRecognizer.view)) ?? false
     }
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return otherGestureRecognizer is UIPanGestureRecognizer
+    }
+
+    /// Whether files can be shared and received
+    var canFilesBeShared: Bool {
+        guard let session = ZMUserSession.shared() else { return true }
+        return session.fileSharingFeature.status == .enabled
+    }
+
+    // MARK: setup views
+
+    private func setupViews() {
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+
+        setupInputBar()
+
+        inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
+        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
+        inputBar.leftAccessoryView.addSubview(markdownButton)
+        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
+        inputBar.addSubview(typingIndicatorView)
+
+        createConstraints()
+    }
+
+    private func setupInputBar() {
+        audioButton.accessibilityIdentifier = "audioButton"
+        videoButton.accessibilityIdentifier = "videoButton"
+        photoButton.accessibilityIdentifier = "photoButton"
+        uploadFileButton.accessibilityIdentifier = "uploadFileButton"
+        sketchButton.accessibilityIdentifier = "sketchButton"
+        pingButton.accessibilityIdentifier = "pingButton"
+        locationButton.accessibilityIdentifier = "locationButton"
+        gifButton.accessibilityIdentifier = "gifButton"
+        mentionButton.accessibilityIdentifier = "mentionButton"
+        markdownButton.accessibilityIdentifier = "markdownButton"
+
+        inputBarButtons.forEach {
+            $0.hitAreaPadding = .zero
+        }
+
+        inputBar.textView.delegate = self
+        inputBar.textView.informalTextViewDelegate = self
+        registerForTextFieldSelectionChange()
+
+        view.addSubview(inputBar)
+
+        inputBar.editingView.delegate = self
+    }
+
+    private func createConstraints() {
+        [inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
+
+        let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
+        bottomConstraint.priority = .defaultLow
+
+        let senderDiameter: CGFloat = 28
+
+        NSLayoutConstraint.activate([
+            inputBar.topAnchor.constraint(equalTo: inputBar.superview!.topAnchor),
+            inputBar.leadingAnchor.constraint(equalTo: inputBar.superview!.leadingAnchor),
+            inputBar.trailingAnchor.constraint(equalTo: inputBar.superview!.trailingAnchor),
+            bottomConstraint,
+
+            sendButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            sendButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
+            ephemeralIndicatorButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            ephemeralIndicatorButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
+            markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
+            markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
+            markdownButton.widthAnchor.constraint(equalToConstant: senderDiameter),
+            markdownButton.heightAnchor.constraint(equalToConstant: senderDiameter),
+
+            hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+            hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
+
+            typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
+            typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
+            typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
+            typingIndicatorView.rightAnchor.constraint(lessThanOrEqualTo: typingIndicatorView.superview!.rightAnchor, constant: 48)
+        ])
     }
 }

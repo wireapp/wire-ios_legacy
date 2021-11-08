@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "trong Danh bạ";
 
 "conversation.input_bar.shortcut.send" = "Gửi Tin nhắn";
-"conversation.input_bar.shortcut.newline" = "Chèn ngắt dòng";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Chỉnh sửa Tin nhắn cuối cùng";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Huỷ";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Kết nối";
 "inbox.connection_request.connect_button_title" = "Kết nối";
 "inbox.connection_request.ignore_button_title" = "Bỏ qua";
+"error.connection.title" = "Error";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Đã xảy ra lỗi, vui lòng thử lại";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Di động";
 "self.settings.account_section.handle.title" = "Tên người dùng";
 "self.settings.account_section.add_handle.title" = "Thêm tên người dùng";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Mọi người có thể tìm bạn với thông tin này.";
 "self.settings.account_details_group.personal.footer" = "Thông tin này có thể không thấy.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Mở khoá";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Mọi người";

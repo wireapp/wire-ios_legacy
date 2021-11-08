@@ -33,11 +33,11 @@ final class DotView: UIView {
 
     var showIndicator: Bool {
         get {
-            return !self.isHidden
+            return !isHidden
         }
 
         set {
-            self.isHidden = !newValue
+            isHidden = !newValue
         }
     }
 
@@ -71,6 +71,7 @@ final class DotView: UIView {
         self.createClientObservers()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

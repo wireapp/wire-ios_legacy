@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "nos Contatos";
 
 "conversation.input_bar.shortcut.send" = "Enviar mensagem";
-"conversation.input_bar.shortcut.newline" = "Inserir quebra de linha";
+"conversation.input_bar.shortcut.newline" = "Inserir Quebra de Linha";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Escolha a menção anterior";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Conectar";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
+"error.connection.title" = "Erro";
 "error.connection.missing_legalhold_consent" = "Você não pode se conectar a este usuário devido à retenção legal.";
+"error.connection.generic_error" = "Algo deu errado, por favor tente novamente";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire precisa acessar suas Fotos";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Telefone";
 "self.settings.account_section.handle.title" = "Nome de usuário";
 "self.settings.account_section.add_handle.title" = "Adicionar nome de usuário";
+"self.settings.account_section.team.title" = "Equipe";
+"self.settings.account_section.domain.title" = "Domínio";
 
 "self.settings.account_details_group.info.footer" = "Pessoas podem te encontrar com esses detalhes.";
 "self.settings.account_details_group.personal.footer" = "Esta informação ainda não está disponível .";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
 "appLockModule.unlockButton.title" = "Desbloquear";
 "appLockModule.goToSettingsButton.title" = "Ir para as configurações";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Rolar para Baixo";
+"keyboardshortcut.conversationDetail" = "Detalhes da Conversa...";
+"keyboardshortcut.searchInConversation" = "Buscar na conversa...";
+"keyboardshortcut.openPeople" = "Pessoas";

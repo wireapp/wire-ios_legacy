@@ -69,6 +69,7 @@ final class ConversationRootViewController: UIViewController {
         configure()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -87,7 +88,7 @@ final class ConversationRootViewController: UIViewController {
         [contentView,
          conversationViewController.view,
          networkStatusViewController.view
-        ].disableAutoresizingMaskTranslation()
+        ].prepareForLayout()
 
         NSLayoutConstraint.activate([
             networkStatusViewController.view.topAnchor.constraint(equalTo: self.safeTopAnchor),

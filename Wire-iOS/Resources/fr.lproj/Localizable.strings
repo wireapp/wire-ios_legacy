@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "dans les contacts";
 
 "conversation.input_bar.shortcut.send" = "Envoyer un message";
-"conversation.input_bar.shortcut.newline" = "Nouvelle ligne";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choisir la mention précédente";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Se connecter";
 "inbox.connection_request.connect_button_title" = "Se connecter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
+"error.connection.title" = "Erreur";
 "error.connection.missing_legalhold_consent" = "Vous ne pouvez pas vous connecter à cet utilisateur à cause de la conservation à des fins juridiques.";
+"error.connection.generic_error" = "Une erreur s'est produite, veuillez réessayer";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire a besoin d'accéder à vos photos";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
 "self.settings.account_section.add_handle.title" = "Choisir un identifiant";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Vos contacts peuvent vous retrouver grâce à ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Pour déverrouiller Wire, veuillez configurer votre code d'authentification dans les paramètres de votre appareil";
 "appLockModule.unlockButton.title" = "Déverrouiller";
 "appLockModule.goToSettingsButton.title" = "Ouvrir les paramètres";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Contacts";

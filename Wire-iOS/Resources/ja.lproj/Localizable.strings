@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "連絡先";
 
 "conversation.input_bar.shortcut.send" = "メッセージを送信";
-"conversation.input_bar.shortcut.newline" = "改行を挿入";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "最後のメッセージを編集";
 "conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "接続";
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
+"error.connection.title" = "エラー";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "問題が生じたようです。もう一度やり直してください。";
 
 // Save image errors
 "library.alert.permission_warning.title" = "\"Wire\"が 写真へのアクセスを求めています。";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "携帯電話";
 "self.settings.account_section.handle.title" = "ユーザーネーム";
 "self.settings.account_section.add_handle.title" = "ユーザーネームを追加する";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "この情報で他の人があなたを見つけることができます。";
 "self.settings.account_details_group.personal.footer" = "この情報は表示されません。";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Wire をロック解除するには、デバイス設定でパスコードを有効にしてください";
 "appLockModule.unlockButton.title" = "ロックを解除";
 "appLockModule.goToSettingsButton.title" = "設定を開く";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "会話";

@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
@@ -58,7 +59,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
     init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
-         isFederationEnabled: Bool = Settings.shared[.federationEnabled] == true) {
+         isFederationEnabled: Bool = Settings.shared.federationEnabled) {
         self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
@@ -167,6 +168,31 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         navigationItem.rightBarButtonItem = closeButton
         view.accessibilityViewIsModal = true
+    }
+
+    private func createConstraints() {
+        [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach { $0?.translatesAutoresizingMaskIntoConstraints = false }
+
+        searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])
+
+        if showsGroupSelector {
+            NSLayoutConstraint.activate([
+                groupSelector.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor),
+                searchResultsViewController.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
+                ])
+
+            groupSelector.fitInSuperview(exclude: [.bottom, .top])
+        } else {
+            NSLayoutConstraint.activate([
+            searchResultsViewController.view.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor)
+                ])
+        }
+
+        searchResultsViewController.view.fitInSuperview(exclude: [.top])
+    }
+
+    var showsGroupSelector: Bool {
+        return SearchGroup.all.count > 1 && ZMUser.selfUser().canSeeServices
     }
 
     func showKeyboardIfNeeded() {

@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "与其他域连接";
 
 "peoplepicker.group.title.singular" = "添加参与者";
 "peoplepicker.group.title.plural" = "添加参与者(%d)";
@@ -90,7 +90,7 @@
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
 "peoplepicker.no_matching_results.message.users" = "通过名字或 @username 在Wire查找用户";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "用 @username@domainname 在 Wire 查找用户\n\n通过@username@domainname 在另一个域查找人员";
 "peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
@@ -307,11 +307,11 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.newline" = "插入换行符";
+"conversation.input_bar.shortcut.newline" = "插入断行";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 "conversation.input_bar.shortcut.choose_previous_mention" = "选择前面的引用";
-"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "选择下一个引用";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
@@ -335,8 +335,8 @@
 "conversation.alert.message_deleted" = "消息已删除。";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.guests_present" = "**访客**在对话中";
+"conversation.banner.services_present" = "**服务**已启动";
 "conversation.banner.externals_present" = "**Externals** are present";
 "conversation.banner.guests_services_present" = "**Guests** and **services** are present";
 "conversation.banner.externals_services_present" = "**Externals** and **services** are present";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "新增好友";
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
+"error.connection.title" = "错误";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "出了点问题，请再试一次";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
@@ -881,7 +883,7 @@
 "profile.details.guest" = "游客";
 "profile.details.group_admin" = "群组管理员";
 "profile.details.partner" = "外部合作者";
-"profile.details.federated" = "Federated";
+"profile.details.federated" = "联邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "用户名";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "电话";
 "self.settings.account_section.handle.title" = "用户名";
 "self.settings.account_section.add_handle.title" = "添加用户名";
+"self.settings.account_section.team.title" = "团队";
+"self.settings.account_section.domain.title" = "域";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息查找到您。";
 "self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
 "appLockModule.unlockButton.title" = "解锁";
 "appLockModule.goToSettingsButton.title" = "前往设置";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "联系人";

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireSystem
 import WireDataModel
 import WireCommonComponents
 
@@ -28,9 +27,9 @@ final class CollectionAudioCell: CollectionCell {
     private let restrictionView = AudioMessageRestrictionView()
     private let headerView = CollectionCellHeader()
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadView()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {

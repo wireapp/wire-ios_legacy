@@ -65,7 +65,8 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 

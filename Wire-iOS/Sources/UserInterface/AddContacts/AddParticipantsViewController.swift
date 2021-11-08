@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 extension ConversationLike where Self: SwiftConversationLike {
     var canAddGuest: Bool {
@@ -125,6 +126,7 @@ final class AddParticipantsViewController: UIViewController {
         userSelection.remove(observer: self)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -144,7 +146,7 @@ final class AddParticipantsViewController: UIViewController {
 
     init(context: Context,
          variant: ColorSchemeVariant = ColorScheme.default.variant,
-         isFederationEnabled: Bool = Settings.shared[.federationEnabled] == true) {
+         isFederationEnabled: Bool = Settings.shared.federationEnabled) {
         self.variant = variant
 
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -250,7 +252,7 @@ final class AddParticipantsViewController: UIViewController {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
 
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {

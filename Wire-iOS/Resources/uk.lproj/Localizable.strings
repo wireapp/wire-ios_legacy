@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
-"conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
@@ -623,7 +623,9 @@
 "connection_request.send_button_title" = "Додати";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
+"error.connection.title" = "Помилка";
 "error.connection.missing_legalhold_consent" = "Ви не можете додати цього користувача через правовий захист.";
+"error.connection.generic_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire потребує доступу до ваших фотографій";
@@ -1010,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Номер телефону";
 "self.settings.account_section.handle.title" = "Нік";
 "self.settings.account_section.add_handle.title" = "Додати нік";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
@@ -1917,3 +1921,9 @@
 "appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
 "appLockModule.unlockButton.title" = "Розблокувати";
 "appLockModule.goToSettingsButton.title" = "Перейти до налаштувань";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Люди";
