@@ -202,16 +202,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         [cellNameLabel, iconImageView].prepareForLayout()
 
-        NSLayoutConstraint.activate([
-          iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-          iconImageView.widthAnchor.constraint(equalToConstant: 16),
-          iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
-          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            leadingConstraint,
-          cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-          cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
-        ])
-
         valueLabel.textColor = UIColor.lightGray
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
@@ -235,25 +225,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         if trailingBoundaryView != contentView {
             [trailingBoundaryView].prepareForLayout()
         }
-
-        NSLayoutConstraint.activate([
-            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
-            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
-            valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
-            valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
-            badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
-            badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
-            badge.heightAnchor.constraint(equalToConstant: 20),
-            badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28)
-        ])
-
         [badge, badgeLabel].prepareForLayout()
-        NSLayoutConstraint.activate([
-            badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
-            badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
-            badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
-            badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor)
-        ])
 
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -262,31 +234,52 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         contentView.addSubview(imagePreview)
 
         [imagePreview].prepareForLayout()
-        NSLayoutConstraint.activate([
-            imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
-            imagePreview.heightAnchor.constraint(equalToConstant: 24),
-            imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
 
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         separatorLine.isAccessibilityElement = false
         addSubview(separatorLine)
 
         [separatorLine, cellNameLabel].prepareForLayout()
-        NSLayoutConstraint.activate([
-            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
-            separatorLine.heightAnchor.constraint(equalToConstant: .hairline)
-        ])
 
         topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         topSeparatorLine.isAccessibilityElement = false
         addSubview(topSeparatorLine)
 
         [topSeparatorLine, cellNameLabel].prepareForLayout()
+
         NSLayoutConstraint.activate([
+          iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+          iconImageView.widthAnchor.constraint(equalToConstant: 16),
+          iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
+          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            leadingConstraint,
+          cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+          cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
+            valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
+            badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
+            badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
+            badge.heightAnchor.constraint(equalToConstant: 20),
+            badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28),
+
+            badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
+            badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
+            badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
+            badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor),
+
+            imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
+            imagePreview.heightAnchor.constraint(equalToConstant: 24),
+            imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separatorLine.heightAnchor.constraint(equalToConstant: .hairline),
+
             topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
             topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
             topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
