@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "nos Contatos";
 
 "conversation.input_bar.shortcut.send" = "Enviar mensagem";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "Inserir Quebra de Linha";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Escolha a menção anterior";
@@ -1923,7 +1923,7 @@
 "appLockModule.goToSettingsButton.title" = "Ir para as configurações";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
-"keyboardshortcut.conversationDetail" = "Conversation Details...";
-"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.scrollToBottom" = "Rolar para Baixo";
+"keyboardshortcut.conversationDetail" = "Detalhes da Conversa...";
+"keyboardshortcut.searchInConversation" = "Buscar na conversa...";
 "keyboardshortcut.openPeople" = "Pessoas";
