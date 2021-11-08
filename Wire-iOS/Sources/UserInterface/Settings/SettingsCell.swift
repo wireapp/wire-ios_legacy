@@ -207,13 +207,10 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
           iconImageView.widthAnchor.constraint(equalToConstant: 16),
           iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
           iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-          cellNameLabelToIconInset,
             leadingConstraint,
           cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
           cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
-
-        cellNameLabelToIconInset.isActive = false
 
         valueLabel.textColor = UIColor.lightGray
         valueLabel.font = UIFont.systemFont(ofSize: 17)
