@@ -96,7 +96,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         [prefixLabel, handleTextField, domainLabel].forEach(addSubview)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [prefixLabel, handleTextField, domainLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([

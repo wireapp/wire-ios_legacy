@@ -86,7 +86,7 @@ final class InputBarButtonsView: UIView {
         self.backgroundColor = UIColor.from(scheme: .barBackground)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, buttonInnerContainer, buttonOuterContainer) { view, innerContainer, outerContainer in
             self.buttonRowTopInset = outerContainer.top == innerContainer.top
             innerContainer.leading == outerContainer.leading
