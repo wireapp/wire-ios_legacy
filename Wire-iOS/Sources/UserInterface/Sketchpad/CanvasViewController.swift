@@ -180,7 +180,8 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 
     private func createConstraints() {
-        constrain(view, canvas, colorPickerController.view, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
+        let colorPickerControllerView = colorPickerController.view
+        constrain(view, canvas, colorPickerControllerView, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
             colorPicker.top == container.top
             colorPicker.left == container.left
             colorPicker.right == container.right
@@ -201,7 +202,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
             toolbar.right == container.right
         }
 
-        constrain(view, colorPickerController.view, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
+        constrain(view, colorPickerControllerView, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
             hintImageView.center == container.center
             hintLabel.top == colorPicker.bottom + 16
             hintLabel.leftMargin == container.leftMargin
