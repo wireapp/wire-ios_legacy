@@ -43,17 +43,17 @@ final class UserConnectionView: UIView, Copyable {
 
     public var user: UserType {
         didSet {
-            self.updateLabels()
-            self.userImageView.user = self.user
+            updateLabels()
+            userImageView.user = user
         }
     }
 
     public init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
-        self.userImageView.userSession = ZMUserSession.shared()
-        self.setup()
-        self.createConstraints()
+        userImageView.userSession = ZMUserSession.shared()
+        setup()
+        createConstraints()
     }
 
     @available(*, unavailable)
@@ -67,13 +67,13 @@ final class UserConnectionView: UIView, Copyable {
             $0.textAlignment = .center
         }
 
-        self.userImageView.accessibilityLabel = "user image"
-        self.userImageView.size = .big
-        self.userImageView.user = self.user
+        userImageView.accessibilityLabel = "user image"
+        userImageView.size = .big
+        userImageView.user = user
 
-        [self.labelContainer, self.userImageView].forEach(self.addSubview)
-        [self.firstLabel, self.secondLabel].forEach(labelContainer.addSubview)
-        self.updateLabels()
+        [labelContainer, userImageView].forEach(addSubview)
+        [firstLabel, secondLabel].forEach(labelContainer.addSubview)
+        updateLabels()
     }
 
     private func updateLabels() {
@@ -113,7 +113,7 @@ final class UserConnectionView: UIView, Copyable {
     }
 
     private func createConstraints() {
-        constrain(self, self.labelContainer, self.userImageView) { selfView, labelContainer, userImageView in
+        constrain(self, labelContainer, userImageView) { selfView, labelContainer, userImageView in
             labelContainer.centerX == selfView.centerX
             labelContainer.top == selfView.top
             labelContainer.left >= selfView.left

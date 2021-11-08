@@ -60,7 +60,7 @@ GCC_PREPROCESSOR_DEFINITIONS = $(SHARED_CUSTOM_VALUES) $(ANALYTICS_FLAGS) $(OTHE
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(OTHER_PREPROCESSOR_FLAGS)
 
 // WIRESTAN - Enabled the fake country in the phone number selection
-OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000 -DWIRESTAN
+OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=50 -Xfrontend -warn-long-expression-type-checking=50 -DWIRESTAN
 
 SWIFT_TREAT_WARNINGS_AS_ERRORS = NO
 

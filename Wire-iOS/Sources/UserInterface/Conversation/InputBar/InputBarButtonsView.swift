@@ -166,12 +166,14 @@ final class InputBarButtonsView: UIView {
                                            inset: CGFloat,
                                            rowIsFull: Bool,
                                            referenceButton: UIButton?) {
-        constrain(buttons.first!) { firstButton in
+        if let first = buttons.first {
+        constrain(first) { firstButton in
             firstButton.leading == firstButton.superview!.leading
         }
+        }
 
-        if rowIsFull {
-            constrain(buttons.last!) { lastButton in
+        if rowIsFull, let last = buttons.last {
+            constrain(last) { lastButton in
                 lastButton.trailing == lastButton.superview!.trailing
             }
         }
@@ -210,8 +212,8 @@ final class InputBarButtonsView: UIView {
             previous = current
         }
 
-        if let reference = referenceButton, !rowIsFull {
-            constrain(reference, buttons.last!) { reference, lastButton in
+        if let reference = referenceButton, !rowIsFull, let lastButton = buttons.last {
+            constrain(reference, lastButton) { reference, lastButton in
                 lastButton.width == reference.width
             }
         }

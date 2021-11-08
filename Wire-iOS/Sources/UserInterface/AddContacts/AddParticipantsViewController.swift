@@ -255,7 +255,8 @@ final class AddParticipantsViewController: UIViewController {
     private func createConstraints() {
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
 
-        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {
+        guard let searchHeaderView = searchHeaderViewController.view, let searchResultsView = searchResultsViewController.view else { return }
+        constrain(view, searchHeaderView, searchResultsView, confirmButton) {
             container, searchHeaderView, searchResultsView, confirmButton in
 
             searchHeaderView.top == container.top
@@ -274,7 +275,7 @@ final class AddParticipantsViewController: UIViewController {
         }
 
         if viewModel.botCanBeAdded {
-            constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
+            constrain(view, searchResultsView, searchGroupSelector, searchResultsView) {
                 view, searchHeaderView, searchGroupSelector, searchResultsView in
                 searchGroupSelector.top == searchHeaderView.bottom
                 searchGroupSelector.leading == view.leading
@@ -283,7 +284,7 @@ final class AddParticipantsViewController: UIViewController {
             }
         }
         else {
-            constrain(searchHeaderViewController.view, searchResultsViewController.view) {
+            constrain(searchHeaderView, searchResultsView) {
                 searchHeaderView, searchResultsView in
                 searchResultsView.top == searchHeaderView.bottom
             }

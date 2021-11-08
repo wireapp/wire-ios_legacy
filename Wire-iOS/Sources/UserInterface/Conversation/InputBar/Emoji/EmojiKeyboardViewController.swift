@@ -71,7 +71,8 @@ final class EmojiKeyboardViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
+        let sectionViewControllerView = sectionViewController.view
+        constrain(view, collectionView, sectionViewControllerView) { view, collectionView, sectionView in
             collectionView.top == view.top
             collectionView.leading == view.leading
             collectionView.trailing == view.trailing
