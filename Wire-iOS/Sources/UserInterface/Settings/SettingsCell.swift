@@ -192,6 +192,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         iconImageView.contentMode = .center
         contentView.addSubview(iconImageView)
+
+        [iconImageView].prepareForLayout()
         cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         contentView.addSubview(cellNameLabel)
 
@@ -199,13 +201,14 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         leadingConstraint.priority = .defaultHigh
 
         [cellNameLabel, iconImageView].prepareForLayout()
-        [iconImageView].prepareForLayout()
+
         NSLayoutConstraint.activate([
           iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
           iconImageView.widthAnchor.constraint(equalToConstant: 16),
           iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
           iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-          cellNameLabelToIconInset,
+
+            cellNameLabelToIconInset,
             leadingConstraint,
           cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
           cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
