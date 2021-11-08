@@ -36,6 +36,7 @@ final class TextSearchResultFooter: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
