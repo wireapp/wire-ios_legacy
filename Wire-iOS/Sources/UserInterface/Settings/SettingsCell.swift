@@ -207,8 +207,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
           iconImageView.widthAnchor.constraint(equalToConstant: 16),
           iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
           iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-
-            cellNameLabelToIconInset,
+          cellNameLabelToIconInset,
             leadingConstraint,
           cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
           cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
@@ -294,10 +293,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
             topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
             topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
-            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline)
+            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline),
+
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
 
-        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
     }
 
