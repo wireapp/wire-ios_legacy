@@ -55,8 +55,10 @@ final class GiphyConfirmationViewController: UIViewController {
         }
 
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
-                                                                (GiphySearchViewController.onDismiss))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, 
+                                                            style: .plain, 
+                                                            target: self, 
+                                                            action: #selector(GiphySearchViewController.onDismiss))
 
         view.backgroundColor = .from(scheme: .background)
     }
