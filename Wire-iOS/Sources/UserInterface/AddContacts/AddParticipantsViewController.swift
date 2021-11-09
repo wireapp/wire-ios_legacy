@@ -276,7 +276,6 @@ final class AddParticipantsViewController: UIViewController {
             bottomConstraint
         ]
 
-
         if viewModel.botCanBeAdded {
             constraints.append(contentsOf: [
                 searchGroupSelector.topAnchor.constraint(equalTo: searchHeaderView.bottomAnchor),
