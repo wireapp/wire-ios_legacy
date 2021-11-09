@@ -130,7 +130,7 @@ final class NetworkStatusView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [offlineView, connectingView].prepareForLayout()
         NSLayoutConstraint.activate([
           offlineView.leftAnchor.constraint(equalTo: leftAnchor, constant: CGFloat.NetworkStatusBar.horizontalMargin),

@@ -158,7 +158,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
 

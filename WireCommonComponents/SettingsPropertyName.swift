@@ -17,7 +17,6 @@
 //
 import Foundation
 
-
 /**
  Available settings
  
@@ -32,18 +31,18 @@ import Foundation
  - Disable(.*):            Disable some app features (debug)
  */
 public enum SettingsPropertyName: String, CustomStringConvertible {
-    
+
     // User defaults
     case chatHeadsDisabled = "ChatHeadsDisabled"
     case notificationContentVisible = "NotificationContentVisible"
     case disableMarkdown = "Markdown"
-        
+
     case darkMode = "DarkMode"
-    
+
     case disableSendButton = "DisableSendButton"
-    
+
     case disableLinkPreviews = "DisableLinkPreviews"
-	
+
     // Profile
     case profileName = "ProfileName"
     case handle = "handle"
@@ -53,7 +52,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case team = "team"
 
     case accentColor = "AccentColor"
-    
+
     // AVS
     case soundAlerts = "SoundAlerts"
     case callingConstantBitRate = "constantBitRate"
@@ -62,7 +61,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case messageSoundName = "MessageSoundName"
     case callSoundName = "CallSoundName"
     case pingSoundName = "PingSoundName"
-    
+
     // Open In
     case tweetOpeningOption = "TweetOpeningOption"
     case mapsOpeningOption = "MapsOpeningOption"
@@ -83,9 +82,9 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case lockApp = "lockApp"
 
     case readReceiptsEnabled = "readReceiptsEnabled"
-    
+
     case encryptMessagesAtRest = "encryptMessagesAtRest"
-    
+
     public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
@@ -93,9 +92,8 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     public var notificationName: Notification.Name {
         return Notification.Name(changeNotificationName)
     }
-    
+
     public var description: String {
-        return self.rawValue;
+        return self.rawValue
     }
 }
-

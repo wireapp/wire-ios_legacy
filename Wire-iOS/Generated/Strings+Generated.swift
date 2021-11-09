@@ -1266,7 +1266,7 @@ internal enum L10n {
           internal static let choosePreviousMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_previous_mention")
           /// Edit Last Message
           internal static let editLastMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.edit_last_message")
-          /// Insert line break
+          /// Insert Line Break
           internal static let newline = L10n.tr("Localizable", "conversation.input_bar.shortcut.newline")
           /// Send Message
           internal static let send = L10n.tr("Localizable", "conversation.input_bar.shortcut.send")
@@ -2150,13 +2150,13 @@ internal enum L10n {
       }
     }
     internal enum Keyboardshortcut {
-      /// Conversation detail...
+      /// Conversation Details...
       internal static let conversationDetail = L10n.tr("Localizable", "keyboardshortcut.conversationDetail")
       /// People
       internal static let openPeople = L10n.tr("Localizable", "keyboardshortcut.openPeople")
-      /// Scroll to bottom
+      /// Scroll to Bottom
       internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
-      /// Search in conversation...
+      /// Search in Conversation...
       internal static let searchInConversation = L10n.tr("Localizable", "keyboardshortcut.searchInConversation")
     }
     internal enum Landing {

@@ -88,7 +88,7 @@ final class ArchivedListViewController: UIViewController {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [archivedNavigationBar, collectionView].prepareForLayout()
         NSLayoutConstraint.activate([
             archivedNavigationBar.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.safeArea.top),

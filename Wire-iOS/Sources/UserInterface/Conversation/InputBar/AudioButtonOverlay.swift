@@ -89,7 +89,7 @@ final class AudioButtonOverlay: UIView {
         sendButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [audioButton, playButton, sendButton, backgroundView].prepareForLayout()
         NSLayoutConstraint.activate([
           audioButton.centerYAnchor.constraint(equalTo: bottomAnchor, constant: -initialViewWidth / 2),
