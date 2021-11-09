@@ -23,11 +23,11 @@ import SnapshotTesting
 final class ConversationTitleViewTests: XCTestCase {
 
     var sut: ConversationTitleView!
-    var conversation: MockConversation!
+    var conversation: SwiftMockConversation!
 
     override func setUp() {
         super.setUp()
-        conversation = MockConversation()
+        conversation = SwiftMockConversation()
         conversation.relatedConnectionState = .accepted
         conversation.displayName = "Alan Turing"
     }
@@ -39,8 +39,8 @@ final class ConversationTitleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    private func createSut(conversation: MockConversation) -> ConversationTitleView {
-        let view = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+    private func createSut(conversation: SwiftMockConversation) -> ConversationTitleView {
+        let view = ConversationTitleView(conversation: conversation as ConversationLike, interactive: true)
         view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         view.backgroundColor = .white
         return view
@@ -77,18 +77,9 @@ final class ConversationTitleViewTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_PendingApproval() {
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly() {
         // when
-        conversation.legalHoldStatus = .pendingApproval
-        sut = createSut(conversation: conversation)
-
-        // then
-        verify(matching: sut)
-    }
-
-    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_Enabled() {
-        // when
-        conversation.legalHoldStatus = .enabled
+        conversation.isUnderLegalHold = true
         sut = createSut(conversation: conversation)
 
         // then
@@ -98,7 +89,7 @@ final class ConversationTitleViewTests: XCTestCase {
     func testThatItUpdatesTheTitleViewAndRendersLegalHoldAndVerifiedShieldCorrectly() {
         // when
         conversation.securityLevel = .secure
-        conversation.legalHoldStatus = .enabled
+        conversation.isUnderLegalHold = true
         sut = createSut(conversation: conversation)
 
         // then
