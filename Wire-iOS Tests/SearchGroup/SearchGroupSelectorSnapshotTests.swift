@@ -38,8 +38,10 @@ final class SearchGroupSelectorSnapshotTests: XCTestCase {
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 320))
     }
 
-    func testForInitState() {
+    func testForInitState_WhenSelfUserCanNotCreateService() {
         // GIVEN
+        let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
+        SelfUser.provider = SelfProvider(selfUser: mockSelfUser)
         createSut()
 
         // WHEN & THEN
