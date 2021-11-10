@@ -23,10 +23,11 @@ class TitleView: UIView {
 
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
-    let titleButton = UIButton()
-    let subtitleLabel = UILabel()
     var tapHandler: ((UIButton) -> Void)?
-    let stackView = UIStackView(axis: .vertical)
+
+    private let stackView = UIStackView(axis: .vertical)
+    private let titleButton = UIButton()
+    private let subtitleLabel = UILabel()
 
     init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)
@@ -85,12 +86,10 @@ class TitleView: UIView {
 
         subtitleLabel.isHidden = subtitle == nil
         subtitleLabel.text = subtitle
-        subtitleLabel.font = FontSpec(.small, .light).font
+        subtitleLabel.font = .smallLightFont
         subtitleLabel.textColor = UIColor.from(scheme: .textDimmed)
 
         createConstraints()
-        setNeedsLayout()
-        layoutIfNeeded()
     }
 
     required init?(coder aDecoder: NSCoder) {

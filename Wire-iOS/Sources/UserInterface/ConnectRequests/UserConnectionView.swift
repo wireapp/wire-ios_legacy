@@ -102,7 +102,7 @@ final class UserConnectionView: UIView, Copyable {
 
         return handle && [
             .foregroundColor: UIColor.from(scheme: .textDimmed),
-            .font: FontSpec(.small, .semibold).font!
+            .font: UIFont.smallSemiboldFont
         ]
     }
 
