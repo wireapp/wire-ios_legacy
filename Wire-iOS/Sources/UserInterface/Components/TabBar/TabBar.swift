@@ -1,22 +1,21 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
-import UIKit
 
 protocol TabBarDelegate: class {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
@@ -34,7 +33,7 @@ final class TabBar: UIView {
 
     private let selectionLineView = UIView()
     private(set) var tabs: [Tab] = []
-    private lazy var lineLeadingConstraint: NSLayoutConstraint = selectionLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: tabInset)
+    private var lineLeadingConstraint: NSLayoutConstraint?
     private var didUpdateInitialBarPosition = false
 
     var style: ColorSchemeVariant {
@@ -93,6 +92,15 @@ final class TabBar: UIView {
 
         addSubview(selectionLineView)
         selectionLineView.backgroundColor = style == .dark ? .white : .black
+
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+            lineLeadingConstraint = selectionLineView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: tabInset),
+            selectionLineView.heightAnchor.constraint(equalToConstant: 1),
+            selectionLineView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
+            let widthInset = tabInset * 2 / CGFloat(items.count),
+            selectionLineView.widthAnchor.constraint(equalTo: selfView.widthAnchor, constant: / CGFloat(items.count) -widthInset)
+        ])
     }
 
     override func layoutSubviews() {
@@ -105,12 +113,12 @@ final class TabBar: UIView {
 
     private func updateLinePosition(animated: Bool) {
         let offset = CGFloat(selectedIndex) * selectionLineView.bounds.width
-        guard offset != lineLeadingConstraint.constant else { return }
+        guard offset != lineLeadingConstraint?.constant else { return }
         updateLinePosition(offset: offset, animated: animated)
     }
 
     private func updateLinePosition(offset: CGFloat, animated: Bool) {
-        lineLeadingConstraint.constant = offset + tabInset
+        lineLeadingConstraint?.constant = offset + tabInset
 
         if animated {
             UIView.animate(
@@ -130,21 +138,14 @@ final class TabBar: UIView {
     }
 
     fileprivate func createConstraints() {
-        let widthInset: CGFloat = tabInset * 2 / CGFloat(items.count)
-
-        [selectionLineView, stackView].prepareForLayout()
+        [<#views#>].prepareForLayout()
         NSLayoutConstraint.activate([
-            lineLeadingConstraint,
-            selectionLineView.heightAnchor.constraint(equalToConstant: 1),
-            selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0 / CGFloat(items.count), constant: -widthInset),
-
-            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: tabInset),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -tabInset),
-            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leftAnchor.constraint(equalTo: selfView.leftAnchor, constant: tabInset),
+            stackView.rightAnchor.constraint(equalTo: selfView.rightAnchor, constant: -tabInset),
+            stackView.topAnchor.constraint(equalTo: selfView.topAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 48),
 
-            bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+            selfView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
         ])
     }
 
