@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 import UIKit
 
-protocol ConversationMessageCellMenuPresenter: class {
+protocol ConversationMessageCellMenuPresenter: AnyObject {
     func showMenu()
 }
 

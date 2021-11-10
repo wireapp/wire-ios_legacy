@@ -50,7 +50,7 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
-protocol SettingsPropertyFactoryDelegate: class {
+protocol SettingsPropertyFactoryDelegate: AnyObject {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
 

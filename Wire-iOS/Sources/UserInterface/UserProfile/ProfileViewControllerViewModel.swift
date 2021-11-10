@@ -265,7 +265,7 @@ extension ProfileViewControllerViewModel: BackButtonTitleDelegate {
     }
 }
 
-protocol ProfileViewControllerViewModelDelegate: class {
+protocol ProfileViewControllerViewModelDelegate: AnyObject {
     func updateShowVerifiedShield()
     func setupNavigationItems()
     func updateFooterViews()

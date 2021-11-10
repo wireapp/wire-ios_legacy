@@ -27,11 +27,11 @@ protocol Dismissable: AnyObject {
     func dismiss()
 }
 
-protocol KeyboardCollapseObserver: class {
+protocol KeyboardCollapseObserver: AnyObject {
     var isKeyboardCollapsed: Bool { get }
 }
 
-protocol UserList: class {
+protocol UserList: AnyObject {
     var users: [UserType] { get set }
     var selectedUser: UserType? { get }
 

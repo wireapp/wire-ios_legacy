@@ -24,7 +24,7 @@ import Foundation
  * A network session task that downloads data.
  */
 
-protocol DataTask: class {
+protocol DataTask: AnyObject {
 
     /// The unique identifier of the task within its session.
     var taskIdentifier: Int { get }
@@ -44,7 +44,7 @@ protocol DataTask: class {
  * An object that schedules and manages data tasks.
  */
 
-protocol DataTaskSession: class {
+protocol DataTaskSession: AnyObject {
 
     /// Creates a data request task for the given URL.
     func makeDataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTask

@@ -31,7 +31,7 @@ protocol ActiveCallRouterProtocol: AnyObject {
 }
 
 // MARK: - CallQualityRouterProtocol
-protocol CallQualityRouterProtocol: class {
+protocol CallQualityRouterProtocol: AnyObject {
     func presentCallQualitySurvey(with callDuration: TimeInterval)
     func dismissCallQualitySurvey(completion: Completion?)
     func presentCallFailureDebugAlert()

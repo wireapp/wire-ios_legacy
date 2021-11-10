@@ -30,7 +30,7 @@ protocol TextFieldValidationDelegate: AnyObject {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-protocol ValidatedTextFieldDelegate: class {
+protocol ValidatedTextFieldDelegate: AnyObject {
     func buttonPressed(_ sender: UIButton)
 }
 

@@ -22,7 +22,7 @@ import FLAnimatedImage
 import WireCommonComponents
 import WireDataModel
 
-protocol GiphySearchViewControllerDelegate: class {
+protocol GiphySearchViewControllerDelegate: AnyObject {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 

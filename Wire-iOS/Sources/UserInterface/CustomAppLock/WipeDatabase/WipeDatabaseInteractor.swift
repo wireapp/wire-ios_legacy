@@ -22,7 +22,7 @@ protocol WipeDatabaseInteractorInput: AnyObject {
     func deleteAccount()
 }
 
-protocol WipeDatabaseInteractorOutput: class {
+protocol WipeDatabaseInteractorOutput: AnyObject {
 }
 
 final class WipeDatabaseInteractor {

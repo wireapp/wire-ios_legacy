@@ -19,7 +19,7 @@
 import UIKit
 import WireSyncEngine
 
-protocol AccountSelectorViewDelegate: class {
+protocol AccountSelectorViewDelegate: AnyObject {
     func accountSelectorDidSelect(account: Account)
 }
 

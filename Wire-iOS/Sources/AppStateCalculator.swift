@@ -56,7 +56,7 @@ enum AppState: Equatable {
     }
 }
 
-protocol AppStateCalculatorDelegate: class {
+protocol AppStateCalculatorDelegate: AnyObject {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void)

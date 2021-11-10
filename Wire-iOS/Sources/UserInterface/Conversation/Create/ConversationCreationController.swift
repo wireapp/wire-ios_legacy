@@ -62,7 +62,7 @@ final class ConversationCreationValues {
     }
 }
 
-protocol ConversationCreationControllerDelegate: class {
+protocol ConversationCreationControllerDelegate: AnyObject {
 
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,

@@ -55,7 +55,7 @@ extension SearchGroup {
     }
 }
 
-protocol SearchResultsViewControllerDelegate: class {
+protocol SearchResultsViewControllerDelegate: AnyObject {
 
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)

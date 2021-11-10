@@ -31,7 +31,7 @@ protocol ProfileViewControllerDelegate: AnyObject {
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet)
 }
 
-protocol BackButtonTitleDelegate: class {
+protocol BackButtonTitleDelegate: AnyObject {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
 }
 

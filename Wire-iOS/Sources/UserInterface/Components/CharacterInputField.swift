@@ -25,7 +25,7 @@ protocol CharacterInputFieldDelegate: AnyObject {
     func didFillInput(inputField: CharacterInputField, text: String)
 }
 
-protocol TextContainer: class {
+protocol TextContainer: AnyObject {
     var text: String? { get set }
 }
 

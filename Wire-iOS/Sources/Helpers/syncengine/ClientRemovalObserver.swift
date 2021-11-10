@@ -23,7 +23,7 @@ enum ClientRemovalUIError: Error {
     case noPasswordProvided
 }
 
-protocol ClientRemovalObserverDelegate: class {
+protocol ClientRemovalObserverDelegate: AnyObject {
     func present(_ clientRemovalObserver: ClientRemovalObserver,
                  viewControllerToPresent: UIViewController)
     func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool)
