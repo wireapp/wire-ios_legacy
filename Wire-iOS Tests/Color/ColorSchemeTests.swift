@@ -45,4 +45,18 @@ final class ColorSchemeTests: XCTestCase {
         XCTAssertNotEqual(sut.accentColor, alphaBlack)
         XCTAssertFalse(sut.isCurrentAccentColor(alphaBlack))
     }
+
+    func testForIsStrongBlueWhenUndefinedInLightVariant() {
+        let expectedAccentColor = UIColor.nameColor(for: .strongBlue, variant: .light)
+        let accentColor = UIColor.nameColor(for: .undefined, variant: .light)
+
+        XCTAssertEqual(accentColor, expectedAccentColor)
+    }
+
+    func testForIsStrongBlueWhenUndefinedInDarkVariant() {
+        let expectedAccentColor = UIColor.nameColor(for: .strongBlue, variant: .dark)
+        let accentColor = UIColor.nameColor(for: .undefined, variant: .dark)
+
+        XCTAssertEqual(accentColor, expectedAccentColor)
+    }
 }
