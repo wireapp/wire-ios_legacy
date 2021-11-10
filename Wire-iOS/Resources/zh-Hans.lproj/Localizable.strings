@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "已验证";
 "conversation.input_bar.placeholder" = "键入一条消息";
-"conversation.input_bar.placeholder_ephemeral" = "阅后即焚";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑动发送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "点击发送";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "访客选项";
 "group_details.guest_options_cell.enabled" = "开启";
 "group_details.guest_options_cell.disabled" = "关闭";
-"group_details.timeout_options_cell.title" = "阅后即焚";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到所有的通知(包括音频和视频通话)，或者只有当有人提到您或回复您的消息时才收到通知。";
 "group_details.receipt_options_cell.title" = "已读回执";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "合法保留对象";
 "legalhold.header.title" = "证据保全";
-"legalhold.header.other_description" = "此对话中至少有一个人已激活证据保全。\n所有消息将被保存，以便将来访问，包括被编辑、已删除和阅后即焚消息。";
-"legalhold.header.self_description" = "您的帐户已开启证据保全。\n所有消息将被保存，以便用于未来访问，包括被编辑、已删除和阅后即焚消息。\n你的对话方将会被提醒。";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "证据保全详情";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "新信息";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "必要更新";
 "force.update.message" = "您错过了些新功能。快到App Store中下载最新版本的Wire呀。";
 "force.update.ok_button" = "到App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "检测到越狱";
 "jailbrokendevice.alert.message" = "出于安全原因，Wire不能在此设备上使用，现有的所有Wire数据已被擦除。";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "待同意。";
 "legalhold_request.alert.title" = "已请求证据保全";
-"legalhold_request.alert.detail" = "所有未来的消息都将由设备记录，指纹：\n\n%@\n\n，这包括在所有对话中被编辑、已和阅后即焚消息。";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "请输入您的密码以确认。";
 "legalhold_request.alert.error_wrong_password" = "密码错误";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "已激活证据保全";
 "legalhold_active.alert.learn_more" = "了解更多信息";
-"legalhold_active.alert.message" = "您的帐户已开启证据保全。\n所有消息将被保存，以便用于未来访问，包括被编辑、已删除和阅后即焚消息。\n你的对话方将会被提醒。";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "会话已过期";
