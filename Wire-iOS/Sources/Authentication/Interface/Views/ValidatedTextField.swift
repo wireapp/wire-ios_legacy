@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol TextFieldValidationDelegate: class {
+protocol TextFieldValidationDelegate: AnyObject {
 
     /// Delegate for validation. It is called when every time .editingChanged event fires
     ///

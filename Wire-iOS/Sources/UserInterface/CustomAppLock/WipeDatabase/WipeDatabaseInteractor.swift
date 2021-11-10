@@ -18,7 +18,7 @@
 import Foundation
 import WireSyncEngine
 
-protocol WipeDatabaseInteractorInput: class {
+protocol WipeDatabaseInteractorInput: AnyObject {
     func deleteAccount()
 }
 

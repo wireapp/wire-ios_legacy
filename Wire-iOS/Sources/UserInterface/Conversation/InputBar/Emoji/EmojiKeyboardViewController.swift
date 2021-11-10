@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-protocol EmojiKeyboardViewControllerDelegate: class {
+protocol EmojiKeyboardViewControllerDelegate: AnyObject {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String)
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController)
 }

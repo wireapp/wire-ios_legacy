@@ -19,7 +19,7 @@
 import WireSyncEngine
 import UIKit
 
-protocol ReplyComposingViewDelegate: class {
+protocol ReplyComposingViewDelegate: AnyObject {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }

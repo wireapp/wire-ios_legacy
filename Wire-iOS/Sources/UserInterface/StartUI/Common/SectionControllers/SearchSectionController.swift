@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol SearchSectionControllerDelegate: class {
+protocol SearchSectionControllerDelegate: AnyObject {
 
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: UserType, at indexPath: IndexPath)
 

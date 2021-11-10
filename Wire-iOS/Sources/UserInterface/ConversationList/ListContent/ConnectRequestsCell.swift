@@ -18,7 +18,7 @@
 
 import WireSyncEngine
 
-protocol SectionListCellType: class {
+protocol SectionListCellType: AnyObject {
     var sectionName: String? { get set }
     var cellIdentifier: String? { get set }
 }

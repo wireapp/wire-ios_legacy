@@ -26,7 +26,7 @@ enum ProfileViewControllerTabBarIndex: Int {
     case devices
 }
 
-protocol ProfileViewControllerDelegate: class {
+protocol ProfileViewControllerDelegate: AnyObject {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet)
 }

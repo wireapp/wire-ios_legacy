@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol GridViewDelegate: class {
+protocol GridViewDelegate: AnyObject {
     func gridView(_ gridView: GridView, didChangePageTo page: Int)
 }
 

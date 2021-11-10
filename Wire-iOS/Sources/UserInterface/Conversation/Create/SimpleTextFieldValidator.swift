@@ -20,7 +20,7 @@ import Foundation
 import WireUtilities
 import UIKit
 
-protocol SimpleTextFieldValidatorDelegate: class {
+protocol SimpleTextFieldValidatorDelegate: AnyObject {
     func textFieldValueChanged(_ value: String?)
     func textFieldValueSubmitted(_ value: String)
     func textFieldDidEndEditing()

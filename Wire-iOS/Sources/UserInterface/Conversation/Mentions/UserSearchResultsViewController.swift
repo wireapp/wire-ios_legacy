@@ -19,11 +19,11 @@
 import UIKit
 import WireDataModel
 
-protocol UserSearchResultsViewControllerDelegate: class {
+protocol UserSearchResultsViewControllerDelegate: AnyObject {
     func didSelect(user: UserType)
 }
 
-protocol Dismissable: class {
+protocol Dismissable: AnyObject {
     func dismiss()
 }
 

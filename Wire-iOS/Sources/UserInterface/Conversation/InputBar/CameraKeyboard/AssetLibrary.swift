@@ -19,7 +19,7 @@
 import Foundation
 import Photos
 
-protocol AssetLibraryDelegate: class {
+protocol AssetLibraryDelegate: AnyObject {
     func assetLibraryDidChange(_ library: AssetLibrary)
 }
 

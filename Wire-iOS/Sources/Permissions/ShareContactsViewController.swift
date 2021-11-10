@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol ShareContactsViewControllerDelegate: class {
+protocol ShareContactsViewControllerDelegate: AnyObject {
     func shareDidSkip(_ viewController: UIViewController)
     func shareDidFinish(_ viewController: UIViewController)
 }

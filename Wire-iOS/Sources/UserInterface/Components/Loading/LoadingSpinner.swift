@@ -21,7 +21,7 @@ import UIKit
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion
 
-protocol SpinnerCapable: class {
+protocol SpinnerCapable: AnyObject {
     var dismissSpinner: SpinnerCompletion? { get set }
 }
 
