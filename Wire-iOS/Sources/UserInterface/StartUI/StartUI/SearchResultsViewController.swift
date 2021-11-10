@@ -32,7 +32,7 @@ extension SearchGroup {
         case .people:
             return true
         case .services:
-            return ZMUser.selfUser().canCreateService
+            return SelfUser.current.canCreateService
         }
     }
 
