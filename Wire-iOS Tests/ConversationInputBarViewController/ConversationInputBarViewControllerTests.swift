@@ -91,7 +91,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
 
             // WHEN
             sut.mode = .timeoutConfguration
-            self.mockConversation.messageDestructionTimeout = .local(.none)
+            self.mockConversation.activeMessageDestructionTimeoutValue = nil
             return sut
         }
 
@@ -99,8 +99,7 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
     }
 
     private func setMessageDestructionTimeout(timeInterval: TimeInterval) {
-        mockConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeInterval))
-        mockConversation.messageDestructionTimeoutValue = timeInterval
+        mockConversation.activeMessageDestructionTimeoutValue = .init(rawValue: timeInterval)
     }
 
     func testEphemeralTime10Second() {
@@ -200,7 +199,38 @@ final class ConversationInputBarViewControllerTests: XCTestCase {
         } as () -> UIViewController)
     }
 
-// MARK: - file action sheet
+    func testEphemeralDisabled() {
+        // THEN
+        verifyInAllPhoneWidths(createSut: {
+            // GIVEN
+            self.mockConversation.isSelfDeletingMessageSendingDisabled = true
+            let sut = ConversationInputBarViewController(conversation: self.mockConversation)
+
+            // WHEN
+            sut.mode = .timeoutConfguration
+
+            return sut
+        } as () -> UIViewController)
+    }
+
+    func testEphemeralWithForcedTimeout() {
+        // THEN
+        verifyInAllPhoneWidths(createSut: {
+            // GIVEN
+            self.mockConversation.isSelfDeletingMessageTimeoutForced = true
+            let sut = ConversationInputBarViewController(conversation: self.mockConversation)
+
+            // WHEN
+            sut.mode = .timeoutConfguration
+            self.setMessageDestructionTimeout(timeInterval: 300)
+
+            sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+
+            return sut
+        } as () -> UIViewController)
+    }
+
+    // MARK: - file action sheet
 
     func testUploadFileActionSheet() {
         let sut = ConversationInputBarViewController(conversation: mockConversation)
