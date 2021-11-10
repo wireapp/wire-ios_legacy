@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Patvirtintas";
 "conversation.input_bar.placeholder" = "Rašykite žinutę";
-"conversation.input_bar.placeholder_ephemeral" = "Laikina žinutė";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Perbraukę aukštyn išsiųsite";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Spustelėję išsiųsite";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Svečiai ir paslaugos";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
-"group_details.timeout_options_cell.title" = "Laikinos žinutės";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Pranešimai";
 "group_details.notification_options_cell.description" = "Jūms bus pranešta apie viską (įskaitant garso ir vaizdo skambučius) arba tik kai kažkas jus pamini arba atsako į jūsų žinutę.";
 "group_details.receipt_options_cell.title" = "Perskaitymo patvirtinimai";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Teisinio sulaikymo subjektai";
 "legalhold.header.title" = "Teisinis sulaikymas";
-"legalhold.header.other_description" = "Susirašinėjime yra bent vienas žmogus teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.";
-"legalhold.header.self_description" = "Jūs buvote teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.\nJūsų pašnekovai bus apie tai informuoti.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Teisinio sulaikymo duomenys";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "Nauja žinutė";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Naujinti būtina";
 "force.update.message" = "Negalite naudotis naujausiomis galimybėmis.\nAtsisiųskite naujausią „Wire“ versiją iš „App Store“.";
 "force.update.ok_button" = "Eiti į „App Store“";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Aptiktas įsilaužimas";
 "jailbrokendevice.alert.message" = "Dėl saugumo „Wire“ negalite naudotis šiame įrenginyje. Esantys „Wire“ duomenys buvo ištrinti.";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Laukia patvirtinimo.";
 "legalhold_request.alert.title" = "Prašomas sulaikymas dėl teisinių priežasčių";
-"legalhold_request.alert.detail" = "Įrenginys įrašys būsimas žinutes naudojant kontrolinį kodą: \n\n%@\n\nĮskaitant ištrintas, pakeistas, ir laikinas žinutes visuose susirašinėjimuose.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Norėdami patvirtinti, įveskite slaptažodį.";
 "legalhold_request.alert.error_wrong_password" = "Neteisingas slaptažodis";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Sulaikymas dėl teisinių priežasčių aktyvus";
 "legalhold_active.alert.learn_more" = "Sužinokite daugiau";
-"legalhold_active.alert.message" = "Jūs buvote teisiškai sulaikytas. Visos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.\n\nJūsų pašnekovai bus apie tai informuoti.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Sesijai skirtas laikas pasibaigė";
