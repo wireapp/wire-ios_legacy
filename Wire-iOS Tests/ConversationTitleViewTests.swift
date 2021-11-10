@@ -40,7 +40,7 @@ final class ConversationTitleViewTests: XCTestCase {
     }
 
     private func createSut(conversation: SwiftMockConversation) -> ConversationTitleView {
-        let view = ConversationTitleView(conversation: conversation as ConversationLike, interactive: true)
+        let view = ConversationTitleView(conversation: conversation, interactive: true)
         view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         view.backgroundColor = .white
         return view
@@ -107,7 +107,7 @@ final class ConversationTitleViewTests: XCTestCase {
 
     func testThatItExecutesTheTapHandlerOnTitleTap() {
         // given
-        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+        sut = ConversationTitleView(conversation: conversation, interactive: true)
 
         var callCount: Int = 0
         sut.tapHandler = { _ in
