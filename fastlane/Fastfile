@@ -87,14 +87,16 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "14.4"
+        ios_version = "15.0"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
-            if xcode_version == "11.4"
-                ios_version = "13.4"
-            elsif xcode_version == "11.4.1"
-                ios_version = "13.4.1"
+            if xcode_version == "13.0"
+                ios_version = "15.0"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
             end
         end
 
@@ -539,5 +541,4 @@ class Build
             "Wire-iOS-Release-Candidate"
         end
     end
-
 end
