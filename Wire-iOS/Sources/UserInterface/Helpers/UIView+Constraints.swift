@@ -338,8 +338,8 @@ extension UIView {
         return fitInConstraints(view: view, insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
 
-    func fitInConstraints(view: UIView, insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
-
+    func fitInConstraints(view: UIView,
+                          insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
         return [
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.leading),
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.trailing),

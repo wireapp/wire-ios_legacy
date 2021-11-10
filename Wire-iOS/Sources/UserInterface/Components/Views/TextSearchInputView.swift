@@ -85,15 +85,16 @@ final class TextSearchInputView: UIView {
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
-        [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
+        [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(addSubview)
 
         createConstraints()
     }
 
     private func createConstraints() {
         [self, iconView, searchInput, placeholderLabel, cancelButton, self, searchInput, cancelButton, spinner].prepareForLayout()
-        
-        NSLayoutConstraint.activate([
+
+        NSLayoutConstraint.activate(
+            searchInput.fitInConstraints(view: self, inset: 8) + [
             iconView.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 8),
             iconView.centerYAnchor.constraint(equalTo: searchInput.centerYAnchor),
 
@@ -101,11 +102,6 @@ final class TextSearchInputView: UIView {
             iconView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             heightAnchor.constraint(lessThanOrEqualToConstant: 100),
-
-            searchInput.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            searchInput.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-            searchInput.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            searchInput.rightAnchor.constraint(equalTo: rightAnchor, constant: 8),
 
             placeholderLabel.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 48),
             placeholderLabel.topAnchor.constraint(equalTo: searchInput.topAnchor),
