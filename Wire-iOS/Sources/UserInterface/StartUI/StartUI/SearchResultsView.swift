@@ -64,7 +64,7 @@ final class SearchResultsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         emptyResultContainer.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.translatesAutoresizingMaskIntoConstraints = false

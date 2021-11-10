@@ -386,7 +386,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let textInputSpacing = CGFloat(16)
 
         let trailingBoundaryView = accessoryView ?? contentView

@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
-"conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
@@ -625,7 +625,6 @@
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
 "error.connection.title" = "Помилка";
 "error.connection.missing_legalhold_consent" = "Ви не можете додати цього користувача через правовий захист.";
-"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
 "error.connection.generic_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 
 // Save image errors
@@ -1924,7 +1923,7 @@
 "appLockModule.goToSettingsButton.title" = "Перейти до налаштувань";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
-"keyboardshortcut.conversationDetail" = "Conversation detail...";
-"keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "Люди";

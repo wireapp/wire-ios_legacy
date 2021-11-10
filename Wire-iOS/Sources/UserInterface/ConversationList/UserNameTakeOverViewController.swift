@@ -107,7 +107,7 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.delegate = self
     }
 
-    func createConstraints() {
+    private func createConstraints() {
 
         [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].prepareForLayout()
 

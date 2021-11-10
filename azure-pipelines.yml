@@ -1,5 +1,5 @@
 pool:
-   vmImage: 'macOS-latest'
+   vmImage: 'macOS-11'
    
 trigger:
   branches:
@@ -16,7 +16,7 @@ variables:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_12.4.app
+    sudo xcode-select -switch /Applications/Xcode_13.1.app
     fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   

@@ -179,7 +179,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         colorPickerController.selectedColorIndex = colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(view, canvas, colorPickerController.view, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
             colorPicker.top == container.top
             colorPicker.left == container.left

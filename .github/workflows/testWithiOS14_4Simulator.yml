@@ -3,7 +3,7 @@ name: Xcode 13 iOS 15 Simulator Test
 on: 
   workflow_dispatch:
 jobs:
-  Run_Tests_Xcode_12_4_iOS_14_4:
+  Run_Tests_Xcode_13_0_iOS_14_4:
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
@@ -16,4 +16,10 @@ jobs:
       run: bash setup.sh
 
     - name: Run tests
-      run: xcodebuild test -scheme Wire-iOS -project Wire-iOS.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
+      run: xcodebuild test -scheme Wire-iOS -project Wire-iOS.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4' | xcpretty && exit ${PIPESTATUS[0]}
+
+    - name: Archive SnapshotResults artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: snapshotResults
+        path: SnapshotResults

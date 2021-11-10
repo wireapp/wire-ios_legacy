@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
-"conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Изменить последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Выбрать предыдущее упоминание";
@@ -625,7 +625,6 @@
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
 "error.connection.title" = "Ошибка";
 "error.connection.missing_legalhold_consent" = "Вы не можете подключиться к этому пользователю из-за юридических ограничений.";
-"error.connection.connection_limit_reached" = "Вы не можете подключиться, поскольку достигли лимита подключения";
 "error.connection.generic_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
 
 // Save image errors
@@ -1924,7 +1923,7 @@
 "appLockModule.goToSettingsButton.title" = "Перейти в настройки";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
-"keyboardshortcut.conversationDetail" = "Информация о беседе...";
-"keyboardshortcut.searchInConversation" = "Поиск в беседе...";
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "Контакты";

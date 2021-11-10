@@ -69,7 +69,7 @@ final class ArchivedNavigationBar: UIView {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [separatorView, titleLabel, dismissButton].prepareForLayout()
         NSLayoutConstraint.activate([
           separatorView.heightAnchor.constraint(equalToConstant: .hairline),
