@@ -36,7 +36,8 @@ extension ConversationActionController {
         guard result else { return }
 
         transitionToListAndEnqueue {
-            conversation.delete(in: userSession) { (result) in
+            conversation.delete(syncContext: userSession.syncContext,
+                                viewContext: userSession.viewContext) { result in
                 switch result {
                 case .success:
                     break
