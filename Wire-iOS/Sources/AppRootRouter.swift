@@ -119,7 +119,6 @@ public class AppRootRouter: NSObject {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
-        setupFeatureConfigNotifications()
     }
 
     private func setupAdditionalWindows() {
@@ -385,7 +384,8 @@ extension AppRootRouter {
                                    account: account,
                                    selfUser: ZMUser.selfUser(),
                                    isComingFromRegistration: isComingFromRegistration,
-                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog,
+                                   featureServiceProvider: ZMUserSession.shared()!)
     }
 }
 
@@ -552,13 +552,5 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
-    }
-}
-
-// MARK: - FeatureConfigChangeObserving
-
-extension AppRootRouter: FeatureConfigObserving {
-    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload) {
-        UIAlertController.showFeatureConfigDidChangeAlert(featureUpdateEvent.name, status: featureUpdateEvent.status)
     }
 }
