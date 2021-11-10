@@ -100,6 +100,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         tearDown()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder) is not implemented")
     }
