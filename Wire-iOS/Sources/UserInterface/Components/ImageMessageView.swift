@@ -73,14 +73,12 @@ final class ImageMessageView: UIView {
                 let image = FLAnimatedImage(animatedGIFData: imageData)
                 imageSize = image?.size ?? .zero
                 imageView.animatedImage = image
-            }
-            else {
+            } else {
                 let image = UIImage(data: imageData, scale: 2.0)
                 imageSize = image?.size ?? .zero
                 imageView.image = image
             }
-        }
-        else {
+        } else {
             dotsLoadingView.isHidden = false
             dotsLoadingView.startProgressAnimation()
         }
@@ -92,12 +90,11 @@ final class ImageMessageView: UIView {
             return
         }
 
-        [imageView].prepareForLayout()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
         if imageSize.width / 2.0 > imageView.bounds.width {
             aspectRatioConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageSize.height / imageSize.width)
-        }
-        else {
+        } else {
             imageView.contentMode = .left
             aspectRatioConstraint = imageView.heightAnchor.constraint(equalToConstant: imageSize.height)
         }
@@ -117,7 +114,6 @@ final class ImageMessageView: UIView {
         userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
         userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
 
-
         addSubview(dotsLoadingView)
 
         createConstraints()
@@ -126,7 +122,12 @@ final class ImageMessageView: UIView {
     }
 
     private func createConstraints() {
-        [imageView, userImageView, userImageViewContainer, userNameLabel, dotsLoadingView].prepareForLayout()
+        [imageView,
+         userImageView,
+         userImageViewContainer,
+         userNameLabel,
+         dotsLoadingView].prepareForLayout()
+
         NSLayoutConstraint.activate([
             userImageViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             userImageViewContainer.widthAnchor.constraint(equalToConstant: 48),

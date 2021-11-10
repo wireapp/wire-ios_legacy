@@ -126,7 +126,7 @@ final class ImageToolbarView: UIView {
         createButtonConstraints()
     }
 
-    ///TODO: Bill - use stack view to hold the buttons?
+    /// TODO: Bill - use stack view to hold the buttons?
     private func createButtonConstraints() {
         let spacing: CGFloat = 16
 
