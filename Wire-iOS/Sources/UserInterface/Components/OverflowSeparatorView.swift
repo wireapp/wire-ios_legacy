@@ -28,9 +28,9 @@ final class OverflowSeparatorView: UIView {
         self.applyStyle()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.applyStyle()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func applyStyle() {

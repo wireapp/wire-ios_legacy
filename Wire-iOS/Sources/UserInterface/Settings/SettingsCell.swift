@@ -165,10 +165,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         setupAccessibiltyElements()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-        setupAccessibiltyElements()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override func prepareForReuse() {

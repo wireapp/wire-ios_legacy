@@ -80,11 +80,9 @@ class SectionHeader: UICollectionReusableView, Themeable {
         headerView.fitInSuperview()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.fitInSuperview()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
@@ -114,10 +112,9 @@ class SectionTableHeader: UITableViewHeaderFooterView, Themeable {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        contentView.addSubview(headerView)
-        createConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func createConstraints() {
