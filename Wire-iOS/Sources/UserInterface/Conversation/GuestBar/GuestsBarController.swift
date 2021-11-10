@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import Down
 
@@ -30,9 +29,9 @@ final class GuestsBarController: UIViewController {
 
     private let label = UILabel()
     private let container = UIView()
-    private var containerHeightConstraint: NSLayoutConstraint!
-    private var heightConstraint: NSLayoutConstraint!
-    private var bottomLabelConstraint: NSLayoutConstraint!
+    private lazy var containerHeightConstraint: NSLayoutConstraint = container.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var heightConstraint: NSLayoutConstraint = view.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var bottomLabelConstraint: NSLayoutConstraint = label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
 
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
@@ -65,17 +64,18 @@ final class GuestsBarController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, container, label) { view, container, label in
-            label.leading == view.leading
-            bottomLabelConstraint = label.bottom == view.bottom - 3
-            label.trailing == view.trailing
-            view.leading == container.leading
-            view.trailing == container.trailing
-            container.top == view.top
+        [container, label].prepareForLayout()
+        NSLayoutConstraint.activate([
+          label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          bottomLabelConstraint,
+          label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          container.topAnchor.constraint(equalTo: view.topAnchor),
 
-            heightConstraint = view.height == GuestsBarController.expandedHeight
-            containerHeightConstraint = container.height == GuestsBarController.expandedHeight
-        }
+          heightConstraint,
+          containerHeightConstraint
+        ])
     }
 
     // MARK: - State Changes

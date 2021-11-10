@@ -252,7 +252,7 @@ final class AddParticipantsViewController: UIViewController {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
 
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {

@@ -18,7 +18,6 @@
 
 import UIKit
 import QuartzCore
-import Cartography
 
 protocol BreathLoadingBarDelegate: class {
     func animationDidStarted()
@@ -28,7 +27,7 @@ protocol BreathLoadingBarDelegate: class {
 final class BreathLoadingBar: UIView {
     weak var delegate: BreathLoadingBarDelegate?
 
-    var heightConstraint: NSLayoutConstraint?
+    lazy var heightConstraint: NSLayoutConstraint = heightAnchor.constraint(equalToConstant: 0)
 
     var animating: Bool = false {
         didSet {
@@ -84,17 +83,17 @@ final class BreathLoadingBar: UIView {
     private func updateView() {
         switch state {
         case .online:
-            heightConstraint?.constant = 0
+            heightConstraint.constant = 0
             alpha = 0
             layer.cornerRadius = 0
         case .onlineSynchronizing:
-            heightConstraint?.constant = CGFloat.SyncBar.height
+            heightConstraint.constant = CGFloat.SyncBar.height
             alpha = 1
             layer.cornerRadius = CGFloat.SyncBar.cornerRadius
 
             backgroundColor = UIColor.accent()
         case .offlineExpanded:
-            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            heightConstraint.constant = CGFloat.OfflineBar.expandedHeight
             alpha = 0
             layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         }
@@ -103,9 +102,10 @@ final class BreathLoadingBar: UIView {
     }
 
     private func createConstraints() {
-        constrain(self) { selfView in
-            heightConstraint = selfView.height == 0
-        }
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          heightConstraint
+        ])
     }
 
     override func layoutSubviews() {

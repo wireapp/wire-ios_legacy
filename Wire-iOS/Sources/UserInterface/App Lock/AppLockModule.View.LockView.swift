@@ -96,6 +96,7 @@ extension AppLockModule.View {
             toggleConstraints()
         }
 
+        @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
             fatal("init(coder) is not implemented")
         }

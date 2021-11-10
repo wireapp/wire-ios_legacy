@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 
 protocol UserSearchResultsViewControllerDelegate: class {
@@ -53,7 +52,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
         }
     }
     private var query: String = ""
-    private var collectionViewHeight: NSLayoutConstraint?
+    private lazy var collectionViewHeight: NSLayoutConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
 
@@ -131,12 +130,13 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func setupConstraints() {
-        constrain(view, collectionView) { (selfView, collectionView) in
-            collectionView.bottom == selfView.bottom
-            collectionView.leading == selfView.leading
-            collectionView.trailing == selfView.trailing
-            collectionViewHeight = collectionView.height == 0
-        }
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionViewHeight
+        ])
     }
 
     @objc func reloadTable(with results: [UserType]) {
@@ -158,7 +158,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     private func resizeTable() {
         let viewHeight = view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        collectionViewHeight?.constant = minValue
+        collectionViewHeight.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
     }
 

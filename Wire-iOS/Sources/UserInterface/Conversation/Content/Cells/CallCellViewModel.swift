@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireCommonComponents
 import UIKit
 import WireDataModel

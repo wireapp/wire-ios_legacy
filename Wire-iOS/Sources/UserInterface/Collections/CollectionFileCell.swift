@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireSystem
 import WireDataModel
 import WireCommonComponents
 
@@ -47,14 +46,14 @@ final class CollectionFileCell: CollectionCell {
         }
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadView()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.loadView()
+        loadView()
     }
 
     func loadView() {

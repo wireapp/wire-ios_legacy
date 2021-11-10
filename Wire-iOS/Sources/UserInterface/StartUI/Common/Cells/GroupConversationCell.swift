@@ -102,7 +102,7 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         NSLayoutConstraint.activate([
             avatarView.widthAnchor.constraint(equalToConstant: 28),
             avatarView.heightAnchor.constraint(equalToConstant: 28),

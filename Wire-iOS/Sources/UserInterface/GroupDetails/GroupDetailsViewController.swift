@@ -75,7 +75,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         [collectionView, footerView].forEach(view.addSubview)
 
         [collectionView, footerView].prepareForLayout()
-
         NSLayoutConstraint.activate([
           collectionView.topAnchor.constraint(equalTo: view.topAnchor),
           collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

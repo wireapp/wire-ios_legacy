@@ -18,16 +18,15 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 
 final class TextSearchViewController: NSObject {
-    var resultsView: TextSearchResultsView!
-    var searchBar: TextSearchInputView!
+    let resultsView: TextSearchResultsView = TextSearchResultsView()
+    let searchBar: TextSearchInputView = TextSearchInputView()
 
     weak var delegate: MessageActionResponder? = .none
     let conversation: ConversationLike
     var searchQuery: String? {
-        return self.searchBar.query
+        return searchBar.query
     }
 
     fileprivate var textSearchQuery: TextSearchQuery?
@@ -43,21 +42,19 @@ final class TextSearchViewController: NSObject {
     init(conversation: ConversationLike) {
         self.conversation = conversation
         super.init()
-        self.loadViews()
+        loadViews()
     }
 
     private func loadViews() {
-        self.resultsView = TextSearchResultsView()
-        self.resultsView.isHidden = results.count == 0
-        self.resultsView.tableView.isHidden = results.count == 0
-        self.resultsView.noResultsView.isHidden = results.count != 0
+        resultsView.isHidden = results.isEmpty
+        resultsView.tableView.isHidden = results.isEmpty
+        resultsView.noResultsView.isHidden = !results.isEmpty
 
-        self.resultsView.tableView.delegate = self
-        self.resultsView.tableView.dataSource = self
+        resultsView.tableView.delegate = self
+        resultsView.tableView.dataSource = self
 
-        self.searchBar = TextSearchInputView()
-        self.searchBar.delegate = self
-        self.searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
+        searchBar.delegate = self
+        searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
     }
 
     func teardown() {
@@ -67,7 +64,7 @@ final class TextSearchViewController: NSObject {
     fileprivate func scheduleSearch() {
         let searchSelector = #selector(TextSearchViewController.search)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: searchSelector, object: .none)
-        self.perform(searchSelector, with: .none, afterDelay: 0.2)
+        perform(searchSelector, with: .none, afterDelay: 0.2)
     }
 
     @objc
@@ -77,8 +74,8 @@ final class TextSearchViewController: NSObject {
         textSearchQuery?.cancel()
         textSearchQuery = nil
 
-        guard let query = self.searchQuery, !query.isEmpty else {
-            self.results = []
+        guard let query = searchQuery, !query.isEmpty else {
+            results = []
             return
         }
 
@@ -119,10 +116,10 @@ final class TextSearchViewController: NSObject {
 
 extension TextSearchViewController: TextSearchQueryDelegate {
     func textSearchQueryDidReceive(result: TextQueryResult) {
-        guard result.query == self.textSearchQuery else { return }
-        if result.matches.count > 0 || !result.hasMore {
-            self.hideLoadingSpinner()
-            self.results = result.matches
+        guard result.query == textSearchQuery else { return }
+        if !result.matches.isEmpty || !result.hasMore {
+            hideLoadingSpinner()
+            results = result.matches
         }
     }
 }
@@ -149,17 +146,17 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
 
 extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.results.count
+        return results.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextSearchResultCell.reuseIdentifier) as! TextSearchResultCell
-        cell.configure(with: self.results[indexPath.row], queries: self.searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? [])
+        cell.configure(with: results[indexPath.row], queries: searchQuery?.components(separatedBy: .whitespacesAndNewlines) ?? [])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.perform(action: .showInConversation, for: self.results[indexPath.row], view: tableView)
+        delegate?.perform(action: .showInConversation, for: results[indexPath.row], view: tableView)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

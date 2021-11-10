@@ -246,14 +246,14 @@ final class CallActionsView: UIView {
     private func updateAccessibilityElements(with input: CallActionsViewInputType) {
         typealias Label = L10n.Localizable.Call.Actions.Label
 
-        microphoneButton.accessibilityLabel = input.isMuted ? Label.toggleMuteOff : Label.toggleMuteOn
+        microphoneButton.accessibilityLabel = input.isMuted ? Label.toggleMuteOff: Label.toggleMuteOn
         flipCameraButton.accessibilityLabel = Label.flipCamera
-        speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Label.toggleSpeakerOff : Label.toggleSpeakerOn
+        speakerButton.accessibilityLabel = input.mediaState.isSpeakerEnabled ? Label.toggleSpeakerOff: Label.toggleSpeakerOn
         acceptCallButton.accessibilityLabel = Label.acceptCall
-        endCallButton.accessibilityLabel = input.callState.canAccept ? Label.rejectCall : Label.terminateCall
+        endCallButton.accessibilityLabel = input.callState.canAccept ? Label.rejectCall: Label.terminateCall
         cameraButtonDisabled.accessibilityLabel = Label.toggleVideoOn
-        cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff : Label.toggleVideoOn
-        flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera : Label.switchToFrontCamera
+        cameraButton.accessibilityLabel = input.mediaState.isSendingVideo ? Label.toggleVideoOff: Label.toggleVideoOn
+        flipCameraButton.accessibilityLabel = input.cameraType == .front ? Label.switchToBackCamera: Label.switchToFrontCamera
 
         speakersAllSegmentedView.accessibilityIdentifier = "speakers_and_all_toggle.selected.\(input.videoGridPresentationMode.accessibilityIdentifier)"
     }

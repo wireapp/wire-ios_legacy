@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "je v kontaktech";
 
 "conversation.input_bar.shortcut.send" = "Odeslat zprávu";
-"conversation.input_bar.shortcut.newline" = "Vložit lomítko";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Upravit poslední zprávu";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Zrušit";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -625,7 +625,6 @@
 "inbox.connection_request.ignore_button_title" = "Ignorovat";
 "error.connection.title" = "Chyba";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
-"error.connection.connection_limit_reached" = "You cannot connect to because you reached the connection limit";
 "error.connection.generic_error" = "Něco se pokazilo. Zkuste prosím znovu";
 
 // Save image errors
@@ -1924,7 +1923,7 @@
 "appLockModule.goToSettingsButton.title" = "Go to settings";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to bottom";
-"keyboardshortcut.conversationDetail" = "Conversation detail...";
-"keyboardshortcut.searchInConversation" = "Search in conversation...";
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "Kontakty";
