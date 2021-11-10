@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireCommonComponents
 import WireSystem
@@ -92,82 +91,87 @@ final class TextSearchInputView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, iconView, searchInput, placeholderLabel, cancelButton) { selfView, iconView, searchInput, placeholderLabel, cancelButton in
-            iconView.leading == searchInput.leading + 8
-            iconView.centerY == searchInput.centerY
+        [<#views#>].prepareForLayout()
+        NSLayoutConstraint.activate([
+            iconView.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 8),
+            iconView.centerYAnchor.constraint(equalTo: searchInput.centerYAnchor),
 
-            iconView.top == selfView.top
-            iconView.bottom == selfView.bottom
+            iconView.topAnchor.constraint(equalTo: selfView.topAnchor),
+            iconView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
 
-            selfView.height <= 100
+            selfView.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
 
-            searchInput.edges == inset(selfView.edges, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+            searchInput.topAnchor.constraint(equalTo: inset(selfView.topAnchor),
+                                             searchInput.bottomAnchor.constraint(equalTo: inset(selfView.bottomAnchor),
+                                                                                 searchInput.leftAnchor.constraint(equalTo: inset(selfView.leftAnchor),
+                                                                                                                   searchInput.rightAnchor.constraint(equalTo: inset(selfView.rightAnchor),
 
-            placeholderLabel.leading == searchInput.leading + 48
-            placeholderLabel.top == searchInput.top
-            placeholderLabel.bottom == searchInput.bottom
-            placeholderLabel.trailing == cancelButton.leading
-        }
+                                                                                                                                                      placeholderLabel.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 48),
+                                                                                                                                                      placeholderLabel.topAnchor.constraint(equalTo: searchInput.topAnchor),
+                                                                                                                                                      placeholderLabel.bottomAnchor.constraint(equalTo: searchInput.bottomAnchor),
+                                                                                                                                                      placeholderLabel.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor)
+                                                                                                                                                      ])
 
-        constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
-            cancelButton.centerY == view.centerY
-            cancelButton.trailing == searchInput.trailing - 8
-            cancelButton.width == StyleKitIcon.Size.tiny.rawValue
-            cancelButton.height == StyleKitIcon.Size.tiny.rawValue
+                                                                                                                   [<#views#>].prepareForLayout()
+                                                                                                                   NSLayoutConstraint.activate([
+                                                                                                                    cancelButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                                                                                                                    cancelButton.trailingAnchor.constraint(equalTo: searchInput.trailingAnchor, constant: -8),
+                                                                                                                    cancelButton.widthAnchor.constraint(equalTo: StyleKitIcon.Size.tiny.rawValueAnchor),
+                                                                                                                    cancelButton.heightAnchor.constraint(equalTo: StyleKitIcon.Size.tiny.rawValueAnchor),
 
-            spinner.trailing == cancelButton.leading - 6
-            spinner.centerY == cancelButton.centerY
-            spinner.width == StyleKitIcon.Size.tiny.rawValue
-        }
-    }
+                                                                                                                    spinner.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -6),
+                                                                                                                    spinner.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
+                                                                                                                    spinner.widthAnchor.constraint(equalTo: StyleKitIcon.Size.tiny.rawValueAnchor)
+                                                                                                                   ])
+                                                                                                                   }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatal("init?(coder aDecoder: NSCoder) is not implemented")
-    }
+                                                                                                                   required init?(coder aDecoder: NSCoder) {
+                                                                                                                       fatal("init?(coder aDecoder: NSCoder) is not implemented")
+                                                                                                                   }
 
-    @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
-        self.query = ""
-        self.searchInput.text = ""
-        self.searchInput.resignFirstResponder()
-    }
+                                                                                                                   @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
+                                                                                                                       self.query = ""
+                                                                                                                       self.searchInput.text = ""
+                                                                                                                       self.searchInput.resignFirstResponder()
+                                                                                                                   }
 
-    fileprivate func updatePlaceholderLabel() {
-        self.placeholderLabel.isHidden = !self.query.isEmpty
-    }
+                                                                                                                   fileprivate func updatePlaceholderLabel() {
+                                                                                                                       self.placeholderLabel.isHidden = !self.query.isEmpty
+                                                                                                                   }
 
-    fileprivate func updateForSearchQuery() {
-        self.updatePlaceholderLabel()
-        cancelButton.isHidden = self.query.isEmpty
-    }
-}
+                                                                                                                   fileprivate func updateForSearchQuery() {
+                                                                                                                       self.updatePlaceholderLabel()
+                                                                                                                       cancelButton.isHidden = self.query.isEmpty
+                                                                                                                   }
+                                                                                                                   }
 
-extension TextSearchInputView: UITextViewDelegate {
+                                                                                                                   extension TextSearchInputView: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let currentText = textView.text else {
-            return true
-        }
-        let containsReturn = text.rangeOfCharacter(from: .newlines, options: [], range: .none) != .none
+                                                                                                                       func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+                                                                                                                           guard let currentText = textView.text else {
+                                                                                                                               return true
+                                                                                                                           }
+                                                                                                                           let containsReturn = text.rangeOfCharacter(from: .newlines, options: [], range: .none) != .none
 
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        self.query = containsReturn ? currentText : newText
+                                                                                                                           let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+                                                                                                                           self.query = containsReturn ? currentText : newText
 
-        if containsReturn {
-            let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
-            if shouldReturn {
-                textView.resignFirstResponder()
-            }
-        }
+                                                                                                                           if containsReturn {
+                                                                                                                               let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
+                                                                                                                               if shouldReturn {
+                                                                                                                                   textView.resignFirstResponder()
+                                                                                                                               }
+                                                                                                                           }
 
-        return !containsReturn
-    }
+                                                                                                                           return !containsReturn
+                                                                                                                       }
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        self.updatePlaceholderLabel()
-    }
+                                                                                                                       func textViewDidBeginEditing(_ textView: UITextView) {
+                                                                                                                           self.updatePlaceholderLabel()
+                                                                                                                       }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
-        self.updatePlaceholderLabel()
-    }
+                                                                                                                       func textViewDidEndEditing(_ textView: UITextView) {
+                                                                                                                           self.updatePlaceholderLabel()
+                                                                                                                       }
 
-}
+                                                                                                                   }
