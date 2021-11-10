@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-protocol TabBarDelegate: class {
+protocol TabBarDelegate: AnyObject {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
 }
 
@@ -33,7 +34,7 @@ final class TabBar: UIView {
 
     private let selectionLineView = UIView()
     private(set) var tabs: [Tab] = []
-    private var lineLeadingConstraint: NSLayoutConstraint?
+    private lazy var lineLeadingConstraint: NSLayoutConstraint = selectionLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: tabInset)
     private var didUpdateInitialBarPosition = false
 
     var style: ColorSchemeVariant {
@@ -81,7 +82,7 @@ final class TabBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func setupViews() {
+    private func setupViews() {
         tabs = items.enumerated().map(makeButtonForItem)
         tabs.forEach(stackView.addArrangedSubview)
 
@@ -92,15 +93,6 @@ final class TabBar: UIView {
 
         addSubview(selectionLineView)
         selectionLineView.backgroundColor = style == .dark ? .white : .black
-
-        [<#views#>].prepareForLayout()
-        NSLayoutConstraint.activate([
-            lineLeadingConstraint = selectionLineView.leadingAnchor.constraint(equalTo: selfView.leadingAnchor, constant: tabInset),
-            selectionLineView.heightAnchor.constraint(equalToConstant: 1),
-            selectionLineView.bottomAnchor.constraint(equalTo: selfView.bottomAnchor),
-            let widthInset = tabInset * 2 / CGFloat(items.count),
-            selectionLineView.widthAnchor.constraint(equalTo: selfView.widthAnchor, constant: / CGFloat(items.count) -widthInset)
-        ])
     }
 
     override func layoutSubviews() {
@@ -113,12 +105,12 @@ final class TabBar: UIView {
 
     private func updateLinePosition(animated: Bool) {
         let offset = CGFloat(selectedIndex) * selectionLineView.bounds.width
-        guard offset != lineLeadingConstraint?.constant else { return }
+        guard offset != lineLeadingConstraint.constant else { return }
         updateLinePosition(offset: offset, animated: animated)
     }
 
     private func updateLinePosition(offset: CGFloat, animated: Bool) {
-        lineLeadingConstraint?.constant = offset + tabInset
+        lineLeadingConstraint.constant = offset + tabInset
 
         if animated {
             UIView.animate(
@@ -137,15 +129,24 @@ final class TabBar: UIView {
         updateLinePosition(offset: offset, animated: false)
     }
 
-    fileprivate func createConstraints() {
-        [<#views#>].prepareForLayout()
+    private func createConstraints() {
+        let oneOverItemsCount: CGFloat = 1 / CGFloat(items.count)
+        let widthInset = tabInset * 2 * oneOverItemsCount
+
+        [selectionLineView, stackView].prepareForLayout()
+
         NSLayoutConstraint.activate([
-            stackView.leftAnchor.constraint(equalTo: selfView.leftAnchor, constant: tabInset),
-            stackView.rightAnchor.constraint(equalTo: selfView.rightAnchor, constant: -tabInset),
-            stackView.topAnchor.constraint(equalTo: selfView.topAnchor),
+            lineLeadingConstraint,
+            selectionLineView.heightAnchor.constraint(equalToConstant: 1),
+            selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: oneOverItemsCount, constant:  -widthInset),
+
+            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: tabInset),
+            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -tabInset),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 48),
 
-            selfView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
+            bottomAnchor.constraint(equalTo: stackView.bottomAnchor)
         ])
     }
 
