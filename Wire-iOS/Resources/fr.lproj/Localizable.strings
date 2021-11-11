@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Vérifié";
 "conversation.input_bar.placeholder" = "Écrivez un message";
-"conversation.input_bar.placeholder_ephemeral" = "Message éphémère";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Balayez vers le haut pour envoyer";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Appuyez pour envoyer";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Contacts externes et services";
 "group_details.guest_options_cell.enabled" = "Activé";
 "group_details.guest_options_cell.disabled" = "Désactivé";
-"group_details.timeout_options_cell.title" = "Messages éphémères";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "Vous pouvez être notifié pour tout (y compris les appels audio et vidéo) ou seulement quand quelqu'un vous mentionne ou répond à un de vos messages.";
 "group_details.receipt_options_cell.title" = "Accusés de lecture";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Participants soumis à la conservation à des fins juridiques";
 "legalhold.header.title" = "Conservation à des fins juridiques";
-"legalhold.header.other_description" = "La conservation à des fins juridiques été activée pour au moins un contact dans cette conversation.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.";
-"legalhold.header.self_description" = "La conservation à des fins juridiques a été activée pour votre compte.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés ou éphémères.\nLes autres participants seront informés de l'enregistrement.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Information sur la conservation à des fins juridiques";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "Nouveau message";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Mise à jour nécessaire";
 "force.update.message" = "Il vous manque de nouvelles fonctionnalités. Téléchargez la dernière version de Wire dans l’App Store.";
 "force.update.ok_button" = "Aller sur l'App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "Il y a eu un changement dans Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Le partage et la réception de fichiers de n'importe quel type est désactivé.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Le partage et la réception de fichiers de n'importe quel type est activé.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";
 "jailbrokendevice.alert.message" = "Pour des raisons de sécurité Wire ne peut pas être utilisé sur cet appareil. Toutes données Wire existantes ont été effacées.";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Validation en attente.";
 "legalhold_request.alert.title" = "Conservation à des fins juridiques demandée";
-"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés sur votre appareil avec l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "La conservation à des fins juridiques est active";
 "legalhold_active.alert.learn_more" = "En savoir plus";
-"legalhold_active.alert.message" = "La conservation à des fins juridiques a été activée sur votre compte. Tous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.\n\nLes autres participants sont informés que la conservation à des fins juridiques est active.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";

@@ -34,7 +34,7 @@ fileprivate extension UIView {
 
 }
 
-protocol ChangeHandleTableViewCellDelegate: class {
+protocol ChangeHandleTableViewCellDelegate: AnyObject {
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String)
 }

@@ -25,7 +25,7 @@ enum NetworkStatusViewState {
     case offlineExpanded
 }
 
-protocol NetworkStatusViewDelegate: class {
+protocol NetworkStatusViewDelegate: AnyObject {
 
     /// Set this var to true after viewDidAppear. This flag prevents first layout animation when the UIViewController is created but not yet appear, if didChangeHeight called with animated = true.
     var shouldAnimateNetworkStatusView: Bool { get set }

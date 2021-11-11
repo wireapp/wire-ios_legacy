@@ -17,7 +17,7 @@
 
 import WireDataModel
 
-protocol ConversationInputBarViewControllerDelegate: class {
+protocol ConversationInputBarViewControllerDelegate: AnyObject {
     func conversationInputBarViewControllerDidComposeText(text: String, mentions: [Mention], replyingTo message: ZMConversationMessage?)
     func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool
     func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool

@@ -19,13 +19,13 @@
 import Foundation
 import Cartography
 
-protocol CharacterInputFieldDelegate: class {
+protocol CharacterInputFieldDelegate: AnyObject {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
     func didChangeText(_ inputField: CharacterInputField, to: String)
     func didFillInput(inputField: CharacterInputField, text: String)
 }
 
-protocol TextContainer: class {
+protocol TextContainer: AnyObject {
     var text: String? { get set }
 }
 

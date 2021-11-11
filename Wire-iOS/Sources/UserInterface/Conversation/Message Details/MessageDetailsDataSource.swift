@@ -29,7 +29,7 @@ enum MessageDetailsDisplayMode: Int {
  * An object that observes changes in the message data source.
  */
 
-protocol MessageDetailsDataSourceObserver: class {
+protocol MessageDetailsDataSourceObserver: AnyObject {
     /// Called when the message details change.
     func dataSourceDidChange(_ dataSource: MessageDetailsDataSource)
 

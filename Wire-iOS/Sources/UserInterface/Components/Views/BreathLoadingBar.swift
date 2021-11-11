@@ -19,7 +19,7 @@
 import UIKit
 import QuartzCore
 
-protocol BreathLoadingBarDelegate: class {
+protocol BreathLoadingBarDelegate: AnyObject {
     func animationDidStarted()
     func animationDidStopped()
 }

@@ -22,7 +22,7 @@ import AuthenticationServices
 import UIKit
 import WireSyncEngine
 
-protocol CompanyLoginFlowHandlerDelegate: class {
+protocol CompanyLoginFlowHandlerDelegate: AnyObject {
     /// Called when the user cancels the company login flow.
     func userDidCancelCompanyLoginFlow()
 }

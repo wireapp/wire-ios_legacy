@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "已驗證";
 "conversation.input_bar.placeholder" = "請輸入訊息";
-"conversation.input_bar.placeholder_ephemeral" = "限時訊息";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑動來發送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "點擊來發送";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "訪客和服務";
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
-"group_details.timeout_options_cell.title" = "限時訊息";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
 "group_details.receipt_options_cell.title" = "讀取回條";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "合法保留對象";
 "legalhold.header.title" = "合法保留";
-"legalhold.header.other_description" = "此對話中至少有一個人被激活了合法保留。\n所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。";
-"legalhold.header.self_description" = "您的帳戶的合法保留已被激活。\n所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。\n您的對話成員將被提醒記錄中。";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "合法保留詳情";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "新訊息";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "必要更新";
 "force.update.message" = "您錯過了些新功能。\n快到App Store中下載最新版的Wire吧。";
 "force.update.ok_button" = "到App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "功能無法使用";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "發現這部裝置已越獄";
 "jailbrokendevice.alert.message" = "出於安全原因，Wire不能在此設備上使用，現有的所有Wire數據已被消除。";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "等待核准";
 "legalhold_request.alert.title" = "合法保留要求";
-"legalhold_request.alert.detail" = "設備將使用指紋記錄所有以後的消息：\n\n%@\n\n這包括所有對話中的已刪除，已編輯和定時的消息。";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "請輸入您的密碼以便確認。";
 "legalhold_request.alert.error_wrong_password" = "密碼錯誤";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "合法保留生效";
 "legalhold_active.alert.learn_more" = "瞭解更多";
-"legalhold_active.alert.message" = "您的帳戶的合法保留已被激活。 所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。\n\n您的對話成員將被提醒記錄中。";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "你的登入階段已過期。";

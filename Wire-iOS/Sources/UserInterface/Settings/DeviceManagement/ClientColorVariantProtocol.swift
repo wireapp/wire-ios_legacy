@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol ClientListViewControllerDelegate: class {
+protocol ClientListViewControllerDelegate: AnyObject {
     func finishedDeleting(_ clientListViewController: ClientListViewController)
 }
 

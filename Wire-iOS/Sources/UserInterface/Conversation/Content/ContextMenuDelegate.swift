@@ -18,7 +18,7 @@
 import UIKit
 import WireDataModel
 
-protocol ContextMenuDelegate: class {
+protocol ContextMenuDelegate: AnyObject {
     var delegate: ConversationMessageCellDelegate? { get }
     var message: ZMConversationMessage? { get }
 

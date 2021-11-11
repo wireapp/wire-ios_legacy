@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol PasscodeTextFieldDelegate: class {
+protocol PasscodeTextFieldDelegate: AnyObject {
     func textFieldValueChanged(_ value: String?)
 }
 

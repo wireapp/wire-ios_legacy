@@ -26,7 +26,7 @@ extension ZMConversation: ConversationListItem {}
 // Placeholder for conversation requests item
 final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
 
-protocol ConversationListViewModelDelegate: class {
+protocol ConversationListViewModelDelegate: AnyObject {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
 
     func listViewModelShouldBeReloaded()
@@ -44,6 +44,6 @@ protocol ConversationListViewModelDelegate: class {
     )
 }
 
-protocol ConversationListViewModelRestorationDelegate: class {
+protocol ConversationListViewModelRestorationDelegate: AnyObject {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool)
 }

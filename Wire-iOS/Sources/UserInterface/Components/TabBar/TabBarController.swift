@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol TabBarControllerDelegate: class {
+protocol TabBarControllerDelegate: AnyObject {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 

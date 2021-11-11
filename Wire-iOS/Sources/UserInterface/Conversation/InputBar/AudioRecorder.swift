@@ -65,7 +65,7 @@ public enum RecordingError: Error {
     case toMaxDuration, toMaxSize
 }
 
-protocol AudioRecorderType: class {
+protocol AudioRecorderType: AnyObject {
     var format: AudioRecorderFormat { get }
     var state: AudioRecorderState { get set }
     var fileURL: URL? { get }

@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol TopPeopleLineCollectionViewControllerDelegate: class {
+protocol TopPeopleLineCollectionViewControllerDelegate: AnyObject {
 
     func topPeopleLineCollectionViewControllerDidSelect(_ conversation: ZMConversation)
 }

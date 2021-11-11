@@ -1,24 +1,24 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
 
-protocol TabBarDelegate: class {
+protocol TabBarDelegate: AnyObject {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
 }
 
@@ -62,7 +62,7 @@ final class TabBar: UIView {
     // MARK: - Initialization
 
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
-        precondition(items.count > 0, "TabBar must be initialized with at least one item")
+        precondition(!items.isEmpty, "TabBar must be initialized with at least one item")
 
         self.items = items
         self.selectedIndex = selectedIndex
@@ -82,7 +82,7 @@ final class TabBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func setupViews() {
+    private func setupViews() {
         tabs = items.enumerated().map(makeButtonForItem)
         tabs.forEach(stackView.addArrangedSubview)
 
@@ -129,15 +129,17 @@ final class TabBar: UIView {
         updateLinePosition(offset: offset, animated: false)
     }
 
-    fileprivate func createConstraints() {
-        let widthInset: CGFloat = tabInset * 2 / CGFloat(items.count)
+    private func createConstraints() {
+        let oneOverItemsCount: CGFloat = 1 / CGFloat(items.count)
+        let widthInset = tabInset * 2 * oneOverItemsCount
 
-        [selectionLineView, stackView].prepareForLayout()
+        [self, selectionLineView, stackView].prepareForLayout()
+
         NSLayoutConstraint.activate([
             lineLeadingConstraint,
             selectionLineView.heightAnchor.constraint(equalToConstant: 1),
             selectionLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0 / CGFloat(items.count), constant: -widthInset),
+            selectionLineView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: oneOverItemsCount, constant: -widthInset),
 
             stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: tabInset),
             stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -tabInset),

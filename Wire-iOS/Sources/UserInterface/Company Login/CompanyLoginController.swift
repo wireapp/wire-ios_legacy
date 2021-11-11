@@ -22,7 +22,7 @@ import UIKit
 import WireTransport
 import WireSyncEngine
 
-protocol CompanyLoginControllerDelegate: class {
+protocol CompanyLoginControllerDelegate: AnyObject {
 
     /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.

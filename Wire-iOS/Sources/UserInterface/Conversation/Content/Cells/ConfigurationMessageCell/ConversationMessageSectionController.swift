@@ -30,7 +30,7 @@ struct ConversationMessageContext: Equatable {
     let spacing: Float
 }
 
-protocol ConversationMessageSectionControllerDelegate: class {
+protocol ConversationMessageSectionControllerDelegate: AnyObject {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
 }
 

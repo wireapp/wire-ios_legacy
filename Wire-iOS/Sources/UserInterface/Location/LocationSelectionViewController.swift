@@ -22,7 +22,7 @@ import MapKit
 import CoreLocation
 import UIKit
 
-protocol LocationSelectionViewControllerDelegate: class {
+protocol LocationSelectionViewControllerDelegate: AnyObject {
     func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData)
     func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController)
 }

@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol CallParticipantsListViewControllerDelegate: class {
+protocol CallParticipantsListViewControllerDelegate: AnyObject {
     func callParticipantsListViewControllerDidSelectShowMore(viewController: CallParticipantsListViewController)
 }
 

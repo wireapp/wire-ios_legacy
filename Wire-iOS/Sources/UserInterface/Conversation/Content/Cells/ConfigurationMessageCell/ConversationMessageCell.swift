@@ -34,7 +34,7 @@ protocol ConversationMessageCellDelegate: MessageActionResponder {
  * A generic view that displays conversation contents.
  */
 
-protocol ConversationMessageCell: class {
+protocol ConversationMessageCell: AnyObject {
     /// The object that contains the configuration of the view.
     associatedtype Configuration
 
@@ -103,7 +103,7 @@ extension ConversationMessageCell {
  * the view type it declares as the contents of the cell.
  */
 
-protocol ConversationMessageCellDescription: class {
+protocol ConversationMessageCellDescription: AnyObject {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
 
