@@ -49,7 +49,7 @@ final class ImageToolbarView: UIView {
         }
     }
 
-    public var imageIsEphemeral = false {
+    var imageIsEphemeral = false {
         didSet {
             guard oldValue != imageIsEphemeral else { return }
             updateButtonConfiguration()
