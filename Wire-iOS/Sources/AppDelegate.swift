@@ -119,7 +119,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
 
+        fixIOS15TransparentBackgroundColor()
+
         return true
+    }
+
+    private func fixIOS15TransparentBackgroundColor() {
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
