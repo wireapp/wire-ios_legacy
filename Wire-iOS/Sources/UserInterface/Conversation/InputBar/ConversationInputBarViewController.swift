@@ -770,7 +770,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         viewController.delegate = self
         viewController.title = conversation.displayName.uppercased()
 
-        parent?.present(viewController.wrapInNavigationController(), animated: true)
+        parent?.present(viewController.wrapInNavigationController(setBackgroundColor: true), animated: true)
     }
 }
 
