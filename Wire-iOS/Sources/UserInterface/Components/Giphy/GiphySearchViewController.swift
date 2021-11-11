@@ -163,11 +163,15 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         navigationController.navigationBar.barTintColor = UIColor.from(scheme: .background)
         navigationController.navigationBar.isTranslucent = false
 
+        if #available(iOS 15, *) {
+            navigationController.view.backgroundColor = UIColor.from(scheme: .barBackground, variant: ColorScheme.default.variant)
+        }
+
         return navigationController
     }
 
     @objc func onDismiss() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Collection View
