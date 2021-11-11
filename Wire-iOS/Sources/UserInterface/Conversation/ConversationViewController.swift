@@ -87,7 +87,7 @@ final class ConversationViewController: UIViewController {
             break
         }
 
-        return viewController?.wrapInNavigationController()
+        return viewController?.wrapInNavigationController(setBackgroundColor: true)
     }
 
     required init(session: ZMUserSessionInterface,
