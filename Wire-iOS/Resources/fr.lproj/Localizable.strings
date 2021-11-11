@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Vérifié";
 "conversation.input_bar.placeholder" = "Écrivez un message";
-"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
+"conversation.input_bar.placeholder_ephemeral" = "Messages auto-supprimés";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Balayez vers le haut pour envoyer";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Appuyez pour envoyer";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "dans les contacts";
 
 "conversation.input_bar.shortcut.send" = "Envoyer un message";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "Nouvelle ligne";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choisir la mention précédente";
@@ -883,7 +883,7 @@
 "profile.details.guest" = "Contact externe";
 "profile.details.group_admin" = "Admin du groupe";
 "profile.details.partner" = "externe";
-"profile.details.federated" = "Federated";
+"profile.details.federated" = "Fédéré";
 "profile.details.blocking_reason" = "Cet utilisateur est bloqué en raison de la conservation à des fins juridiques. [PLUS D'INFOS](%@)";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Contacts externes et services";
 "group_details.guest_options_cell.enabled" = "Activé";
 "group_details.guest_options_cell.disabled" = "Désactivé";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "Messages auto-supprimés";
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "Vous pouvez être notifié pour tout (y compris les appels audio et vidéo) ou seulement quand quelqu'un vous mentionne ou répond à un de vos messages.";
 "group_details.receipt_options_cell.title" = "Accusés de lecture";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Participants soumis à la conservation à des fins juridiques";
 "legalhold.header.title" = "Conservation à des fins juridiques";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "La conservation à des fins juridiques été activée pour au moins un contact dans cette conversation.\nTous vos messages seront enregistrés pour un accès futur, y compris les messages supprimés, modifiés et éphémères.";
+"legalhold.header.self_description" = "La conservation à des fins juridiques a été activée pour votre compte.\nTous vos messages seront enregistrés pour un accès futur, y compris les messages supprimés, modifiés et éphémères.\nVos contacts seront informés de l’enregistrement.";
 "legalhold.accessibility" = "Information sur la conservation à des fins juridiques";
 
 
@@ -1012,8 +1012,8 @@
 "self.settings.account_section.phone.title" = "Téléphone";
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
 "self.settings.account_section.add_handle.title" = "Choisir un identifiant";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "Équipe";
+"self.settings.account_section.domain.title" = "Domaine";
 
 "self.settings.account_details_group.info.footer" = "Vos contacts peuvent vous retrouver grâce à ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
@@ -1133,7 +1133,7 @@
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
+"self.settings.vbr.description" = "Cela permet aux appels audio d'utiliser moins de données et de mieux fonctionner sur les réseaux plus lents. Désactivez pour utiliser l'encodage en débit constant (CBR). Ce paramètre n'affecte que les appels 1:1; les appels de conférence utilisent toujours l'encodage CBR.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Appel Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Message Wire";
@@ -1652,31 +1652,31 @@
 "feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Le partage et la réception de fichiers de n'importe quel type est désactivé.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Le partage et la réception de fichiers de n'importe quel type est activé.";
-"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
-"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
-"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+"feature_config.file_sharing_restrictions.file" = "La réception de fichiers est restreinte";
+"feature_config.file_sharing_restrictions.picture" = "La réception d'images est restreinte";
+"feature_config.file_sharing_restrictions.video" = "La réception de vidéos est restreinte";
+"feature_config.file_sharing_restrictions.audio" = "La réception de fichiers audio est restreinte";
 
 //Feature flag - Conference calling
-"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
-"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
-"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+"feature_config.update.conference_calling.alert.title" = "Offre Entreprise";
+"feature_config.update.conference_calling.alert.message" = "Votre équipe a été mise à niveau sur le plan Entreprise. Vous avez maintenant accès à des fonctionnalités telles que les appels de conférence.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "En savoir plus sur le plan Entreprise";
 
-"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
-"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
-"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
-"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Passer à la version Entreprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Votre équipe est actuellement sur le plan Basique gratuit. Passez à la version Entreprise pour accéder à des fonctionnalités telles que les appels de conférence.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "En savoir plus sur la tarification de Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Mettre à niveau maintenant";
 
-"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
-"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+"feature_config.conference_calling_restrictions.members.alert.title" = "Fonctionnalité non disponible";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Pour démarrer une conférence téléphonique, votre équipe doit passer au plan Entreprise.";
 
-"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
-"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Fonctionnalité non disponible";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "L'option d'initier un appel de conférence n'est disponible que dans la version payante de Wire.";
 
 // Feature configs: self-deleting messages
-"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
-"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+"feature_config.alert.self_deleting_messages.message.disabled" = "Les messages auto-supprimés sont désactivés";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Les messages auto-supprimés sont activés. Vous pouvez définir un délai avant de rédiger un message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages auto-supprimés sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";
@@ -1846,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Validation en attente.";
 "legalhold_request.alert.title" = "Conservation à des fins juridiques demandée";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
+"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés sur l’appareil avec l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
 "legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "La conservation à des fins juridiques est active";
 "legalhold_active.alert.learn_more" = "En savoir plus";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "La conservation à des fins juridiques a été activée pour votre compte. Tous vos messages seront enregistrés pour un accès futur, y compris les messages supprimés, modifiés et éphémères.\n\nVos contacts seront informés de l’enregistrement.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";
@@ -1931,7 +1931,7 @@
 "appLockModule.goToSettingsButton.title" = "Ouvrir les paramètres";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
-"keyboardshortcut.conversationDetail" = "Conversation Details...";
-"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.scrollToBottom" = "Défiler jusqu'en bas";
+"keyboardshortcut.conversationDetail" = "Détails de la conversation";
+"keyboardshortcut.searchInConversation" = "Rechercher dans la conversation...";
 "keyboardshortcut.openPeople" = "Contacts";
