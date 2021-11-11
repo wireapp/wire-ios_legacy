@@ -56,7 +56,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
          selfUser: UserType) {
         self.configuration = configuration
         contentController = CallInfoViewController(configuration: configuration, selfUser: selfUser)
-        contentNavigationController = contentController.wrapInNavigationController(setBackgroundColor: false)
+        contentNavigationController = contentController.wrapInNavigationController()
         callDegradationController = CallDegradationController()
 
         super.init(nibName: nil, bundle: nil)
