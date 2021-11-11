@@ -23,7 +23,7 @@ enum EditButtonType {
     case undo, confirm, cancel
 }
 
-protocol InputBarEditViewDelegate: class {
+protocol InputBarEditViewDelegate: AnyObject {
     func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }

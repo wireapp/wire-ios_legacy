@@ -22,7 +22,7 @@ import Foundation
  * An object that can execute authentication actions.
  */
 
-protocol AuthenticationActioner: class {
+protocol AuthenticationActioner: AnyObject {
 
     /**
      * Executes the list of actions, in the order they are stored.
@@ -56,7 +56,7 @@ extension AuthenticationActioner {
  * An object that can trigger authentication actions.
  */
 
-protocol AuthenticationActionable: class {
+protocol AuthenticationActionable: AnyObject {
 
     /**
      * The actioner to use to execute the actions. This variable will be set by another

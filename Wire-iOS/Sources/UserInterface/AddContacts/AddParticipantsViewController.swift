@@ -42,8 +42,7 @@ extension ConversationLike where Self: SwiftConversationLike {
     }
 }
 
-protocol AddParticipantsConversationCreationDelegate: class {
-
+protocol AddParticipantsConversationCreationDelegate: AnyObject {
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
 }
 

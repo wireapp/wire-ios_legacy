@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol GroupOptionsSectionControllerDelegate: class {
+protocol GroupOptionsSectionControllerDelegate: AnyObject {
     func presentTimeoutOptions(animated: Bool)
     func presentGuestOptions(animated: Bool)
     func presentNotificationsOptions(animated: Bool)

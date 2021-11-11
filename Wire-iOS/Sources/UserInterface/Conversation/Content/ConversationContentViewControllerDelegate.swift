@@ -19,7 +19,7 @@ import Foundation
 import WireDataModel
 import UIKit
 
-protocol ConversationContentViewControllerDelegate: class {
+protocol ConversationContentViewControllerDelegate: AnyObject {
 
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, willDisplayActiveMediaPlayerFor message: ZMConversationMessage?)
 

@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 
-protocol CallQualityViewControllerDelegate: class {
+protocol CallQualityViewControllerDelegate: AnyObject {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }

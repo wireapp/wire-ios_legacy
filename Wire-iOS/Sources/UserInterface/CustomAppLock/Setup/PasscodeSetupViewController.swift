@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import Down
 
-protocol PasscodeSetupUserInterface: class {
+protocol PasscodeSetupUserInterface: AnyObject {
     var createButtonEnabled: Bool { get set }
     func setValidationLabelsState(errorReason: PasscodeError, passed: Bool)
 }

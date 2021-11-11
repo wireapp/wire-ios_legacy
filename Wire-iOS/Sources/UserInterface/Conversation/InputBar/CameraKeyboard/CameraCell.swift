@@ -19,7 +19,7 @@
 import Foundation
 import avs
 
-protocol CameraCellDelegate: class {
+protocol CameraCellDelegate: AnyObject {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }

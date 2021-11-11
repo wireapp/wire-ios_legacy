@@ -24,7 +24,7 @@ import WireDataModel
  * Provides information to the event responder chain and executes actions.
  */
 
-protocol AuthenticationEventResponderChainDelegate: class {
+protocol AuthenticationEventResponderChainDelegate: AnyObject {
 
     /// The object providing authentication status info.
     var statusProvider: AuthenticationStatusProvider { get }

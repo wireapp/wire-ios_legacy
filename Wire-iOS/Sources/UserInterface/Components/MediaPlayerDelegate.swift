@@ -17,6 +17,6 @@
 
 import Foundation
 
-protocol MediaPlayerDelegate: class {
+protocol MediaPlayerDelegate: AnyObject {
     func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState)
 }

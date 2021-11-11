@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Верифікований";
 "conversation.input_bar.placeholder" = "Напишіть повідомлення";
-"conversation.input_bar.placeholder_ephemeral" = "Тимчасове повідомлення";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Гості та сервіси";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
-"group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
 "group_details.receipt_options_cell.title" = "Звіти про перегляд";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Суб'єкти правового захисту";
 "legalhold.header.title" = "Правовий захист";
-"legalhold.header.other_description" = "В даній розмові правовий захист активовано, як мінімум, для одного учасника.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.";
-"legalhold.header.self_description" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\nВаші співрозмовники будуть повідомлені про це.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Подробиці правового захисту";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "Нове повідомлення";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Необхідне оновлення";
 "force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
 "force.update.ok_button" = "Перейти в App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "У Wire відбулися зміни";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
 "feature_config.update.file_sharing.alert.message.disabled" = "Отримання та надсилання файлів будь-якого типу було вимкнено.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Отримання та надсилання файлів будь-якого типу було увімкнено.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
 "jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Очікує підтвердження.";
 "legalhold_request.alert.title" = "Отримано запит на правовий захист";
-"legalhold_request.alert.detail" = "Усі майбутні повідомлення будуть записані пристроєм з ідентифікатором:\n\n%@\n\nВ тому числі видалені, відредаговані та тимчасові повідомлення в усіх розмовах.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Введіть ваш пароль для підтвердження.";
 "legalhold_request.alert.error_wrong_password" = "Невірний пароль";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Правовий захист активний";
 "legalhold_active.alert.learn_more" = "Дізнатися більше";
-"legalhold_active.alert.message" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\n\nВаші співрозмовники будуть повідомлені про це.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";

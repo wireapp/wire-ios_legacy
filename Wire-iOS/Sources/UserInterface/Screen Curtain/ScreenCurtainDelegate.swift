@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-protocol ScreenCurtainDelegate: class {
+protocol ScreenCurtainDelegate: AnyObject {
 
     /// Whether the screen curtain should be shown when the app
     /// resigns active.

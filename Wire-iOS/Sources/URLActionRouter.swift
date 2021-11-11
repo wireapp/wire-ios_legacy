@@ -23,7 +23,7 @@ extension Notification.Name {
 }
 
 // MARK: - URLActionRouterDelegete
-protocol URLActionRouterDelegate: class {
+protocol URLActionRouterDelegate: AnyObject {
 
     func urlActionRouterWillShowCompanyLoginError()
     func urlActionRouterCanDisplayAlerts() -> Bool

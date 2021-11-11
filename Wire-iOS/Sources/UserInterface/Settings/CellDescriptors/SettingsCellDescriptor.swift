@@ -37,7 +37,7 @@ import UIKit
  * @abstract Top-level protocol for model object of settings. Describes the way cell should be created or how the value
  * should be updated from the cell.
  */
-protocol SettingsCellDescriptorType: class {
+protocol SettingsCellDescriptorType: AnyObject {
     static var cellType: SettingsTableCell.Type {get}
     var visible: Bool {get}
     var title: String {get}
@@ -63,7 +63,7 @@ protocol SettingsGroupCellDescriptorType: SettingsCellDescriptorType {
     var viewController: UIViewController? {get set}
 }
 
-protocol SettingsSectionDescriptorType: class {
+protocol SettingsSectionDescriptorType: AnyObject {
     var cellDescriptors: [SettingsCellDescriptorType] {get}
     var visibleCellDescriptors: [SettingsCellDescriptorType] {get}
     var header: String? {get}

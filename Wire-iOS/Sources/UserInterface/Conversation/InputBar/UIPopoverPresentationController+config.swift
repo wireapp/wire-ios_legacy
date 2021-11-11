@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol PopoverPresenter: class {
+protocol PopoverPresenter: AnyObject {
 
     /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
     var presentedPopover: UIPopoverPresentationController? {get set}

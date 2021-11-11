@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol CallAccessoryViewControllerDelegate: class {
+protocol CallAccessoryViewControllerDelegate: AnyObject {
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)
 }
 

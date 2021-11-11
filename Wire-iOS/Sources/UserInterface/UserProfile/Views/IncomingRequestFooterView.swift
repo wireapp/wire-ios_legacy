@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol IncomingRequestFooterViewDelegate: class {
+protocol IncomingRequestFooterViewDelegate: AnyObject {
 
     /// Called when the user accepts or denies a connection request.
     func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction)
