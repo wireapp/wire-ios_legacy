@@ -26,7 +26,7 @@ public enum NavigationDestination {
     case conversationList
 }
 
-protocol AuthenticatedRouterProtocol: class {
+protocol AuthenticatedRouterProtocol: AnyObject {
     func updateActiveCallPresentationState()
     func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?)
     func navigate(to destination: NavigationDestination)

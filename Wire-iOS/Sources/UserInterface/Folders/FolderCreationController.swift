@@ -20,11 +20,11 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-protocol FolderCreationValuesConfigurable: class {
+protocol FolderCreationValuesConfigurable: AnyObject {
     func configure(with name: String)
 }
 
-protocol FolderCreationControllerDelegate: class {
+protocol FolderCreationControllerDelegate: AnyObject {
 
     func folderController(
         _ controller: FolderCreationController,

@@ -62,7 +62,7 @@ final class TabBar: UIView {
     // MARK: - Initialization
 
     init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
-        precondition(items.count > 0, "TabBar must be initialized with at least one item")
+        precondition(!items.isEmpty, "TabBar must be initialized with at least one item")
 
         self.items = items
         self.selectedIndex = selectedIndex
@@ -133,8 +133,7 @@ final class TabBar: UIView {
         let oneOverItemsCount: CGFloat = 1 / CGFloat(items.count)
         let widthInset = tabInset * 2 * oneOverItemsCount
 
-        [selectionLineView, stackView].prepareForLayout()
-
+        [self, selectionLineView, stackView].prepareForLayout()
         NSLayoutConstraint.activate([
             lineLeadingConstraint,
             selectionLineView.heightAnchor.constraint(equalToConstant: 1),

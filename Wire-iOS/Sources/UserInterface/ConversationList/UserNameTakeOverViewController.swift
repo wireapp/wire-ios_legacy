@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol UserNameTakeOverViewControllerDelegate: class {
+protocol UserNameTakeOverViewControllerDelegate: AnyObject {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
 }
 

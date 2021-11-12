@@ -19,7 +19,7 @@
 import Cartography
 import UIKit
 
-protocol LocationSendViewControllerDelegate: class {
+protocol LocationSendViewControllerDelegate: AnyObject {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 

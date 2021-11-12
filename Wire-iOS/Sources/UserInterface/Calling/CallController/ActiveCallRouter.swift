@@ -20,7 +20,7 @@ import UIKit
 import WireSyncEngine
 
 // MARK: - ActiveCallRouterProtocol
-protocol ActiveCallRouterProtocol: class {
+protocol ActiveCallRouterProtocol: AnyObject {
     func presentActiveCall(for voiceChannel: VoiceChannel, animated: Bool)
     func dismissActiveCall(animated: Bool, completion: Completion?)
     func minimizeCall(animated: Bool, completion: Completion?)
@@ -31,7 +31,7 @@ protocol ActiveCallRouterProtocol: class {
 }
 
 // MARK: - CallQualityRouterProtocol
-protocol CallQualityRouterProtocol: class {
+protocol CallQualityRouterProtocol: AnyObject {
     func presentCallQualitySurvey(with callDuration: TimeInterval)
     func dismissCallQualitySurvey(completion: Completion?)
     func presentCallFailureDebugAlert()

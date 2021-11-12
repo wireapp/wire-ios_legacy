@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 
 /// An object that receives notification about the phone number input view.
-protocol PhoneNumberInputViewDelegate: class {
+protocol PhoneNumberInputViewDelegate: AnyObject {
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber)
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)

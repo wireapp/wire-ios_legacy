@@ -22,7 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
-protocol CallTopOverlayControllerDelegate: class {
+protocol CallTopOverlayControllerDelegate: AnyObject {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)
 }
 

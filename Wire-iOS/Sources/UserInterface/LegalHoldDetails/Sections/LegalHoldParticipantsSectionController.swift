@@ -35,7 +35,7 @@ private struct LegalHoldParticipantsSectionViewModel {
 
 }
 
-protocol LegalHoldParticipantsSectionControllerDelegate: class {
+protocol LegalHoldParticipantsSectionControllerDelegate: AnyObject {
 
     func legalHoldParticipantsSectionWantsToPresentUserProfile(for user: UserType)
 

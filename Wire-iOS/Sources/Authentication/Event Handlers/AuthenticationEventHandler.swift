@@ -28,7 +28,7 @@ import Foundation
  * next handler will be used. The first handler that returns a valid value will be used, and the call loop will be stopped.
  */
 
-protocol AuthenticationEventHandler: class {
+protocol AuthenticationEventHandler: AnyObject {
 
     /**
      * The type of context objects required to process the event.

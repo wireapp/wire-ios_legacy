@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol ConversationCreationValuesConfigurable: class {
+protocol ConversationCreationValuesConfigurable: AnyObject {
     func configure(with values: ConversationCreationValues)
 }
 
@@ -62,7 +62,7 @@ final class ConversationCreationValues {
     }
 }
 
-protocol ConversationCreationControllerDelegate: class {
+protocol ConversationCreationControllerDelegate: AnyObject {
 
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,

@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol CountryCodeTableViewControllerDelegate: class {
+protocol CountryCodeTableViewControllerDelegate: AnyObject {
     func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country)
 }
 

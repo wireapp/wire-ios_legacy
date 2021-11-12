@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
@@ -56,8 +55,10 @@ final class GiphyConfirmationViewController: UIViewController {
         }
 
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
-            (GiphySearchViewController.onDismiss))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(GiphySearchViewController.onDismiss))
 
         view.backgroundColor = .from(scheme: .background)
     }
@@ -129,39 +130,39 @@ final class GiphyConfirmationViewController: UIViewController {
         }
     }
 
-    func configureConstraints() {
+    private func configureConstraints() {
 
-        imagePreview.translatesAutoresizingMaskIntoConstraints = false
+        let widthConstraint = buttonContainer.widthAnchor.constraint(equalToConstant: 476)
+
+        widthConstraint.priority = .defaultHigh
+
+        [imagePreview, buttonContainer, cancelButton, acceptButton].prepareForLayout()
 
         NSLayoutConstraint.activate([
             imagePreview.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             imagePreview.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
             imagePreview.topAnchor.constraint(equalTo: safeTopAnchor),
-            imagePreview.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor)
+            imagePreview.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor),
+
+            cancelButton.heightAnchor.constraint(equalToConstant: 40),
+            cancelButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 100),
+            cancelButton.leftAnchor.constraint(equalTo: buttonContainer.leftAnchor),
+            cancelButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            cancelButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
+
+            acceptButton.heightAnchor.constraint(equalToConstant: 40),
+            acceptButton.rightAnchor.constraint(equalTo: buttonContainer.rightAnchor),
+            acceptButton.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            acceptButton.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
+
+            cancelButton.widthAnchor.constraint(equalTo: acceptButton.widthAnchor),
+            cancelButton.rightAnchor.constraint(equalTo: acceptButton.leftAnchor, constant: -16),
+
+            buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: buttonContainer.leftAnchor, constant: 32),
+            buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: buttonContainer.rightAnchor, constant: -32),
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -32),
+            widthConstraint,
+            buttonContainer.centerXAnchor.constraint(equalTo: buttonContainer.centerXAnchor)
         ])
-
-        constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
-            leftButton.height == 40
-            leftButton.width >= 100
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
-
-            rightButton.height == 40
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
-
-            leftButton.width == rightButton.width
-            leftButton.right == rightButton.left - 16
-        }
-
-        constrain(view, buttonContainer) { container, buttonContainer in
-            buttonContainer.left >= container.left + 32
-            buttonContainer.right <= container.right - 32
-            buttonContainer.bottom == container.bottom - 32
-            buttonContainer.width == 476 ~ 700.0
-            buttonContainer.centerX == container.centerX
-        }
     }
 }

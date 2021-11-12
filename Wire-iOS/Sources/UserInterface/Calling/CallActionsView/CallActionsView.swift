@@ -19,7 +19,7 @@
 import UIKit
 import WireSyncEngine
 
-protocol CallActionsViewDelegate: class {
+protocol CallActionsViewDelegate: AnyObject {
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
