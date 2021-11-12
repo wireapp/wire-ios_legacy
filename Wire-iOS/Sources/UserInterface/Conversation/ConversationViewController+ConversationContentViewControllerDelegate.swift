@@ -127,7 +127,9 @@ extension ConversationViewController {
         ConversationInputBarViewController.endEditingMessage()
         inputBarController.inputBar.textView.resignFirstResponder()
 
-        createAndPresentParticipantsPopoverController(with: sourceView.bounds, from: sourceView, contentViewController: viewController)
+        createAndPresentParticipantsPopoverController(with: sourceView.bounds,
+                                                      from: sourceView,
+                                                      contentViewController: viewController)
     }
 
     // MARK: - Application Events & Notifications

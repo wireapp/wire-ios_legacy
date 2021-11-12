@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol EmailPasswordTextFieldDelegate: class {
+protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))

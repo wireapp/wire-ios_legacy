@@ -22,7 +22,7 @@ import UIKit
 import WireCommonComponents
 import WireSystem
 
-protocol TextSearchInputViewDelegate: class {
+protocol TextSearchInputViewDelegate: AnyObject {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }

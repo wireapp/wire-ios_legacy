@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol PerformClipboardAction: class {
+protocol PerformClipboardAction: AnyObject {
     func shouldAllowPerformAction(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> Bool
 }
 

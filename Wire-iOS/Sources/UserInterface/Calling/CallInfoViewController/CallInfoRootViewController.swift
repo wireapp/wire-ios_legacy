@@ -21,7 +21,7 @@ import UIKit
 import SafariServices
 import WireDataModel
 
-protocol CallInfoRootViewControllerDelegate: class {
+protocol CallInfoRootViewControllerDelegate: AnyObject {
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
     func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context)
 }

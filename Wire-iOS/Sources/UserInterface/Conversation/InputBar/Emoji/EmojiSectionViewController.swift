@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol EmojiSectionViewControllerDelegate: class {
+protocol EmojiSectionViewControllerDelegate: AnyObject {
     func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType, scrolling: Bool)
 }
 

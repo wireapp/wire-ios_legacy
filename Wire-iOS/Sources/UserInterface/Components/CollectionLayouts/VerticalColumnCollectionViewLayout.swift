@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol VerticalColumnCollectionViewLayoutDelegate: class {
+protocol VerticalColumnCollectionViewLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize
 }
 

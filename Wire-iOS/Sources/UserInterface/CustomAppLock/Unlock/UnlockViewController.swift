@@ -21,7 +21,7 @@ import WireCommonComponents
 import WireDataModel
 import WireSyncEngine
 
-protocol UnlockViewControllerDelegate: class {
+protocol UnlockViewControllerDelegate: AnyObject {
 
     func unlockViewControllerDidUnlock()
 

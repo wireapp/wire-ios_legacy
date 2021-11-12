@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Überprüft";
 "conversation.input_bar.placeholder" = "Eine Nachricht schreiben";
-"conversation.input_bar.placeholder_ephemeral" = "Temporäre Nachricht";
+"conversation.input_bar.placeholder_ephemeral" = "Selbstlöschende Nachricht";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Zum Senden tippen";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Gäste und Dienste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.timeout_options_cell.title" = "Temporäre Nachrichten";
+"group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
 "group_details.notification_options_cell.title" = "Benachrichtigungen";
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine Ihrer Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Personen, die der gesetzlichen Aufbewahrung unterliegen";
 "legalhold.header.title" = "Gesetzliche Aufbewahrung";
-"legalhold.header.other_description" = "Die gesetzlichen Aufbewahrung wurde für mindestens eine Person dieser Unterhaltung aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.";
-"legalhold.header.self_description" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+"legalhold.header.other_description" = "Die gesetzlichen Aufbewahrung wurde für mindestens eine Person dieser Unterhaltung aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.";
+"legalhold.header.self_description" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. \nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.\n    ";
 "legalhold.accessibility" = "Details zur gesetzlichen Aufbewahrung";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "Neue Nachricht";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Aktualisierung erforderlich";
 "force.update.message" = "Sie verpassen neue Funktionen.\nLaden Sie die neueste Version von Wire herunter.";
 "force.update.ok_button" = "Zum App Store";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "Es gab eine Änderung bei Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
 "feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Funktion nicht verfügbar";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "Die Option, eine Telefonkonferenz zu starten, ist nur in der kostenpflichtigen Version verfügbar.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Selbstlöschende Nachrichten sind deaktiviert.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Selbstlöschende Nachrichten sind aktiviert. Sie können einen Timer setzen, bevor Sie eine Nachricht schreiben.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Selbstlöschende Nachrichten sind ab jetzt verbindlich. Neue Nachrichten werden nach %@ gelöscht.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
 "jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Genehmigung ausstehend.";
 "legalhold_request.alert.title" = "Gesetzliche Aufbewahrung ersucht";
-"legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und temporärer Nachrichten in allen Unterhaltungen.";
+"legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten in allen Unterhaltungen.";
 "legalhold_request.alert.detail.enter_password" = "Bitte zur Bestätigung das Passwort eingeben.";
 "legalhold_request.alert.error_wrong_password" = "Falsches Passwort";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Gesetzliche Aufbewahrung ist aktiv";
 "legalhold_active.alert.learn_more" = "Mehr erfahren";
-"legalhold_active.alert.message" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. Alle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\n\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+"legalhold_active.alert.message" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. Alle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.\n\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.\n    ";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";

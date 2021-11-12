@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol UserCellSubtitleProtocol: class {
+protocol UserCellSubtitleProtocol: AnyObject {
     func subtitle(forRegularUser user: UserType?) -> NSAttributedString?
 
     static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] { get set }

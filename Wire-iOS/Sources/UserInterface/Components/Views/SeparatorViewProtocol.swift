@@ -25,7 +25,7 @@ protocol ViewWithContentView {
 extension UICollectionViewCell: ViewWithContentView {}
 extension UITableViewCell: ViewWithContentView {}
 
-protocol SeparatorViewProtocol: class {
+protocol SeparatorViewProtocol: AnyObject {
     var separator: UIView { get }
     var separatorLeadingAnchor: NSLayoutXAxisAnchor { get }
     var separatorInsetConstraint: NSLayoutConstraint! { get set }

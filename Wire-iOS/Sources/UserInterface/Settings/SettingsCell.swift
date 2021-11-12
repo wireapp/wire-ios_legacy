@@ -28,7 +28,7 @@ enum SettingsCellPreview {
     case color(UIColor)
 }
 
-protocol SettingsCellType: class {
+protocol SettingsCellType: AnyObject {
     var titleText: String {get set}
     var preview: SettingsCellPreview {get set}
     var titleColor: UIColor {get set}

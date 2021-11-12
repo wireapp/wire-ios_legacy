@@ -21,7 +21,7 @@ import Cartography
 import UIKit
 import WireDataModel
 
-protocol SearchHeaderViewControllerDelegate: class {
+protocol SearchHeaderViewControllerDelegate: AnyObject {
     func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
 }

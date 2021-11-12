@@ -43,7 +43,7 @@ extension EmptySearchResultsViewAction {
     }
 }
 
-protocol EmptySearchResultsViewDelegate: class {
+protocol EmptySearchResultsViewDelegate: AnyObject {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView)
 }
 

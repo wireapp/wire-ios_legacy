@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Doğrulandı";
 "conversation.input_bar.placeholder" = "Bir mesaj yazın";
-"conversation.input_bar.placeholder_ephemeral" = "Süreli Mesaj";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Göndermek için kaydırın";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Göndermek için tıkla";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Misafirler ve hizmetler";
 "group_details.guest_options_cell.enabled" = "Açık";
 "group_details.guest_options_cell.disabled" = "Kapalı";
-"group_details.timeout_options_cell.title" = "Süreli mesajlar";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Bildirimler";
 "group_details.notification_options_cell.description" = "Her şeyden (sesli ve görüntülü aramalar dahil) veya yalnızca biri sizden bahsettiğinde veya mesajlarınızdan birini yanıtladığında size bildirim gelebilir.";
 "group_details.receipt_options_cell.title" = "Okundu bilgisi";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Yasal tutma konuları";
 "legalhold.header.title" = "Kanuni Durdurma";
-"legalhold.header.other_description" = "Yasal tutma bu konuşmada en az bir kişi için aktive edildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.";
-"legalhold.header.self_description" = "Hesabınız için Yasal Tutma etkinleştirildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.\nKonuşma ortaklarınız kaydın farkında olacak.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Yasal bekletme detayları";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "Yeni Mesaj";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Güncelleme gerekli";
 "force.update.message" = "Yeni özellikleri kaçırıyorsun.\nApp Store'dan Wire'ın en güncel versiyonunu indir.";
 "force.update.ok_button" = "App Store'a git";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak(root) algılandı";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Onay bekliyor.";
 "legalhold_request.alert.title" = "Kanuni Durdurma istendi";
-"legalhold_request.alert.detail" = "Gelecekteki tüm mesajlar parmak izi ile cihaz tarafından kaydedilecektir:\n\n%@\n\nBu, tüm sohbetlerden silinmiş, düzenlenmiş ve süreli mesajları içerir.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Onaylamak için şifrenizi girin.";
 "legalhold_request.alert.error_wrong_password" = "Yanlış Şifre";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Kanuni Durdurma Etkin";
 "legalhold_active.alert.learn_more" = "Daha Fazla";
-"legalhold_active.alert.message" = "Hesabınız için Yasal Tutma etkinleştirildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.\nKonuşma ortaklarınız kaydın farkında olacak.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Oturumunuzun süresi doldu";

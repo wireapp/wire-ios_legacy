@@ -20,7 +20,7 @@ import WireSyncEngine
 
 typealias UserSessionInterface = UserSessionSwiftInterface & UserSessionAppLockInterface
 
-protocol ZMUserSessionInterface: class {
+protocol ZMUserSessionInterface: AnyObject {
 
     func perform(_ changes: @escaping () -> Void)
 

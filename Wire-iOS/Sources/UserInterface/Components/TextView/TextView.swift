@@ -23,7 +23,7 @@ import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "TextView")
 
-protocol InformalTextViewDelegate: class {
+protocol InformalTextViewDelegate: AnyObject {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }

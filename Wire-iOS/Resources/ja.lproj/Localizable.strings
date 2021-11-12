@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "検証する";
 "conversation.input_bar.placeholder" = "メッセージを入力します";
-"conversation.input_bar.placeholder_ephemeral" = "タイマーメッセージ";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "上にスワイプして送信";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "タップして送信";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "ゲストとサービス";
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
-"group_details.timeout_options_cell.title" = "タイマーメッセージ";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "通知センター";
 "group_details.notification_options_cell.description" = "あなたは、すべて（オーディオとビデオ通話を含みます）または、メンションされた時のみに、通知をすることができます。";
 "group_details.receipt_options_cell.title" = "開封通知";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "訴訟ホールドの対象";
 "legalhold.header.title" = "法的所有権";
-"legalhold.header.other_description" = "この会話の少なくとも1人のユーザーに対して法的所有権が有効になりました。\n削除されたメッセージ、編集されたメッセージ、時間指定されたメッセージなど、すべてのメッセージは将来のアクセスのために保存されます。";
-"legalhold.header.self_description" = "あなたのアカウントの法的所有権が開始されました。\n削除されたメッセージ、編集されたメッセージ、時間指定されたメッセージなど、すべてのメッセージは将来のアクセスのために保存されます。\n\n会話の相手へ録音されることを知らせてください。";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "法的所有権の詳細";
 
 
@@ -1640,12 +1640,15 @@
 "push.notification.new_message" = "新着メッセージ";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "アップデートが必要です。";
 "force.update.message" = "新しい機能を利用できていないようです。\n最新バージョンのWireをApp Storeでダウンロードしてください。";
 "force.update.ok_button" = "App Storeに行く";
 
-//Feature flag - File sharing
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
 "feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
@@ -1670,7 +1673,12 @@
 "feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
 "feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
 
-//Jailbroken alert
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "脱獄/Root化 を検知しました。";
 "jailbrokendevice.alert.message" = "セキュリティ上の理由により、このデバイスではWireを使用できません。既存のWireデータはすべて消去されました。";
 
@@ -1838,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "承認待ち";
 "legalhold_request.alert.title" = "要求された法的所有権";
-"legalhold_request.alert.detail" = "以下のフィンガープリントを持つデバイスは、以降全てのメッセージが録音されます。\n\n%@\n\nこれには、すべての会話で削除されたメッセージ、編集されたメッセージ、および時間指定されたメッセージが含まれます。";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "確認のためパスワードを入力してください。";
 "legalhold_request.alert.error_wrong_password" = "パスワードが間違っています";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "法的所有権が有効です";
 "legalhold_active.alert.learn_more" = "もっと知る";
-"legalhold_active.alert.message" = "あなたのアカウントの法的所有権が開始されました。\n削除されたメッセージ、編集されたメッセージ、時間指定されたメッセージなど、すべてのメッセージは将来のアクセスのために保存されます。\n\n会話の相手へ録音されることを知らせてください。";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "セッションの有効期限が切れました";
