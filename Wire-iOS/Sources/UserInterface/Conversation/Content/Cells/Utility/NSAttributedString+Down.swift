@@ -41,7 +41,7 @@ extension NSAttributedString {
         if let attrStr = try? down.toAttributedString(using: style) {
             let symbols = Symbol.allCases.map { $0.rawValue }
 
-            if symbols.contains(attrStr.string), !symbols.contains(text) {
+            if symbols.contains(attrStr.string) {
                 result = NSMutableAttributedString(string: text)
             } else {
                 result = NSMutableAttributedString(attributedString: attrStr)
