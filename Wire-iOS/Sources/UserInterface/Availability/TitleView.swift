@@ -26,7 +26,7 @@ class TitleView: UIView {
     var tapHandler: ((UIButton) -> Void)?
 
     private let stackView = UIStackView(axis: .vertical)
-    private let titleButton = UIButton()
+    let titleButton = UIButton()
     private let subtitleLabel = UILabel()
 
     init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
