@@ -129,13 +129,13 @@ final class AudioMessageView: UIView, TransferView {
     }
 
     private func createConstraints() {
-        Set([self,
+        [self,
              playButton,
              timeLabel,
              downloadProgressView,
              playerProgressView,
              waveformProgressView,
-             loadingView]).prepareForLayout()
+             loadingView].prepareForLayout()
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),

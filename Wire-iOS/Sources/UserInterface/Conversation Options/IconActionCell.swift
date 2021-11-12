@@ -47,7 +47,10 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        [contentView, label, separator, imageContainer, iconImageView].prepareForLayout()
+        [label,
+         separator,
+         imageContainer,
+         iconImageView].prepareForLayout()
         NSLayoutConstraint.activate([
             imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
