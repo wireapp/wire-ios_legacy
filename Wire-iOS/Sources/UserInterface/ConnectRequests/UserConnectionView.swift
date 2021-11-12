@@ -112,7 +112,10 @@ final class UserConnectionView: UIView, Copyable {
 
     private func createConstraints() {
         let verticalMargin: CGFloat = 16
-        [self, labelContainer, userImageView, labelContainer, firstLabel, secondLabel].prepareForLayout()
+        [userImageView,
+         labelContainer,
+         firstLabel,
+         secondLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             labelContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -137,7 +140,8 @@ final class UserConnectionView: UIView, Copyable {
             firstLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor),
 
             secondLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor),
-            secondLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor)])
+            secondLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor)
+        ])
     }
 }
 
