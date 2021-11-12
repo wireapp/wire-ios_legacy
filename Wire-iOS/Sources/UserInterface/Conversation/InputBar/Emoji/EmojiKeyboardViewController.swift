@@ -164,7 +164,7 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-class EmojiCollectionViewCell: UICollectionViewCell {
+final class EmojiCollectionViewCell: UICollectionViewCell {
 
     let titleLabel = UILabel()
 
