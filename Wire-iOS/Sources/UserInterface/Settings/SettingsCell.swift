@@ -122,7 +122,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var icon: StyleKitIcon? = nil {
+    var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
                 iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)

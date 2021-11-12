@@ -43,7 +43,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
     var isEmojiKeyboardInTransition = false
-    var sketchImage: UIImage? = nil {
+    var sketchImage: UIImage? {
         didSet {
             if let image = sketchImage {
                 canvas.referenceImage = image

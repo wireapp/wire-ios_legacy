@@ -173,7 +173,7 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
