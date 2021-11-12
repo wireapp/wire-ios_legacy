@@ -94,12 +94,18 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     }
 
-    @objc private func openSettings() {
+    @objc
+    private func openSettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url)
     }
 
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
+
+        [containerView,
+         descriptionLabel,
+         settingsButton,
+         cameraIcon].prepareForLayout()
 
         var constraints: [NSLayoutConstraint] = [
             descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
@@ -112,8 +118,6 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
         defer {
             NSLayoutConstraint.activate(constraints)
         }
-
-        [descriptionLabel, settingsButton, cameraIcon].prepareForLayout()
 
         if deniedAuthorization == .ongoingCall {
             constraints.append(contentsOf: createConstraintsForOngoingCallAlert())
@@ -129,7 +133,6 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         containerView.addSubview(settingsButton)
 
-        [descriptionLabel, settingsButton].prepareForLayout()
         return [
             settingsButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             settingsButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 24),
@@ -145,8 +148,6 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
             settingsButton.removeFromSuperview()
         }
         containerView.addSubview(cameraIcon)
-
-        [containerView, descriptionLabel, cameraIcon].prepareForLayout()
 
         return [
             descriptionLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
