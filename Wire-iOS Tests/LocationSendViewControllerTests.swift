@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class LocationSendViewControllerTests: ZMSnapshotTestCase {
+final class LocationSendViewControllerTests: ZMSnapshotTestCase {
 
     var sut: LocationSendViewController! = nil
 
