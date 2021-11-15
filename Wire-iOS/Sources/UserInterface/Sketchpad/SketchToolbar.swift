@@ -57,7 +57,7 @@ class SketchToolbar: UIView {
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)
     }
 
-    func createButtonContraints(buttons: [UIButton]) {
+    private func createButtonContraints(buttons: [UIButton]) {
         for button in buttons {
             button.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -98,7 +98,7 @@ class SketchToolbar: UIView {
         createCenterButtonConstraints()
     }
 
-    func createCenterButtonConstraints() {
+    private func createCenterButtonConstraints() {
         guard !centerButtons.isEmpty,
         let leftButton = centerButtons.first,
         let rightButton = centerButtons.last else { return }
@@ -106,25 +106,27 @@ class SketchToolbar: UIView {
         let buttonSpacing: CGFloat = 32
 
         [centerButtonContainer, leftButton, rightButton].prepareForLayout()
-        NSLayoutConstraint.activate([
+
+        var constraints = [
           leftButton.leftAnchor.constraint(equalTo: centerButtonContainer.leftAnchor, constant: buttonSpacing),
           leftButton.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor),
 
           rightButton.rightAnchor.constraint(equalTo: centerButtonContainer.rightAnchor, constant: -buttonSpacing),
           rightButton.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor)
-        ])
+        ]
 
-        ///TODO: active in 1 batch
         for i in 1..<centerButtons.count {
             let previousButton = centerButtons[i-1]
             let button = centerButtons[i]
 
             [button, previousButton].prepareForLayout()
-            NSLayoutConstraint.activate([
+            constraints.append(contentsOf: [
               button.leftAnchor.constraint(equalTo: previousButton.rightAnchor, constant: buttonSpacing),
               button.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor)
             ])
         }
+
+        NSLayoutConstraint.activate(constraints)
     }
 
 }

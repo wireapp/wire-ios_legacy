@@ -269,7 +269,7 @@ class CallQualityView: UIStackView {
     }
 
     private func createConstraints() {
-        [scoreButton].prepareForLayout()
+        scoreButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scoreButton.widthAnchor.constraint(lessThanOrEqualToConstant: 48),
             scoreButton.heightAnchor.constraint(equalTo: scoreButton.widthAnchor)
