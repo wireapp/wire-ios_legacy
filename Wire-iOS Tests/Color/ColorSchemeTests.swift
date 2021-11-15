@@ -46,7 +46,7 @@ final class ColorSchemeTests: XCTestCase {
         XCTAssertFalse(sut.isCurrentAccentColor(alphaBlack))
     }
 
-    func testForIsStrongBlue_WhenUndefinedInLightVariant() {
+    func testForIsStrongBlue_WhenAccentColorIsUndefinedInLightVariant() {
         // GIVEN / WHEN
         let expectedAccentColor = UIColor.white.mix(UIColor(fromZMAccentColor: .strongBlue), amount: 0.8)
         let accentColor = UIColor.nameColor(for: .undefined, variant: .light)
@@ -55,7 +55,7 @@ final class ColorSchemeTests: XCTestCase {
         XCTAssertEqual(accentColor, expectedAccentColor)
     }
 
-    func testForIsStrongBlue_WhenUndefinedInDarkVariant() {
+    func testForIsStrongBlue_WhenAccentColorIsUndefinedInDarkVariant() {
         // GIVEN / WHEN
         let expectedAccentColor = UIColor.black.mix(UIColor(fromZMAccentColor: .strongBlue), amount: 0.8)
         let accentColor = UIColor.nameColor(for: .undefined, variant: .dark)
