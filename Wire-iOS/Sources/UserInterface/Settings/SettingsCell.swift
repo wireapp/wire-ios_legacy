@@ -1,23 +1,22 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
-import Cartography
 import WireCommonComponents
 
 enum SettingsCellPreview {
@@ -38,21 +37,76 @@ protocol SettingsCellType: AnyObject {
 }
 
 class SettingsTableCell: UITableViewCell, SettingsCellType {
-    let iconImageView = UIImageView()
-    public let cellNameLabel: UILabel = {
+    private let iconImageView: UIImageView = {
+        let iconImageView = UIImageView()
+        iconImageView.contentMode = .center
+
+        return iconImageView
+    }()
+
+    let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         return label
     }()
-    let valueLabel = UILabel()
-    let badge = RoundedBadge(view: UIView())
-    var badgeLabel = UILabel()
-    let imagePreview = UIImageView()
-    let separatorLine = UIView()
-    let topSeparatorLine = UIView()
-    var cellNameLabelToIconInset: NSLayoutConstraint!
+
+    let valueLabel: UILabel = {
+        let valueLabel = UILabel()
+
+        valueLabel.textColor = .lightGray
+        valueLabel.font = UIFont.systemFont(ofSize: 17)
+        valueLabel.textAlignment = .right
+
+        return valueLabel
+    }()
+
+    let badge: RoundedBadge = {
+        let badge = RoundedBadge(view: UIView())
+        badge.backgroundColor = .white
+        badge.isHidden = true
+
+        return badge
+    }()
+
+    private let badgeLabel: UILabel = {
+        let badgeLabel = UILabel()
+        badgeLabel.font = FontSpec(.small, .medium).font
+        badgeLabel.textAlignment = .center
+        badgeLabel.textColor = .black
+
+        return badgeLabel
+    }()
+
+    private let imagePreview: UIImageView = {
+        let imagePreview = UIImageView()
+        imagePreview.clipsToBounds = true
+        imagePreview.layer.cornerRadius = 12
+        imagePreview.contentMode = .scaleAspectFill
+        imagePreview.accessibilityIdentifier = "imagePreview"
+
+        return imagePreview
+    }()
+
+    private let separatorLine: UIView = {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        separatorLine.isAccessibilityElement = false
+
+        return separatorLine
+    }()
+
+    private let topSeparatorLine: UIView = {
+        let topSeparatorLine = UIView()
+        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        topSeparatorLine.isAccessibilityElement = false
+
+        return topSeparatorLine
+    }()
+
+    private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
     var variant: ColorSchemeVariant? = .none {
         didSet {
@@ -140,7 +194,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var titleColor: UIColor = UIColor.white {
+    var titleColor: UIColor = .white {
         didSet {
             cellNameLabel.textColor = titleColor
         }
@@ -176,104 +230,77 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func setup() {
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
-        iconImageView.contentMode = .center
-        contentView.addSubview(iconImageView)
-
-        constrain(contentView, iconImageView) { contentView, iconImageView in
-            iconImageView.leading == contentView.leading + 24
-            iconImageView.width == 16
-            iconImageView.height == iconImageView.height
-            iconImageView.centerY == contentView.centerY
-        }
-
-        cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        contentView.addSubview(cellNameLabel)
-
-        constrain(contentView, cellNameLabel, iconImageView) { contentView, cellNameLabel, iconImageView in
-            cellNameLabelToIconInset = cellNameLabel.leading == iconImageView.trailing + 24
-            cellNameLabel.leading == contentView.leading + 16 ~ 750.0
-            cellNameLabel.top == contentView.top + 12
-            cellNameLabel.bottom == contentView.bottom - 12
-        }
-
-        cellNameLabelToIconInset.isActive = false
-
-        valueLabel.textColor = UIColor.lightGray
-        valueLabel.font = UIFont.systemFont(ofSize: 17)
-        valueLabel.textAlignment = .right
-
-        contentView.addSubview(valueLabel)
-
-        badgeLabel.font = FontSpec(.small, .medium).font
-        badgeLabel.textAlignment = .center
-        badgeLabel.textColor = UIColor.black
-
         badge.containedView.addSubview(badgeLabel)
 
-        badge.backgroundColor = UIColor.white
-        badge.isHidden = true
-        contentView.addSubview(badge)
+        [iconImageView, cellNameLabel, valueLabel, badge, imagePreview].forEach {
+            contentView.addSubview($0)
+        }
+
+        [separatorLine, topSeparatorLine].forEach {
+            addSubview($0)
+        }
+
+        variant = .none
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+        leadingConstraint.priority = .defaultHigh
 
         let trailingBoundaryView = accessoryView ?? contentView
 
-        constrain(contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge) { contentView, cellNameLabel, valueLabel, trailingBoundaryView, badge in
-            valueLabel.top == contentView.top - 8
-            valueLabel.bottom == contentView.bottom + 8
-            valueLabel.leading >= cellNameLabel.trailing + 8
-            valueLabel.trailing == trailingBoundaryView.trailing - 16
-            badge.center == valueLabel.center
-            badge.height == 20
-            badge.width >= 28
+        if trailingBoundaryView != contentView {
+            trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        constrain(badge, badgeLabel) { badge, badgeLabel in
-            badgeLabel.leading == badge.leading + 6
-            badgeLabel.trailing == badge.trailing - 6
-            badgeLabel.top == badge.top
-            badgeLabel.bottom == badge.bottom
-        }
+        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
 
-        imagePreview.clipsToBounds = true
-        imagePreview.layer.cornerRadius = 12
-        imagePreview.contentMode = .scaleAspectFill
-        imagePreview.accessibilityIdentifier = "imagePreview"
-        contentView.addSubview(imagePreview)
+        NSLayoutConstraint.activate([
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            iconImageView.widthAnchor.constraint(equalToConstant: 16),
+            iconImageView.heightAnchor.constraint(equalTo: iconImageView.heightAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            leadingConstraint,
+            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
 
-        constrain(contentView, imagePreview) { contentView, imagePreview in
-            imagePreview.width == imagePreview.height
-            imagePreview.height == 24
-            imagePreview.trailing == contentView.trailing - 16
-            imagePreview.centerY == contentView.centerY
-        }
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            valueLabel.leadingAnchor.constraint(greaterThanOrEqualTo: cellNameLabel.trailingAnchor, constant: 8),
+            valueLabel.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -16),
+            badge.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
+            badge.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
+            badge.heightAnchor.constraint(equalToConstant: 20),
+            badge.widthAnchor.constraint(greaterThanOrEqualToConstant: 28),
 
-        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        separatorLine.isAccessibilityElement = false
-        addSubview(separatorLine)
+            badgeLabel.leadingAnchor.constraint(equalTo: badge.leadingAnchor, constant: 6),
+            badgeLabel.trailingAnchor.constraint(equalTo: badge.trailingAnchor, constant: -6),
+            badgeLabel.topAnchor.constraint(equalTo: badge.topAnchor),
+            badgeLabel.bottomAnchor.constraint(equalTo: badge.bottomAnchor),
 
-        constrain(self, separatorLine, cellNameLabel) { selfView, separatorLine, cellNameLabel in
-            separatorLine.leading == cellNameLabel.leading
-            separatorLine.trailing == selfView.trailing
-            separatorLine.bottom == selfView.bottom
-            separatorLine.height == .hairline
-        }
+            imagePreview.widthAnchor.constraint(equalTo: imagePreview.heightAnchor),
+            imagePreview.heightAnchor.constraint(equalToConstant: 24),
+            imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        topSeparatorLine.isAccessibilityElement = false
-        addSubview(topSeparatorLine)
+            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separatorLine.heightAnchor.constraint(equalToConstant: .hairline),
 
-        constrain(self, topSeparatorLine, cellNameLabel) { selfView, topSeparatorLine, cellNameLabel in
-            topSeparatorLine.leading == cellNameLabel.leading
-            topSeparatorLine.trailing == selfView.trailing
-            topSeparatorLine.top == selfView.top
-            topSeparatorLine.height == .hairline
-        }
+            topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
+            topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
+            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline),
 
-        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
-        variant = .none
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
+        ])
     }
 
     func setupAccessibiltyElements() {
@@ -363,7 +390,8 @@ final class SettingsValueCell: SettingsTableCell {
     }
 }
 
-final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
+final class SettingsTextCell: SettingsTableCell,
+                              UITextFieldDelegate {
     var textInput: UITextField!
 
     override func setup() {
@@ -386,16 +414,20 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     }
 
     private func createConstraints() {
-        let textInputSpacing = CGFloat(16)
+        let textInputSpacing: CGFloat = 16
 
         let trailingBoundaryView = accessoryView ?? contentView
-        constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
-            textInput.top == contentView.top - 8
-            textInput.bottom == contentView.bottom + 8
-            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
+
+        textInput.translatesAutoresizingMaskIntoConstraints = false
+        if trailingBoundaryView != contentView {
+            trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
         NSLayoutConstraint.activate([
+            textInput.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
+            textInput.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            textInput.trailingAnchor.constraint(equalTo: trailingBoundaryView.trailingAnchor, constant: -textInputSpacing),
+
             cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
 
@@ -441,7 +473,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     }
 }
 
-class SettingsStaticTextTableCell: SettingsTableCell {
+final class SettingsStaticTextTableCell: SettingsTableCell {
 
     override func setup() {
         super.setup()
