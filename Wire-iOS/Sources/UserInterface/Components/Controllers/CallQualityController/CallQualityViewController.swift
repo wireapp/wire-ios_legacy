@@ -261,15 +261,22 @@ class CallQualityView: UIStackView {
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
-        constrain(scoreButton) { scoreButton in
-            scoreButton.width <= 48
-            scoreButton.height == scoreButton.width
-        }
 
         addArrangedSubview(scoreLabel)
         addArrangedSubview(scoreButton)
+
+        createConstraints()
     }
 
+    private func createConstraints() {
+        [scoreButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+            scoreButton.widthAnchor.constraint(lessThanOrEqualToConstant: 48),
+            scoreButton.heightAnchor.constraint(equalTo: scoreButton.widthAnchor)
+        ])
+    }
+
+    @available(*, unavailable)
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
