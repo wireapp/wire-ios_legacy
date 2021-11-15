@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 protocol CallQualityViewControllerDelegate: AnyObject {
@@ -262,7 +261,7 @@ class CallQualityView: UIStackView {
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
-        constrain(scoreButton) {scoreButton in
+        constrain(scoreButton) { scoreButton in
             scoreButton.width <= 48
             scoreButton.height == scoreButton.width
         }

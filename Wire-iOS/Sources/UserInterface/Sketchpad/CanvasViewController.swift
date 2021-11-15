@@ -51,7 +51,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         }
     }
 
-    let emojiKeyboardViewController =  EmojiKeyboardViewController()
+    let emojiKeyboardViewController = EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
 
     override var shouldAutorotate: Bool {
