@@ -33,7 +33,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
     weak var delegate: CanvasViewControllerDelegate?
     var canvas = Canvas()
-    var toolbar: SketchToolbar!
+    private lazy var toolbar: SketchToolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
     let drawButton = IconButton()
     let emojiButton = IconButton()
     let sendButton = IconButton.sendButton()
@@ -79,7 +79,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
         emojiKeyboardViewController.delegate = self
 
-        toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
         hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
@@ -290,7 +289,6 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
 
         emojiKeyboardViewController.willMove(toParent: self)
         view.addSubview(emojiKeyboardViewController.view)
-
 
         emojiKeyboardView.translatesAutoresizingMaskIntoConstraints = false
 
