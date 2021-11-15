@@ -19,7 +19,6 @@
 import Foundation
 import WireCommonComponents
 import WireShareEngine
-import Cartography
 import SystemConfiguration
 import WireSystem
 import UIKit
