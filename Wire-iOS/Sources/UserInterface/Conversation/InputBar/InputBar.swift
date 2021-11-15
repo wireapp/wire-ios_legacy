@@ -172,7 +172,7 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
@@ -338,7 +338,8 @@ final class InputBar: UIView {
         rightAccessoryStackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
     }
 
-    @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
+    @objc
+    private func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
         guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
     }

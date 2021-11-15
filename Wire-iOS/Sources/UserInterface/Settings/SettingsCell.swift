@@ -122,7 +122,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var icon: StyleKitIcon? = nil {
+    var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
                 iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
@@ -165,10 +165,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         setupAccessibiltyElements()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-        setupAccessibiltyElements()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override func prepareForReuse() {

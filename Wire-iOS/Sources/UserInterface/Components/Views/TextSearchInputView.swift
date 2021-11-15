@@ -121,8 +121,9 @@ final class TextSearchInputView: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatal("init?(coder aDecoder: NSCoder) is not implemented")
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {

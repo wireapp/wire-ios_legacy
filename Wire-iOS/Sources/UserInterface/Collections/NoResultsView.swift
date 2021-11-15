@@ -35,7 +35,7 @@ final class NoResultsView: UIView {
         }
     }
 
-    var icon: StyleKitIcon? = nil {
+    var icon: StyleKitIcon? {
         didSet {
             iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }
@@ -72,6 +72,7 @@ final class NoResultsView: UIView {
         ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }
