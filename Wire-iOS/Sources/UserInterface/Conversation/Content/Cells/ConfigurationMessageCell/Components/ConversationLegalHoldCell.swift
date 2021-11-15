@@ -36,9 +36,9 @@ final class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, C
         setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupView()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     func setupView() {

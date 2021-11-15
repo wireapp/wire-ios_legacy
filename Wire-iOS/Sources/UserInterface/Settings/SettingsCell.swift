@@ -27,7 +27,7 @@ enum SettingsCellPreview {
     case color(UIColor)
 }
 
-protocol SettingsCellType: class {
+protocol SettingsCellType: AnyObject {
     var titleText: String {get set}
     var preview: SettingsCellPreview {get set}
     var titleColor: UIColor {get set}
@@ -221,7 +221,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override func prepareForReuse() {

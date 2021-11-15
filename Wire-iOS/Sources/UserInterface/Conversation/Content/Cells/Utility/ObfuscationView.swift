@@ -47,6 +47,7 @@ final class ObfuscationView: UIImageView {
         }
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatal("initWithCoder: not implemented")
     }

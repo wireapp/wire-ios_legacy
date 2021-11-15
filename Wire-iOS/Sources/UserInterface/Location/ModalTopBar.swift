@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol ModalTopBarDelegate: class {
+protocol ModalTopBarDelegate: AnyObject {
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 

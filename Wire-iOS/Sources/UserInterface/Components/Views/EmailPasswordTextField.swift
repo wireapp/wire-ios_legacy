@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol EmailPasswordTextFieldDelegate: class {
+protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
@@ -67,13 +67,9 @@ class EmailPasswordTextField: UIView, MagicTappable {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        let separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        separatorContainer = ContentInsetView(UIView(), inset: separatorInset)
-        super.init(coder: aDecoder)
-
-        configureSubviews()
-        configureConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {

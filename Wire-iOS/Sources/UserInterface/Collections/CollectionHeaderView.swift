@@ -76,6 +76,7 @@ final class CollectionHeaderView: UICollectionReusableView {
 
     var selectionAction: ((CollectionsSectionSet) -> Void)? = .none
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }

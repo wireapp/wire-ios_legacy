@@ -21,7 +21,7 @@ import UIKit
 import avs
 import WireDataModel
 
-protocol AudioEffectsPickerDelegate: class {
+protocol AudioEffectsPickerDelegate: AnyObject {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
@@ -100,6 +100,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         tearDown()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder) is not implemented")
     }
@@ -341,7 +342,7 @@ extension AudioEffectsPickerViewController: AudioPlayerControllerDelegate {
 
 }
 
-private protocol AudioPlayerControllerDelegate: class {
+private protocol AudioPlayerControllerDelegate: AnyObject {
 
     func audioPlayerControllerDidFinishPlaying()
 

@@ -34,12 +34,9 @@ final class PlaceholderConversationView: UIView {
         applyColorScheme(ColorScheme.default.variant)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
-        configureObservers()
-        applyColorScheme(ColorScheme.default.variant)
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {

@@ -24,7 +24,7 @@ import WireCommonComponents
 typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
-protocol ConversationListContainerViewModelDelegate: class {
+protocol ConversationListContainerViewModelDelegate: AnyObject {
     init(viewModel: ConversationListViewController.ViewModel)
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)

@@ -21,7 +21,7 @@ import WireDataModel
 
 // MARK: ArchivedListViewControllerDelegate
 
-protocol ArchivedListViewControllerDelegate: class {
+protocol ArchivedListViewControllerDelegate: AnyObject {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
 }

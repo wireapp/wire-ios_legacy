@@ -22,7 +22,7 @@ import WireSyncEngine
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
-protocol NetworkStatusViewControllerDelegate: class {
+protocol NetworkStatusViewControllerDelegate: AnyObject {
 
     ///  return false if NetworkStatusViewController will not disapper in iPad regular mode with specific orientation.
     ///

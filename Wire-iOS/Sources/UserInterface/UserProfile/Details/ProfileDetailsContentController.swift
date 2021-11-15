@@ -24,7 +24,7 @@ import WireSyncEngine
  * An object that receives notifications from a profile details content controller.
  */
 
-protocol ProfileDetailsContentControllerDelegate: class {
+protocol ProfileDetailsContentControllerDelegate: AnyObject {
 
     /// Called when the profile details change.
     func profileDetailsContentDidChange()

@@ -34,12 +34,12 @@ enum SplitViewControllerLayoutSize {
     case regularLandscape
 }
 
-protocol SplitLayoutObservable: class {
+protocol SplitLayoutObservable: AnyObject {
     var layoutSize: SplitViewControllerLayoutSize { get }
     var leftViewControllerWidth: CGFloat { get }
 }
 
-protocol SplitViewControllerDelegate: class {
+protocol SplitViewControllerDelegate: AnyObject {
     func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool
 }
 
