@@ -23,7 +23,7 @@ import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "TextView")
 
-protocol InformalTextViewDelegate: class {
+protocol InformalTextViewDelegate: AnyObject {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }
@@ -116,9 +116,9 @@ class TextView: UITextView {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {

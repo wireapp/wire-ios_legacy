@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 protocol Bar {
@@ -87,8 +86,12 @@ final class BarController: UIViewController {
 
         view.addSubview(stackView)
 
-        constrain(view, stackView) { view, stackView in
-            stackView.edges == view.edges
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          stackView.topAnchor.constraint(equalTo: view.topAnchor),
+          stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          stackView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          stackView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 }

@@ -96,32 +96,32 @@ class IconButton: ButtonWithLargerHitArea {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         updateCircularCornerRadius()
     }
 
     // MARK: - Observing state
-    override public var isHighlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
 
-    override public var isSelected: Bool {
+    override var isSelected: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
 
-    override public var isEnabled: Bool {
+    override var isEnabled: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
 
-    override public func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
+    override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         super.setTitleColor(color, for: state)
 
         if adjustsTitleWhenHighlighted && state.contains(.normal) {

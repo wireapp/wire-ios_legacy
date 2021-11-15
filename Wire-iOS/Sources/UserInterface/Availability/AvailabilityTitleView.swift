@@ -86,7 +86,8 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         updateConfiguration()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

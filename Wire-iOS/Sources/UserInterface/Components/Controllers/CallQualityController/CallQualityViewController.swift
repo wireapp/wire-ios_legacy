@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 
-protocol CallQualityViewControllerDelegate: class {
+protocol CallQualityViewControllerDelegate: AnyObject {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
@@ -134,7 +134,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         callQualityStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -301,9 +301,13 @@ class QualityScoreSelectorView: UIView {
             .forEach(scoreStackView.addArrangedSubview)
 
         addSubview(scoreStackView)
-        constrain(self, scoreStackView) { selfView, scoreStackView in
-            scoreStackView.edges == selfView.edges
-        }
+        scoreStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          scoreStackView.topAnchor.constraint(equalTo: topAnchor),
+          scoreStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          scoreStackView.leftAnchor.constraint(equalTo: leftAnchor),
+          scoreStackView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
     }
 
     override func layoutSubviews() {

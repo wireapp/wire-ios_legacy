@@ -80,7 +80,7 @@ final class ConversationListAccessoryView: UIView {
         updateForIcon()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         transparentIconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 

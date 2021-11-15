@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol TokenFieldDelegate: class {
+protocol TokenFieldDelegate: AnyObject {
     func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token<NSObjectProtocol>])
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String)
     func tokenFieldDidConfirmSelection(_ controller: TokenField)

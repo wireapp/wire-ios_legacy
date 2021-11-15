@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
 
@@ -53,21 +52,22 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        constrain(contentView, topSeparator, titleLabel, subtitleLabel) { contentView, topSeparator, titleLabel, subtitleLabel in
-            topSeparator.top == contentView.top
-            topSeparator.leading == contentView.leading + 16
-            topSeparator.trailing == contentView.trailing - 16
-            topSeparator.height == .hairline
+        [topSeparator, titleLabel, subtitleLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          topSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
+          topSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          topSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+          topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
 
-            titleLabel.top == topSeparator.bottom + 24
-            titleLabel.leading == topSeparator.leading
-            titleLabel.trailing == topSeparator.trailing
+          titleLabel.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 24),
+          titleLabel.leadingAnchor.constraint(equalTo: topSeparator.leadingAnchor),
+          titleLabel.trailingAnchor.constraint(equalTo: topSeparator.trailingAnchor),
 
-            subtitleLabel.top == titleLabel.bottom + 16
-            subtitleLabel.leading == topSeparator.leading
-            subtitleLabel.trailing == topSeparator.trailing
-            subtitleLabel.bottom == contentView.bottom - 24
-        }
+          subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+          subtitleLabel.leadingAnchor.constraint(equalTo: topSeparator.leadingAnchor),
+          subtitleLabel.trailingAnchor.constraint(equalTo: topSeparator.trailingAnchor),
+          subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+        ])
     }
 
     private func styleViews() {

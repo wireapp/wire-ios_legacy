@@ -28,7 +28,7 @@ enum SettingsCellPreview {
     case color(UIColor)
 }
 
-protocol SettingsCellType: class {
+protocol SettingsCellType: AnyObject {
     var titleText: String {get set}
     var preview: SettingsCellPreview {get set}
     var titleColor: UIColor {get set}
@@ -165,10 +165,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         setupAccessibiltyElements()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-        setupAccessibiltyElements()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override func prepareForReuse() {
@@ -386,7 +385,7 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let textInputSpacing = CGFloat(16)
 
         let trailingBoundaryView = accessoryView ?? contentView

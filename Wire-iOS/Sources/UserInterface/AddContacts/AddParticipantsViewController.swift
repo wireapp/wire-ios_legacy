@@ -42,8 +42,7 @@ extension ConversationLike where Self: SwiftConversationLike {
     }
 }
 
-protocol AddParticipantsConversationCreationDelegate: class {
-
+protocol AddParticipantsConversationCreationDelegate: AnyObject {
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
 }
 
@@ -252,7 +251,7 @@ final class AddParticipantsViewController: UIViewController {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
 
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {

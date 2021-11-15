@@ -45,9 +45,9 @@ final class CustomSpacingStackView: UIView {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        stackView = UIStackView()
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     /**

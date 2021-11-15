@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import Cartography
 import avs
 
 struct AudioEffectCellBorders: OptionSet {
@@ -57,22 +56,23 @@ final class AudioEffectCell: UICollectionViewCell {
             v.backgroundColor = UIColor(white: 1, alpha: 0.16)
         }
 
-        constrain(contentView, iconView) { contentView, iconView in
-            iconView.edges == contentView.edges
-        }
+        [iconView, borderRightView, borderBottomView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          iconView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          iconView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          iconView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
 
-        constrain(contentView, borderRightView, borderBottomView) { contentView, borderRightView, borderBottomView in
+          borderRightView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          borderRightView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          borderRightView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0.5),
+          borderRightView.widthAnchor.constraint(equalToConstant: .hairline),
 
-            borderRightView.bottom == contentView.bottom
-            borderRightView.top == contentView.top
-            borderRightView.right == contentView.right + 0.5
-            borderRightView.width == .hairline
-
-            borderBottomView.left == contentView.left
-            borderBottomView.bottom == contentView.bottom + 0.5
-            borderBottomView.right == contentView.right
-            borderBottomView.height == .hairline
-        }
+          borderBottomView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          borderBottomView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0.5),
+          borderBottomView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          borderBottomView.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
 
         updateForSelectedState()
     }

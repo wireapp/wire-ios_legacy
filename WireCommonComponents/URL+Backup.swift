@@ -22,7 +22,7 @@ import WireUtilities
 
 public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
 
-public protocol BackupExcluder: class {
+public protocol BackupExcluder: AnyObject {
     static func exclude(filesToExclude: [FileInDirectory]) throws
 }
 

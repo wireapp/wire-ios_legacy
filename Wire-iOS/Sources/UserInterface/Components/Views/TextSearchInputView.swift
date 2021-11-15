@@ -22,7 +22,7 @@ import UIKit
 import WireCommonComponents
 import WireSystem
 
-protocol TextSearchInputViewDelegate: class {
+protocol TextSearchInputViewDelegate: AnyObject {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
@@ -121,8 +121,9 @@ final class TextSearchInputView: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatal("init?(coder aDecoder: NSCoder) is not implemented")
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {

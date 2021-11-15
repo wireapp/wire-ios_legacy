@@ -58,9 +58,9 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
@@ -102,7 +102,7 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         NSLayoutConstraint.activate([
             avatarView.widthAnchor.constraint(equalToConstant: 28),
             avatarView.heightAnchor.constraint(equalToConstant: 28),

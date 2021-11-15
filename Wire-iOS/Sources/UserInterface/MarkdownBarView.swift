@@ -20,7 +20,7 @@ import UIKit
 import Down
 import WireCommonComponents
 
-protocol MarkdownBarViewDelegate: class {
+protocol MarkdownBarViewDelegate: AnyObject {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
 }
@@ -85,7 +85,7 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
-        stackView.translatesAutoresizingMaskIntoConstraints = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
           stackView.topAnchor.constraint(equalTo: topAnchor),
           stackView.bottomAnchor.constraint(equalTo: bottomAnchor),

@@ -41,7 +41,7 @@ class RoundedBadge: UIButton {
         updateCornerRadius()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
 
         containedView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
@@ -77,11 +77,12 @@ class RoundedBadge: UIButton {
         self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         updateCornerRadius()
     }

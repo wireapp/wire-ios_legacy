@@ -18,7 +18,7 @@
 
 import Foundation
 import Photos
-import Cartography
+import UIKit
 
 final class AssetCell: UICollectionViewCell {
 
@@ -44,13 +44,17 @@ final class AssetCell: UICollectionViewCell {
         durationView.font = FontSpec(.small, .light).font!
         contentView.addSubview(durationView)
 
-        constrain(contentView, imageView, durationView) { contentView, imageView, durationView in
-            imageView.edges == contentView.edges
-            durationView.bottom == contentView.bottom
-            durationView.left == contentView.left
-            durationView.right == contentView.right
-            durationView.height == 20
-        }
+        [imageView, durationView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          durationView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          durationView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          durationView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          durationView.heightAnchor.constraint(equalToConstant: 20)
+        ])
     }
 
     @available(*, unavailable)

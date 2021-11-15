@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol MessageActionResponder: class {
+protocol MessageActionResponder: AnyObject {
     /// perform an action for the message
     ///
     /// - Parameters:

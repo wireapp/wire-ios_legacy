@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-protocol EmojiKeyboardViewControllerDelegate: class {
+protocol EmojiKeyboardViewControllerDelegate: AnyObject {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String)
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController)
 }
@@ -70,7 +70,7 @@ final class EmojiKeyboardViewController: UIViewController {
         sectionViewController.didMove(toParent: self)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
             collectionView.top == view.top
             collectionView.leading == view.leading
@@ -188,7 +188,7 @@ class EmojiCollectionViewCell: UICollectionViewCell {
         addSubview(titleLabel)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(self, titleLabel) { view, label in
             label.edges == view.edges
         }

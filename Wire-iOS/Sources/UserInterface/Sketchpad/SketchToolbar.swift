@@ -67,7 +67,7 @@ class SketchToolbar: UIView {
         }
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let buttonSpacing: CGFloat = 8
 
         constrain(self, containerView) { parentView, container in

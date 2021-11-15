@@ -33,11 +33,11 @@ final class DotView: UIView {
 
     var showIndicator: Bool {
         get {
-            return !self.isHidden
+            return !isHidden
         }
 
         set {
-            self.isHidden = !newValue
+            isHidden = !newValue
         }
     }
 

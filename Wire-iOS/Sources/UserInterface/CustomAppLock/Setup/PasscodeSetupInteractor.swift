@@ -21,12 +21,12 @@ import WireCommonComponents
 import WireTransport
 import WireSyncEngine
 
-protocol PasscodeSetupInteractorInput: class {
+protocol PasscodeSetupInteractorInput: AnyObject {
     func validate(error: TextFieldValidator.ValidationError?)
     func storePasscode(passcode: String) throws
 }
 
-protocol PasscodeSetupInteractorOutput: class {
+protocol PasscodeSetupInteractorOutput: AnyObject {
     func passcodeValidated(result: PasswordValidationResult)
 }
 

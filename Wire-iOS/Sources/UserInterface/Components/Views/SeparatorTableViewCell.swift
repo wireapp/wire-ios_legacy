@@ -46,9 +46,9 @@ class SeparatorTableViewCell: UITableViewCell, SeparatorViewProtocol, Themeable 
         configureSubviews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {

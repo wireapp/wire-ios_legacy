@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final class WaveFormView: UIView {
 
@@ -25,13 +24,13 @@ final class WaveFormView: UIView {
     fileprivate let leftGradient = GradientView()
     fileprivate let rightGradient = GradientView()
 
-    fileprivate var leftGradientWidthConstraint: NSLayoutConstraint?
-    fileprivate var rightGradientWidthConstraint: NSLayoutConstraint?
+    fileprivate lazy var leftGradientWidthConstraint: NSLayoutConstraint = leftGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
+    fileprivate lazy var rightGradientWidthConstraint: NSLayoutConstraint = rightGradient.widthAnchor.constraint(equalToConstant: gradientWidth)
 
     var gradientWidth: CGFloat = 25 {
         didSet {
-            leftGradientWidthConstraint?.constant = gradientWidth
-            rightGradientWidthConstraint?.constant = gradientWidth
+            leftGradientWidthConstraint.constant = gradientWidth
+            rightGradientWidthConstraint.constant = gradientWidth
         }
     }
 
@@ -80,15 +79,23 @@ final class WaveFormView: UIView {
     }
 
     fileprivate func createConstraints() {
-        constrain(self, visualizationView, leftGradient, rightGradient) { view, visualizationView, leftGradient, rightGradient in
-            visualizationView.edges == view.edges
-            align(top: view, leftGradient, rightGradient)
-            align(bottom: view, leftGradient, rightGradient)
-            view.left == leftGradient.left
-            view.right == rightGradient.right
-            leftGradientWidthConstraint = leftGradient.width == gradientWidth
-            rightGradientWidthConstraint = rightGradient.width == gradientWidth
-        }
+        [visualizationView, leftGradient, rightGradient].prepareForLayout()
+        NSLayoutConstraint.activate([
+            visualizationView.topAnchor.constraint(equalTo: topAnchor),
+            visualizationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            visualizationView.leftAnchor.constraint(equalTo: leftAnchor),
+            visualizationView.rightAnchor.constraint(equalTo: rightAnchor),
+
+            topAnchor.constraint(equalTo: leftGradient.topAnchor),
+            topAnchor.constraint(equalTo: rightGradient.topAnchor),
+            bottomAnchor.constraint(equalTo: leftGradient.bottomAnchor),
+            bottomAnchor.constraint(equalTo: rightGradient.bottomAnchor),
+
+            leftAnchor.constraint(equalTo: leftGradient.leftAnchor),
+            rightAnchor.constraint(equalTo: rightGradient.rightAnchor),
+            leftGradientWidthConstraint,
+            rightGradientWidthConstraint
+        ])
     }
 
     fileprivate func updateWaveFormColor() {

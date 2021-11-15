@@ -34,7 +34,7 @@ fileprivate extension UIView {
 
 }
 
-protocol ChangeHandleTableViewCellDelegate: class {
+protocol ChangeHandleTableViewCellDelegate: AnyObject {
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String)
 }
@@ -96,7 +96,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         [prefixLabel, handleTextField, domainLabel].forEach(addSubview)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [prefixLabel, handleTextField, domainLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([

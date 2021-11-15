@@ -23,7 +23,7 @@ enum PopUpIconButtonExpandDirection {
     case left, right
 }
 
-protocol PopUpIconButtonDelegate: class {
+protocol PopUpIconButtonDelegate: AnyObject {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: StyleKitIcon)
 }
 

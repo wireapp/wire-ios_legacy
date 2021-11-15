@@ -26,6 +26,9 @@ extension Notification.Name {
 }
 
 final class ConversationListItemView: UIView {
+    // MARK: UI constants
+    static let minHeight: CGFloat = 64
+
     // Please use `updateForConversation:` to set conversation.
     private var conversation: ConversationAvatarViewConversation?
 
@@ -113,6 +116,28 @@ final class ConversationListItemView: UIView {
         createConstraints()
 
         NotificationCenter.default.addObserver(self, selector: #selector(otherConversationListItemDidScroll(_:)), name: .conversationListItemDidScroll, object: nil)
+    }
+
+    private func createConstraints() {
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            // height
+            heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight),
+
+            // avatar
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
+            contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+
+            // lineView
+            lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
+            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
+        ])
     }
 
     private func setupLabelsStack() {

@@ -19,7 +19,7 @@
 import UIKit
 import WireDataModel
 
-protocol TextViewInteractionDelegate: class {
+protocol TextViewInteractionDelegate: AnyObject {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }

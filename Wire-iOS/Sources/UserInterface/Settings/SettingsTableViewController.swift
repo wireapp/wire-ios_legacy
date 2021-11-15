@@ -53,8 +53,9 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         self.edgesForExtendedLayout = UIRectEdge()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -173,8 +174,9 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

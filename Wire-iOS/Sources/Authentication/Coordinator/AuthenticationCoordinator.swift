@@ -24,7 +24,7 @@ import UIKit
  * Provides and asks for context when registering users.
  */
 
-protocol AuthenticationCoordinatorDelegate: class {
+protocol AuthenticationCoordinatorDelegate: AnyObject {
 
     /**
      * The coordinator finished authenticating the user.

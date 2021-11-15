@@ -32,9 +32,9 @@ class DefaultNavigationBar: UINavigationBar {
         configure()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
@@ -67,11 +67,16 @@ class DefaultNavigationBar: UINavigationBar {
 }
 
 extension UIViewController {
-
     func wrapInNavigationController(navigationControllerClass: UINavigationController.Type = RotationAwareNavigationController.self,
-                                    navigationBarClass: AnyClass? = DefaultNavigationBar.self) -> UINavigationController {
+                                    navigationBarClass: AnyClass? = DefaultNavigationBar.self,
+                                    setBackgroundColor: Bool = false) -> UINavigationController {
         let navigationController = navigationControllerClass.init(navigationBarClass: navigationBarClass, toolbarClass: nil)
         navigationController.setViewControllers([self], animated: false)
+
+        if #available(iOS 15, *), setBackgroundColor {
+            navigationController.view.backgroundColor = UIColor.from(scheme: .barBackground, variant: ColorScheme.default.variant)
+        }
+
         return navigationController
     }
 
