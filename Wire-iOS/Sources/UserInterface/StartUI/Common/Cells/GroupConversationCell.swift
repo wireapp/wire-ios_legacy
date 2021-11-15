@@ -58,9 +58,9 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {

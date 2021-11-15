@@ -98,7 +98,7 @@ extension AppLockModule.View {
 
         @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
-            fatal("init(coder) is not implemented")
+            fatalError("init(coder) is not implemented")
         }
 
         // MARK: - Helpers
