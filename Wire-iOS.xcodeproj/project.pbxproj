@@ -878,8 +878,6 @@
 		A96867CB26A5E68400679D95 /* FLAnimatedImage.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE2172666682200E713FC /* FLAnimatedImage.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867CD26A5E68600679D95 /* Down.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; };
 		A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A96867D026A5E6C100679D95 /* Cartography.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; };
-		A96867D126A5E6C100679D95 /* Cartography.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867D326A5E6E100679D95 /* ZipArchive.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19B266657AF00E713FC /* ZipArchive.xcframework */; };
 		A96867D426A5E6E100679D95 /* ZipArchive.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19B266657AF00E713FC /* ZipArchive.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867D626A5E70D00679D95 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
@@ -890,7 +888,6 @@
 		A96867E426A5E93400679D95 /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A0266657AF00E713FC /* PINCache.xcframework */; };
 		A96867E726A5E93700679D95 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */; };
 		A96867EA26A5E93900679D95 /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
-		A96867ED26A5E94700679D95 /* Cartography.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A3266657AF00E713FC /* Cartography.xcframework */; };
 		A96867F026A5E94900679D95 /* WireRequestStrategy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE197266657AE00E713FC /* WireRequestStrategy.xcframework */; };
 		A96867F226A5E94C00679D95 /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
 		A96867F426A5E9C500679D95 /* Countly.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98682862666E64E0064581B /* Countly.xcframework */; };
@@ -1725,7 +1722,6 @@
 				A96867FF26A5ED1B00679D95 /* DifferenceKit.xcframework in Embed Frameworks */,
 				A96867C226A5E61A00679D95 /* HTMLString.xcframework in Embed Frameworks */,
 				A96867D726A5E70D00679D95 /* SwiftProtobuf.xcframework in Embed Frameworks */,
-				A96867D126A5E6C100679D95 /* Cartography.xcframework in Embed Frameworks */,
 				A96867B926A5E5A000679D95 /* WireSyncEngine.xcframework in Embed Frameworks */,
 				1658E93326C560A0003D0090 /* Starscream.xcframework in Embed Frameworks */,
 				A96867F926A5EAEB00679D95 /* libPhoneNumberiOS.xcframework in Embed Frameworks */,
@@ -3497,7 +3493,6 @@
 				A968680426A5F73400679D95 /* WireCommonComponents.framework in Frameworks */,
 				A96867F026A5E94900679D95 /* WireRequestStrategy.xcframework in Frameworks */,
 				A96867F226A5E94C00679D95 /* WireShareEngine.xcframework in Frameworks */,
-				A96867ED26A5E94700679D95 /* Cartography.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3526,7 +3521,6 @@
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
 				A96867B626A5E5A000679D95 /* WireShareEngine.xcframework in Frameworks */,
-				A96867D026A5E6C100679D95 /* Cartography.xcframework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				A96867BC26A5E5A000679D95 /* WireTransport.xcframework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,

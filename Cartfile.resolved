@@ -1,4 +1,3 @@
-github "wireapp/Cartography" "4.0.0_xcframework"
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
 github "wireapp/Down" "v2.3.0_Xcode13"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
