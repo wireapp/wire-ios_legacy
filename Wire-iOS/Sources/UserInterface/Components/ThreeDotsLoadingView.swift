@@ -18,18 +18,17 @@
 
 import UIKit
 import Foundation
-import Cartography
 
 final class ThreeDotsLoadingView: UIView {
 
-    let loadingAnimationKey = "loading"
-    let dotRadius = 2
-    let activeColor = UIColor.from(scheme: .loadingDotActive)
-    let inactiveColor = UIColor.from(scheme: .loadingDotInactive)
+    private let loadingAnimationKey = "loading"
+    private let dotRadius: CGFloat = 2
+    private let activeColor = UIColor.from(scheme: .loadingDotActive)
+    private let inactiveColor = UIColor.from(scheme: .loadingDotInactive)
 
-    let dot1 = UIView()
-    let dot2 = UIView()
-    let dot3 = UIView()
+    private let dot1 = UIView()
+    private let dot2 = UIView()
+    private let dot3 = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,30 +51,33 @@ final class ThreeDotsLoadingView: UIView {
 
     func setupViews() {
         [dot1, dot2, dot3].forEach { (dot) in
-            dot.layer.cornerRadius = CGFloat(dotRadius)
+            dot.layer.cornerRadius = dotRadius
             dot.backgroundColor = inactiveColor
         }
     }
 
-    func setupConstraints() {
+    private func setupConstraints() {
 
-        constrain(self, dot1, dot3) { container, leadingDot, trailingDot in
-            leadingDot.left == container.left
-            trailingDot.right == container.right
+        [dot1, dot2, dot3].prepareForLayout()
+
+        var constraints: [NSLayoutConstraint] = [
+            dot1.leftAnchor.constraint(equalTo: leftAnchor),
+            dot3.rightAnchor.constraint(equalTo: rightAnchor),
+
+            dot2.leftAnchor.constraint(equalTo: dot1.rightAnchor, constant: 4),
+            dot3.leftAnchor.constraint(equalTo: dot2.rightAnchor, constant: 4)
+        ]
+
+        [dot1, dot2, dot3].forEach { dot in
+            constraints.append(contentsOf: [
+              dot.topAnchor.constraint(equalTo: topAnchor),
+              dot.bottomAnchor.constraint(equalTo: bottomAnchor),
+              dot.widthAnchor.constraint(equalToConstant: dotRadius * 2),
+              dot.heightAnchor.constraint(equalToConstant: dotRadius * 2)
+            ])
         }
 
-        [dot1, dot2, dot3].forEach { (dot) in
-            constrain(self, dot) { container, dot in
-                dot.top == container.top
-                dot.bottom == container.bottom
-                dot.width == CGFloat(dotRadius * 2)
-                dot.height == CGFloat(dotRadius * 2)
-            }
-        }
-
-        constrain(dot1, dot2, dot3) { dot1, dot2, dot3 in
-            distribute(by: 4, horizontally: dot1, dot2, dot3)
-        }
+        NSLayoutConstraint.activate(constraints)
     }
 
     override var isHidden: Bool {
@@ -118,10 +120,8 @@ final class ThreeDotsLoadingView: UIView {
         [dot1, dot2, dot3].forEach { $0.layer.removeAnimation(forKey: loadingAnimationKey) }
     }
 
-}
-
-extension ThreeDotsLoadingView {
-    @objc func applicationDidBecomeActive(_ notification: Notification) {
+    @objc
+    func applicationDidBecomeActive(_ notification: Notification) {
         updateLoadingAnimation()
     }
 }

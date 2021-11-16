@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireCommonComponents
@@ -32,8 +31,8 @@ extension ConversationLike where Self: SwiftConversationLike {
         // Access mode and/or role is unknown: let's try to add and observe the result.
         guard let accessMode = accessMode,
               let accessRole = accessRole else {
-                return true
-        }
+                  return true
+              }
 
         let canAddGuest = accessMode.contains(.invite)
         let guestCanBeAdded = accessRole != .team
@@ -109,7 +108,7 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate let confirmButtonHeight: CGFloat = 46.0
     fileprivate let confirmButton: IconButton
     fileprivate let emptyResultView: EmptySearchResultsView
-    fileprivate var bottomConstraint: NSLayoutConstraint?
+    private lazy var bottomConstraint: NSLayoutConstraint = confirmButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomMargin)
     fileprivate let backButtonDescriptor = BackButtonDescription()
     private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
@@ -252,41 +251,44 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     private func createConstraints() {
-        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
-
-        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {
-            container, searchHeaderView, searchResultsView, confirmButton in
-
-            searchHeaderView.top == container.top
-            searchHeaderView.left == container.left
-            searchHeaderView.right == container.right
-
-            searchResultsView.left == container.left
-            searchResultsView.right == container.right
-            searchResultsView.bottom == container.bottom
-
-            confirmButton.height == self.confirmButtonHeight
-            confirmButton.left == container.left + margin
-            confirmButton.right == container.right - margin
-
-            self.bottomConstraint = confirmButton.bottom == container.safeAreaLayoutGuide.bottom - bottomMargin
+        guard let searchHeaderView = searchHeaderViewController.view,
+              let searchResultsView = searchResultsViewController.view,
+              let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
+            return
         }
+
+        [searchHeaderView, searchResultsView, confirmButton].prepareForLayout()
+
+        var constraints: [NSLayoutConstraint] = [
+            searchHeaderView.topAnchor.constraint(equalTo: view.topAnchor),
+            searchHeaderView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            searchHeaderView.rightAnchor.constraint(equalTo: view.rightAnchor),
+
+            searchResultsView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            searchResultsView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            searchResultsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            confirmButton.heightAnchor.constraint(equalToConstant: confirmButtonHeight),
+            confirmButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin),
+            confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin),
+
+            bottomConstraint
+        ]
 
         if viewModel.botCanBeAdded {
-            constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
-                view, searchHeaderView, searchGroupSelector, searchResultsView in
-                searchGroupSelector.top == searchHeaderView.bottom
-                searchGroupSelector.leading == view.leading
-                searchGroupSelector.trailing == view.trailing
-                searchResultsView.top == searchGroupSelector.bottom
-            }
+            constraints.append(contentsOf: [
+                searchGroupSelector.topAnchor.constraint(equalTo: searchHeaderView.bottomAnchor),
+                searchGroupSelector.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                searchGroupSelector.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                searchResultsView.topAnchor.constraint(equalTo: searchGroupSelector.bottomAnchor)
+            ])
+        } else {
+            constraints.append(
+                searchResultsView.topAnchor.constraint(equalTo: searchHeaderView.bottomAnchor)
+            )
         }
-        else {
-            constrain(searchHeaderViewController.view, searchResultsViewController.view) {
-                searchHeaderView, searchResultsView in
-                searchResultsView.top == searchHeaderView.bottom
-            }
-        }
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     private func updateValues() {
@@ -350,7 +352,7 @@ final class AddParticipantsViewController: UIViewController {
                 return -weakSelf.bottomMargin
             }()
 
-            weakSelf.bottomConstraint?.constant = -(keyboardHeight + margin)
+            weakSelf.bottomConstraint.constant = -(keyboardHeight + margin)
             weakSelf.view.layoutIfNeeded()
         })
     }
@@ -457,10 +459,12 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             case .failure(let error):
                 guard let controller = self.navigationController?.topViewController else { return }
                 error.displayAddBotError(in: controller)
+            @unknown default:
+                fatalError()
             }
         }
 
-        self.navigationController?.pushViewController(detail, animated: true)
+        navigationController?.pushViewController(detail, animated: true)
     }
 
 }
