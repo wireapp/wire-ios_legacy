@@ -166,15 +166,4 @@ final class NSAttributedStringDownTests: XCTestCase {
         XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
-    func testThatItReturnsBracketsSymbols() {
-        // GIVEN
-        let plainTextSymbol = "{ }"
-
-        // WHEN
-        let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
-
-        // THEN
-        XCTAssertEqual(sut.string, plainTextSymbol)
-    }
-
 }
