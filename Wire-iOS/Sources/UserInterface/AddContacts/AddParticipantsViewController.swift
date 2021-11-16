@@ -257,7 +257,10 @@ final class AddParticipantsViewController: UIViewController {
             return
         }
 
-        [searchHeaderView, searchResultsView, confirmButton].prepareForLayout()
+        [searchHeaderView,
+         searchResultsView,
+         confirmButton,
+         searchGroupSelector].prepareForLayout()
 
         var constraints: [NSLayoutConstraint] = [
             searchHeaderView.topAnchor.constraint(equalTo: view.topAnchor),
