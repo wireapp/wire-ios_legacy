@@ -44,7 +44,9 @@ final class GiphyConfirmationViewController: UIViewController {
     ///   - ziph: provide nil for testing only
     ///   - previewImage: image for preview
     ///   - searchResultController: provide nil for testing only
-    init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
+    init(withZiph ziph: Ziph?,
+         previewImage: FLAnimatedImage?,
+         searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
 
@@ -134,9 +136,12 @@ final class GiphyConfirmationViewController: UIViewController {
 
         let widthConstraint = buttonContainer.widthAnchor.constraint(equalToConstant: 476)
 
-        widthConstraint.priority = .defaultHigh
+        widthConstraint.priority = .init(700)
 
-        [imagePreview, buttonContainer, cancelButton, acceptButton].prepareForLayout()
+        [imagePreview,
+         buttonContainer,
+         cancelButton,
+         acceptButton].prepareForLayout()
 
         NSLayoutConstraint.activate([
             imagePreview.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
