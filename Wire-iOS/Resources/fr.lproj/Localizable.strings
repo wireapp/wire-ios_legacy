@@ -1674,9 +1674,9 @@
 "feature_config.conference_calling_restrictions.personal.alert.message" = "L'option d'initier un appel de conférence n'est disponible que dans la version payante de Wire.";
 
 // Feature configs: self-deleting messages
-"feature_config.alert.self_deleting_messages.message.disabled" = "Les messages auto-supprimés sont désactivés";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Les messages auto-supprimés sont activés. Vous pouvez définir un délai avant de rédiger un message.";
-"feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages auto-supprimés sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
+"feature_config.alert.self_deleting_messages.message.disabled" = "Les messages éphémères sont désactivés";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Les messages éphémères sont activés. Vous pouvez définir un délai avant de rédiger un message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages éphémères sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";
@@ -1846,7 +1846,7 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Validation en attente.";
 "legalhold_request.alert.title" = "Conservation à des fins juridiques demandée";
-"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés sur l’appareil avec l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
+"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés sur l’appareil ayant l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
 "legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
