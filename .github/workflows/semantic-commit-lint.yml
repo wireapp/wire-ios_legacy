@@ -1,4 +1,5 @@
 name: "Semantic Commit Linting of PR titles"
+
 on:
   pull_request_target:
     types: [ opened, edited, synchronize ]
@@ -54,8 +55,8 @@ jobs:
           validateSingleCommit: true
       - name: Add Failure Label
         if: failure()
-        run: | 
-          gh api --silent repos/{owner}/{repo}/labels -f name="${CUSTOM_PR_LABEL}" -f color="FF0000"
+        run: |
+          gh api repos/{owner}/{repo}/labels -f name="${CUSTOM_PR_LABEL}" -f color="FF0000" || true
           gh pr edit "${HEAD}" --add-label "${CUSTOM_PR_LABEL}"
       - name: Remove Failure Label
         if: success()
