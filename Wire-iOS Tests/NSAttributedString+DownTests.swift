@@ -30,7 +30,8 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
+
     }
 
     func testThatItReturnsH2Characters() {
@@ -41,7 +42,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsH3Characters() {
@@ -52,7 +53,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsH4Characters() {
@@ -63,7 +64,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsH5Characters() {
@@ -74,7 +75,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsH6Characters() {
@@ -85,7 +86,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsBlockQuoteSymbol() {
@@ -96,7 +97,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsTwoBlockQuoteSymbols() {
@@ -107,7 +108,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsThreeBlockQuoteSymbols() {
@@ -118,7 +119,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsFourBlockQuoteSymbols() {
@@ -129,7 +130,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsTwoBoldSymbols() {
@@ -140,7 +141,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsThreeBoldSymbols() {
@@ -151,7 +152,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsFourBoldSymbols() {
@@ -162,7 +163,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
     func testThatItReturnsBracketsSymbols() {
@@ -173,7 +174,7 @@ final class NSAttributedStringDownTests: XCTestCase {
         let sut  = NSMutableAttributedString.markdown(from: plainTextSymbol, style: NSAttributedString.style)
 
         // THEN
-        XCTAssertEqual(sut, NSMutableAttributedString(string: plainTextSymbol))
+        XCTAssertEqual(sut.string, plainTextSymbol)
     }
 
 }
