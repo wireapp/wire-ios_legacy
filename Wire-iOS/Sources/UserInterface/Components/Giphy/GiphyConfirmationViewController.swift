@@ -35,7 +35,7 @@ final class GiphyConfirmationViewController: UIViewController {
     private let buttonContainer = UIView()
     weak var delegate: GiphyConfirmationViewControllerDelegate?
     private let searchResultController: ZiphySearchResultsController?
-    let ziph: Ziph?
+    private let ziph: Ziph?
     private var imageData: Data?
 
     /// init method with optional arguments for remove dependency for testing
