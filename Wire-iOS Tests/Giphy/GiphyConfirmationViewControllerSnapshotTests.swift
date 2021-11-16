@@ -19,7 +19,6 @@
 import SnapshotTesting
 import XCTest
 @testable import Wire
-import FLAnimatedImage
 
 final class GiphyConfirmationViewControllerSnapshotTests: XCTestCase {
     var sut: GiphyConfirmationViewController!

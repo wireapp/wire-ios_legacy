@@ -118,15 +118,18 @@ final class GiphyConfirmationViewController: UIViewController {
         }
     }
 
-    @objc func onDismiss() {
+    @objc
+    private func onDismiss() {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func onCancel() {
+    @objc
+    private func onCancel() {
         _ = navigationController?.popViewController(animated: true)
     }
 
-    @objc func onAccept() {
+    @objc
+    private func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
         }
@@ -163,11 +166,11 @@ final class GiphyConfirmationViewController: UIViewController {
             cancelButton.widthAnchor.constraint(equalTo: acceptButton.widthAnchor),
             cancelButton.rightAnchor.constraint(equalTo: acceptButton.leftAnchor, constant: -16),
 
-            buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: buttonContainer.leftAnchor, constant: 32),
-            buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: buttonContainer.rightAnchor, constant: -32),
-            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor, constant: -32),
+            buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor, constant: 32),
+            buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor, constant: -32),
+            buttonContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
             widthConstraint,
-            buttonContainer.centerXAnchor.constraint(equalTo: buttonContainer.centerXAnchor)
+            buttonContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
