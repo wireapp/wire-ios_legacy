@@ -21,7 +21,7 @@ import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
 
-protocol GiphyConfirmationViewControllerDelegate {
+protocol GiphyConfirmationViewControllerDelegate: AnyObject {
 
     func giphyConfirmationViewController(_ giphyConfirmationViewController: GiphyConfirmationViewController, didConfirmImageData imageData: Data)
 
@@ -29,14 +29,14 @@ protocol GiphyConfirmationViewControllerDelegate {
 
 final class GiphyConfirmationViewController: UIViewController {
 
-    var imagePreview = FLAnimatedImageView()
-    var acceptButton = Button(style: .full)
-    var cancelButton = Button(style: .empty)
-    var buttonContainer = UIView()
-    var delegate: GiphyConfirmationViewControllerDelegate?
-    let searchResultController: ZiphySearchResultsController?
+    private let imagePreview = FLAnimatedImageView()
+    private let acceptButton = Button(style: .full)
+    private let cancelButton = Button(style: .empty)
+    private let buttonContainer = UIView()
+    weak var delegate: GiphyConfirmationViewControllerDelegate?
+    private let searchResultController: ZiphySearchResultsController?
     let ziph: Ziph?
-    var imageData: Data?
+    private var imageData: Data?
 
     /// init method with optional arguments for remove dependency for testing
     ///
