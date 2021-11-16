@@ -230,8 +230,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
-            let navigationController = addParticipantsViewController.wrapInNavigationController()
+            let navigationController = addParticipantsViewController.wrapInNavigationController(setBackgroundColor: true)
             navigationController.modalPresentationStyle = .currentContext
+
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation,
