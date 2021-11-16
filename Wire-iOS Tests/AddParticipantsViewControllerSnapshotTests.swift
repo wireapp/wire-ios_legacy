@@ -33,11 +33,11 @@ final class MockTeam: TeamType {
     var imageData: Data?
 
     func requestImage() {
-        //no-op
+        // no-op
     }
 
     func refreshMetadata() {
-        //no-op
+        // no-op
     }
 }
 
@@ -81,17 +81,17 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
     }
 
     func testThatTabBarIsShown_WhenBotCanBeAdded() {
-        //GIVEN
+        // GIVEN
         let mockConversation = MockGroupDetailsConversation()
 
-        //WHEN
+        // WHEN
         mockConversation.conversationType = .group
         mockConversation.teamType = MockTeam()
         mockConversation.allowGuests = true
 
         sut = AddParticipantsViewController(context: .add(mockConversation), variant: .light)
 
-        //THEN
+        // THEN
         verify(matching: sut)
     }
 
