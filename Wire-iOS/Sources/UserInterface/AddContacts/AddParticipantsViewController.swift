@@ -172,9 +172,9 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.hasRoundCorners = true
 
-        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
+        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: variant)
 
-        searchGroupSelector = SearchGroupSelector(style: self.variant)
+        searchGroupSelector = SearchGroupSelector(style: variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
                                                                   isAddingParticipants: true,
