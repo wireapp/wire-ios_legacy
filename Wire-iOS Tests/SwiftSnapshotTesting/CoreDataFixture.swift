@@ -319,7 +319,9 @@ extension CoreDataFixtureTestHelper {
     }
 
     func createGroupConversation() -> ZMConversation {
-        return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
+        return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC,
+                                                      otherUser: otherUser,
+                                                      selfUser: selfUser)
     }
 
     func createTeamGroupConversation() -> ZMConversation {
