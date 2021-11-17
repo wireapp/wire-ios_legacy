@@ -28,7 +28,7 @@ final class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         conversation = self.createGroupConversation()
-        conversation.setMessageDestructionTimeoutValue(.fiveMinutes, for: .selfUser)
+        conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue.fiveMinutes)
         sut = EphemeralKeyboardViewController(conversation: conversation)
     }
 
