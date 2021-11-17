@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Connect";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Connect";
 "inbox.connection_request.ignore_button_title" = "Ignore";
 "error.connection.title" = "Error";

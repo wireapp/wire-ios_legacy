@@ -2100,6 +2100,8 @@ internal enum L10n {
       internal static let confirm = L10n.tr("Localizable", "image_confirmer.confirm")
     }
     internal enum Inbox {
+      /// Connection Requests
+      internal static let title = L10n.tr("Localizable", "inbox.title")
       internal enum ConnectionRequest {
         /// Connect
         internal static let connectButtonTitle = L10n.tr("Localizable", "inbox.connection_request.connect_button_title")
