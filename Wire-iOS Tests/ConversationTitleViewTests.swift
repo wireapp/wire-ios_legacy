@@ -18,18 +18,19 @@
 
 import XCTest
 @testable import Wire
-import SnapshotTesting
 
-final class ConversationTitleViewTests: XCTestCase {
+final class ConversationTitleViewTests: ZMSnapshotTestCase {
 
     var sut: ConversationTitleView!
-    var conversation: SwiftMockConversation!
+    var conversation: MockConversation!
 
     override func setUp() {
         super.setUp()
-        conversation = SwiftMockConversation()
+        conversation = MockConversation()
         conversation.relatedConnectionState = .accepted
         conversation.displayName = "Alan Turing"
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+        snapshotBackgroundColor = UIColor.white
     }
 
     override func tearDown() {
@@ -39,76 +40,58 @@ final class ConversationTitleViewTests: XCTestCase {
         super.tearDown()
     }
 
-    private func createSut(conversation: SwiftMockConversation) -> ConversationTitleView {
-        let view = ConversationTitleView(conversation: conversation, interactive: true)
-        view.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
-        view.backgroundColor = .white
-        return view
-    }
-
     func testThatItRendersTheConversationDisplayNameCorrectly() {
-        // given
-        sut = createSut(conversation: conversation)
-
-        // then
-        verify(matching: sut)
-    }
-
-    func testThatItRendersTheFederatedConversationDisplayNameCorrectly() {
-        // given
-        let user = MockUserType.createUser(name: "Alan Turing")
-        user.isFederated = true
-        user.domain = "wire.com"
-        user.handle = "alanturing"
-        conversation.connectedUserType = user
-        conversation.conversationType = .oneOnOne
-        sut = createSut(conversation: conversation)
-
-        // then
-        verify(matching: sut)
+        verify(view: sut)
     }
 
     func testThatItUpdatesTheTitleViewAndRendersTheVerifiedShieldCorrectly() {
         // when
         conversation.securityLevel = .secure
-        sut = createSut(conversation: conversation)
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
 
         // then
-        verify(matching: sut)
+        verify(view: sut)
     }
 
-    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly() {
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_PendingApproval() {
         // when
-        conversation.isUnderLegalHold = true
-        sut = createSut(conversation: conversation)
+        conversation.legalHoldStatus = .pendingApproval
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
 
         // then
-        verify(matching: sut)
+        verify(view: sut)
+    }
+
+    func testThatItUpdatesTheTitleViewAndRendersLegalHoldCorrectly_Enabled() {
+        // when
+        conversation.legalHoldStatus = .enabled
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
+
+        // then
+        verify(view: sut)
     }
 
     func testThatItUpdatesTheTitleViewAndRendersLegalHoldAndVerifiedShieldCorrectly() {
         // when
         conversation.securityLevel = .secure
-        conversation.isUnderLegalHold = true
-        sut = createSut(conversation: conversation)
+        conversation.legalHoldStatus = .enabled
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
 
         // then
-        verify(matching: sut)
+        verify(view: sut)
     }
 
     func testThatItDoesNotRenderTheDownArrowForOutgoingConnections() {
         // when
         conversation.relatedConnectionState = .sent
-        sut = createSut(conversation: conversation)
+        sut = ConversationTitleView(conversation: conversation as Any as! ZMConversation, interactive: true)
 
         // then
-        verify(matching: sut)
+        verify(view: sut)
     }
 
     func testThatItExecutesTheTapHandlerOnTitleTap() {
         // given
-        sut = ConversationTitleView(conversation: conversation, interactive: true)
-
         var callCount: Int = 0
         sut.tapHandler = { _ in
             callCount += 1
