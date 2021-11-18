@@ -37,7 +37,7 @@
 "share_extension.unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
 "share_extension.unlock.submit_button.title" = "odblokuj";
 "share_extension.unlock.textfield.placeholder" = "Wprowadź swoje hasło";
-"share_extension.unlock.hint_label" = "Hasło";
+"share_extension.unlock.hint_label" = "Kod dostępu";
 "share_extension.unlock.error_label" = "Błędne hasło";
 "share_extension.unlock.alert.message" = "Otwórz Wire aby utworzyć hasło";
 "share_extension.unlock.reveal_passcode" = "Odkryj hasło";
