@@ -1797,7 +1797,7 @@ internal enum L10n {
           internal enum Message {
             /// Self-deleting messages are disabled.
             internal static let disabled = L10n.tr("Localizable", "feature_config.alert.self_deleting_messages.message.disabled")
-            /// Self-deleting messages are enabled. You can set a timeout before composing a message.
+            /// Self-deleting messages are enabled. You can set a timer before writing a message.
             internal static let enabled = L10n.tr("Localizable", "feature_config.alert.self_deleting_messages.message.enabled")
             /// Self-deleting messages are now mandatory. New messages will self-delete after %@.
             internal static func forcedOn(_ p1: Any) -> String {
