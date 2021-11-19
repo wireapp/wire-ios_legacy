@@ -52,31 +52,15 @@ protocol InputBarConversation {
     var hasDraftMessage: Bool { get }
     var draftMessage: DraftMessage? { get }
 
-    var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue? { get }
-    var hasSyncedMessageDestructionTimeout: Bool { get }
-    var isSelfDeletingMessageSendingDisabled: Bool { get }
-    var isSelfDeletingMessageTimeoutForced: Bool { get }
+    var messageDestructionTimeoutValue: TimeInterval { get }
+    var messageDestructionTimeout: MessageDestructionTimeout? { get }
 
     var isReadOnly: Bool { get }
 }
 
 typealias InputBarConversationType = InputBarConversation & TypingStatusProvider & ConversationLike
 
-extension ZMConversation: InputBarConversation {
-
-    var isSelfDeletingMessageSendingDisabled: Bool {
-        guard let context = managedObjectContext else { return false }
-        let feature = FeatureService(context: context).fetchSelfDeletingMesssages()
-        return feature.status == .disabled
-    }
-
-    var isSelfDeletingMessageTimeoutForced: Bool {
-        guard let context = managedObjectContext else { return false }
-        let feature = FeatureService(context: context).fetchSelfDeletingMesssages()
-        return feature.config.enforcedTimeoutSeconds > 0
-    }
-
-}
+extension ZMConversation: InputBarConversation {}
 
 // MARK: - GroupDetailsConversation View controllers and child VCs
 
@@ -91,8 +75,6 @@ protocol GroupDetailsConversation {
     var freeParticipantSlots: Int { get }
 
     var teamRemoteIdentifier: UUID? { get }
-
-    var syncedMessageDestructionTimeout: TimeInterval { get }
 }
 
 typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation
@@ -103,10 +85,4 @@ extension ZMConversation: TypingStatusProvider {}
 extension ZMConversation: VoiceChannelProvider {}
 extension ZMConversation: CanManageAccessProvider {}
 
-extension ZMConversation: GroupDetailsConversation {
-
-    var syncedMessageDestructionTimeout: TimeInterval {
-        return messageDestructionTimeoutValue(for: .groupConversation).rawValue
-    }
-
-}
+extension ZMConversation: GroupDetailsConversation {}

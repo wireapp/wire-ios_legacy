@@ -145,7 +145,7 @@ final class SettingsPropertyFactory {
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: Settings.shared.federationEnabled))
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(federationEnabled: Settings.shared.federationEnabled))
 
         case .team:
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)

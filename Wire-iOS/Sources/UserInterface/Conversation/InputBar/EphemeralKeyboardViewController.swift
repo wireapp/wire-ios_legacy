@@ -31,18 +31,28 @@ protocol EphemeralKeyboardViewControllerDelegate: AnyObject {
 
 extension InputBarConversation {
 
+    var destructionTimeout: MessageDestructionTimeoutValue? {
+        switch messageDestructionTimeout {
+        case .local(let value)?:
+            return value
+        case .synced(let value)?:
+            return value
+        default:
+            return nil
+        }
+    }
+
     var timeoutImage: UIImage? {
-        guard let timeout = activeMessageDestructionTimeoutValue else { return nil }
-        return timeoutImage(for: timeout)
+        guard let value = self.destructionTimeout else { return nil }
+        return timeoutImage(for: value)
     }
 
     var disabledTimeoutImage: UIImage? {
-        guard let timeout = activeMessageDestructionTimeoutValue else { return nil }
-        return timeoutImage(for: timeout, withColor: .lightGraphite)
+        guard let value = self.destructionTimeout else { return nil }
+        return timeoutImage(for: value, withColor: .lightGraphite)
     }
 
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        guard timeout != .none else { return nil }
         if timeout.isYears { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
         if timeout.isWeeks { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
         if timeout.isDays { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
@@ -136,8 +146,7 @@ final class EphemeralKeyboardViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let currentTimeout = conversation.messageDestructionTimeoutValue(for: .selfUser)
-        guard let index = timeouts.firstIndex(of: currentTimeout) else { return }
+        guard let index = timeouts.firstIndex(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 

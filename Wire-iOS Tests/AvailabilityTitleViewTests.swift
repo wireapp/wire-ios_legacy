@@ -98,7 +98,6 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
         let sut = AvailabilityTitleView(user: user, options: options)
         sut.colorSchemeVariant = colorSchemeVariant
         sut.backgroundColor = colorSchemeVariant == .light ? .white : .black
-        sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         verify(view: sut, file: file, line: line)
     }
 

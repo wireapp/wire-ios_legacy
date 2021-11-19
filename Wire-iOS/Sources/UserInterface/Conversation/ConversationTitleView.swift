@@ -52,16 +52,8 @@ final class ConversationTitleView: TitleView {
             attachments.append(.verifiedShield())
         }
 
-        var subtitle: String?
-        if conversation.conversationType == .oneOnOne,
-           let user = conversation.connectedUserType,
-           user.isFederated {
-            subtitle = user.handleDisplayString(withDomain: true)
-        }
-
         super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
-                        subtitle: subtitle,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
 
         var components: [String] = []

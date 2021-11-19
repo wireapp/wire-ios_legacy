@@ -34,8 +34,10 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
 
         var components: [NSAttributedString?] = []
 
-        if let handle = user.handleDisplayString(withDomain: user.isFederated), !handle.isEmpty {
-            components.append(handle && UserCell.boldFont)
+        if user.isFederated, let domain = user.domain {
+            components.append("@\(user.handle ?? "")@\(domain)" && UserCell.boldFont)
+        } else if let handle = user.handle, !handle.isEmpty {
+            components.append("@\(handle)" && UserCell.boldFont)
         }
 
         WirelessExpirationTimeFormatter.shared.string(for: user).apply {
