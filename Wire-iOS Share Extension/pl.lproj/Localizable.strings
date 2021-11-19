@@ -61,5 +61,5 @@
 "meta.degraded.send_anyway_button" = "Wyślij mimo to";
 
 //Feature flag - File sharing
-"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.title" = "Ograniczenia udostępniania plików";
 "feature.flag.file_sharing.alert.message" = "Nie możesz udostępnić tego pliku, ponieważ ta funkcja jest wyłączona.";
