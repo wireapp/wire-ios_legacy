@@ -224,7 +224,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
 }
 
-class CallQualityView: UIStackView {
+final class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
     let scoreButton = Button()
     let callback: (Int) -> Void

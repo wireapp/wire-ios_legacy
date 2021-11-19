@@ -48,8 +48,8 @@ final class SearchHeaderViewController: UIViewController {
 
     init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
-        self.colorSchemeVariant = variant
-        self.clearButton = IconButton(style: .default, variant: variant)
+        colorSchemeVariant = variant
+        clearButton = IconButton(style: .default, variant: variant)
 
         super.init(nibName: nil, bundle: nil)
 
