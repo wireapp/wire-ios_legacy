@@ -77,7 +77,7 @@ extension ZMConversation {
             "with_service": includesServiceUser ? true : false,
             "is_allow_guests": accessMode == ConversationAccessMode.allowGuests ? true : false,
             "conversation_size": participants.count.logRound(),
-            "is_global_ephemeral": hasSyncedMessageDestructionTimeout,
+            "is_global_ephemeral": hasSyncedTimeout,
             "conversation_services": sortedServiceUsers.count.logRound(),
             "conversation_guests_wireless": participants.filter({
                 $0.isWirelessUser && $0.isGuest(in: self)
@@ -87,6 +87,14 @@ extension ZMConversation {
             }).count.logRound()]
 
         return attributes.updated(other: guestAttributes)
+    }
+
+    var hasSyncedTimeout: Bool {
+        if case .synced? = messageDestructionTimeout {
+            return true
+        } else {
+            return false
+        }
     }
 
     var guestAttributes: [String: Any] {

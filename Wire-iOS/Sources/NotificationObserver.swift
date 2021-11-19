@@ -95,3 +95,21 @@ extension AudioPermissionsObserving {
         })
     }
 }
+
+// MARK: - FeatureConfigChangeObserving
+protocol FeatureConfigObserving: ObserverTokenStore {
+    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload)
+}
+
+extension FeatureConfigObserving {
+    func setupFeatureConfigNotifications() {
+        addObserverToken(NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification,
+                                                                object: nil,
+                                                                queue: .main) { [weak self] note in
+            guard let observer = self,
+                  let featureUpdateEvent = note.object as? FeatureUpdateEventPayload
+            else { return }
+            observer.featureConfigDidChange(in: featureUpdateEvent)
+        })
+    }
+}

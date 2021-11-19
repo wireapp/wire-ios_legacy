@@ -1587,7 +1587,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Coś poszło nie tak, spróbuj ponownie";
 "error.user.needs_credentials" = "Proszę sprawdzić swoje dane i spróbować ponownie.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "Ten e-mail wymaga zaproszenia zespołowego. Skontaktuj się z twoimi administratorami organizacji IT, aby otrzymać zaproszenie.";
 "error.user.invalid_credentials" = "Proszę sprawdzić swoje dane i spróbować ponownie.";
 "error.user.account_pending_activation" = "Konto na które próbujesz się zalogować oczekuje na aktywacje. Sprawdź swoje dane.";
 "error.user.network_error" = "Prawdopodobnie wystąpił problem z siecią. Spróbuj ponownie później.";

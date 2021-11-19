@@ -54,6 +54,8 @@ class SwiftMockConversation: NSObject, Conversation {
 
     var accessRole: ConversationAccessRole?
 
+    var messageDestructionTimeout: MessageDestructionTimeout?
+
     var isUnderLegalHold: Bool = false
     var securityLevel: ZMConversationSecurityLevel = .notSecure
 
@@ -67,14 +69,11 @@ class SwiftMockConversation: NSObject, Conversation {
 }
 
 final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsConversation {
-
     var userDefinedName: String?
 
     var freeParticipantSlots: Int = 1
 
     var hasReadReceiptsEnabled: Bool = false
-
-    var syncedMessageDestructionTimeout: TimeInterval = 0
 }
 
 final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation, TypingStatusProvider {
@@ -85,14 +84,11 @@ final class MockInputBarConversationType: SwiftMockConversation, InputBarConvers
 
     var draftMessage: DraftMessage?
 
+    var messageDestructionTimeoutValue: TimeInterval = 0
+
     func setIsTyping(_ isTyping: Bool) {
         // no-op
     }
 
     var isReadOnly: Bool = false
-
-    var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?
-    var hasSyncedMessageDestructionTimeout = false
-    var isSelfDeletingMessageSendingDisabled = false
-    var isSelfDeletingMessageTimeoutForced = false
 }

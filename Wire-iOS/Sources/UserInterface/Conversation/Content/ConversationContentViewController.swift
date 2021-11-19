@@ -89,19 +89,14 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.updateMediaBar()
         }
-
-        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification,
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification,
                                                object: nil,
                                                queue: .main) { [weak self] note in
-            guard let change = note.object as? FeatureService.FeatureChange else { return }
-
-            switch change {
-            case .fileSharingEnabled, .fileSharingDisabled:
-                self?.updateVisibleCells()
-
-            default:
-                break
+            guard let featureUpdateEvent = note.object as? FeatureUpdateEventPayload,
+                  featureUpdateEvent.name == .fileSharing else {
+                return
             }
+            self?.updateVisibleCells()
         }
     }
 

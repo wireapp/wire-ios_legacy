@@ -96,7 +96,12 @@ extension ConversationInputBarViewController {
     }
 
     func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
-        let title = conversation.activeMessageDestructionTimeoutValue?.shortDisplayString
+        guard let timerValue = conversation.destructionTimeout else {
+            button.setTitle("", for: .normal)
+            return
+        }
+
+        let title = timerValue.shortDisplayString
         button.setTitle(title, for: .normal)
     }
 
@@ -115,7 +120,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueue {
-            conversation.setMessageDestructionTimeoutValue(.init(rawValue: timeout), for: .selfUser)
+            conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
             self.updateRightAccessoryView()
         }
     }
@@ -123,10 +128,8 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
 }
 
 extension ConversationInputBarViewController {
-
     var ephemeralState: EphemeralState {
         var state = EphemeralState.none
-
         if !sendButtonState.ephemeral {
             state = .none
         } else if self.conversation.hasSyncedMessageDestructionTimeout {
@@ -138,14 +141,11 @@ extension ConversationInputBarViewController {
         return state
     }
 
-    func updateViewsForSelfDeletingMessageChanges() {
-        updateAccessoryViews()
-
+    func updateInputBar() {
         inputBar.changeEphemeralState(to: ephemeralState)
 
         if conversation.hasSyncedMessageDestructionTimeout {
             dismissEphemeralController()
         }
     }
-
 }
