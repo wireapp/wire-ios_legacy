@@ -836,7 +836,6 @@
 		A95E561123FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
 		A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */; };
-        A9614660273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961465F273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift */; };
 		A9614EF823C38C810012A718 /* ConnectRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */; };
 		A96316A523F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */; };
 		A96316A623F2BCAA00AFDB71 /* UIViewController+ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21A1D34F8F800DF0793 /* UIViewController+ErrorAlert.swift */; };
@@ -2648,7 +2647,7 @@
 		A95DFDC024E6D2E20005DC0E /* CGSize+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Const.swift"; sourceTree = "<group>"; };
 		A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllerContextTransitioning+Helper.swift"; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
-        A961465F273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGroupSelectorSnapshotTests.swift; sourceTree = "<group>"; };
+		A961465F273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchGroupSelectorSnapshotTests.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewController.swift; sourceTree = "<group>"; };
@@ -6129,14 +6128,14 @@
 			path = Poll;
 			sourceTree = "<group>";
 		};
-        A961465E273C0B6600986596 /* SearchGroup */ = {
-             isa = PBXGroup;
-             children = (
-                 A961465F273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift */,
-             );
-             path = SearchGroup;
-             sourceTree = "<group>";
-         };
+		A961465E273C0B6600986596 /* SearchGroup */ = {
+			isa = PBXGroup;
+			children = (
+				A961465F273C0B8D00986596 /* SearchGroupSelectorSnapshotTests.swift */,
+			);
+			path = SearchGroup;
+			sourceTree = "<group>";
+		};
 		A9681D8223883890004FE917 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -7526,7 +7525,7 @@
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "Zeta Project Germany GmbH";
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
