@@ -80,7 +80,6 @@ class URLActionRouter: URLActionRouterProtocol {
     }
 
     func performPendingActions() {
-        performPendingTransition()
         performPendingNavigation()
         presentPendingAlert()
     }
@@ -125,10 +124,6 @@ class URLActionRouter: URLActionRouterProtocol {
 
     func internalPresentAlert(_ alert: UIAlertController) {
         rootViewController.present(alert, animated: true, completion: nil)
-    }
-
-    func performPendingTransition() {
-        sessionManager?.processCompanyLoginPendingURLAction()
     }
 }
 
@@ -184,14 +179,6 @@ extension URLActionRouter: PresentationDelegate {
 
     func showConversationList() {
         navigate(to: .conversationList)
-    }
-
-    func addNewAccount() {
-        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
-            return
-        }
-
-        sessionManager?.addAccount()
     }
 
     // MARK: - Private Implementation

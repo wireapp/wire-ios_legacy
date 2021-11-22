@@ -398,14 +398,17 @@ extension AppRootRouter {
     }
 
     private func applicationDidTransition(to appState: AppState) {
-        if case .unauthenticated(let error) = appState {
+        switch appState {
+        case .unauthenticated(error: let error):
             presentAlertForDeletedAccountIfNeeded(error)
-        }
-
-        if case .authenticated = appState {
+            sessionManager.processLoginPendingURLAction()
+        case .authenticated:
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            sessionManager.processLoginPendingURLAction()
+        default:
+            break
         }
 
         urlActionRouter.performPendingActions()
