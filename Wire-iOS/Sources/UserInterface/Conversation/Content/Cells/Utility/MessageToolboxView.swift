@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 
 /// Observes events from the message toolbox.
-protocol MessageToolboxViewDelegate: class {
+protocol MessageToolboxViewDelegate: AnyObject {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ sender: UIView?)

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireDataModel
 import FLAnimatedImage
 
@@ -44,7 +43,6 @@ final class ImageMessageView: UIView {
     private var user: UserType? {
         didSet {
             if let user = user {
-
                 userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
                 userNameLabel.text = user.name
                 userImageView.user = user
@@ -62,11 +60,11 @@ final class ImageMessageView: UIView {
         }
     }
 
-    func updateForImage() {
+    private func updateForImage() {
         if let message = message,
-            let imageMessageData = message.imageMessageData,
-            let imageData = imageMessageData.imageData,
-            imageData.count > 0 {
+           let imageMessageData = message.imageMessageData,
+           let imageData = imageMessageData.imageData,
+           !imageData.isEmpty {
 
             dotsLoadingView.stopProgressAnimation()
             dotsLoadingView.isHidden = true
@@ -75,14 +73,12 @@ final class ImageMessageView: UIView {
                 let image = FLAnimatedImage(animatedGIFData: imageData)
                 imageSize = image?.size ?? .zero
                 imageView.animatedImage = image
-            }
-            else {
+            } else {
                 let image = UIImage(data: imageData, scale: 2.0)
                 imageSize = image?.size ?? .zero
                 imageView.image = image
             }
-        }
-        else {
+        } else {
             dotsLoadingView.isHidden = false
             dotsLoadingView.startProgressAnimation()
         }
@@ -94,25 +90,20 @@ final class ImageMessageView: UIView {
             return
         }
 
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
         if imageSize.width / 2.0 > imageView.bounds.width {
-
-            constrain(imageView) { imageView in
-                aspectRatioConstraint = imageView.height == imageView.width * (imageSize.height / imageSize.width)
-            }
-        }
-        else {
+            aspectRatioConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageSize.height / imageSize.width)
+        } else {
             imageView.contentMode = .left
-
-            constrain(imageView) { imageView in
-                aspectRatioConstraint = imageView.height == imageSize.height
-            }
+            aspectRatioConstraint = imageView.heightAnchor.constraint(equalToConstant: imageSize.height)
         }
+
+        aspectRatioConstraint?.isActive = true
         setNeedsLayout()
-        layoutIfNeeded()
     }
 
     private func createViews() {
-
         userImageViewContainer.addSubview(userImageView)
 
         [imageView, userImageViewContainer, userNameLabel].forEach(addSubview)
@@ -123,35 +114,44 @@ final class ImageMessageView: UIView {
         userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
         userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
 
-        constrain(self, imageView, userImageView, userImageViewContainer, userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
-            userImageViewContainer.leading == selfView.leading
-            userImageViewContainer.width == 48
-            userImageViewContainer.height == 24
-            userImageViewContainer.top == selfView.top
-
-            userImageView.top == userImageViewContainer.top
-            userImageView.bottom == userImageViewContainer.bottom
-            userImageView.centerX == userImageViewContainer.centerX
-            userImageView.width == userImageViewContainer.height
-
-            userNameLabel.leading == userImageViewContainer.trailing
-            userNameLabel.trailing <= selfView.trailing
-            userNameLabel.centerY == userImageView.centerY
-
-            imageView.top == userImageViewContainer.bottom + 12
-            imageView.leading == userImageViewContainer.trailing
-            imageView.trailing == selfView.trailing
-            selfView.bottom == imageView.bottom
-            imageView.height >= 64
-        }
-
         addSubview(dotsLoadingView)
 
-        constrain(self, dotsLoadingView) { selfView, dotsLoadingView in
-            dotsLoadingView.center == selfView.center
-        }
+        createConstraints()
 
         updateForImage()
+    }
+
+    private func createConstraints() {
+        [imageView,
+         userImageView,
+         userImageViewContainer,
+         userNameLabel,
+         dotsLoadingView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+            userImageViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            userImageViewContainer.widthAnchor.constraint(equalToConstant: 48),
+            userImageViewContainer.heightAnchor.constraint(equalToConstant: 24),
+            userImageViewContainer.topAnchor.constraint(equalTo: topAnchor),
+
+            userImageView.topAnchor.constraint(equalTo: userImageViewContainer.topAnchor),
+            userImageView.bottomAnchor.constraint(equalTo: userImageViewContainer.bottomAnchor),
+            userImageView.centerXAnchor.constraint(equalTo: userImageViewContainer.centerXAnchor),
+            userImageView.widthAnchor.constraint(equalTo: userImageViewContainer.heightAnchor),
+
+            userNameLabel.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+            userNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            userNameLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
+
+            imageView.topAnchor.constraint(equalTo: userImageViewContainer.bottomAnchor, constant: 12),
+            imageView.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 64),
+
+            dotsLoadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dotsLoadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     override func layoutSubviews() {

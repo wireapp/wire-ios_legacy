@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireDataModel
 import UIKit
 import WireCommonComponents
@@ -27,27 +26,27 @@ final class FileTransferView: UIView, TransferView {
 
     weak var delegate: TransferViewDelegate?
 
-    let progressView = CircularProgressView()
-    let topLabel = UILabel()
-    let bottomLabel = UILabel()
-    let fileTypeIconView: UIImageView = {
+    private let progressView = CircularProgressView()
+    private let topLabel = UILabel()
+    private let bottomLabel = UILabel()
+    private let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
-    let fileEyeView: UIImageView = {
+    private let fileEyeView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
-    let actionButton = IconButton()
+    private let actionButton = IconButton()
 
-    let labelTextColor: UIColor = .from(scheme: .textForeground)
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
-    let labelBoldFont: UIFont = .smallSemiboldFont
+    private let labelTextColor: UIColor = .from(scheme: .textForeground)
+    private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    private let labelFont: UIFont = .smallLightFont
+    private let labelBoldFont: UIFont = .smallSemiboldFont
 
     private var allViews: [UIView] = []
 
@@ -74,7 +73,6 @@ final class FileTransferView: UIView, TransferView {
         progressView.accessibilityIdentifier = "FileTransferProgressView"
         progressView.isUserInteractionEnabled = false
 
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
         loadingView.isHidden = true
 
         allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
@@ -97,46 +95,50 @@ final class FileTransferView: UIView, TransferView {
     }
 
     private func createConstraints() {
-        constrain(self, topLabel, actionButton) { selfView, topLabel, actionButton in
-            topLabel.top == selfView.top + 12
-            topLabel.left == actionButton.right + 12
-            topLabel.right == selfView.right - 12
-        }
+        [topLabel,
+         actionButton,
+         fileTypeIconView,
+         fileEyeView,
+         progressView,
+         bottomLabel,
+         loadingView].prepareForLayout()
 
-        constrain(fileTypeIconView, actionButton, self) { fileTypeIconView, actionButton, selfView in
-            actionButton.centerY == selfView.centerY
-            actionButton.left == selfView.left + 12
-            actionButton.height == 32
-            actionButton.width == 32
+        NSLayoutConstraint.activate([
+            topLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            topLabel.leftAnchor.constraint(equalTo: actionButton.rightAnchor, constant: 12),
+            topLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
 
-            fileTypeIconView.width == 32
-            fileTypeIconView.height == 32
-            fileTypeIconView.center == actionButton.center
-        }
+            actionButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            actionButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            actionButton.heightAnchor.constraint(equalToConstant: 32),
+            actionButton.widthAnchor.constraint(equalToConstant: 32),
 
-        constrain(fileTypeIconView, fileEyeView) { fileTypeIconView, fileEyeView in
-            fileEyeView.centerX == fileTypeIconView.centerX
-            fileEyeView.centerY == fileTypeIconView.centerY + 3
-        }
+            fileTypeIconView.widthAnchor.constraint(equalToConstant: 32),
+            fileTypeIconView.heightAnchor.constraint(equalToConstant: 32),
+            fileTypeIconView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+            fileTypeIconView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
 
-        constrain(progressView, actionButton) { progressView, actionButton in
-            progressView.center == actionButton.center
-            progressView.width == actionButton.width - 2
-            progressView.height == actionButton.height - 2
-        }
+            fileEyeView.centerXAnchor.constraint(equalTo: fileTypeIconView.centerXAnchor),
+            fileEyeView.centerYAnchor.constraint(equalTo: fileTypeIconView.centerYAnchor, constant: 3),
 
-        constrain(self, topLabel, bottomLabel, loadingView) { _, topLabel, bottomLabel, loadingView in
-            bottomLabel.top == topLabel.bottom + 2
-            bottomLabel.left == topLabel.left
-            bottomLabel.right == topLabel.right
-            loadingView.center == loadingView.superview!.center
-        }
+            progressView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+            progressView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
+            progressView.widthAnchor.constraint(equalTo: actionButton.widthAnchor, constant: -2),
+            progressView.heightAnchor.constraint(equalTo: actionButton.heightAnchor, constant: -2),
+
+            bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 2),
+            bottomLabel.leftAnchor.constraint(equalTo: topLabel.leftAnchor),
+            bottomLabel.rightAnchor.constraint(equalTo: topLabel.rightAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         fileMessage = message
-        guard let fileMessageData = message.fileMessageData
-            else { return }
+        guard let fileMessageData = message.fileMessageData else {
+            return
+        }
 
         configureVisibleViews(with: message, isInitial: isInitial)
 

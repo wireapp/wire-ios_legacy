@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol InviteTeamMemberSectionDelegate: class {
+protocol InviteTeamMemberSectionDelegate: AnyObject {
     func inviteSectionDidRequestTeamManagement()
 }
 

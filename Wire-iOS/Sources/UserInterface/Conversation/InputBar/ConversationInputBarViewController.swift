@@ -595,7 +595,8 @@ final class ConversationInputBarViewController: UIViewController,
 
     @objc
     private func giphyButtonPressed(_ sender: Any?) {
-        guard !AppDelegate.isOffline, let conversation = conversation as? ZMConversation else { return }
+        guard !AppDelegate.isOffline,
+                let conversation = conversation as? ZMConversation else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
@@ -744,7 +745,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         viewController.delegate = self
         viewController.title = conversation.displayName.uppercased()
 
-        parent?.present(viewController.wrapInNavigationController(), animated: true)
+        parent?.present(viewController.wrapInNavigationController(setBackgroundColor: true), animated: true)
     }
 }
 

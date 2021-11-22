@@ -21,11 +21,11 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-protocol CollectionCellDelegate: class {
+protocol CollectionCellDelegate: AnyObject {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
 }
 
-protocol CollectionCellMessageChangeDelegate: class {
+protocol CollectionCellMessageChangeDelegate: AnyObject {
     func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
 }
 
@@ -52,6 +52,7 @@ class CollectionCell: UICollectionViewCell {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

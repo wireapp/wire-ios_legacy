@@ -38,9 +38,9 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         self.setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func setup() {

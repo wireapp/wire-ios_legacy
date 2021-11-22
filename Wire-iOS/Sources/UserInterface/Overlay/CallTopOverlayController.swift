@@ -22,7 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
-protocol CallTopOverlayControllerDelegate: class {
+protocol CallTopOverlayControllerDelegate: AnyObject {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)
 }
 
@@ -55,6 +55,7 @@ final class CallTopOverlayController: UIViewController {
             super.init(frame: .zero)
         }
 
+        @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }

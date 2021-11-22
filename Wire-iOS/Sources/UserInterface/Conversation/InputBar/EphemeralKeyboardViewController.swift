@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireDataModel
 
-protocol EphemeralKeyboardViewControllerDelegate: class {
+protocol EphemeralKeyboardViewControllerDelegate: AnyObject {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
 
     func ephemeralKeyboard(

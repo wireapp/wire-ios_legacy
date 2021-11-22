@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-protocol CallInfoViewControllerDelegate: class {
+protocol CallInfoViewControllerDelegate: AnyObject {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
@@ -55,7 +55,8 @@ extension CallInfoViewControllerInput {
             userEnabledCBR == other.userEnabledCBR &&
             callState.isEqual(toCallState: other.callState) &&
             videoGridPresentationMode == other.videoGridPresentationMode &&
-            allowPresentationModeUpdates == other.allowPresentationModeUpdates
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates &&
+            isForcedCBR == other.isForcedCBR
     }
 }
 

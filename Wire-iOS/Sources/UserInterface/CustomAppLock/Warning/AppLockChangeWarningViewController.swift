@@ -21,7 +21,7 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-protocol AppLockChangeWarningViewControllerDelegate: class {
+protocol AppLockChangeWarningViewControllerDelegate: AnyObject {
 
     func appLockChangeWarningViewControllerDidDismiss()
 

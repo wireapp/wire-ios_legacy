@@ -23,7 +23,7 @@ enum ConversationListButtonType {
     case archive, startUI, list, folder
 }
 
-protocol ConversationListBottomBarControllerDelegate: class {
+protocol ConversationListBottomBarControllerDelegate: AnyObject {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
 }
 

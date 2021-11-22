@@ -88,5 +88,3 @@ if [ ! -z "${OVERRIDES_DIR}" ]; then
     echo "✅ Copying '${OVERRIDES_DIR}' over to '${CONFIGURATION_LOCATION}'"
     cp -RL "${OVERRIDES_DIR}" "${CONFIGURATION_LOCATION}"
 fi
-
-

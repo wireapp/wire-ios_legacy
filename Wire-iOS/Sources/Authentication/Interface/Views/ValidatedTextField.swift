@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol TextFieldValidationDelegate: class {
+protocol TextFieldValidationDelegate: AnyObject {
 
     /// Delegate for validation. It is called when every time .editingChanged event fires
     ///
@@ -30,7 +30,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-protocol ValidatedTextFieldDelegate: class {
+protocol ValidatedTextFieldDelegate: AnyObject {
     func buttonPressed(_ sender: UIButton)
 }
 

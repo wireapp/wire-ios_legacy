@@ -36,6 +36,7 @@ final class CollectionCellHeader: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }

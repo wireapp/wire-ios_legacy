@@ -242,7 +242,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         // if the current message is ephemeral, then it will be the only
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
-
             let copyButton = iconButton(messageAction:
                 .copy)
 
@@ -278,7 +277,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     private func createControlsBar() {
         let buttons = createControlsBarButtons()
 
-        self.buttonsBar = InputBarButtonsView(buttons: buttons)
+        buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         self.buttonsBar.backgroundColor = UIColor.from(scheme: .barBackground)
@@ -346,6 +345,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
                                        for: message ?? currentMessage,
                                        view: sender as? UIView ?? view)
     }
+
+    //MARK: icon button actions
 
     @objc
     private func copyCurrent(_ sender: AnyObject!) {

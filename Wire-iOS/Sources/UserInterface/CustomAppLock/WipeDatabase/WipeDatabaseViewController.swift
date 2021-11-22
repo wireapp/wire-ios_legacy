@@ -17,7 +17,7 @@
 
 import UIKit
 
-protocol WipeDatabaseUserInterface: class {
+protocol WipeDatabaseUserInterface: AnyObject {
     func presentConfirmAlert()
 }
 

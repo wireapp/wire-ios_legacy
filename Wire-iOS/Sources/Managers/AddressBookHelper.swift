@@ -21,7 +21,7 @@ import Contacts
 import WireSyncEngine
 import UIKit
 
-protocol AddressBookHelperProtocol: class {
+protocol AddressBookHelperProtocol: AnyObject {
     var isAddressBookAccessGranted: Bool { get }
     var isAddressBookAccessUnknown: Bool { get }
     var isAddressBookAccessDisabled: Bool { get }
