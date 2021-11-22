@@ -128,9 +128,6 @@ class URLActionRouter: URLActionRouterProtocol {
     }
 
     func performPendingTransition() {
-        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
-            return
-        }
         sessionManager?.processCompanyLoginPendingURLAction()
     }
 }
@@ -187,6 +184,14 @@ extension URLActionRouter: PresentationDelegate {
 
     func showConversationList() {
         navigate(to: .conversationList)
+    }
+
+    func addNewAccount() {
+        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
+            return
+        }
+
+        sessionManager?.addAccount()
     }
 
     // MARK: - Private Implementation
