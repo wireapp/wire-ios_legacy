@@ -128,6 +128,9 @@ class URLActionRouter: URLActionRouterProtocol {
     }
 
     func performPendingTransition() {
+        guard delegate?.urlActionRouterCanDisplayAlerts() == true else {
+            return
+        }
         sessionManager?.processCompanyLoginPendingURLAction()
     }
 }
