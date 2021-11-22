@@ -80,6 +80,7 @@ class URLActionRouter: URLActionRouterProtocol {
     }
 
     func performPendingActions() {
+        performPendingTransition()
         performPendingNavigation()
         presentPendingAlert()
     }
@@ -124,6 +125,10 @@ class URLActionRouter: URLActionRouterProtocol {
 
     func internalPresentAlert(_ alert: UIAlertController) {
         rootViewController.present(alert, animated: true, completion: nil)
+    }
+
+    func performPendingTransition() {
+        sessionManager?.processCompanyLoginPendingURLAction()
     }
 }
 

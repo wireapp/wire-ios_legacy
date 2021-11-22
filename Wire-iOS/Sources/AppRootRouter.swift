@@ -256,12 +256,6 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 extension AppRootRouter {
     // MARK: - Navigation Helpers
     private func showInitial(launchOptions: LaunchOptions) {
-        /// If the launch URL action causes a logout, there is no need to put the application in a headless state. The application has been transferred to a certain step in the applicationDidBecomeActive() method.
-        if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
-            if (try? URLAction(url: url))?.causesLogout == true {
-                return
-            }
-        }
         enqueueTransition(to: .headless) { [weak self] in
             Analytics.shared.tagEvent("app.open")
             self?.sessionManager.start(launchOptions: launchOptions)
