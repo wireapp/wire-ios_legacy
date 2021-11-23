@@ -31,7 +31,7 @@
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */; };
-		06B3091326AEDC990057AF9E /* UIAlertController+FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B3091226AEDC990057AF9E /* UIAlertController+FeatureFlag.swift */; };
+		06B3091326AEDC990057AF9E /* UIAlertController+FeatureConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B3091226AEDC990057AF9E /* UIAlertController+FeatureConfig.swift */; };
 		06C1074425B9973E00C099D3 /* PasswordCharacterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074325B9973E00C099D3 /* PasswordCharacterClass.swift */; };
 		06C1074625B99C4A00C099D3 /* PasswordRuleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074525B99C4A00C099D3 /* PasswordRuleSet.swift */; };
 		06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */; };
@@ -1277,6 +1277,7 @@
 		EEC6A08F21B7BF7900133BC7 /* ConversationCreateGuestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC6A08E21B7BF7900133BC7 /* ConversationCreateGuestsCell.swift */; };
 		EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */; };
 		EEC94D4223BF49D6003AF93D /* UserType+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC94D4123BF49D6003AF93D /* UserType+Helpers.swift */; };
+		EECA835426F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */; };
 		EEE104052126F68A003C779B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE104042126F68A003C779B /* CameraController.swift */; };
@@ -1787,7 +1788,7 @@
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
-		06B3091226AEDC990057AF9E /* UIAlertController+FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+FeatureFlag.swift"; sourceTree = "<group>"; };
+		06B3091226AEDC990057AF9E /* UIAlertController+FeatureConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+FeatureConfig.swift"; sourceTree = "<group>"; };
 		06C1074325B9973E00C099D3 /* PasswordCharacterClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCharacterClass.swift; sourceTree = "<group>"; };
 		06C1074525B99C4A00C099D3 /* PasswordRuleSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSet.swift; sourceTree = "<group>"; };
 		06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSetTests.swift; sourceTree = "<group>"; };
@@ -3119,6 +3120,7 @@
 		EEC6A08E21B7BF7900133BC7 /* ConversationCreateGuestsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsCell.swift; sourceTree = "<group>"; };
 		EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNotificationOptionsViewController.swift; sourceTree = "<group>"; };
 		EEC94D4123BF49D6003AF93D /* UserType+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+Helpers.swift"; sourceTree = "<group>"; };
+		EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerFeatureConfigSnapshotTests.swift; sourceTree = "<group>"; };
 		EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorage.swift; sourceTree = "<group>"; };
 		EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Invite.swift"; sourceTree = "<group>"; };
 		EEE104042126F68A003C779B /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
@@ -3637,7 +3639,7 @@
 			children = (
 				63589AA024DAA398008FEC8F /* UIAlertController+Permissions.swift */,
 				161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */,
-				06B3091226AEDC990057AF9E /* UIAlertController+FeatureFlag.swift */,
+				06B3091226AEDC990057AF9E /* UIAlertController+FeatureConfig.swift */,
 			);
 			path = UIAlertController;
 			sourceTree = "<group>";
@@ -6525,6 +6527,7 @@
 				EF2FEDC7228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift */,
 				EF4FFB3422830BD200B69851 /* String+WholeRangeTests.swift */,
 				EFDBA24622942FBB00874A15 /* UIAlertViewController+CompanyLoginTests.swift */,
+				EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */,
 				EF23740F230D49EC006F53F3 /* NetworkConditionHelperTests.swift */,
 				EFFE1D3A230D63EA00389290 /* CountryTests.swift */,
 				EF3243522317F0060043F147 /* ZClientViewControllerTests.swift */,
@@ -8502,7 +8505,7 @@
 				EF1ABCA82310147C00496A1B /* UIViewController+Invite.swift in Sources */,
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
 				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
-				06B3091326AEDC990057AF9E /* UIAlertController+FeatureFlag.swift in Sources */,
+				06B3091326AEDC990057AF9E /* UIAlertController+FeatureConfig.swift in Sources */,
 				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
 				87B48EBE20A050AA00DBAD9D /* ViewControllerDismisser.swift in Sources */,
 				6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */,
@@ -8914,6 +8917,7 @@
 				EE52378B23F5574D00D4FE79 /* MockUserType+ValidatorType.swift in Sources */,
 				F1CB5D29215A3108001CCF5D /* MentionsHandlerTests.swift in Sources */,
 				A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */,
+				EECA835426F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift in Sources */,
 				542CDF4024B32E2100DF0B39 /* HandleChangeStateTests.swift in Sources */,
 				A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */,
 				EF17B0DB223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift in Sources */,

@@ -23,8 +23,11 @@ class TitleView: UIView {
 
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
-    let titleButton = UIButton()
     var tapHandler: ((UIButton) -> Void)?
+
+    private let stackView = UIStackView(axis: .vertical)
+    let titleButton = UIButton()
+    private let subtitleLabel = UILabel()
 
     init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)
@@ -41,13 +44,17 @@ class TitleView: UIView {
     }
 
     private func createConstraints() {
-        titleButton.translatesAutoresizingMaskIntoConstraints = false
-        titleButton.fitIn(view: self)
+        [titleButton, stackView, subtitleLabel].prepareForLayout()
+
+        stackView.fitIn(view: self)
     }
 
     private func createViews() {
         titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
-        addSubview(titleButton)
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
+        addSubview(stackView)
+        [titleButton, subtitleLabel].forEach(stackView.addArrangedSubview)
     }
 
     @objc
@@ -59,11 +66,11 @@ class TitleView: UIView {
     /// - parameter conversation: The conversation for which the view should be configured
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
-    func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
-        configure(icons: icon == nil ? [] : [icon!], title: title, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
+    func configure(icon: NSTextAttachment?, title: String, subtitle: String? = nil, interactive: Bool, showInteractiveIcon: Bool = true) {
+        configure(icons: icon == nil ? [] : [icon!], title: title, subtitle: subtitle, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
     }
 
-    func configure(icons: [NSTextAttachment], title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
+    func configure(icons: [NSTextAttachment], title: String, subtitle: String? = nil, interactive: Bool, showInteractiveIcon: Bool = true) {
 
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
@@ -73,14 +80,16 @@ class TitleView: UIView {
         titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(normalLabel, for: [])
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
-        titleButton.sizeToFit()
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         accessibilityLabel = titleButton.titleLabel?.text
-        frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
+
+        subtitleLabel.isHidden = subtitle == nil
+        subtitleLabel.text = subtitle
+        subtitleLabel.font = .smallLightFont
+        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed)
+
         createConstraints()
-        setNeedsLayout()
-        layoutIfNeeded()
     }
 
     @available(*, unavailable)
