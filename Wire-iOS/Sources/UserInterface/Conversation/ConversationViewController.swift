@@ -391,7 +391,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 // MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
+    func conversationDidChange(_ note: ConversationChangeInfo) {
         if note.causedByConversationPrivacyChange {
             presentPrivacyWarningAlert(for: note)
         }
@@ -426,14 +426,14 @@ extension ConversationViewController: ZMConversationObserver {
 // MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
-    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+    func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
         if changeInfo.deletedObjects.contains(conversation) {
             ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
         }
     }
 
-    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
 }
