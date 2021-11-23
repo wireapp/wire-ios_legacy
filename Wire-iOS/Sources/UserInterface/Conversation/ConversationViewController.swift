@@ -391,7 +391,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 // MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
+    func conversationDidChange(_ note: ConversationChangeInfo) {
         if note.causedByConversationPrivacyChange {
             presentPrivacyWarningAlert(for: note)
         }
@@ -426,14 +426,14 @@ extension ConversationViewController: ZMConversationObserver {
 // MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
-    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+    func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
         if changeInfo.deletedObjects.contains(conversation) {
             ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
         }
     }
 
-    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
 }
@@ -515,8 +515,8 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     }
 
     @objc
-    fileprivate func onCollectionButtonPressed(_ sender: AnyObject!) {
-        if self.collectionController == .none {
+    private func onCollectionButtonPressed(_ sender: AnyObject?) {
+        if collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
 
@@ -534,7 +534,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
 
         collectionController?.shouldTrackOnNextOpen = true
 
-        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
+        let navigationController = KeyboardAvoidingViewController(viewController: collectionController!).wrapInNavigationController(setBackgroundColor: true)
 
         ZClientViewController.shared?.present(navigationController, animated: true)
     }
