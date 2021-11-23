@@ -60,6 +60,16 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
 
+    func testThatAppStateChanges_OnDidFailToLoadDatabase() {
+        // WHEN
+        sut.applicationDidBecomeActive()
+        sut.sessionManagerDidFailToLoadDatabase()
+
+        // THEN
+        XCTAssertEqual(sut.appState, .databaseFailure)
+        XCTAssertTrue(delegate.wasNotified)
+    }
+
     func testThatAppStateChanges_OnWillMigrateAccount() {
         // GIVEN
         let account = Account(userName: "dummy", userIdentifier: UUID())

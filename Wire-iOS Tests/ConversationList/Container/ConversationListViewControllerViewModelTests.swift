@@ -45,29 +45,29 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
     }
 
     func testThatSelectAConversationCallsSelectOnListContentController() {
-        /// GIVEN
+        // GIVEN
         XCTAssertFalse(mockViewController.isSelectedOnListContentController)
 
-        /// WHEN
+        // WHEN
         mockConversation = ZMConversation()
         sut.select(conversation: mockConversation)
 
-        /// THEN
+        // THEN
         XCTAssertEqual(mockConversation, sut.selectedConversation)
         XCTAssert(mockViewController.isSelectedOnListContentController)
     }
 
     func testThatShowPushPermissionDeniedDialogIfNeededReturnTrueWhenHandleExists() {
-        /// GIVEN
+        // GIVEN
         selfUser.handle = nil
         var result = sut.showPushPermissionDeniedDialogIfNeeded()
         XCTAssertFalse(result)
 
-        /// WHEN
+        // WHEN
         selfUser.handle = "blah"
         result = sut.showPushPermissionDeniedDialogIfNeeded()
 
-        /// THEN
+        // THEN
         XCTAssert(result)
     }
 }

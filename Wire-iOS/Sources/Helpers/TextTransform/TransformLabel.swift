@@ -25,12 +25,12 @@ import UIKit
 final class TransformLabel: UILabel {
 
     override var accessibilityValue: String? {
-        set {
-            super.accessibilityValue = newValue
-        }
-
         get {
             return attributedText?.string ?? text
+        }
+
+        set {
+            super.accessibilityValue = newValue
         }
     }
 

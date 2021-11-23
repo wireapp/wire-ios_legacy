@@ -30,7 +30,7 @@ enum MediaPlayerState: Int {
     case error
 }
 
-protocol MediaPlayer: class {
+protocol MediaPlayer: AnyObject {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
     var state: MediaPlayerState? { get }
@@ -41,7 +41,7 @@ protocol MediaPlayer: class {
 
 typealias AudioTrackCompletionHandler = (_ loaded: Bool, _ error: Error?) -> Void
 
-protocol AudioTrackPlayerDelegate: class {
+protocol AudioTrackPlayerDelegate: AnyObject {
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?)
     func progressDidChange(_ audioTrackPlayer: AudioTrackPlayer, progress: Double)
 }
@@ -229,7 +229,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             return
         }
 
-        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] event in
+        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] _ in
             if self?.avPlayer?.rate > 0 {
                 self?.pause()
                 return .success
@@ -238,7 +238,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             }
         })
 
-        playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] event in
+        playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] _ in
             if self?.audioTrack == nil {
                 return .noSuchContent
             }

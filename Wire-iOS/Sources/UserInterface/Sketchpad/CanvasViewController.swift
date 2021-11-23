@@ -21,7 +21,7 @@ import WireCanvas
 import Cartography
 import WireCommonComponents
 
-protocol CanvasViewControllerDelegate: class {
+protocol CanvasViewControllerDelegate: AnyObject {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage)
 }
 
@@ -43,7 +43,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
     var isEmojiKeyboardInTransition = false
-    var sketchImage: UIImage? = nil {
+    var sketchImage: UIImage? {
         didSet {
             if let image = sketchImage {
                 canvas.referenceImage = image
@@ -179,7 +179,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         colorPickerController.selectedColorIndex = colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         constrain(view, canvas, colorPickerController.view, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
             colorPicker.top == container.top
             colorPicker.left == container.left
@@ -293,7 +293,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
 
         addChild(emojiKeyboardViewController)
 
-        if (animated) {
+        if animated {
             isEmojiKeyboardInTransition = true
 
             let offscreen = CGAffineTransform(translationX: 0, y: KeyboardHeight.current)
@@ -306,7 +306,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
                            animations: {
                             self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
                 },
-                           completion: { (finished) in
+                           completion: { _ in
                             self.isEmojiKeyboardInTransition = false
             })
         }
@@ -322,7 +322,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
             self.emojiKeyboardViewController.removeFromParent()
         }
 
-        if (animated) {
+        if animated {
 
             isEmojiKeyboardInTransition = true
 
@@ -333,7 +333,7 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
                             let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
                             self.emojiKeyboardViewController.view.transform = offscreen
                 },
-                           completion: { (finished) in
+                           completion: { _ in
                             self.isEmojiKeyboardInTransition = false
                             removeEmojiKeyboardViewController()
             })

@@ -98,13 +98,13 @@ final class ConversationListViewModel: NSObject {
             static func == (lhs: ConversationListViewModel.Section.Kind, rhs: ConversationListViewModel.Section.Kind) -> Bool {
                 switch (lhs, rhs) {
                 case (.conversations, .conversations):
-                    fallthrough
+                    return true
                 case (.contactRequests, .contactRequests):
-                    fallthrough
+                    return true
                 case (.contacts, .contacts):
-                    fallthrough
+                    return true
                 case (.groups, .groups):
-                    fallthrough
+                    return true
                 case (.favorites, .favorites):
                     return true
                 case (.folder(let lhsLabel), .folder(let rhsLabel)):
@@ -179,6 +179,10 @@ final class ConversationListViewModel: NSObject {
     }
 
     var folderEnabled: Bool {
+        get {
+            return state.folderEnabled
+        }
+
         set {
             guard newValue != state.folderEnabled else { return }
 
@@ -187,10 +191,6 @@ final class ConversationListViewModel: NSObject {
             updateAllSections()
             delegate?.listViewModelShouldBeReloaded()
             delegateFolderEnableState(newState: state)
-        }
-
-        get {
-            return state.folderEnabled
         }
     }
 
@@ -371,12 +371,6 @@ final class ConversationListViewModel: NSObject {
         return conversationDirectory.conversations(by: conversationListType).map({ SectionItem(item: $0, kind: kind) })
     }
 
-    private func reload() {
-        updateAllSections()
-        log.debug("RELOAD conversation list")
-        delegate?.listViewModelShouldBeReloaded()
-    }
-
     /// Select the item at an index path
     ///
     /// - Parameter indexPath: indexPath of the item to select
@@ -488,24 +482,23 @@ final class ConversationListViewModel: NSObject {
                      .conversations]
         }
 
-        return kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
+        return kinds.map { Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
     }
 
     private func sectionNumber(for kind: Section.Kind) -> Int? {
-        for (index, section) in sections.enumerated() {
-            if section.kind == kind {
-                return index
-            }
+        for (index, section) in sections.enumerated() where section.kind == kind {
+            return index
         }
 
         return nil
     }
 
-    private func update(for kind: Section.Kind) {
+    private func update(for kind: Section.Kind? = nil) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
 
         var newValue: [Section]
-        if let sectionNumber = self.sectionNumber(for: kind) {
+        if let kind = kind,
+            let sectionNumber = self.sectionNumber(for: kind) {
             newValue = sections
             let newList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
 
@@ -522,23 +515,25 @@ final class ConversationListViewModel: NSObject {
         }
 
         let changeset = StagedChangeset(source: sections, target: newValue)
-
-        delegate?.reload(using: changeset, interrupt: { _ in
-            return false
-        }) { data in
-            if let data = data {
-                self.sections = data
+        if changeset.isEmpty {
+            sections = newValue
+        } else {
+            delegate?.reload(using: changeset, interrupt: { _ in
+                return false
+            }) { data in
+                if let data = data {
+                    self.sections = data
+                }
             }
         }
 
-        if let sectionNumber = sectionNumber(for: kind) {
-
-            /// When the section is collaped, the setData closure of the reload() above is not called and we need to set here to make sure the folder badge calculation is correct
-            if collapsed(at: sectionNumber) {
-                sections = newValue
-            }
-
+        if let kind = kind,
+           let sectionNumber = sectionNumber(for: kind) {
             delegate?.listViewModel(self, didUpdateSection: sectionNumber)
+        } else {
+            sections.enumerated().forEach {
+                delegate?.listViewModel(self, didUpdateSection: $0.offset)
+            }
         }
     }
 
@@ -691,7 +686,7 @@ final class ConversationListViewModel: NSObject {
 
 // MARK: - ZMUserObserver
 
-fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
+private let log = ZMSLog(tag: "ConversationListViewModel")
 
 // MARK: - ConversationDirectoryObserver
 
@@ -701,9 +696,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
-            reload()
+            update()
         } else {
-            /// TODO: When 2 sections are visible and a conversation belongs to both, the lower section's update animation is missing since it started after the top section update animation started. To fix this we should calculate the change set in one batch.
+            /// TODO: When 2 sections are visible and a conversation belongs to both, the lower section's update
+            /// animation is missing since it started after the top section update animation started. To fix this
+            /// we should calculate the change set in one batch.
             /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {

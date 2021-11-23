@@ -81,7 +81,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
                 cell.isUserInteractionEnabled = true
 
                 switch result {
-                case .failure(_):
+                case .failure:
                     cell.configure(with: conversation)
                     self?.presentingViewController?.present(UIAlertController.checkYourConnection(), animated: true)
                 default:

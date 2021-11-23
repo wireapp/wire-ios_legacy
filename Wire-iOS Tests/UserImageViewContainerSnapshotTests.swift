@@ -47,13 +47,13 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
         sut.user = mockUser
     }
 
-    func testForNoUserImageWithoutSession(){
+    func testForNoUserImageWithoutSession() {
         setupSut(userSession: nil)
 
         verify(matching: sut)
     }
 
-    func testForWithUserImage(){
+    func testForWithUserImage() {
         setupSut(userSession: MockZMUserSession())
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))

@@ -73,6 +73,7 @@ final class BackupPasswordViewController: UIViewController {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -173,7 +174,7 @@ extension BackupPasswordViewController: UITextFieldDelegate {
         }
 
         if string.containsCharacters(from: .newlines) {
-            if let _ = password {
+            if password != nil {
                 completeWithCurrentResult()
             }
             return false

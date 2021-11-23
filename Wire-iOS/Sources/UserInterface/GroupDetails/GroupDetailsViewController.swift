@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
@@ -67,25 +66,24 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSubviews() {
+    private func createSubviews() {
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
 
         [collectionView, footerView].forEach(view.addSubview)
 
-        constrain(view, collectionView, footerView) { container, collectionView, footerView in
-            collectionView.top == container.top
-            collectionView.leading == container.leading
-            collectionView.trailing == container.trailing
-            collectionView.bottom == footerView.top
-            footerView.leading == container.leading
-            footerView.trailing == container.trailing
-            footerView.bottom == container.bottom
-        }
+        [collectionView, footerView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+          footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
@@ -110,7 +108,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
@@ -134,11 +132,20 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
             let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
 
-            if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
-                if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
+            let maxNumberOfDisplayed = Int.ConversationParticipants.maxNumberOfDisplayed
+            let maxNumberWithoutTruncation = Int.ConversationParticipants.maxNumberWithoutTruncation
+
+            if admins.count <= maxNumberWithoutTruncation || admins.isEmpty {
+                // Dispay the ShowAll button after the first section.
+                if admins.count >= maxNumberOfDisplayed && (participants.count > maxNumberWithoutTruncation) {
                     let adminSection = ParticipantsSectionController(participants: admins,
-                                                                     conversationRole: .admin, conversation: conversation,
-                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: admins.count - 1, maxDisplayedParticipants: Int.ConversationParticipants.maxNumberOfDisplayed)
+                                                                     conversationRole: .admin,
+                                                                     conversation: conversation,
+                                                                     delegate: self,
+                                                                     totalParticipantsCount: participants.count,
+                                                                     clipSection: true,
+                                                                     maxParticipants: admins.count - 1,
+                                                                     maxDisplayedParticipants: Int.ConversationParticipants.maxNumberOfDisplayed)
                     sections.append(adminSection)
                 } else {
                     let adminSection = ParticipantsSectionController(participants: admins,
@@ -153,9 +160,15 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                             sections.append(memberSection)
                         }
                     } else { // Display the ShowAll button after the second section
+                        let maxParticipants = Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count
                         let memberSection = ParticipantsSectionController(participants: members,
-                                                                          conversationRole: .member, conversation: conversation,
-                                                                          delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count), maxDisplayedParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count) - 2)
+                                                                          conversationRole: .member,
+                                                                          conversation: conversation,
+                                                                          delegate: self,
+                                                                          totalParticipantsCount: participants.count,
+                                                                          clipSection: true,
+                                                                          maxParticipants: maxParticipants,
+                                                                          maxDisplayedParticipants: maxParticipants - 2)
                         sections.append(memberSection)
                     }
                 }
@@ -217,8 +230,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
-            let navigationController = addParticipantsViewController.wrapInNavigationController()
+            let navigationController = addParticipantsViewController.wrapInNavigationController(setBackgroundColor: true)
             navigationController.modalPresentationStyle = .currentContext
+
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation,

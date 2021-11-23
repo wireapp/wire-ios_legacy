@@ -21,7 +21,7 @@ import WireDataModel
 
 extension ZMConversationMessage {
     public func isFileDownloaded() -> Bool {
-        if let _ = self.fileMessageData?.fileURL {
+        if self.fileMessageData?.fileURL != nil {
             return true
         }
         else {

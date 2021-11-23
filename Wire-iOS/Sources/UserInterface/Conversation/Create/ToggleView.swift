@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class ToggleView: UIView, Themeable {
 
@@ -34,8 +33,13 @@ final class ToggleView: UIView, Themeable {
 
     var handler: ToggleHandler?
     var isOn: Bool {
-        set { toggle.isOn = newValue }
-        get { return toggle.isOn }
+        get {
+            return toggle.isOn
+        }
+
+        set {
+            toggle.isOn = newValue
+        }
     }
 
     init(title: String, isOn: Bool, accessibilityIdentifier: String) {
@@ -48,6 +52,7 @@ final class ToggleView: UIView, Themeable {
         toggle.accessibilityIdentifier = accessibilityIdentifier
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,13 +70,14 @@ final class ToggleView: UIView, Themeable {
     }
 
     private func createConstraints() {
-        constrain(self, titleLabel, toggle) { view, titleLabel, toggle in
-            titleLabel.centerY == view.centerY
-            titleLabel.leading == view.leading + 16
-            toggle.centerY == view.centerY
-            toggle.trailing == view.trailing - 16
-            view.height == 56
-        }
+        [titleLabel, toggle].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+          toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
+          toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+          heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
 
     @objc private func toggleValueChanged(_ sender: UISwitch) {

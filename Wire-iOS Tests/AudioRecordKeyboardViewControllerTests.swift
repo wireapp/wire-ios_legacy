@@ -23,17 +23,17 @@ import XCTest
 final class MockAudioRecordKeyboardDelegate: AudioRecordViewControllerDelegate {
     var didCancelHitCount = 0
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
-        didCancelHitCount = didCancelHitCount + 1
+        didCancelHitCount += 1
     }
 
     var didStartRecordingHitCount = 0
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
-        didStartRecordingHitCount = didStartRecordingHitCount + 1
+        didStartRecordingHitCount += 1
     }
 
     var wantsToSendAudioHitCount = 0
     func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {
-        wantsToSendAudioHitCount = wantsToSendAudioHitCount + 1
+        wantsToSendAudioHitCount += 1
     }
 }
 

@@ -40,7 +40,7 @@ final class LocationPreviewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(view: sut.view)
     }
 }

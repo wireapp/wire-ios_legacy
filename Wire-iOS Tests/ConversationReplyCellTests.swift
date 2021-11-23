@@ -75,6 +75,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItTruncatesTextAfterFourLines_31() {
         // GIVEN
+        // swiftlint:disable:next line_length
         let message = MockMessageFactory.textMessage(withText: "@Bruno do we have the latest mockup files ready to go for the annual report? Once we have the copy finalized I would like to drop it in and get this out as quickly as possible. We can also add more lines to the test message if we need.")
         message.backingTextMessageData?.mentions = [Mention(range: NSRange(location: 0, length: 6), user: otherUser)]
         message.senderUser = MockUserType.createSelfUser(name: "Alice")
@@ -218,12 +219,14 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersMarkdownListMoreThan4Line() {
         // GIVEN
+        // swiftlint:disable line_length
         let markdownNoHeaders = """
         1. In den alten Zeiten, wo das Wünschen noch geholfen hat, lebte ein König, dessen Töchter waren alle schön;
         2. aber die jüngste war so schön, daß die Sonne selber, die doch so vieles gesehen hat, sich verwunderte, sooft sie ihr ins Gesicht schien.
         3. Nahe bei dem Schlosse des Königs lag ein großer dunkler Wald, und in dem Walde unter einer alten Linde war ein Brunnen;
         4. wenn nun der Tag recht heiß war, so ging das Königskind hinaus in den Wald und setzte sich an den Rand des kühlen Brunnens - und wenn sie Langeweile hatte, so nahm sie eine goldene Kugel, warf sie in die Höhe und fing sie wieder; und das war ihr liebstes Spielwerk.
         """
+        // swiftlint:enable line_length
 
         let message = MockMessageFactory.textMessage(withText: markdownNoHeaders)
         message.senderUser = MockUserType.createSelfUser(name: "Alice")

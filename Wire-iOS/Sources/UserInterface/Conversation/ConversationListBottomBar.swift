@@ -17,14 +17,13 @@
 // 
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 enum ConversationListButtonType {
     case archive, startUI, list, folder
 }
 
-protocol ConversationListBottomBarControllerDelegate: class {
+protocol ConversationListBottomBarControllerDelegate: AnyObject {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
 }
 
@@ -52,8 +51,13 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     var showSeparator: Bool {
-        set { separator.fadeAndHide(!newValue) }
-        get { return !separator.isHidden }
+        get {
+            return !separator.isHidden
+        }
+
+        set {
+            separator.fadeAndHide(!newValue)
+        }
     }
 
     private var allButtons: [IconButton] {
@@ -69,6 +73,7 @@ final class ConversationListBottomBarController: UIViewController {
         addObservers()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -165,7 +170,7 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     @objc
-    private func startUIButtonTapped(_ sender: IconButton) {
+    func startUIButtonTapped(_ sender: Any?) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 

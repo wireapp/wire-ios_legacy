@@ -56,7 +56,7 @@ final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testEmptySearchScreenWithKeyword(){
+    func testEmptySearchScreenWithKeyword() {
         verify(view: mockNavigationController.view)
     }
 }

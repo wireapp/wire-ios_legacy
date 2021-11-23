@@ -112,9 +112,11 @@ final class MockSystemMessageData: NSObject, ZMSystemMessageData {
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
     var parentMessage: ZMSystemMessageData?
+    var participantsRemovedReason: ZMParticipantsRemovedReason
 
-    init(systemMessageType: ZMSystemMessageType) {
+    init(systemMessageType: ZMSystemMessageType, reason: ZMParticipantsRemovedReason) {
         self.systemMessageType = systemMessageType
+        self.participantsRemovedReason = reason
     }
 }
 
@@ -346,6 +348,10 @@ class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage
     var linkAttachments: [LinkAttachment]?
     var needsLinkAttachmentsUpdate: Bool = false
     var isSilenced: Bool = false
+    var backingIsRestricted: Bool = false
+    var isRestricted: Bool {
+        return backingIsRestricted
+    }
 
     var isSent: Bool {
         switch deliveryState {

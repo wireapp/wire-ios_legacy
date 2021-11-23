@@ -52,9 +52,7 @@ extension ConversationInputBarViewController {
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
-            if #available(iOS 11.0, *) {
-                pickerController.videoExportPreset = AVURLAsset.defaultVideoQuality
-            }
+            pickerController.videoExportPreset = AVURLAsset.defaultVideoQuality
 
             if let popover = pickerController.popoverPresentationController,
                 let imageView = pointToView {
@@ -108,7 +106,7 @@ extension ConversationInputBarViewController {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }
 
-        AVURLAsset.convertVideoToUploadFormat(at: videoTempURL, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { resultURL, asset, error in
+        AVURLAsset.convertVideoToUploadFormat(at: videoTempURL, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { resultURL, _, error in
             if error == nil,
                let resultURL = resultURL {
                 self.uploadFile(at: resultURL)

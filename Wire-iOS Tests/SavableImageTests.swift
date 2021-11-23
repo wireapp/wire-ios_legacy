@@ -82,7 +82,7 @@ final class SavableImageTests: XCTestCase {
         super.tearDown()
     }
 
-    func setupMock(savableImage: SavableImage){
+    func setupMock(savableImage: SavableImage) {
         savableImage.assetChangeRequestType = MockAssetChangeRequest.self
         savableImage.assetCreationRequestType = MockAssetCreationRequest.self
         savableImage.photoLibrary = MockPhotoLibrary()
@@ -99,7 +99,7 @@ final class SavableImageTests: XCTestCase {
 
             // WHEN
             let expectation = self.expectation(description: "Wait for image to be saved")
-            savableImage.saveToLibrary() { success in
+            savableImage.saveToLibrary { success in
                 XCTAssert(success)
                 expectation.fulfill()
                 savableImage = nil
@@ -129,7 +129,7 @@ final class SavableImageTests: XCTestCase {
 
             // WHEN
             let expectation = self.expectation(description: "Wait for image to be saved")
-            mockOwner.savableImage.saveToLibrary() { success in
+            mockOwner.savableImage.saveToLibrary { success in
                 XCTAssert(success)
 
                 // THEN
@@ -160,7 +160,7 @@ final class SavableImageTests: XCTestCase {
 
             // WHEN
             let expectation = self.expectation(description: "Wait for image to be saved")
-            savableImage.saveToLibrary() { success in
+            savableImage.saveToLibrary { success in
                 XCTAssert(success)
                 expectation.fulfill()
                 savableImage = nil
@@ -199,7 +199,7 @@ final class SavableImageTests: XCTestCase {
                 didCheckData = true
             }
 
-            mockOwner.savableImage.saveToLibrary() { success in
+            mockOwner.savableImage.saveToLibrary { success in
                 XCTAssert(success)
 
                 // THEN

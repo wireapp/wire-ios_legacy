@@ -43,7 +43,7 @@ extension UIViewController {
                 switch result {
                 case .success:
                     dismisser?.dismiss(viewController: self, completion: nil)
-                case .failure(_):
+                case .failure:
                     break
                 }
             }

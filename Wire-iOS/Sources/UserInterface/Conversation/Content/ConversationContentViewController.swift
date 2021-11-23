@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireRequestStrategy
 import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
@@ -88,6 +89,19 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
             self?.updateMediaBar()
         }
+        NotificationCenter.default.addObserver(forName: .featureConfigDidChangeNotification,
+                                               object: nil,
+                                               queue: .main) { [weak self] note in
+            guard let featureUpdateEvent = note.object as? FeatureUpdateEventPayload,
+                  featureUpdateEvent.name == .fileSharing else {
+                return
+            }
+            self?.updateVisibleCells()
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: ZMConversation.failedToSendMessageNotificationName, object: nil)
     }
 
     @available(*, unavailable)
@@ -135,12 +149,21 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         setupMentionsResultsView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertToSendMessage), name: ZMConversation.failedToSendMessageNotificationName, object: .none)
     }
 
     @objc
     private func applicationDidBecomeActive(_ notification: Notification) {
         dataSource.resetSectionControllers()
         tableView.reloadData()
+    }
+
+    @objc
+    private func showErrorAlertToSendMessage() {
+        typealias MessageSendError = L10n.Localizable.Error.Message.Send
+        UIAlertController.showErrorAlertWithLink(title: MessageSendError.title,
+                                                 message: MessageSendError.missingLegalholdConsent)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -348,16 +371,17 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
     private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
         guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
-
         let index = dataSource.indexOfMessage(message)
+        return indexPathsForVisibleRows.contains { $0.section == index }
+    }
 
-        for indexPath in indexPathsForVisibleRows {
-            if indexPath.section == index {
-                return true
-            }
-        }
+    // MARK: - Feature config changes
 
-        return false
+    private func updateVisibleCells() {
+        guard let visibleRows = tableView.indexPathsForVisibleRows else { return }
+        tableView.beginUpdates()
+        tableView.reloadRows(at: visibleRows, with: .none)
+        tableView.endUpdates()
     }
 }
 
@@ -398,4 +422,29 @@ extension ConversationContentViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         // no-op
     }
+}
+
+private extension UIAlertController {
+
+    static func showErrorAlertWithLink(title: String,
+                                       message: String) {
+        let topmostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
+
+        let legalHoldLearnMoreHandler: ((UIAlertAction) -> Swift.Void) = { _ in
+            let browserViewController = BrowserViewController(url: URL.wr_legalHoldLearnMore.appendingLocaleParameter)
+            topmostViewController?.present(browserViewController, animated: true)
+        }
+
+        let alertController = UIAlertController(title: title,
+                                                message: message,
+                                                preferredStyle: .alert)
+
+        alertController.addAction(.ok(style: .cancel))
+        alertController.addAction(UIAlertAction(title: L10n.Localizable.LegalholdActive.Alert.learnMore,
+                                                style: .default,
+                                                handler: legalHoldLearnMoreHandler))
+
+        topmostViewController?.present(alertController, animated: true)
+    }
+
 }

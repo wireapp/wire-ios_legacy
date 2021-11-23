@@ -90,7 +90,7 @@ extension ZMConversation {
     }
 
     var hasSyncedTimeout: Bool {
-        if case .synced(_)? = messageDestructionTimeout {
+        if case .synced? = messageDestructionTimeout {
             return true
         } else {
             return false

@@ -94,7 +94,9 @@ final class CoreDataFixture {
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
 
+    let dispatchGroup = DispatchGroup()
     var uiMOC: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
 
     /// The color of the container view in which the view to
     /// be snapshot will be placed, defaults to UIColor.lightGrayColor
@@ -102,18 +104,17 @@ final class CoreDataFixture {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     /// If this is set the accent color will be overriden for the tests
     var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(newValue)
-        }
         get {
             return UIColor.accentOverrideColor!
+        }
+
+        set {
+            UIColor.setAccentOverride(newValue)
         }
     }
 
@@ -131,24 +132,22 @@ final class CoreDataFixture {
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
 
-        let group = DispatchGroup()
-
-        group.enter()
-
-        StorageStack.reset()
-        StorageStack.shared.createStorageAsInMemory = true
         do {
             documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         } catch {
             XCTAssertNil(error, "Unexpected error \(error)")
         }
 
-        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
-            self.uiMOC = contextDirectory.uiContext
-            group.leave()
-        })
+        let account = Account(userName: "", userIdentifier: UUID())
+        let group = ZMSDispatchGroup(dispatchGroup: dispatchGroup, label: "CoreDataStack")
+        let coreDataStack = CoreDataStack(account: account,
+                                          applicationContainer: documentsDirectory!,
+                                          inMemoryStore: true,
+                                          dispatchGroup: group)
 
-        group.wait()
+        coreDataStack.loadStores(completionHandler: { _ in })
+        self.uiMOC = coreDataStack.viewContext
+        self.coreDataStack = coreDataStack
 
         if needsCaches {
             setUpCaches()
@@ -211,7 +210,7 @@ final class CoreDataFixture {
         otherUser = ZMUser.insertNewObject(in: uiMOC)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
-        otherUser.setHandle("bruno")
+        otherUser.handle = "bruno"
         otherUser.accentColorValue = .brightOrange
 
         otherUserConversation = ZMConversation.createOtherUserConversation(moc: uiMOC, otherUser: otherUser)
@@ -274,7 +273,7 @@ extension CoreDataFixture {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()
         serviceUser.name = "ServiceUser"
-        serviceUser.setHandle(serviceUser.name!.lowercased())
+        serviceUser.handle = serviceUser.name!.lowercased()
         serviceUser.accentColorValue = .brightOrange
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()
@@ -320,7 +319,9 @@ extension CoreDataFixtureTestHelper {
     }
 
     func createGroupConversation() -> ZMConversation {
-        return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
+        return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC,
+                                                      otherUser: otherUser,
+                                                      selfUser: selfUser)
     }
 
     func createTeamGroupConversation() -> ZMConversation {

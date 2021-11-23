@@ -17,17 +17,15 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-protocol CollectionCellDelegate: class {
+protocol CollectionCellDelegate: AnyObject {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
 }
 
-protocol CollectionCellMessageChangeDelegate: class {
+protocol CollectionCellMessageChangeDelegate: AnyObject {
     func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
 }
 
@@ -54,9 +52,9 @@ class CollectionCell: UICollectionViewCell {
         }
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadContents()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {
@@ -64,21 +62,18 @@ class CollectionCell: UICollectionViewCell {
         self.loadContents()
     }
 
-    public var desiredWidth: CGFloat? = .none
-    public var desiredHeight: CGFloat? = .none
+    var desiredWidth: CGFloat? = .none
+    var desiredHeight: CGFloat? = .none
 
     override var intrinsicContentSize: CGSize {
-        get {
-            let width = self.desiredWidth ?? UIView.noIntrinsicMetric
-            let height = self.desiredHeight ?? UIView.noIntrinsicMetric
-
-            return CGSize(width: width, height: height)
-        }
+        let width = self.desiredWidth ?? UIView.noIntrinsicMetric
+        let height = self.desiredHeight ?? UIView.noIntrinsicMetric
+        return CGSize(width: width, height: height)
     }
 
     private var cachedSize: CGSize? = .none
 
-    public func flushCachedSize() {
+    func flushCachedSize() {
         cachedSize = .none
     }
 
@@ -231,7 +226,7 @@ class CollectionCell: UICollectionViewCell {
 }
 
 extension CollectionCell: ZMMessageObserver {
-    public func messageDidChange(_ changeInfo: MessageChangeInfo) {
+    func messageDidChange(_ changeInfo: MessageChangeInfo) {
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }

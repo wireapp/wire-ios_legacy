@@ -57,7 +57,7 @@ final class FileBackupExcluder: BackupExcluder {
     private func excludeFilesFromBackup() {
         do {
             try FileBackupExcluder.exclude(filesToExclude: FileBackupExcluder.filesToExclude)
-        } catch (let error) {
+        } catch {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }

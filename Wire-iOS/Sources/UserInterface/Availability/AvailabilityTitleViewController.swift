@@ -38,6 +38,7 @@ final class AvailabilityTitleViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,7 +48,7 @@ final class AvailabilityTitleViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        availabilityTitleView?.tapHandler = { [weak self] button in
+        availabilityTitleView?.tapHandler = { [weak self] _ in
             self?.presentAvailabilityPicker()
         }
     }
@@ -62,7 +63,7 @@ final class AvailabilityTitleViewController: UIViewController {
         present(alertViewController, animated: true)
     }
 
-    private func didSelectAvailability(_ availability: Availability) {
+    private func didSelectAvailability(_ availability: AvailabilityKind) {
         let changes = { [weak self] in
             self?.user.availability = availability
             self?.provideHapticFeedback()

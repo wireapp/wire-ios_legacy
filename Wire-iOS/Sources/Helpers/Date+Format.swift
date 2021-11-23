@@ -120,7 +120,7 @@ extension Date {
         var dateString = String()
 
         // Date is within the last hour
-        if (intervalSinceDate < WRDateFormatter.NSTimeIntervalOneHour) {
+        if intervalSinceDate < WRDateFormatter.NSTimeIntervalOneHour {
             dateString = WRDateFormatter.timeIntervalFormatter.string(forTimeInterval: -intervalSinceDate)
         }
             // Date is from today or yesterday

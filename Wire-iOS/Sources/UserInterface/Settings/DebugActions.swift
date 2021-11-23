@@ -26,8 +26,7 @@ enum DebugActions {
     static func alert(
         _ message: String,
         title: String = "",
-        textToCopy: String? = nil)
-    {
+        textToCopy: String? = nil) {
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if let textToCopy = textToCopy {
@@ -80,8 +79,7 @@ enum DebugActions {
         let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
 
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: predicate.evaluate)
-        {
+            .first(where: predicate.evaluate) {
             let message = ["Found an unread conversation:",
                              "\(convo.displayName)",
                 "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
@@ -94,6 +92,14 @@ enum DebugActions {
         }
     }
 
+    static func deleteInvalidConversations(_ type: SettingsCellDescriptorType) {
+        guard let context = ZMUserSession.shared()?.managedObjectContext else { return }
+
+        let predicate = NSPredicate(format: "domain = ''")
+        try? context.batchDeleteEntities(named: ZMConversation.entityName(), matching: predicate)
+        context.saveOrRollback()
+    }
+
     /// Sends a message that will fail to decode on every other device, on the first conversation of the list
     static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
         guard
@@ -104,7 +110,7 @@ enum DebugActions {
         }
 
         var external = External()
-        if let otr = "broken_key".data(using: .utf8)  {
+        if let otr = "broken_key".data(using: .utf8) {
              external.otrKey = otr
         }
         let genericMessage = GenericMessage(content: external)
@@ -165,7 +171,7 @@ enum DebugActions {
     }
 
     static func generateTestCrash(_ type: SettingsCellDescriptorType) {
-        MSCrashes.generateTestCrash()
+        Crashes.generateTestCrash()
     }
 
     static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
@@ -224,7 +230,7 @@ enum DebugActions {
         guard let userSession = ZMUserSession.shared() else { return }
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
-        var conversations: [ZMConversation]? = nil
+        var conversations: [ZMConversation]?
         userSession.syncManagedObjectContext.performGroupedBlock {
             conversations = try? userSession.syncManagedObjectContext.fetch(NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName()))
             conversations?.forEach({ _ = $0.estimatedUnreadCount })
@@ -239,10 +245,7 @@ enum DebugActions {
         controller.show(alertController, sender: nil)
     }
 
-    static func askNumber(
-        title: String,
-        _ callback: @escaping (Int) -> Void)
-    {
+    static func askNumber(title: String, _ callback: @escaping (Int) -> Void) {
         askString(title: title) {
             if let number = NumberFormatter().number(from: $0) {
                 callback(number.intValue)
@@ -252,10 +255,7 @@ enum DebugActions {
         }
     }
 
-    static func askString(
-        title: String,
-        _ callback: @escaping (String) -> Void)
-    {
+    static func askString(title: String, _ callback: @escaping (String) -> Void) {
         guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
         let controller = UIAlertController(
@@ -282,7 +282,7 @@ enum DebugActions {
         repeat {
             let toAppendInThisStep = left < step ? left : step
 
-            left = left - toAppendInThisStep
+            left -= toAppendInThisStep
 
             appendMessages(count: toAppendInThisStep)
         }
@@ -299,7 +299,7 @@ enum DebugActions {
 
             appendMessagesToDatabase(count: thisBatchCount)
 
-            currentCount = currentCount - thisBatchCount
+            currentCount -= thisBatchCount
         }
         while (currentCount > 0)
     }

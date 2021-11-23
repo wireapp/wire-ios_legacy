@@ -25,9 +25,10 @@ extension ZMConversationMessage {
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
         guard
-            SelfUser.current.phoneNumber != nil,
-            SelfUser.current.isTeamMember,
-            SelfUser.current.hasDigitalSignatureEnabled
+            let selfUser = SelfUser.provider?.selfUser,
+            selfUser.phoneNumber != nil,
+            selfUser.isTeamMember,
+            selfUser.hasDigitalSignatureEnabled
         else {
             return false
         }
@@ -36,6 +37,9 @@ extension ZMConversationMessage {
 
     /// Whether the message can be copied.
     var canBeCopied: Bool {
+        guard !isRestricted else {
+            return false
+        }
         return SecurityFlags.clipboard.isEnabled
             && !isEphemeral
             && (isText || isImage || isLocation)
@@ -105,10 +109,13 @@ extension ZMConversationMessage {
 
     /// Wether it is possible to download the message content.
     var canBeDownloaded: Bool {
-        guard let fileMessageData = self.fileMessageData else {
+        guard let fileMessageData = self.fileMessageData,
+              !isRestricted else {
             return false
         }
-        return isFile && fileMessageData.transferState == .uploaded && fileMessageData.downloadState == .remote
+        return isFile
+            && fileMessageData.transferState == .uploaded
+            && fileMessageData.downloadState == .remote
     }
 
     var canCancelDownload: Bool {
@@ -120,7 +127,7 @@ extension ZMConversationMessage {
 
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
+        if isEphemeral || isRestricted {
             return false
         }
 
@@ -143,7 +150,7 @@ extension ZMConversationMessage {
 
     /// Wether it should be possible to forward given message to another conversation.
     var canBeForwarded: Bool {
-        if isEphemeral {
+        if isEphemeral || isRestricted {
             return false
         }
 

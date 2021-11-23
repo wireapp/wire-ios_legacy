@@ -51,7 +51,7 @@ final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {
                     let inset = (maxCellWidth - CGFloat(totalElementsInSection) * attributes.frame.size.width) / 2
 
                     var newLeftAlignedFrame: CGRect = attributes.frame
-                    newLeftAlignedFrame.origin.x = newLeftAlignedFrame.origin.x - inset
+                    newLeftAlignedFrame.origin.x -= inset
                     attributes.frame = newLeftAlignedFrame
                 }
             }

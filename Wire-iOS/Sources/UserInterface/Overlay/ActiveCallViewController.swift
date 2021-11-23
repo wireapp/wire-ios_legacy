@@ -22,9 +22,9 @@ import WireSystem
 import WireDataModel
 import WireSyncEngine
 
-fileprivate let zmLog = ZMSLog(tag: "calling")
+private let zmLog = ZMSLog(tag: "calling")
 
-protocol ActiveCallViewControllerDelegate: class {
+protocol ActiveCallViewControllerDelegate: AnyObject {
     func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
                                               for conversation: ZMConversation?)
 }
@@ -51,6 +51,7 @@ final class ActiveCallViewController: UIViewController {
         zmLog.debug(String(format: "Presenting CallViewController: %p", visibleVoiceChannelViewController))
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -87,10 +88,6 @@ final class ActiveCallViewController: UIViewController {
         return visibleVoiceChannelViewController
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
     func updateVisibleVoiceChannelViewController() {
         guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {
@@ -115,8 +112,7 @@ final class ActiveCallViewController: UIViewController {
                    duration: 0.35,
                    options: .transitionCrossDissolve,
                    animations: nil,
-                   completion:
-            { (finished) in
+                   completion: { _ in
                 toViewController.didMove(toParent: self)
                 fromViewController.removeFromParent()
         })
@@ -130,7 +126,7 @@ final class ActiveCallViewController: UIViewController {
 
 extension ActiveCallViewController: WireCallCenterCallStateObserver {
 
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateVisibleVoiceChannelViewController()
     }
 

@@ -137,7 +137,7 @@ enum ColorSchemeColor: Int {
     case utilityNeutral
     case utilitySuccess
 
-    fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
+    fileprivate func colorPair(accentColor: UIColor) -> ColorPair {
         switch self {
         case .textForeground:
             return ColorPair(light: .graphite, dark: .white)
@@ -285,12 +285,12 @@ final class ColorScheme: NSObject {
 
 }
 
-fileprivate struct ColorPair {
+private struct ColorPair {
     let light: UIColor
     let dark: UIColor
 }
 
-fileprivate extension ColorPair {
+private extension ColorPair {
     init(both color: UIColor) {
         self.init(light: color, dark: color)
     }
@@ -304,8 +304,8 @@ extension UIColor {
 
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     // NB: the order of coefficients must match ZMAccentColor enum ordering
-    private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
-    private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
+    private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
+    private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
 
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     class func nameColor(for accentColor: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {

@@ -21,7 +21,7 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-protocol AppLockChangeWarningViewControllerDelegate: class {
+protocol AppLockChangeWarningViewControllerDelegate: AnyObject {
 
     func appLockChangeWarningViewControllerDidDismiss()
 
@@ -106,7 +106,7 @@ final class AppLockChangeWarningViewController: UIViewController {
         [contentView,
          titleLabel,
          confirmButton,
-         messageLabel].disableAutoresizingMaskTranslation()
+         messageLabel].prepareForLayout()
 
         let contentPadding: CGFloat = 24
 

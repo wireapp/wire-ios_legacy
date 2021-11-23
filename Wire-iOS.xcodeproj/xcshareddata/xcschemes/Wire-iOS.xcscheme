@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1140"
+   LastUpgradeVersion = "1310"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -53,6 +53,12 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithPicture()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -60,6 +66,27 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testFailedUploadCell_fromThisDevice()">
+               </Test>
+               <Test
+                  Identifier = "ConversationVideoMessageCellTests/testUploadedCell_fromOtherUser()">
+               </Test>
+               <Test
+                  Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
+               </Test>
+               <Test
+                  Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -181,6 +208,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ConsoleAnalytics"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-FederationEnabled 1"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

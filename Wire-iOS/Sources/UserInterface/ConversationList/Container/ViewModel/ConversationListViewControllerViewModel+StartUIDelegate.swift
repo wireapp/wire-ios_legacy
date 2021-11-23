@@ -20,7 +20,7 @@ import WireDataModel
 import UIKit
 import WireSyncEngine
 
-fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
+private typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
     func startUI(_ startUI: StartUIViewController, didSelect user: UserType) {
@@ -60,7 +60,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
 
         viewController?.setState(.conversationList, animated: true) {
-            var oneToOneConversation: ZMConversation? = nil
+            var oneToOneConversation: ZMConversation?
             userSession.enqueue({
                 oneToOneConversation = user.oneToOneConversation
             }, completionHandler: {

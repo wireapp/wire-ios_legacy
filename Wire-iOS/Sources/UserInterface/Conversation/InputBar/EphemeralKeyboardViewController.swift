@@ -18,10 +18,9 @@
 
 import UIKit
 import WireCommonComponents
-import Cartography
 import WireDataModel
 
-protocol EphemeralKeyboardViewControllerDelegate: class {
+protocol EphemeralKeyboardViewControllerDelegate: AnyObject {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
 
     func ephemeralKeyboard(
@@ -54,12 +53,12 @@ extension InputBarConversation {
     }
 
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        if timeout.isYears    { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
-        if timeout.isWeeks    { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
-        if timeout.isDays     { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
-        if timeout.isHours    { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
-        if timeout.isMinutes  { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
-        if timeout.isSeconds  { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
+        if timeout.isYears { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
+        if timeout.isWeeks { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
+        if timeout.isDays { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
+        if timeout.isHours { return StyleKitIcon.timeoutHour.makeImage(size: 64, color: color) }
+        if timeout.isMinutes { return StyleKitIcon.timeoutMinute.makeImage(size: 64, color: color) }
+        if timeout.isSeconds { return StyleKitIcon.timeoutSecond.makeImage(size: 64, color: color) }
         return nil
     }
 }
@@ -76,7 +75,7 @@ extension UIAlertController {
             textField.keyboardType = .decimalPad
             textField.placeholder = "Time interval in seconds"
         }
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] action in
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] _ in
             guard let input = alertController?.textFields?.first,
                 let inputText = input.text,
                 let selectedTimeInterval = TimeInterval(inputText) else {
@@ -131,7 +130,8 @@ final class EphemeralKeyboardViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -174,15 +174,16 @@ final class EphemeralKeyboardViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, picker, titleLabel) { view, picker, label in
-            label.leading == view.leading + 16
-            label.trailing == view.trailing - 16
-            label.top == view.top + 16
-            picker.top == label.bottom
-            picker.bottom == view.bottom - 16
-            picker.leading == view.leading + 32
-            picker.trailing == view.trailing - 32
-        }
+        [picker, titleLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+          titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+          picker.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+          picker.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+          picker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+          picker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+        ])
     }
 
     fileprivate func displayCustomPicker() {
@@ -210,9 +211,9 @@ final class EphemeralKeyboardViewController: UIViewController {
 /// views, which means that the behaviour could break in future iOS updates.
 class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
-    var selectorColor: UIColor? = nil
+    var selectorColor: UIColor?
     var tapRecognizer: UIGestureRecognizer! = nil
-    var didTapViewClosure: (() -> Void)? = nil
+    var didTapViewClosure: (() -> Void)?
 
     init() {
         super.init(frame: .zero)
@@ -221,6 +222,7 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
         addGestureRecognizer(tapRecognizer)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -28,9 +28,9 @@ final class OverflowSeparatorView: UIView {
         self.applyStyle()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.applyStyle()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func applyStyle() {
@@ -39,9 +39,7 @@ final class OverflowSeparatorView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        get {
-            return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
-        }
+        return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

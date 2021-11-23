@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol AnalyticsProvider: class {
+protocol AnalyticsProvider: AnyObject {
     var isOptedOut: Bool { get set }
     var selfUser: UserType? { get set }
 

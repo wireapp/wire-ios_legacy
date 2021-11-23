@@ -101,7 +101,7 @@ final class SpinnerButton: Button {
         layer.borderWidth = 1
 
         let states: [UIControl.State] = [.normal, .highlighted, .disabled]
-        states.forEach() {
+        states.forEach {
             let color: UIColor
             switch variant {
             case .dark:

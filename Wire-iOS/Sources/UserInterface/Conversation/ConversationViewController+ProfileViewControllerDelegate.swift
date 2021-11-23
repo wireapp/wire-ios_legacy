@@ -29,7 +29,7 @@ extension ConversationViewController {
 }
 
 extension ConversationViewController: ProfileViewControllerDelegate {
-    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
             self.zClientViewController.select(conversation: conversation, focusOnView: true, animated: true)
         }

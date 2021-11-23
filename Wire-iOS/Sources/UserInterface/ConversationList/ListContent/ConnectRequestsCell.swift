@@ -18,7 +18,7 @@
 
 import WireSyncEngine
 
-protocol SectionListCellType: class {
+protocol SectionListCellType: AnyObject {
     var sectionName: String? { get set }
     var cellIdentifier: String? { get set }
 }
@@ -56,6 +56,7 @@ final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
         setupConnectRequestsCell()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -121,7 +122,7 @@ final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
         let newCount: Int = connectionRequests.count
 
         if newCount != currentConnectionRequestsCount {
-            let connectionUsers = connectionRequests.map{ conversation in
+            let connectionUsers = connectionRequests.map { conversation in
                 if let conversation = conversation as? ZMConversation {
                     return conversation.connection?.to
                 } else {

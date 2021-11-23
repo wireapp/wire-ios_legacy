@@ -48,7 +48,7 @@ final class AnalyticsTests: XCTestCase {
         TrackingManager.shared.disableCrashSharing = true
 
         // THEN
-        XCTAssertFalse(MSCrashes.isEnabled())
+        XCTAssertFalse(Crashes.enabled)
     }
 
     func testThatItSetsOptOutCrashReportToSharedSettings() {

@@ -56,8 +56,8 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
 
     typealias Configuration = GuestsAllowedCellConfiguration
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
@@ -70,6 +70,7 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -22,7 +22,7 @@ import UIKit
 extension UIView {
 
     public func updateVisibleViews(_ views: [UIView], visibleViews: [UIView], animated: Bool) {
-        if (animated) {
+        if animated {
             UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
                 self.updateVisibleViews(views, visibleViews: visibleViews)
                 }, completion: nil)

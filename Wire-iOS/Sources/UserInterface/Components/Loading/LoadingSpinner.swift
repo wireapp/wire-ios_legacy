@@ -21,7 +21,7 @@ import UIKit
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion
 
-protocol SpinnerCapable: class {
+protocol SpinnerCapable: AnyObject {
     var dismissSpinner: SpinnerCompletion? { get set }
 }
 
@@ -31,6 +31,10 @@ extension SpinnerCapable where Self: UIViewController {
     }
 
     var isLoadingViewVisible: Bool {
+        get {
+            return dismissSpinner != nil
+        }
+
         set {
             if newValue {
                 // do not show double spinners
@@ -41,10 +45,6 @@ extension SpinnerCapable where Self: UIViewController {
                 dismissSpinner?()
                 dismissSpinner = nil
             }
-        }
-
-        get {
-            return dismissSpinner != nil
         }
     }
 

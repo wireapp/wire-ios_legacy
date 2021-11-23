@@ -28,7 +28,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError: TextFieldValidator.ValidationError? = nil
+        var lastError: TextFieldValidator.ValidationError?
 
         func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
 

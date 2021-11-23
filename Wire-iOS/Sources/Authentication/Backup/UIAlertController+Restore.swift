@@ -49,9 +49,10 @@ extension UIAlertController {
 
     private static func title(for error: Error) -> String {
         switch error {
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
+        case
+            CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
             return "registration.no_history.restore_backup_failed.wrong_version.title".localized
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
+        case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
             return "registration.no_history.restore_backup_failed.wrong_account.title".localized
         default:
             return "registration.no_history.restore_backup_failed.title".localized
@@ -60,9 +61,9 @@ extension UIAlertController {
 
     private static func message(for error: Error) -> String {
         switch error {
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
+        case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
             return "registration.no_history.restore_backup_failed.wrong_version.message".localized
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
+        case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
             return "registration.no_history.restore_backup_failed.wrong_account.message".localized
         default:
             return "registration.no_history.restore_backup_failed.message".localized

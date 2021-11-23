@@ -23,8 +23,8 @@ import WireDataModel
 class CustomMessageView: UIView {
     public var isSelected: Bool = false
 
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     public var messageLabel = WebLinkTextView()
     var messageText: String? {
@@ -33,7 +33,8 @@ class CustomMessageView: UIView {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

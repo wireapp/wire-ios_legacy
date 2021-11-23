@@ -24,7 +24,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
 
     func testDefaultState() {
         // GIVEN
-        let sut = BackupPasswordViewController { (_, _) in }
+        let sut = BackupPasswordViewController { _, _ in }
         // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
@@ -34,7 +34,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
 
         let validPassword = "Password123!"
         let expectation = self.expectation(description: "Callback called")
-        let sut = BackupPasswordViewController { (_, password) in
+        let sut = BackupPasswordViewController { _, password in
             XCTAssertEqual(password!.value, validPassword)
             expectation.fulfill()
         }
@@ -49,7 +49,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
 
     func testThatWhitespacesPasswordIsNotGood() {
         // GIVEN
-        let sut = BackupPasswordViewController { (_, password) in
+        let sut = BackupPasswordViewController { _, _ in
             XCTFail()
         }
         // WHEN

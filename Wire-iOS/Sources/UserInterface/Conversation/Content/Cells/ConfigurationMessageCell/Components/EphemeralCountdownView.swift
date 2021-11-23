@@ -26,7 +26,7 @@ class EphemeralCountdownView: UIView {
     fileprivate let containerView =  UIView()
     fileprivate var timer: Timer?
 
-    var message: ZMConversationMessage? = nil
+    var message: ZMConversationMessage?
 
     init() {
         super.init(frame: .zero)
@@ -44,6 +44,7 @@ class EphemeralCountdownView: UIView {
         ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

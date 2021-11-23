@@ -147,7 +147,7 @@ final class ConversationFileMessageTests: XCTestCase {
         verify(message: message)
     }
 
-    func testDownloadedCell_fromOtherUser() {
+    func disable_testDownloadedCell_fromOtherUser() {
         message.senderUser = SwiftMockLoader.mockUsers().first!
         message.backingFileMessageData.transferState = .uploaded
         message.backingFileMessageData.downloadState = .downloaded
@@ -230,6 +230,15 @@ final class ConversationFileMessageTests: XCTestCase {
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
         verify(message: message)
+    }
+
+    // MARK: - Receiving restrictions
+
+    func testRestrictionMessageCell() {
+        message.backingIsRestricted = true
+        message.backingFileMessageData.mimeType = "application/pdf"
+
+        verify(message: message, allColorSchemes: true)
     }
 
 }

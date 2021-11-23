@@ -19,7 +19,6 @@
 import UIKit
 import WireSyncEngine
 import WireCommonComponents
-import WireUtilities
 
 /**
  * The first page of the user settings.
@@ -31,8 +30,8 @@ final class SelfProfileViewController: UIViewController {
     let selfUser: SettingsSelfUser
 
     var userRightInterfaceType: UserRightInterface.Type = UserRight.self
-    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
-    var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
+    var settingsCellDescriptorFactory: SettingsCellDescriptorFactory?
+    var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)?
 
     // MARK: - Views
 

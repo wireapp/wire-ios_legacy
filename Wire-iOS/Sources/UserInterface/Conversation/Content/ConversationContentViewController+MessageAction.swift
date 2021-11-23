@@ -50,7 +50,7 @@ extension ConversationContentViewController {
         canvasViewController.title = message.conversationLike?.displayName.localizedUppercase
         canvasViewController.select(editMode: editMode, animated: false)
 
-        present(canvasViewController.wrapInNavigationController(), animated: true)
+        present(canvasViewController.wrapInNavigationController(setBackgroundColor: true), animated: true)
     }
 
     func messageAction(actionId: MessageAction,

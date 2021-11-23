@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 
-protocol TeamMemberInviteViewControllerDelegate: class {
+protocol TeamMemberInviteViewControllerDelegate: AnyObject {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)
 }
 
@@ -149,7 +149,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
 
         footerTextFieldView.isLoading = false
         buttonMode = dataSource.data.count == 0 ? .skip : .done
-        invitationsCount = invitationsCount + 1
+        invitationsCount += 1
     }
 
     private func handleManualInputResult(_ result: InviteResult) {

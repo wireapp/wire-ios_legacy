@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 class Tab: Button {
 

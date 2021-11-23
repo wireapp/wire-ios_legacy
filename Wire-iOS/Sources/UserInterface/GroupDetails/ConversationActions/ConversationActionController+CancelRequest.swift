@@ -75,9 +75,12 @@ extension ConversationActionController {
 
     func handleConnectionRequestResult(_ result: CancelConnectionRequestResult, for conversation: ZMConversation) {
         guard case .cancelRequest = result else { return }
-        enqueue {
-            conversation.connectedUser?.cancelConnectionRequest()
-        }
+
+        conversation.connectedUser?.cancelConnectionRequest(completion: { [weak self] error in
+            if let error = error as? LocalizedError {
+                self?.presentError(error)
+            }
+        })
     }
 
 }

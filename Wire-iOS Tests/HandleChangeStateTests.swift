@@ -43,7 +43,11 @@ class HandleChangeStateTests: XCTestCase {
                                                   availability: .unknown)
 
         // THEN
-        XCTAssertThrowsError(try handleChangeState.validate("testusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestuser1")) { error in
+        // swiftlint:disable line_length
+        let longHandle = "testusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestuser1"
+        // swiftlint:enable line_length
+
+        XCTAssertThrowsError(try handleChangeState.validate(longHandle)) { error in
             XCTAssertEqual(error as! HandleChangeState.ValidationError,
                            HandleChangeState.ValidationError.tooLong)
         }

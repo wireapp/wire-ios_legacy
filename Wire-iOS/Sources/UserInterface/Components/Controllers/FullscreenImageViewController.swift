@@ -370,7 +370,8 @@ final class FullscreenImageViewController: UIViewController {
         isShowingChrome = false
 
         initialImageViewCenter = imageView.center
-        let nearLocationInView = CGPoint(x: (panGestureLocationInView.x - initialImageViewCenter.x) * 0.1 + initialImageViewCenter.x, y: (panGestureLocationInView.y - initialImageViewCenter.y) * 0.1 + initialImageViewCenter.y)
+        let nearLocationInView = CGPoint(x: (panGestureLocationInView.x - initialImageViewCenter.x) * 0.1 + initialImageViewCenter.x,
+                                         y: (panGestureLocationInView.y - initialImageViewCenter.y) * 0.1 + initialImageViewCenter.y)
 
         imageDragStartingPoint = nearLocationInView
         imageDragOffsetFromActualTranslation = translationOffset

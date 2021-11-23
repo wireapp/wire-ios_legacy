@@ -35,10 +35,11 @@ final class MockMessageFactory {
     /// When sender is not provided, create a new self user and assign as sender of the return message
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate<T: MockMessage>(sender: UserType? = nil, conversation: Conversation? = nil) -> T {
+    class func messageTemplate<T: MockMessage>(sender: UserType? = nil,
+                                               conversation: Conversation? = nil) -> T {
         let message = T()
 
-        var mockZMConversation: MockConversation? = nil
+        var mockZMConversation: MockConversation?
         if let conversation = conversation {
             message.conversationLike = conversation
         } else {
@@ -105,11 +106,13 @@ final class MockMessageFactory {
     }
 
     class func systemMessageAndData(with systemMessageType: ZMSystemMessageType,
+                                    conversation: Conversation? = nil,
                                     users numUsers: Int = 0,
-                                    sender: UserType? = nil) -> (MockMessage?, MockSystemMessageData) {
-        let message = MockMessageFactory.messageTemplate(sender: sender)
+                                    sender: UserType? = nil,
+                                    reason: ZMParticipantsRemovedReason = .none) -> (MockMessage?, MockSystemMessageData) {
+        let message = MockMessageFactory.messageTemplate(sender: sender, conversation: conversation)
 
-        let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType)
+        let mockSystemMessageData = MockSystemMessageData(systemMessageType: systemMessageType, reason: reason)
 
         message.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
 
@@ -123,11 +126,17 @@ final class MockMessageFactory {
     }
 
     class func systemMessage(with systemMessageType: ZMSystemMessageType,
+                             conversation: Conversation? = nil,
                              users numUsers: Int = 0,
                              clients numClients: Int = 0,
-                             sender: UserType? = nil) -> MockMessage? {
+                             sender: UserType? = nil,
+                             reason: ZMParticipantsRemovedReason = .none) -> MockMessage? {
 
-        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType, users: numUsers, sender: sender)
+        let (message, mockSystemMessageData) = systemMessageAndData(with: systemMessageType,
+                                                                    conversation: conversation,
+                                                                    users: numUsers,
+                                                                    sender: sender,
+                                                                    reason: reason)
 
         var userClients: [AnyHashable] = []
 

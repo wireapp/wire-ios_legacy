@@ -49,7 +49,7 @@ extension UITraitEnvironment {
 
         let userInterfaceSizeClass: UIUserInterfaceSizeClass
 
-        /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
+        // On iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
         if let windowWidth = windowWidth,
             windowWidth <= CGFloat.SplitView.IPadMarginLimit {
             userInterfaceSizeClass = .compact

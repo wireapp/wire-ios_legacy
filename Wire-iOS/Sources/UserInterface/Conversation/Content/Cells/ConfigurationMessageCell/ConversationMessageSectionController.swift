@@ -30,7 +30,7 @@ struct ConversationMessageContext: Equatable {
     let spacing: Float
 }
 
-protocol ConversationMessageSectionControllerDelegate: class {
+protocol ConversationMessageSectionControllerDelegate: AnyObject {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
 }
 
@@ -183,12 +183,12 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
-        compositeMessage.compositeMessageData?.items.forEach() { item in
+        compositeMessage.compositeMessageData?.items.forEach { item in
             switch item {
             case .text(let data):
                 let textCells = ConversationTextMessageCellDescription.cells(textMessageData: data, message: message, searchQueries: context.searchQueries)
 
-                cells = cells + textCells
+                cells += textCells
             case .button(let data):
 
                 let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title,

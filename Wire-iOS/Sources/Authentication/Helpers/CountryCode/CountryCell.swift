@@ -23,8 +23,9 @@ final class CountryCell: UITableViewCell {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configure(for country: Country) {

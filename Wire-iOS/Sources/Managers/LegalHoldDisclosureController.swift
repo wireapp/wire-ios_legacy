@@ -69,7 +69,7 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
     let presenter: ViewControllerPresenter
 
     /// UIAlertController currently presented
-    var presentedAlertController: UIAlertController? = nil
+    var presentedAlertController: UIAlertController?
 
     /// The current state of legal hold disclosure. Defaults to none.
     var currentState: DisclosureState = .none {
@@ -190,7 +190,7 @@ final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
     }
 
     private func presentAlertController(for state: DisclosureState) {
-        var alertController: UIAlertController? = nil
+        var alertController: UIAlertController?
 
         switch state {
         case .warningAboutDisabled:

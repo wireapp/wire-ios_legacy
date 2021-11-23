@@ -26,16 +26,16 @@ enum CallDegradationState: Equatable {
     case outgoing(degradedUser: HashBoxUser?)
 }
 
-protocol CallDegradationControllerDelegate: class {
+protocol CallDegradationControllerDelegate: AnyObject {
     func continueDegradedCall()
     func cancelDegradedCall()
 }
 
 final class CallDegradationController: UIViewController {
 
-    weak var delegate: CallDegradationControllerDelegate? = nil
-    weak var targetViewController: UIViewController? = nil
-    var visibleAlertController: UIAlertController? = nil
+    weak var delegate: CallDegradationControllerDelegate?
+    weak var targetViewController: UIViewController?
+    var visibleAlertController: UIAlertController?
 
     // Used to delay presentation of the alert controller until
     // the view is ready.

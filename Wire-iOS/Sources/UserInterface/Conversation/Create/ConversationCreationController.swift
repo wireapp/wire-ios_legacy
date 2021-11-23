@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol ConversationCreationValuesConfigurable: class {
+protocol ConversationCreationValuesConfigurable: AnyObject {
     func configure(with values: ConversationCreationValues)
 }
 
@@ -62,7 +62,7 @@ final class ConversationCreationValues {
     }
 }
 
-protocol ConversationCreationControllerDelegate: class {
+protocol ConversationCreationControllerDelegate: AnyObject {
 
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,
@@ -159,7 +159,7 @@ final class ConversationCreationController: UIViewController {
         setupViews()
 
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.currentFirst {
+        if UIResponder.currentFirst != nil {
             nameSection.becomeFirstResponder()
         }
     }
@@ -174,7 +174,7 @@ final class ConversationCreationController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
@@ -183,9 +183,7 @@ final class ConversationCreationController: UIViewController {
         // TODO: if keyboard is open, it should scroll.
         let collectionView = UICollectionView(forGroupedSections: ())
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
 
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -293,7 +291,7 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
         errorSection.clearError()
         switch value {
-        case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
+        case .error: navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
         }
 

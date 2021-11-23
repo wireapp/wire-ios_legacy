@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol SimpleTextFieldDelegate: class {
+protocol SimpleTextFieldDelegate: AnyObject {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
     func textFieldReturnPressed(_ textField: SimpleTextField)
     func textFieldDidEndEditing(_ textField: SimpleTextField)
@@ -89,6 +89,7 @@ final class SimpleTextField: UITextField, Themeable {
         tintColor = .accent()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -130,13 +131,14 @@ final class SimpleTextField: UITextField, Themeable {
     }
 
     override var placeholder: String? {
+        get {
+            return super.placeholder
+        }
+
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
-        }
-        get {
-            return super.placeholder
         }
     }
 

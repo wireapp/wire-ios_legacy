@@ -35,7 +35,7 @@ final class TopPeopleCellSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 }

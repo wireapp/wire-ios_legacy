@@ -111,6 +111,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let remainingTimeLabel = UILabel()
     let groupRoleIndicator = LabelIndicator(context: .groupRole)
     let externalIndicator = LabelIndicator(context: .external)
+    let federatedIndicator = LabelIndicator(context: .federated)
 
     private var tokens: [Any?] = []
     private var teamObserver: NSObjectProtocol?
@@ -190,6 +191,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
         updateGuestIndicator()
         updateExternalIndicator()
+        updateFederatedIndicator()
         updateGroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
@@ -202,6 +204,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
                                                                           availabilityTitleViewController.view,
                                                                           guestIndicatorStack,
                                                                           externalIndicator,
+                                                                          federatedIndicator,
                                                                           groupRoleIndicator])
 
         stackView.alignment = .center
@@ -261,6 +264,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateExternalIndicator() {
         externalIndicator.isHidden = !user.isExternalPartner
+    }
+
+    private func updateFederatedIndicator() {
+        federatedIndicator.isHidden = !user.isFederated
     }
 
     private func updateGroupRoleIndicator() {

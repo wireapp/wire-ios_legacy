@@ -46,8 +46,8 @@ final class GiphySearchViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testGiphySearchViewControllerIsNotRetainedAfterTimerIsScheduled(){
-        autoreleasepool{
+    func testGiphySearchViewControllerIsNotRetainedAfterTimerIsScheduled() {
+        autoreleasepool {
             // GIVEN
             let searchTerm: String = "apple"
 

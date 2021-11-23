@@ -20,7 +20,8 @@ import Foundation
 import UIKit
 
 final class SearchGroupSelector: UIView, TabBarDelegate {
-    var onGroupSelected: ((SearchGroup) -> Void)? = nil
+
+    var onGroupSelected: ((SearchGroup) -> Void)?
 
     var group: SearchGroup = .people {
         didSet {
@@ -52,6 +53,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

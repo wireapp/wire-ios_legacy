@@ -50,7 +50,19 @@ final class CallHapticsController {
 
     // MARK: - Private
 
+    private func shouldUpdateParticipantsList(_ newParticipants: [CallParticipant]) -> Bool {
+        return !(Array(participants).hasMoreThanTwoConnectedParticipants || newParticipants.hasMoreThanTwoConnectedParticipants)
+    }
+
     private func updateParticipantsList(_ newParticipants: [CallParticipant]) {
+        defer {
+            participants = Set(newParticipants)
+        }
+
+        guard shouldUpdateParticipantsList(newParticipants) else {
+            return
+        }
+
         let updatedHashes = Set(newParticipants.map(\.hashValue))
         let participantsHashes = Set(participants.map(\.hashValue))
 
@@ -67,8 +79,6 @@ final class CallHapticsController {
             Log.haptics.debug("triggering join event")
             hapticGenerator.trigger(event: .join)
         }
-
-        participants = Set(newParticipants)
     }
 
     private func updateParticipantsVideoStateList(_ newParticipants: [CallParticipant]) {

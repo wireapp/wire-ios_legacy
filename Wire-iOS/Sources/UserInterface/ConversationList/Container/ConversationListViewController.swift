@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum ConversationListState {
     case conversationList
@@ -133,7 +134,7 @@ final class ConversationListViewController: UIViewController {
         /// update
         hideNoContactLabel(animated: false)
 
-        viewModel.setupObservers()
+        setupObservers()
 
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
     }
@@ -175,7 +176,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
             self.listContentController.reload()
@@ -193,6 +194,10 @@ final class ConversationListViewController: UIViewController {
     }
 
     // MARK: - setup UI
+
+    private func setupObservers() {
+        viewModel.setupObservers()
+    }
 
     private func setupTopBar() {
         add(topBarViewController, to: contentContainer)
@@ -237,7 +242,7 @@ final class ConversationListViewController: UIViewController {
         bottomBar,
         noConversationLabel,
         onboardingHint,
-        networkStatusViewController.view].forEach() {
+        networkStatusViewController.view].forEach {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 

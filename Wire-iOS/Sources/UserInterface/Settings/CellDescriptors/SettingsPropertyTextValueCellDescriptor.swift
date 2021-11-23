@@ -25,9 +25,7 @@ private let zmLog = ZMSLog(tag: "UI")
 class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsTextCell.self
     var title: String {
-        get {
-            return settingsProperty.propertyName.settingsPropertyLabelText
-        }
+        return settingsProperty.propertyName.settingsPropertyLabelText
     }
     var visible: Bool = true
     let identifier: String?
@@ -48,15 +46,14 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         }
 
         if settingsProperty.enabled {
-            textCell.textInput.isUserInteractionEnabled = true
             textCell.textInput.accessibilityTraits.remove(.staticText)
             textCell.textInput.accessibilityIdentifier = title + "Field"
         } else {
-            textCell.textInput.isUserInteractionEnabled = false
             textCell.textInput.accessibilityTraits.insert(.staticText)
             textCell.textInput.accessibilityIdentifier = title + "FieldDisabled"
         }
 
+        textCell.textInput.isEnabled = settingsProperty.enabled
         textCell.textInput.isAccessibilityElement = true
     }
 

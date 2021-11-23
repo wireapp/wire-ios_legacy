@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireDataModel
 import UIKit
 import WireCommonComponents
@@ -27,27 +26,27 @@ final class FileTransferView: UIView, TransferView {
 
     weak var delegate: TransferViewDelegate?
 
-    let progressView = CircularProgressView()
-    let topLabel = UILabel()
-    let bottomLabel = UILabel()
-    let fileTypeIconView: UIImageView = {
+    private let progressView = CircularProgressView()
+    private let topLabel = UILabel()
+    private let bottomLabel = UILabel()
+    private let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
-    let fileEyeView: UIImageView = {
+    private let fileEyeView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
-    let actionButton = IconButton()
+    private let actionButton = IconButton()
 
-    let labelTextColor: UIColor = .from(scheme: .textForeground)
-    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    let labelFont: UIFont = .smallLightFont
-    let labelBoldFont: UIFont = .smallSemiboldFont
+    private let labelTextColor: UIColor = .from(scheme: .textForeground)
+    private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    private let labelFont: UIFont = .smallLightFont
+    private let labelBoldFont: UIFont = .smallSemiboldFont
 
     private var allViews: [UIView] = []
 
@@ -55,38 +54,38 @@ final class FileTransferView: UIView, TransferView {
         super.init(frame: frame)
         backgroundColor = .from(scheme: .placeholderBackground)
 
-        self.topLabel.numberOfLines = 1
-        self.topLabel.lineBreakMode = .byTruncatingMiddle
-        self.topLabel.accessibilityIdentifier = "FileTransferTopLabel"
+        topLabel.numberOfLines = 1
+        topLabel.lineBreakMode = .byTruncatingMiddle
+        topLabel.accessibilityIdentifier = "FileTransferTopLabel"
 
-        self.bottomLabel.numberOfLines = 1
-        self.bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
+        bottomLabel.numberOfLines = 1
+        bottomLabel.accessibilityIdentifier = "FileTransferBottomLabel"
 
-        self.fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
+        fileTypeIconView.accessibilityIdentifier = "FileTransferFileTypeIcon"
 
-        self.fileEyeView.setTemplateIcon(.eye, size: 8)
+        fileEyeView.setTemplateIcon(.eye, size: 8)
 
-        self.actionButton.contentMode = .scaleAspectFit
+        actionButton.contentMode = .scaleAspectFit
         actionButton.setIconColor(.white, for: .normal)
-        self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
-        self.actionButton.accessibilityIdentifier = "FileTransferActionButton"
+        actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
+        actionButton.accessibilityIdentifier = "FileTransferActionButton"
 
-        self.progressView.accessibilityIdentifier = "FileTransferProgressView"
-        self.progressView.isUserInteractionEnabled = false
+        progressView.accessibilityIdentifier = "FileTransferProgressView"
+        progressView.isUserInteractionEnabled = false
 
-        self.loadingView.translatesAutoresizingMaskIntoConstraints = false
-        self.loadingView.isHidden = true
+        loadingView.isHidden = true
 
-        self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
-        self.allViews.forEach(self.addSubview)
+        allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
+        allViews.forEach(addSubview)
 
-        self.createConstraints()
+        createConstraints()
 
-        var currentElements = self.accessibilityElements ?? []
+        var currentElements = accessibilityElements ?? []
         currentElements.append(contentsOf: [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton])
-        self.accessibilityElements = currentElements
+        accessibilityElements = currentElements
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -96,56 +95,60 @@ final class FileTransferView: UIView, TransferView {
     }
 
     private func createConstraints() {
-        constrain(self, self.topLabel, self.actionButton) { selfView, topLabel, actionButton in
-            topLabel.top == selfView.top + 12
-            topLabel.left == actionButton.right + 12
-            topLabel.right == selfView.right - 12
-        }
+        [topLabel,
+         actionButton,
+         fileTypeIconView,
+         fileEyeView,
+         progressView,
+         bottomLabel,
+         loadingView].prepareForLayout()
 
-        constrain(self.fileTypeIconView, self.actionButton, self) { fileTypeIconView, actionButton, selfView in
-            actionButton.centerY == selfView.centerY
-            actionButton.left == selfView.left + 12
-            actionButton.height == 32
-            actionButton.width == 32
+        NSLayoutConstraint.activate([
+            topLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            topLabel.leftAnchor.constraint(equalTo: actionButton.rightAnchor, constant: 12),
+            topLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
 
-            fileTypeIconView.width == 32
-            fileTypeIconView.height == 32
-            fileTypeIconView.center == actionButton.center
-        }
+            actionButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            actionButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            actionButton.heightAnchor.constraint(equalToConstant: 32),
+            actionButton.widthAnchor.constraint(equalToConstant: 32),
 
-        constrain(self.fileTypeIconView, self.fileEyeView) { fileTypeIconView, fileEyeView in
-            fileEyeView.centerX == fileTypeIconView.centerX
-            fileEyeView.centerY == fileTypeIconView.centerY + 3
-        }
+            fileTypeIconView.widthAnchor.constraint(equalToConstant: 32),
+            fileTypeIconView.heightAnchor.constraint(equalToConstant: 32),
+            fileTypeIconView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+            fileTypeIconView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
 
-        constrain(self.progressView, self.actionButton) { progressView, actionButton in
-            progressView.center == actionButton.center
-            progressView.width == actionButton.width - 2
-            progressView.height == actionButton.height - 2
-        }
+            fileEyeView.centerXAnchor.constraint(equalTo: fileTypeIconView.centerXAnchor),
+            fileEyeView.centerYAnchor.constraint(equalTo: fileTypeIconView.centerYAnchor, constant: 3),
 
-        constrain(self, self.topLabel, self.bottomLabel, self.loadingView) { messageContentView, topLabel, bottomLabel, loadingView in
-            bottomLabel.top == topLabel.bottom + 2
-            bottomLabel.left == topLabel.left
-            bottomLabel.right == topLabel.right
-            loadingView.center == loadingView.superview!.center
-        }
+            progressView.centerXAnchor.constraint(equalTo: actionButton.centerXAnchor),
+            progressView.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
+            progressView.widthAnchor.constraint(equalTo: actionButton.widthAnchor, constant: -2),
+            progressView.heightAnchor.constraint(equalTo: actionButton.heightAnchor, constant: -2),
+
+            bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 2),
+            bottomLabel.leftAnchor.constraint(equalTo: topLabel.leftAnchor),
+            bottomLabel.rightAnchor.constraint(equalTo: topLabel.rightAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
-        self.fileMessage = message
-        guard let fileMessageData = message.fileMessageData
-            else { return }
+        fileMessage = message
+        guard let fileMessageData = message.fileMessageData else {
+            return
+        }
 
         configureVisibleViews(with: message, isInitial: isInitial)
 
         let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size
-
-        let filename = (filepath.lastPathComponent as NSString).deletingPathExtension
         let ext = filepath.pathExtension
 
         let dot = " " + String.MessageToolbox.middleDot + " " && labelFont && labelTextBlendedColor
+
+        guard let filename = message.filename else { return }
         let fileNameAttributed = filename.uppercased() && labelBoldFont && labelTextColor
         let extAttributed = ext.uppercased() && labelFont && labelTextBlendedColor
 
@@ -162,7 +165,7 @@ final class FileTransferView: UIView, TransferView {
             self?.fileTypeIconView.mediaAsset = image
         }
 
-        self.actionButton.isUserInteractionEnabled = true
+        actionButton.isUserInteractionEnabled = true
 
         switch fileMessageData.transferState {
 
@@ -171,21 +174,21 @@ final class FileTransferView: UIView, TransferView {
             let statusText = "content.file.uploading".localized(uppercased: true) && labelFont && labelTextBlendedColor
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + statusText
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
+            topLabel.attributedText = firstLine
+            bottomLabel.attributedText = secondLine
         case .uploaded:
             switch fileMessageData.downloadState {
             case .downloaded, .remote:
                 let firstLine = fileNameAttributed
                 let secondLine = fileSizeAttributed + dot + extAttributed
-                self.topLabel.attributedText = firstLine
-                self.bottomLabel.attributedText = secondLine
+                topLabel.attributedText = firstLine
+                bottomLabel.attributedText = secondLine
             case .downloading:
                 let statusText = "content.file.downloading".localized(uppercased: true) && labelFont && labelTextBlendedColor
                 let firstLine = fileNameAttributed
                 let secondLine = fileSizeAttributed + dot + statusText
-                self.topLabel.attributedText = firstLine
-                self.bottomLabel.attributedText = secondLine
+                topLabel.attributedText = firstLine
+                bottomLabel.attributedText = secondLine
             }
         case .uploadingFailed, .uploadingCancelled:
             let statusText = fileMessageData.transferState == .uploadingFailed ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
@@ -193,12 +196,12 @@ final class FileTransferView: UIView, TransferView {
 
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + attributedStatusText
-            self.topLabel.attributedText = firstLine
-            self.bottomLabel.attributedText = secondLine
+            topLabel.attributedText = firstLine
+            bottomLabel.attributedText = secondLine
         }
 
-        self.topLabel.accessibilityValue = self.topLabel.attributedText?.string ?? ""
-        self.bottomLabel.accessibilityValue = self.bottomLabel.attributedText?.string ?? ""
+        topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
+        bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
     }
 
     fileprivate func configureVisibleViews(with message: ZMConversationMessage, isInitial: Bool) {
@@ -213,7 +216,7 @@ final class FileTransferView: UIView, TransferView {
             visibleViews = [loadingView]
         case .uploading, .downloading:
             visibleViews.append(progressView)
-            self.progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
+            progressView.setProgress(message.fileMessageData!.progress, animated: !isInitial)
         case .uploaded, .downloaded:
             visibleViews.append(contentsOf: [fileTypeIconView, fileEyeView])
         default:
@@ -222,44 +225,44 @@ final class FileTransferView: UIView, TransferView {
 
         if let viewsState = state.viewsStateForFile() {
             visibleViews.append(actionButton)
-            self.actionButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
-            self.actionButton.backgroundColor = viewsState.playButtonBackgroundColor
+            actionButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
+            actionButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
 
-        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
+        updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
     }
 
     override var tintColor: UIColor! {
         didSet {
-            self.progressView.tintColor = self.tintColor
+            progressView.tintColor = tintColor
         }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
+        actionButton.layer.cornerRadius = actionButton.bounds.size.width / 2.0
     }
 
     // MARK: - Actions
 
     @objc func onActionButtonPressed(_ sender: UIButton) {
-        guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
+        guard let message = fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }
 
-        switch(fileMessageData.transferState) {
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != message.fileMessageData!.fileURL {
-                self.delegate?.transferView(self, didSelect: .cancel)
+                delegate?.transferView(self, didSelect: .cancel)
             }
         case .uploadingFailed, .uploadingCancelled:
-            self.delegate?.transferView(self, didSelect: .resend)
+            delegate?.transferView(self, didSelect: .resend)
         case .uploaded:
             if case .downloading = fileMessageData.downloadState {
-                self.progressView.setProgress(0, animated: false)
-                self.delegate?.transferView(self, didSelect: .cancel)
+                progressView.setProgress(0, animated: false)
+                delegate?.transferView(self, didSelect: .cancel)
             } else {
-                self.delegate?.transferView(self, didSelect: .present)
+                delegate?.transferView(self, didSelect: .present)
             }
         }
     }

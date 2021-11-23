@@ -28,24 +28,30 @@ final class AvailabilityStringBuilder: NSObject {
         var fontSize: FontSize = .small
 
         switch style {
-            case .list: do {
+        case .list:
+            do {
                 if let name = user.name {
                     title = name
                 }
 
                 fontSize = .normal
+
                 if color == nil {
                     color = UIColor.from(scheme: .textForeground, variant: .dark)
                 }
             }
-            case .participants: do {
+        case .participants:
+            do {
                 title = (user.name ?? "").localizedUppercase
                 color = UIColor.from(scheme: .textForeground)
             }
-            case .placeholder: do {
-                guard availability != .none else { // Should use the default placeholder string
+        case .placeholder:
+            do {
+                guard availability != .none else {
+                    // Should use the default placeholder string
                     return nil
                 }
+
                 title = "availability.\(availability.canonicalName)".localized.localizedUppercase
             }
         }
@@ -56,7 +62,7 @@ final class AvailabilityStringBuilder: NSObject {
         return attributedText
     }
 
-    static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
+    static func icon(for availability: AvailabilityKind, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard availability != .none, let iconType = availability.iconType
             else { return nil }
 

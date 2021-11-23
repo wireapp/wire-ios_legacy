@@ -20,11 +20,6 @@ import UIKit
 import WireSyncEngine
 import avs
 
-extension AppRootRouter {
-    static let appStateDidTransition = Notification.Name(rawValue: "appStateDidTransition")
-    static let appStateKey = "AppState"
-}
-
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
 
@@ -35,7 +30,6 @@ public class AppRootRouter: NSObject {
     private let navigator: NavigatorProtocol
     private var appStateCalculator: AppStateCalculator
     private var urlActionRouter: URLActionRouter
-    private var deepLinkURL: URL?
 
     private var authenticationCoordinator: AuthenticationCoordinator?
     private var switchingAccountRouter: SwitchingAccountRouter
@@ -63,15 +57,12 @@ public class AppRootRouter: NSObject {
     init(viewController: RootViewController,
          navigator: NavigatorProtocol,
          sessionManager: SessionManager,
-         appStateCalculator: AppStateCalculator,
-         deepLinkURL: URL? = nil) {
+         appStateCalculator: AppStateCalculator) {
         self.rootViewController = viewController
         self.navigator = navigator
         self.sessionManager = sessionManager
         self.appStateCalculator = appStateCalculator
-        self.deepLinkURL = deepLinkURL
-        self.urlActionRouter = URLActionRouter(viewController: viewController,
-                                               url: deepLinkURL)
+        self.urlActionRouter = URLActionRouter(viewController: viewController)
         self.switchingAccountRouter = SwitchingAccountRouter()
         self.quickActionsManager = QuickActionsManager()
         self.foregroundNotificationFilter = ForegroundNotificationFilter()
@@ -102,23 +93,11 @@ public class AppRootRouter: NSObject {
     // MARK: - Public implementation
 
     public func start(launchOptions: LaunchOptions) {
-        guard let deepLinkURL = deepLinkURL else {
-            showInitial(launchOptions: launchOptions)
-            return
-        }
-
-        guard
-            let action = try? URLAction(url: deepLinkURL),
-            action.requiresAuthentication == true
-        else {
-            return
-        }
         showInitial(launchOptions: launchOptions)
     }
 
-    public func openDeepLinkURL(_ deepLinkURL: URL?) -> Bool {
-        guard let url = deepLinkURL else { return false }
-        return urlActionRouter.open(url: url)
+    public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
+        return urlActionRouter.open(url: deepLinkURL)
     }
 
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
@@ -140,6 +119,7 @@ public class AppRootRouter: NSObject {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
+        setupFeatureConfigNotifications()
     }
 
     private func setupAdditionalWindows() {
@@ -153,10 +133,44 @@ public class AppRootRouter: NSObject {
 
     private func setCallingSettings() {
         sessionManager.updateCallNotificationStyleFromSettings()
+        sessionManager.usePackagingFeatureConfig = true
         sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
     }
+
+    // MARK: - Transition
+
+    /// A queue on which we disspatch app state transitions.
+
+    private let appStateTransitionQueue = DispatchQueue(label: "AppRootRouter.appStateTransitionQueue")
+
+    /// A group to encapsulate the entire transition to a new app state.
+
+    private let appStateTransitionGroup = DispatchGroup()
+
+    /// Synchronously enqueues a transition to a new app state.
+    ///
+    /// The transition will only begin once a previous transition has completed.
+    ///
+    /// - Parameters:
+    ///     - appState: The new state to transition to.
+    ///     - completion: A block executed after the transition has completed.
+
+    private func enqueueTransition(to appState: AppState, completion: @escaping () -> Void = {}) {
+        // Perform the wait on a background queue so we don't cause a
+        // deadlock on the main queue.
+        appStateTransitionQueue.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.appStateTransitionGroup.wait()
+
+            DispatchQueue.main.async {
+                self.transition(to: appState, completion: completion)
+            }
+        }
+    }
+
 }
 
 // MARK: - AppStateCalculatorDelegate
@@ -164,18 +178,12 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void) {
-        applicationWillTransition(to: appState)
-        transition(to: appState, completion: completion)
-        notifyTransition(for: appState)
-    }
-
-    private func notifyTransition(for appState: AppState) {
-        NotificationCenter.default.post(name: AppRootRouter.appStateDidTransition,
-                                        object: nil,
-                                        userInfo: [AppRootRouter.appStateKey: appState])
+        enqueueTransition(to: appState, completion: completion)
     }
 
     private func transition(to appState: AppState, completion: @escaping () -> Void) {
+        applicationWillTransition(to: appState)
+
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         let completionBlock = { [weak self] in
@@ -188,6 +196,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
             showBlacklisted(completion: completionBlock)
         case .jailbroken:
             showJailbroken(completion: completionBlock)
+        case .databaseFailure:
+            showDatabaseLoadingFailure(completion: completionBlock)
         case .migrating:
             showLaunchScreen(isLoading: true, completion: completionBlock)
         case .unauthenticated(error: let error):
@@ -210,16 +220,16 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         case .locked:
             // TODO: [John] Avoid singleton.
             screenCurtain.delegate = ZMUserSession.shared()
-            showAppLock()
+            showAppLock(completion: completionBlock)
         }
     }
 
     private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
         switch state {
-        case .unauthenticated:
-            break // do not reset the authentication coordinator for unauthenticated state
+        case .authenticated:
+            authenticationCoordinator = nil
         default:
-            authenticationCoordinator = nil // reset the authentication coordinator when we no longer need it
+            break
         }
     }
 
@@ -238,18 +248,18 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     }
 
     func reload() {
-        transition(to: .headless, completion: { })
-        transition(to: appStateCalculator.appState, completion: { })
+        enqueueTransition(to: .headless)
+        enqueueTransition(to: appStateCalculator.appState)
     }
 }
 
 extension AppRootRouter {
     // MARK: - Navigation Helpers
     private func showInitial(launchOptions: LaunchOptions) {
-        transition(to: .headless, completion: { [weak self] in
+        enqueueTransition(to: .headless) { [weak self] in
             Analytics.shared.tagEvent("app.open")
             self?.sessionManager.start(launchOptions: launchOptions)
-        })
+        }
     }
 
     private func showBlacklisted(completion: @escaping () -> Void) {
@@ -260,6 +270,13 @@ extension AppRootRouter {
 
     private func showJailbroken(completion: @escaping () -> Void) {
         let blockerViewController = BlockerViewController(context: .jailbroken)
+        rootViewController.set(childViewController: blockerViewController,
+                               completion: completion)
+    }
+
+    private func showDatabaseLoadingFailure(completion: @escaping () -> Void) {
+        let blockerViewController = BlockerViewController(context: .databaseFailure,
+                                                          sessionManager: sessionManager)
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }
@@ -281,6 +298,7 @@ extension AppRootRouter {
                 error?.userSessionErrorCode == .accountDeleted,
             let sessionManager = SessionManager.shared
         else {
+            completion()
             return
         }
 
@@ -293,6 +311,7 @@ extension AppRootRouter {
                                                               statusProvider: AuthenticationStatusProvider())
 
         guard let authenticationCoordinator = authenticationCoordinator else {
+            completion()
             return
         }
 
@@ -302,8 +321,6 @@ extension AppRootRouter {
 
         rootViewController.set(childViewController: navigationController,
                                completion: completion)
-
-        presentAlertForDeletedAccountIfNeeded(error)
     }
 
     private func showAuthenticated(isComingFromRegistration: Bool, completion: @escaping () -> Void) {
@@ -312,6 +329,7 @@ extension AppRootRouter {
             let authenticatedRouter = buildAuthenticatedRouter(account: selectedAccount,
                                                                isComingFromRegistration: isComingFromRegistration)
         else {
+            completion()
             return
         }
 
@@ -327,9 +345,10 @@ extension AppRootRouter {
                                completion: completion)
     }
 
-    private func showAppLock() {
+    private func showAppLock(completion: @escaping () -> Void) {
         guard let session = ZMUserSession.shared() else { fatalError() }
-        rootViewController.set(childViewController: AppLockModule.build(session: session))
+        rootViewController.set(childViewController: AppLockModule.build(session: session),
+                               completion: completion)
     }
 
     // MARK: - Helpers
@@ -344,17 +363,17 @@ extension AppRootRouter {
     }
 
     private func setupAnalyticsSharing() {
-        Analytics.shared.selfUser = SelfUser.current
-
         guard
             appStateCalculator.wasUnauthenticated,
-            Analytics.shared.selfUser?.isTeamMember ?? false
+            let selfUser = SelfUser.provider?.selfUser,
+            selfUser.isTeamMember
         else {
             return
         }
 
         TrackingManager.shared.disableCrashSharing = true
         TrackingManager.shared.disableAnalyticsSharing = false
+        Analytics.shared.provider?.selfUser = selfUser
     }
 
     private func buildAuthenticatedRouter(account: Account, isComingFromRegistration: Bool) -> AuthenticatedRouter? {
@@ -373,26 +392,58 @@ extension AppRootRouter {
 // TO DO: THIS PART MUST BE CLENED UP
 extension AppRootRouter {
     private func applicationWillTransition(to appState: AppState) {
-        if case .authenticated = appState {
-            if AppDelegate.shared.shouldConfigureSelfUserProvider {
-                SelfUser.provider = ZMUserSession.shared()
-            }
-        }
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = .accent()
-        colorScheme.variant = Settings.shared.colorSchemeVariant
+        appStateTransitionGroup.enter()
+        configureSelfUserProviderIfNeeded(for: appState)
+        configureColorScheme()
     }
 
     private func applicationDidTransition(to appState: AppState) {
+        if case .unauthenticated(let error) = appState {
+            presentAlertForDeletedAccountIfNeeded(error)
+        }
+
         if case .authenticated = appState {
             authenticatedRouter?.updateActiveCallPresentationState()
-            urlActionRouter.openDeepLink(needsAuthentication: true)
-
+            urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
-        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
+        }
+
+        urlActionRouter.performPendingActions()
+        resetSelfUserProviderIfNeeded(for: appState)
+        resetAuthenticatedRouterIfNeeded(for: appState)
+        appStateTransitionGroup.leave()
+    }
+
+    private func resetAuthenticatedRouterIfNeeded(for appState: AppState) {
+        switch appState {
+        case .authenticated: break
+        default:
+            authenticatedRouter = nil
+        }
+    }
+
+    private func resetSelfUserProviderIfNeeded(for appState: AppState) {
+        guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
+
+        switch appState {
+        case .authenticated: break
+        default:
             SelfUser.provider = nil
         }
+    }
+
+    private func configureSelfUserProviderIfNeeded(for appState: AppState) {
+        guard AppDelegate.shared.shouldConfigureSelfUserProvider else { return }
+
+        if case .authenticated = appState {
+            SelfUser.provider = ZMUserSession.shared()
+        }
+    }
+
+    private func configureColorScheme() {
+        let colorScheme = ColorScheme.default
+        colorScheme.accentColor = .accent()
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
@@ -405,8 +456,14 @@ extension AppRootRouter {
 
         switch reason {
         case .sessionExpired:
-            rootViewController.presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized,
-                                                        message: "account_deleted_session_expired_alert.message".localized)
+            rootViewController.presentAlertWithOKButton(
+                title: L10n.Localizable.AccountDeletedSessionExpiredAlert.title,
+                message: L10n.Localizable.AccountDeletedSessionExpiredAlert.message)
+
+        case .biometricPasscodeNotAvailable:
+            rootViewController.presentAlertWithOKButton(
+                title: L10n.Localizable.AccountDeletedMissingPasscodeAlert.title,
+                message: L10n.Localizable.AccountDeletedMissingPasscodeAlert.message)
 
         case .databaseWiped:
             let wipeCompletionViewController = WipeCompletionViewController()
@@ -419,14 +476,27 @@ extension AppRootRouter {
     }
 }
 
-// MARK: - URLActionRouterDelegete
-extension AppRootRouter: URLActionRouterDelegete {
+// MARK: - URLActionRouterDelegate
+
+extension AppRootRouter: URLActionRouterDelegate {
+
     func urlActionRouterWillShowCompanyLoginError() {
         authenticationCoordinator?.cancelCompanyLogin()
     }
+
+    func urlActionRouterCanDisplayAlerts() -> Bool {
+        switch appStateCalculator.appState {
+        case .authenticated, .unauthenticated:
+            return true
+        default:
+            return false
+        }
+    }
+
 }
 
 // MARK: - ApplicationStateObserving
+
 extension AppRootRouter: ApplicationStateObserving {
     func addObserverToken(_ token: NSObjectProtocol) {
         observerTokens.append(token)
@@ -456,6 +526,7 @@ extension AppRootRouter: ApplicationStateObserving {
 }
 
 // MARK: - ContentSizeCategoryObserving
+
 extension AppRootRouter: ContentSizeCategoryObserving {
     func contentSizeCategoryDidChange() {
         NSAttributedString.invalidateParagraphStyle()
@@ -477,9 +548,17 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 }
 
 // MARK: - AudioPermissionsObserving
+
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
+    }
+}
 
+// MARK: - FeatureConfigChangeObserving
+
+extension AppRootRouter: FeatureConfigObserving {
+    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload) {
+        UIAlertController.showFeatureConfigDidChangeAlert(featureUpdateEvent.name, status: featureUpdateEvent.status)
     }
 }

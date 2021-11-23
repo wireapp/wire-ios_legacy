@@ -25,22 +25,22 @@ final class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControll
 
     var cameraKeyboardWantsToOpenCameraRollHitCount: UInt = 0
     @objc func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
-        cameraKeyboardWantsToOpenCameraRollHitCount = cameraKeyboardWantsToOpenCameraRollHitCount + 1
+        cameraKeyboardWantsToOpenCameraRollHitCount += 1
     }
 
     var cameraKeyboardWantsToOpenFullScreenCameraHitCount: UInt = 0
     @objc func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
-        cameraKeyboardWantsToOpenFullScreenCameraHitCount = cameraKeyboardWantsToOpenFullScreenCameraHitCount + 1
+        cameraKeyboardWantsToOpenFullScreenCameraHitCount += 1
     }
 
     var cameraKeyboardDidSelectVideoHitCount: UInt = 0
     @objc func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval) {
-        cameraKeyboardDidSelectVideoHitCount = cameraKeyboardDidSelectVideoHitCount + 1
+        cameraKeyboardDidSelectVideoHitCount += 1
     }
 
     var cameraKeyboardViewControllerDidSelectImageDataHitCount: UInt = 0
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool, uti: String?) {
-        cameraKeyboardViewControllerDidSelectImageDataHitCount = cameraKeyboardViewControllerDidSelectImageDataHitCount + 1
+        cameraKeyboardViewControllerDidSelectImageDataHitCount += 1
     }
 }
 

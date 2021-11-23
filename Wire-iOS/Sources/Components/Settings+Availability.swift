@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-fileprivate extension Availability {
+fileprivate extension AvailabilityKind {
 
     var dontRemindMeUserDefaultsKey: String {
         return "dont_remind_me_\(canonicalName)"
@@ -29,11 +29,11 @@ fileprivate extension Availability {
 
 extension Settings {
 
-    func shouldRemindUserWhenChanging(_ availability: Availability) -> Bool {
+    func shouldRemindUserWhenChanging(_ availability: AvailabilityKind) -> Bool {
         return defaults.bool(forKey: availability.dontRemindMeUserDefaultsKey) != true
     }
 
-    func dontRemindUserWhenChanging(_ availability: Availability) {
+    func dontRemindUserWhenChanging(_ availability: AvailabilityKind) {
         defaults.set(true, forKey: availability.dontRemindMeUserDefaultsKey)
     }
 

@@ -16,13 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Cartography
 import WireCommonComponents
 import UIKit
 import avs
 import WireDataModel
 
-protocol AudioEffectsPickerDelegate: class {
+protocol AudioEffectsPickerDelegate: AnyObject {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
@@ -34,7 +33,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
     fileprivate var audioPlayerController: AudioPlayerController? {
         didSet {
-            if self.audioPlayerController == .none {
+            if audioPlayerController == .none {
                 let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
                 NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
             }
@@ -56,16 +55,16 @@ final class AudioEffectsPickerViewController: UIViewController {
 
     var selectedAudioEffect: AVSAudioEffectType = .none {
         didSet {
-            if self.selectedAudioEffect == .reverse {
-                self.progressView.samples = self.normalizedLoudness.reversed()
+            if selectedAudioEffect == .reverse {
+                progressView.samples = normalizedLoudness.reversed()
             }
             else {
-                self.progressView.samples = self.normalizedLoudness
+                progressView.samples = normalizedLoudness
             }
 
-            self.setState(.playing, animated: true)
+            setState(.playing, animated: true)
 
-            if let audioPlayerController = self.audioPlayerController, oldValue == self.selectedAudioEffect {
+            if let audioPlayerController = audioPlayerController, oldValue == selectedAudioEffect {
 
                 if audioPlayerController.state == .playing {
                     audioPlayerController.stop()
@@ -76,8 +75,8 @@ final class AudioEffectsPickerViewController: UIViewController {
                 return
             }
 
-            if self.selectedAudioEffect != .none {
-                self.audioPlayerController?.stop()
+            if selectedAudioEffect != .none {
+                audioPlayerController?.stop()
 
                 let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
                 effectPath.deleteFileAtPath()
@@ -88,8 +87,8 @@ final class AudioEffectsPickerViewController: UIViewController {
                 }
             }
             else {
-                self.delegate?.audioEffectsPickerDidPickEffect(self, effect: .none, resultFilePath: self.recordingPath)
-                self.playMedia(self.recordingPath)
+                delegate?.audioEffectsPickerDidPickEffect(self, effect: .none, resultFilePath: recordingPath)
+                playMedia(recordingPath)
             }
         }
     }
@@ -101,6 +100,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         tearDown()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder) is not implemented")
     }
@@ -112,9 +112,9 @@ final class AudioEffectsPickerViewController: UIViewController {
     }
 
     func tearDown() {
-        self.audioPlayerController?.stop()
-        self.audioPlayerController?.tearDown()
-        self.audioPlayerController = .none
+        audioPlayerController?.stop()
+        audioPlayerController?.tearDown()
+        audioPlayerController = .none
     }
 
     fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -126,56 +126,63 @@ final class AudioEffectsPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.createCollectionView()
-        self.progressView.barColor = UIColor.white
-        self.progressView.translatesAutoresizingMaskIntoConstraints = false
+        createCollectionView()
+        progressView.barColor = UIColor.white
+        progressView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.subtitleLabel.textAlignment = .center
-        self.subtitleLabel.font = FontSpec(.small, .light).font!
-        self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.statusBoxView.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.font = FontSpec(.small, .light).font!
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusBoxView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.statusBoxView.addSubview(self.progressView)
-        self.statusBoxView.addSubview(self.subtitleLabel)
-        self.view.addSubview(self.statusBoxView)
-        self.view.addSubview(self.collectionView)
+        statusBoxView.addSubview(progressView)
+        statusBoxView.addSubview(subtitleLabel)
+        view.addSubview(statusBoxView)
+        view.addSubview(collectionView)
 
-        constrain(self.view, self.collectionView, self.progressView, self.subtitleLabel, self.statusBoxView) { view, collectionView, progressView, subtitleLabel, statusBoxView in
-            collectionView.left == view.left
-            collectionView.top == view.top
-            collectionView.right == view.right
+        [collectionView, progressView, subtitleLabel, statusBoxView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
 
-            statusBoxView.top == collectionView.bottom + 8
-            statusBoxView.height == 24
-            statusBoxView.left == collectionView.left + 48
-            statusBoxView.right == collectionView.right - 48
-            statusBoxView.bottom == view.bottom
+          statusBoxView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 8),
+          statusBoxView.heightAnchor.constraint(equalToConstant: 24),
+          statusBoxView.leftAnchor.constraint(equalTo: collectionView.leftAnchor, constant: 48),
+          statusBoxView.rightAnchor.constraint(equalTo: collectionView.rightAnchor, constant: -48),
+          statusBoxView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            progressView.edges == statusBoxView.edges
-            subtitleLabel.edges == statusBoxView.edges
-        }
+          progressView.topAnchor.constraint(equalTo: statusBoxView.topAnchor),
+          progressView.bottomAnchor.constraint(equalTo: statusBoxView.bottomAnchor),
+          progressView.leftAnchor.constraint(equalTo: statusBoxView.leftAnchor),
+          progressView.rightAnchor.constraint(equalTo: statusBoxView.rightAnchor),
+          subtitleLabel.topAnchor.constraint(equalTo: statusBoxView.topAnchor),
+          subtitleLabel.bottomAnchor.constraint(equalTo: statusBoxView.bottomAnchor),
+          subtitleLabel.leftAnchor.constraint(equalTo: statusBoxView.leftAnchor),
+          subtitleLabel.rightAnchor.constraint(equalTo: statusBoxView.rightAnchor)
+        ])
 
-        /// Do not load in tests, which may cause exception break point to break when loading audio assets
+        // Do not load in tests, which may cause exception break point to break when loading audio assets
         if !ProcessInfo.processInfo.isRunningTests {
              loadLevels()
         }
 
-        self.setState(.time, animated: false)
+        setState(.time, animated: false)
     }
 
     fileprivate func createCollectionView() {
-        self.collectionViewLayout.scrollDirection = .vertical
-        self.collectionViewLayout.minimumLineSpacing = 0
-        self.collectionViewLayout.minimumInteritemSpacing = 0
-        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-        self.collectionView.register(AudioEffectCell.self, forCellWithReuseIdentifier: AudioEffectCell.reuseIdentifier)
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.allowsMultipleSelection = false
-        self.collectionView.allowsSelection = true
-        self.collectionView.backgroundColor = UIColor.clear
+        collectionViewLayout.scrollDirection = .vertical
+        collectionViewLayout.minimumLineSpacing = 0
+        collectionViewLayout.minimumInteritemSpacing = 0
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        collectionView.register(AudioEffectCell.self, forCellWithReuseIdentifier: AudioEffectCell.reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.allowsSelection = true
+        collectionView.backgroundColor = UIColor.clear
     }
 
     fileprivate func loadLevels() {
@@ -197,7 +204,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.selectCurrentFilter()
+        selectCurrentFilter()
         delay(2) {
             if self.state == .time {
                 self.setState(.tip, animated: true)
@@ -212,16 +219,16 @@ final class AudioEffectsPickerViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
-            self.lastLayoutSize = self.view.bounds.size
-            self.collectionViewLayout.invalidateLayout()
-            self.collectionView.reloadData()
-            self.selectCurrentFilter()
+        if !lastLayoutSize.equalTo(view.bounds.size) {
+            lastLayoutSize = view.bounds.size
+            collectionViewLayout.invalidateLayout()
+            collectionView.reloadData()
+            selectCurrentFilter()
         }
     }
 
     func setState(_ state: State, animated: Bool) {
-        if self.state == state {
+        if state == state {
             return
         }
 
@@ -230,13 +237,13 @@ final class AudioEffectsPickerViewController: UIViewController {
         let colorScheme = ColorScheme()
         colorScheme.variant = .dark
 
-        switch self.state {
+        switch state {
         case .tip:
-            self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized(uppercased: true)
-            self.subtitleLabel.textColor = colorScheme.color(named: .textForeground)
+            subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized(uppercased: true)
+            subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         case .time:
             let duration: Int
-            if let player = self.audioPlayerController?.player {
+            if let player = audioPlayerController?.player {
                 duration = Int(ceil(player.duration))
             }
             else {
@@ -244,9 +251,9 @@ final class AudioEffectsPickerViewController: UIViewController {
             }
 
             let (seconds, minutes) = (duration % 60, duration / 60)
-            self.subtitleLabel.text = String(format: "%d:%02d", minutes, seconds)
-            self.subtitleLabel.accessibilityValue = self.subtitleLabel.text
-            self.subtitleLabel.textColor = colorScheme.color(named: .textForeground)
+            subtitleLabel.text = String(format: "%d:%02d", minutes, seconds)
+            subtitleLabel.accessibilityValue = subtitleLabel.text
+            subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         default:
             // no-op
             break
@@ -259,7 +266,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
         if animated {
             let options: UIView.AnimationOptions = (state == .playing) ? .transitionFlipFromTop : .transitionFlipFromBottom
-            UIView.transition(with: self.statusBoxView, duration: 0.35, options: options, animations: change, completion: .none)
+            UIView.transition(with: statusBoxView, duration: 0.35, options: options, animations: change, completion: .none)
         }
         else {
             change()
@@ -267,30 +274,30 @@ final class AudioEffectsPickerViewController: UIViewController {
     }
 
     fileprivate func selectCurrentFilter() {
-        if let index = self.effects.firstIndex(where: {
-            $0 == self.selectedAudioEffect
+        if let index = effects.firstIndex(where: {
+            $0 == selectedAudioEffect
         }) {
             let indexPath = IndexPath(item: index, section: 0)
-            self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
     }
 
     fileprivate func playMedia(_ atPath: String) {
-        self.audioPlayerController?.tearDown()
+        audioPlayerController?.tearDown()
 
-        self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
-        self.audioPlayerController?.delegate = self
-        self.audioPlayerController?.play()
-        self.updatePlayProgressTime()
+        audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
+        audioPlayerController?.delegate = self
+        audioPlayerController?.play()
+        updatePlayProgressTime()
     }
 
     @objc fileprivate func updatePlayProgressTime() {
         let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
-        if let player = self.audioPlayerController?.player {
-            self.progressView.progress = Float(player.currentTime / player.duration)
+        if let player = audioPlayerController?.player {
+            progressView.progress = Float(player.currentTime / player.duration)
 
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
-            self.perform(selector, with: .none, afterDelay: 0.05)
+            perform(selector, with: .none, afterDelay: 0.05)
         }
         else {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
@@ -304,12 +311,12 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.effects.count
+        return effects.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AudioEffectCell.reuseIdentifier, for: indexPath) as! AudioEffectCell
-        cell.effect = self.effects[indexPath.item]
+        cell.effect = effects[indexPath.item]
         let lastColumn = ((indexPath as NSIndexPath).item % type(of: self).effectColumns) == type(of: self).effectColumns - 1
         let lastRow = Int(floorf(Float((indexPath as NSIndexPath).item) / Float(type(of: self).effectColumns))) == type(of: self).effectRows - 1
 
@@ -323,7 +330,7 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedAudioEffect = self.effects[indexPath.item]
+        selectedAudioEffect = effects[indexPath.item]
     }
 }
 
@@ -335,7 +342,7 @@ extension AudioEffectsPickerViewController: AudioPlayerControllerDelegate {
 
 }
 
-private protocol AudioPlayerControllerDelegate: class {
+private protocol AudioPlayerControllerDelegate: AnyObject {
 
     func audioPlayerControllerDidFinishPlaying()
 
@@ -392,7 +399,7 @@ private class AudioPlayerController: NSObject, MediaPlayer, AVAudioPlayerDelegat
     }
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if player == self.player {
+        if player == player {
             tearDown()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }

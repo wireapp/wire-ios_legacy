@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-protocol EmojiSectionViewControllerDelegate: class {
+protocol EmojiSectionViewControllerDelegate: AnyObject {
     func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType, scrolling: Bool)
 }
 
@@ -40,7 +40,7 @@ final class EmojiSectionViewController: UIViewController {
         }
     }
 
-    weak var sectionDelegate: EmojiSectionViewControllerDelegate? = nil
+    weak var sectionDelegate: EmojiSectionViewControllerDelegate?
 
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +52,7 @@ final class EmojiSectionViewController: UIViewController {
         selectedType = typesByButton.values.first
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -38,6 +38,7 @@ final class ZClientViewController: UIViewController {
     var legalHoldDisclosureController: LegalHoldDisclosureController?
 
     var userObserverToken: Any?
+    var conferenceCallingUnavailableObserverToken: Any?
 
     private let topOverlayContainer: UIView = UIView()
     private var topOverlayViewController: UIViewController?
@@ -87,6 +88,16 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { [weak self] (note) in
+            guard let change = note.object as? Feature.FeatureChange,
+                  let session = SessionManager.shared,
+                  session.usePackagingFeatureConfig else { return }
+            switch change {
+            case .conferenceCallingIsAvailable:
+                self?.presentConferenceCallingAvailableAlert()
+            }
+        }
 
         setupAppearance()
 
@@ -163,6 +174,26 @@ final class ZClientViewController: UIViewController {
         }
 
         setupUserChangeInfoObserver()
+        setUpConferenceCallingUnavailableObserver()
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
+    override var shouldAutorotate: Bool {
+        return presentedViewController?.shouldAutorotate ?? true
+    }
+
+    // MARK: keyboard shortcut
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.openPeople)]
+    }
+
+    @objc
+    private func openStartUI(_ sender: Any?) {
+        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
     }
 
     private func createBackgroundViewController() {
@@ -172,14 +203,6 @@ final class ZClientViewController: UIViewController {
         conversationListViewController.view.frame = backgroundViewController.view.bounds
 
         wireSplitViewController.leftViewController = backgroundViewController
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
-    override var shouldAutorotate: Bool {
-        return presentedViewController?.shouldAutorotate ?? true
     }
 
     // MARK: Status bar
@@ -300,7 +323,7 @@ final class ZClientViewController: UIViewController {
               focusOnView focus: Bool,
               animated: Bool,
               completion: Completion? = nil) {
-        var conversationRootController: ConversationRootViewController? = nil
+        var conversationRootController: ConversationRootViewController?
         if conversation === currentConversation,
            conversationRootController != nil {
             if let message = message {
@@ -522,7 +545,7 @@ final class ZClientViewController: UIViewController {
                            duration: 0.5,
                            options: .transitionCrossDissolve,
                            animations: { viewController.view.fitInSuperview() },
-                           completion: { (finished) in
+                           completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
@@ -675,6 +698,12 @@ final class ZClientViewController: UIViewController {
                 animated: Bool,
                 completion: Completion? = nil) {
         dismissAllModalControllers(callback: { [weak self] in
+            guard
+                !conversation.isDeleted,
+                conversation.managedObjectContext != nil
+            else {
+                return
+            }
             self?.conversationListViewController.viewModel.select(conversation: conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }

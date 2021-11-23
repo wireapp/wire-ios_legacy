@@ -88,9 +88,9 @@ enum InputBarState: Equatable {
 
     mutating func changeEphemeralState(to newState: EphemeralState) {
         switch self {
-        case .markingDown(_):
+        case .markingDown:
             self = .markingDown(ephemeral: newState)
-        case .writing(_):
+        case .writing:
             self = .writing(ephemeral: newState)
         default:
             return
@@ -144,7 +144,7 @@ final class InputBar: UIView {
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
-    fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
+    fileprivate var rowTopInsetConstraint: NSLayoutConstraint?
 
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
@@ -173,7 +173,7 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView: InvisibleInputAccessoryView? = nil  {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
@@ -302,7 +302,7 @@ final class InputBar: UIView {
             buttonsView.bottom == buttonInnerContainer.bottom
         }
 
-        constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
+        constrain(buttonContainer, buttonInnerContainer) { container, innerContainer in
             container.bottom == container.superview!.bottom
             container.leading == container.superview!.leading
             container.trailing == container.superview!.trailing
@@ -332,7 +332,8 @@ final class InputBar: UIView {
         rightAccessoryStackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
     }
 
-    @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
+    @objc
+    private func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
         guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
     }

@@ -21,7 +21,7 @@ import Cartography
 import UIKit
 import WireDataModel
 
-protocol SearchHeaderViewControllerDelegate: class {
+protocol SearchHeaderViewControllerDelegate: AnyObject {
     func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
 }
@@ -42,6 +42,7 @@ class SearchHeaderViewController: UIViewController {
         return tokenField.filterText
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -110,11 +111,7 @@ class SearchHeaderViewController: UIViewController {
 
         // pin to the bottom of the navigation bar
 
-        if #available(iOS 11.0, *) {
-            tokenFieldContainer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            tokenFieldContainer.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
-        }
+        tokenFieldContainer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
 
         constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
             tokenFieldContainer.bottom == view.bottom

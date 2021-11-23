@@ -64,7 +64,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
-    private var observerToken: Any? = nil
+    private var observerToken: Any?
     private let displaySender: Bool
 
     let message: ZMConversationMessage
@@ -106,12 +106,16 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
+        imagePreview.isAccessibilityElement = true
+        imagePreview.accessibilityIdentifier = "ThumbnailImage_ReplyPreview"
 
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
@@ -155,16 +159,18 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     }
 
     private func updateForMessage() {
+        typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
+        imagePreview.isHidden = message.isRestricted
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             if let imageResource = message.imageMessageData?.image {
@@ -172,8 +178,8 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             }
         }
         else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
+            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             imagePreview.setImageResource(fileMessageData.thumbnailImage)
@@ -187,6 +193,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         updateForMessage()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -206,7 +213,7 @@ final class MessagePreviewView: UIView, Themeable {
 
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
-    private var observerToken: Any? = nil
+    private var observerToken: Any?
     private let displaySender: Bool
 
     let message: ZMConversationMessage
@@ -246,6 +253,8 @@ final class MessagePreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         allViews.prepareForLayout()
@@ -313,6 +322,7 @@ final class MessagePreviewView: UIView, Themeable {
         updateForMessage()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

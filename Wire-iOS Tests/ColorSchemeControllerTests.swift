@@ -47,7 +47,7 @@ final class ColorSchemeControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatColorSchemeIsUpdatedAfterSettingIsChanged(){
+    func testThatColorSchemeIsUpdatedAfterSettingIsChanged() {
         // GIVEN
         let colorScheme = ColorScheme.default
 

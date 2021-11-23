@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol TokenizedTextViewDelegate: class {
+protocol TokenizedTextViewDelegate: AnyObject {
     func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat)
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
 }

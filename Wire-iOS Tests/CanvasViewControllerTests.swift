@@ -35,12 +35,12 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForSendButtonEnalbed(){
+    func testForSendButtonEnalbed() {
         sut.sendButton.isEnabled = true
         verify(view: sut.view)
     }
 
-    func testForEmojiKeyboard(){
+    func testForEmojiKeyboard() {
         sut.emojiButton.sendActions(for: .touchUpInside)
         verify(view: sut.view)
     }

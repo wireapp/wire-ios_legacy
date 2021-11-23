@@ -21,47 +21,122 @@ import XCTest
 
 final class URLActionRouterTests: XCTestCase {
 
-    func testThatDeepLinkIsNotOpened_WhenDeepLinkIsNotValid() {
+    // MARK: Presenting Alerts
+
+    func testThatAlertIsPresented_WhenCanDisplayAlertsReturnsTrue() {
         // GIVEN
-        let invalidDeepLinkUrl = URL(string: "wire://invalidDeepLinkUrl")!
-        let router =  TestableURLActionRouter(viewController: RootViewController(), url: invalidDeepLinkUrl)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
 
         // WHEN
-        router.openDeepLink(needsAuthentication: false)
+        router.presentAlert(alert)
 
         // THEN
-        XCTAssertFalse(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, alert)
     }
 
-    func testThatDeepLinkIsOpened_WhenDeepLinkIsValid() {
+    func testThatAlertIsNotPresented_WhenCanDisplayAlertsReturnsFalse() {
         // GIVEN
-        let validDeepLink = URL(string: "wire://start-sso/wire-5977c2d2-aa60-4657-bad8-4e4ed08e483a")!
-        let router =  TestableURLActionRouter(viewController: RootViewController(), url: validDeepLink)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        delegate.canDisplayAlerts = false
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
 
         // WHEN
-        router.openDeepLink()
+        router.presentAlert(alert)
 
         // THEN
-        XCTAssertTrue(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, nil)
     }
 
-    func testThatDeepLinkIsNotOpened_WhenDeepLinkIsValidAndNeedsAuthentication() {
+    func testThatPendingAlertIsPresented_WhenPerformPendingActionsIsCalled() {
         // GIVEN
-        let validDeepLink = URL(string: "wire://user/user_id")!
-        let router =  TestableURLActionRouter(viewController: RootViewController(), url: validDeepLink)
+        let alert = UIAlertController.alertWithOKButton(message: "Hello World")
+        let viewController = RootViewController()
+        let delegate = MockURLActionRouterDelegate()
+        delegate.canDisplayAlerts = false
+        let router = TestableURLActionRouter(viewController: viewController)
+        router.delegate = delegate
+        router.presentAlert(alert)
 
         // WHEN
-        router.openDeepLink(needsAuthentication: true)
+        delegate.canDisplayAlerts = true
+        router.performPendingActions()
 
         // THEN
-        XCTAssertFalse(router.wasDeepLinkOpened)
+        XCTAssertEqual(router.presentedAlert, alert)
+    }
+
+    // MARK: Navigation
+
+    func testThatNavigationPerformed_WhenAuthenticatedRouterIsAvailable() {
+        // GIVEN
+        let authenticatedRouter = MockAuthenticatedRouter()
+        let router = TestableURLActionRouter(viewController: RootViewController())
+        router.authenticatedRouter = authenticatedRouter
+
+        // WHEN
+        router.navigate(to: .conversationList)
+
+        // THEN
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
+        }
+    }
+
+    func testThatNavigationPerformed_WhenAuthenticatedRouterBecomesAvailable() {
+        // GIVEN
+        let authenticatedRouter = MockAuthenticatedRouter()
+        let router = TestableURLActionRouter(viewController: RootViewController())
+        router.navigate(to: .conversationList)
+
+        // WHEN
+        router.authenticatedRouter = authenticatedRouter
+        router.performPendingActions()
+
+        // THEN
+        guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
+            return XCTFail()
+        }
     }
 }
 
+class MockAuthenticatedRouter: AuthenticatedRouterProtocol {
+
+    func updateActiveCallPresentationState() { }
+
+    func minimizeCallOverlay(animated: Bool, withCompletion completion: Completion?) { }
+
+    var didNavigateToDestination: NavigationDestination?
+    func navigate(to destination: NavigationDestination) {
+        didNavigateToDestination = destination
+    }
+
+}
+
+class MockURLActionRouterDelegate: URLActionRouterDelegate {
+
+    var didCallWillShowCompanyLoginError: Bool = false
+    func urlActionRouterWillShowCompanyLoginError() {
+        didCallWillShowCompanyLoginError = true
+    }
+
+    var canDisplayAlerts: Bool = true
+    func urlActionRouterCanDisplayAlerts() -> Bool {
+        return canDisplayAlerts
+    }
+
+}
+
 class TestableURLActionRouter: URLActionRouter {
-    var wasDeepLinkOpened = false
-    override func open(url: URL) -> Bool {
-        wasDeepLinkOpened = true
-        return wasDeepLinkOpened
+
+    var presentedAlert: UIAlertController?
+    override func internalPresentAlert(_ alert: UIAlertController) {
+        presentedAlert = alert
     }
 }

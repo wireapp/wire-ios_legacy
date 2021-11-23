@@ -48,53 +48,181 @@ final class ProfileViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - .profileViewer  Context
+
     func testForContextProfileViewer() {
+        // GIVEN
         selfUser.teamRole = .member
         mockUser.emailAddress = nil
+
+        // WHEN
         sut = ProfileViewController(user: mockUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
 
+        // THEN
         verify(matching: sut)
     }
 
     func testForContextProfileViewerForSelfUser() {
+        // GIVEN
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
+
+        // WHEN
         sut = ProfileViewController(user: selfUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
 
+        // THEN
         verify(matching: sut)
     }
 
     func testForUserName() {
+        // GIVEN
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
         selfUser.availability = .busy
         selfUser.isTrusted = true
+
+        // WHEN
         sut = ProfileViewController(user: selfUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
         sut.updateShowVerifiedShield()
         let navWrapperController = sut.wrapInNavigationController()
+        sut.viewDidAppear(false)
+
+        // THEN
         verify(matching: navWrapperController)
     }
 
+    func testForContextProfileViewerUnderLegalHold() {
+        // GIVEN
+        selfUser.teamRole = .member
+        mockUser.emailAddress = nil
+        mockUser.isUnderLegalHold = true
+
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        sut.viewDidAppear(false)
+
+        // THEN
+        verify(matching: navWrapperController)
+    }
+
+    func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
+        // GIVEN
+        let selfUserOutsideTeam = MockUser.createSelfUser(name: "John Johnson", inTeam: nil)
+        selfUserOutsideTeam.handle = "johnjohnson"
+        selfUserOutsideTeam.feature(withUserClients: 6)
+
+        mockUser.emailAddress = nil
+        mockUser.isUnderLegalHold = true
+
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUserOutsideTeam,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        sut.viewDidAppear(false)
+
+        // THEN
+        verify(matching: navWrapperController)
+    }
+
+    func testForContextProfileViewerForSelfUserUnderLegalHold() {
+        // GIVEN
+        selfUser.teamRole = .member
+        selfUser.emailAddress = nil
+        selfUser.isUnderLegalHold = true
+
+        // WHEN
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        let navWrapperController = sut.wrapInNavigationController()
+        sut.viewDidAppear(false)
+
+        // THEN
+        verify(matching: navWrapperController)
+    }
+
+    func testItRequestsDataRefeshForTeamMembers() {
+        // GIVEN
+        mockUser.isTeamMember = true
+
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // THEN
+        XCTAssertEqual(mockUser.refreshDataCount, 1)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 1)
+    }
+
+    func testItDoesNotRequestsDataRefeshForNonTeamMembers() {
+        // GIVEN
+        mockUser.isTeamMember = false
+
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // THEN
+        XCTAssertEqual(mockUser.refreshDataCount, 0)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 0)
+    }
+
+    // MARK: - .deviceList  Context
+
+    func testForDeviceListContext() {
+        // WHEN
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testForWrapInNavigationController() {
+        // GIVEN
+        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
+
+        // WHEN
+        let navWrapperController = sut.wrapInNavigationController()
+        sut.viewDidAppear(false)
+
+        // THEN
+        verify(matching: navWrapperController)
+    }
+
+    // MARK: - .oneToOneConversation  Context
+
     func testForContextOneToOneConversation() {
+        // GIVEN
         let selfUser = MockUserType.createSelfUser(name: "Bob", inTeam: UUID())
         mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, mockUser]
 
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(),
+                                    context: .oneToOneConversation)
 
+        // THEN
         verify(matching: sut)
     }
 
     func testForContextOneToOneConversationForPartnerRole() {
+        // GIVEN
         selfUser.teamRole = .partner
         selfUser.canCreateConversation = false
         mockUser.emailAddress = nil
@@ -102,16 +230,17 @@ final class ProfileViewControllerTests: XCTestCase {
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, mockUser]
 
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
+        // WHEN
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(),
+                                    context: .oneToOneConversation)
 
+        // THEN
         verify(matching: sut)
     }
 
-    func testForDeviceListContext() {
-        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
-        verify(matching: sut)
-    }
+    // MARK: - .groupConversation  Context
 
     func testForIncomingRequest() {
         // GIVEN
@@ -125,82 +254,13 @@ final class ProfileViewControllerTests: XCTestCase {
         conversation.activeParticipants = [selfUser, mockUser]
 
         // WHEN
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
-                                    conversation: conversation.convertToRegularConversation(), context: .groupConversation)
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    conversation: conversation.convertToRegularConversation(),
+                                    context: .groupConversation)
 
         // THEN
         verify(matching: sut)
     }
 
-    func testForWrapInNavigationController() {
-        sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
-        let navWrapperController = sut.wrapInNavigationController()
-
-        verify(matching: navWrapperController)
-    }
-
-    func testForContextProfileViewerUnderLegalHold() {
-        selfUser.teamRole = .member
-        mockUser.emailAddress = nil
-        mockUser.isUnderLegalHold = true
-        sut = ProfileViewController(user: mockUser,
-                                    viewer: selfUser,
-                                    context: .profileViewer)
-        let navWrapperController = sut.wrapInNavigationController()
-
-        verify(matching: navWrapperController)
-    }
-
-    func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
-        let selfUserOutsideTeam = MockUser.createSelfUser(name: "John Johnson", inTeam: nil)
-        selfUserOutsideTeam.handle = "johnjohnson"
-        selfUserOutsideTeam.feature(withUserClients: 6)
-
-        mockUser.emailAddress = nil
-        mockUser.isUnderLegalHold = true
-        sut = ProfileViewController(user: mockUser,
-                                    viewer: selfUserOutsideTeam,
-                                    context: .profileViewer)
-        let navWrapperController = sut.wrapInNavigationController()
-
-        verify(matching: navWrapperController)
-    }
-
-    func testForContextProfileViewerForSelfUserUnderLegalHold() {
-        selfUser.teamRole = .member
-        selfUser.emailAddress = nil
-        selfUser.isUnderLegalHold = true
-        sut = ProfileViewController(user: selfUser,
-                                    viewer: selfUser,
-                                    context: .profileViewer)
-        let navWrapperController = sut.wrapInNavigationController()
-
-        verify(matching: navWrapperController)
-    }
-
-    func testItRequestsDataRefeshForTeamMembers() {
-        // Given
-        mockUser.isTeamMember = true
-
-        sut = ProfileViewController(user: mockUser,
-                                    viewer: selfUser,
-                                    context: .profileViewer)
-
-        // Then
-        XCTAssertEqual(mockUser.refreshDataCount, 1)
-        XCTAssertEqual(mockUser.refreshMembershipCount, 1)
-    }
-
-    func testItDoesNotRequestsDataRefeshForNonTeamMembers() {
-        // Given
-        mockUser.isTeamMember = false
-
-        sut = ProfileViewController(user: mockUser,
-                                    viewer: selfUser,
-                                    context: .profileViewer)
-
-        // Then
-        XCTAssertEqual(mockUser.refreshDataCount, 0)
-        XCTAssertEqual(mockUser.refreshMembershipCount, 0)
-    }
 }

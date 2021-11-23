@@ -85,7 +85,7 @@ extension UIViewController {
             case .accountLimitReached:
                 message = "error.user.account_limit_reached".localized
             case .unknownError:
-                fallthrough
+                message = "error.user.unkown_error".localized
             default:
                 message = "error.user.unkown_error".localized
             }

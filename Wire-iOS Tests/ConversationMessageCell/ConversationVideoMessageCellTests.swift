@@ -1,4 +1,4 @@
-//
+// 
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -216,6 +216,15 @@ final class ConversationVideoMessageCellTests: XCTestCase {
         message.backingFileMessageData.fileURL = Bundle.main.bundleURL
 
         verify(message: message, waitForImagesToLoad: true)
+    }
+
+    // MARK: - Receiving restrictions
+
+    func testRestrictionMessageCell() {
+        message.backingIsRestricted = true
+        message.backingFileMessageData.mimeType = "video/mp4"
+
+        verify(message: message, allColorSchemes: true)
     }
 
 }

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Kontakti";
 "peoplepicker.header.contacts_personal" = "Osobni kontakti";
 "peoplepicker.header.directory" = "Povežite se";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Dodaj sudionike";
 "peoplepicker.group.title.plural" = "Dodaj sudionike (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Nema kontakata.";
 
-"peoplepicker.no_matching_results_title" = "0 rezultata.";
-"peoplepicker.no_matching_results_message" = "Unesi potpunu adresu e-pošte.";
 "peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Pošalji pozivnicu";
 "peoplepicker.no_matching_results.action.share_contacts" = "Podijeli kontakte";
+"peoplepicker.no_matching_results.action.learn_more" = "Saznaj više";
+"peoplepicker.no_matching_results.action.manage_services" = "Upravljanje uslugama";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Molimo, unesite valjanu adresu e-pošte";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "0 rezultata.";
-"peoplepicker.no_matching_results_services_title" = "Usluge su pomagači koji mogu poboljšati Vaš tijek rada. Da biste ih omogućili, obratite se administratoru.";
-"peoplepicker.no_matching_results_services_admin_title" = "Usluge su pomagači koji mogu poboljšati Vaš tijek rada.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Upravljanje uslugama";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Unesi potpunu adresu e-pošte ili";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "podijeli kontakte";
-
-"peoplepicker.share_contacts.no_results.title" = "Pronađite ljude pomoću imena ili adrese e-pošte";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "0 rezultata.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Pozivnica poslana";
 "peoplepicker.send_invitation.dialog.message" = "Ovo se može upotrebljavati dva tjedna. Pošalji nov zahtjev ako ovaj istekne.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Stvori sobu za goste";
 "peoplepicker.quick-action.admin-services" = "Upravljanje uslugama";
 
-"add_participants.all_contacts_added" = "Svi su ovdje.";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "Grupa je puna";
 "add_participants.alert.message.new_conversation" = "Do %d ljudi može se pridružiti razgovoru.";
@@ -289,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Verificirano";
 "conversation.input_bar.placeholder" = "Upiši poruku";
-"conversation.input_bar.placeholder_ephemeral" = "Odgođeno slanje";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Povuci prema gore za slanje poruke";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Lagano dodirnite da bi se poruka poslala";
@@ -310,9 +307,11 @@
 "conversation.connection_view.in_address_book" = "u kontaktima";
 
 "conversation.input_bar.shortcut.send" = "Pošalji poruku";
-"conversation.input_bar.shortcut.newline" = "Umetanje retka";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Uredi posljednju poruku";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Odustani";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "Poruka preduga";
 "conversation.input_bar.message_too_long.message" = "Možete poslati poruke dužine do %d znakova.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "The message is deleted.";
 
-"conversation.guests_present" = "Gosti su prisutni";
-"conversation.services_present" = "Usluge su aktivne";
-"conversation.guests_services_present" = "Gosti i usluge su prisutni";
+// Conversation banner
+"conversation.banner.guests_present" = "**Guests** are present";
+"conversation.banner.services_present" = "**Services** are active";
+"conversation.banner.externals_present" = "**Externals** are present";
+"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
+"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
+"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
+"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+
 "conversation.action.search" = "Traži";
 
 // Reply message preview
@@ -439,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ razgovara s %@";
 "content.system.conversation.other.added" = "%@ je uključio / uključila %@";
 "content.system.conversation.other.removed" = "%@ je isključio / isključila %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ je otišao / otišla";
 
 "content.system.conversation.you.started" = "%@ razgovara s %@";
 "content.system.conversation.you.added" = "%@ je uključio / uključila %@";
 "content.system.conversation.you.removed" = "%@ je isključio / isključila %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ je otišao / otišla";
 "content.system.conversation.team.member-leave" = "%@ je uklonjen iz tima.";
 "content.system.conversation.guest.joined" = "%@ se pridružio";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Usluge i ljudi van Vašeg tima mogu se pridružiti razgovoru.";
 "content.system.conversation.invite.button" = "Pozovi ljude";
@@ -614,6 +623,9 @@
 "connection_request.send_button_title" = "Povežite se";
 "inbox.connection_request.connect_button_title" = "Povežite se";
 "inbox.connection_request.ignore_button_title" = "Ignoriraj";
+"error.connection.title" = "Pogreška";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Nešto ne funkcionira dobro. Molimo, pokušajte ponovno";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire treba pristup Vašim slikama";
@@ -638,9 +650,9 @@
 "voice.accept_button.title" = "Prihvati";
 "voice.decline_button.title" = "Odbij";
 "voice.hang_up_button.title" = "Poklopi";
-"voice.mute_button.title" = "Isključi zvuk";
-"voice.video_button.title" = "Videozapis";
-"voice.flip_video_button.title" = "Okreni";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Zvučnik";
 "voice.cancel_button.title" = "Odustani";
 "voice.call_button.title" = "Poziv";
@@ -672,16 +684,20 @@
 "call.status.constant_bitrate" = "Konstanta bitna brzina";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Prikaži sve (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Sudionici";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
 "call.overlay.switch_to.all" = "ALL";
 
-"call.grid.no_active_speakers" = "No active speakers...";
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video pauziran";
-
 "call.video.too_many.alert.title" = "Previše ljudi za video";
 "call.video.too_many.alert.message" = "Video pozivi rade samo u grupama od 4 i manje.";
 
@@ -711,7 +727,7 @@
 "call.announcement.incoming" = "Dolazni poziv od %@";
 "call.actions.label.toggle_mute_on" = "Isključi zvuk";
 "call.actions.label.toggle_mute_off" = "Uključi zvuk";
-"call.actions.label.flip_camera" = "Okreni kameru";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Omogući zvučnik";
 "call.actions.label.toggle_speaker_off" = "Onemogući zvučnik";
 "call.actions.label.accept_call" = "Prihvati poziv";
@@ -867,6 +883,8 @@
 "profile.details.guest" = "Gost";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Korisničko Ime";
 "profile_view.accessibility.name" = "Zaslonsko ime";
@@ -904,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Gosti i usluge";
 "group_details.guest_options_cell.enabled" = "Uključeno";
 "group_details.guest_options_cell.disabled" = "Isključi";
-"group_details.timeout_options_cell.title" = "Vremenski određene poruke";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Obavijesti";
 "group_details.notification_options_cell.description" = "Možete biti obaviješteni o svemu (uključujući audio i video pozive) ili samo kada Vas netko spomene ili odgovori na neku od Vaših poruka.";
 "group_details.receipt_options_cell.title" = "Potvrde o čitanju";
@@ -918,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Legal hold subjects";
 "legalhold.header.title" = "Legal Hold";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Legal hold details";
 
 
@@ -994,6 +1012,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Korisničko Ime";
 "self.settings.account_section.add_handle.title" = "Dodajte korisničko ime";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Drugi Vas mogu pronaći s ovim detaljima.";
 "self.settings.account_details_group.personal.footer" = "Ova informacija nije vidjljiva.";
@@ -1113,7 +1133,7 @@
 "self.settings.callkit.description" = "Pokaži pozive s Wirea na zaključanom zaslonu i u povijesti poziva na iOS uređaju. Ako je iCloud aktivan, povijest poziva se dijeli s Appleom.";
 
 "self.settings.vbr.title" = "Kodiranje promjenjivom bitnom brzinom (VBR)";
-"self.settings.vbr.description" = "Ova opcija omogućava da glasovni pozivi koriste manje podataka i bolje rade na sporijim mrežama. Za isključivanje koristite kodiranje konstantnom bitnom brzinom (CBE).";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Poziv s Wirea";
 "self.settings.sound_menu.sounds.wire_message" = "Poruka s Wirea";
@@ -1605,6 +1625,9 @@
 "error.conversation.cannot_remove" = "Neuspješno uklanjanje sudionika";
 "error.conversation.too_many_members" = "Razgovor je pun";
 "error.conversation.offline" = "Postoji problem s Vašom Internet vezom. Molimo provjerite da li radi.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Dodirnite boju da biste promjenili veličinu kista";
 
@@ -1617,14 +1640,55 @@
 "push.notification.new_message" = "Nova poruka";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Potrebno je ažuriranje";
 "force.update.message" = "Propuštate najnovije karakteristike aplikacije.\nPronađite posljednju verziju Wirea u App Storeu.";
 "force.update.ok_button" = "Idite u App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Idite na postavke";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Nastavi";
 
 // Third Party
 "giphy.conversation.message" = "%@ · putem giphy.com";
@@ -1641,7 +1705,7 @@
 "invite_banner.invite_button_title" = "Pozovi više ljudi";
 
 // Collections
-"collections.section.images.title" = "Slike";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Dokumenti";
 "collections.section.videos.title" = "Videozapisi";
 "collections.section.links.title" = "Poveznice";
@@ -1720,6 +1784,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
 "url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Pridruži se";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire ne može pronaći ovu osobu.";
@@ -1775,18 +1846,21 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Pending approval.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
 "legalhold_request.alert.error_wrong_password" = "Pogrešna lozinka";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Legal Hold is Active";
 "legalhold_active.alert.learn_more" = "Saznajte više";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
@@ -1849,9 +1923,15 @@
 
 // MARK: - App lock module
 
-"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
-"appLockModule.message.touchID" = "Unlock Wire with Touch ID or Passcode";
-"appLockModule.message.passcode" = "Unlock Wire with Passcode";
+"appLockModule.message.faceID" = "Otključaj Wire s Face ID ili šifrom";
+"appLockModule.message.touchID" = "Otključaj Wire s Touch ID ili šifrom";
+"appLockModule.message.passcode" = "Otključaj Wire s šifrom";
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
-"appLockModule.unlockButton.title" = "Unlock";
+"appLockModule.unlockButton.title" = "Otključaj";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Kontakti";

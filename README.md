@@ -43,9 +43,9 @@ These differences are:
 ### Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
 
-- OS X 10.15 or newer
-- Xcode 11.4 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
-- Carthage 0.34.0 or newer (https://github.com/Carthage/Carthage)
+- OS X 11.4 or newer
+- Xcode 12.4 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
+- Carthage 0.38.0 or newer (https://github.com/Carthage/Carthage)
 
 The setup script will automatically check for you that you satisfy these requirements
 
@@ -57,7 +57,7 @@ The setup script will automatically check for you that you satisfy these require
 
 These steps allow you to build only the Wire umbrella project, pulling in all other Wire frameworks with Carthage. If you want to modify the source/debug other Wire frameworks, you can open the `Carthage/Checkouts` subfolder and open the individual projects for each dependency there.
 
-You can then use `carthage build --platform iOS` to rebuild the dependency and use it in the umbrella project.
+You can then use `carthage bootstrap --platform ios --use-xcframeworks` to rebuild the dependency and use it in the umbrella project.
 
 ### Known limitations
 

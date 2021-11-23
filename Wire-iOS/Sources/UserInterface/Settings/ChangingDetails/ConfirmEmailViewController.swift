@@ -17,17 +17,20 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 import WireSyncEngine
 
-protocol ConfirmEmailDelegate: class {
+protocol ConfirmEmailDelegate: AnyObject {
     func resendVerification(inController controller: ConfirmEmailViewController)
     func didConfirmEmail(inController controller: ConfirmEmailViewController)
 }
 
 extension UITableView {
     var autolayoutTableHeaderView: UIView? {
+        get {
+            return self.tableHeaderView
+        }
+
         set {
             if let newHeader = newValue {
                 newHeader.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +41,7 @@ extension UITableView {
                     newHeader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
                     newHeader.widthAnchor.constraint(equalTo: self.widthAnchor),
                     newHeader.topAnchor.constraint(equalTo: self.topAnchor)
-                    ])
+                ])
 
                 self.tableHeaderView?.layoutIfNeeded()
                 self.tableHeaderView = newHeader
@@ -46,9 +49,6 @@ extension UITableView {
             else {
                 self.tableHeaderView = nil
             }
-        }
-        get {
-            return self.tableHeaderView
         }
     }
 }
@@ -67,6 +67,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

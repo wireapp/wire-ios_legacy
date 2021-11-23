@@ -22,40 +22,27 @@ import WireSyncEngine
 
 fileprivate extension VoiceChannel {
     func accessoryType() -> CallInfoViewControllerAccessoryType {
-        if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
-            return .none
-        }
-
         switch state {
-        case .incoming(video: false, shouldRing: true, degraded: _):
-            return initiator.map { .avatar(HashBox(value: $0)) } ?? .none
-        case .incoming(video: true, shouldRing: true, degraded: _):
-            return .none
-        case .answered, .establishedDataChannel, .outgoing:
-            if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
-                return .avatar(HashBox(value: remoteParticipant))
-            } else {
-                return .none
-            }
+        case .incoming(_, shouldRing: true, _),
+             .answered,
+             .establishedDataChannel,
+             .outgoing:
+            guard !videoState.isSending,
+                  let initiator = initiator
+            else { return .none }
+            return .avatar(HashBox(value: initiator))
         case .unknown,
              .none,
              .terminating,
              .mediaStopped,
              .established,
              .incoming(_, shouldRing: false, _):
-            if conversation?.conversationType == .group {
-                return .participantsList(sortedConnectedParticipants().map {
-                    .callParticipant(user: HashBox(value: $0.user),
-                                     videoState: $0.state.videoState,
-                                     microphoneState: $0.state.microphoneState,
-                                     activeSpeakerState: $0.activeSpeakerState)
-                })
-
-            } else if let remoteParticipant = conversation?.connectedUser {
-                return .avatar(HashBox(value: remoteParticipant))
-            } else {
-                return .none
-            }
+            return .participantsList(sortedConnectedParticipants().map {
+                .callParticipant(user: HashBox(value: $0.user),
+                                 videoState: $0.state.videoState,
+                                 microphoneState: $0.state.microphoneState,
+                                 activeSpeakerState: $0.activeSpeakerState)
+            })
         }
     }
 
@@ -68,20 +55,15 @@ fileprivate extension VoiceChannel {
 
     func canToggleMediaType(with permissions: CallPermissionsConfiguration,
                             selfUser: UserType) -> Bool {
-        switch state {
-        case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
-            return false
-        default:
-            guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
+        guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
 
-            // The user can only re-enable their video if the conversation allows GVC
-            if videoState == .stopped {
-                return canUpgradeToVideo(selfUser: selfUser)
-            }
-
-            // If the user already enabled video, they should be able to disable it
-            return true
+        // The user can only re-enable their video if the conversation allows GVC
+        if videoState == .stopped {
+            return canUpgradeToVideo(selfUser: selfUser)
         }
+
+        // If the user already enabled video, they should be able to disable it
+        return true
     }
 
     func mediaState(with permissions: CallPermissionsConfiguration) -> MediaState {
@@ -112,14 +94,13 @@ fileprivate extension VoiceChannel {
 
 }
 
-struct CallInfoConfiguration: CallInfoViewControllerInput  {
+struct CallInfoConfiguration: CallInfoViewControllerInput {
     fileprivate static let maxActiveSpeakers: Int = 4
 
     let permissions: CallPermissionsConfiguration
     let isConstantBitRate: Bool
     let title: String
     let isVideoCall: Bool
-    let variant: ColorSchemeVariant
     let canToggleMediaType: Bool
     let isMuted: Bool
     let mediaState: MediaState
@@ -131,9 +112,11 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let mediaManager: AVSMediaManagerInterface
     let networkQuality: NetworkQuality
     let userEnabledCBR: Bool
+    let isForcedCBR: Bool
     let callState: CallStateExtending
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
+    let variant: ColorSchemeVariant
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -156,8 +139,8 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
         isVideoCall = voiceChannel.internalIsVideoCall
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
+        isForcedCBR = SecurityFlags.forceConstantBitRateCalls.isEnabled
         title = voiceChannel.conversation?.displayName ?? ""
-        variant = ColorScheme.default.variant
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
@@ -165,6 +148,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         callState = voiceChannel.state
         videoGridPresentationMode = voiceChannel.videoGridPresentationMode
         allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
+        variant = ColorScheme.default.variant
     }
 
     // This property has to be computed in order to return the correct call duration
@@ -181,7 +165,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
 
 }
 
-fileprivate struct VoiceChannelSnapshot {
+private struct VoiceChannelSnapshot {
     let callerName: String?
     let state: CallState
     let callStartDate: Date
@@ -269,10 +253,7 @@ fileprivate extension VoiceChannel {
 
     var allowPresentationModeUpdates: Bool {
         return connectedParticipants.count > 2
-            && internalIsVideoCall
-            && isActiveSpeakersTabEnabled
     }
-    private var isActiveSpeakersTabEnabled: Bool { true }
 }
 
 extension VoiceChannel {

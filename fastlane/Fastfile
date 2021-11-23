@@ -5,6 +5,12 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
+        # Saving `Carthage bootstrap` running time by reusing the Cathage artifacts.
+        # When the Cathage framworks is not pre-built(e.g. in feature branch), this option can save the time of building.
+        # When cache_carthage = YES, 
+        # copy Carthage folder form ~/tmp/cache/Carthage before running setup.sh and 
+        # copy it back after at the end of this lane
+        cache_carthage = options[:cache_carthage]
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -36,9 +42,19 @@ platform :ios do
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
+
+            if cache_carthage == "Yes"
+                sh "cd .. && cp -R ~/tmp/cache/Carthage ./Carthage || echo ⚠️ Carthage cache not exist, skip copying"
+            end
+
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
+
+            if cache_carthage == "Yes"
+                sh "rm -rf ~/tmp/cache/Carthage"
+                sh "cd .. && cp -R ./Carthage ~/tmp/cache/Carthage"
+            end
         end
     end
 
@@ -71,14 +87,16 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "13.4.1"
+        ios_version = "15.0"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
-            if xcode_version == "11.4"
-                ios_version = "13.4"
-            elsif xcode_version == "11.4.1"
-                ios_version = "13.4.1"
+            if xcode_version == "13.0"
+                ios_version = "15.0"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
             end
         end
 
@@ -134,6 +152,32 @@ platform :ios do
                 xcargs: "BUILD_NUMBER=#{build.build_number}"
             )
         end
+    end
+
+    desc "Build for release to AppStore without symbols"
+    lane :build_for_release_without_symbols do |options|
+        xcode_version = options[:xcode_version]
+
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
+        end
+
+        build = Build.new(options: options)
+
+        build_app(
+            scheme: "Wire-iOS",
+            configuration: build.configuration,
+            export_method: build.export_method,
+            export_options: {"iCloudContainerEnvironment": "Production"},
+            derived_data_path: "DerivedData",
+            archive_path: build.archive_path(with_filename: true),
+            buildlog_path: build.build_path,
+            output_directory: build.artifact_path(with_filename: false),
+            output_name: build.filename,
+            include_bitcode: false,
+            include_symbols: false,
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
+        )
     end
 
     desc "Upload to AppStore"
@@ -271,9 +315,6 @@ platform :ios do
         codecov = "./codecov -J '^Wire$' -D ../DerivedData"
 
         if ENV["BUILD_REASON"] == "PullRequest"
-            if ENV["CODECOV_TOKEN"].nil?
-                UI.user_error! "codecov.io token missing for current repository. Set it in CODECOV_TOKEN environment variable"
-            end
 
             if ENV["BUILD_SOURCEBRANCH"].nil?
                 UI.user_error! "Source branch env variable missing. Set BUILD_SOURCEBRANCH to fix it"
@@ -281,11 +322,10 @@ platform :ios do
 
             pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
+            codecov << " -P #{pull_request_number}"
         end
 
         sh codecov
-
     end
 end
 
@@ -501,5 +541,4 @@ class Build
             "Wire-iOS-Release-Candidate"
         end
     end
-
 end

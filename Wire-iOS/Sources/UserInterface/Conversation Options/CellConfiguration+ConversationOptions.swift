@@ -17,11 +17,12 @@
 //
 
 import Foundation
+import UIKit
 
 extension CellConfiguration {
 
     static func groupAdminToogle(get: @escaping () -> Bool,
-                                 set: @escaping (Bool) -> Void) -> CellConfiguration {
+                                 set: @escaping (Bool, UIView?) -> Void) -> CellConfiguration {
         return .iconToggle(
             title: "profile.profile.group_admin_options.title".localized,
             subtitle: "",
@@ -34,7 +35,7 @@ extension CellConfiguration {
         )
     }
 
-    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool) -> Void) -> CellConfiguration {
+    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void) -> CellConfiguration {
         return .iconToggle(
             title: "guest_room.allow_guests.title".localized,
             subtitle: "guest_room.allow_guests.subtitle".localized,

@@ -52,7 +52,7 @@ final class BackgroundViewControllerTests: XCTestCase {
         // make sure view is loaded
         _ = sut.view
         // WHEN
-        /// TODO: hacks to make below line passes
+        // TODO: hacks to make below line passes
         selfUser.accentColorValue = selfUser.accentColorValue
 
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup], timeout: 10))

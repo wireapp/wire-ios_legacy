@@ -31,7 +31,7 @@ final class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelega
     }
     var didFillInput: Int = 0
     func didFillInput(inputField: CharacterInputField, text: String) {
-        didFillInput = didFillInput + 1
+        didFillInput += 1
     }
 }
 

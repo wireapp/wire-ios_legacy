@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import UIKit
 
 struct ModalPresentationConfiguration {
@@ -110,14 +109,15 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
 }
 
 final private class ModalInteractionController: UIPercentDrivenInteractiveTransition {
-
     var interactionInProgress = false
     private var shouldCompleteTransition = false
     private weak var presentationViewController: ModalPresentationViewController!
 
     func setupWith(viewController: ModalPresentationViewController) {
         presentationViewController = viewController
-        viewController.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didPan))
+        panGestureRecognizer.maximumNumberOfTouches = 1
+        viewController.view.addGestureRecognizer(panGestureRecognizer)
     }
 
     @objc
@@ -153,11 +153,13 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     private let interactionController = ModalInteractionController()
     private let configuration: ModalPresentationConfiguration
 
-    init(viewController: UIViewController, configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3)) {
+    init(viewController: UIViewController,
+         configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3),
+         enableDismissOnPan: Bool = true) {
         self.viewController = viewController
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
-        setupViews(with: viewController)
+        setupViews(with: viewController, enableDismissOnPan: enableDismissOnPan)
         createConstraints()
         modalPresentationCapturesStatusBarAppearance = true
     }
@@ -175,13 +177,11 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         return viewController
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
-    private func setupViews(with viewController: UIViewController) {
+    private func setupViews(with viewController: UIViewController, enableDismissOnPan: Bool) {
         transitioningDelegate = self
-        interactionController.setupWith(viewController: self)
+        if enableDismissOnPan {
+            interactionController.setupWith(viewController: self)
+        }
         modalPresentationStyle = .overFullScreen
         view.addSubview(dimView)
         dimView.backgroundColor = .clear
@@ -192,9 +192,18 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     }
 
     private func createConstraints() {
-        constrain(view, viewController.view, dimView) { view, childViewControllerView, dimView in
-            childViewControllerView.edges == view.edges
-            dimView.edges == view.edges
+        if let childViewControllerView = viewController.view {
+        [childViewControllerView, dimView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          childViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
+          childViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          childViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          childViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          dimView.topAnchor.constraint(equalTo: view.topAnchor),
+          dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          dimView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          dimView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
         }
     }
 
@@ -204,11 +213,11 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return ModalPresentationTransition(configuration: configuration)
+        return nil
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return ModalDismissalTransition(configuration: configuration)
+        return nil
     }
 
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

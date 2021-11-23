@@ -34,7 +34,7 @@ final class ConfirmEmailViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testConfirmationSentToEmail(){
+    func testConfirmationSentToEmail() {
         self.verify(view: sut.view)
     }
 }

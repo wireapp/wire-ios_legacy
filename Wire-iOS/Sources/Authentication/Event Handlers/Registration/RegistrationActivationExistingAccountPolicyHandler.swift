@@ -19,6 +19,8 @@
 import Foundation
 import WireDataModel
 
+private typealias AlertStrings = L10n.Localizable.Registration.Alert
+
 /**
  * Handles the case that the user tries to register an account with a phone/e-mail that is already registered.
  */
@@ -55,27 +57,16 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
 
         switch credentials {
         case .email(let email):
-            let prefilledCredentials = AuthenticationPrefilledCredentials(
-                primaryCredentialsType: .email, credentials:
-                LoginCredentials(emailAddress: email, phoneNumber: nil, hasPassword: true, usesCompanyLogin: false), isExpired: false
-            )
-
-            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
-            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [.transition(.provideCredentials(.email, prefilledCredentials), mode: .replace)])
-
-            let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
-                                                       message: "registration.alert.account_exists.message_email".localized,
-                                                       actions: [changeEmailAction, loginAction])
+            let alert = AuthenticationCoordinatorAlert(title: AlertStrings.AccountExists.title,
+                                                       message: AlertStrings.AccountExists.messageEmail,
+                                                       actions: [.changeEmail, .login(email: email)])
 
             actions.append(.presentAlert(alert))
 
         case .phone(let number):
-            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_phone_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
-            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: number)])
-
-            let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
-                                                       message: "registration.alert.account_exists.message_phone".localized,
-                                                       actions: [changePhoneAction, loginAction])
+            let alert = AuthenticationCoordinatorAlert(title: AlertStrings.AccountExists.title,
+                                                       message: AlertStrings.AccountExists.messagePhone,
+                                                       actions: [.changePhone, .login(phoneNumber: number)])
 
             actions.append(.presentAlert(alert))
         }
@@ -83,4 +74,35 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
         return actions
     }
 
+}
+
+private extension AuthenticationCoordinatorAlertAction {
+
+    static var changeEmail: Self {
+        Self.init(title: AlertStrings.changeEmailAction,
+                  coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
+    }
+
+    static var changePhone: Self {
+        Self.init(title: AlertStrings.changePhoneAction,
+                  coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
+    }
+
+    static func login(email: String) -> Self {
+        let credentials = LoginCredentials(emailAddress: email,
+                                           phoneNumber: nil,
+                                           hasPassword: true,
+                                           usesCompanyLogin: false)
+
+        let prefilledCredentials = AuthenticationPrefilledCredentials(primaryCredentialsType: .email,
+                                                                      credentials: credentials,
+                                                                      isExpired: false)
+        return Self.init(title: AlertStrings.changeSigninAction,
+                         coordinatorActions: [.transition(.provideCredentials(.email, prefilledCredentials), mode: .replace)])
+    }
+
+    static func login(phoneNumber: String) -> Self {
+        Self.init(title: AlertStrings.changeSigninAction,
+                  coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: phoneNumber)])
+    }
 }

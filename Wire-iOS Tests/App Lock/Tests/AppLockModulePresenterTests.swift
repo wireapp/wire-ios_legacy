@@ -82,6 +82,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_CustomPasscodeNeeded() {
         // When
         sut.handleResult(.customPasscodeNeeded)
@@ -91,6 +92,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(router.actions, [.inputPasscode])
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_AuthenticationDenied() {
         // When
         sut.handleResult(.authenticationDenied(.faceID))
@@ -99,6 +101,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(view.models, [.locked(.faceID)])
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_AuthenticationUnavailable() {
         // When
         sut.handleResult(.authenticationUnavailable)
@@ -114,7 +117,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.viewDidAppear)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: true)])
     }
 
     func test_UnlockButtonTapped() {
@@ -122,7 +125,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.unlockButtonTapped)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: true)])
     }
 
     func test_PasscodeSetupCompleted() {
@@ -162,7 +165,7 @@ final class AppLockModulePresenterTests: XCTestCase {
         sut.processEvent(.applicationWillEnterForeground)
 
         // Then
-        XCTAssertEqual(interactor.requests, [.initiateAuthentication])
+        XCTAssertEqual(interactor.requests, [.initiateAuthentication(requireActiveApp: false)])
     }
 
 }

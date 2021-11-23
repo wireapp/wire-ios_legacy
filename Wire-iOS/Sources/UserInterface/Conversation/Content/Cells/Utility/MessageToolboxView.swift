@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 
 /// Observes events from the message toolbox.
-protocol MessageToolboxViewDelegate: class {
+protocol MessageToolboxViewDelegate: AnyObject {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ sender: UIView?)
@@ -29,7 +29,7 @@ protocol MessageToolboxViewDelegate: class {
 }
 
 private extension UILabel {
-    static func createSeparatorLabel() -> UILabel{
+    static func createSeparatorLabel() -> UILabel {
         let label = UILabel()
         label.numberOfLines = 1
         label.textColor = UIColor.from(scheme: .textDimmed)
@@ -57,7 +57,7 @@ final class MessageToolboxView: UIView {
     // MARK: - UI Elements
 
     /// The timer for ephemeral messages.
-    private var timestampTimer: Timer? = nil
+    private var timestampTimer: Timer?
 
     private let contentStack: UIStackView = {
         let stack = UIStackView()
@@ -155,6 +155,7 @@ final class MessageToolboxView: UIView {
         addGestureRecognizer(tapGestureRecogniser)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

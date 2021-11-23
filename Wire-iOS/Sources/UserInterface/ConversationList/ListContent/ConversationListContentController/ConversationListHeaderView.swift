@@ -65,7 +65,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
     }
 
-    var tapHandler: TapHandler? = nil
+    var tapHandler: TapHandler?
 
     private var badgeMarginConstraint: NSLayoutConstraint?
     private var badgeWidthConstraint: NSLayoutConstraint?
@@ -92,12 +92,12 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     /// display title of the header
     var title: String? {
-        set {
-            titleLabel.text = newValue
-        }
-
         get {
             return titleLabel.text
+        }
+
+        set {
+            titleLabel.text = newValue
         }
     }
 

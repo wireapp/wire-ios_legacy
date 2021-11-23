@@ -53,7 +53,10 @@ final class ConversationSystemMessageTests: XCTestCase {
     }
 
     func testAddParticipant_Service() {
-        let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
+        let mockConversation = SwiftMockConversation()
+        let message = MockMessageFactory.systemMessage(with: .participantsAdded,
+                                                       conversation: mockConversation,
+                                                       users: 1, clients: 0)!
         message.senderUser = SwiftMockLoader.mockUsers().last
         message.backingSystemMessageData?.userTypes = Set<AnyHashable>([MockServiceUserType .createServiceUser(name: "GitHub")])
 
@@ -69,6 +72,29 @@ final class ConversationSystemMessageTests: XCTestCase {
 
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+
+        verify(message: message, allColorSchemes: true)
+    }
+
+    func testRemoveSelfUser_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 0, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+        let mockSelfUser = MockUserType.createSelfUser(name: "Alice")
+        message.backingSystemMessageData.userTypes = Set([mockSelfUser])
+
+        verify(message: message, allColorSchemes: true)
+    }
+
+    func testRemoveParticipant_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0, reason: .legalHoldPolicyConflict)!
+        message.senderUser = SwiftMockLoader.mockUsers().last
+
+        verify(message: message, allColorSchemes: true)
+    }
+
+    func testRemoveManyParticipants_LegalHoldPolicyConflict() {
+        let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 5, clients: 0, reason: .legalHoldPolicyConflict)!
         message.senderUser = SwiftMockLoader.mockUsers().last
 
         verify(message: message, allColorSchemes: true)

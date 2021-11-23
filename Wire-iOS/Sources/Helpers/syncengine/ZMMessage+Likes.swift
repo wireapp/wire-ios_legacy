@@ -33,15 +33,16 @@ extension ZMConversationMessage {
     }
 
     var liked: Bool {
+        get {
+            return likers.contains { $0.isSelfUser }
+        }
+
         set {
             if newValue {
                 ZMMessage.addReaction(.like, toMessage: self)
             } else {
                 ZMMessage.removeReaction(onMessage: self)
             }
-        }
-        get {
-            return likers.contains { $0.isSelfUser }
         }
     }
 

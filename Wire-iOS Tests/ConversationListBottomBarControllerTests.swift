@@ -21,7 +21,7 @@ import XCTest
 
 class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBarControllerDelegate {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
-        switch (buttonType) {
+        switch buttonType {
         case .archive:
             self.archiveButtonTapCount += 1
         case .startUI:
@@ -54,7 +54,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
             self.sut = ConversationListBottomBarController()
             self.sut.delegate = self.mockDelegate
 
-            /// SUT has a priority 750 height constraint. fix its height first
+            // SUT has a priority 750 height constraint. fix its height first
             NSLayoutConstraint.activate([
                 sut.view.heightAnchor.constraint(equalToConstant: 56)
                 ])

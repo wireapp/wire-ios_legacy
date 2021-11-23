@@ -163,7 +163,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
 
     static let userClientURL: URL = URL(string: "settings://user-client")!
 
-    var linkTarget: LinkTarget? = nil
+    var linkTarget: LinkTarget?
 
     enum LinkTarget {
         case user(UserType)
@@ -182,10 +182,9 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
        setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        setupView()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     func setupView() {
@@ -350,7 +349,7 @@ final class ConversationSystemMessageCellDescription {
             let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
 
-            /// only display invite user cell for team members
+            // Only display invite user cell for team members
             if SelfUser.current.isTeamMember,
                conversation.selfCanAddUsers,
                conversation.isOpenGroup {
@@ -503,7 +502,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
-        var updateText: NSAttributedString? = nil
+        var updateText: NSAttributedString?
         let baseAttributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
 
         if timeoutValue == .none {
@@ -591,9 +590,11 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
 }
 
 extension ConversationStartedSystemMessageCellDescription: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
+    func conversationDidChange(_ note: ConversationChangeInfo) {
         guard note.createdRemotelyChanged else { return }
-        if let conversation = message?.conversation, conversation.conversationType == .group, conversation.localParticipants.count == 1 {
+        if let conversation = message?.conversationLike,
+           conversation.conversationType == .group,
+           conversation.localParticipantsCount == 1 {
             delegate?.conversationMessageShouldUpdate()
         }
     }

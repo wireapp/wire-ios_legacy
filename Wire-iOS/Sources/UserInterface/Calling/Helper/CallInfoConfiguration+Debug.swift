@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension CallInfoViewControllerInput  {
+extension CallInfoViewControllerInput {
     var debugDescription: String {
         return """
         <\(type(of: self))>
@@ -30,7 +30,6 @@ extension CallInfoViewControllerInput  {
         mediaState: \(mediaState)
         appearance: \(appearance)
         isVideoCall: \(isVideoCall)
-        variant: \(variant.rawValue)
         state: \(state)
         isConstantBitRate: \(isConstantBitRate)
         title: \(title)

@@ -68,18 +68,33 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
+        let federationEnabled = Settings.shared.federationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
-                           handleElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle))]
+                           handleElement(
+                            enabled: userRightInterfaceType.selfUserIsPermitted(to: .editHandle),
+                            federationEnabled: federationEnabled
+                           )]
 
-        if let user = ZMUser.selfUser(), !user.usesCompanyLogin {
-            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true),
-               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)){
+        let user = SelfUser.current
+
+        if !user.usesCompanyLogin {
+            if !user.hasTeam || user.phoneNumber?.isEmpty == false,
+               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
                 cellDescriptors.append(phoneElement)
             }
 
             cellDescriptors.append(emailElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editEmail)))
         }
+
+        if user.hasTeam {
+            cellDescriptors.append(teamElement())
+        }
+
+        if federationEnabled {
+            cellDescriptors.append(domainElement())
+        }
+
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
@@ -205,7 +220,8 @@ extension SettingsCellDescriptorFactory {
         }
     }
 
-    func handleElement(enabled: Bool = true) -> SettingsCellDescriptorType {
+    func handleElement(enabled: Bool = true, federationEnabled: Bool) -> SettingsCellDescriptorType {
+        typealias AccountSection = L10n.Localizable.Self.Settings.AccountSection
         if enabled {
             let presentation: () -> ChangeHandleViewController = {
                 return ChangeHandleViewController()
@@ -213,11 +229,13 @@ extension SettingsCellDescriptorFactory {
 
             if nil != ZMUser.selfUser().handle {
                 let preview: PreviewGeneratorType = { _ in
-                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString else { return .none }
+                    guard let handleDisplayString = ZMUser.selfUser()?.handleDisplayString(federationEnabled: federationEnabled) else {
+                        return .none
+                    }
                     return .text(handleDisplayString)
                 }
                 return SettingsExternalScreenCellDescriptor(
-                    title: "self.settings.account_section.handle.title".localized,
+                    title: AccountSection.Handle.title,
                     isDestructive: false,
                     presentationStyle: .navigation,
                     presentationAction: presentation,
@@ -227,12 +245,20 @@ extension SettingsCellDescriptorFactory {
             }
 
             return SettingsExternalScreenCellDescriptor(
-                title: "self.settings.account_section.add_handle.title".localized,
+                title: AccountSection.AddHandle.title,
                 presentationAction: presentation
             )
         } else {
             return textValueCellDescriptor(propertyName: .handle, enabled: enabled)
         }
+    }
+
+    func teamElement() -> SettingsCellDescriptorType {
+        return textValueCellDescriptor(propertyName: .team, enabled: false)
+    }
+
+    func domainElement() -> SettingsCellDescriptorType {
+        return textValueCellDescriptor(propertyName: .domain, enabled: false)
     }
 
     func pictureElement() -> SettingsCellDescriptorType {

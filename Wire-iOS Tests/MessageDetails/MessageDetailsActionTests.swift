@@ -19,11 +19,16 @@
 import XCTest
 @testable import Wire
 
-final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
+final class MessageDetailsActionTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
         SelfUser.setupMockSelfUser()
+    }
+
+    override func tearDown() {
+        SelfUser.provider = nil
+        super.tearDown()
     }
 
     // MARK: - One To One
@@ -90,7 +95,6 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
     func testThatDetailsAreAvailableInTeamGroup_Ephemeral() {
         withGroupMessage(belongsToTeam: true, teamGroup: true) { message in
             message.isEphemeral = true
-
             XCTAssertFalse(message.canBeLiked)
             XCTAssertTrue(message.areMessageDetailsAvailable)
             XCTAssertTrue(message.areReadReceiptsDetailsAvailable)
@@ -104,23 +108,21 @@ final class MessageDetailsActionTests: CoreDataSnapshotTestCase {
         message.senderUser = SelfUser.current
         let mockConversation = SwiftMockConversation()
         mockConversation.mockLocalParticipantsContain = true
+
         if teamGroup {
             mockConversation.teamRemoteIdentifier = UUID()
         }
+
         message.conversationLike = mockConversation
         block(message)
     }
 
     private func withOneToOneMessage(belongsToTeam: Bool, _ block: @escaping (MockMessage) -> Void) {
-        let context = belongsToTeam ? teamTest : nonTeamTest
 
-        context {
-            let message = MockMessageFactory.textMessage(withText: "Message")
-            message.senderUser = SelfUser.current
-            message.conversation = otherUserConversation
-            message.conversationLike = otherUserConversation
-            block(message)
-        }
+        let message = MockMessageFactory.textMessage(withText: "Message")
+        message.senderUser = SelfUser.current
+        message.conversationLike = SwiftMockConversation()
+        block(message)
     }
 
 }

@@ -37,6 +37,7 @@ final class StartUIInviteActionBar: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardFrameWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,7 +77,7 @@ final class StartUIInviteActionBar: UIView {
 
         let diff: CGFloat = beginOrigin - endOrigin
 
-        UIView.animate(withKeyboardNotification: notification, in: self, animations: { [weak self] keyboardFrameInView in
+        UIView.animate(withKeyboardNotification: notification, in: self, animations: { [weak self] _ in
             guard let weakSelf = self else { return }
 
             weakSelf.bottomEdgeConstraint.constant = -weakSelf.padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)

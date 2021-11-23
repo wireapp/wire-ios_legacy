@@ -37,6 +37,7 @@ final class SectionFooterView: UIView, Themeable {
         applyColorScheme(colorSchemeVariant)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,11 +79,9 @@ final class SectionFooter: UICollectionReusableView, Themeable {
         footerView.fitInSuperview()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addSubview(footerView)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.fitInSuperview()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
@@ -116,11 +115,9 @@ class SectionTableFooter: UITableViewHeaderFooterView, Themeable {
         footerView.fitInSuperview()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addSubview(footerView)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.fitInSuperview()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {

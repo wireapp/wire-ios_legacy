@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 
 final class ConversationListAccessoryView: UIView {
-    var icon: ConversationStatusIcon? = nil {
+    var icon: ConversationStatusIcon? {
         didSet {
             if icon != oldValue {
                 updateForIcon()
@@ -80,7 +80,7 @@ final class ConversationListAccessoryView: UIView {
         updateForIcon()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         transparentIconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -109,6 +109,7 @@ final class ConversationListAccessoryView: UIView {
         badgeView.fitInSuperview()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -221,7 +222,7 @@ final class ConversationListAccessoryView: UIView {
             self.transparentIconView.isHidden = false
             self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
 
-        case .unreadMessages(_), .mention:
+        case .unreadMessages, .mention:
             self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
             self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 

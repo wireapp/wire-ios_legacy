@@ -36,35 +36,35 @@ final class TrackingManager: NSObject, TrackingInterface {
     static let shared = TrackingManager()
 
     var disableCrashSharing: Bool {
+        get {
+            return ExtensionSettings.shared.disableCrashSharing
+        }
+
         set {
             updateAppCenterStateIfNeeded(oldState: disableCrashSharing, newValue)
             ExtensionSettings.shared.disableCrashSharing = newValue
         }
-
-        get {
-            return ExtensionSettings.shared.disableCrashSharing
-        }
     }
 
     var disableAnalyticsSharing: Bool {
+        get {
+            return ExtensionSettings.shared.disableAnalyticsSharing
+        }
+
         set {
             Analytics.shared?.isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             ExtensionSettings.shared.disableAnalyticsSharing = newValue
-        }
-
-        get {
-            return ExtensionSettings.shared.disableAnalyticsSharing
         }
     }
 
     private func updateAppCenterStateIfNeeded(oldState: Bool, _ newState: Bool) {
         switch (oldState, newState) {
         case (true, false):
-            MSAppCenter.setEnabled(true)
-            MSAppCenter.start()
+            AppCenter.enabled = true
+            AppCenter.start()
         case (false, true):
-            MSAppCenter.setEnabled(false)
+            AppCenter.enabled = false
         default:
             return
         }

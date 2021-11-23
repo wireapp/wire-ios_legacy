@@ -20,7 +20,7 @@ import Foundation
 import WireSystem
 import WireDataModel
 
-fileprivate let tag = "<ANALYTICS>:"
+private let tag = "<ANALYTICS>:"
 final class AnalyticsConsoleProvider: NSObject {
 
     let zmLog = ZMSLog(tag: tag)

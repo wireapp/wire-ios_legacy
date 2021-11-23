@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol UserCellSubtitleProtocol: class {
+protocol UserCellSubtitleProtocol: AnyObject {
     func subtitle(forRegularUser user: UserType?) -> NSAttributedString?
 
     static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] { get set }
@@ -34,7 +34,9 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
 
         var components: [NSAttributedString?] = []
 
-        if let handle = user.handle, !handle.isEmpty {
+        if user.isFederated, let domain = user.domain {
+            components.append("@\(user.handle ?? "")@\(domain)" && UserCell.boldFont)
+        } else if let handle = user.handle, !handle.isEmpty {
             components.append("@\(handle)" && UserCell.boldFont)
         }
 

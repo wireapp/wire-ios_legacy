@@ -46,6 +46,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
         observerToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,15 +119,23 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
             return view
         } else {
-            guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath) as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
+            let dequeuedView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                                                               withReuseIdentifier: "SectionFooter",
+                                                                               for: indexPath)
+
+            guard let view = dequeuedView as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
             view.titleLabel.text = "group_details.notification_options_cell.description".localized
             return view
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let dequeuedView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter,
+                                                                           withReuseIdentifier: "SectionFooter",
+                                                                           for: IndexPath(item: 0, section: section))
 
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
+        guard let view = dequeuedView as? SectionFooter else { return .zero }
+
         view.titleLabel.text = "group_details.notification_options_cell.description".localized
         view.size(fittingWidth: collectionView.bounds.width)
         return view.bounds.size

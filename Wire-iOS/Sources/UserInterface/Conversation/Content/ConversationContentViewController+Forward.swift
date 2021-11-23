@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 import WireCommonComponents
 import UIKit
 
@@ -128,8 +127,8 @@ extension ZMConversationMessage {
 }
 
 extension ZMConversationList {/// TODO mv to DM
-    func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
-        return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
+    func shareableConversations(excluding: ConversationLike? = nil) -> [ZMConversation] {
+        return map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
                 !(conversation === excluding)
@@ -164,11 +163,12 @@ extension ConversationContentViewController {
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
     func showForwardFor(message: ZMConversationMessage?, from view: UIView?) {
-        guard let message = message else { return }
+        guard let userSession = ZMUserSession.shared(),
+              let message = message else { return }
 
         endEditing()
 
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession ).shareableConversations(excluding: message.conversationLike)
 
         let shareViewController = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message as! ZMMessage,

@@ -20,7 +20,7 @@ import WireDataModel
 
 extension UserType {
 
-    var nameAccentColor: UIColor? {
+    var nameAccentColor: UIColor {
         return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
     }
 
@@ -30,15 +30,6 @@ extension UserType {
         #else
         return hasTeam
         #endif
-    }
-
-    /// Blocks user if not already blocked and vice versa.
-    func toggleBlocked() {
-        if isBlocked {
-            accept()
-        } else {
-            block()
-        }
     }
 
 }

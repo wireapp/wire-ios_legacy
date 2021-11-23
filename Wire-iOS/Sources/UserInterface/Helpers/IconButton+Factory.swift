@@ -101,8 +101,6 @@ extension IconButton {
 
 extension UIControl.State: Hashable {
     public var hashValue: Int {
-        get {
-            return Int(self.rawValue)
-        }
+        return Int(self.rawValue)
     }
 }

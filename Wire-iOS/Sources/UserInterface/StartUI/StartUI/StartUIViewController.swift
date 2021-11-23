@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
@@ -32,12 +33,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     let groupSelector: SearchGroupSelector = SearchGroupSelector(style: .dark)
 
-    let searchResultsViewController: SearchResultsViewController = {
-        let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
-        viewController.mode = .list
-
-        return viewController
-    }()
+    let searchResultsViewController: SearchResultsViewController
 
     var addressBookUploadLogicHandled = false
 
@@ -46,6 +42,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     var addressBookHelper: AddressBookHelperProtocol {
         return addressBookHelperType.sharedHelper
     }
+
+    let isFederationEnabled: Bool
 
     let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
 
@@ -60,8 +58,14 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
-    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
+         isFederationEnabled: Bool = Settings.shared.federationEnabled) {
+        self.isFederationEnabled = isFederationEnabled
         self.addressBookHelperType = addressBookHelperType
+        self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
+                                                                       isAddingParticipants: false,
+                                                                       shouldIncludeGuests: true,
+                                                                       isFederationEnabled: isFederationEnabled)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -107,7 +111,9 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     func setupViews() {
         configGroupSelector()
-        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: .dark,
+                                                 isSelfUserAdmin: selfUser.canManageTeam,
+                                                 isFederationEnabled: isFederationEnabled)
 
         emptyResultView.delegate = self
 
@@ -162,6 +168,31 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         navigationItem.rightBarButtonItem = closeButton
         view.accessibilityViewIsModal = true
+    }
+
+    private func createConstraints() {
+        [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach { $0?.translatesAutoresizingMaskIntoConstraints = false }
+
+        searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])
+
+        if showsGroupSelector {
+            NSLayoutConstraint.activate([
+                groupSelector.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor),
+                searchResultsViewController.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
+                ])
+
+            groupSelector.fitInSuperview(exclude: [.bottom, .top])
+        } else {
+            NSLayoutConstraint.activate([
+            searchResultsViewController.view.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor)
+                ])
+        }
+
+        searchResultsViewController.view.fitInSuperview(exclude: [.top])
+    }
+
+    var showsGroupSelector: Bool {
+        return SearchGroup.all.count > 1 && ZMUser.selfUser().canSeeServices
     }
 
     func showKeyboardIfNeeded() {

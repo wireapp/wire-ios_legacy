@@ -25,8 +25,8 @@ final class DirectorySectionController: SearchSectionController {
 
     var suggestions: [ZMSearchUser] = []
     weak var delegate: SearchSectionControllerDelegate?
-    var token: AnyObject? = nil
-    weak var collectionView: UICollectionView? = nil
+    var token: AnyObject?
+    weak var collectionView: UICollectionView?
 
     override var isHidden: Bool {
         return self.suggestions.isEmpty
@@ -58,7 +58,7 @@ final class DirectorySectionController: SearchSectionController {
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
-        cell.connectButton.isHidden = false
+        cell.connectButton.isHidden = !user.canBeUnblocked
         cell.connectButton.tag = indexPath.row
         cell.connectButton.addTarget(self, action: #selector(connect(_:)), for: .touchUpInside)
 
@@ -71,11 +71,28 @@ final class DirectorySectionController: SearchSectionController {
         let indexPath = IndexPath(row: button.tag, section: 0)
         let user = suggestions[indexPath.row]
 
-        ZMUserSession.shared()?.enqueue {
-            let username = user.name ?? ""
-            let selfUsername = SelfUser.current.name ?? ""
-            let messageText = "missive.connection_request.default_message".localized(args: username, selfUsername)
-            user.connect(message: messageText)
+        if user.isBlocked {
+            user.accept { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? UpdateConnectionError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
+        } else {
+            user.connect { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? ConnectToUserError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
         }
     }
 

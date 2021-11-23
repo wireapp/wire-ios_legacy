@@ -26,12 +26,12 @@ enum ProfileViewControllerTabBarIndex: Int {
     case devices
 }
 
-protocol ProfileViewControllerDelegate: class {
+protocol ProfileViewControllerDelegate: AnyObject {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet)
 }
 
-protocol BackButtonTitleDelegate: class {
+protocol BackButtonTitleDelegate: AnyObject {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
 }
 
@@ -148,7 +148,7 @@ final class ProfileViewController: UIViewController {
 
         let controller = UIAlertController.cancelConnectionRequest(for: user) { canceled in
             if !canceled {
-                self.viewModel.cancelConnectionRequest() {
+                self.viewModel.cancelConnectionRequest {
                     self.returnToPreviousScreen()
                 }
             }
@@ -175,7 +175,6 @@ final class ProfileViewController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground)
 
-        setupNavigationItems()
         setupHeader()
         setupTabsController()
         setupConstraints()
@@ -185,6 +184,7 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setupNavigationItems()
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: navigationItem.titleView)
     }
 
@@ -352,7 +352,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             leftViewControllerRevealed = true
         }
 
-        dismiss(animated: true){ [weak self] in
+        dismiss(animated: true) { [weak self] in
             self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
                 ZClientViewController.shared?.conversationListViewController.topBarViewController.presentSettings()
             }
@@ -437,7 +437,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
-                case .failure(_):
+                case .failure:
                     break
                 }
             }
@@ -524,5 +524,9 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         } else {
             self.dismiss(animated: true, completion: nil)
         }
+    }
+
+    func presentError(_ error: LocalizedError) {
+        presentLocalizedErrorAlert(error)
     }
 }

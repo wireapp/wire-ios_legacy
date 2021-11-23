@@ -22,32 +22,23 @@ import XCTest
 extension MockMessage: AudioTrack {
 
     public var title: String? {
-        get {
-            return .none
-        }
+        return .none
     }
+
     public var author: String? {
-        get {
-            return .none
-        }
+        return .none
     }
 
     public var duration: TimeInterval {
-        get {
-            return 9999
-        }
+        return 9999
     }
 
     public var streamURL: URL? {
-        get {
-            return .none
-        }
+        return .none
     }
 
     public var previewStreamURL: URL? {
-        get {
-            return .none
-        }
+        return .none
     }
 
     public var failedToLoad: Bool {

@@ -98,7 +98,8 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -214,7 +215,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         self.cancelButton.accessibilityLabel = "cancelRecording"
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [self.audioPreviewView,
          self.timeLabel,
          self.tipLabel,
@@ -419,7 +420,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     // MARK: - Button Actions
 
     @objc func recordButtonPressed(_ sender: AnyObject!) {
-        self.recorder.startRecording { success in
+        self.recorder.startRecording { _ in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
             AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()

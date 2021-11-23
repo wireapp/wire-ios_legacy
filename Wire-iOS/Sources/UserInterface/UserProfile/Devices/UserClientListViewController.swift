@@ -148,7 +148,7 @@ extension UserClientListViewController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.clientsChanged || changeInfo.trustLevelChanged else { return }
 
-        /// TODO: add clients to userType
+        // TODO: add clients to userType
         headerView.showUnencryptedLabel = (user as? ZMUser)?.clients.isEmpty == true
         clients = UserClientListViewController.clientsSortedByRelevance(for: user)
         collectionView.reloadData()

@@ -20,7 +20,7 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-fileprivate enum Item {
+private enum Item {
     case supportedValue(MessageDestructionTimeoutValue)
     case unsupportedValue(MessageDestructionTimeoutValue)
     case customValue
@@ -32,7 +32,7 @@ extension ZMConversation {
 
         if let timeout = self.messageDestructionTimeout,
             case .synced(let value) = timeout,
-            case .custom(_) = value {
+            case .custom = value {
             newItems.append(.unsupportedValue(value))
         }
 
@@ -70,6 +70,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
         observerToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

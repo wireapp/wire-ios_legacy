@@ -45,5 +45,5 @@ final class MockZMUserSession: NSObject, UserSessionInterface {
 
     var appLockController: AppLockType = AppLockModule.MockAppLockController()
 
-    var lock: SessionLock? = nil
+    var lock: SessionLock?
 }

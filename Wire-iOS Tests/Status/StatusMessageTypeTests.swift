@@ -33,7 +33,7 @@ final class StatusMessageTypeTests: XCTestCase {
 
         for statusMessageType in StatusMessageType.allCases {
             if let key = statusMessageType.localizationKey {
-                availableLanguages.forEach() { language in
+                availableLanguages.forEach { language in
                     if let localizationKey = localizeString(stringToLocalize: key, language: language) {
 
                         /// WHEN

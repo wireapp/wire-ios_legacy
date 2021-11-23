@@ -24,7 +24,7 @@ final private class MockAudioRecordViewControllerDelegate: NSObject, AudioRecord
     var cancelCallCount: UInt = 0
 
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
-        cancelCallCount = cancelCallCount + 1
+        cancelCallCount += 1
     }
 
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}

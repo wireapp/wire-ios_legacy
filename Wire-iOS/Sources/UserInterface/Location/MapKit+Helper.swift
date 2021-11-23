@@ -32,12 +32,7 @@ extension CLPlacemark {
     func formattedAddress(_ includeCountry: Bool) -> String? {
         let lines: [String]?
 
-        if #available(iOS 11.0, *) {
-            lines = [subThoroughfare, thoroughfare, locality, subLocality, administrativeArea, postalCode, country].compactMap { $0 }
-
-        } else {
-            lines = addressDictionary?["FormattedAddressLines"] as? [String]
-        }
+        lines = [subThoroughfare, thoroughfare, locality, subLocality, administrativeArea, postalCode, country].compactMap { $0 }
 
         return includeCountry ? lines?.joined(separator: ", ") : lines?.dropLast().joined(separator: ", ")
     }

@@ -17,8 +17,8 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
+import Down
 
 final class GuestsBarController: UIViewController {
 
@@ -29,9 +29,9 @@ final class GuestsBarController: UIViewController {
 
     private let label = UILabel()
     private let container = UIView()
-    private var containerHeightConstraint: NSLayoutConstraint!
-    private var heightConstraint: NSLayoutConstraint!
-    private var bottomLabelConstraint: NSLayoutConstraint!
+    private lazy var containerHeightConstraint: NSLayoutConstraint = container.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var heightConstraint: NSLayoutConstraint = view.heightAnchor.constraint(equalToConstant: GuestsBarController.expandedHeight)
+    private lazy var bottomLabelConstraint: NSLayoutConstraint = label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
 
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
@@ -57,27 +57,25 @@ final class GuestsBarController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = .clear
-        container.backgroundColor = .lightGraphite
+        container.backgroundColor = .accent()
         container.clipsToBounds = true
-        label.font = FontSpec(.small, .semibold).font!
-        label.textColor = .white
-        label.textAlignment = .center
         container.addSubview(label)
         view.addSubview(container)
     }
 
     private func createConstraints() {
-        constrain(self.view, container, label) { view, container, label in
-            label.leading == view.leading
-            bottomLabelConstraint = label.bottom == view.bottom - 3
-            label.trailing == view.trailing
-            view.leading == container.leading
-            view.trailing == container.trailing
-            container.top == view.top
+        [container, label].prepareForLayout()
+        NSLayoutConstraint.activate([
+          label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          bottomLabelConstraint,
+          label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+          view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+          container.topAnchor.constraint(equalTo: view.topAnchor),
 
-            heightConstraint = view.height == GuestsBarController.expandedHeight
-            containerHeightConstraint = container.height == GuestsBarController.expandedHeight
-        }
+          heightConstraint,
+          containerHeightConstraint
+        ])
     }
 
     // MARK: - State Changes
@@ -90,7 +88,7 @@ final class GuestsBarController: UIViewController {
         let collapsed = state == .hidden
 
         let change = {
-            if (!collapsed) {
+            if !collapsed {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()
@@ -122,7 +120,10 @@ final class GuestsBarController: UIViewController {
             label.text = nil
             label.accessibilityIdentifier = nil
         case .visible(let labelKey, let accessibilityIdentifier):
-            label.text = labelKey.localized(uppercased: true)
+            let markdownTitle = labelKey.localized
+            label.attributedText = .markdown(from: markdownTitle,
+                                             style: .labelStyle)
+            label.textAlignment = .center
             label.accessibilityIdentifier = accessibilityIdentifier
         }
     }
@@ -135,4 +136,17 @@ extension GuestsBarController: Bar {
     var weight: Float {
         return 1
     }
+}
+
+private extension DownStyle {
+
+    static var labelStyle: DownStyle {
+        let style = DownStyle()
+        style.baseFont = UIFont.systemFont(ofSize: 12, contentSizeCategory: .medium, weight: .light)
+        style.baseFontColor = .white
+        style.baseParagraphStyle = NSParagraphStyle.default
+
+        return style
+    }
+
 }

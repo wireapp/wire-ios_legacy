@@ -40,9 +40,9 @@ final class CrashReporter {
 
         
         //Enable after securing app extensions from App Center
-        MSAppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashSharing)
-        MSAppCenter.configure(withAppSecret: Bundle.appCenterAppId)
-        MSAppCenter.start()
+        AppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashSharing)
+        AppCenter.configure(withAppSecret: Bundle.appCenterAppId)
+        AppCenter.start()
  
     }
 

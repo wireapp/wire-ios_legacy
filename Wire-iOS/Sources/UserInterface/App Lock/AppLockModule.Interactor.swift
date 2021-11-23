@@ -98,6 +98,9 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
 
     func executeRequest(_ request: AppLockModule.Request) {
         switch request {
+        case .initiateAuthentication(requireActiveApp: true) where applicationState != .active:
+            return
+
         case .initiateAuthentication where !isAuthenticationNeeded:
             openAppLock()
 
@@ -108,11 +111,6 @@ extension AppLockModule.Interactor: AppLockInteractorPresenterInterface {
             presenter.handleResult(.readyForAuthentication(shouldInform: needsToNotifyUser))
 
         case .evaluateAuthentication:
-            guard applicationState == .active else {
-                handleAuthenticationResult(.denied, context: nil)
-                return
-            }
-
             guard let preference = passcodePreference else {
                 handleAuthenticationResult(.granted, context: nil)
                 return

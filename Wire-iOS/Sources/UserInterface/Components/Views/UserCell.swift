@@ -50,7 +50,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     fileprivate var avatarSpacerWidthConstraint: NSLayoutConstraint?
 
-    weak var user: UserType? = nil
+    weak var user: UserType?
 
     static let boldFont: UIFont = .smallRegularFont
     static let lightFont: UIFont = .smallLightFont
@@ -158,7 +158,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         createConstraints()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
 

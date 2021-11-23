@@ -22,21 +22,21 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
-protocol CallTopOverlayControllerDelegate: class {
+protocol CallTopOverlayControllerDelegate: AnyObject {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)
 }
 
 extension CallState {
     public func description(callee: String, conversation: String, isGroup: Bool) -> String {
         switch self {
-        case .incoming(_, _, _):
+        case .incoming:
             let toAppend = (isGroup ? conversation + "・" : "")
             return toAppend + "call.status.incoming.user".localized(args: callee)
-        case .outgoing(_):
+        case .outgoing:
             return "call.status.outgoing.user".localized(args: conversation)
-        case .answered(_), .establishedDataChannel:
+        case .answered, .establishedDataChannel:
             return "call.status.connecting".localized
-        case .terminating(_):
+        case .terminating:
             return "call.status.terminating".localized
         default:
             return ""
@@ -55,6 +55,7 @@ final class CallTopOverlayController: UIViewController {
             super.init(frame: .zero)
         }
 
+        @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -69,12 +70,12 @@ final class CallTopOverlayController: UIViewController {
     private let muteIcon = UIImageView()
     private var muteIconWidth: NSLayoutConstraint?
     private var tapGestureRecognizer: UITapGestureRecognizer!
-    private weak var callDurationTimer: Timer? = nil
+    private weak var callDurationTimer: Timer?
     private var observerTokens: [Any] = []
     private let callDurationFormatter = DateComponentsFormatter()
 
     let conversation: ZMConversation
-    weak var delegate: CallTopOverlayControllerDelegate? = nil
+    weak var delegate: CallTopOverlayControllerDelegate?
 
     private var callDuration: TimeInterval = 0 {
         didSet {
@@ -163,7 +164,7 @@ final class CallTopOverlayController: UIViewController {
     private var displayMuteIcon: Bool = false {
         didSet {
             if displayMuteIcon {
-                muteIcon.setIcon(.microphoneWithStrikethrough, size: 12, color: .white)
+                muteIcon.setIcon(.microphoneOff, size: 12, color: .white)
                 muteIconWidth?.constant = 12
             } else {
                 muteIcon.image = nil
@@ -180,7 +181,6 @@ final class CallTopOverlayController: UIViewController {
             stopCallDurationTimer()
         default:
             updateLabel()
-            break
         }
     }
 

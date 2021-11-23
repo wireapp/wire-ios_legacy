@@ -21,8 +21,8 @@ import XCTest
 
 extension XCTestCase {
     public func verifyDeallocation<T: AnyObject>(of instanceGenerator: () -> (T)) {
-        weak var weakInstance: T? = nil
-        var instance: T? = nil
+        weak var weakInstance: T?
+        var instance: T?
 
         autoreleasepool {
             instance = instanceGenerator()
@@ -113,6 +113,22 @@ final class CallViewControllerTests: XCTestCase {
 
         // Then
         XCTAssertEqual(mockVoiceChannel.videoGridPresentationMode, VideoGridPresentationMode.activeSpeakers)
+    }
+
+    func testThatCallGridViewControllerDelegate_ForwardsVideoStreamsRequestToVoiceChannel() {
+        // Given
+        let configuration = MockCallGridViewControllerInput()
+        let viewController = CallGridViewController(configuration: configuration)
+        let clients = [
+            AVSClient(userId: UUID(), clientId: UUID().transportString()),
+            AVSClient(userId: UUID(), clientId: UUID().transportString())
+        ]
+
+        // When
+        sut.callGridViewController(viewController, perform: .requestVideoStreamsForClients(clients))
+
+        // Then
+        XCTAssertEqual(mockVoiceChannel.requestedVideoStreams, clients)
     }
 
     func testThatItDeallocates() {

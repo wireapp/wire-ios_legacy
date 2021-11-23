@@ -50,6 +50,7 @@ final class AppLockModuleViewTests: XCTestCase {
         XCTAssertEqual(presenter.events, [.viewDidAppear])
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_ItSendsEvent_WhenLockViewRequestReauthentication() {
         // Given
         sut.loadViewIfNeeded()
@@ -98,6 +99,7 @@ final class AppLockModuleViewTests: XCTestCase {
         XCTAssertEqual(presenter.events, [.configChangeAcknowledged])
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_ItSendsEvent_WhenApplicationWillEnterForeground() {
         // When
         sut.applicationWillEnterForeground()
@@ -108,6 +110,7 @@ final class AppLockModuleViewTests: XCTestCase {
 
     // MARK: - View states
 
+    // @SF.Locking @TSFI.UserInterface
     func test_ViewState_Locked() {
         // Given
         for type in AuthenticationType.allCases {
@@ -118,6 +121,7 @@ final class AppLockModuleViewTests: XCTestCase {
         }
     }
 
+    // @SF.Locking @TSFI.UserInterface
     func test_ViewState_Authenticating() {
         // Given
         sut.refresh(withModel: .authenticating)

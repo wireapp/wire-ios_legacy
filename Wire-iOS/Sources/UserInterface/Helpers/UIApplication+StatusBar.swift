@@ -35,7 +35,7 @@ extension UIApplication {
                 return false
             }
 
-            if controller is RootViewController  {
+            if controller is RootViewController {
                 return true
             }
 

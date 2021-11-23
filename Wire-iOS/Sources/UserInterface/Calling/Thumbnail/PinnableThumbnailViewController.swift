@@ -21,7 +21,7 @@ import UIKit
 final class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
-    private let thumbnailContainerView = UIView()
+    private let thumbnailContainerView = PassthroughTouchesView()
     private(set) var contentView: OrientableView?
 
     // MARK: - Dynamics
@@ -65,6 +65,10 @@ final class PinnableThumbnailViewController: UIViewController {
     }
 
     // MARK: - Configuration
+
+    override func loadView() {
+        view = PassthroughTouchesView()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,9 +150,9 @@ final class PinnableThumbnailViewController: UIViewController {
         let bounds = CGRect(origin: CGPoint.zero, size: safeSize)
         pinningBehavior.updateFields(in: bounds)
 
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             self.updateThumbnailFrame(animated: false, parentSize: safeSize)
-        }, completion: { context in
+        }, completion: { _ in
             self.pinningBehavior.isEnabled = true
         })
     }

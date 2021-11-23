@@ -38,14 +38,14 @@ final class GroupDetailsFooterViewTests: XCTestCase, CoreDataFixtureTestHelper {
         super.tearDown()
     }
 
-    func testForAllPhoneWidths(){
+    func testForAllPhoneWidths() {
         teamTest {
             sut = GroupDetailsFooterView()
             verifyInAllPhoneWidths(matching: sut)
         }
     }
 
-    func testForPartnerRoleWithNoAddParticipantsButton(){
+    func testForPartnerRoleWithNoAddParticipantsButton() {
         teamTest {
             let groupConversation = createGroupConversation()
             groupConversation.teamRemoteIdentifier = team?.remoteIdentifier

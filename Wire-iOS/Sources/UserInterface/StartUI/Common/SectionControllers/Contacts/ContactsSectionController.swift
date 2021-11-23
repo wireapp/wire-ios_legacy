@@ -22,14 +22,14 @@ import WireDataModel
 class ContactsSectionController: SearchSectionController {
 
     var contacts: [UserType] = []
-    var selection: UserSelection? = nil {
+    var selection: UserSelection? {
         didSet {
             selection?.add(observer: self)
         }
     }
     var allowsSelection: Bool = false
     weak var delegate: SearchSectionControllerDelegate?
-    weak var collectionView: UICollectionView? = nil
+    weak var collectionView: UICollectionView?
 
     deinit {
         selection?.remove(observer: self)
@@ -73,7 +73,7 @@ class ContactsSectionController: SearchSectionController {
         let selected = selection?.users.contains(user) ?? false
         cell.isSelected = selected
 
-        if selected  {
+        if selected {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
 

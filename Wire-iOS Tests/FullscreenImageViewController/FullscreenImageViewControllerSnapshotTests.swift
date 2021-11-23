@@ -32,19 +32,19 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testThatVeryLargeImageIsLoadedToImageView(){
+    func testThatVeryLargeImageIsLoadedToImageView() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "20000x20000.gif")
 
         verify(view: sut.view)
     }
 
-    func testThatSmallImageIsCenteredInTheScreen(){
+    func testThatSmallImageIsCenteredInTheScreen() {
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
 
         verify(view: sut.view)
     }
 
-    func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
+    func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped() {
         // GIVEN
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
 

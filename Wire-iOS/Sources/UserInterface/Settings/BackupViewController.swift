@@ -58,6 +58,7 @@ final class BackupStatusCell: UITableViewCell {
         descriptionLabel.textColor = color
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -85,6 +86,7 @@ final class BackupActionCell: UITableViewCell {
         actionTitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -112,6 +114,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

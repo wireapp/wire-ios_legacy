@@ -25,7 +25,7 @@ private let log = ZMSLog(tag: "Authentication")
  * A type of object that observes changes from an authentication state controller.
  */
 
-protocol AuthenticationStateControllerDelegate: class {
+protocol AuthenticationStateControllerDelegate: AnyObject {
 
     /**
      * Called when the current state changes in the state controller.

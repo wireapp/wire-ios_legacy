@@ -19,7 +19,7 @@
 import WireSyncEngine
 import UIKit
 
-protocol ReplyComposingViewDelegate: class {
+protocol ReplyComposingViewDelegate: AnyObject {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }
@@ -61,8 +61,8 @@ final class ReplyComposingView: UIView {
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!
-    weak var delegate: ReplyComposingViewDelegate? = nil
-    private var observerToken: Any? = nil
+    weak var delegate: ReplyComposingViewDelegate?
+    private var observerToken: Any?
 
     init(message: ZMConversationMessage) {
         require(message.canBeQuoted)
@@ -76,6 +76,7 @@ final class ReplyComposingView: UIView {
         setupConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -96,8 +97,6 @@ final class ReplyComposingView: UIView {
 
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
-        previewView.isAccessibilityElement = true
-        previewView.shouldGroupAccessibilityChildren = true
         previewView.accessibilityIdentifier = "replyView"
         previewView.accessibilityLabel = buildAccessibilityLabel()
 

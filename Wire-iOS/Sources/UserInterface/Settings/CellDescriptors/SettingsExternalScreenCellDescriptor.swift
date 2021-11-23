@@ -61,7 +61,13 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         )
     }
 
-    convenience init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
+    convenience init(title: String,
+                     isDestructive: Bool,
+                     presentationStyle: PresentationStyle,
+                     presentationAction: @escaping () -> (UIViewController?),
+                     previewGenerator: PreviewGeneratorType? = .none,
+                     icon: StyleKitIcon? = nil,
+                     accessoryViewMode: AccessoryViewMode = .default) {
         self.init(
             title: title,
             isDestructive: isDestructive,
@@ -74,7 +80,15 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         )
     }
 
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String?, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
+    init(title: String,
+         isDestructive: Bool,
+         presentationStyle: PresentationStyle,
+         identifier: String?,
+         presentationAction: @escaping () -> (UIViewController?),
+         previewGenerator: PreviewGeneratorType? = .none,
+         icon: StyleKitIcon? = nil,
+         accessoryViewMode: AccessoryViewMode = .default) {
+
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle

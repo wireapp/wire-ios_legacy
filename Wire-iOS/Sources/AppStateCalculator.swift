@@ -26,6 +26,7 @@ enum AppState: Equatable {
     case unauthenticated(error: NSError?)
     case blacklisted
     case jailbroken
+    case databaseFailure
     case migrating
     case loading(account: Account, from: Account?)
 
@@ -38,10 +39,12 @@ enum AppState: Equatable {
         case (.authenticated, .authenticated):
             return true
         case let (.unauthenticated(error1), .unauthenticated(error2)):
-            return error1 == error2
+            return error1 === error2
         case (blacklisted, blacklisted):
             return true
         case (jailbroken, jailbroken):
+            return true
+        case (databaseFailure, databaseFailure):
             return true
         case (migrating, migrating):
             return true
@@ -53,7 +56,7 @@ enum AppState: Equatable {
     }
 }
 
-protocol AppStateCalculatorDelegate: class {
+protocol AppStateCalculatorDelegate: AnyObject {
     func appStateCalculator(_: AppStateCalculator,
                             didCalculate appState: AppState,
                             completion: @escaping () -> Void)
@@ -72,7 +75,7 @@ class AppStateCalculator {
     // MARK: - Public Property
     weak var delegate: AppStateCalculatorDelegate?
     var wasUnauthenticated: Bool {
-        guard case .unauthenticated(_) = previousAppState else {
+        guard case .unauthenticated = previousAppState else {
             return false
         }
         return true
@@ -80,7 +83,7 @@ class AppStateCalculator {
 
     // MARK: - Private Set Property
     private(set) var previousAppState: AppState = .headless
-    private(set) var pendingAppState: AppState? = nil
+    private(set) var pendingAppState: AppState?
     private(set) var appState: AppState = .headless {
         willSet {
             previousAppState = appState
@@ -149,6 +152,10 @@ extension AppStateCalculator: SessionManagerDelegate {
 
     func sessionManagerDidBlacklistJailbrokenDevice() {
         transition(to: .jailbroken)
+    }
+
+    func sessionManagerDidFailToLoadDatabase() {
+        transition(to: .databaseFailure)
     }
 
     func sessionManagerWillMigrateAccount(userSessionCanBeTornDown: @escaping () -> Void) {

@@ -49,11 +49,10 @@ final class ConversationListTopBarViewController: UIViewController {
             observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: sharedSession)
         }
 
-        if #available(iOS 11.0, *) {
-            self.viewRespectsSystemMinimumLayoutMargins = false
-        }
+        viewRespectsSystemMinimumLayoutMargins = false
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -365,7 +364,7 @@ final class TopBar: UIView {
         super.init(frame: frame)
         layoutMargins = UIEdgeInsets(top: 0, left: CGFloat.ConversationList.horizontalMargin, bottom: 0, right: CGFloat.ConversationList.horizontalMargin)
         let spacing: CGFloat = 7
-        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach() {
+        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -395,6 +394,7 @@ final class TopBar: UIView {
                                      rightSeparatorInsetConstraint])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

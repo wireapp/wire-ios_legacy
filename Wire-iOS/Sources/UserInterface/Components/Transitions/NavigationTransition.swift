@@ -76,7 +76,7 @@ final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitionin
                           animations: {
             fromView.transform = fromViewEndTransform
             toView.transform = .identity
-        }) { finished in
+        }) { _ in
             fromView.transform = .identity
             transitionContext.completeTransition(true)
         }

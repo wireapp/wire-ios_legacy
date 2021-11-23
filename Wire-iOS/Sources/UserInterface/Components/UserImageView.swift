@@ -95,6 +95,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         userObserverToken = nil
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -208,7 +209,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
-        if size == .big{
+        if size == .big {
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
                 updateUserImage()
             }

@@ -20,7 +20,7 @@ import Foundation
 import WireUtilities
 import UIKit
 
-protocol SimpleTextFieldValidatorDelegate: class {
+protocol SimpleTextFieldValidatorDelegate: AnyObject {
     func textFieldValueChanged(_ value: String?)
     func textFieldValueSubmitted(_ value: String)
     func textFieldDidEndEditing()
@@ -69,7 +69,7 @@ extension SimpleTextFieldValidator: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldValue = textField.text as NSString?
         let result = oldValue?.replacingCharacters(in: range, with: string) ?? ""
-        if !result.isEmpty, let _ = self.validate(text: result)  {
+        if !result.isEmpty, self.validate(text: result) != nil {
             return false
         }
         delegate?.textFieldValueChanged(result)

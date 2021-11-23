@@ -27,20 +27,22 @@ extension UIColor {
 extension XCTestCase {
     /// If this is set the accent color will be overriden for the tests
     static var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(newValue)
-        }
         get {
             return UIColor.accentOverrideColor!
+        }
+
+        set {
+            UIColor.setAccentOverride(newValue)
         }
     }
 
     var accentColor: ZMAccentColor {
-        set {
-            XCTestCase.accentColor = newValue
-        }
         get {
             return XCTestCase.accentColor
+        }
+
+        set {
+            XCTestCase.accentColor = newValue
         }
     }
 }

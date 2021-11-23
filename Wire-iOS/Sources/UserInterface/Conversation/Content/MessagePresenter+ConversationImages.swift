@@ -33,7 +33,7 @@ extension MessagePresenter {
                               actionResponder: MessageActionResponder,
                               isPreviewing: Bool) -> UIViewController {
 
-        guard let conversation = message.conversation else {
+        guard let conversation = message.conversationLike else {
             fatal("Message has no conversation.")
         }
 
@@ -43,7 +43,8 @@ extension MessagePresenter {
 
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
 
-        let collection = AssetCollectionWrapper(conversation: conversation, matchingCategories: [imagesCategoryMatch])
+        let collection = AssetCollectionWrapper(conversation: conversation,
+                                                matchingCategories: [imagesCategoryMatch])
 
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
         imagesController.isPreviewing = isPreviewing

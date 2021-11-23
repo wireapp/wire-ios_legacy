@@ -35,8 +35,9 @@
 @property (nonatomic, readwrite, copy) NSString *name;
 @property (nonatomic, readwrite, copy) NSString *initials;
 @property (nonatomic, readwrite, copy) NSString *emailAddress;
-@property (nonatomic, readwrite) NSString *phoneNumber;
+@property (nonatomic, readwrite, copy) NSString *phoneNumber;
 @property (nonatomic, readwrite, copy) NSString *handle;
+@property (nonatomic, readwrite, copy) NSString *domain;
 @property (nonatomic) ZMAccentColor accentColorValue;
 @property (nonatomic, readwrite) BOOL isBlocked;
 @property (nonatomic, readwrite) BOOL isIgnored;
@@ -81,6 +82,7 @@
 @property (nonatomic, readwrite) BOOL isAccountDeleted;
 @property (nonatomic, readwrite, copy) NSData *previewImageData;
 @property (nonatomic, readwrite, copy) NSData *completeImageData;
+@property (nonatomic, readwrite, copy) NSString *connectionRequestMessage;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic, readonly) MockLegalHoldDataSource *legalHoldDataSource;
@@ -89,8 +91,8 @@
 @property (nonatomic) ZMConnection *connection;
 @property (nonatomic) ZMAddressBookContact *contact;
 @property (nonatomic) AddressBookEntry *addressBookEntry;
-@property (nonatomic) NSUUID *remoteIdentifier;
-@property (nonatomic, readwrite) Availability availability;
+@property (nonatomic, copy) NSUUID *remoteIdentifier;
+@property (nonatomic, readwrite) AvailabilityKind availability;
 @property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
 @property (nonatomic) NSUUID *teamIdentifier;

@@ -70,11 +70,10 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
         super.init(collectionViewLayout: layout)
         layout.delegate = self
 
-        if #available(iOS 11.0, *) {
-            collectionView?.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView?.contentInsetAdjustmentBehavior = .never
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +81,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
     // MARK: - View lifecycle
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
+        coordinator.animate(alongsideTransition: { _ in
             self.updateLayout(for: size)
         })
     }

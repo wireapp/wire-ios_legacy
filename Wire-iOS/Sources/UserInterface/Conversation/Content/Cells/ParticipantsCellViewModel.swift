@@ -22,7 +22,7 @@ import WireDataModel
 
 enum ConversationActionType {
 
-    case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
+    case none, started(withName: String?), added(herself: Bool), removed(reason: ZMParticipantsRemovedReason), left, teamMemberLeave
 
     /// Some actions only involve the sender, others involve other users too.
     var involvesUsersOtherThanSender: Bool {
@@ -57,7 +57,9 @@ extension ZMConversationMessage {
     var actionType: ConversationActionType {
         guard let systemMessage = systemMessageData else { return .none }
         switch systemMessage.systemMessageType {
-        case .participantsRemoved:  return systemMessage.userIsTheSender ? .left : .removed
+        case .participantsRemoved:  return systemMessage.userIsTheSender
+            ? .left
+            : .removed(reason: systemMessage.participantsRemovedReason)
         case .participantsAdded:    return .added(herself: systemMessage.userIsTheSender)
         case .newConversation:      return .started(withName: systemMessage.text)
         case .teamMemberLeave:      return .teamMemberLeave
@@ -88,12 +90,15 @@ class ParticipantsCellViewModel {
     }
 
     var showInviteButton: Bool {
-        guard case .started = action, let conversation = message.conversation else { return false }
+        guard case .started = action,
+              let conversation = message.conversationLike as? (ConversationLike & CanManageAccessProvider) else { return false }
         return conversation.canManageAccess && conversation.allowGuests
     }
 
     private var showServiceUserWarning: Bool {
-        guard case .added = action, let messageData = message.systemMessageData, let conversation = message.conversation else { return false }
+        guard case .added = action,
+              let messageData = message.systemMessageData,
+              let conversation = message.conversationLike else { return false }
         guard let users = Array(messageData.userTypes) as? [UserType] else { return false }
 
         let selfAddedToServiceConversation = users.any(\.isSelfUser) && conversation.areServicesPresent
@@ -177,7 +182,14 @@ class ParticipantsCellViewModel {
     }
 
     private var nameList: NameList {
-        let userNames = shownUsers.map { self.name(for: $0) }
+        var userNames = shownUsers.map { self.name(for: $0) }
+        /// If users were removed due to legal hold policy conflict and there is a selfUser in that list, we should only display selfUser
+        if case .removed(reason: .legalHoldPolicyConflict) = action,
+           isSelfIncludedInUsers,
+           !sortedUsersWithoutSelf.isEmpty {
+            userNames = [self.name(for: SelfUser.current)]
+        }
+
         return NameList(names: userNames, collapsed: collapsedUsers.count, selfIncluded: isSelfIncludedInUsers)
     }
 
@@ -188,6 +200,11 @@ class ParticipantsCellViewModel {
         if message.isUserSender(user) { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
+
+        // If there is selfUser in the list, we should only display selfUser as "You"
+        if case .removed(reason: .legalHoldPolicyConflict) = action,
+           !sortedUsers.filter({ $0.isSelfUser }).isEmpty { return "started" }
+
         return "accusative"
     }
 
@@ -217,7 +234,7 @@ class ParticipantsCellViewModel {
         let senderName = name(for: sender).capitalized
 
         if action.involvesUsersOtherThanSender {
-            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList, isSelfIncludedInUsers: isSelfIncludedInUsers)
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }

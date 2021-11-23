@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 
@@ -36,20 +35,25 @@ final class GiphyCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         contentView.addSubview(imageView)
 
-        constrain(self.contentView, self.imageView) { contentView, imageView in
-            imageView.edges == contentView.edges
-        }
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+        ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func prepareForReuse() {
-        self.imageView.animatedImage = nil
-        self.ziph = nil
-        self.representation = nil
-        self.backgroundColor = nil
+        imageView.animatedImage = nil
+        ziph = nil
+        representation = nil
+        backgroundColor = nil
     }
 
 }

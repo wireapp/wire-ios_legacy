@@ -60,7 +60,6 @@ struct ReadReceiptViewModel {
             updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized, attributes: ConversationSystemMessageCell.baseAttributes)
         default:
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
-            break
         }
 
         return updateText

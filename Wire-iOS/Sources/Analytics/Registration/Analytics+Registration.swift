@@ -35,7 +35,7 @@ extension Analytics {
     func tagTeamFinishedInviteStep(with result: InviteResult) {
         let attributes: [String: Any]
 
-        switch(result) {
+        switch result {
         case .none:
             attributes = ["invited": false,
                           "invites:": 0]

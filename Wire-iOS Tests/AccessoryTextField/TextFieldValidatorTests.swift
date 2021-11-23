@@ -33,7 +33,7 @@ final class TextFieldValidatorTests: XCTestCase {
         super.tearDown()
     }
 
-    func testOneCharacterNameIsNotAccepted(){
+    func testOneCharacterNameIsNotAccepted() {
         // GIVEN
         let text = "a"
         let type: ValidatedTextField.Kind = .name(isTeam: false)
@@ -46,7 +46,7 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted(){
+    func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted() {
         // GIVEN
         let text = " a "
         let type: ValidatedTextField.Kind = .name(isTeam: false)
@@ -59,7 +59,7 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testNameWithTenSpaceIsNotAccepted(){
+    func testNameWithTenSpaceIsNotAccepted() {
         // GIVEN
         let text = String(repeating: " ", count: 10)
         let type: ValidatedTextField.Kind = .name(isTeam: false)
@@ -72,7 +72,7 @@ final class TextFieldValidatorTests: XCTestCase {
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(String(describing: error))")
     }
 
-    func testTwoCharacterNameIsAccepted(){
+    func testTwoCharacterNameIsAccepted() {
         // GIVEN
         let text = "aa"
         let type: ValidatedTextField.Kind = .name(isTeam: false)

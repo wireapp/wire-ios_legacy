@@ -35,11 +35,11 @@ final class LaunchImageViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 
-    func testForShowingSpinner(){
+    func testForShowingSpinner() {
         sut.showLoadingScreen()
 
         verify(matching: sut)

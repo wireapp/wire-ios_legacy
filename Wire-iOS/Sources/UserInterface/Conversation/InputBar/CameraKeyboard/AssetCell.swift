@@ -18,7 +18,7 @@
 
 import Foundation
 import Photos
-import Cartography
+import UIKit
 
 final class AssetCell: UICollectionViewCell {
 
@@ -32,27 +32,32 @@ final class AssetCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.contentView.clipsToBounds = true
+        contentView.clipsToBounds = true
 
-        self.imageView.contentMode = .scaleAspectFill
-        self.imageView.backgroundColor = UIColor(white: 0, alpha: 0.1)
-        self.contentView.addSubview(self.imageView)
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        contentView.addSubview(imageView)
 
-        self.durationView.textAlignment = .center
-        self.durationView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        self.durationView.textColor = UIColor.white
-        self.durationView.font = FontSpec(.small, .light).font!
-        self.contentView.addSubview(self.durationView)
+        durationView.textAlignment = .center
+        durationView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        durationView.textColor = UIColor.white
+        durationView.font = FontSpec(.small, .light).font!
+        contentView.addSubview(durationView)
 
-        constrain(self.contentView, self.imageView, self.durationView) { contentView, imageView, durationView in
-            imageView.edges == contentView.edges
-            durationView.bottom == contentView.bottom
-            durationView.left == contentView.left
-            durationView.right == contentView.right
-            durationView.height == 20
-        }
+        [imageView, durationView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          durationView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          durationView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          durationView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          durationView.heightAnchor.constraint(equalToConstant: 20)
+        ])
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,27 +72,27 @@ final class AssetCell: UICollectionViewCell {
 
     var asset: PHAsset? {
         didSet {
-            self.imageView.image = nil
+            imageView.image = nil
 
-            if self.imageRequestTag != PHInvalidImageRequestID {
-                manager.cancelImageRequest(self.imageRequestTag)
-                self.imageRequestTag = PHInvalidImageRequestID
+            if imageRequestTag != PHInvalidImageRequestID {
+                manager.cancelImageRequest(imageRequestTag)
+                imageRequestTag = PHInvalidImageRequestID
             }
 
-            guard let asset = self.asset else {
-                self.durationView.text = ""
-                self.durationView.isHidden = true
+            guard let asset = asset else {
+                durationView.text = ""
+                durationView.isHidden = true
                 return
             }
 
-            let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
+            let maxDimensionRetina = max(bounds.size.width, bounds.size.height) * (window ?? UIApplication.shared.keyWindow!).screen.scale
 
             representedAssetIdentifier = asset.localIdentifier
             imageRequestTag = manager.requestImage(for: asset,
                                                    targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
                                                    contentMode: .aspectFill,
                                                    options: type(of: self).imageFetchOptions,
-                                                   resultHandler: { [weak self] result, info -> Void in
+                                                   resultHandler: { [weak self] result, _ -> Void in
                                                     guard let `self` = self,
                                                         self.representedAssetIdentifier == asset.localIdentifier
                                                         else { return }
@@ -98,12 +103,12 @@ final class AssetCell: UICollectionViewCell {
                 let duration = Int(ceil(asset.duration))
 
                 let (seconds, minutes) = (duration % 60, duration / 60)
-                self.durationView.text = String(format: "%d:%02d", minutes, seconds)
-                self.durationView.isHidden = false
+                durationView.text = String(format: "%d:%02d", minutes, seconds)
+                durationView.isHidden = false
             }
             else {
-                self.durationView.text = ""
-                self.durationView.isHidden = true
+                durationView.text = ""
+                durationView.isHidden = true
             }
         }
     }
@@ -111,6 +116,6 @@ final class AssetCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        self.asset = .none
+        asset = .none
     }
 }

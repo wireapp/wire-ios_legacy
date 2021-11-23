@@ -21,21 +21,22 @@ import WireCommonComponents
 import WireDataModel
 
 final class ConversationTitleView: TitleView {
-    var conversation: ZMConversation
+    var conversation: ConversationLike
     var interactive: Bool = true
 
-    @objc init(conversation: ZMConversation, interactive: Bool = true) {
+    init(conversation: ConversationLike, interactive: Bool = true) {
         self.conversation = conversation
         self.interactive = interactive
         super.init()
         configure()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc func configure() {
+    func configure() {
         titleColor = UIColor.from(scheme: .textForeground)
         titleColorSelected = UIColor.from(scheme: .textDimmed)
         titleFont = FontSpec(.medium, .semibold).font!

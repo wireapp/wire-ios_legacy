@@ -57,6 +57,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -71,9 +72,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.from(scheme: .contentBackground, variant: variant)
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        }
+        tableView.contentInsetAdjustmentBehavior = .never
     }
 
     private func createConstraints() {
@@ -100,15 +99,19 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         present(UIAlertController.checkYourConnection(), animated: false)
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView? = nil, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
         let alertController = UIAlertController.confirmRemovingGuests(completion)
+        alertController.configPopover(pointToView: sourceView ?? view)
         present(alertController, animated: true)
 
         return alertController
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void) {
-        present(UIAlertController.confirmRevokingLink(completion), animated: true)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView? = nil, confirmRevokingLink completion: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController.confirmRevokingLink(completion)
+        present(alertController, animated: true)
+
+        alertController.configPopover(pointToView: sourceView ?? view)
     }
 
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView? = nil) {

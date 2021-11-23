@@ -19,7 +19,7 @@
 import Foundation
 import avs
 
-protocol CameraCellDelegate: class {
+protocol CameraCellDelegate: AnyObject {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
@@ -70,7 +70,7 @@ final class CameraCell: UICollectionViewCell {
         self.takePictureButton.accessibilityIdentifier = "takePictureButton"
         self.contentView.addSubview(self.takePictureButton)
 
-        self.changeCameraButton.setIcon(.cameraSwitch, size: .tiny, for: [])
+        self.changeCameraButton.setIcon(.flipCamera, size: .tiny, for: [])
         self.changeCameraButton.setIconColor(UIColor.white, for: [])
         self.changeCameraButton.translatesAutoresizingMaskIntoConstraints = false
         self.changeCameraButton.addTarget(self, action: #selector(changeCameraPressed(_:)), for: .touchUpInside)

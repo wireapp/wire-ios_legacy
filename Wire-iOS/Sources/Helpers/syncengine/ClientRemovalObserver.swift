@@ -23,7 +23,7 @@ enum ClientRemovalUIError: Error {
     case noPasswordProvided
 }
 
-protocol ClientRemovalObserverDelegate: class {
+protocol ClientRemovalObserverDelegate: AnyObject {
     func present(_ clientRemovalObserver: ClientRemovalObserver,
                  viewControllerToPresent: UIViewController)
     func setIsLoadingViewVisible(_ clientRemovalObserver: ClientRemovalObserver, isVisible: Bool)
@@ -73,7 +73,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     private func endRemoval(result: Error?) {
         completion?(result)
 
-        /// allow password input alert can be show next time
+        // Allow password input alert can be show next time
         passwordIsNecessaryForDelete = false
     }
 

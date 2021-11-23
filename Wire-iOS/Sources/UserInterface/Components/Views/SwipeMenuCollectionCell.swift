@@ -68,7 +68,10 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     private var revealAnimationPerforming = false
     private var scrollingFraction: CGFloat = 0 {
         didSet {
-            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
+            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: scrollingFraction * bounds.size.width,
+                                                                             initialOffset: initialDrawerOffset,
+                                                                             drawerWidth: drawerWidth,
+                                                                             viewWidth: bounds.size.width)
         }
     }
 
@@ -139,6 +142,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         self.init(frame: .zero)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -389,12 +393,10 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
 
         if #available(iOS 13.0, *) {
             return false
-        } else if #available(iOS 11.0, *) {
-            // pan recognizer should not require failure of any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
         }
 
-        return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
+        // pan recognizer should not require failure of any other recognizer
+        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
@@ -402,12 +404,10 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
 
         if #available(iOS 13.0, *) {
             return true
-        } else if #available(iOS 11.0, *) {
-            // pan recognizer should not recognize simultaneously with any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
         }
 
-        return true
+        // pan recognizer should not recognize simultaneously with any other recognizer
+        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
 }

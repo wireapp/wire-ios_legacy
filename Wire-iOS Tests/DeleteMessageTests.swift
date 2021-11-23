@@ -44,7 +44,7 @@ final class DeleteMessageTests: XCTestCase {
     }
 
     func message(for conversationType: ConversationCellType) -> ZMConversationMessage? {
-        var message: MockMessage? = nil
+        var message: MockMessage?
 
         switch conversationType {
         case .text:

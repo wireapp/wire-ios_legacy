@@ -44,7 +44,7 @@ final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureT
 
         sut = ConversationContentViewController(conversation: mockConversation, mediaPlaybackManager: nil, session: mockZMUserSession)
 
-        /// Call the setup codes in viewDidLoad
+        // Call the setup codes in viewDidLoad
         sut.loadViewIfNeeded()
     }
 

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
 
-        appRootRouter?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated {
             ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
         }
     }
@@ -208,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
 
-        appRootRouter?.performWhenAuthenticated() {
+        appRootRouter?.performWhenAuthenticated {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }
@@ -239,8 +239,7 @@ private extension AppDelegate {
         appRootRouter = AppRootRouter(viewController: viewController,
                                       navigator: navigator,
                                       sessionManager: sessionManager,
-                                      appStateCalculator: appStateCalculator,
-                                      deepLinkURL: launchOptions[.url] as? URL)
+                                      appStateCalculator: appStateCalculator)
     }
 
     private func createSessionManager(launchOptions: LaunchOptions) -> SessionManager? {
@@ -254,6 +253,7 @@ private extension AppDelegate {
         }
 
         configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
+        configuration.supportFederation = Settings.shared.federationEnabled
         let jailbreakDetector = JailbreakDetector()
 
         let sessionManager = SessionManager(appVersion: appVersion,

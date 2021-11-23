@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol ClientListViewControllerDelegate: class {
+protocol ClientListViewControllerDelegate: AnyObject {
     func finishedDeleting(_ clientListViewController: ClientListViewController)
 }
 
@@ -33,24 +33,20 @@ protocol ClientColorVariantProtocol {
 extension ClientColorVariantProtocol where Self: UIViewController {
 
     var headerFooterViewTextColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.4)
-            case .light?:
-                return UIColor.from(scheme: .textForeground, variant: .light)
-            }
+        switch variant {
+        case .none, .dark?:
+            return UIColor(white: 1, alpha: 0.4)
+        case .light?:
+            return UIColor.from(scheme: .textForeground, variant: .light)
         }
     }
 
     var separatorColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.1)
-            case .light?:
-                return UIColor.from(scheme: .separator, variant: .light)
-            }
+        switch variant {
+        case .none, .dark?:
+            return UIColor(white: 1, alpha: 0.1)
+        case .light?:
+            return UIColor.from(scheme: .separator, variant: .light)
         }
     }
 
