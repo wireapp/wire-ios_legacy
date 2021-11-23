@@ -515,8 +515,8 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     }
 
     @objc
-    fileprivate func onCollectionButtonPressed(_ sender: AnyObject!) {
-        if self.collectionController == .none {
+    private func onCollectionButtonPressed(_ sender: AnyObject?) {
+        if collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
 
@@ -534,7 +534,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
 
         collectionController?.shouldTrackOnNextOpen = true
 
-        let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
+        let navigationController = KeyboardAvoidingViewController(viewController: collectionController!).wrapInNavigationController(setBackgroundColor: true)
 
         ZClientViewController.shared?.present(navigationController, animated: true)
     }
