@@ -26,7 +26,7 @@ github "wireapp/wire-ios-share-engine" "237.0.0"
 github "wireapp/wire-ios-sync-engine" "hotfix/xcode12_4"
 github "wireapp/wire-ios-system" "36.0.0"
 github "wireapp/wire-ios-testing" "27.0.0"
-github "wireapp/wire-ios-transport" "84.0.0"
+github "wireapp/wire-ios-transport" "hotfix/xcode12_4"
 github "wireapp/wire-ios-utilities" "44.0.0"
 github "wireapp/wire-ios-ziphy" "17.0.0"
 
