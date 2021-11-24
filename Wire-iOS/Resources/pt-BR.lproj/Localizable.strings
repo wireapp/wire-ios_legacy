@@ -1675,7 +1675,7 @@
 
 // Feature configs: self-deleting messages
 "feature_config.alert.self_deleting_messages.message.disabled" = "A auto-exclusão de mensagens está desabilitada.";
-"feature_config.alert.self_deleting_messages.message.enabled" = "A auto-exclusão de mensagens está habilitada. Você pode definir um tempo limite antes de escrever uma mensagem.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "A auto-exclusão de mensagens está habilitada. Você pode definir um temporizador antes de escrever uma mensagem.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "A auto-exclusão de mensagens agora é obrigatória. Novas mensagens serão excluídas automaticamente após %@.";
 
 // Jailbroken alert

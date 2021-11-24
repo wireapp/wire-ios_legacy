@@ -1675,7 +1675,7 @@
 
 // Feature configs: self-deleting messages
 "feature_config.alert.self_deleting_messages.message.disabled" = "Les messages éphémères sont désactivés";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Les messages éphémères sont activés. Vous pouvez définir un délai avant de rédiger un message.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages éphémères sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
 
 // Jailbroken alert
