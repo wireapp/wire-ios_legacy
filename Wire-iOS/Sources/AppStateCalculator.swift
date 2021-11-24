@@ -135,7 +135,7 @@ extension AppStateCalculator: ApplicationStateObserving {
 
 // MARK: - SessionManagerDelegate
 extension AppStateCalculator: SessionManagerDelegate {
-    var isAuthenticated: Bool {
+    var isInAuthenticatedAppState: Bool {
         switch appState {
         case .authenticated:
             return true
@@ -143,7 +143,7 @@ extension AppStateCalculator: SessionManagerDelegate {
             return false
         }
     }
-    var isUnauthenticated: Bool {
+    var isInUnathenticatedAppState: Bool {
         switch appState {
         case .unauthenticated:
             return true

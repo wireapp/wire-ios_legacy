@@ -401,12 +401,13 @@ extension AppRootRouter {
         switch appState {
         case .unauthenticated(error: let error):
             presentAlertForDeletedAccountIfNeeded(error)
-            sessionManager.processLoginPendingURLAction()
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
         case .authenticated:
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
-            sessionManager.processLoginPendingURLAction()
+            sessionManager.processPendingURLActionRequiresAuthentication()
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
         default:
             break
         }
