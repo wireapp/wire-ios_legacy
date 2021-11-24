@@ -91,8 +91,13 @@ platform :ios do
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
-#TODO: ios simulator version choice
-            ios_version = "15.0"
+            if xcode_version == "13.0"
+                ios_version = "15.0"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
+            end
         end
 
         run_tests(
