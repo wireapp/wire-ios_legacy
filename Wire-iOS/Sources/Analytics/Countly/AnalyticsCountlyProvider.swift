@@ -18,6 +18,7 @@
 import Foundation
 import Countly
 import WireSyncEngine
+import WireDataModel
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
