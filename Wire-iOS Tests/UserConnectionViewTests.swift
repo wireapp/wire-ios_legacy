@@ -29,10 +29,12 @@ extension UIView {
 
 final class UserConnectionViewTests: XCTestCase {
 
-    func sutForUser(_ mockUser: MockUserType = SwiftMockLoader.mockUsers().first!) -> UserConnectionView {
+    func sutForUser(_ mockUser: MockUserType = SwiftMockLoader.mockUsers().first!, isFederated: Bool = false) -> UserConnectionView {
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
+        mockUser.isFederated = isFederated
+        mockUser.domain = "wire.com"
 
         let connectionView = UserConnectionView(user: mockUser)
         connectionView.layoutForTest()
@@ -47,6 +49,11 @@ final class UserConnectionViewTests: XCTestCase {
 
     func testWithUserName() {
         let sut = sutForUser()
+        verify(matching: sut)
+    }
+
+    func testWithUserName_Federated() {
+        let sut = sutForUser(isFederated: true)
         verify(matching: sut)
     }
 
