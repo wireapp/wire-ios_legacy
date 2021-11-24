@@ -17,7 +17,6 @@ variables:
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_12.4.app
-    export DEVELOPER_DIR=/Applications/Xcode_12.4.app/Contents/Developer
     echo "XCode version..."
     /usr/bin/xcodebuild -version
     fastlane prepare xcode_version:12.4
