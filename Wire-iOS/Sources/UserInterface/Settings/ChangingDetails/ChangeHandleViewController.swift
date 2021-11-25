@@ -34,7 +34,7 @@ fileprivate extension UIView {
 
 }
 
-protocol ChangeHandleTableViewCellDelegate: class {
+protocol ChangeHandleTableViewCellDelegate: AnyObject {
     func tableViewCell(cell: ChangeHandleTableViewCell, shouldAllowEditingText text: String) -> Bool
     func tableViewCellDidChangeText(cell: ChangeHandleTableViewCell, text: String)
 }
@@ -96,7 +96,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
         [prefixLabel, handleTextField, domainLabel].forEach(addSubview)
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         [prefixLabel, handleTextField, domainLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
@@ -309,7 +309,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         cell.handleTextField.text = state.displayHandle
         cell.handleTextField.becomeFirstResponder()
         cell.domainLabel.isHidden = !federationEnabled
-        cell.domainLabel.text = federationEnabled ? SelfUser.current.handleDomainString : ""
+        cell.domainLabel.text = federationEnabled ? SelfUser.current.domainString : ""
         return cell
     }
 

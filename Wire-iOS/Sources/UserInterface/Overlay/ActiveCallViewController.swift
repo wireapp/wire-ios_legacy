@@ -24,7 +24,7 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "calling")
 
-protocol ActiveCallViewControllerDelegate: class {
+protocol ActiveCallViewControllerDelegate: AnyObject {
     func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
                                               for conversation: ZMConversation?)
 }

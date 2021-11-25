@@ -228,10 +228,10 @@ final class ListSkeletonView: UIView {
          listContentView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-            topBar.topAnchor.constraint(equalTo: safeTopAnchor),
-            topBar.leftAnchor.constraint(equalTo: leftAnchor),
-            topBar.rightAnchor.constraint(equalTo: rightAnchor),
-            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10),
+          topBar.topAnchor.constraint(equalTo: safeTopAnchor),
+          topBar.leftAnchor.constraint(equalTo: leftAnchor),
+          topBar.rightAnchor.constraint(equalTo: rightAnchor),
+          topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10),
 
           buttonRowView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16),
           buttonRowView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),

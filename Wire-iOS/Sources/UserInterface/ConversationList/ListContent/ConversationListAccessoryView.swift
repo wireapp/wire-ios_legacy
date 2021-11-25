@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 
 final class ConversationListAccessoryView: UIView {
-    var icon: ConversationStatusIcon? = nil {
+    var icon: ConversationStatusIcon? {
         didSet {
             if icon != oldValue {
                 updateForIcon()
@@ -80,7 +80,7 @@ final class ConversationListAccessoryView: UIView {
         updateForIcon()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         transparentIconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 

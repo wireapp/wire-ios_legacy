@@ -17,9 +17,8 @@
 //
 
 import UIKit
-import Cartography
 
-protocol EmojiKeyboardViewControllerDelegate: class {
+protocol EmojiKeyboardViewControllerDelegate: AnyObject {
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String)
     func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController)
 }
@@ -70,17 +69,25 @@ final class EmojiKeyboardViewController: UIViewController {
         sectionViewController.didMove(toParent: self)
     }
 
-    func createConstraints() {
-        constrain(view, collectionView, sectionViewController.view) { view, collectionView, sectionView in
-            collectionView.top == view.top
-            collectionView.leading == view.leading
-            collectionView.trailing == view.trailing
-            collectionView.bottom == sectionView.top
-            sectionView.bottom == view.bottom - UIScreen.safeArea.bottom
-            sectionView.leading == view.leading
-            sectionView.trailing == view.trailing - 32 ~ 750.0
-            sectionView.width <= 400
-        }
+    private func createConstraints() {
+        guard let sectionViewControllerView = sectionViewController.view else { return }
+
+        [collectionView, sectionViewControllerView].prepareForLayout()
+
+        let sectionViewControllerViewTrailing = sectionViewControllerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+
+        sectionViewControllerViewTrailing.priority = .defaultHigh
+
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: sectionViewControllerView.topAnchor),
+            sectionViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            sectionViewControllerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            sectionViewControllerViewTrailing,
+            sectionViewControllerView.widthAnchor.constraint(lessThanOrEqualToConstant: 400)
+        ])
     }
 
     func cellForEmoji(_ emoji: Emoji, indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,7 +164,7 @@ extension EmojiKeyboardViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-class EmojiCollectionViewCell: UICollectionViewCell {
+final class EmojiCollectionViewCell: UICollectionViewCell {
 
     let titleLabel = UILabel()
 
@@ -188,15 +195,19 @@ class EmojiCollectionViewCell: UICollectionViewCell {
         addSubview(titleLabel)
     }
 
-    func createConstraints() {
-        constrain(self, titleLabel) { view, label in
-            label.edges == view.edges
-        }
+    private func createConstraints() {
+        [titleLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
     }
 
 }
 
-class EmojiCollectionView: UICollectionView {
+final class EmojiCollectionView: UICollectionView {
 
     private let layout = UICollectionViewFlowLayout()
 

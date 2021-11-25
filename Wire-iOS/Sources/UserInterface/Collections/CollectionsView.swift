@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 final class CollectionsView: UIView {
@@ -100,33 +99,41 @@ final class CollectionsView: UIView {
     }
 
     func constrainViews(searchViewController: TextSearchViewController) {
-        addSubview(searchViewController.resultsView)
-        addSubview(searchViewController.searchBar)
 
-        constrain(self, searchViewController.searchBar, collectionView, noResultsView) { selfView, searchBar, collectionView, noResultsView in
-
-            searchBar.top == selfView.top
-            searchBar.leading == selfView.leading
-            searchBar.trailing == selfView.trailing
-            searchBar.height == 56
-
-            collectionView.top == searchBar.bottom
-
-            collectionView.leading == selfView.leading
-            collectionView.trailing == selfView.trailing
-            collectionView.bottom == selfView.bottom
-
-            noResultsView.top >= searchBar.bottom + 12
-            noResultsView.centerX == selfView.centerX
-            noResultsView.centerY == selfView.centerY ~ UILayoutPriority.defaultLow
-            noResultsView.bottom <= selfView.bottom - 12
-            noResultsView.leading >= selfView.leading + 24
-            noResultsView.trailing <= selfView.trailing - 24
+        let searchBar = searchViewController.searchBar
+        let resultsView = searchViewController.resultsView
+        [searchBar, resultsView].forEach {
+            addSubview($0)
         }
 
-        constrain(collectionView, searchViewController.resultsView) { collectionView, resultsView in
-            resultsView.edges == collectionView.edges
-        }
+        let centerYConstraint = noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        centerYConstraint.priority = .defaultLow
+
+        [searchBar, resultsView, collectionView, noResultsView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          searchBar.topAnchor.constraint(equalTo: topAnchor),
+          searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+          searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+          searchBar.heightAnchor.constraint(equalToConstant: 56),
+
+          collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+
+          collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+          noResultsView.topAnchor.constraint(greaterThanOrEqualTo: searchBar.bottomAnchor, constant: 12),
+          noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+          centerYConstraint,
+          noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
+          noResultsView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 24),
+          noResultsView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -24),
+
+          resultsView.topAnchor.constraint(equalTo: collectionView.topAnchor),
+          resultsView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+          resultsView.leftAnchor.constraint(equalTo: collectionView.leftAnchor),
+          resultsView.rightAnchor.constraint(equalTo: collectionView.rightAnchor)
+        ])
     }
 
 }

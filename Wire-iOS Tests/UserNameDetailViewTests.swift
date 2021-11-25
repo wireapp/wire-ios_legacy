@@ -19,43 +19,49 @@
 import XCTest
 @testable import Wire
 
-class UserNameDetailViewTests: ZMSnapshotTestCase {
+class UserNameDetailViewTests: XCTestCase {
+    var sut: UserNameDetailView!
 
-    override func setUp() {
-        super.setUp()
-        snapshotBackgroundColor = .white
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
     func createSutWithHeadStyle(user: UserType? = nil,
                                 addressBookName: String? = nil,
                                 fallbackName: String = "Jose Luis") -> UserNameDetailView {
         let model = UserNameDetailViewModel(user: user, fallbackName: fallbackName, addressBookName: addressBookName)
-        let sut = UserNameDetailView()
-        sut.configure(with: model)
-
-        return sut
-    }
-
-    func testThatItRendersFallbackUserName() {
-        let sut = createSutWithHeadStyle()
-        verifyInAllPhoneWidths(view: sut)
+        let view = UserNameDetailView()
+        view.translatesAutoresizingMaskIntoConstraints = true
+        view.configure(with: model)
+        view.backgroundColor = .white
+        view.frame = CGRect(x: 0, y: 0, width: 320, height: 32)
+        return view
     }
 
     func testThatItRendersAddressBookName() {
         let user = SwiftMockLoader.mockUsers().first
-        let sut = createSutWithHeadStyle(user: user, addressBookName: "JameyBoy")
-        verifyInAllPhoneWidths(view: sut)
+        sut = createSutWithHeadStyle(user: user, addressBookName: "JameyBoy")
+        verify(matching: sut)
     }
 
     func testThatItRendersAddressBookName_EqualName() {
         let user = SwiftMockLoader.mockUsers().first
-        let sut = createSutWithHeadStyle(user: user, addressBookName: user?.name, fallbackName: "")
-        verifyInAllPhoneWidths(view: sut)
+        sut = createSutWithHeadStyle(user: user, addressBookName: user?.name, fallbackName: "")
+        verify(matching: sut)
     }
 
     func testThatItRendersUserName() {
         let user = SwiftMockLoader.mockUsers().first
-        let sut = createSutWithHeadStyle(user: user, fallbackName: "")
-        verifyInAllPhoneWidths(view: sut)
+        sut = createSutWithHeadStyle(user: user, fallbackName: "")
+        verify(matching: sut)
+    }
+
+    func testThatItRendersUserName_Federated() {
+        let user = SwiftMockLoader.mockUsers().first
+        user?.domain = "wire.com"
+        user?.isFederated = true
+        sut = createSutWithHeadStyle(user: user, fallbackName: "")
+        verify(matching: sut)
     }
 }

@@ -42,9 +42,9 @@ final class CollectionImageCell: CollectionCell {
     /// asynchronous tasks where the cell might have been re-used in the mean time.
     private var reuseToken = UUID()
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadView()
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {

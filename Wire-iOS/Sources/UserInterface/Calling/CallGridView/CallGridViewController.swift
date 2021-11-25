@@ -17,14 +17,13 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireSyncEngine
 import avs
 import DifferenceKit
 
-protocol CallGridViewControllerDelegate: class {
+protocol CallGridViewControllerDelegate: AnyObject {
     func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction)
 }
 

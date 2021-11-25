@@ -20,7 +20,7 @@ import UIKit
 import WireSyncEngine
 import avs
 
-protocol CallViewControllerDelegate: class {
+protocol CallViewControllerDelegate: AnyObject {
     func callViewControllerDidDisappear(_ callController: CallViewController,
                                         for conversation: ZMConversation?)
 }

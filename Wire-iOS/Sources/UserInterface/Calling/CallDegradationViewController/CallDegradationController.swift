@@ -26,7 +26,7 @@ enum CallDegradationState: Equatable {
     case outgoing(degradedUser: HashBoxUser?)
 }
 
-protocol CallDegradationControllerDelegate: class {
+protocol CallDegradationControllerDelegate: AnyObject {
     func continueDegradedCall()
     func cancelDegradedCall()
 }

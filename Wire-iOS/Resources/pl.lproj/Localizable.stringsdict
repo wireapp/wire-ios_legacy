@@ -55,9 +55,9 @@
         <key>one</key>
         <string>został dodany</string>
         <key>few</key>
-        <string>have been added</string>
+        <string>zostali dodani</string>
         <key>many</key>
-        <string>have been added</string>
+        <string>zostało dodanych</string>
         <key>other</key>
         <string>zostali dodani</string>
       </dict>
@@ -73,11 +73,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>one</key>
-        <string>has been removed</string>
+        <string>został usunięty</string>
         <key>few</key>
-        <string>have been removed</string>
+        <string>zostało usuniętych</string>
         <key>many</key>
-        <string>have been removed</string>
+        <string>zostało usuniętych</string>
         <key>other</key>
         <string>zostali usunięci</string>
       </dict>
@@ -153,13 +153,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string> and %d others</string>
+        <string>i %d innych</string>
         <key>few</key>
-        <string> and %d others</string>
+        <string>i %d innych</string>
         <key>many</key>
-        <string> and %d others</string>
+        <string>i %d innych</string>
         <key>other</key>
-        <string> and %d others</string>
+        <string>i %d innych</string>
       </dict>
       <key>d_new_devices</key>
       <dict>
@@ -210,9 +210,9 @@
         <key>one</key>
         <string>wiadomość</string>
         <key>few</key>
-        <string>%d messages</string>
+        <string>%d wiadomości</string>
         <key>many</key>
-        <string>%d messages</string>
+        <string>%d wiadomości</string>
         <key>other</key>
         <string>%d wiadomości</string>
       </dict>
@@ -228,11 +228,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mention</string>
+        <string>%d wzmianka</string>
         <key>few</key>
-        <string>%d mentions</string>
+        <string>%d wzmianek</string>
         <key>many</key>
-        <string>%d mentions</string>
+        <string>%d wzmianek</string>
         <key>other</key>
         <string>%d wzmianek</string>
       </dict>
@@ -248,11 +248,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 reply</string>
+        <string>odpowiedź</string>
         <key>few</key>
-        <string>%d replies</string>
+        <string>%d odpowiedzi</string>
         <key>many</key>
-        <string>%d replies</string>
+        <string>%d odpowiedzi</string>
         <key>other</key>
         <string>%d odpowiedzi</string>
       </dict>
@@ -268,11 +268,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>zaczepienie</string>
+        <string>zaczepka</string>
         <key>few</key>
-        <string>%d pings</string>
+        <string>%d zaczepek</string>
         <key>many</key>
-        <string>%d pings</string>
+        <string>%d zaczepek</string>
         <key>other</key>
         <string>%d zaczepek</string>
       </dict>
@@ -310,9 +310,9 @@
         <key>one</key>
         <string>Nieodebrane połączenie</string>
         <key>few</key>
-        <string>Missed calls</string>
+        <string>Nieodebrane połączenia</string>
         <key>many</key>
-        <string>Missed calls</string>
+        <string>Nieodebrane połączenia</string>
         <key>other</key>
         <string>Nieodebrane połączenia</string>
       </dict>
@@ -360,7 +360,7 @@
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>co najmniej %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -368,13 +368,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>jeden znak</string>
         <key>few</key>
-        <string>%d characters</string>
+        <string>%d znaków</string>
         <key>many</key>
-        <string>%d characters</string>
+        <string>%d znaków</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d znaków</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -388,13 +388,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>jedną małą literę</string>
         <key>few</key>
-        <string>%d lowercase letters</string>
+        <string>%d małych liter</string>
         <key>many</key>
-        <string>%d lowercase letters</string>
+        <string>%d małych liter</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d małych liter</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -408,11 +408,11 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>jedna wielka litera</string>
         <key>few</key>
-        <string>%d capital letters</string>
+        <string>%d wielkich liter</string>
         <key>many</key>
-        <string>%d capital letters</string>
+        <string>%d wielkich liter</string>
         <key>other</key>
         <string>%d wielkich liter</string>
       </dict>
@@ -428,13 +428,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>numer</string>
         <key>few</key>
-        <string>%d numbers</string>
+        <string>%d numerów</string>
         <key>many</key>
-        <string>%d numbers</string>
+        <string>%d numerów</string>
         <key>other</key>
-        <string>%d liczb</string>
+        <string>%d numerów</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -448,11 +448,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>znak specjalny</string>
         <key>few</key>
-        <string>%d special characters</string>
+        <string>%d znaków specjalnych</string>
         <key>many</key>
-        <string>%d special characters</string>
+        <string>%d znaków specjalnych</string>
         <key>other</key>
         <string>%d znaków specjalnych</string>
       </dict>

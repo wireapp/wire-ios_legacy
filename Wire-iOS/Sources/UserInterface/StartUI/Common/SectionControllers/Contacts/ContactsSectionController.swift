@@ -22,7 +22,7 @@ import WireDataModel
 class ContactsSectionController: SearchSectionController {
 
     var contacts: [UserType] = []
-    var selection: UserSelection? = nil {
+    var selection: UserSelection? {
         didSet {
             selection?.add(observer: self)
         }

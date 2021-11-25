@@ -19,7 +19,7 @@
 import UIKit
 import WireSyncEngine
 
-protocol AccountSelectorViewDelegate: class {
+protocol AccountSelectorViewDelegate: AnyObject {
     func accountSelectorDidSelect(account: Account)
 }
 
@@ -29,7 +29,7 @@ final class AccountSelectorView: UIView {
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
-    fileprivate var accounts: [Account]? = nil {
+    fileprivate var accounts: [Account]? {
         didSet {
             guard ZMUserSession.shared() != nil else {
                 return

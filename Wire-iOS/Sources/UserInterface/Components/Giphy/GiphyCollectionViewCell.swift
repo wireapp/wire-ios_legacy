@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 
@@ -36,9 +35,13 @@ final class GiphyCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         contentView.addSubview(imageView)
 
-        constrain(contentView, imageView) { contentView, imageView in
-            imageView.edges == contentView.edges
-        }
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+        ])
     }
 
     @available(*, unavailable)

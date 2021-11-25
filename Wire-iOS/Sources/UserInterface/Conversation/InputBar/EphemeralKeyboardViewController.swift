@@ -18,10 +18,9 @@
 
 import UIKit
 import WireCommonComponents
-import Cartography
 import WireDataModel
 
-protocol EphemeralKeyboardViewControllerDelegate: class {
+protocol EphemeralKeyboardViewControllerDelegate: AnyObject {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
 
     func ephemeralKeyboard(
@@ -32,28 +31,18 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
 
 extension InputBarConversation {
 
-    var destructionTimeout: MessageDestructionTimeoutValue? {
-        switch messageDestructionTimeout {
-        case .local(let value)?:
-            return value
-        case .synced(let value)?:
-            return value
-        default:
-            return nil
-        }
-    }
-
     var timeoutImage: UIImage? {
-        guard let value = self.destructionTimeout else { return nil }
-        return timeoutImage(for: value)
+        guard let timeout = activeMessageDestructionTimeoutValue else { return nil }
+        return timeoutImage(for: timeout)
     }
 
     var disabledTimeoutImage: UIImage? {
-        guard let value = self.destructionTimeout else { return nil }
-        return timeoutImage(for: value, withColor: .lightGraphite)
+        guard let timeout = activeMessageDestructionTimeoutValue else { return nil }
+        return timeoutImage(for: timeout, withColor: .lightGraphite)
     }
 
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
+        guard timeout != .none else { return nil }
         if timeout.isYears { return StyleKitIcon.timeoutYear.makeImage(size: 64, color: color) }
         if timeout.isWeeks { return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: color) }
         if timeout.isDays { return StyleKitIcon.timeoutDay.makeImage(size: 64, color: color) }
@@ -131,7 +120,8 @@ final class EphemeralKeyboardViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -146,7 +136,8 @@ final class EphemeralKeyboardViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let index = timeouts.firstIndex(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
+        let currentTimeout = conversation.messageDestructionTimeoutValue(for: .selfUser)
+        guard let index = timeouts.firstIndex(of: currentTimeout) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 
@@ -174,15 +165,16 @@ final class EphemeralKeyboardViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, picker, titleLabel) { view, picker, label in
-            label.leading == view.leading + 16
-            label.trailing == view.trailing - 16
-            label.top == view.top + 16
-            picker.top == label.bottom
-            picker.bottom == view.bottom - 16
-            picker.leading == view.leading + 32
-            picker.trailing == view.trailing - 32
-        }
+        [picker, titleLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+          titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+          titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+          picker.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+          picker.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+          picker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+          picker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+        ])
     }
 
     fileprivate func displayCustomPicker() {

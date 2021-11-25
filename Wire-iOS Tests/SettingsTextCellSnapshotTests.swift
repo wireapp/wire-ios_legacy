@@ -49,7 +49,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         let mockTableView = sut.wrapInTableView()
         mockTableView.backgroundColor = .black
 
-        XCTAssert(sut.textInput.isUserInteractionEnabled)
+        XCTAssert(sut.textInput.isEnabled)
 
         verify(view: mockTableView)
     }
@@ -62,6 +62,6 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         cellDescriptor.featureCell(sut)
 
         // THEN
-        XCTAssertFalse(sut.textInput.isUserInteractionEnabled)
+        XCTAssertFalse(sut.textInput.isEnabled)
     }
 }

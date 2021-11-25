@@ -26,9 +26,9 @@ final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
     private let restrictionView = SimpleVideoMessageRestrictionView()
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.loadView()
+        fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {

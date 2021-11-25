@@ -40,7 +40,7 @@ final class BadgeUserImageView: UserImageView {
     }
 
     /// The badge icon.
-    var badgeIcon: StyleKitIcon? = nil {
+    var badgeIcon: StyleKitIcon? {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }

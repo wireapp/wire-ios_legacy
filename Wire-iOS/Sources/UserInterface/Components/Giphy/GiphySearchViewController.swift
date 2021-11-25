@@ -17,13 +17,12 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
 import WireDataModel
 
-protocol GiphySearchViewControllerDelegate: class {
+protocol GiphySearchViewControllerDelegate: AnyObject {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
@@ -134,9 +133,11 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     }
 
     private func createConstraints() {
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func applyStyle() {
@@ -162,11 +163,15 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         navigationController.navigationBar.barTintColor = UIColor.from(scheme: .background)
         navigationController.navigationBar.isTranslucent = false
 
+        if #available(iOS 15, *) {
+            navigationController.view.backgroundColor = UIColor.from(scheme: .barBackground, variant: ColorScheme.default.variant)
+        }
+
         return navigationController
     }
 
     @objc func onDismiss() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Collection View

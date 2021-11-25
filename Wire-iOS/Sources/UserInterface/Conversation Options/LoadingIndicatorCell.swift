@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable {
 
@@ -28,10 +27,15 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
         contentView.addSubview(spinner)
         backgroundColor = .clear
         spinner.hidesWhenStopped = false
-        constrain(contentView, spinner) { contentView, spinner in
-            spinner.edges == contentView.edges
-            spinner.height == 120
-        }
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+          spinner.topAnchor.constraint(equalTo: contentView.topAnchor),
+          spinner.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          spinner.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          spinner.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          spinner.heightAnchor.constraint(equalToConstant: 120)
+        ])
     }
 
     @available(*, unavailable)

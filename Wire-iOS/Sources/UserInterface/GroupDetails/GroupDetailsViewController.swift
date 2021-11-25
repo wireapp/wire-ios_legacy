@@ -75,7 +75,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         [collectionView, footerView].forEach(view.addSubview)
 
         [collectionView, footerView].prepareForLayout()
-
         NSLayoutConstraint.activate([
           collectionView.topAnchor.constraint(equalTo: view.topAnchor),
           collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -231,8 +230,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
-            let navigationController = addParticipantsViewController.wrapInNavigationController()
+            let navigationController = addParticipantsViewController.wrapInNavigationController(setBackgroundColor: true)
             navigationController.modalPresentationStyle = .currentContext
+
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation,

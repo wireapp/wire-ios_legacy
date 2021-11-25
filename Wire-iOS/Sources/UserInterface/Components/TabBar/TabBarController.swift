@@ -17,9 +17,8 @@
 //
 
 import UIKit
-import Cartography
 
-protocol TabBarControllerDelegate: class {
+protocol TabBarControllerDelegate: AnyObject {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 

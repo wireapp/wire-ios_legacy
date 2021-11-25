@@ -17,13 +17,12 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
-protocol NetworkStatusViewControllerDelegate: class {
+protocol NetworkStatusViewControllerDelegate: AnyObject {
 
     ///  return false if NetworkStatusViewController will not disapper in iPad regular mode with specific orientation.
     ///
@@ -66,6 +65,20 @@ final class NetworkStatusViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIApplication.didChangeStatusBarOrientationNotification, object: .none)
+
+        view.addSubview(networkStatusView)
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        networkStatusView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          networkStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          networkStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          networkStatusView.topAnchor.constraint(equalTo: view.topAnchor),
+          networkStatusView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
     }
 
     @available(*, unavailable)
@@ -84,14 +97,6 @@ final class NetworkStatusViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        view.addSubview(networkStatusView)
-
-        constrain(view, networkStatusView) { containerView, networkStatusView in
-            networkStatusView.leading == containerView.leading
-            networkStatusView.trailing == containerView.trailing
-            networkStatusView.top == containerView.top
-            networkStatusView.height == containerView.height
-        }
 
         if let userSession = ZMUserSession.shared() {
             enqueue(state: viewState(from: userSession.networkState))

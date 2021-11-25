@@ -29,12 +29,8 @@ final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
     }
 
     func configure(with conversation: GroupDetailsConversationType) {
-        switch conversation.messageDestructionTimeout {
-        case .synced(let value)?:
-            status = value.displayString
-        default:
-            status = MessageDestructionTimeoutValue.none.displayString
-        }
+        let timeout = MessageDestructionTimeoutValue(rawValue: conversation.syncedMessageDestructionTimeout)
+        status = timeout.displayString
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
