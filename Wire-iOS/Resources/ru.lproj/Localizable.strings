@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Верифицировано";
 "conversation.input_bar.placeholder" = "Введите сообщение";
-"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
+"conversation.input_bar.placeholder_ephemeral" = "Самоудаляющееся сообщение";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
 "conversation.input_bar.shortcut.edit_last_message" = "Изменить последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Выбрать предыдущее упоминание";
@@ -922,7 +922,7 @@
 "group_details.guest_options_cell.title" = "Гости и сервисы";
 "group_details.guest_options_cell.enabled" = "Вкл.";
 "group_details.guest_options_cell.disabled" = "Выкл.";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "Самоудаляющиеся сообщения";
 "group_details.notification_options_cell.title" = "Уведомления";
 "group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
 "group_details.receipt_options_cell.title" = "Отчеты о прочтении";
@@ -936,8 +936,8 @@
 
 "legalhold.participants.section.title" = "Субъекты юридических ограничений";
 "legalhold.header.title" = "Юридические ограничения";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "В этой беседе активированы юридические ограничения как минимум для одного участника. Все сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и самоудаляющиеся.";
+"legalhold.header.self_description" = "Для вашей учетной записи активированы юридические ограничения. Все сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и самоудаляющиеся. Ваши собеседники будут уведомлены об этом.";
 "legalhold.accessibility" = "Информация о правовой защите";
 
 
@@ -1674,9 +1674,9 @@
 "feature_config.conference_calling_restrictions.personal.alert.message" = "Возможность инициировать конференц-связь доступна только в платной версии Wire.";
 
 // Feature configs: self-deleting messages
-"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
-"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+"feature_config.alert.self_deleting_messages.message.disabled" = "Самоудаляющиеся сообщения отключены.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Самоудаляющиеся сообщения включены. Перед написанием сообщения можно установить таймер.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Самоудаляющиеся сообщения теперь обязательны. Новые сообщения будут самоудаляться спустя %@.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
@@ -1846,14 +1846,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "В ожидании принятия.";
 "legalhold_request.alert.title" = "Запрошены юридические ограничения";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
+"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nСюда входят удаленные, отредактированные и самоудаляющиеся сообщения во всех беседах.";
 "legalhold_request.alert.detail.enter_password" = "Введите пароль для подтверждения.";
 "legalhold_request.alert.error_wrong_password" = "Неверный пароль";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Юридические ограничения активны";
 "legalhold_active.alert.learn_more" = "Подробнее";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Для вашей учетной записи активированы юридические ограничения. Все сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и самоудаляющиеся.\n\nВаши собеседники будут уведомлены об этом.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Ваша сессия истекла";
@@ -1931,7 +1931,7 @@
 "appLockModule.goToSettingsButton.title" = "Перейти в настройки";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
-"keyboardshortcut.conversationDetail" = "Conversation Details...";
-"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.scrollToBottom" = "Прокрутить вниз";
+"keyboardshortcut.conversationDetail" = "Информация о беседе...";
+"keyboardshortcut.searchInConversation" = "Поиск в беседе...";
 "keyboardshortcut.openPeople" = "Контакты";
