@@ -21,7 +21,7 @@ import WireDataModel
 
 extension AnalyticsEvent {
 
-    static func joinedCall(asVideoCall: Bool, callDirection: CallDirection,  in conversation: ZMConversation) -> AnalyticsEvent {
+    static func joinedCall(asVideoCall: Bool, callDirection: CallDirection, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.initiated_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
@@ -31,8 +31,8 @@ extension AnalyticsEvent {
 
     enum CallDirection: String, AnalyticsAttributeValue {
 
-      case incoming
-      case outgoing
+        case incoming
+        case outgoing
 
         var analyticsValue: String {
             return rawValue
@@ -42,7 +42,7 @@ extension AnalyticsEvent {
 }
 
 private extension AnalyticsAttributeKey {
-    
+
     /// Whether a call started as a video call.
     ///
     /// Expected to refer to a value of type `Boolean`.
@@ -51,7 +51,7 @@ private extension AnalyticsAttributeKey {
 
     /// The direction of the call.
     ///
-    /// Expected to refer to a value of type `String`.
+    /// Expected to refer to a value of type `AnalyticsCallDirectionType`.
     static let callDirection  = AnalyticsAttributeKey(rawValue: "call_direction")
 
 }
