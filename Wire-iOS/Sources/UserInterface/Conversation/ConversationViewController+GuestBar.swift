@@ -43,16 +43,16 @@ extension ConversationViewController {
             states.append(ConversationBanner.remotes)
         }
 
+        if conversation.externalParticipantsState.contains(.visibleExternals) {
+            states.append(ConversationBanner.externals)
+        }
+
         if conversation.externalParticipantsState.contains(.visibleGuests) {
             states.append(ConversationBanner.guests)
         }
 
         if conversation.externalParticipantsState.contains(.visibleServices) {
             states.append(ConversationBanner.services)
-        }
-
-        if conversation.externalParticipantsState.contains(.visibleExternals) {
-            states.append(ConversationBanner.externals)
         }
 
         let head = states[0]
