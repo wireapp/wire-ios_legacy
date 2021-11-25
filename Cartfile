@@ -1,8 +1,8 @@
 github "wireapp/wire-ios-ziphy" ~> 17.0.0
-github "wireapp/wire-ios-sync-engine" ~> 403.0.0
-github "wireapp/wire-ios-share-engine" ~> 237.0.0
+github "wireapp/wire-ios-sync-engine" ~> 404.0.0
+github "wireapp/wire-ios-share-engine" ~> 238.0.0
 github "wireapp/FormatterKit" "1.8.1_xcframework"
-github "wireapp/wire-ios-canvas" ~> 14.0.0
+github "wireapp/wire-ios-canvas" ~> 14.0.2
 github "wireapp/appcenter-sdk-apple" "4.3.0"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/Down" "v2.3.0_Xcode13"
