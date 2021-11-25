@@ -77,7 +77,7 @@ final class AnalyticsCountlyProviderTests: XCTestCase, CoreDataFixtureTestHelper
 
             // WHEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 0)
-            sut.tagEvent(.openingApp())
+            sut.tagEvent(.openingApp)
 
             // THEN
             XCTAssertEqual(analyticsCountlyProvider.pendingEvents.count, 1)
