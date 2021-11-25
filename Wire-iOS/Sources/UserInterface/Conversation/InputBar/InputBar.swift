@@ -1,23 +1,22 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
-import Cartography
 import Down
 import WireDataModel
 
@@ -144,15 +143,15 @@ final class InputBar: UIView {
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
-    fileprivate var rowTopInsetConstraint: NSLayoutConstraint?
+    private lazy var rowTopInsetConstraint: NSLayoutConstraint = buttonInnerContainer.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -constants.buttonsBarHeight)
 
     // Contains the secondaryButtonsView and buttonsView
-    fileprivate let buttonInnerContainer = UIView()
+    private let buttonInnerContainer = UIView()
 
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
 
-    fileprivate var leftAccessoryViewWidthConstraint: NSLayoutConstraint?
+    private lazy var leftAccessoryViewWidthConstraint: NSLayoutConstraint = leftAccessoryView.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
 
     var isEditing: Bool {
         return inputBarState.isEditing
@@ -264,54 +263,61 @@ final class InputBar: UIView {
     }
 
     fileprivate func createConstraints() {
+        [buttonContainer,
+         textView,
+         buttonRowSeparator,
+         leftAccessoryView,
+         rightAccessoryStackView,
+         secondaryButtonsView,
+         buttonsView,
+         buttonInnerContainer].prepareForLayout()
 
-        constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryStackView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
-            leftAccessoryView.leading == leftAccessoryView.superview!.leading
-            leftAccessoryView.top == leftAccessoryView.superview!.top
-            leftAccessoryView.bottom == buttonContainer.top
-            leftAccessoryViewWidthConstraint = leftAccessoryView.width == conversationHorizontalMargins.left
+        let rightAccessoryViewWidthConstraint =  rightAccessoryStackView.widthAnchor.constraint(equalToConstant: 0)
+        rightAccessoryViewWidthConstraint.priority = .defaultHigh
 
-            rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
-            rightAccessoryView.top == rightAccessoryView.superview!.top
-            rightAccessoryView.width == 0 ~ 750.0
-            rightAccessoryView.bottom == buttonContainer.top
+        NSLayoutConstraint.activate([
+            leftAccessoryView.leadingAnchor.constraint(equalTo: leftAccessoryView.superview!.leadingAnchor),
+            leftAccessoryView.topAnchor.constraint(equalTo: leftAccessoryView.superview!.topAnchor),
+            leftAccessoryView.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            leftAccessoryViewWidthConstraint,
 
-            buttonContainer.top == textView.bottom
-            textView.top == textView.superview!.top
-            textView.leading == leftAccessoryView.trailing
-            textView.trailing <= textView.superview!.trailing - 16
-            textView.trailing == rightAccessoryView.leading
-            textView.height >= 56
-            textView.height <= 120 ~ 1000.0
+            rightAccessoryStackView.trailingAnchor.constraint(equalTo: rightAccessoryStackView.superview!.trailingAnchor),
+            rightAccessoryStackView.topAnchor.constraint(equalTo: rightAccessoryStackView.superview!.topAnchor),
+            rightAccessoryViewWidthConstraint,
+            rightAccessoryStackView.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor),
 
-            buttonRowSeparator.top == buttonContainer.top
-            buttonRowSeparator.leading == buttonRowSeparator.superview!.leading + 16
-            buttonRowSeparator.trailing == buttonRowSeparator.superview!.trailing - 16
-            buttonRowSeparator.height == .hairline
-        }
+            buttonContainer.topAnchor.constraint(equalTo: textView.bottomAnchor),
+            textView.topAnchor.constraint(equalTo: textView.superview!.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: leftAccessoryView.trailingAnchor),
+            textView.trailingAnchor.constraint(lessThanOrEqualTo: textView.superview!.trailingAnchor, constant: -16),
+            textView.trailingAnchor.constraint(equalTo: rightAccessoryStackView.leadingAnchor),
+            textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
+            textView.heightAnchor.constraint(lessThanOrEqualToConstant: 120),
 
-        constrain(secondaryButtonsView, buttonsView, buttonInnerContainer) { secondaryButtonsView, buttonsView, buttonInnerContainer in
-            secondaryButtonsView.top == buttonInnerContainer.top
-            secondaryButtonsView.leading == buttonInnerContainer.leading
-            secondaryButtonsView.trailing == buttonInnerContainer.trailing
-            secondaryButtonsView.bottom == buttonsView.top
-            secondaryButtonsView.height == constants.buttonsBarHeight
+            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            buttonRowSeparator.leadingAnchor.constraint(equalTo: buttonRowSeparator.superview!.leadingAnchor, constant: 16),
+            buttonRowSeparator.trailingAnchor.constraint(equalTo: buttonRowSeparator.superview!.trailingAnchor, constant: -16),
+            buttonRowSeparator.heightAnchor.constraint(equalToConstant: .hairline),
 
-            buttonsView.leading == buttonInnerContainer.leading
-            buttonsView.trailing <= buttonInnerContainer.trailing
-            buttonsView.bottom == buttonInnerContainer.bottom
-        }
+            secondaryButtonsView.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor),
+            secondaryButtonsView.leadingAnchor.constraint(equalTo: buttonInnerContainer.leadingAnchor),
+            secondaryButtonsView.trailingAnchor.constraint(equalTo: buttonInnerContainer.trailingAnchor),
+            secondaryButtonsView.bottomAnchor.constraint(equalTo: buttonsView.topAnchor),
+            secondaryButtonsView.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
 
-        constrain(buttonContainer, buttonInnerContainer) { container, innerContainer in
-            container.bottom == container.superview!.bottom
-            container.leading == container.superview!.leading
-            container.trailing == container.superview!.trailing
-            container.height == constants.buttonsBarHeight
+            buttonsView.leadingAnchor.constraint(equalTo: buttonInnerContainer.leadingAnchor),
+            buttonsView.trailingAnchor.constraint(lessThanOrEqualTo: buttonInnerContainer.trailingAnchor),
+            buttonsView.bottomAnchor.constraint(equalTo: buttonInnerContainer.bottomAnchor),
 
-            innerContainer.leading == container.leading
-            innerContainer.trailing == container.trailing
-            self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
-        }
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor),
+            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor),
+            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor),
+            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
+
+            buttonInnerContainer.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            buttonInnerContainer.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            rowTopInsetConstraint
+        ])
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -324,7 +330,7 @@ final class InputBar: UIView {
     }
 
     fileprivate func updateLeftAccessoryViewWidth() {
-        leftAccessoryViewWidthConstraint?.constant = conversationHorizontalMargins.left
+        leftAccessoryViewWidthConstraint.constant = conversationHorizontalMargins.left
     }
 
     fileprivate func updateRightAccessoryStackViewLayoutMargins() {
@@ -393,7 +399,7 @@ final class InputBar: UIView {
         updateEditViewState()
         updatePlaceholder()
         updateReturnKey()
-        rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
+        rowTopInsetConstraint.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {

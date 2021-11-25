@@ -18,20 +18,7 @@
 
 import Foundation
 import WireDataModel
-
-private let disableEphemeralSending = false
-private let disableEphemeralSendingInGroups = false
-
-extension InputBarConversation {
-    var hasSyncedMessageDestructionTimeout: Bool {
-        switch messageDestructionTimeout {
-        case .synced?:
-            return true
-        default:
-            return false
-        }
-    }
-}
+import WireSyncEngine
 
 final class ConversationInputBarButtonState {
 
@@ -41,15 +28,15 @@ final class ConversationInputBarButtonState {
     }
 
     var hourglassButtonHidden: Bool {
-        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || ephemeral || disableEphemeralSending
+        return hasText || editing || ephemeral || isEphemeralSendingDisabled
     }
 
     var ephemeralIndicatorButtonHidden: Bool {
-        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
+        return editing || !ephemeral || isEphemeralSendingDisabled
     }
 
     var ephemeralIndicatorButtonEnabled: Bool {
-        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout
+        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout && !isEphemeralTimeoutForced
     }
 
     private var hasText: Bool {
@@ -57,32 +44,36 @@ final class ConversationInputBarButtonState {
     }
 
     var ephemeral: Bool {
-        return destructionTimeout != 0
+        guard let timeout = destructionTimeout else { return false }
+        return timeout != .none
     }
 
-    private var textLength: Int = 0
-    private var editing: Bool = false
-    private var markingDown: Bool = false
-    private var destructionTimeout: TimeInterval = 0
-    private var conversationType: ZMConversationType = .oneOnOne
-    private var mode: ConversationInputBarViewControllerMode = .textInput
-    private var syncedMessageDestructionTimeout: Bool = false
+    private var textLength = 0
+    private var editing = false
+    private var markingDown = false
+    private var destructionTimeout: MessageDestructionTimeoutValue?
+    private var mode = ConversationInputBarViewControllerMode.textInput
+    private var syncedMessageDestructionTimeout = false
+    private var isEphemeralSendingDisabled = false
+    private var isEphemeralTimeoutForced = false
 
     func update(textLength: Int,
                 editing: Bool,
                 markingDown: Bool,
-                destructionTimeout: TimeInterval,
-                conversationType: ZMConversationType,
+                destructionTimeout: MessageDestructionTimeoutValue?,
                 mode: ConversationInputBarViewControllerMode,
-                syncedMessageDestructionTimeout: Bool) {
+                syncedMessageDestructionTimeout: Bool,
+                isEphemeralSendingDisabled: Bool,
+                isEphemeralTimeoutForced: Bool) {
 
         self.textLength = textLength
         self.editing = editing
         self.markingDown = markingDown
         self.destructionTimeout = destructionTimeout
-        self.conversationType = conversationType
         self.mode = mode
         self.syncedMessageDestructionTimeout = syncedMessageDestructionTimeout
+        self.isEphemeralSendingDisabled = isEphemeralSendingDisabled
+        self.isEphemeralTimeoutForced = isEphemeralTimeoutForced
     }
 
 }

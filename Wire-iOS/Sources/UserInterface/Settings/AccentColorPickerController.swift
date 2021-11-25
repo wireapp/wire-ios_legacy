@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import WireSyncEngine
-import Cartography
 import WireCommonComponents
 
 protocol ColorPickerControllerDelegate {
@@ -80,35 +79,35 @@ class ColorPickerController: UIViewController {
         contentView.addSubview(tableView)
         contentView.addSubview(headerView)
 
-        constrain(contentView, headerView, titleLabel, closeButton) { contentView, headerView, titleLabel, closeButton in
-            headerView.left == contentView.left
-            headerView.top == contentView.top
-            headerView.right == contentView.right
-            headerView.height == 44
+        [contentView, headerView, titleLabel, closeButton].prepareForLayout()
 
-            titleLabel.center == headerView.center
-            titleLabel.left >= headerView.left
-            titleLabel.right <= closeButton.left
+        NSLayoutConstraint.activate([
+          headerView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+          headerView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          headerView.heightAnchor.constraint(equalToConstant: 44),
 
-            closeButton.centerY == headerView.centerY
-            closeButton.right == headerView.right
-            closeButton.height == headerView.height
-            closeButton.width == closeButton.height
-        }
+          titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+          titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+          titleLabel.leftAnchor.constraint(greaterThanOrEqualTo: headerView.leftAnchor),
+          titleLabel.rightAnchor.constraint(lessThanOrEqualTo: closeButton.leftAnchor),
 
-        constrain(contentView, tableView, headerView) { contentView, tableView, headerView in
-            tableView.left == contentView.left
-            tableView.bottom == contentView.bottom
-            tableView.right == contentView.right
+          closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+          closeButton.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+          closeButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
+          closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
 
-            tableView.top == headerView.bottom
-        }
+          tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
 
-        constrain(view, contentView, headerView) { view, contentView, headerView in
-            contentView.center == view.center
-            contentView.width == 300
-            contentView.height == headerView.height + type(of: self).rowHeight * CGFloat(colors.count)
-        }
+          tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+
+          contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          contentView.widthAnchor.constraint(equalToConstant: 300),
+          contentView.heightAnchor.constraint(equalTo: headerView.heightAnchor, constant: type(of: self).rowHeight * CGFloat(colors.count))
+        ])
 
         tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
         tableView.delegate = self
@@ -135,10 +134,15 @@ class ColorPickerController: UIViewController {
             contentView.addSubview(colorView)
             contentView.addSubview(checkmarkView)
 
-            constrain(contentView, checkmarkView, colorView) { contentView, checkmarkView, colorView in
-                colorView.edges == contentView.edges
-                checkmarkView.center == contentView.center
-            }
+            [checkmarkView, colorView].prepareForLayout()
+            NSLayoutConstraint.activate([
+              colorView.topAnchor.constraint(equalTo: contentView.topAnchor),
+              colorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+              colorView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+              colorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+              checkmarkView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+              checkmarkView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            ])
 
             checkmarkView.setIcon(.checkmark, size: .small, color: UIColor.white)
             checkmarkView.isHidden = true
@@ -168,7 +172,8 @@ class ColorPickerController: UIViewController {
 
     }
 
-    @objc func didPressDismiss(_ sender: AnyObject?) {
+    @objc
+    private func didPressDismiss(_ sender: AnyObject?) {
         delegate?.colorPickerWantsToDismiss(self)
     }
 }

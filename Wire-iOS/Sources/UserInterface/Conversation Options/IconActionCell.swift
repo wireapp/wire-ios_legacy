@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
 
@@ -48,24 +47,29 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        constrain(contentView, label, separator, imageContainer, iconImageView) { contentView, label, separator, imageContainer, imageView in
-            imageContainer.top == contentView.top
-            imageContainer.bottom == contentView.bottom
-            imageContainer.leading == contentView.leading
-            imageContainer.width == CGFloat.IconCell.IconWidth
-            imageView.center == imageContainer.center
+        [label,
+         separator,
+         imageContainer,
+         iconImageView].prepareForLayout()
+        NSLayoutConstraint.activate([
+            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageContainer.widthAnchor.constraint(equalToConstant: CGFloat.IconCell.IconWidth),
+            iconImageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
 
-            label.leading == imageContainer.trailing
-            label.top == contentView.top
-            label.trailing == contentView.trailing
-            label.bottom == contentView.bottom
-            label.height == 56
+            label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            label.heightAnchor.constraint(equalToConstant: 56),
 
-            separator.height == .hairline
-            separator.leading == label.leading
-            separator.trailing == label.trailing
-            separator.bottom == contentView.bottom
-        }
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {

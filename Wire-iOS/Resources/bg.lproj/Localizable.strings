@@ -1675,7 +1675,7 @@
 
 // Feature configs: self-deleting messages
 "feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timeout before composing a message.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
 
 // Jailbroken alert
