@@ -21,7 +21,7 @@ import WireDataModel
 
 extension AnalyticsEvent {
 
-    static func openingApp() -> AnalyticsEvent {
+    static var openingApp: AnalyticsEvent {
         let event = AnalyticsEvent(name: "app.open")
         return event
     }
