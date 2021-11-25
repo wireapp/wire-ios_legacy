@@ -103,6 +103,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
         case .established:
             if var callInfo = callInfos[conversationId] {
+                let video = conversation.voiceChannel?.isVideoCall ?? false
                 defer { callInfos[conversationId] = callInfo }
                 callInfo.maximumCallParticipants = max(callInfo.maximumCallParticipants, (conversation.voiceChannel?.participants.count ?? 0) + 1)
 
@@ -110,7 +111,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                 guard callInfo.establishedDate == nil else { return }
 
                 callInfo.establishedDate = Date()
-                analytics.tag(callEvent: .established, in: conversation, callInfo: callInfo)
+                Analytics.shared.tagEvent(.establishedCall(asVideoCall: video, callDirection: .outgoing, in: conversation))
             }
 
             guard let userSession = ZMUserSession.shared() else {

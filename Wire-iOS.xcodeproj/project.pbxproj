@@ -536,6 +536,7 @@
 		669105C327397E6A00324115 /* NSAttributedString+DownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669105C227397E6900324115 /* NSAttributedString+DownTests.swift */; };
 		66C1C278274E34BE00DF29DC /* CountlyUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1C276274E34BE00DF29DC /* CountlyUserInterface.swift */; };
 		66C1C279274E34BE00DF29DC /* CountlyInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1C277274E34BE00DF29DC /* CountlyInterface.swift */; };
+		66CF47D6274FD724002056EF /* Analytics+EstablishedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CF47D5274FD724002056EF /* Analytics+EstablishedCall.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
@@ -2309,6 +2310,7 @@
 		669105C227397E6900324115 /* NSAttributedString+DownTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+DownTests.swift"; sourceTree = "<group>"; };
 		66C1C276274E34BE00DF29DC /* CountlyUserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountlyUserInterface.swift; sourceTree = "<group>"; };
 		66C1C277274E34BE00DF29DC /* CountlyInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountlyInterface.swift; sourceTree = "<group>"; };
+		66CF47D5274FD724002056EF /* Analytics+EstablishedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+EstablishedCall.swift"; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4814,6 +4816,7 @@
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
 				662F6359274FAB9B004A0677 /* Analytics+InitiatedCall.swift */,
 				662F635D274FAE50004A0677 /* Analytics+JoinedCall.swift */,
+				66CF47D5274FD724002056EF /* Analytics+EstablishedCall.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -8748,6 +8751,7 @@
 				EE948F1923E17778000A663E /* ContactsDataSource.swift in Sources */,
 				16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
+				66CF47D6274FD724002056EF /* Analytics+EstablishedCall.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
 				16A5FDC52154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift in Sources */,
 				87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */,
