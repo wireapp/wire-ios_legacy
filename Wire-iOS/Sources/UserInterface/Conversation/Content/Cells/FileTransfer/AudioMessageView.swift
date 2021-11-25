@@ -68,6 +68,7 @@ final class AudioMessageView: UIView, TransferView {
 
         return waveformProgressView
     }()
+    
     private let loadingView = ThreeDotsLoadingView()
 
     private var allViews: [UIView] = []
@@ -130,12 +131,12 @@ final class AudioMessageView: UIView, TransferView {
 
     private func createConstraints() {
         [self,
-             playButton,
-             timeLabel,
-             downloadProgressView,
-             playerProgressView,
-             waveformProgressView,
-             loadingView].prepareForLayout()
+         playButton,
+         timeLabel,
+         downloadProgressView,
+         playerProgressView,
+         waveformProgressView,
+         loadingView].prepareForLayout()
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
