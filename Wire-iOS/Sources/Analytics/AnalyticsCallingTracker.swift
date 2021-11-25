@@ -95,9 +95,10 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             callInfos[conversationId] = callInfo
             analytics.tag(callEvent: .received, in: conversation, callInfo: callInfo)
         case .answered:
+            let video = conversation.voiceChannel?.isVideoCall ?? false
             if var callInfo = callInfos[conversationId] {
                 callInfo.connectingDate = Date()
-                analytics.tag(callEvent: .answered, in: conversation, callInfo: callInfo)
+                Analytics.shared.tagEvent(.joinedCall(asVideoCall: video, callDirection: .outgoing, in: conversation))
                 callInfos[conversationId] = callInfo
             }
         case .established:
@@ -158,12 +159,12 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
 
         // When the screen sharing starts add a record to screenSharingInfos set if no exist item with same client id exists
         if let participant = participants.first(where: { $0.state.videoState == .screenSharing }),
-            screenSharingStartTimes[participant.clientId] == nil {
+           screenSharingStartTimes[participant.clientId] == nil {
             screenSharingStartTimes[participant.clientId] = Date()
         } else if let screenSharedParticipant = participants.first(where: { $0.state.videoState == .stopped && ($0.user as? ZMUser != selfUser) }),
-            let screenSharingDate = screenSharingStartTimes[screenSharedParticipant.clientId],
-            let conversationId = conversation.remoteIdentifier,
-            let callInfo = callInfos[conversationId] {
+                  let screenSharingDate = screenSharingStartTimes[screenSharedParticipant.clientId],
+                  let conversationId = conversation.remoteIdentifier,
+                  let callInfo = callInfos[conversationId] {
 
             // When videoState == .stopped from a remote participant, tag the event if we found a record in screenSharingInfos set with matching clientId
             analytics.tag(callEvent: .screenSharing(duration: -screenSharingDate.timeIntervalSinceNow),

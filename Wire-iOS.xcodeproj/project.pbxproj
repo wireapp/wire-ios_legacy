@@ -532,6 +532,7 @@
 		662F6358274F89EF004A0677 /* Analytics+AppOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */; };
 		662F635A274FAB9B004A0677 /* Analytics+InitiatedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F6359274FAB9B004A0677 /* Analytics+InitiatedCall.swift */; };
 		662F635C274FAC9D004A0677 /* AnalyticsAttributeValue+PrimitiveTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F635B274FAC9D004A0677 /* AnalyticsAttributeValue+PrimitiveTypes.swift */; };
+		662F635E274FAE50004A0677 /* Analytics+JoinedCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662F635D274FAE50004A0677 /* Analytics+JoinedCall.swift */; };
 		669105C327397E6A00324115 /* NSAttributedString+DownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669105C227397E6900324115 /* NSAttributedString+DownTests.swift */; };
 		66C1C278274E34BE00DF29DC /* CountlyUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1C276274E34BE00DF29DC /* CountlyUserInterface.swift */; };
 		66C1C279274E34BE00DF29DC /* CountlyInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C1C277274E34BE00DF29DC /* CountlyInterface.swift */; };
@@ -2304,6 +2305,7 @@
 		662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+AppOpen.swift"; sourceTree = "<group>"; };
 		662F6359274FAB9B004A0677 /* Analytics+InitiatedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+InitiatedCall.swift"; sourceTree = "<group>"; };
 		662F635B274FAC9D004A0677 /* AnalyticsAttributeValue+PrimitiveTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsAttributeValue+PrimitiveTypes.swift"; sourceTree = "<group>"; };
+		662F635D274FAE50004A0677 /* Analytics+JoinedCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+JoinedCall.swift"; sourceTree = "<group>"; };
 		669105C227397E6900324115 /* NSAttributedString+DownTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+DownTests.swift"; sourceTree = "<group>"; };
 		66C1C276274E34BE00DF29DC /* CountlyUserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountlyUserInterface.swift; sourceTree = "<group>"; };
 		66C1C277274E34BE00DF29DC /* CountlyInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountlyInterface.swift; sourceTree = "<group>"; };
@@ -4811,6 +4813,7 @@
 				87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */,
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
 				662F6359274FAB9B004A0677 /* Analytics+InitiatedCall.swift */,
+				662F635D274FAE50004A0677 /* Analytics+JoinedCall.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -7936,6 +7939,7 @@
 				87D56DF81E003D9300DFF722 /* CollectionsView.swift in Sources */,
 				543DF685252DD7F0001F6EA6 /* NotificationObserver.swift in Sources */,
 				BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */,
+				662F635E274FAE50004A0677 /* Analytics+JoinedCall.swift in Sources */,
 				5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */,
 				EF46ECCD231D5B4B00D425DA /* ConversationListViewControllerViewModel+StartUIDelegate.swift in Sources */,
 				5EA73D8C20D901E80001D106 /* ConversationTimeoutOptionsViewController.swift in Sources */,
