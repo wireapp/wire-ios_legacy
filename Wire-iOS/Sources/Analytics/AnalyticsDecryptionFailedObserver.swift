@@ -43,6 +43,7 @@ final class AnalyticsDecryptionFailedObserver: NSObject {
             }
         }
 
-        analytics.tagCannotDecryptMessage(withAttributes: trackingInfo, conversation: note?.object as? ZMConversation)
+        guard let conversation = note?.object as? ZMConversation else { return }
+        Analytics.shared.tagEvent(.failedToDecryptMessage(in: conversation))
     }
 }
