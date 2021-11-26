@@ -98,7 +98,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             let video = conversation.voiceChannel?.isVideoCall ?? false
             if var callInfo = callInfos[conversationId] {
                 callInfo.connectingDate = Date()
-                Analytics.shared.tagEvent(.joinedCall(asVideoCall: video, callDirection: .outgoing, in: conversation))
+                Analytics.shared.tagEvent(.joinedCall(asVideoCall: video, callDirection: .incoming, in: conversation))
                 callInfos[conversationId] = callInfo
             }
         case .established:
