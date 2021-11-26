@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "此訊息已刪除。";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**訪客**在對話中";
-"conversation.banner.services_present" = "**服務**已啟動";
-"conversation.banner.externals_present" = "**外部人士**在對話中";
-"conversation.banner.guests_services_present" = "對話中有**訪客**和**服務**";
-"conversation.banner.externals_services_present" = "對話中有**外部人士**和**服務**";
-"conversation.banner.externals_guests_present" = "對話中有**外部人士**和**訪客**";
-"conversation.banner.externals_guests_services_present" = "對話中有**外部人士**和**訪客**和**服務**";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "搜索";
 
@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "連接請求";
 "connection_request.send_button_title" = "加為連絡人";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "加為連絡人";
 "inbox.connection_request.ignore_button_title" = "忽略";
 "error.connection.title" = "錯誤";

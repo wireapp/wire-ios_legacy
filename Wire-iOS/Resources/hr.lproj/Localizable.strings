@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "The message is deleted.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**Externals** and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Traži";
 
@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "Zahtjev za povezivanje";
 "connection_request.send_button_title" = "Povežite se";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Povežite se";
 "inbox.connection_request.ignore_button_title" = "Ignoriraj";
 "error.connection.title" = "Pogreška";

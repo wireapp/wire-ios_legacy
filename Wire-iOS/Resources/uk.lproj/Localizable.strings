@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "Присутні **гості**";
-"conversation.banner.services_present" = "Присутні **сервіси**";
-"conversation.banner.externals_present" = "Присутні **зовнішні учасники**";
-"conversation.banner.guests_services_present" = "Присутні **гості** та **сервіси**";
-"conversation.banner.externals_services_present" = "Присутні **зовнішні учасники** та **сервіси**";
-"conversation.banner.externals_guests_present" = "Присутні **зовнішні учасники** та **гості**";
-"conversation.banner.externals_guests_services_present" = "Присутні **зовнішні учасники**, **гості** та **сервіси**";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Пошук";
 
@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "Запит на додавання до контактів";
 "connection_request.send_button_title" = "Додати";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
 "error.connection.title" = "Помилка";

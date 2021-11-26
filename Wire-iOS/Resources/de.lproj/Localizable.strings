@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Gäste** anwesend";
-"conversation.banner.services_present" = "**Dienste** aktiv";
-"conversation.banner.externals_present" = "**Externe** anwesend";
-"conversation.banner.guests_services_present" = "**Gäste** anwesend, **Dienste** aktiv";
-"conversation.banner.externals_services_present" = "**Externe** anwesend, **Dienste** aktiv";
-"conversation.banner.externals_guests_present" = "**Externe** und **Gäste** anwesend";
-"conversation.banner.externals_guests_services_present" = "**Externe** und **Gäste** anwesend, **Dienste** aktiv";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Suche";
 
@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "Kontaktanfrage";
 "connection_request.send_button_title" = "Kontaktanfrage";
+"inbox.title" = "Kontaktanfragen";
 "inbox.connection_request.connect_button_title" = "Verbinden";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
 "error.connection.title" = "Fehler";

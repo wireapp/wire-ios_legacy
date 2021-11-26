@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Сообщение удалено.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "Присутствуют **гости**";
-"conversation.banner.services_present" = "**Сервисы** активны";
-"conversation.banner.externals_present" = "Присутствуют **внешние участники**";
-"conversation.banner.guests_services_present" = "Присутствуют **гости** и **сервисы**";
-"conversation.banner.externals_services_present" = "Присутствуют **внешние участники** и **сервисы**";
-"conversation.banner.externals_guests_present" = "Присутствуют **внешние участники** и **гости**";
-"conversation.banner.externals_guests_services_present" = "Присутствуют **внешние участники**, **гости** и **сервисы**";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Поиск";
 
@@ -621,6 +621,7 @@
 
 "connection_request_pending_title" = "Запрос на добавление";
 "connection_request.send_button_title" = "Связаться";
+"inbox.title" = "Запросы на добавление в контакты";
 "inbox.connection_request.connect_button_title" = "Связаться";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
 "error.connection.title" = "Ошибка";
