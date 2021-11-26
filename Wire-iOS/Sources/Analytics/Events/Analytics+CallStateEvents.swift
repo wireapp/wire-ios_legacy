@@ -36,7 +36,7 @@ extension AnalyticsEvent {
         return event
     }
 
-    static func establishedCall(asVideoCall: Bool, callDirection: CallDirection,  in conversation: ZMConversation) -> AnalyticsEvent {
+    static func establishedCall(asVideoCall: Bool, callDirection: CallDirection, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.established_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
