@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.guests" = "**Gäste**";
+"conversation.banner.services" = "**Dienste**";
+"conversation.banner.externals" = "**Externe**";
+"conversation.banner.remotes" = "**Föderierte Nutzer**";
+"conversation.banner.are_present" = "%@ sind anwesend";
+"conversation.banner.are_active" = "%@ sind aktiv";
+"conversation.banner.separator" = "  und ";
 
 "conversation.action.search" = "Suche";
 

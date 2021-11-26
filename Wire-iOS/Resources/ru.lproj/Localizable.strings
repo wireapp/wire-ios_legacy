@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Сообщение удалено.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
+"conversation.banner.guests" = "**Гости**";
+"conversation.banner.services" = "**Сервисы**";
 "conversation.banner.externals" = "**Externals**";
 "conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.are_present" = "%@ присутствуют";
+"conversation.banner.are_active" = "%@ активны";
+"conversation.banner.separator" = " и ";
 
 "conversation.action.search" = "Поиск";
 
