@@ -19,7 +19,6 @@
 import Foundation
 import WireDataModel
 
-
 extension AnalyticsEvent {
 
     static func failedToDecryptMessage(in conversation: ZMConversation) -> AnalyticsEvent {
