@@ -21,12 +21,37 @@ import WireDataModel
 
 extension AnalyticsEvent {
 
-    static func establishedCall(asVideoCall: Bool, callDirection: CallDirection,  in conversation: ZMConversation) -> AnalyticsEvent {
+    static func initiatedCall(asVideoCall: Bool, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.initiated_call")
+        event.attributes = conversation.analyticsAttributes
+        event.attributes[.startedAsVideoCall] = asVideoCall
+        return event
+    }
+
+    static func joinedCall(asVideoCall: Bool, callDirection: CallDirection, in conversation: ZMConversation) -> AnalyticsEvent {
+        var event = AnalyticsEvent(name: "calling.joined_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
         event.attributes[.callDirection] = callDirection
         return event
+    }
+
+    static func establishedCall(asVideoCall: Bool, callDirection: CallDirection,  in conversation: ZMConversation) -> AnalyticsEvent {
+        var event = AnalyticsEvent(name: "calling.established_call")
+        event.attributes = conversation.analyticsAttributes
+        event.attributes[.startedAsVideoCall] = asVideoCall
+        event.attributes[.callDirection] = callDirection
+        return event
+    }
+
+    enum CallDirection: String, AnalyticsAttributeValue {
+
+        case incoming
+        case outgoing
+
+        var analyticsValue: String {
+            return rawValue
+        }
     }
 
 }
