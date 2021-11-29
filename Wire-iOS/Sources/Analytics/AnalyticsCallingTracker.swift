@@ -111,7 +111,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                 guard callInfo.establishedDate == nil else { return }
 
                 callInfo.establishedDate = Date()
-                Analytics.shared.tagEvent(.establishedCall(asVideoCall: video, callDirection: .outgoing, in: conversation))
+                Analytics.shared.tagEvent(.establishedCall(asVideoCall: video, in: conversation))
             }
 
             guard let userSession = ZMUserSession.shared() else {

@@ -36,10 +36,12 @@ extension AnalyticsEvent {
         return event
     }
 
-    static func establishedCall(asVideoCall: Bool, callDirection: CallDirection, in conversation: ZMConversation) -> AnalyticsEvent {
+    static func establishedCall(asVideoCall: Bool, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.established_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
+        return event
+    }
         event.attributes[.callDirection] = callDirection
         return event
     }
@@ -61,7 +63,6 @@ private extension AnalyticsAttributeKey {
     /// Whether a call started as a video call.
     ///
     /// Expected to refer to a value of type `Boolean`.
-
     static let startedAsVideoCall = AnalyticsAttributeKey(rawValue: "call_video")
 
     /// The direction of the call.
