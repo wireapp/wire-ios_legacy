@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.guests" = "**Convidados**";
+"conversation.banner.services" = "**Serviços**";
+"conversation.banner.externals" = "**Externos**";
+"conversation.banner.remotes" = "**Usuários federados**";
+"conversation.banner.are_present" = "%@ estão presentes";
+"conversation.banner.are_active" = "%@ estão ativos";
+"conversation.banner.separator" = " e ";
 
 "conversation.action.search" = "Procurar";
 
@@ -621,7 +621,7 @@
 
 "connection_request_pending_title" = "Solicitação de Conexão";
 "connection_request.send_button_title" = "Conectar";
-"inbox.title" = "Connection Requests";
+"inbox.title" = "Solicitações de Conexão";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
 "error.connection.title" = "Erro";
