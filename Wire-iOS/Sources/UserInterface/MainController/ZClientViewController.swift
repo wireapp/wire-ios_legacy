@@ -90,12 +90,16 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
 
         NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { [weak self] (note) in
-            guard let change = note.object as? Feature.FeatureChange,
-                  let session = SessionManager.shared,
-                  session.usePackagingFeatureConfig else { return }
+            guard let change = note.object as? FeatureService.FeatureChange else { return }
+
             switch change {
             case .conferenceCallingIsAvailable:
+                guard let session = SessionManager.shared,
+                      session.usePackagingFeatureConfig else { break }
                 self?.presentConferenceCallingAvailableAlert()
+
+            default:
+                break
             }
         }
 
@@ -344,7 +348,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = nil
 
         let inbox = ConnectRequestsViewController()
-        pushContentViewController(inbox, focusOnView: focus, animated: animated)
+        pushContentViewController(inbox.wrapInNavigationController(setBackgroundColor: true), focusOnView: focus, animated: animated)
     }
 
     /// Open the user clients detail screen

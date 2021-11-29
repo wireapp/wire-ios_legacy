@@ -119,7 +119,6 @@ public class AppRootRouter: NSObject {
         setupApplicationNotifications()
         setupContentSizeCategoryNotifications()
         setupAudioPermissionsNotifications()
-        setupFeatureConfigNotifications()
     }
 
     private func setupAdditionalWindows() {
@@ -385,7 +384,8 @@ extension AppRootRouter {
                                    account: account,
                                    selfUser: ZMUser.selfUser(),
                                    isComingFromRegistration: isComingFromRegistration,
-                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog,
+                                   featureServiceProvider: ZMUserSession.shared()!)
     }
 }
 
@@ -398,14 +398,18 @@ extension AppRootRouter {
     }
 
     private func applicationDidTransition(to appState: AppState) {
-        if case .unauthenticated(let error) = appState {
+        switch appState {
+        case .unauthenticated(error: let error):
             presentAlertForDeletedAccountIfNeeded(error)
-        }
-
-        if case .authenticated = appState {
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
+        case .authenticated:
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            sessionManager.processPendingURLActionRequiresAuthentication()
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
+        default:
+            break
         }
 
         urlActionRouter.performPendingActions()
@@ -552,13 +556,5 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
-    }
-}
-
-// MARK: - FeatureConfigChangeObserving
-
-extension AppRootRouter: FeatureConfigObserving {
-    func featureConfigDidChange(in featureUpdateEvent: FeatureUpdateEventPayload) {
-        UIAlertController.showFeatureConfigDidChangeAlert(featureUpdateEvent.name, status: featureUpdateEvent.status)
     }
 }

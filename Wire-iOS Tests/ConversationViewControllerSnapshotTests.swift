@@ -119,4 +119,23 @@ extension ConversationViewControllerSnapshotTests {
         verify(matching: sut)
     }
 
+    func testThatGuestsBarControllerIsVisibleIfExternalsAndServicesArePresent() {
+        // given
+        let teamMember = Member.insertNewObject(in: uiMOC)
+        teamMember.user = otherUser
+        teamMember.team = team
+        otherUser.membership?.setTeamRole(.partner)
+
+        mockConversation.teamRemoteIdentifier = team?.remoteIdentifier
+        mockConversation.add(participants: [serviceUser])
+
+        UIColor.setAccentOverride(.strongLimeGreen)
+
+        // when
+        sut.updateGuestsBarVisibility()
+
+        // then
+        verify(matching: sut)
+    }
+
 }

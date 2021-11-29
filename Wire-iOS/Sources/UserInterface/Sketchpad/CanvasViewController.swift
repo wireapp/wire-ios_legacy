@@ -18,7 +18,6 @@
 
 import UIKit
 import WireCanvas
-import Cartography
 import WireCommonComponents
 
 protocol CanvasViewControllerDelegate: AnyObject {
@@ -34,7 +33,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
     weak var delegate: CanvasViewControllerDelegate?
     var canvas = Canvas()
-    var toolbar: SketchToolbar!
+    private lazy var toolbar: SketchToolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
     let drawButton = IconButton()
     let emojiButton = IconButton()
     let sendButton = IconButton.sendButton()
@@ -52,7 +51,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         }
     }
 
-    let emojiKeyboardViewController =  EmojiKeyboardViewController()
+    let emojiKeyboardViewController = EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
 
     override var shouldAutorotate: Bool {
@@ -80,7 +79,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
         emojiKeyboardViewController.delegate = self
 
-        toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
         hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
@@ -180,33 +178,41 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 
     private func createConstraints() {
-        constrain(view, canvas, colorPickerController.view, toolbar, separatorLine) { container, canvas, colorPicker, toolbar, separatorLine in
-            colorPicker.top == container.top
-            colorPicker.left == container.left
-            colorPicker.right == container.right
-            colorPicker.height == 48
+        guard let colorPicker = colorPickerController.view else { return }
 
-            separatorLine.top == colorPicker.bottom
-            separatorLine.left == colorPicker.left
-            separatorLine.right == colorPicker.right
-            separatorLine.height == .hairline
+        [canvas,
+         colorPicker,
+         toolbar,
+         separatorLine,
+         hintImageView,
+         hintLabel].prepareForLayout()
 
-            canvas.top == colorPicker.bottom
-            canvas.left == container.left
-            canvas.right == container.right
+        NSLayoutConstraint.activate([
+            colorPicker.topAnchor.constraint(equalTo: view.topAnchor),
+            colorPicker.leftAnchor.constraint(equalTo: view.leftAnchor),
+            colorPicker.rightAnchor.constraint(equalTo: view.rightAnchor),
+            colorPicker.heightAnchor.constraint(equalToConstant: 48),
 
-            toolbar.top == canvas.bottom
-            toolbar.bottom == container.bottom
-            toolbar.left == container.left
-            toolbar.right == container.right
-        }
+            separatorLine.topAnchor.constraint(equalTo: colorPicker.bottomAnchor),
+            separatorLine.leftAnchor.constraint(equalTo: colorPicker.leftAnchor),
+            separatorLine.rightAnchor.constraint(equalTo: colorPicker.rightAnchor),
+            separatorLine.heightAnchor.constraint(equalToConstant: .hairline),
 
-        constrain(view, colorPickerController.view, hintImageView, hintLabel) { container, colorPicker, hintImageView, hintLabel in
-            hintImageView.center == container.center
-            hintLabel.top == colorPicker.bottom + 16
-            hintLabel.leftMargin == container.leftMargin
-            hintLabel.rightMargin == container.rightMargin
-        }
+            canvas.topAnchor.constraint(equalTo: colorPicker.bottomAnchor),
+            canvas.leftAnchor.constraint(equalTo: view.leftAnchor),
+            canvas.rightAnchor.constraint(equalTo: view.rightAnchor),
+
+            toolbar.topAnchor.constraint(equalTo: canvas.bottomAnchor),
+            toolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            toolbar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            toolbar.rightAnchor.constraint(equalTo: view.rightAnchor),
+
+            hintImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hintImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            hintLabel.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 16),
+            hintLabel.layoutMarginsGuide.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
+            hintLabel.layoutMarginsGuide.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor)
+        ])
     }
 
     func updateButtonSelection() {
@@ -279,19 +285,21 @@ extension CanvasViewController: CanvasDelegate {
 extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
 
     func showEmojiKeyboard(animated: Bool) {
-        guard !isEmojiKeyboardInTransition else { return }
+        guard !isEmojiKeyboardInTransition, let emojiKeyboardView = emojiKeyboardViewController.view else { return }
 
         emojiKeyboardViewController.willMove(toParent: self)
         view.addSubview(emojiKeyboardViewController.view)
 
-        constrain(view, emojiKeyboardViewController.view) { container, emojiKeyboardView in
-            emojiKeyboardView.height == KeyboardHeight.current
-            emojiKeyboardView.left == container.left
-            emojiKeyboardView.right == container.right
-            emojiKeyboardView.bottom == container.bottom
-        }
+        emojiKeyboardView.translatesAutoresizingMaskIntoConstraints = false
 
         addChild(emojiKeyboardViewController)
+
+        NSLayoutConstraint.activate([
+            emojiKeyboardView.heightAnchor.constraint(equalToConstant: KeyboardHeight.current),
+            emojiKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            emojiKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            emojiKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         if animated {
             isEmojiKeyboardInTransition = true
@@ -304,10 +312,10 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
                            delay: 0,
                            options: UIView.AnimationOptions(rawValue: UInt(7)),
                            animations: {
-                            self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
-                },
+                self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
+            },
                            completion: { _ in
-                            self.isEmojiKeyboardInTransition = false
+                self.isEmojiKeyboardInTransition = false
             })
         }
     }
@@ -330,12 +338,12 @@ extension CanvasViewController: EmojiKeyboardViewControllerDelegate {
                            delay: 0,
                            options: UIView.AnimationOptions(rawValue: UInt(7)),
                            animations: {
-                            let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
-                            self.emojiKeyboardViewController.view.transform = offscreen
-                },
+                let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
+                self.emojiKeyboardViewController.view.transform = offscreen
+            },
                            completion: { _ in
-                            self.isEmojiKeyboardInTransition = false
-                            removeEmojiKeyboardViewController()
+                self.isEmojiKeyboardInTransition = false
+                removeEmojiKeyboardViewController()
             })
         } else {
             removeEmojiKeyboardViewController()

@@ -1,22 +1,21 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
-import Cartography
 import UIKit
 
 protocol LocationSendViewControllerDelegate: AnyObject {
@@ -26,18 +25,18 @@ protocol LocationSendViewControllerDelegate: AnyObject {
 final class LocationSendViewController: UIViewController {
 
     let sendButton = Button(style: .full)
-    public let addressLabel: UILabel = {
+    let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
         label.textColor = .from(scheme: .textForeground)
         return label
     }()
-    public let separatorView: UIView = {
+    let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.from(scheme: .separator)
         return view
     }()
-    fileprivate let containerView = UIView()
+    private let containerView = UIView()
 
     weak var delegate: LocationSendViewControllerDelegate?
 
@@ -47,7 +46,7 @@ final class LocationSendViewController: UIViewController {
         }
     }
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
         createConstraints()
@@ -64,27 +63,32 @@ final class LocationSendViewController: UIViewController {
         [addressLabel, sendButton, separatorView].forEach(containerView.addSubview)
     }
 
-    fileprivate func createConstraints() {
-        constrain(view, containerView, separatorView, addressLabel, sendButton) { view, container, separator, label, button in
-            container.edges == inset(view.edges, 24, 0)
-            label.leading == container.leading
-            label.trailing <= button.leading - 12 ~ 1000.0
-            label.top == container.top
-            label.bottom == container.bottom - UIScreen.safeArea.bottom
-            button.trailing == container.trailing
-            button.centerY == label.centerY
-            button.height == 28
-            separator.leading == view.leading
-            separator.trailing == view.trailing
-            separator.top == container.top
-            separator.height == .hairline
-        }
+    private func createConstraints() {
+        [containerView, separatorView, addressLabel, sendButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
+            containerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+            containerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+            addressLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            addressLabel.trailingAnchor.constraint(lessThanOrEqualTo: sendButton.leadingAnchor, constant: -12),
+            addressLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            addressLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            sendButton.centerYAnchor.constraint(equalTo: addressLabel.centerYAnchor),
+            sendButton.heightAnchor.constraint(equalToConstant: 28),
+            separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            separatorView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
 
         sendButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         addressLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
 
-    @objc fileprivate func sendButtonTapped(_ sender: Button) {
+    @objc
+    private func sendButtonTapped(_ sender: Button) {
         delegate?.locationSendViewControllerSendButtonTapped(self)
     }
 }

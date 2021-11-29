@@ -135,6 +135,23 @@ extension AppStateCalculator: ApplicationStateObserving {
 
 // MARK: - SessionManagerDelegate
 extension AppStateCalculator: SessionManagerDelegate {
+    var isInAuthenticatedAppState: Bool {
+        switch appState {
+        case .authenticated:
+            return true
+        default:
+            return false
+        }
+    }
+    var isInUnathenticatedAppState: Bool {
+        switch appState {
+        case .unauthenticated:
+            return true
+        default:
+            return false
+        }
+    }
+
     func sessionManagerWillLogout(error: Error?,
                                   userSessionCanBeTornDown: (() -> Void)?) {
         let appState: AppState = .unauthenticated(error: error as NSError?)
