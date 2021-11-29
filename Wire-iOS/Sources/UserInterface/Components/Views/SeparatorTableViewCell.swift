@@ -83,7 +83,7 @@ class SeparatorTableViewCell: UITableViewCell, SeparatorViewProtocol, Themeable 
     }
 
     // if nil the background color is the default content background color for the theme
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)

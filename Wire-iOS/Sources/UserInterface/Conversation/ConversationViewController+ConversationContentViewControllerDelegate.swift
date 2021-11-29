@@ -35,7 +35,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
 
         endEditing()
 
-        createAndPresentParticipantsPopoverController(with: frame, from: view, contentViewController: profileViewController.wrapInNavigationController())
+        createAndPresentParticipantsPopoverController(with: frame, from: view, contentViewController: profileViewController.wrapInNavigationController(setBackgroundColor: true))
     }
 
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, willDisplayActiveMediaPlayerFor message: ZMConversationMessage?) {

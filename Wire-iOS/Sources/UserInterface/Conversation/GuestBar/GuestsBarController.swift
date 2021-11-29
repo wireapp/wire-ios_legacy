@@ -44,7 +44,6 @@ final class GuestsBarController: UIViewController {
             return _state
         }
         set {
-            guard newValue != state else { return }
             setState(newValue, animated: false)
         }
     }
@@ -53,6 +52,7 @@ final class GuestsBarController: UIViewController {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateState(animated: false)
     }
 
     private func setupViews() {
@@ -81,24 +81,30 @@ final class GuestsBarController: UIViewController {
     // MARK: - State Changes
 
     func setState(_ state: State, animated: Bool) {
-        guard _state != state, isViewLoaded, !shouldIgnoreUpdates else { return }
+        guard state != _state else {
+            return
+        }
 
         _state = state
+        updateState(animated: animated)
+    }
+
+    private func updateState(animated: Bool) {
+        guard isViewLoaded, !shouldIgnoreUpdates else {
+            return
+        }
+
         configureTitle(with: state)
         let collapsed = state == .hidden
 
         let change = {
             if !collapsed {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
-                self.view.setNeedsLayout()
-                self.view.layoutIfNeeded()
             }
 
             self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
             self.bottomLabelConstraint.constant = collapsed ? -GuestsBarController.expandedHeight : -3
             self.label.alpha = collapsed ? 0 : 1
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
         }
 
         let completion: (Bool) -> Void = { _ in
@@ -119,10 +125,10 @@ final class GuestsBarController: UIViewController {
         case .hidden:
             label.text = nil
             label.accessibilityIdentifier = nil
-        case .visible(let labelKey, let accessibilityIdentifier):
-            let markdownTitle = labelKey.localized
-            label.attributedText = .markdown(from: markdownTitle,
-                                             style: .labelStyle)
+        case .visible(let text, let accessibilityIdentifier):
+            let attributedText: NSAttributedString = .markdown(from: text,
+                                                               style: .labelStyle)
+            label.attributedText = attributedText
             label.textAlignment = .center
             label.accessibilityIdentifier = accessibilityIdentifier
         }

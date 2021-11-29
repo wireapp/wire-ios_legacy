@@ -35,7 +35,7 @@ final class NoResultsView: UIView {
         }
     }
 
-    var icon: StyleKitIcon? = nil {
+    var icon: StyleKitIcon? {
         didSet {
             iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
         }

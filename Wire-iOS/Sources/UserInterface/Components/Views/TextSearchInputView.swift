@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireCommonComponents
 import WireSystem
@@ -86,39 +85,38 @@ final class TextSearchInputView: UIView {
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
-        [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
+        [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(addSubview)
 
-        self.createConstraints()
+        createConstraints()
     }
 
     private func createConstraints() {
-        constrain(self, iconView, searchInput, placeholderLabel, cancelButton) { selfView, iconView, searchInput, placeholderLabel, cancelButton in
-            iconView.leading == searchInput.leading + 8
-            iconView.centerY == searchInput.centerY
+        [self, iconView, searchInput, placeholderLabel, cancelButton, self, searchInput, cancelButton, spinner].prepareForLayout()
 
-            iconView.top == selfView.top
-            iconView.bottom == selfView.bottom
+        NSLayoutConstraint.activate(
+            searchInput.fitInConstraints(view: self, inset: 8) + [
+            iconView.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 8),
+            iconView.centerYAnchor.constraint(equalTo: searchInput.centerYAnchor),
 
-            selfView.height <= 100
+            iconView.topAnchor.constraint(equalTo: topAnchor),
+            iconView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            searchInput.edges == inset(selfView.edges, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+            heightAnchor.constraint(lessThanOrEqualToConstant: 100),
 
-            placeholderLabel.leading == searchInput.leading + 48
-            placeholderLabel.top == searchInput.top
-            placeholderLabel.bottom == searchInput.bottom
-            placeholderLabel.trailing == cancelButton.leading
-        }
+            placeholderLabel.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 48),
+            placeholderLabel.topAnchor.constraint(equalTo: searchInput.topAnchor),
+            placeholderLabel.bottomAnchor.constraint(equalTo: searchInput.bottomAnchor),
+            placeholderLabel.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor),
 
-        constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
-            cancelButton.centerY == view.centerY
-            cancelButton.trailing == searchInput.trailing - 8
-            cancelButton.width == StyleKitIcon.Size.tiny.rawValue
-            cancelButton.height == StyleKitIcon.Size.tiny.rawValue
+            cancelButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            cancelButton.trailingAnchor.constraint(equalTo: searchInput.trailingAnchor, constant: -8),
+            cancelButton.widthAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue),
+            cancelButton.heightAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue),
 
-            spinner.trailing == cancelButton.leading - 6
-            spinner.centerY == cancelButton.centerY
-            spinner.width == StyleKitIcon.Size.tiny.rawValue
-        }
+            spinner.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -6),
+            spinner.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
+            spinner.widthAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue)
+        ])
     }
 
     @available(*, unavailable)
@@ -126,7 +124,8 @@ final class TextSearchInputView: UIView {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
-    @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
+    @objc
+    func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
         self.query = ""
         self.searchInput.text = ""
         self.searchInput.resignFirstResponder()

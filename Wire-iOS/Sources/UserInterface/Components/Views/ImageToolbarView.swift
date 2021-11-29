@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 enum ImageToolbarConfiguration {
     case cell
@@ -84,16 +83,21 @@ final class ImageToolbarView: UIView {
 
         addSubview(buttonContainer)
 
-        constrain(self, buttonContainer) { container, buttonContainer in
-            buttonContainer.centerX == container.centerX
-            buttonContainer.top == container.top
-            buttonContainer.bottom == container.bottom
-            buttonContainer.left >= container.left
-            buttonContainer.right <= container.right
-        }
+        createConstraints()
 
         setupButtons()
         updateButtonConfiguration()
+    }
+
+    private func createConstraints() {
+        buttonContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            buttonContainer.topAnchor.constraint(equalTo: topAnchor),
+            buttonContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            buttonContainer.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
+            buttonContainer.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor)
+        ])
     }
 
     @available(*, unavailable)
@@ -122,40 +126,49 @@ final class ImageToolbarView: UIView {
         createButtonConstraints()
     }
 
-    func createButtonConstraints() {
+    /// TODO: Bill - use stack view to hold the buttons?
+    private func createButtonConstraints() {
         let spacing: CGFloat = 16
 
+        var constraints: [NSLayoutConstraint] = []
+
         if let firstButton = buttons.first {
-            constrain(buttonContainer, firstButton) { container, firstButton in
-                firstButton.left == container.left + spacing
-            }
+            [firstButton].prepareForLayout()
+            constraints.append(
+                firstButton.leftAnchor.constraint(equalTo: buttonContainer.leftAnchor, constant: spacing)
+            )
         }
 
         if let lastButton = buttons.last {
-            constrain(buttonContainer, lastButton) { container, lastButton in
-                lastButton.right == container.right - spacing
-            }
+            lastButton.translatesAutoresizingMaskIntoConstraints = false
+            constraints.append(
+                lastButton.rightAnchor.constraint(equalTo: buttonContainer.rightAnchor, constant: -spacing)
+            )
         }
 
         for button in buttons {
-            constrain(buttonContainer, button) { container, button in
-                button.width == 16
-                button.height == 16
-                button.centerY == container.centerY
-            }
+            button.translatesAutoresizingMaskIntoConstraints = false
+            constraints.append(contentsOf: [
+                button.widthAnchor.constraint(equalToConstant: 16),
+                button.heightAnchor.constraint(equalToConstant: 16),
+                button.centerYAnchor.constraint(equalTo: buttonContainer.centerYAnchor)
+            ])
         }
 
         for i in 1..<buttons.count {
             let previousButton = buttons[i-1]
             let button = buttons[i]
 
-            constrain(self, button, previousButton) { _, button, previousButton in
-                button.left == previousButton.right + spacing * 2
-            }
+            [button, previousButton].prepareForLayout()
+            constraints.append(
+                button.leftAnchor.constraint(equalTo: previousButton.rightAnchor, constant: spacing * 2)
+            )
         }
+
+        NSLayoutConstraint.activate(constraints)
     }
 
-    func setupButtons() {
+    private func setupButtons() {
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
         sketchButton.setIcon(.brush, size: .tiny, for: .normal)
