@@ -1,5 +1,5 @@
 pool:
-   vmImage: 'macOS-10.15'
+   vmImage: 'macOS-11'
    
 trigger:
   branches:
@@ -16,10 +16,8 @@ variables:
 
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_12.4.app
-    echo "XCode version..."
-    /usr/bin/xcodebuild -version
-    fastlane prepare xcode_version:12.4
+    sudo xcode-select -switch /Applications/Xcode_13.1.app
+    fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
