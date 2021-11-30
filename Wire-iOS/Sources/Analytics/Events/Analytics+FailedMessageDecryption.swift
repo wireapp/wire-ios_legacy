@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,21 +19,12 @@
 import Foundation
 import WireDataModel
 
-protocol Event {
-    var name: String { get }
-    var attributes: [AnyHashable: Any]? { get }
-}
+extension AnalyticsEvent {
 
-extension Analytics {
-
-    func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes as? [String: NSObject] ?? [:])
+    static func failedToDecryptMessage(in conversation: ZMConversation) -> AnalyticsEvent {
+        var event = AnalyticsEvent(name: "e2ee.failed_message_decryption")
+        event.attributes = conversation.analyticsAttributes
+        return event
     }
 
-}
-
-extension Event {
-    func track() {
-        Analytics.shared.tag(self)
-    }
 }

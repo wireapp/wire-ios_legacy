@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 final class AnalyticsCountlyProvider: AnalyticsProvider {
 
-    typealias PendingEvent = (event: String, attribtues: [String: Any])
+    typealias PendingEvent = (event: String, attributes: [String: Any])
 
     // MARK: - Properties
 
@@ -90,7 +90,7 @@ final class AnalyticsCountlyProvider: AnalyticsProvider {
           serverURL: URL) {
 
         guard !appKey.isEmpty else { return nil }
-        
+
         self.countly = countly
         self.countlyUser = countlyUser
         self.appKey = appKey

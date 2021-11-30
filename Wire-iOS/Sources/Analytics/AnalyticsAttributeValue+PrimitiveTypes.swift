@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,21 +19,8 @@
 import Foundation
 import WireDataModel
 
-protocol Event {
-    var name: String { get }
-    var attributes: [AnyHashable: Any]? { get }
-}
-
-extension Analytics {
-
-    func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes as? [String: NSObject] ?? [:])
-    }
-
-}
-
-extension Event {
-    func track() {
-        Analytics.shared.tag(self)
+extension Bool: AnalyticsAttributeValue {
+    public var analyticsValue: String {
+        return self ? "True" : "False"
     }
 }
