@@ -17,10 +17,7 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
-import WireSystem
-import WireDataModel
 import WireSyncEngine
 import avs
 import WireCommonComponents
@@ -71,6 +68,7 @@ final class AudioMessageView: UIView, TransferView {
 
         return waveformProgressView
     }()
+    
     private let loadingView = ThreeDotsLoadingView()
 
     private var allViews: [UIView] = []
@@ -132,39 +130,44 @@ final class AudioMessageView: UIView, TransferView {
     }
 
     private func createConstraints() {
-        constrain(self, playButton, timeLabel) { selfView, playButton, timeLabel in
-            selfView.height == 56
+        [self,
+         playButton,
+         timeLabel,
+         downloadProgressView,
+         playerProgressView,
+         waveformProgressView,
+         loadingView].prepareForLayout()
 
-            playButton.left == selfView.left + 12
-            playButton.centerY == selfView.centerY
-            playButton.width == 32
-            playButton.height == playButton.width
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 56),
 
-            timeLabel.left == playButton.right + 12
-            timeLabel.centerY == selfView.centerY
-            timeLabel.width >= 32
-        }
+            playButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            playButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: 32),
+            playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor),
 
-        constrain(downloadProgressView, playButton) { downloadProgressView, playButton in
-            downloadProgressView.center == playButton.center
-            downloadProgressView.width == playButton.width - 2
-            downloadProgressView.height == playButton.height - 2
-        }
+            timeLabel.leftAnchor.constraint(equalTo: playButton.rightAnchor, constant: 12),
+            timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 32),
 
-        constrain(self, playerProgressView, timeLabel, waveformProgressView, loadingView) { selfView, playerProgressView, timeLabel, waveformProgressView, loadingView in
-            playerProgressView.centerY == selfView.centerY
-            playerProgressView.left == timeLabel.right + 12
-            playerProgressView.right == selfView.right - 12
-            playerProgressView.height == 1
+            downloadProgressView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor),
+            downloadProgressView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
+            downloadProgressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+            downloadProgressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
 
-            waveformProgressView.centerY == selfView.centerY
-            waveformProgressView.left == playerProgressView.left
-            waveformProgressView.right == playerProgressView.right
-            waveformProgressView.height == 32
+            playerProgressView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            playerProgressView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 12),
+            playerProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
+            playerProgressView.heightAnchor.constraint(equalToConstant: 1),
 
-            loadingView.center == selfView.center
-        }
+            waveformProgressView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            waveformProgressView.leftAnchor.constraint(equalTo: playerProgressView.leftAnchor),
+            waveformProgressView.rightAnchor.constraint(equalTo: playerProgressView.rightAnchor),
+            waveformProgressView.heightAnchor.constraint(equalToConstant: 32),
 
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     override var tintColor: UIColor! {
@@ -213,7 +216,7 @@ final class AudioMessageView: UIView, TransferView {
 
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, isInitial: Bool) {
         guard let fileMessage = fileMessage,
-            let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
+              let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
 
         var visibleViews = [playButton, timeLabel]
 
@@ -257,9 +260,9 @@ final class AudioMessageView: UIView, TransferView {
             }
         } else {
             guard let message = fileMessage,
-                let fileMessageData = message.fileMessageData else {
-                    return
-            }
+                  let fileMessageData = message.fileMessageData else {
+                      return
+                  }
             if fileMessageData.durationMilliseconds != 0 {
                 duration = Int(roundf(Float(fileMessageData.durationMilliseconds) / 1000.0))
             }
@@ -328,11 +331,11 @@ final class AudioMessageView: UIView, TransferView {
     private func playTrack() {
         let userSession = ZMUserSession.shared()
         guard let fileMessage = fileMessage,
-            let fileMessageData = fileMessage.fileMessageData,
-            let audioTrackPlayer = audioTrackPlayer,
-            userSession == nil || userSession!.isCallOngoing == false else {
-                return
-        }
+              let fileMessageData = fileMessage.fileMessageData,
+              let audioTrackPlayer = audioTrackPlayer,
+              userSession == nil || userSession!.isCallOngoing == false else {
+                  return
+              }
 
         proximityMonitorManager?.stateChanged = proximityStateDidChange
 
@@ -366,9 +369,9 @@ final class AudioMessageView: UIView, TransferView {
     /// is ephemeral and it would exceed its destruction date.
     private func extendEphemeralTimerIfNeeded(to endDate: Date) {
         guard let destructionDate = fileMessage?.destructionDate,
-            endDate > destructionDate,
-            let assetMsg = fileMessage as? ZMAssetClientMessage
-            else { return }
+              endDate > destructionDate,
+              let assetMsg = fileMessage as? ZMAssetClientMessage
+        else { return }
 
         assetMsg.extendDestructionTimer(to: endDate)
     }
@@ -378,10 +381,10 @@ final class AudioMessageView: UIView, TransferView {
     /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
         guard let message = fileMessage,
-            let audioTrack = message.audioTrack,
-            let audioTrackPlayer = audioTrackPlayer
-            else {
-                return false
+              let audioTrack = message.audioTrack,
+              let audioTrackPlayer = audioTrackPlayer
+        else {
+            return false
         }
 
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(fileMessage) ?? false
@@ -435,7 +438,7 @@ final class AudioMessageView: UIView, TransferView {
             updateTimeLabel()
             updateProximityObserverState()
         }
-            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+        /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
         else if state == .completed {
             updateTimeLabel()
         } else {

@@ -30,7 +30,7 @@ protocol CollectionViewSectionController: UICollectionViewDataSource, UICollecti
 
 final class SectionCollectionViewController: NSObject {
 
-    var collectionView: UICollectionView? = nil {
+    var collectionView: UICollectionView? {
         didSet {
             collectionView?.dataSource = self
             collectionView?.delegate = self

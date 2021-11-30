@@ -35,9 +35,9 @@ class ConversationCreateNameCell: UICollectionViewCell {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     fileprivate func setup() {

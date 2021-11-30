@@ -74,7 +74,7 @@ final class ProfilePresenter: NSObject, ViewControllerDismisser {
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 
-        let navigationController = profileViewController.wrapInNavigationController()
+        let navigationController = profileViewController.wrapInNavigationController(setBackgroundColor: true)
         navigationController.transitioningDelegate = transitionDelegate
         navigationController.modalPresentationStyle = .formSheet
 

@@ -1,23 +1,22 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import WireDataModel
-import Cartography
 import MapKit
 import CoreLocation
 import UIKit
@@ -50,7 +49,7 @@ final class LocationSelectionViewController: UIViewController {
     fileprivate let geocoder = CLGeocoder()
     fileprivate let sendViewController = LocationSendViewController()
     fileprivate let pointAnnotation = MKPointAnnotation()
-    fileprivate var annotationView: MKPinAnnotationView! = nil
+    private lazy var annotationView: MKPinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: String(describing: type(of: self)))
     fileprivate var userShowedInitially = false
     fileprivate var mapDidRender = false
 
@@ -96,35 +95,37 @@ final class LocationSelectionViewController: UIViewController {
         mapView.isPitchEnabled = false
         toolBar.configure(title: title!, subtitle: nil, topAnchor: safeTopAnchor)
         pointAnnotation.coordinate = mapView.centerCoordinate
-        annotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: String(describing: type(of: self)))
+
         mapView.addSubview(annotationView)
     }
 
     fileprivate func createConstraints() {
-        constrain(view, mapView, sendViewController.view, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
-            mapView.trailing == view.trailing
-            mapView.leading == view.leading
-            mapView.top == view.top + UIScreen.safeArea.top
-            mapView.bottom == view.bottom  - UIScreen.safeArea.bottom
-            sendController.leading == view.leading
-            sendController.trailing == view.trailing
-            sendController.bottom == view.bottom
-            sendController.height == 56 + UIScreen.safeArea.bottom
-            toolBar.leading == view.leading
-            toolBar.top == view.top
-            toolBar.trailing == view.trailing
-            pin.centerX == mapView.centerX + 8.5
-            pin.bottom == mapView.centerY + 5
-            pin.height == 39
-            pin.width == 32
-        }
+        guard let sendController = sendViewController.view else { return }
 
-        constrain(view, sendViewController.view, locationButton) { view, sendController, button in
-            button.leading == view.leading + 16
-            button.bottom == sendController.top - 16
-            button.width == 28
-            button.height == 28
-        }
+        [mapView, sendController, annotationView, toolBar, locationButton].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.safeArea.top),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            sendController.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            sendController.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            sendController.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            sendController.heightAnchor.constraint(equalToConstant: 56 + UIScreen.safeArea.bottom),
+            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toolBar.topAnchor.constraint(equalTo: view.topAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            annotationView.centerXAnchor.constraint(equalTo: mapView.centerXAnchor, constant: 8.5),
+            annotationView.bottomAnchor.constraint(equalTo: mapView.centerYAnchor, constant: 5),
+            annotationView.heightAnchor.constraint(equalToConstant: 39),
+            annotationView.widthAnchor.constraint(equalToConstant: 32),
+
+            locationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            locationButton.bottomAnchor.constraint(equalTo: sendController.topAnchor, constant: -16),
+            locationButton.widthAnchor.constraint(equalToConstant: 28),
+            locationButton.heightAnchor.constraint(equalToConstant: 28)
+        ])
     }
 
     @objc fileprivate func locationButtonTapped(_ sender: IconButton) {

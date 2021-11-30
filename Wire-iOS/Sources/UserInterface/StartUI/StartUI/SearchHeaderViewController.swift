@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 
@@ -26,7 +25,7 @@ protocol SearchHeaderViewControllerDelegate: AnyObject {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
 }
 
-class SearchHeaderViewController: UIViewController {
+final class SearchHeaderViewController: UIViewController {
 
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
@@ -49,8 +48,8 @@ class SearchHeaderViewController: UIViewController {
 
     init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
-        self.colorSchemeVariant = variant
-        self.clearButton = IconButton(style: .default, variant: variant)
+        colorSchemeVariant = variant
+        clearButton = IconButton(style: .default, variant: variant)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -92,36 +91,36 @@ class SearchHeaderViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
-            searchIcon.centerY == tokenField.centerY
-            searchIcon.leading == tokenField.leading + 8
+        [tokenFieldContainer, tokenField, searchIcon, clearButton, tokenFieldContainer].prepareForLayout()
+        NSLayoutConstraint.activate([
+          searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+          searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8),
 
-            clearButton.width == 32
-            clearButton.height == clearButton.width
-            clearButton.centerY == tokenField.centerY
-            clearButton.trailing == tokenField.trailing
+          clearButton.widthAnchor.constraint(equalToConstant: 32),
+          clearButton.heightAnchor.constraint(equalTo: clearButton.widthAnchor),
+          clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor),
 
-            tokenField.height >= 40
-            tokenField.top >= container.top + 8
-            tokenField.bottom <= container.bottom - 8
-            tokenField.leading == container.leading + 8
-            tokenField.trailing == container.trailing - 8
-            tokenField.centerY == container.centerY
-        }
+          tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
+          tokenField.topAnchor.constraint(greaterThanOrEqualTo: tokenFieldContainer.topAnchor, constant: 8),
+          tokenField.bottomAnchor.constraint(lessThanOrEqualTo: tokenFieldContainer.bottomAnchor, constant: -8),
+          tokenField.leadingAnchor.constraint(equalTo: tokenFieldContainer.leadingAnchor, constant: 8),
+          tokenField.trailingAnchor.constraint(equalTo: tokenFieldContainer.trailingAnchor, constant: -8),
+          tokenField.centerYAnchor.constraint(equalTo: tokenFieldContainer.centerYAnchor),
 
         // pin to the bottom of the navigation bar
 
-        tokenFieldContainer.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tokenFieldContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 
-        constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
-            tokenFieldContainer.bottom == view.bottom
-            tokenFieldContainer.leading == view.leading
-            tokenFieldContainer.trailing == view.trailing
-            tokenFieldContainer.height == 56
-        }
+          tokenFieldContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          tokenFieldContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          tokenFieldContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          tokenFieldContainer.heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
 
-    @objc private dynamic func onClearButtonPressed() {
+    @objc
+    private func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()

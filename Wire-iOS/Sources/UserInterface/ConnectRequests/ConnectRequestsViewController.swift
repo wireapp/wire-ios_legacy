@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var connectionRequests: [ConversationLike] = []
@@ -62,6 +63,12 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         tableView.estimatedSectionFooterHeight = 0
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupNavigationBar()
+    }
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -82,6 +89,13 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         }
 
         super.viewWillTransition(to: size, with: coordinator)
+    }
+
+    private func setupNavigationBar() {
+        title = L10n.Localizable.Inbox.title.localizedUppercase
+        let button = AuthenticationNavigationBar.makeBackButton()
+        button.addTarget(self, action: #selector(onBackButtonPressed), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
 
     // MARK: - UITableViewDataSource
@@ -106,6 +120,12 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
 
     // MARK: - Helpers
+
+    @objc
+    func onBackButtonPressed() {
+        ZClientViewController.shared?.showConversationList()
+    }
+
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
         /// get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]

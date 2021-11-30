@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
@@ -53,8 +52,9 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         self.edgesForExtendedLayout = UIRectEdge()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -90,25 +90,30 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
     }
 
     private func createConstraints() {
-        constrain(view, tableView, topSeparator, footerContainer, footerSeparator) { view, tableView, topSeparator, footerContainer, footerSeparator in
-            tableView.left == view.left
-            tableView.right == view.right
-            tableView.top == view.top
+        [tableView, topSeparator, footerContainer, footerSeparator].prepareForLayout()
 
-            topSeparator.left == tableView.left
-            topSeparator.right == tableView.right
-            topSeparator.top == tableView.top
+        let footerContainerHeightConstraint = footerContainer.heightAnchor.constraint(equalToConstant: 0)
+        footerContainerHeightConstraint.priority = .defaultHigh
 
-            footerContainer.top == tableView.bottom
-            footerContainer.left == tableView.left
-            footerContainer.right == tableView.right
-            footerContainer.bottom == view.bottom
-            footerContainer.height == 0 ~ 750.0
+        NSLayoutConstraint.activate([
+          tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          tableView.topAnchor.constraint(equalTo: view.topAnchor),
 
-            footerSeparator.left == footerContainer.left
-            footerSeparator.right == footerContainer.right
-            footerSeparator.top == footerContainer.top
-        }
+          topSeparator.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          topSeparator.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          topSeparator.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+          footerContainer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+          footerContainer.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          footerContainer.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          footerContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          footerContainerHeightConstraint,
+
+          footerSeparator.leftAnchor.constraint(equalTo: footerContainer.leftAnchor),
+          footerSeparator.rightAnchor.constraint(equalTo: footerContainer.rightAnchor),
+          footerSeparator.topAnchor.constraint(equalTo: footerContainer.topAnchor)
+        ])
     }
 
     private func updateFooter(_ newFooter: UIView?) {
@@ -116,9 +121,13 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         footerSeparator.isHidden = newFooter == nil
         guard let newFooter = newFooter else { return }
         footerContainer.addSubview(newFooter)
-        constrain(footerContainer, newFooter) { container, footer in
-            footer.edges == container.edges
-        }
+        [footerContainer, newFooter].prepareForLayout()
+        NSLayoutConstraint.activate([
+            newFooter.topAnchor.constraint(equalTo: footerContainer.topAnchor),
+            newFooter.bottomAnchor.constraint(equalTo: footerContainer.bottomAnchor),
+            newFooter.leftAnchor.constraint(equalTo: footerContainer.leftAnchor),
+            newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
+        ])
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -173,8 +182,9 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
