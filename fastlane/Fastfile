@@ -278,6 +278,9 @@ platform :ios do
         end
 
         
+        sh "echo SHA of IPA is:"
+        sh "shasum -a 256 ../#{build.artifact_path(with_filename: true)}.ipa || true"
+
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
