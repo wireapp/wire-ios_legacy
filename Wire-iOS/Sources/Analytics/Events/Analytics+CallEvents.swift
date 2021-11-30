@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
+// swiftlint:disable line_length
 enum CallEvent {
     case initiated,
          received,
@@ -74,11 +75,16 @@ extension Analytics {
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
 
         switch event {
-        case .ended(reason: let reason):
-            attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
-            attributes.merge(attributesForCallDuration(with: callInfo), strategy: .preferNew)
-            attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
-            attributes.merge(["reason": reason], strategy: .preferNew)
+        case .ended(reason: _):
+            let video = conversation.voiceChannel?.isVideoCall ?? false
+            let toggleVideo = callInfo.toggledVideo ? true : false
+            let participants = Double(callInfo.maximumCallParticipants)
+            let screenShare = conversation.voiceChannel?.videoState ==  .screenSharing ? true : false
+            guard let establishedDate = callInfo.establishedDate else { return [:] }
+            let duration = Double(-establishedDate.timeIntervalSinceNow)
+
+            Analytics.shared.tagEvent(.endedCall(asVideoCall: video, callDirection: .outgoing, callDuration: duration, callParticipants: participants, videoEnabled: toggleVideo, screenShareEnabled: screenShare, callEndedReason: .normal, conversation: conversation))
+
         case .screenSharing(let duration):
             Analytics.shared.tagEvent(.screenShare(callDirection: .incoming, duration: duration, in: conversation))
         default:
