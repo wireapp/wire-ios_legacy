@@ -42,7 +42,12 @@ extension AnalyticsEvent {
         event.attributes[.startedAsVideoCall] = asVideoCall
         return event
     }
+
+    static func screenShare(callDirection: CallDirection, duration: Double, in conversation: ZMConversation) -> AnalyticsEvent {
+        var event = AnalyticsEvent(name: "calling.screen_share")
+        event.attributes = conversation.analyticsAttributes
         event.attributes[.callDirection] = callDirection
+        event.attributes[.screenShareDuration] =  RoundedInt(Int(duration), factor: 6)
         return event
     }
 
@@ -69,5 +74,10 @@ private extension AnalyticsAttributeKey {
     ///
     /// Expected to refer to a value of type `AnalyticsCallDirectionType`.
     static let callDirection  = AnalyticsAttributeKey(rawValue: "call_direction")
+
+    /// The duration of the screen-sharing.
+    ///
+    /// Expected to refer to a value of type `AnalyticsScreenShareDurationType`.
+    static let screenShareDuration = AnalyticsAttributeKey(rawValue: "screen_share_duration")
 
 }
