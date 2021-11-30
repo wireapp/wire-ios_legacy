@@ -75,9 +75,7 @@ extension VoiceChannel {
     }
 
     func arrangeStreams(for selfStream: Stream?, participantsStreams: [Stream]) -> StreamArrangment {
-        
         let streamsExcludingSelf = participantsStreams.filter { $0.streamId != selfStreamId }
-        
         let sortedStreamsList = sortByVideo(streamData: streamsExcludingSelf)
 
         guard let selfStream = selfStream else {
@@ -91,7 +89,7 @@ extension VoiceChannel {
         }
     }
 
-    func sortByVideo(streamData:[Stream]) -> [Stream]{
+    func sortByVideo(streamData: [Stream]) -> [Stream] {
         let sortedData = streamData.sorted {
             $0.videoState!.isSending && !$1.videoState!.isSending
         }
