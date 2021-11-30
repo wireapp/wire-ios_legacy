@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class DotView: UIView {
@@ -44,7 +43,7 @@ final class DotView: UIView {
     init(user: ZMUser? = nil) {
         self.user = user
         super.init(frame: .zero)
-        self.isHidden = true
+        isHidden = true
 
         circleView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
@@ -59,16 +58,27 @@ final class DotView: UIView {
 
         addSubview(circleView)
         addSubview(centerView)
-        constrain(self, circleView, centerView) { selfView, backingView, centerView in
-            backingView.edges == selfView.edges
-            centerView.edges == inset(selfView.edges, 1, 1, 1, 1)
-        }
 
-        if let userSession = ZMUserSession.shared(), let user = user {
+        createConstraints()
+
+        if let userSession = ZMUserSession.shared(),
+            let user = user {
             userObserver = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 
-        self.createClientObservers()
+        createClientObservers()
+    }
+
+    private func createConstraints() {
+        [self, circleView, centerView].prepareForLayout()
+
+        let centerViewConstraints = centerView.fitInConstraints(view: self, inset: 1)
+
+        NSLayoutConstraint.activate([
+            circleView.topAnchor.constraint(equalTo: topAnchor),
+            circleView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            circleView.leftAnchor.constraint(equalTo: leftAnchor),
+            circleView.rightAnchor.constraint(equalTo: rightAnchor)] + centerViewConstraints)
     }
 
     @available(*, unavailable)

@@ -137,7 +137,7 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable {
         }
     }
 
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)

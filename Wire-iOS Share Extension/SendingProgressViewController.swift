@@ -19,7 +19,6 @@
 import Foundation
 import WireCommonComponents
 import WireShareEngine
-import Cartography
 import SystemConfiguration
 import WireSystem
 import UIKit
@@ -99,27 +98,37 @@ final class SendingProgressViewController : UIViewController {
         view.addSubview(circularProgress)
         view.addSubview(connectionStatusLabel)
         
-        constrain(view, circularShadow, circularProgress, connectionStatusLabel) {
-            container, circularShadow, circularProgress, connectionStatus in
-            circularShadow.width == 48
-            circularShadow.height == 48
-            circularShadow.center == container.center
-            
-            circularProgress.width == 48
-            circularProgress.height == 48
-            circularProgress.center == container.center
-            
-            connectionStatus.bottom == container.bottom - 5
-            connectionStatus.centerX == container.centerX
-        }
+        createConstraints()
 
         updateProgressMode()
         
         let reachability = NetworkStatus.shared.reachability
         setReachability(from: reachability)
     }
+
+    private func createConstraints() {
+        [circularShadow,
+         circularProgress,
+         connectionStatusLabel].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+            circularShadow.widthAnchor.constraint(equalToConstant: 48),
+            circularShadow.heightAnchor.constraint(equalToConstant: 48),
+            circularShadow.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            circularShadow.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+            circularProgress.widthAnchor.constraint(equalToConstant: 48),
+            circularProgress.heightAnchor.constraint(equalToConstant: 48),
+            circularProgress.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            circularProgress.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+            connectionStatusLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5),
+            connectionStatusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
     
-    @objc func onCancelTapped() {
+    @objc
+    private func onCancelTapped() {
         cancelHandler?()
     }
     

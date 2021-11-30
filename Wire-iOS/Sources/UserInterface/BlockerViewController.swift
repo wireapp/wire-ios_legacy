@@ -37,8 +37,9 @@ final class BlockerViewController: LaunchImageViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override func viewDidAppear(_ animated: Bool) {

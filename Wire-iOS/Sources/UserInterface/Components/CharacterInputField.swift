@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+import UIKit
 
 protocol CharacterInputFieldDelegate: AnyObject {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
@@ -119,17 +119,24 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
             super.init(frame: .zero)
 
-            self.layer.cornerRadius = 4
-            self.backgroundColor = .white
+            layer.cornerRadius = 4
+            backgroundColor = .white
 
             label.font = UIFont.systemFont(ofSize: 32)
-            self.addSubview(label)
+            addSubview(label)
 
-            constrain(self, label) { selfView, label in
-                label.center == selfView.center
-            }
+            createConstraints()
         }
 
+        private func createConstraints() {
+            label.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                label.centerXAnchor.constraint(equalTo: centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+        }
+
+        @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -169,18 +176,29 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
         characterViews.forEach(self.stackView.addArrangedSubview)
 
-        self.addSubview(stackView)
+        addSubview(stackView)
 
-        constrain(self, stackView) { selfView, stackView in
-            stackView.edges == selfView.edges
-        }
+        createConstraints()
 
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
-        self.addGestureRecognizer(longPressGestureRecognizer)
+        addGestureRecognizer(longPressGestureRecognizer)
 
-        self.storage = String()
+        storage = String()
     }
 
+    private func createConstraints() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.leftAnchor.constraint(equalTo: leftAnchor),
+            stackView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
+
+    }
+
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

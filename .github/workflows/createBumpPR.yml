@@ -46,7 +46,7 @@ jobs:
       - name: Create bump PR
         run: |
             git add .
-            git commit -m"bump components"
+            git commit -m"chore: bump components"
             git push --set-upstream origin ${{ steps.update.outputs.BRANCH }}
             echo "ℹ️ open bump PR"
-            gh pr create --title "chore: bump components" --body "Bump framework(s) version for: ${{ github.event.client_payload.repository }}"
+            gh pr create --title "chore: bump components SQPIT-774" --body "Bump framework(s) version for: ${{ github.event.client_payload.repository }}"

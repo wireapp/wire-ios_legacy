@@ -17,14 +17,12 @@
 //
 
 import Foundation
-import Cartography
-import WireDataModel
 import UIKit
 import WireSyncEngine
 
 final class UserConnectionView: UIView, Copyable {
 
-    public convenience init(instance: UserConnectionView) {
+    convenience init(instance: UserConnectionView) {
         self.init(user: instance.user)
     }
 
@@ -41,19 +39,19 @@ final class UserConnectionView: UIView, Copyable {
     private let labelContainer = UIView()
     private let userImageView = UserImageView()
 
-    public var user: UserType {
+    var user: UserType {
         didSet {
-            self.updateLabels()
-            self.userImageView.user = self.user
+            updateLabels()
+            userImageView.user = user
         }
     }
 
-    public init(user: UserType) {
+    init(user: UserType) {
         self.user = user
         super.init(frame: .zero)
-        self.userImageView.userSession = ZMUserSession.shared()
-        self.setup()
-        self.createConstraints()
+        userImageView.userSession = ZMUserSession.shared()
+        setup()
+        createConstraints()
     }
 
     @available(*, unavailable)
@@ -67,13 +65,13 @@ final class UserConnectionView: UIView, Copyable {
             $0.textAlignment = .center
         }
 
-        self.userImageView.accessibilityLabel = "user image"
-        self.userImageView.size = .big
-        self.userImageView.user = self.user
+        userImageView.accessibilityLabel = "user image"
+        userImageView.size = .big
+        userImageView.user = user
 
-        [self.labelContainer, self.userImageView].forEach(self.addSubview)
-        [self.firstLabel, self.secondLabel].forEach(labelContainer.addSubview)
-        self.updateLabels()
+        [labelContainer, userImageView].forEach(addSubview)
+        [firstLabel, secondLabel].forEach(labelContainer.addSubview)
+        updateLabels()
     }
 
     private func updateLabels() {
@@ -109,38 +107,41 @@ final class UserConnectionView: UIView, Copyable {
     private var correlationLabelText: NSAttributedString? {
         return type(of: self).correlationFormatter.correlationText(
             for: user,
-            addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
+               addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
     }
 
     private func createConstraints() {
-        constrain(self, self.labelContainer, self.userImageView) { selfView, labelContainer, userImageView in
-            labelContainer.centerX == selfView.centerX
-            labelContainer.top == selfView.top
-            labelContainer.left >= selfView.left
+        let verticalMargin: CGFloat = 16
+        [userImageView,
+         labelContainer,
+         firstLabel,
+         secondLabel].prepareForLayout()
 
-            userImageView.top >= labelContainer.bottom
-            userImageView.center == selfView.center
-            userImageView.left >= selfView.left + 54
-            userImageView.width == userImageView.height
-            userImageView.height <= 264
-            userImageView.bottom <= selfView.bottom
-        }
+        NSLayoutConstraint.activate([
+            labelContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelContainer.topAnchor.constraint(equalTo: topAnchor),
+            labelContainer.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
 
-        let verticalMargin = CGFloat(16)
+            userImageView.topAnchor.constraint(greaterThanOrEqualTo: labelContainer.bottomAnchor),
+            userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            userImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            userImageView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 54),
+            userImageView.widthAnchor.constraint(equalTo: userImageView.heightAnchor),
+            userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 264),
+            userImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
 
-        constrain(labelContainer, firstLabel, secondLabel) { labelContainer, handleLabel, correlationLabel in
-            handleLabel.top == labelContainer.top + verticalMargin
-            handleLabel.height == 16
-            correlationLabel.top == handleLabel.bottom
-            handleLabel.height == 16
-            correlationLabel.bottom == labelContainer.bottom - verticalMargin
+            firstLabel.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: verticalMargin),
+            firstLabel.heightAnchor.constraint(equalToConstant: 16),
+            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor),
+            firstLabel.heightAnchor.constraint(equalToConstant: 16),
+            secondLabel.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor, constant: -verticalMargin),
 
-            [handleLabel, correlationLabel].forEach {
-                $0.leading == labelContainer.leading
-                $0.trailing == labelContainer.trailing
-            }
-        }
+            firstLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor),
+            firstLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor),
+
+            secondLabel.leadingAnchor.constraint(equalTo: labelContainer.leadingAnchor),
+            secondLabel.trailingAnchor.constraint(equalTo: labelContainer.trailingAnchor)
+        ])
     }
-
 }

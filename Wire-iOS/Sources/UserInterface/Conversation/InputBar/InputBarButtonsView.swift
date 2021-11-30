@@ -40,7 +40,7 @@ final class InputBarButtonsView: UIView {
     fileprivate(set) var currentRow: RowIndex = 0
 
     fileprivate lazy var buttonRowTopInset: NSLayoutConstraint = buttonOuterContainer.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor)
-    fileprivate lazy var buttonRowHeight: NSLayoutConstraint = buttonInnerContainer.heightAnchor.constraint(equalToConstant: 0)
+    private lazy var buttonRowHeight: NSLayoutConstraint = buttonInnerContainer.heightAnchor.constraint(equalToConstant: 0)
     fileprivate var lastLayoutWidth: CGFloat = 0
 
     let expandRowButton = IconButton()
@@ -98,7 +98,7 @@ final class InputBarButtonsView: UIView {
             buttonInnerContainer.bottomAnchor.constraint(equalTo: buttonOuterContainer.bottomAnchor),
             buttonRowHeight,
 
-            buttonOuterContainer.heightAnchor.constraint(equalTo: buttonInnerContainer.heightAnchor),
+            buttonOuterContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
             buttonOuterContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UIScreen.safeArea.bottom),
             buttonOuterContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonOuterContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -202,7 +202,6 @@ final class InputBarButtonsView: UIView {
             button.translatesAutoresizingMaskIntoConstraints = false
 
             if button == expandRowButton {
-
                 constraints.append(contentsOf: [
                     button.topAnchor.constraint(equalTo: topAnchor),
                     button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
@@ -291,7 +290,8 @@ extension InputBarButtonsView {
         showRow(0, animated: true)
     }
 
-    @objc fileprivate func ellipsisButtonPressed(_ button: UIButton!) {
+    @objc
+    private func ellipsisButtonPressed(_ button: UIButton!) {
         showRow(currentRow == 0 ? 1 : 0, animated: true)
     }
 }

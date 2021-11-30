@@ -32,9 +32,9 @@ class DefaultNavigationBar: UINavigationBar {
         configure()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
