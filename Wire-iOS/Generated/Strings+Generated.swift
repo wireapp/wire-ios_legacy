@@ -1797,6 +1797,14 @@ internal enum L10n {
       internal enum Alert {
         /// There has been a change in Wire
         internal static let genericTitle = L10n.tr("Localizable", "feature_config.alert.generic_title")
+        internal enum GuestLinks {
+          internal enum Message {
+            /// Guest links are disabled.
+            internal static let disabled = L10n.tr("Localizable", "feature_config.alert.guest_links.message.disabled")
+            /// Guest links are enabled.
+            internal static let enabled = L10n.tr("Localizable", "feature_config.alert.guest_links.message.enabled")
+          }
+        }
         internal enum SelfDeletingMessages {
           internal enum Message {
             /// Self-deleting messages are disabled.

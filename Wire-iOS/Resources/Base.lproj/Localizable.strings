@@ -1679,6 +1679,11 @@
 "feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
 
+/// TODO: katerina needs to be change
+// Feature configs: guest links
+"feature_config.alert.guest_links.message.disabled" = "Guest links are disabled.";
+"feature_config.alert.guest_links.message.enabled" = "Guest links are enabled.";
+
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";

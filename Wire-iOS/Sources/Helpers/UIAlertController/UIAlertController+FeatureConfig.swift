@@ -64,6 +64,15 @@ extension UIAlertController {
         case .fileSharingDisabled:
             return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.disabled,
                                          onOK: { acknowledger.acknowledgeChange(for: .fileSharing) })
+
+        case .guestLinksEnabled:
+            return alertForFeatureChange(message: Strings.Alert.GuestLinks.Message.enabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .guestLinks) })
+
+        case .guestLinksDisabled:
+            return alertForFeatureChange(message: Strings.Alert.GuestLinks.Message.disabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .guestLinks) })
+
         }
     }
 
