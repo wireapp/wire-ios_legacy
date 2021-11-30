@@ -28,4 +28,3 @@ github "wireapp/wire-ios-testing" "27.0.0"
 github "wireapp/wire-ios-transport" "84.0.0"
 github "wireapp/wire-ios-utilities" "44.0.0"
 github "wireapp/wire-ios-ziphy" "17.0.0"
-
