@@ -120,10 +120,18 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
 
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
-
+            // swiftlint:disable line_length
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
-                analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
+                let video = conversation.voiceChannel?.isVideoCall ?? false
+                let toggleVideo = callInfo.toggledVideo ? true : false
+                let participants = Double(callInfo.maximumCallParticipants)
+                let screenShare = conversation.voiceChannel?.videoState ==  .screenSharing ? true : false
+                guard let establishedDate = callInfo.establishedDate else { return }
+                let duration = Double(-establishedDate.timeIntervalSinceNow)
+
+                Analytics.shared.tagEvent(.endedCall(asVideoCall: video, callDirection: .outgoing, callDuration: duration, callParticipants: participants, videoEnabled: toggleVideo, screenShareEnabled: screenShare, callEndedReason: .normal, conversation: conversation))
+
             }
             callInfos[conversationId] = nil
 
