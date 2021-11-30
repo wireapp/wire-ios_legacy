@@ -80,8 +80,7 @@ extension Analytics {
             attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
             attributes.merge(["reason": reason], strategy: .preferNew)
         case .screenSharing(let duration):
-            attributes["screen_share_direction"] = "incoming"
-            attributes["screen_share_duration"] = Int(round(duration / 5)) * 5
+            Analytics.shared.tagEvent(.screenShare(callDirection: .incoming, duration: duration, in: conversation))
         default:
             break
         }
