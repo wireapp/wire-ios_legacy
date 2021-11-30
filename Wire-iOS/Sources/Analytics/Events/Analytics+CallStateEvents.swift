@@ -77,7 +77,7 @@ private extension AnalyticsAttributeKey {
 
     /// The duration of the screen-sharing.
     ///
-    /// Expected to refer to a value of type `AnalyticsScreenShareDurationType`.
+    /// Expected to refer to a value of type `RoundedInt`.
     static let screenShareDuration = AnalyticsAttributeKey(rawValue: "screen_share_duration")
 
 }
