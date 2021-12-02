@@ -199,7 +199,6 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-
     func testThatItRendersItsTitle() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")

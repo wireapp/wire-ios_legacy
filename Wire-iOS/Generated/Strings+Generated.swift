@@ -4241,14 +4241,6 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "system_status_bar.poor_connectivity.title")
       }
     }
-    internal enum TeAm {
-      internal enum Invite {
-        internal enum Error {
-          /// No Internet Connection
-          internal static let noInternet = L10n.tr("Localizable", "te     am.invite.error.no_internet")
-        }
-      }
-    }
     internal enum Team {
       internal enum ActivationCode {
         /// You’ve got mail
@@ -4298,6 +4290,8 @@ internal enum L10n {
           internal static let alreadyRegistered = L10n.tr("Localizable", "team.invite.error.already_registered")
           /// Something went wrong, please try again
           internal static let generic = L10n.tr("Localizable", "team.invite.error.generic")
+          /// No Internet Connection
+          internal static let noInternet = L10n.tr("Localizable", "team.invite.error.no_internet")
           /// The maximum number of invitations has been sent
           internal static let tooManyInvitations = L10n.tr("Localizable", "team.invite.error.too_many_invitations")
         }
