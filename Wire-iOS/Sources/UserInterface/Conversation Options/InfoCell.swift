@@ -79,7 +79,7 @@ final class InfoCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case .info = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
-        iconImageView.setIcon(.about, size: .tiny, color:  UIColor.from(scheme: .textForeground, variant: variant))
+        iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
 }
