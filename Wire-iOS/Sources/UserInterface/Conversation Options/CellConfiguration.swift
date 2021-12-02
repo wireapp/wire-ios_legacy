@@ -53,7 +53,7 @@ enum CellConfiguration {
         case .leadingButton: return ActionCell.self
         case .loading: return LoadingIndicatorCell.self
         case .text: return TextCell.self
-        case .info: return InfoCell.self
+        case .info: return GuestLinkInfoCell.self
         case .iconAction: return IconActionCell.self
         }
     }
@@ -79,7 +79,7 @@ enum CellConfiguration {
             ActionCell.self,
             LoadingIndicatorCell.self,
             TextCell.self,
-            InfoCell.self,
+            GuestLinkInfoCell.self,
             IconActionCell.self
         ]
     }

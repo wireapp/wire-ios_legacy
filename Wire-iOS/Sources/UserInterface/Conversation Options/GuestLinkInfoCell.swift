@@ -19,7 +19,7 @@
 import UIKit
 import Down
 
-final class InfoCell: UITableViewCell, CellConfigurationConfigurable {
+final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
 
     // MARK: - Properties
 
