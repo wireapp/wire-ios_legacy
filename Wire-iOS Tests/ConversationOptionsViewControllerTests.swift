@@ -177,7 +177,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatItRendersAllowGue_WhenItIsNotAllowed() {
+    func testThatItRendersAllowGuests_WhenItIsNotAllowed() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
         config.linkResult = .success(nil)
