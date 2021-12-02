@@ -57,9 +57,8 @@ extension AnalyticsEvent {
                           callParticipants: Double,
                           videoEnabled: Bool,
                           screenShareEnabled: Bool,
-                          callEndedReason: ReasonCallEnded,
+                          callEndedReason: CallEndReason,
                           conversation: ZMConversation) -> AnalyticsEvent {
-        
         var event = AnalyticsEvent(name: "calling.ended_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
@@ -72,7 +71,7 @@ extension AnalyticsEvent {
         return event
     }
 
-    enum ReasonCallEnded: String, AnalyticsAttributeValue {
+    enum CallEndReason: String, AnalyticsAttributeValue {
         case normal = "normal"
         case selfReason = "self"
         case other = "other"
@@ -124,7 +123,7 @@ private extension AnalyticsAttributeKey {
 
     /// The peak number of participants in the call.
     ///
-    /// Expected to refer to a value of type `AnalyticsCallParticipantsType`.
+    /// Expected to refer to a value of type `RoundedInt`.
     static let callParticipants  = AnalyticsAttributeKey(rawValue: "call_participants")
 
     /// Whether the video was enabled at least once by any user.

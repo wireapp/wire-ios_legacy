@@ -120,7 +120,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
 
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
-            // swiftlint:disable line_length
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
                 let video = conversation.voiceChannel?.isVideoCall ?? false
