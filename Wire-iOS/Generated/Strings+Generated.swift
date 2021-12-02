@@ -1795,14 +1795,14 @@ internal enum L10n {
     }
     internal enum FeatureConfig {
       internal enum Alert {
-        /// There has been a change in Wire
+        /// Team settings changed
         internal static let genericTitle = L10n.tr("Localizable", "feature_config.alert.generic_title")
-        internal enum GuestLinks {
+        internal enum ConversationGuestLinks {
           internal enum Message {
-            /// Guest links are disabled.
-            internal static let disabled = L10n.tr("Localizable", "feature_config.alert.guest_links.message.disabled")
-            /// Guest links are enabled.
-            internal static let enabled = L10n.tr("Localizable", "feature_config.alert.guest_links.message.enabled")
+            /// Generating guest links is now disabled for all group admins.
+            internal static let disabled = L10n.tr("Localizable", "feature_config.alert.conversation_guest_links.message.disabled")
+            /// Generating guest links is now enabled for all group admins.
+            internal static let enabled = L10n.tr("Localizable", "feature_config.alert.conversation_guest_links.message.enabled")
           }
         }
         internal enum SelfDeletingMessages {
@@ -2072,10 +2072,14 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "guest_room.link.button.title")
         }
         internal enum Header {
-          /// Anyone with the link can join the conversation, even if they don’t have Wire.
+          /// Invite others with a Link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.
           internal static let subtitle = L10n.tr("Localizable", "guest_room.link.header.subtitle")
-          /// Invite others with a link
+          /// Guest Links
           internal static let title = L10n.tr("Localizable", "guest_room.link.header.title")
+        }
+        internal enum NotAllowed {
+          /// Generating guest links is not allowed in your team.
+          internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.explaination")
         }
       }
       internal enum RemoveGuests {
@@ -4237,6 +4241,14 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "system_status_bar.poor_connectivity.title")
       }
     }
+    internal enum TeAm {
+      internal enum Invite {
+        internal enum Error {
+          /// No Internet Connection
+          internal static let noInternet = L10n.tr("Localizable", "te     am.invite.error.no_internet")
+        }
+      }
+    }
     internal enum Team {
       internal enum ActivationCode {
         /// You’ve got mail
@@ -4286,8 +4298,6 @@ internal enum L10n {
           internal static let alreadyRegistered = L10n.tr("Localizable", "team.invite.error.already_registered")
           /// Something went wrong, please try again
           internal static let generic = L10n.tr("Localizable", "team.invite.error.generic")
-          /// No Internet Connection
-          internal static let noInternet = L10n.tr("Localizable", "team.invite.error.no_internet")
           /// The maximum number of invitations has been sent
           internal static let tooManyInvitations = L10n.tr("Localizable", "team.invite.error.too_many_invitations")
         }

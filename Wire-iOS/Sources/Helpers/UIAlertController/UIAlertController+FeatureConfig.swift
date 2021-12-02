@@ -65,13 +65,13 @@ extension UIAlertController {
             return alertForFeatureChange(message: Strings.Update.FileSharing.Alert.Message.disabled,
                                          onOK: { acknowledger.acknowledgeChange(for: .fileSharing) })
 
-        case .guestLinksEnabled:
-            return alertForFeatureChange(message: Strings.Alert.GuestLinks.Message.enabled,
-                                         onOK: { acknowledger.acknowledgeChange(for: .guestLinks) })
+        case .conversationGuestLinksEnabled:
+            return alertForFeatureChange(message: Strings.Alert.ConversationGuestLinks.Message.enabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .conversationGuestLinks) })
 
-        case .guestLinksDisabled:
-            return alertForFeatureChange(message: Strings.Alert.GuestLinks.Message.disabled,
-                                         onOK: { acknowledger.acknowledgeChange(for: .guestLinks) })
+        case .conversationGuestLinksDisabled:
+            return alertForFeatureChange(message: Strings.Alert.ConversationGuestLinks.Message.disabled,
+                                         onOK: { acknowledger.acknowledgeChange(for: .conversationGuestLinks) })
 
         }
     }
