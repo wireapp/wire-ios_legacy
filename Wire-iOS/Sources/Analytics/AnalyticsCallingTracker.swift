@@ -130,7 +130,13 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                 guard let establishedDate = callInfo.establishedDate else { return }
                 let duration = Double(-establishedDate.timeIntervalSinceNow)
 
-                Analytics.shared.tagEvent(.endedCall(asVideoCall: video, callDirection: .outgoing, callDuration: duration, callParticipants: participants, videoEnabled: toggleVideo, screenShareEnabled: screenShare, callEndedReason: .normal, conversation: conversation))
+                Analytics.shared.tagEvent(.endedCall(asVideoCall: video,
+                                                     callDirection: .outgoing,
+                                                     callDuration: duration,
+                                                     callParticipants: participants,
+                                                     videoEnabled: toggleVideo,
+                                                     screenShareEnabled: screenShare,
+                                                     callEndedReason: .normal, conversation: conversation))
 
             }
             callInfos[conversationId] = nil

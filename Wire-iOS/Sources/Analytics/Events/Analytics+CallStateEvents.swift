@@ -51,8 +51,15 @@ extension AnalyticsEvent {
         return event
     }
 
-    // swiftlint:disable line_length
-    static func endedCall(asVideoCall: Bool, callDirection: CallDirection, callDuration: Double, callParticipants: Double, videoEnabled: Bool, screenShareEnabled: Bool, callEndedReason: ReasonCallEnded, conversation: ZMConversation) -> AnalyticsEvent {
+    static func endedCall(asVideoCall: Bool,
+                          callDirection: CallDirection,
+                          callDuration: Double,
+                          callParticipants: Double,
+                          videoEnabled: Bool,
+                          screenShareEnabled: Bool,
+                          callEndedReason: ReasonCallEnded,
+                          conversation: ZMConversation) -> AnalyticsEvent {
+        
         var event = AnalyticsEvent(name: "calling.ended_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
