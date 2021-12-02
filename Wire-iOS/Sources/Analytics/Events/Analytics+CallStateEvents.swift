@@ -18,6 +18,39 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
+
+extension CallClosedReason: AnalyticsAttributeValue {
+    public var analyticsValue: String {
+        switch self {
+        case .normal:
+            return "normal"
+        case .canceled:
+            return "cancelled"
+        case .anweredElsewhere:
+            return "answered_elsewhere"
+        case .rejectedElsewhere:
+            return "rejected"
+        case .timeout:
+            return "timeout"
+        case .lostMedia:
+            return "lost_media"
+        case .internalError:
+            return "internal_error"
+        case .inputOutputError:
+            return "io_error"
+        case .stillOngoing:
+            return "still_ongoing"
+        case .securityDegraded:
+            return "security_degraded"
+        case .outdatedClient:
+            return "outdated_client"
+        case .unknown:
+            return "unknown"
+        }
+    }
+
+}
 
 extension AnalyticsEvent {
 
@@ -57,7 +90,7 @@ extension AnalyticsEvent {
                           callParticipants: Double,
                           videoEnabled: Bool,
                           screenShareEnabled: Bool,
-                          callEndedReason: CallEndReason,
+                          callClosedReason: CallClosedReason,
                           conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.ended_call")
         event.attributes = conversation.analyticsAttributes
@@ -67,30 +100,10 @@ extension AnalyticsEvent {
         event.attributes[.callParticipants] = RoundedInt(Int(callParticipants), factor: 6)
         event.attributes[.videoEnabled] = videoEnabled
         event.attributes[.screenShareEnabled] = screenShareEnabled
-        event.attributes[.callEndedReason] = callEndedReason
+        event.attributes[.callEndedReason] = callClosedReason
         return event
     }
 
-    enum CallEndReason: String, AnalyticsAttributeValue {
-        case normal = "normal"
-        case selfReason = "self"
-        case other = "other"
-        case gsmCall = "gsm_call"
-        case internalError = "internal_error"
-        case timeout = "timeout"
-        case lostMedia = "lost_media"
-        case cancelled = "cancelled"
-        case answeredElsewhere = "answered_elsewhere"
-        case ioError = "io_error"
-        case stillOngoing = "still_ongoing"
-        case timeoutEccon = "timeout_econn"
-        case dataChannel = "data_channel"
-        case rejected = "rejected"
-
-        var analyticsValue: String {
-            return rawValue
-        }
-    }
 
     enum CallDirection: String, AnalyticsAttributeValue {
 

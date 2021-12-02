@@ -19,13 +19,14 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum CallEvent {
     case initiated,
          received,
          answered,
          established,
-         ended(reason: String),
+         ended(reason: CallClosedReason),
          screenSharing(duration: TimeInterval)
 }
 
@@ -74,7 +75,7 @@ extension Analytics {
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
 
         switch event {
-        case .ended(reason: _):
+        case .ended(let reason):
             let video = conversation.voiceChannel?.isVideoCall ?? false
             let toggleVideo = callInfo.toggledVideo ? true : false
             let participants = Double(callInfo.maximumCallParticipants)
@@ -88,7 +89,7 @@ extension Analytics {
                                                  callParticipants: participants,
                                                  videoEnabled: toggleVideo,
                                                  screenShareEnabled: screenShare,
-                                                 callEndedReason: .normal,
+                                                 callClosedReason: reason,
                                                  conversation: conversation))
 
         case .screenSharing(let duration):

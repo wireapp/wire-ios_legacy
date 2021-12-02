@@ -120,7 +120,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
 
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
-        case .terminating(reason: let reason):
+        case .terminating(let reason):
             if let callInfo = callInfos[conversationId] {
                 let video = conversation.voiceChannel?.isVideoCall ?? false
                 let toggleVideo = callInfo.toggledVideo ? true : false
@@ -135,7 +135,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                                                      callParticipants: participants,
                                                      videoEnabled: toggleVideo,
                                                      screenShareEnabled: screenShare,
-                                                     callEndedReason: .normal, conversation: conversation))
+                                                     callClosedReason: reason, conversation: conversation))
 
             }
             callInfos[conversationId] = nil
@@ -182,37 +182,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
             Analytics.shared.tagEvent(.screenShare(callDirection: .incoming, duration: -screenSharingDate.timeIntervalSinceNow, in: conversation))
 
             screenSharingStartTimes[screenSharedParticipant.clientId] = nil
-        }
-    }
-}
-
-private extension CallClosedReason {
-
-    var analyticsValue: String {
-        switch self {
-        case .canceled:
-            return "canceled"
-        case .normal, .stillOngoing:
-            return "normal"
-        case .inputOutputError:
-            return "io_error"
-        case .internalError:
-            return "internal_error"
-        case .securityDegraded:
-            return "security_degraded"
-        case .anweredElsewhere:
-            return "answered_elsewhere"
-        case .timeout:
-            return "timeout"
-        case .unknown:
-            return "unknown"
-        case .lostMedia:
-            return "drop"
-        case .rejectedElsewhere:
-            return "rejected_elsewhere"
-        case .outdatedClient:
-            return "outdated_client"
-
         }
     }
 }
