@@ -77,11 +77,11 @@ extension Analytics {
         switch event {
         case .ended(let reason):
             let video = conversation.voiceChannel?.isVideoCall ?? false
-            let toggleVideo = callInfo.toggledVideo ? true : false
+            let toggleVideo = callInfo.toggledVideo
             let participants = Double(callInfo.maximumCallParticipants)
-            let screenShare = conversation.voiceChannel?.videoState ==  .screenSharing ? true : false
+            let screenShare = conversation.voiceChannel?.videoState ==  .screenSharing
             guard let establishedDate = callInfo.establishedDate else { return [:] }
-            let duration = Double(-establishedDate.timeIntervalSinceNow)
+            let duration = -establishedDate.timeIntervalSinceNow
 
             Analytics.shared.tagEvent(.endedCall(asVideoCall: video,
                                                  callDirection: .outgoing,
