@@ -61,9 +61,22 @@ jobs:
           pwd
           # check the different contains Cartfile and related files only
           DIFF_OUTPUT="$(git diff --name-only origin/develop HEAD)"
+          
+          ##TODO: Rewrite these check logic in Swift
+          
           if [[ $DIFF_OUTPUT =~ 'Cartfile' ]]; then
             echo "contains Cartfile"
+            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile/}
           fi
           
+          echo $DIFF_OUTPUT
+          
+          if [[ $DIFF_OUTPUT =~ 'Cartfile.resolved' ]]; then
+            echo "contains Cartfile"
+            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile.resolved/}
+          fi
+
+          echo $DIFF_OUTPUT
+
 #          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
 #          rm .githubtoken
