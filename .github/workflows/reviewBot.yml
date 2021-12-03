@@ -55,14 +55,14 @@ jobs:
         run: |
           hub pr checkout ${{ github.event.issue.number }}
 
-      - name: Checked changed files
+      - name: Git Diff
         id: gitDiff
         run: |          
           echo "::set-output name=changedFiles::`git diff --name-only origin/develop HEAD`"
 
       - name: Changed Files Exporter
         run: | 
-          echo ${{ steps.gitDiff.outputs.changedFiles }}
+          printf ${{ steps.gitDiff.outputs.changedFiles }}
     
       - name: Review bump components PR
         run: |
