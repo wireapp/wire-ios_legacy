@@ -42,13 +42,15 @@ jobs:
             exit 1
           fi
               
-      - name: Checkout
+      - name: gh auth
         run: |
           # auth with zenkins to prevent self approval not allowed issue
-          # TODO: guard for Cartfile is not empty
           echo ${{ secrets.ZENKINS_SECRET }} > .githubtoken
           gh auth login --with-token < .githubtoken
-          
+          rm .githubtoken
+
+      - name: Checkout
+        run: |
           gh repo clone wireapp/${{ github.event.repository.name }}
           
           cd ${{ github.event.repository.name }}
@@ -88,4 +90,3 @@ jobs:
             gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
           fi
 
-          rm .githubtoken
