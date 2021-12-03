@@ -70,7 +70,7 @@ jobs:
         run: |
           # auth with zenkins to prevent self approval not allowed issue
           # TODO: guard for Cartfile is not empty
-          echo ${{ secrets.ZENKINS_TOKEN }} > .githubtoken
+          echo ${{ secrets.ZENKINS_SECRET }} > .githubtoken
           gh auth login --with-token < .githubtoken
           
           gh pr checkout ${{ github.event.issue.number }}
