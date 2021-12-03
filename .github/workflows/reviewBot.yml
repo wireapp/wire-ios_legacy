@@ -79,7 +79,13 @@ jobs:
           fi
           
           echo $DIFF_OUTPUT
-          
 
-#          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
-#          rm .githubtoken
+          # clean line break
+          DIFF_OUTPUT=$(echo $DIFF_OUTPUT|tr -d '\n')
+          
+          # if diff only contains Cartfile and Cartfile.resolved, Zenkins approve this PR
+          if [ -z "$DIFF_OUTPUT" ]; then 
+            gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
+          fi
+
+          rm .githubtoken
