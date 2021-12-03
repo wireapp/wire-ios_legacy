@@ -42,16 +42,27 @@ jobs:
             exit 1
           fi
           
-      - name: Changed Files Exporter
-        id: filesExporter
-        uses: umani/changed-files@v3.3.0
+      - name: checkout
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v2.2.0
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: '^Cartfile*$'
+          fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
+
+      - name: Checkout Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          hub pr checkout ${{ github.event.issue.number }}
+
+      - name: Checked changed files
+        id: gitDiff
+        run: |          
+          echo "::set-output name=new_tag::`git diff --name-only origin/develop HEAD`"
 
       - name: Changed Files Exporter
         run: | 
-          echo ${{ steps.filesExporter.outputs.files_updated }}
+          echo ${{ steps.gitDiff.outputs.files_updated }}
     
       - name: Review bump components PR
         run: |
