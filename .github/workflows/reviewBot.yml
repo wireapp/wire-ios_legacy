@@ -48,12 +48,13 @@ jobs:
         uses: actions/checkout@v2.2.0
         with:
           fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
+          ref: ${{ github.event.issue.head.sha }}
 
-      - name: Checkout Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.ZENKINS_TOKEN }}
-        run: |
-          hub pr checkout ${{ github.event.issue.number }}
+#       - name: Checkout Pull Request
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+#         run: |
+#           hub pr checkout ${{ github.event.issue.number }}
 
       - name: Git Diff
         id: gitDiff
