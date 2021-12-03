@@ -73,8 +73,8 @@ jobs:
           echo ${{ secrets.ZENKINS_SECRET }} > .githubtoken
           gh auth login --with-token < .githubtoken
           
-          gh pr checkout ${{ github.event.issue.number }}
+          gh pr checkout ${{ github.event.issue.number }} --repo wireapp/wire-ios
           git diff --name-only origin/develop HEAD
           
-          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios-request-strategy
+          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios
           rm .githubtoken
