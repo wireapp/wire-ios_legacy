@@ -27,12 +27,10 @@ platform :ios do
                 override_folder = "CI configuration"
             end
 
-
             config_repo = options[:config_repo]
             if config_repo.nil? 
                 config_repo = "https://github.com/wireapp/wire-ios-build-configuration.git"
             end
-
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
