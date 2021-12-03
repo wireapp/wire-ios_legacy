@@ -38,35 +38,11 @@ jobs:
             fi
           done
           if [ $adminFound = 0 ]; then
-            echo ${{ github.actor }} is not allowed for releasing
+            echo ${{ github.actor }} is not allowed for requesting zenkins to review
             exit 1
           fi
-          
-#       - name: checkout
-# #         env:
-# #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         uses: actions/checkout@v2.2.0
-#         with:
-#           fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
-
-#       - name: Checkout Pull Request
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: |
-#           hub pr checkout ${{ github.event.issue.number }}
-
-#       - name: Git Diff
-#         id: gitDiff
-#         run: |          
-#           echo "::set-output name=changedFiles::`$(git diff --name-only origin/develop HEAD)`"
-
-#       - name: Changed Files in this PR
-#         run: | 
-#           echo -e ${{ steps.gitDiff.outputs.changedFiles }}
-    
+              
       - name: Review bump components PR
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.ZENKINS_TOKEN }}
         run: |
           # auth with zenkins to prevent self approval not allowed issue
           # TODO: guard for Cartfile is not empty
@@ -79,8 +55,10 @@ jobs:
           
           gh pr checkout ${{ github.event.issue.number }} --repo wireapp/${{ github.event.repository.name }}
           
-          ls
-#          git diff --name-only origin/develop HEAD
+          # check the different contains Cartfile and related files only
+          if git diff --name-only origin/develop HEAD | grep -q 'Cartfile'; then
+            echo "contains Cartfile"
+          fi
           
 #          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
 #          rm .githubtoken
