@@ -87,7 +87,7 @@ extension AnalyticsEvent {
     static func endedCall(asVideoCall: Bool,
                           callDirection: CallDirection,
                           callDuration: Double,
-                          callParticipants: Double,
+                          callParticipants: Int,
                           videoEnabled: Bool,
                           screenShareEnabled: Bool,
                           callClosedReason: CallClosedReason,
@@ -156,6 +156,6 @@ private extension AnalyticsAttributeKey {
 
     /// The reason the call ended, according to AVS.
     ///
-    /// Expected to refer to a value of type `AnalyticsCallEndedReasonType`.
+    /// Expected to refer to a value of type `CallClosedReason`.
     static let callEndedReason  = AnalyticsAttributeKey(rawValue: "call_end_reason")
 }

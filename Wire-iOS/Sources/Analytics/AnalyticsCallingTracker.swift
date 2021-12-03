@@ -135,7 +135,8 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
                                                      callParticipants: participants,
                                                      videoEnabled: toggleVideo,
                                                      screenShareEnabled: screenShare,
-                                                     callClosedReason: reason, conversation: conversation))
+                                                     callClosedReason: reason,
+                                                     conversation: conversation))
 
             }
             callInfos[conversationId] = nil
