@@ -122,19 +122,19 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
         case .terminating(let reason):
             if let callInfo = callInfos[conversationId] {
+                guard let establishedDate = callInfo.establishedDate else { return }
                 let isVideoCall = conversation.voiceChannel?.isVideoCall ?? false
                 let toggleVideo = callInfo.toggledVideo
-                let maximumCallParticipants = Double(callInfo.maximumCallParticipants)
+                let maximumCallParticipants = callInfo.maximumCallParticipants
                 let isSharingScreen = conversation.voiceChannel?.videoState ==  .screenSharing
-                guard let establishedDate = callInfo.establishedDate else { return }
                 let duration = -establishedDate.timeIntervalSinceNow
 
-                Analytics.shared.tagEvent(.endedCall(asVideoCall: video,
+                Analytics.shared.tagEvent(.endedCall(asVideoCall: isVideoCall,
                                                      callDirection: .outgoing,
                                                      callDuration: duration,
-                                                     callParticipants: participants,
+                                                     callParticipants: maximumCallParticipants,
                                                      videoEnabled: toggleVideo,
-                                                     screenShareEnabled: screenShare,
+                                                     screenShareEnabled: isSharingScreen,
                                                      callClosedReason: reason,
                                                      conversation: conversation))
 

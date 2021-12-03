@@ -104,7 +104,6 @@ extension AnalyticsEvent {
         return event
     }
 
-
     enum CallDirection: String, AnalyticsAttributeValue {
 
         case incoming
