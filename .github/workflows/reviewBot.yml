@@ -1,0 +1,63 @@
+name: review PR by Zenkins v0.1.3
+
+on: 
+  issue_comment:
+    types: [created]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    env:
+      ADMINS: ('billypchan' 'marcoconti83' 'typfel' 'johnxnguyen' 'David-Henner' 'KaterinaWire' 'sb88k' 'agisilaos')
+
+    steps:
+      - name: guard for magic spell
+        if: ${{ github.event.comment.body != '@zenkins review' }}
+        run: exit 1
+
+      - name: guard for pull requests
+        if: ${{ !github.event.issue.pull_request }}
+        run: exit 1
+
+      - name: guard for title
+        if: ${{ !(startsWith(github.event.issue.title, 'chore') && endsWith(github.event.issue.title, 'bump components SQPIT-776')) }}
+        run: |
+          echo "github: ${{ github }}"
+          echo "title not match. Exit. Title is ${{ github.event.issue.title }}"
+          exit 1
+
+      - name: guard for admins
+        run: |
+          admins=${{ env.ADMINS }}
+          adminFound=0
+          for admin in ${admins[*]}
+          do
+            if [[ "$admin" == "${{ github.actor }}" ]]; then
+              echo ${{ github.actor }} is allowed for releasing
+              adminFound=1
+            fi
+          done
+          if [ $adminFound = 0 ]; then
+            echo ${{ github.actor }} is not allowed for releasing
+            exit 1
+          fi
+          
+      - name: Changed Files Exporter
+        id: filesExporter
+        uses: umani/changed-files@v3.3.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '^Cartfile*$'
+
+      - name: Changed Files Exporter
+        run: | 
+          echo ${{ steps.filesExporter.outputs.files_updated }}
+    
+      - name: Review bump components PR
+        run: |
+          # auth with zenkins to prevent self approval not allowed issue
+          # TODO: guard for Cartfile is not empty
+          echo ${{ secrets.ZENKINS_TOKEN }} > .githubtoken
+          gh auth login --with-token < .githubtoken
+          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios-request-strategy
+          rm .githubtoken
