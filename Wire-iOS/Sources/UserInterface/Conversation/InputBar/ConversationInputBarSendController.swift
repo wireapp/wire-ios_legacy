@@ -64,7 +64,7 @@ final class ConversationInputBarSendController: NSObject {
             }
         }, completionHandler: {
             Analytics.shared.tagEvent(.contributed(.textMessage, in: conversation))
-            
+
         })
     }
 

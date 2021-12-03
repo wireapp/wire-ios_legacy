@@ -346,7 +346,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
                                        view: sender as? UIView ?? view)
     }
 
-    //MARK: icon button actions
+    // MARK: icon button actions
 
     @objc
     private func copyCurrent(_ sender: AnyObject!) {
