@@ -57,6 +57,8 @@ jobs:
           
       - name: Diff
         run: |
+          cd ${{ github.event.repository.name }}
+          pwd
           # check the different contains Cartfile and related files only
           DIFF_OUTPUT="$(git diff --name-only origin/develop HEAD)"
           if [[ $DIFF_OUTPUT =~ 'Cartfile' ]]; then
