@@ -64,6 +64,15 @@ jobs:
           
           ##TODO: Rewrite these check logic in Swift
           
+          # replace longer string first, since Cartfile.resolved contains Cartfile and prevent replace Cartfile twice
+          
+          if [[ $DIFF_OUTPUT =~ 'Cartfile.resolved' ]]; then
+            echo "contains Cartfile.resolved"
+            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile.resolved/}
+          fi
+
+          echo $DIFF_OUTPUT
+
           if [[ $DIFF_OUTPUT =~ 'Cartfile' ]]; then
             echo "contains Cartfile"
             DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile/}
@@ -71,12 +80,6 @@ jobs:
           
           echo $DIFF_OUTPUT
           
-          if [[ $DIFF_OUTPUT =~ 'Cartfile.resolved' ]]; then
-            echo "contains Cartfile"
-            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile.resolved/}
-          fi
-
-          echo $DIFF_OUTPUT
 
 #          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
 #          rm .githubtoken
