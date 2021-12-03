@@ -58,16 +58,17 @@ jobs:
       - name: Checked changed files
         id: gitDiff
         run: |          
-          echo "::set-output name=new_tag::`git diff --name-only origin/develop HEAD`"
+          echo "::set-output name=changedFiles::`git diff --name-only origin/develop HEAD`"
 
       - name: Changed Files Exporter
         run: | 
-          echo ${{ steps.gitDiff.outputs.files_updated }}
+          echo ${{ steps.gitDiff.outputs.changedFiles }}
     
       - name: Review bump components PR
         run: |
           # auth with zenkins to prevent self approval not allowed issue
           # TODO: guard for Cartfile is not empty
+          unset GITHUB_TOKEN
           echo ${{ secrets.ZENKINS_TOKEN }} > .githubtoken
           gh auth login --with-token < .githubtoken
           gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios-request-strategy
