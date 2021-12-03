@@ -60,15 +60,16 @@ jobs:
         run: |          
           echo "::set-output name=changedFiles::`git diff --name-only origin/develop HEAD`"
 
-      - name: Changed Files Exporter
+      - name: Changed Files in this PR
         run: | 
-          printf ${{ steps.gitDiff.outputs.changedFiles }}
+          echo -e ${{ steps.gitDiff.outputs.changedFiles }}
     
       - name: Review bump components PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.ZENKINS_TOKEN }}
         run: |
           # auth with zenkins to prevent self approval not allowed issue
           # TODO: guard for Cartfile is not empty
-          unset GITHUB_TOKEN
           echo ${{ secrets.ZENKINS_TOKEN }} > .githubtoken
           gh auth login --with-token < .githubtoken
           gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios-request-strategy
