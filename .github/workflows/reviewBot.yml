@@ -42,7 +42,7 @@ jobs:
             exit 1
           fi
               
-      - name: Review bump components PR
+      - name: Checkout
         run: |
           # auth with zenkins to prevent self approval not allowed issue
           # TODO: guard for Cartfile is not empty
@@ -55,8 +55,11 @@ jobs:
           
           gh pr checkout ${{ github.event.issue.number }} --repo wireapp/${{ github.event.repository.name }}
           
+      - name: Diff
+        run: |
           # check the different contains Cartfile and related files only
-          if git diff --name-only origin/develop HEAD | grep -q 'Cartfile'; then
+          DIFF_OUTPUT="$(git diff --name-only origin/develop HEAD)"
+          if [[ $DIFF_OUTPUT =~ 'Cartfile' ]]; then
             echo "contains Cartfile"
           fi
           
