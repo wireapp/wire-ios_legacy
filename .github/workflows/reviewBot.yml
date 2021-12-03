@@ -75,7 +75,7 @@ jobs:
           
           gh pr checkout ${{ github.event.issue.number }} --repo wireapp/wire-ios
           ls
-          git diff --name-only origin/develop HEAD
+#          git diff --name-only origin/develop HEAD
           
-          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios
-          rm .githubtoken
+#          gh pr review ${{ github.event.issue.number }} --approve -R wireapp/wire-ios
+#          rm .githubtoken
