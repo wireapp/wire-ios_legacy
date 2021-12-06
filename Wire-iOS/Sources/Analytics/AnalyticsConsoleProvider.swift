@@ -67,9 +67,9 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
     func tagEvent(_ event: AnalyticsEvent) {
         tagEvent(event.name, attributes: event.attributes.rawValue)
     }
-    
-    func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
-        
+
+    func tagEvent(_ event: String, attributes: [String: Any] = [:]) {
+
         let printableAttributes = attributes
 
         var loggingDict = [String: Any]()

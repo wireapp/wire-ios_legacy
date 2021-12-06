@@ -120,10 +120,25 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             }
 
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
+        case .terminating(let reason):
+            if let callInfo = callInfos[conversationId],
+               let establishedDate = callInfo.establishedDate {
 
-        case .terminating(reason: let reason):
-            if let callInfo = callInfos[conversationId] {
-                analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
+                let isVideoCall = conversation.voiceChannel?.isVideoCall ?? false
+                let toggleVideo = callInfo.toggledVideo
+                let maximumCallParticipants = callInfo.maximumCallParticipants
+                let isSharingScreen = conversation.voiceChannel?.videoState ==  .screenSharing
+                let duration = -establishedDate.timeIntervalSinceNow
+
+                Analytics.shared.tagEvent(.endedCall(asVideoCall: isVideoCall,
+                                                     callDirection: .outgoing,
+                                                     callDuration: duration,
+                                                     callParticipants: maximumCallParticipants,
+                                                     videoEnabled: toggleVideo,
+                                                     screenShareEnabled: isSharingScreen,
+                                                     callClosedReason: reason,
+                                                     conversation: conversation))
+
             }
             callInfos[conversationId] = nil
 
@@ -169,37 +184,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallParticipantObserver {
             Analytics.shared.tagEvent(.screenShare(callDirection: .incoming, duration: -screenSharingDate.timeIntervalSinceNow, in: conversation))
 
             screenSharingStartTimes[screenSharedParticipant.clientId] = nil
-        }
-    }
-}
-
-private extension CallClosedReason {
-
-    var analyticsValue: String {
-        switch self {
-        case .canceled:
-            return "canceled"
-        case .normal, .stillOngoing:
-            return "normal"
-        case .inputOutputError:
-            return "io_error"
-        case .internalError:
-            return "internal_error"
-        case .securityDegraded:
-            return "security_degraded"
-        case .anweredElsewhere:
-            return "answered_elsewhere"
-        case .timeout:
-            return "timeout"
-        case .unknown:
-            return "unknown"
-        case .lostMedia:
-            return "drop"
-        case .rejectedElsewhere:
-            return "rejected_elsewhere"
-        case .outdatedClient:
-            return "outdated_client"
-
         }
     }
 }

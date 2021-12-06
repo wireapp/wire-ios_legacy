@@ -19,13 +19,14 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum CallEvent {
     case initiated,
          received,
          answered,
          established,
-         ended(reason: String),
+         ended(reason: CallClosedReason),
          screenSharing(duration: TimeInterval)
 }
 
@@ -74,11 +75,23 @@ extension Analytics {
         attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
 
         switch event {
-        case .ended(reason: let reason):
-            attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
-            attributes.merge(attributesForCallDuration(with: callInfo), strategy: .preferNew)
-            attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
-            attributes.merge(["reason": reason], strategy: .preferNew)
+        case .ended(let reason):
+            guard let establishedDate = callInfo.establishedDate else { return [:] }
+            let isVideoCall = conversation.voiceChannel?.isVideoCall ?? false
+            let toggleVideo = callInfo.toggledVideo
+            let maximumCallParticipants = callInfo.maximumCallParticipants
+            let isScreenSharing = conversation.voiceChannel?.videoState ==  .screenSharing
+            let duration = -establishedDate.timeIntervalSinceNow
+
+            Analytics.shared.tagEvent(.endedCall(asVideoCall: isVideoCall,
+                                                 callDirection: .outgoing,
+                                                 callDuration: duration,
+                                                 callParticipants: maximumCallParticipants,
+                                                 videoEnabled: toggleVideo,
+                                                 screenShareEnabled: isScreenSharing,
+                                                 callClosedReason: reason,
+                                                 conversation: conversation))
+
         case .screenSharing(let duration):
             Analytics.shared.tagEvent(.screenShare(callDirection: .incoming, duration: duration, in: conversation))
         default:

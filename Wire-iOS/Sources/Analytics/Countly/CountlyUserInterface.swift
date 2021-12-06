@@ -24,7 +24,7 @@ protocol CountlyUserInterface {
     func set(_ key: String, value: String)
 
     func unSet(_ key: String)
-    
+
     func save()
 
 }
