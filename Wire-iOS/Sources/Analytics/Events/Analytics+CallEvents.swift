@@ -47,15 +47,6 @@ extension CallEvent {
 
 extension Analytics {
 
-    func tagCallQualityReview(_ feedback: CallQualitySurveyReview) {
-        var attributes: [String: NSObject] = [:]
-        attributes["label"] = feedback.label
-        attributes["score"] = feedback.score
-        attributes["ignore-reason"] = feedback.ignoreReason
-
-        tagEvent("calling.call_quality_review", attributes: attributes)
-    }
-
     func tag(callEvent: CallEvent,
              in conversation: ZMConversation,
              callInfo: CallInfo) {

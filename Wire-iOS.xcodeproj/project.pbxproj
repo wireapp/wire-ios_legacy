@@ -250,7 +250,6 @@
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0F75BE2268A0B6006C991E /* ColorScheme+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0F75BD2268A0B6006C991E /* ColorScheme+Helper.swift */; };
 		5E0F75C02268A0D7006C991E /* UIBarButtonItem+StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */; };
-		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */; };
 		5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */; };
 		5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */; };
@@ -2010,7 +2009,6 @@
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0F75BD2268A0B6006C991E /* ColorScheme+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorScheme+Helper.swift"; sourceTree = "<group>"; };
 		5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+StyleKit.swift"; sourceTree = "<group>"; };
-		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLWireLocaleTests.swift; sourceTree = "<group>"; };
 		5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartCompanyLoginLinkEventHandler.swift; sourceTree = "<group>"; };
 		5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationErrorEventHandler.swift; sourceTree = "<group>"; };
@@ -4788,7 +4786,6 @@
 				16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */,
 				87E3C5071FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift */,
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
-				5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */,
 				EE05CCFA25DC586F00777A25 /* AnalyticsAttributeKey+AppInfo.swift */,
 				EE05CD2025DDB1E900777A25 /* ZMConversation+AnalyticsAttributes.swift */,
 				871BBFC31D34F56300DF0793 /* Events */,
@@ -8171,7 +8168,6 @@
 				8787D1841EA74F5B00254D02 /* UserType+Additions.swift in Sources */,
 				5EFD913F21C8F98500080599 /* VerifyPhoneStepDescription.swift in Sources */,
 				EF22DC7F224BC5C2001EDE8E /* UIViewController+Alert.swift in Sources */,
-				5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */,
 				0619FBBB258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift in Sources */,
 				EEAC0A1621AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift in Sources */,
 				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
