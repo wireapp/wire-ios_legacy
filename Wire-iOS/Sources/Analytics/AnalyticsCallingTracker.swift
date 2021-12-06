@@ -93,7 +93,6 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
         case .incoming(video: let video, shouldRing: true, degraded: _):
             let callInfo = CallInfo(connectingDate: nil, establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: false, video: video)
             callInfos[conversationId] = callInfo
-            analytics.tag(callEvent: .received, in: conversation, callInfo: callInfo)
         case .answered:
             let video = conversation.voiceChannel?.isVideoCall ?? false
             if var callInfo = callInfos[conversationId] {
