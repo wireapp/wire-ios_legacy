@@ -169,9 +169,6 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
     }
 
     @objc private func didTapContinueButton(_ sender: Button) {
-        let inviteResult = invitationsCount == 0 ? Analytics.InviteResult.none : Analytics.InviteResult.invited(invitesCount: invitationsCount)
-
-        Analytics.shared.tagTeamFinishedInviteStep(with: inviteResult)
         authenticationCoordinator?.teamInviteViewControllerDidFinish(self)
     }
 
