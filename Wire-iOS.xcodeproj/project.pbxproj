@@ -2706,7 +2706,6 @@
 		A99EE1A0266657AF00E713FC /* PINCache.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PINCache.xcframework; path = Carthage/Build/PINCache.xcframework; sourceTree = "<group>"; };
 		A99EE1A1266657AF00E713FC /* WireProtos.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireProtos.xcframework; path = Carthage/Build/WireProtos.xcframework; sourceTree = "<group>"; };
 		A99EE1A2266657AF00E713FC /* HTMLString.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HTMLString.xcframework; path = Carthage/Build/HTMLString.xcframework; sourceTree = "<group>"; };
-		A99EE1A3266657AF00E713FC /* Cartography.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Cartography.xcframework; path = Carthage/Build/Cartography.xcframework; sourceTree = "<group>"; };
 		A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireShareEngine.xcframework; path = Carthage/Build/WireShareEngine.xcframework; sourceTree = "<group>"; };
 		A99EE1A5266657B000E713FC /* WireDataModel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireDataModel.xcframework; path = Carthage/Build/WireDataModel.xcframework; sourceTree = "<group>"; };
 		A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
@@ -4698,7 +4697,6 @@
 				A99EE203266660D300E713FC /* AppCenterAnalytics.xcframework */,
 				A99EE204266660D300E713FC /* AppCenterCrashes.xcframework */,
 				A99EE199266657AE00E713FC /* avs.xcframework */,
-				A99EE1A3266657AF00E713FC /* Cartography.xcframework */,
 				A99EE1A2266657AF00E713FC /* HTMLString.xcframework */,
 				A99EE1A0266657AF00E713FC /* PINCache.xcframework */,
 				A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */,
