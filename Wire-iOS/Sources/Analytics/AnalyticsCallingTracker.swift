@@ -123,7 +123,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
         case .terminating(let reason):
             if let callInfo = callInfos[conversationId],
                let establishedDate = callInfo.establishedDate {
-                
+
                 let isVideoCall = conversation.voiceChannel?.isVideoCall ?? false
                 let toggleVideo = callInfo.toggledVideo
                 let maximumCallParticipants = callInfo.maximumCallParticipants
