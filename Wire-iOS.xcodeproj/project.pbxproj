@@ -747,7 +747,6 @@
 		87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CB36B91D74782B007AB4E5 /* LikeButton.swift */; };
 		87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFDAB32044710400FD140D /* GuestIndicator.swift */; };
 		87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */; };
-		87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */; };
 		87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */; };
 		87D56DF81E003D9300DFF722 /* CollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF71E003D9300DFF722 /* CollectionsView.swift */; };
 		87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D56DF91E0046FE00DFF722 /* CollectionImageCell.swift */; };
@@ -2559,7 +2558,6 @@
 		87CB36B91D74782B007AB4E5 /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		87CFDAB32044710400FD140D /* GuestIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestIndicator.swift; sourceTree = "<group>"; };
 		87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentColorPickerController.swift; sourceTree = "<group>"; };
-		87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Settings.swift"; sourceTree = "<group>"; };
 		87D553661C86F0450026573C /* MockUserClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserClient.swift; sourceTree = "<group>"; };
 		87D56DF51E003A5300DFF722 /* CollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewController.swift; sourceTree = "<group>"; };
 		87D56DF71E003D9300DFF722 /* CollectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsView.swift; sourceTree = "<group>"; };
@@ -4804,7 +4802,6 @@
 				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
 				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
 				D5168F2B200CBBF300F8222A /* Analytics+TeamInvites.swift */,
-				87D38F9B1E5D9EE0004C5730 /* Analytics+Settings.swift */,
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
 				66CF47D7274FE01B002056EF /* Analytics+FailedMessageDecryption.swift */,
 				667DC2852750D6FA0073BECE /* Analytics+CallStateEvents.swift */,
@@ -8754,7 +8751,6 @@
 				F12EAF73214FB6FF00B00AD9 /* MentionsHandler.swift in Sources */,
 				BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */,
 				A937A5C323D5F0400080A507 /* ConversationInputBarViewControllerDelegate.swift in Sources */,
-				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				A93C96BB251CD3DE00EBD4D8 /* AnalyticsDecryptionFailedObserver.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* CallGridConfiguration.swift in Sources */,
 				EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */,
