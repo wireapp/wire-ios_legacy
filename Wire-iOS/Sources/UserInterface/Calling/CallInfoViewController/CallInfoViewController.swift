@@ -124,8 +124,16 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         addChild(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
+        addMutedStateToastMessage()
     }
-
+    
+    func addMutedStateToastMessage() {
+        if configuration.isMuted {
+            let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message, colorScheme: ColorSchemeColor.utilityNeutral, variant: ColorSchemeVariant.light, dismissable: true, moreInfoAction: nil)
+            Toast.show(with: toastConfig)
+        }
+    }
+    
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
