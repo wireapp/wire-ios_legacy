@@ -122,7 +122,8 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
             callParticipantObserverToken = WireCallCenterV3.addCallParticipantObserver(observer: self, for: conversation, userSession: userSession)
         case .terminating(let reason):
             if let callInfo = callInfos[conversationId],
-            guard let establishedDate = callInfo.establishedDate else { return } {
+               let establishedDate = callInfo.establishedDate {
+                
                 let isVideoCall = conversation.voiceChannel?.isVideoCall ?? false
                 let toggleVideo = callInfo.toggledVideo
                 let maximumCallParticipants = callInfo.maximumCallParticipants
