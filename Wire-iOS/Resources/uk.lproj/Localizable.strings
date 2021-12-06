@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Верифікований";
 "conversation.input_bar.placeholder" = "Напишіть повідомлення";
-"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
+"conversation.input_bar.placeholder_ephemeral" = "Тимчасове повідомленя";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.guests" = "**Гості**";
+"conversation.banner.services" = "**Сервіси**";
+"conversation.banner.externals" = "**Зовнішні користувачі**";
+"conversation.banner.remotes" = "**Федеративні користувачі**";
+"conversation.banner.are_present" = "%@ присутні";
+"conversation.banner.are_active" = "%@ активні";
+"conversation.banner.separator" = " та ";
 
 "conversation.action.search" = "Пошук";
 
@@ -621,7 +621,7 @@
 
 "connection_request_pending_title" = "Запит на додавання до контактів";
 "connection_request.send_button_title" = "Додати";
-"inbox.title" = "Connection Requests";
+"inbox.title" = "Запити на додавання до контактів";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
 "error.connection.title" = "Помилка";
@@ -923,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Гості та сервіси";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "Тимчасові повідомленяя";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
 "group_details.receipt_options_cell.title" = "Звіти про перегляд";
@@ -937,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Суб'єкти правового захисту";
 "legalhold.header.title" = "Правовий захист";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "В даній розмові правовий захист було активовано мінімум для одного учасника.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.";
+"legalhold.header.self_description" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими, відредагованими та тимчасованими повідомленнями.\nВаші співрозмовники будуть повідомлені про це.";
 "legalhold.accessibility" = "Подробиці правового захисту";
 
 
@@ -1013,8 +1013,8 @@
 "self.settings.account_section.phone.title" = "Номер телефону";
 "self.settings.account_section.handle.title" = "Нік";
 "self.settings.account_section.add_handle.title" = "Додати нік";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "Команда";
+"self.settings.account_section.domain.title" = "Домен";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
@@ -1659,25 +1659,25 @@
 "feature_config.file_sharing_restrictions.audio" = "Отримання аудіоповідомлень заборонене";
 
 //Feature flag - Conference calling
-"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
-"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
-"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+"feature_config.update.conference_calling.alert.title" = "Ентерпрайз-версія";
+"feature_config.update.conference_calling.alert.message" = "Ваша команда була оновлена до ентерпрайз-версії. Тепер у вас є доступ до таких функцій, як відео-конференції.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Дізнайтеся більше про ентерпрайз-версію";
 
-"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
-"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
-"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
-"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Оновити до ентерпрайз-версії";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Ваша команда наразі використовує безкоштовну базову версію. Оновіться до ентерпрайз-версії для доступу до таких функцій, як вихідні конференц-виклики.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Дізнатися більше про ціни на Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Оновити зараз";
 
-"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
-"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+"feature_config.conference_calling_restrictions.members.alert.title" = "Функція недоступна";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Щоб почати конференц-виклик, команда повинна оновитися до ентерпрайз-версії.";
 
-"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
-"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Функція недоступна";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Можливість ініціювання конференц-виклику доступна тільки в платній версії Wire.";
 
 // Feature configs: self-deleting messages
-"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
-"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+"feature_config.alert.self_deleting_messages.message.disabled" = "Тимчасові повідомлення вимкнені.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Тимчасові повідомлення були увімкнені. Ви можете встановити таймер перед тим, як писати повідомлення.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Тимчасові повідомлення тепер є обов'язковими. Нові повідомлення будуть видалятися автоматично після %@.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
@@ -1847,14 +1847,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Очікує підтвердження.";
 "legalhold_request.alert.title" = "Отримано запит на правовий захист";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
+"legalhold_request.alert.detail" = "Усі майбутні повідомлення будуть записані пристроєм з ідентифікатором:\n\n%@\n\nВключно з видаленими, відредагованими та тимчасовими повідомленнями в усіх розмовах.";
 "legalhold_request.alert.detail.enter_password" = "Введіть ваш пароль для підтвердження.";
 "legalhold_request.alert.error_wrong_password" = "Невірний пароль";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Правовий захист активний";
 "legalhold_active.alert.learn_more" = "Дізнатися більше";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими, відредагованими та тимчасованими повідомленнями.\n\nВаші співрозмовники будуть повідомлені про це.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
@@ -1932,7 +1932,7 @@
 "appLockModule.goToSettingsButton.title" = "Перейти до налаштувань";
 
 //MARK: - Keyboard shortcut
-"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
-"keyboardshortcut.conversationDetail" = "Conversation Details...";
-"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.scrollToBottom" = "Прокрутити донизу";
+"keyboardshortcut.conversationDetail" = "Деталі розмови...";
+"keyboardshortcut.searchInConversation" = "Пошук в розмові..";
 "keyboardshortcut.openPeople" = "Люди";
