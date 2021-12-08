@@ -1196,7 +1196,6 @@
 		D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D65A0E2074CFBB00D7F3C3 /* AuthenticationType.swift */; };
 		D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */; };
 		D5D89780201A12D300FAF69C /* Account+ShareExtensionDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */; };
-		D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D89781201A25E000FAF69C /* Analytics+Services.swift */; };
 		D5DBAAA720064D5600E9F65B /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */; };
 		D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA920064D8800E9F65B /* InviteResult.swift */; };
 		D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */; };
@@ -1579,7 +1578,6 @@
 		EFFE1D3B230D63EA00389290 /* CountryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFE1D3A230D63EA00389290 /* CountryTests.swift */; };
 		EFFE707222F2DB38007CEA38 /* session_manager.json in Resources */ = {isa = PBXBuildFile; fileRef = 161041B622D764C1001109D7 /* session_manager.json */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
-		F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F112C58520497860007C1E8F /* Analytics+Guests.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
 		F1199D361FC8490A0070FAC3 /* TeamCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */; };
 		F1199D371FC8490A0070FAC3 /* AuthenticationStepController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199D301FC8490A0070FAC3 /* AuthenticationStepController.swift */; };
@@ -3038,7 +3036,6 @@
 		D5D65A0E2074CFBB00D7F3C3 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
 		D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPasswordViewController.swift; sourceTree = "<group>"; };
 		D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+ShareExtensionDisplayName.swift"; sourceTree = "<group>"; };
-		D5D89781201A25E000FAF69C /* Analytics+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Services.swift"; sourceTree = "<group>"; };
 		D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
 		D5DBAAA920064D8800E9F65B /* InviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteResult.swift; sourceTree = "<group>"; };
 		D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteHeaderView.swift; sourceTree = "<group>"; };
@@ -3412,7 +3409,6 @@
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Backend.swift"; sourceTree = "<group>"; };
 		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
-		F112C58520497860007C1E8F /* Analytics+Guests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Guests.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F114466821A2F8BC00B5FEBA /* Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		F114466921A56F3200B5FEBA /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
@@ -4788,8 +4784,6 @@
 			children = (
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				EE05CD2C25DDB32900777A25 /* AnalyticsEvent+Contributed.swift */,
-				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
-				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
 				66CF47D7274FE01B002056EF /* Analytics+FailedMessageDecryption.swift */,
 				667DC2852750D6FA0073BECE /* Analytics+CallStateEvents.swift */,
@@ -8665,7 +8659,6 @@
 				5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */,
 				635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
-				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
 				5EA73D8820D901000001D106 /* DetailsCollectionViewCell.swift in Sources */,
 				A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */,
@@ -8707,7 +8700,6 @@
 				6305206224FFEF9600ED295A /* OrientableView.swift in Sources */,
 				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
 				87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */,
-				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,
 				5E35F7802183131400D3F4FE /* ConversationLinkAttachmentCell.swift in Sources */,
 				1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */,
 				A9A6506424D1C2C800B6A68D /* PasscodeError.swift in Sources */,
