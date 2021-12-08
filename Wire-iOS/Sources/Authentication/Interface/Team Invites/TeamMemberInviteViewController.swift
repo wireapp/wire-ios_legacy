@@ -133,7 +133,6 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         }
 
         guard let userSession = ZMUserSession.shared() else { return }
-        Analytics.shared.tag(TeamInviteEvent.sentInvite(.teamCreation))
         footerTextFieldView.isLoading = true
 
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
