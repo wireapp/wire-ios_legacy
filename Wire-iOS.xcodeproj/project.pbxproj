@@ -8776,7 +8776,6 @@
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
-				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
 				0661925726F889DC006969AA /* PerformClipboardAction.swift in Sources */,
 				A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
