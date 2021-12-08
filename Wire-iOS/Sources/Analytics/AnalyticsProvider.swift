@@ -28,9 +28,6 @@ protocol AnalyticsProvider: AnyObject {
 
     func tagEvent(_ event: AnalyticsEvent)
 
-    /// Set a custom dimension
-    func setSuperProperty(_ name: String, value: Any?)
-
     /// Force the AnalyticsProvider to process the queued data immediately
     ///
     /// - Parameter completion: an optional completion handler for when the flush has completed.

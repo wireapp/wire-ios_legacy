@@ -89,10 +89,6 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: loggingDict)
     }
 
-    func setSuperProperty(_ name: String, value: Any?) {
-        print(loggingData: ["superProperty_\(name)": value ?? "nil"])
-    }
-
     func flush(completion: Completion?) {
         completion?()
     }
