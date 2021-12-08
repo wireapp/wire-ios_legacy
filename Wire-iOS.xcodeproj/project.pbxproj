@@ -1204,7 +1204,6 @@
 		D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */; };
 		D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */; };
 		D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */; };
-		D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */; };
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
@@ -3048,7 +3047,6 @@
 		D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteTextFieldFooterView.swift; sourceTree = "<group>"; };
 		D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteTableViewCell.swift; sourceTree = "<group>"; };
 		D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+RemoveAction.swift"; sourceTree = "<group>"; };
-		D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+HistoryBackup.swift"; sourceTree = "<group>"; };
 		D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TableViewHeaderFooterSizing.swift"; sourceTree = "<group>"; };
 		DB7FEC901B8729AD00BA72DE /* ConversationInputBarSendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationInputBarSendController.swift; sourceTree = "<group>"; };
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
@@ -4794,7 +4792,6 @@
 				EE05CD2C25DDB32900777A25 /* AnalyticsEvent+Contributed.swift */,
 				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
-				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
 				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
 				66CF47D7274FE01B002056EF /* Analytics+FailedMessageDecryption.swift */,
@@ -8893,7 +8890,6 @@
 				D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */,
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
 				A9681D8123883877004FE917 /* IconToggleSubtitleCell.swift in Sources */,
-				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
 				546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */,
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,

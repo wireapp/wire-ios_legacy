@@ -197,7 +197,7 @@ final class ServiceDetailViewController: UIViewController {
 
                     switch result {
                     case .success:
-                        Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
+                        
                         completion?(.success(conversation: conversation))
                     case .failure(let error):
                         completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
@@ -210,10 +210,6 @@ final class ServiceDetailViewController: UIViewController {
                     completion?(.success(conversation: existingConversation))
                 } else {
                     serviceUser.createConversation(in: userSession, completionHandler: { (result) in
-                        if case let .success(conversation) = result {
-                            Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
-                        }
-
                         switch result {
                         case .success(let conversation):
                             completion?(.success(conversation: conversation))

@@ -24,16 +24,4 @@ protocol Event {
     var attributes: [AnyHashable: Any]? { get }
 }
 
-extension Analytics {
 
-    func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes as? [String: NSObject] ?? [:])
-    }
-
-}
-
-extension Event {
-    func track() {
-        Analytics.shared.tag(self)
-    }
-}
