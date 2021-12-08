@@ -65,7 +65,8 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
     }
 
     func tagEvent(_ event: AnalyticsEvent) {
-        tagEvent(event.name, attributes: event.attributes.rawValue)
+        // no-op
+        // TODO: [Agis] Delete this
     }
 
     func tagEvent(_ event: String, attributes: [String: Any] = [:]) {

@@ -79,6 +79,12 @@ final class Analytics: NSObject {
 }
 
 extension Analytics: AnalyticsType {
+    
+    func tagEvent(_ event: String) {
+        // no-op
+        // TODO: [Agis] Delete this
+    }
+    
     func setPersistedAttributes(_ attributes: [String: NSObject]?, for event: String) {
         // no-op
     }
@@ -86,11 +92,6 @@ extension Analytics: AnalyticsType {
     func persistedAttributes(for event: String) -> [String: NSObject]? {
         // no-op
         return nil
-    }
-
-    /// Record an event with no attributes
-    func tagEvent(_ event: String) {
-        provider?.tagEvent(event, attributes: [:])
     }
 
     /// Record an event with optional attributes.

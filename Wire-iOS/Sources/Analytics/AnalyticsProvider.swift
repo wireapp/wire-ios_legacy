@@ -23,6 +23,7 @@ protocol AnalyticsProvider: AnyObject {
     var isOptedOut: Bool { get set }
     var selfUser: UserType? { get set }
 
+    // TODO: [Agis] Delete this
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String: Any])
 
