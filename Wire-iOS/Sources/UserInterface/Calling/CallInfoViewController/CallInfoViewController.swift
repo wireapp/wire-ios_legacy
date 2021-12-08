@@ -128,7 +128,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
     
     func addMutedStateToastMessage() {
-        if configuration.isMuted {
+        if case .established(let duration) = configuration.state,
+                   duration <= 5.0,
+                   configuration.isMuted {
             let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message, colorScheme: ColorSchemeColor.utilityNeutral, variant: ColorSchemeVariant.light, dismissable: true, moreInfoAction: nil)
             Toast.show(with: toastConfig)
         }
