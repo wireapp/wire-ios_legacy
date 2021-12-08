@@ -118,7 +118,6 @@
 		1658E93226C5609F003D0090 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E93126C5609F003D0090 /* Starscream.xcframework */; };
 		1658E93326C560A0003D0090 /* Starscream.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E93126C5609F003D0090 /* Starscream.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1658E93626C5652B003D0090 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E93126C5609F003D0090 /* Starscream.xcframework */; };
-		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
 		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
 		165C55C2254B0CB500731CA9 /* UIColor+NamedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BBEC852469941D00801AEC /* UIColor+NamedColors.swift */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
@@ -1864,7 +1863,6 @@
 		1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoTestFixture.swift; sourceTree = "<group>"; };
 		1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInfoViewControllerInput.swift; sourceTree = "<group>"; };
 		1658E93126C5609F003D0090 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
-		16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+CallEvents.swift"; sourceTree = "<group>"; };
 		1659FCCC234E415200D06C1F /* MockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLabel.swift; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
@@ -4790,7 +4788,6 @@
 			children = (
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				EE05CD2C25DDB32900777A25 /* AnalyticsEvent+Contributed.swift */,
-				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
 				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
 				662F6357274F89EF004A0677 /* Analytics+AppOpen.swift */,
