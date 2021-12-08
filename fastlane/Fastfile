@@ -56,7 +56,6 @@ platform :ios do
         end
     end
 
-
     desc "Build for testing"
     lane :build do |options|
         xcode_version = options[:xcode_version]
