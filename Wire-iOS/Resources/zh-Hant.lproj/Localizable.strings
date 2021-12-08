@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "已驗證";
 "conversation.input_bar.placeholder" = "請輸入訊息";
-"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
+"conversation.input_bar.placeholder_ephemeral" = "自動刪除訊息";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑動來發送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "點擊來發送";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "此訊息已刪除。";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "**訪客**";
+"conversation.banner.services" = "**服務**";
+"conversation.banner.externals" = "**外部合作者**";
+"conversation.banner.remotes" = "**聯邦使用者**";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.separator" = "和";
 
 "conversation.action.search" = "搜索";
 
@@ -621,7 +621,7 @@
 
 "connection_request_pending_title" = "連接請求";
 "connection_request.send_button_title" = "加為連絡人";
-"inbox.title" = "Connection Requests";
+"inbox.title" = "連接請求";
 "inbox.connection_request.connect_button_title" = "加為連絡人";
 "inbox.connection_request.ignore_button_title" = "忽略";
 "error.connection.title" = "錯誤";
@@ -694,8 +694,8 @@
 "call.grid.no_active_speakers" = "沒有人在視像通話中發言...";
 
 "call.grid.hints.fullscreen" = "雙擊方格以全屏顯示";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
-"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.go_back_or_zoom" = "點兩下返回，兩指收放縮放";
+"call.grid.hints.go_back" = "點兩下返回";
 "call.grid.hints.zoom" = "捏合縮放";
 
 "call.video.paused" = "影像已暫停";
@@ -884,7 +884,7 @@
 "profile.details.guest" = "訪客";
 "profile.details.group_admin" = "群組管理員";
 "profile.details.partner" = "外部合作者";
-"profile.details.federated" = "站台聯邦";
+"profile.details.federated" = "聯邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "使用者名稱";
@@ -923,7 +923,7 @@
 "group_details.guest_options_cell.title" = "訪客和服務";
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "自動刪除訊息";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
 "group_details.receipt_options_cell.title" = "讀取回條";
@@ -938,7 +938,7 @@
 "legalhold.participants.section.title" = "合法保留對象";
 "legalhold.header.title" = "合法保留";
 "legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.self_description" = "您的帳戶的合法保留已被激活。 所有消息都將保留，以供將來訪問，包括刪除，編輯和自動刪除訊息。\n\n您的對話成員將被提醒記錄中。";
 "legalhold.accessibility" = "合法保留詳情";
 
 
@@ -1628,7 +1628,7 @@
 "error.conversation.offline" = "您的網路連線似乎有些問題，請確保網路正常運作。";
 "error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
 "error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
-"error.message.send.title" = "Messages cannot be sent";
+"error.message.send.title" = "無法傳送訊息";
 
 "sketchpad.initial_hint" = "點擊顏色塊來改變筆刷大小";
 
