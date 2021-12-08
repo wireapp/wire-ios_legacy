@@ -9,4 +9,4 @@ jobs:
   call-workflow:
     uses: wireapp/wire-ios-shared-resources/.github/workflows/createBumpPR.yml@master
     secrets:
-      envPAT: ${{ secrets.IOS_RELEASE_DISPATCH_SECRET }}
+      envPAT: ${{ secrets.ZENKINS_WORKFLOW_PAT }}
