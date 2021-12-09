@@ -35,7 +35,6 @@ final class AnalyticsDecryptionFailedObserver: NSObject {
 
     @objc
     private func messageCannotBeDecrypted(_ note: Notification?) {
-
         guard let conversation = note?.object as? ZMConversation else { return }
         Analytics.shared.tagEvent(.failedToDecryptMessage(in: conversation))
     }
