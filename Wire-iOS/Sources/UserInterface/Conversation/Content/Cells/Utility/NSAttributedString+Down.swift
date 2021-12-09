@@ -35,7 +35,7 @@ extension NSAttributedString {
         if result.string.last == "\n" {
             result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
         }
-        
+
         guard !result.string.isEmpty else {
             return .init(string: text)
         }
