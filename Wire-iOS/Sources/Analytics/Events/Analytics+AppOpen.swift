@@ -20,7 +20,8 @@ import Foundation
 import WireDataModel
 
 extension AnalyticsEvent {
-
+    
+    /// When the user opens the app.
     static var openingApp: AnalyticsEvent {
         let event = AnalyticsEvent(name: "app.open")
         return event
