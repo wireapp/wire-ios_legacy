@@ -53,14 +53,25 @@ extension CallClosedReason: AnalyticsAttributeValue {
 }
 
 extension AnalyticsEvent {
-
+    
+    /// AVS receives a request to start an outgoing call.
+    /// - Parameters:
+    ///   - asVideoCall: Whether the call was started as a video call.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event
     static func initiatedCall(asVideoCall: Bool, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.initiated_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
         return event
     }
-
+    
+    /// When SE notices that both sides have joined the call (signalling-wise).
+    /// - Parameters:
+    ///   - asVideoCall: Whether the call was started as a video call.
+    ///   - callDirection: The direction of the call. Either .outgoing or .incoming.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event.
     static func joinedCall(asVideoCall: Bool, callDirection: CallDirection, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.joined_call")
         event.attributes = conversation.analyticsAttributes
@@ -68,14 +79,25 @@ extension AnalyticsEvent {
         event.attributes[.callDirection] = callDirection
         return event
     }
-
+    
+    /// When SE notices that AVS has established media.
+    /// - Parameters:
+    ///   - asVideoCall: Whether the call was started as a video call.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event.
     static func establishedCall(asVideoCall: Bool, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.established_call")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.startedAsVideoCall] = asVideoCall
         return event
     }
-
+    
+    /// When any user in the call initiates screen sharing.
+    /// - Parameters:
+    ///   - callDirection: The direction of the call. Either .outgoing or .incoming.
+    ///   - duration: The duration of the screen share in seconds.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event
     static func screenShare(callDirection: CallDirection, duration: Double, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "calling.screen_share")
         event.attributes = conversation.analyticsAttributes
@@ -83,7 +105,18 @@ extension AnalyticsEvent {
         event.attributes[.screenShareDuration] =  RoundedInt(Int(duration), factor: 6)
         return event
     }
-
+    
+    /// When SE notices that AVS has terminated the call.
+    /// - Parameters:
+    ///   - asVideoCall: Whether the call was started as a video call.
+    ///   - callDirection: The direction of the call. Either .outgoing or .incoming.
+    ///   - callDuration: The duration of the screen share in seconds.
+    ///   - callParticipants: The peak number of participants in the call.
+    ///   - videoEnabled: Whether the video was enabled at least once by any user.
+    ///   - screenShareEnabled: Whether screen sharing was enabled at least once by any user.
+    ///   - callClosedReason: The reason the call ended, according to AVS.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event
     static func endedCall(asVideoCall: Bool,
                           callDirection: CallDirection,
                           callDuration: Double,
