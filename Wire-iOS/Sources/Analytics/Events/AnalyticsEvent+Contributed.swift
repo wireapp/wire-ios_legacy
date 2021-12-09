@@ -20,14 +20,20 @@ import Foundation
 import WireDataModel
 
 extension AnalyticsEvent {
-
+    
+    /// When a contribution is made in a conversation, such as sending a message or starting a call.
+    /// - Parameters:
+    ///   - kind: The type of contribution.
+    ///   - conversation: ZMConversation so we're able to get conversation attributes.
+    /// - Returns: An Analytics Event
     static func contributed(_ kind: ContributionType, in conversation: ZMConversation) -> AnalyticsEvent {
         var event = AnalyticsEvent(name: "contributed")
         event.attributes = conversation.analyticsAttributes
         event.attributes[.contributionType] = kind
         return event
     }
-
+    
+    /// The type of contribution.
     enum ContributionType: String, AnalyticsAttributeValue {
 
         case textMessage = "text"
