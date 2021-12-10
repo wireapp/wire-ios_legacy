@@ -65,7 +65,7 @@ final class ShareContactsViewController: UIViewController {
     var notNowButtonHidden = false
     private(set) var showingAddressBookAccessDeniedViewController = false
 
-    private let notNowButton: UIButton = {
+    private lazy var notNowButton: UIButton = {
         let notNowButton = UIButton(type: .custom)
         notNowButton.titleLabel?.font = UIFont.smallLightFont
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
