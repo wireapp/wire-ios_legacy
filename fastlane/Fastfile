@@ -56,7 +56,6 @@ platform :ios do
         end
     end
 
-
     desc "Build for testing"
     lane :build do |options|
         xcode_version = options[:xcode_version]
@@ -194,6 +193,7 @@ platform :ios do
             skip_app_version_update: true,
             skip_metadata: true,
             skip_screenshots: true,
+            api_key_path: options[:api_key_path]
         )
     end
 
