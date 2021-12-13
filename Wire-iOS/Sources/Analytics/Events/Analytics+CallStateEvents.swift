@@ -53,7 +53,7 @@ extension CallClosedReason: AnalyticsAttributeValue {
 }
 
 extension AnalyticsEvent {
-    
+
     /// AVS receives a request to start an outgoing call.
     /// - Parameters:
     ///   - asVideoCall: Whether the call was started as a video call.
@@ -65,7 +65,7 @@ extension AnalyticsEvent {
         event.attributes[.startedAsVideoCall] = asVideoCall
         return event
     }
-    
+
     /// When SE notices that both sides have joined the call (signalling-wise).
     /// - Parameters:
     ///   - asVideoCall: Whether the call was started as a video call.
@@ -79,7 +79,7 @@ extension AnalyticsEvent {
         event.attributes[.callDirection] = callDirection
         return event
     }
-    
+
     /// When SE notices that AVS has established media.
     /// - Parameters:
     ///   - asVideoCall: Whether the call was started as a video call.
@@ -91,7 +91,7 @@ extension AnalyticsEvent {
         event.attributes[.startedAsVideoCall] = asVideoCall
         return event
     }
-    
+
     /// When any user in the call initiates screen sharing.
     /// - Parameters:
     ///   - callDirection: The direction of the call. Either .outgoing or .incoming.
@@ -105,7 +105,7 @@ extension AnalyticsEvent {
         event.attributes[.screenShareDuration] =  RoundedInt(Int(duration), factor: 6)
         return event
     }
-    
+
     /// When SE notices that AVS has terminated the call.
     /// - Parameters:
     ///   - asVideoCall: Whether the call was started as a video call.

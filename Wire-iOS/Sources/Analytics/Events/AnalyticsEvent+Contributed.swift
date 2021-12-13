@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 
 extension AnalyticsEvent {
-    
+
     /// When a contribution is made in a conversation, such as sending a message or starting a call.
     /// - Parameters:
     ///   - kind: The type of contribution.
@@ -32,7 +32,7 @@ extension AnalyticsEvent {
         event.attributes[.contributionType] = kind
         return event
     }
-    
+
     /// The type of contribution.
     enum ContributionType: String, AnalyticsAttributeValue {
 

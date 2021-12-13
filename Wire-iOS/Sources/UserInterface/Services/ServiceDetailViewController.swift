@@ -197,7 +197,7 @@ final class ServiceDetailViewController: UIViewController {
 
                     switch result {
                     case .success:
-                        
+
                         completion?(.success(conversation: conversation))
                     case .failure(let error):
                         completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))

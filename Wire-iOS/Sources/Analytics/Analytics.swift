@@ -79,12 +79,12 @@ final class Analytics: NSObject {
 }
 
 extension Analytics: AnalyticsType {
-    
+
     func tagEvent(_ event: String) {
         // no-op
         // TODO: [Agis] Delete this
     }
-    
+
     func setPersistedAttributes(_ attributes: [String: NSObject]?, for event: String) {
         // no-op
     }

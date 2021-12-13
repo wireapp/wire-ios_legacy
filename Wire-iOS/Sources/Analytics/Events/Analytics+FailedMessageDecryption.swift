@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 
 extension AnalyticsEvent {
-    
+
     /// When the app discovers it can't decrypt a received message.
     /// - Parameter conversation: ZMConversation so we're able to get conversation attributes.
     /// - Returns: An Analytics Event
