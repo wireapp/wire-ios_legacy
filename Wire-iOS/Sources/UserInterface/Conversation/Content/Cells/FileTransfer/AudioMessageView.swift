@@ -68,7 +68,7 @@ final class AudioMessageView: UIView, TransferView {
 
         return waveformProgressView
     }()
-    
+
     private let loadingView = ThreeDotsLoadingView()
 
     private var allViews: [UIView] = []

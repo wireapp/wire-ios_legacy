@@ -337,8 +337,8 @@
 // Conversation banner
 "conversation.banner.guests" = "**Гости**";
 "conversation.banner.services" = "**Сервисы**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.externals" = "**Внешние**";
+"conversation.banner.remotes" = "**Федеративные пользователи**";
 "conversation.banner.are_present" = "%@ присутствуют";
 "conversation.banner.are_active" = "%@ активны";
 "conversation.banner.separator" = " и ";
