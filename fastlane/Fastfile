@@ -251,7 +251,6 @@ platform :ios do
         sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
     end
 
-
     desc "Upload for internal use"
     lane :upload_app_center do |options|
         build = Build.new(options: options)
