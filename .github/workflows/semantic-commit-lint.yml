@@ -31,7 +31,6 @@ jobs:
             breaking
             build
             ci
-            Chore
             chore
             docs
             feat
