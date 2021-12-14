@@ -112,7 +112,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
 
-    private let buttonStackView: UIStackView = {
+    private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
@@ -124,7 +124,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return stackView
     }()
 
-    private let loginButton: Button = {
+    private lazy var loginButton: Button = {
         let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
@@ -135,7 +135,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let enterpriseLoginButton: Button = {
+    private lazy var enterpriseLoginButton: Button = {
         let button = Button(style: .empty,
                             variant: .light,
                             titleLabelFont: .smallSemiboldFont)
@@ -148,7 +148,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let loginWithEmailButton: Button = {
+    private lazy var loginWithEmailButton: Button = {
         let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
@@ -159,7 +159,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let loginWithSSOButton: Button = {
+    private lazy var loginWithSSOButton: Button = {
         let button = Button(style: .empty, variant: .light, titleLabelFont: .smallSemiboldFont)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
@@ -183,7 +183,7 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
 
-    private let createAccountButton: Button = {
+    private lazy var createAccountButton: Button = {
         let button = Button(style: .empty,
                             variant: .light,
                             titleLabelFont: .smallSemiboldFont)

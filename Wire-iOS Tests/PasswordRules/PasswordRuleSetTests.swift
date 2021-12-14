@@ -50,7 +50,7 @@ class PasswordRuleSetTests: XCTestCase {
 
     // MARK: - Validation
 
-    // @SF.Locking @TSFI.UserInterface
+    // @SF.Locking @TSFI.UserInterface @S0.1
     func testPasswordNotMatchingRuleSet() {
         // Valid
         checkPassword("Passw0rd!", expectedResult: .valid)
@@ -72,7 +72,7 @@ class PasswordRuleSetTests: XCTestCase {
         XCTAssertEqual(defaultRuleSet.validatePassword(password), expectedResult, file: file, line: line)
     }
 
-    // @SF.Locking @TSFI.UserInterface
+    // @SF.Locking @TSFI.UserInterface @S0.1
     func testThatItDetectsDisallowedCharacter() {
         // GIVEN
         let ruleSet = PasswordRuleSet(minimumLength: 8, maximumLength: 120, allowedCharacters: [.asciiPrintable], requiredCharacters: [.digits])
