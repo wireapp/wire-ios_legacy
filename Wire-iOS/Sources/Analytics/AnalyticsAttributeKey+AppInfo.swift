@@ -21,7 +21,9 @@ import WireDataModel
 
 extension AnalyticsAttributeKey {
 
+    /// Which platform the event was generated on.
     static let appName = AnalyticsAttributeKey(rawValue: "app_name")
+    /// The version of the app being used.
     static let appVersion = AnalyticsAttributeKey(rawValue: "app_version")
 
 }

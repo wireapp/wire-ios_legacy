@@ -198,7 +198,6 @@ fileprivate extension BackupViewController {
                 switch backupResult {
                 case .failure(let error):
                     self.presentAlert(for: error)
-                    BackupEvent.exportFailed.track()
                 case .success(let url):
                     self.presentShareSheet(with: url, from: indexPath)
                 }

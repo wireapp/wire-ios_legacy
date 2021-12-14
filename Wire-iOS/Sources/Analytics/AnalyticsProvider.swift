@@ -23,13 +23,11 @@ protocol AnalyticsProvider: AnyObject {
     var isOptedOut: Bool { get set }
     var selfUser: UserType? { get set }
 
+    // TODO: [Agis] Delete this
     /// Record an event with optional attributes.
     func tagEvent(_ event: String, attributes: [String: Any])
 
     func tagEvent(_ event: AnalyticsEvent)
-
-    /// Set a custom dimension
-    func setSuperProperty(_ name: String, value: Any?)
 
     /// Force the AnalyticsProvider to process the queued data immediately
     ///

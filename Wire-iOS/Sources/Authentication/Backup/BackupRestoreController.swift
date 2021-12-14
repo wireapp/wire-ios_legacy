@@ -86,12 +86,10 @@ final class BackupRestoreController: NSObject {
                 }
 
             case .failure(let error):
-                BackupEvent.importFailed.track()
                 self.showRestoreError(error)
                 self.target.isLoadingViewVisible = false
 
             case .success:
-                BackupEvent.importSucceeded.track()
                 self.delegate?.backupResoreControllerDidFinishRestoring(self)
             }
         }
