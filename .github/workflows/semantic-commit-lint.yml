@@ -41,6 +41,19 @@ jobs:
             revert
             style
             test
+            Breaking
+            Build
+            Ci
+            Chore
+            Docs
+            Feat
+            Fix
+            Other
+            Perf
+            Refactor
+            Revert
+            Style
+            Test
           # For work-in-progress PRs you can typically use draft pull requests 
           # from Github. However, private repositories on the free plan don't have 
           # this option and therefore this action allows you to opt-in to using the 
