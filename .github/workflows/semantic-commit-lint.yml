@@ -31,6 +31,7 @@ jobs:
             breaking
             build
             ci
+            Chore
             chore
             docs
             feat
@@ -38,6 +39,7 @@ jobs:
             other
             perf
             refactor
+            Revert
             revert
             style
             test
