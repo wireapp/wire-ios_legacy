@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 
-protocol TeamMemberInviteViewControllerDelegate: class {
+protocol TeamMemberInviteViewControllerDelegate: AnyObject {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)
 }
 

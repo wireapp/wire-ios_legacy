@@ -43,9 +43,9 @@ These differences are:
 ### Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
 
-- OS X 11.4 or newer
-- Xcode 12.4 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
-- Carthage 0.38.0 or newer (https://github.com/Carthage/Carthage)
+- macOS 11.6 (Big Sur) or newer
+- Xcode 13.1 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
+- Carthage 0.38 or newer (https://github.com/Carthage/Carthage)
 
 The setup script will automatically check for you that you satisfy these requirements
 

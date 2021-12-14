@@ -40,7 +40,7 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
     }
 
     // if nil the background color is the default content background color for the theme
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
@@ -58,9 +58,9 @@ final class GroupConversationCell: UICollectionViewCell, Themeable {
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {

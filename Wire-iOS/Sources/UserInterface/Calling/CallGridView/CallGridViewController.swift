@@ -23,7 +23,7 @@ import WireSyncEngine
 import avs
 import DifferenceKit
 
-protocol CallGridViewControllerDelegate: class {
+protocol CallGridViewControllerDelegate: AnyObject {
     func callGridViewController(_ viewController: CallGridViewController, perform action: CallGridAction)
 }
 

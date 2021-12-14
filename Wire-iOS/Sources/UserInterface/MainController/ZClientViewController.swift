@@ -348,7 +348,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = nil
 
         let inbox = ConnectRequestsViewController()
-        pushContentViewController(inbox, focusOnView: focus, animated: animated)
+        pushContentViewController(inbox.wrapInNavigationController(setBackgroundColor: true), focusOnView: focus, animated: animated)
     }
 
     /// Open the user clients detail screen

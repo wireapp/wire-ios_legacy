@@ -17,10 +17,9 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
-protocol CallQualityViewControllerDelegate: class {
+protocol CallQualityViewControllerDelegate: AnyObject {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
@@ -225,7 +224,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
 }
 
-class CallQualityView: UIStackView {
+final class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
     let scoreButton = Button()
     let callback: (Int) -> Void
@@ -262,15 +261,22 @@ class CallQualityView: UIStackView {
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
-        constrain(scoreButton) {scoreButton in
-            scoreButton.width <= 48
-            scoreButton.height == scoreButton.width
-        }
 
         addArrangedSubview(scoreLabel)
         addArrangedSubview(scoreButton)
+
+        createConstraints()
     }
 
+    private func createConstraints() {
+        scoreButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scoreButton.widthAnchor.constraint(lessThanOrEqualToConstant: 48),
+            scoreButton.heightAnchor.constraint(equalTo: scoreButton.widthAnchor)
+        ])
+    }
+
+    @available(*, unavailable)
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

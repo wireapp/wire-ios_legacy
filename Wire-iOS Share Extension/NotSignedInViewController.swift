@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class NotSignedInViewController : UIViewController {
     
@@ -29,6 +28,7 @@ final class NotSignedInViewController : UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,13 +49,22 @@ final class NotSignedInViewController : UIViewController {
         messageLabel.numberOfLines = 0
         
         view.addSubview(messageLabel)
-        
-        constrain(view, messageLabel) { container, messageLabel in
-            messageLabel.edges == container.edgesWithinMargins
-        }
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            messageLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            messageLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
+            messageLabel.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
     
-    @objc func onCloseTapped() {
+    @objc
+    private func onCloseTapped() {
         closeHandler?()
     }
 }

@@ -23,7 +23,7 @@ typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> V
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with table view index bar
 final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
-    var user: UserType? = nil {
+    var user: UserType? {
         didSet {
             avatar.user = user
             updateTitleLabel()
@@ -45,7 +45,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 
     // if nil the background color is the default content background color for the theme
-    var contentBackgroundColor: UIColor? = nil {
+    var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)

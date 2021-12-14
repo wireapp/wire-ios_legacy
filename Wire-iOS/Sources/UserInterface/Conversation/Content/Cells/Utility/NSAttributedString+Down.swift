@@ -27,7 +27,7 @@ extension NSAttributedString {
         let result: NSMutableAttributedString
 
         if let attrStr = try? down.toAttributedString(using: style) {
-            result = NSMutableAttributedString(attributedString: attrStr)
+            result = .init(attributedString: attrStr)
         } else {
             result = NSMutableAttributedString(string: text)
         }
@@ -36,9 +36,12 @@ extension NSAttributedString {
             result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
         }
 
+        guard !result.string.isEmpty else {
+            return .init(string: text)
+        }
+
         return result
     }
-
 }
 
 extension NSAttributedString {

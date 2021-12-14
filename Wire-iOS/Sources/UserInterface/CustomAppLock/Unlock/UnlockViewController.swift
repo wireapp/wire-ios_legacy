@@ -21,7 +21,7 @@ import WireCommonComponents
 import WireDataModel
 import WireSyncEngine
 
-protocol UnlockViewControllerDelegate: class {
+protocol UnlockViewControllerDelegate: AnyObject {
 
     func unlockViewControllerDidUnlock()
 
@@ -115,7 +115,7 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private let wipeButton: UIButton = {
+    private lazy var wipeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)

@@ -30,7 +30,7 @@ enum MediaPlayerState: Int {
     case error
 }
 
-protocol MediaPlayer: class {
+protocol MediaPlayer: AnyObject {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
     var state: MediaPlayerState? { get }
@@ -41,7 +41,7 @@ protocol MediaPlayer: class {
 
 typealias AudioTrackCompletionHandler = (_ loaded: Bool, _ error: Error?) -> Void
 
-protocol AudioTrackPlayerDelegate: class {
+protocol AudioTrackPlayerDelegate: AnyObject {
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?)
     func progressDidChange(_ audioTrackPlayer: AudioTrackPlayer, progress: Double)
 }
