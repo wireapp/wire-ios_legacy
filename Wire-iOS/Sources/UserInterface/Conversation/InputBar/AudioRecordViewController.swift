@@ -313,8 +313,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         if recordingState == .recording {
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
             NSLayoutConstraint.activate(recordingDotViewVisible)
-        }
-        else {
+        } else {
             NSLayoutConstraint.deactivate(recordingDotViewVisible)
             NSLayoutConstraint.activate(recordingDotViewHidden)
         }
