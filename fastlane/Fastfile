@@ -329,7 +329,6 @@ platform :ios do
         end
 
         sh codecov
-
     end
 end
 
