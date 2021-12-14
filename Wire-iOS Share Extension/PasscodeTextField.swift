@@ -24,7 +24,7 @@ protocol PasscodeTextFieldDelegate: AnyObject {
     func textFieldValueChanged(_ value: String?)
 }
 
-class PasscodeTextField: AccessoryTextField {
+final class PasscodeTextField: AccessoryTextField {
     
     // MARK: - Constants
     

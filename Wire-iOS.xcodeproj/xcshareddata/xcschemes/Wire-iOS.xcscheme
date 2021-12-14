@@ -123,6 +123,16 @@
                </Test>
             </SkippedTests>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9802A802768E64F0020AF71"
+               BuildableName = "WireShareExtensionTests.xctest"
+               BlueprintName = "WireShareExtensionTests"
+               ReferencedContainer = "container:Wire-iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

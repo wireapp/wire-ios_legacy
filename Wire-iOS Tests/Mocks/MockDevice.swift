@@ -18,6 +18,7 @@
 
 import Foundation
 @testable import Wire
+import UIKit
 
 final class MockDevice: DeviceProtocol {
     var orientation: UIDeviceOrientation = .unknown

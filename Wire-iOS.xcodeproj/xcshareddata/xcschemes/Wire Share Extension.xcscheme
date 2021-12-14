@@ -52,6 +52,16 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9802A802768E64F0020AF71"
+               BuildableName = "WireShareExtensionTests.xctest"
+               BlueprintName = "WireShareExtensionTests"
+               ReferencedContainer = "container:Wire-iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -84,6 +94,11 @@
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
             value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SNAPSHOT_REFERENCE_DIR"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME) Tests/ReferenceImages"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

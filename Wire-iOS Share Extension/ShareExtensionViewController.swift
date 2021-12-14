@@ -86,7 +86,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
 
     fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .denied
     private var observer: SendableBatchObserver? = nil
-    private weak var progressViewController: SendingProgressViewController? = nil
+    private weak var progressViewController: SendingProgressViewController?
     
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     let stateAccessoryView = ConversationStateAccessoryView()

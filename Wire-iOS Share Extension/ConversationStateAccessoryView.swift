@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireShareEngine
 
-class ConversationStateAccessoryView: UIView {
+final class ConversationStateAccessoryView: UIView {
 
     private let contentStack = UIStackView()
     private let legalHoldImageView = UIImageView()
