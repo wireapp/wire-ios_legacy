@@ -113,8 +113,7 @@ final class EphemeralKeyboardViewController: UIViewController {
         self.conversation = conversation
         if Bundle.developerModeEnabled {
             timeouts = MessageDestructionTimeoutValue.all + [nil]
-        }
-        else {
+        } else {
             timeouts = MessageDestructionTimeoutValue.all
         }
         super.init(nibName: nil, bundle: nil)
@@ -281,8 +280,7 @@ extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDat
         let timeout = timeouts[row]
         if let actualTimeout = timeout, let title = actualTimeout.displayString {
             return title && font && color
-        }
-        else {
+        } else {
             return "Custom" && font && color
         }
     }
@@ -292,8 +290,7 @@ extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDat
 
         if let actualTimeout = timeout {
             delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: actualTimeout.rawValue)
-        }
-        else {
+        } else {
             displayCustomPicker()
         }
     }

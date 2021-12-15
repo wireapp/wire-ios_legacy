@@ -133,44 +133,32 @@ extension StatusMessageType {
         if message.isText, let textMessage = message.textMessageData {
             if textMessage.isMentioningSelf {
                 self = .mention
-            }
-            else if textMessage.isQuotingSelf {
+            } else if textMessage.isQuotingSelf {
                 self = .reply
-            }
-            else if textMessage.linkPreview != nil {
+            } else if textMessage.linkPreview != nil {
                 self = .link
-            }
-            else {
+            } else {
                 self = .text
             }
-        }
-        else if message.isImage {
+        } else if message.isImage {
             self = .image
-        }
-        else if message.isLocation {
+        } else if message.isLocation {
             self = .location
-        }
-        else if message.isAudio {
+        } else if message.isAudio {
             self = .audio
-        }
-        else if message.isVideo {
+        } else if message.isVideo {
             self = .video
-        }
-        else if message.isFile {
+        } else if message.isFile {
             self = .file
-        }
-        else if message.isKnock {
+        } else if message.isKnock {
             self = .knock
-        }
-        else if message.isSystem, let system = message.systemMessageData {
+        } else if message.isSystem, let system = message.systemMessageData {
             if let statusMessageType = StatusMessageType.conversationSystemMessageTypeToStatusMessageType[system.systemMessageType] {
                 self = statusMessageType
-            }
-            else {
+            } else {
                 return nil
             }
-        }
-        else {
+        } else {
             return nil
         }
     }
@@ -394,8 +382,7 @@ final class TypingMatcher: ConversationStatusMatcher {
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
-        }
-        else {
+        } else {
             statusString = "conversation.status.typing".localized && type(of: self).regularStyle
         }
         return statusString
@@ -528,8 +515,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
 
             let resultString = localizedMatchedItems.joined(separator: ", ")
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
-        }
-        else {
+        } else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if $0.senderUser != nil,
                        let type = StatusMessageType(message: $0),
@@ -559,8 +545,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
                     typeSuffix += ".group"
                 }
                 messageDescription = (localizationRootPath + typeSuffix).localized
-            }
-            else {
+            } else {
                 var format = localizationRootPath + "." + localizationKey
 
                 if status.isGroup && type == .missedCall {
@@ -574,8 +559,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
             if status.isGroup && !message.isEphemeral {
                 return (((sender.name ?? "") + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
-            }
-            else {
+            } else {
                 return messageDescription && Swift.type(of: self).regularStyle
             }
         }
@@ -594,8 +578,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
                    let type = StatusMessageType(message: $0),
                    matchedTypesDescriptions[type] != nil {
                     return true
-                }
-                else {
+                } else {
                     return false
                 }
             }),

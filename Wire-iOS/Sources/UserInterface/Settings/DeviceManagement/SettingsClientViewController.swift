@@ -211,8 +211,7 @@ final class SettingsClientViewController: UIViewController,
         case .fingerprintAndVerify:
             if self.userClient == ZMUserSession.shared()?.selfUserClient {
                 return 1
-            }
-            else {
+            } else {
                 return 2
             }
         case .resetSession:
@@ -247,8 +246,7 @@ final class SettingsClientViewController: UIViewController,
                         cell.variant = self.variant
                     return cell
                 }
-            }
-            else {
+            } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).verifiedCellReuseIdentifier, for: indexPath) as? SettingsToggleCell {
                     cell.titleText = NSLocalizedString("device.verified", comment: "")
                     cell.cellNameLabel.accessibilityIdentifier = "device verified label"
