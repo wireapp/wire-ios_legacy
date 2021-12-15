@@ -2072,7 +2072,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "guest_room.link.button.title")
         }
         internal enum Header {
-          /// Invite others with a Link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.
+          /// Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.
           internal static let subtitle = L10n.tr("Localizable", "guest_room.link.header.subtitle")
           /// Guest Links
           internal static let title = L10n.tr("Localizable", "guest_room.link.header.title")
