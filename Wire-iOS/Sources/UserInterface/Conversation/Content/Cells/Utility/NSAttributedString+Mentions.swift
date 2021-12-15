@@ -79,8 +79,7 @@ extension NSMutableAttributedString {
         if user.isSelfUser {
             color = ColorScheme.default.color(named: .textForeground)
             backgroundColor = ColorScheme.default.color(named: .selfMentionHighlight)
-        }
-        else {
+        } else {
             color = .accent()
             backgroundColor = .clear
         }
