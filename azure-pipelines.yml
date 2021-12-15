@@ -75,6 +75,7 @@ steps:
 - script: |
     fastlane post_test
   env:  
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
     DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Post Test"
