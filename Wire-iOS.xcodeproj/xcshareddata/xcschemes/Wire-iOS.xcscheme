@@ -196,7 +196,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-BackendEnvironmentTypeOverrideKey staging"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--persist-backend-type"
