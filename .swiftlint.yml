@@ -13,7 +13,6 @@ disabled_rules:
     - notification_center_detachment
     - discarded_notification_center_observer
     - cyclomatic_complexity
-    - statement_position
     - weak_delegate
     - inclusive_language
     - class_delegate_protocol

@@ -78,8 +78,7 @@ final class SettingsPropertyTests: XCTestCase {
                     expected: true
                 )
             }
-        }
-        else {
+        } else {
             recordFailure(
                 withDescription: "Unable to read property value",
                 inFile: file,

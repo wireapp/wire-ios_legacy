@@ -134,8 +134,7 @@ final class DateFormatterTests: XCTestCase {
         if hour > 12 {
             hour -= 12
             meridiem = "PM"
-        }
-        else if hour == 12 {
+        } else if hour == 12 {
             meridiem = "PM"
         }
 
