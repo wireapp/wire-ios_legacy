@@ -57,8 +57,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         didSet {
             if selectedAudioEffect == .reverse {
                 progressView.samples = normalizedLoudness.reversed()
-            }
-            else {
+            } else {
                 progressView.samples = normalizedLoudness
             }
 
@@ -85,8 +84,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
                     self.playMedia(effectPath)
                 }
-            }
-            else {
+            } else {
                 delegate?.audioEffectsPickerDidPickEffect(self, effect: .none, resultFilePath: recordingPath)
                 playMedia(recordingPath)
             }
@@ -245,8 +243,7 @@ final class AudioEffectsPickerViewController: UIViewController {
             let duration: Int
             if let player = audioPlayerController?.player {
                 duration = Int(ceil(player.duration))
-            }
-            else {
+            } else {
                 duration = Int(ceil(self.duration))
             }
 
@@ -267,8 +264,7 @@ final class AudioEffectsPickerViewController: UIViewController {
         if animated {
             let options: UIView.AnimationOptions = (state == .playing) ? .transitionFlipFromTop : .transitionFlipFromBottom
             UIView.transition(with: statusBoxView, duration: 0.35, options: options, animations: change, completion: .none)
-        }
-        else {
+        } else {
             change()
         }
     }
@@ -298,8 +294,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
             perform(selector, with: .none, afterDelay: 0.05)
-        }
-        else {
+        } else {
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
         }
     }

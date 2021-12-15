@@ -105,8 +105,7 @@ final class AssetCell: UICollectionViewCell {
                 let (seconds, minutes) = (duration % 60, duration / 60)
                 durationView.text = String(format: "%d:%02d", minutes, seconds)
                 durationView.isHidden = false
-            }
-            else {
+            } else {
                 durationView.text = ""
                 durationView.isHidden = true
             }
