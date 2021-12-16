@@ -42,8 +42,7 @@ final class LikeButton: IconButton {
             let prevState: UIControl.State
             if self.isSelected {
                 prevState = .selected
-            }
-            else {
+            } else {
                 prevState = []
             }
 
@@ -77,8 +76,7 @@ final class LikeButton: IconButton {
                         imageView.alpha = 1
                         self.isSelected = selected
                     })
-            }
-            else {
+            } else {
 
                 UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
@@ -95,8 +93,7 @@ final class LikeButton: IconButton {
             }
 
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        }
-        else {
+        } else {
             self.isSelected = selected
         }
     }

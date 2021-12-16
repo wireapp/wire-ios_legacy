@@ -201,8 +201,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let mediaManager = self.mediaManager {
                     return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(0)
                 }
             }
@@ -213,8 +212,7 @@ final class SettingsPropertyFactory {
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
                         var mediaManager = self.mediaManager {
                         mediaManager.intensityLevel = intensivityLevel
-                    }
-                    else {
+                    } else {
                         throw SettingsPropertyError.WrongValue("Cannot use value \(intValue) for AVSIntensivityLevel at \(propertyName)")
                     }
                 default:
@@ -227,8 +225,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableAnalyticsSharing)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(false)
                 }
             }
@@ -248,8 +245,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableCrashSharing)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(false)
                 }
             }

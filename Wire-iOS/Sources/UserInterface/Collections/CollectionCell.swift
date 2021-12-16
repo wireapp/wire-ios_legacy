@@ -83,8 +83,7 @@ class CollectionCell: UICollectionViewCell {
             newFrame.size.width = cachedSize.width
             newFrame.size.height = cachedSize.height
             layoutAttributes.frame = newFrame
-        }
-        else {
+        } else {
             setNeedsLayout()
             layoutIfNeeded()
             var desiredSize = layoutAttributes.size

@@ -113,7 +113,7 @@ class CombinationTestTest: XCTestCase {
         let test = CombinationTest(mutable: BoolPair(first: false, second: false), mutators: [firstMutator, secondMutator])
 
         XCTAssertEqual(test.testAll { (variation) -> (Bool?) in
-            return variation.result.calculate() == variation.combinationChain.reduce(true) { $0 && $1 }
+            return variation.result.calculate() == variation.combinationChain.allSatisfy { $0 }
         }.count, 0)
     }
 }

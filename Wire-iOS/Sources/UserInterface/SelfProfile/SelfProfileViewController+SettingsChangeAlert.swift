@@ -28,8 +28,7 @@ extension SelfProfileViewController {
             self.presentReadReceiptsChangedAlert(with: currentValue)
 
             return true
-        }
-        else {
+        } else {
             return false
         }
     }

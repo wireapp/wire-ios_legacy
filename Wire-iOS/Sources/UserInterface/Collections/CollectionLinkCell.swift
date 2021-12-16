@@ -72,8 +72,7 @@ final class CollectionLinkCell: CollectionCell {
 
         if changeInfo == nil {
             shouldReload = true
-        }
-        else {
+        } else {
             shouldReload = changeInfo!.imageChanged
         }
 
