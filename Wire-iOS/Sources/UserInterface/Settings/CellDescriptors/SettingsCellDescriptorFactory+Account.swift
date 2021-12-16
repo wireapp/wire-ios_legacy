@@ -306,8 +306,7 @@ extension SettingsCellDescriptorFactory {
             presentationAction: {
                 if ZMUser.selfUser().hasValidEmail || ZMUser.selfUser()!.usesCompanyLogin {
                     return BackupViewController.init(backupSource: SessionManager.shared!)
-                }
-                else {
+                } else {
                     let alert = UIAlertController(
                         title: "self.settings.history_backup.set_email.title".localized,
                         message: "self.settings.history_backup.set_email.message".localized,

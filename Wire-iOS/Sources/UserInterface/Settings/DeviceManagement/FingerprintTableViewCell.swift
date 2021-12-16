@@ -118,8 +118,7 @@ final class FingerprintTableViewCell: UITableViewCell {
 
                     fingerprintLabel.attributedText = attributedFingerprint
                     spinner.stopAnimating()
-        }
-        else {
+        } else {
             fingerprintLabel.attributedText = .none
             spinner.startAnimating()
         }
