@@ -139,7 +139,7 @@ final class ConversationTextMessageTests: XCTestCase {
         verify(message: message, waitForTextViewToLoad: true)
     }
 
-    func disabled_testSoundCloudMediaPreviewAttachment() {
+    func testSoundCloudMediaPreviewAttachment() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "https://soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo")
         message.senderUser = mockOtherUser
@@ -150,7 +150,12 @@ final class ConversationTextMessageTests: XCTestCase {
         ]
 
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        let options = XCTExpectedFailure.Options()
+        options.isStrict = false
+        XCTExpectFailure("This test is flaky, may be related to sound cloud preview text view?", options: options) {
+            verify(message: message, waitForTextViewToLoad: true)
+        }
+
     }
 
     func testSoundCloudSetMediaPreviewAttachment() {
