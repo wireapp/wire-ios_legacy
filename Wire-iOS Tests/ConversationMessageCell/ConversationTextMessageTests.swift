@@ -195,5 +195,4 @@ final class ConversationTextMessageTests: XCTestCase {
         // THEN
         verify(message: message)
     }
-
 }
