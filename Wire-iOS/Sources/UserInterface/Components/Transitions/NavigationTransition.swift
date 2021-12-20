@@ -76,10 +76,10 @@ final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitionin
                           animations: {
             fromView.transform = fromViewEndTransform
             toView.transform = .identity
-        }) { _ in
+        }, completion: { _ in
             fromView.transform = .identity
             transitionContext.completeTransition(true)
-        }
+        })
     }
 
     private var rightToLeft: Bool {

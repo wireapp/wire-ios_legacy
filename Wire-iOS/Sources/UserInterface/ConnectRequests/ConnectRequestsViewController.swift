@@ -85,8 +85,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { _ in
             self.tableView.reloadData()
-        }) { _ in
-        }
+        }, completion: { _ in
+        })
 
         super.viewWillTransition(to: size, with: coordinator)
     }

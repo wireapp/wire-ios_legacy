@@ -58,9 +58,9 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView?.alpha = 0
                 fromView?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            }) { _ in
+            }, completion: { _ in
                 fromView?.transform = .identity
-            }
+            })
 
             toView?.alpha = 0
             toView?.transform = CGAffineTransform(scaleX: 2, y: 2)
@@ -68,9 +68,9 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 toView?.alpha = 1
                 toView?.transform = .identity
-            }) { _ in
+            }, completion: { _ in
                 transitionContext.completeTransition(true)
-            }
+            })
         } else {
 
             if let frame = fromView?.frame {
@@ -81,9 +81,9 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView?.alpha = 0
                 fromView?.transform = CGAffineTransform(scaleX: 2, y: 2)
-            }) { _ in
+            }, completion: { _ in
                 fromView?.transform = .identity
-            }
+            })
 
             if let frame = toView?.frame {
                 toView?.layer.anchorPoint = interactionPoint
@@ -96,9 +96,9 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             UIView.animate(easing: .easeOutExpo, duration: 0.35, delayTime: 0.3, animations: {
                 toView?.alpha = 1
                 toView?.transform = .identity
-            }) { _ in
+            }, completion: { _ in
                 transitionContext.completeTransition(true)
-            }
+            })
         }
     }
 }
