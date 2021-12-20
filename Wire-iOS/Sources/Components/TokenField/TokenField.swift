@@ -517,9 +517,7 @@ final class TokenField: UIView {
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = UIColor.clear
-        if #available(iOS 11, *) {
-            textView.textDragInteraction?.isEnabled = false
-        }
+        textView.textDragInteraction?.isEnabled = false
         addSubview(textView)
 
         toLabel.translatesAutoresizingMaskIntoConstraints = false

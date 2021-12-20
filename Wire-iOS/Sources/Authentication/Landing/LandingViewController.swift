@@ -286,9 +286,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }
 
     private func configureSubviews() {
-        if #available(iOS 11, *) {
-            additionalSafeAreaInsets.top = -44
-        }
+        additionalSafeAreaInsets.top = -44
 
         topStack.addArrangedSubview(logoView)
 
