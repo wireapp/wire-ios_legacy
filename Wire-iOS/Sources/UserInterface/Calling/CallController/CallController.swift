@@ -33,7 +33,7 @@ final class CallController: NSObject {
         return callConversationProvider?.priorityCallConversation
     }
 
-    private var dateOfLastErrorAlertByConversationId = [UUID: Date]()
+    private var dateOfLastErrorAlertByConversationId = [AVSIdentifier: Date]()
     private var alertDebounceInterval: TimeInterval { 15 * .oneMinute  }
 
     // MARK: - Init
@@ -159,7 +159,7 @@ extension CallController: ActiveCallViewControllerDelegate {
 
 // MARK: - WireCallCenterCallErrorObserver
 extension CallController: WireCallCenterCallErrorObserver {
-    func callCenterDidReceiveCallError(_ error: CallError, conversationId: UUID) {
+    func callCenterDidReceiveCallError(_ error: CallError, conversationId: AVSIdentifier) {
         guard
             error == .unknownProtocol,
             shouldDisplayErrorAlert(for: conversationId)
@@ -171,7 +171,7 @@ extension CallController: WireCallCenterCallErrorObserver {
         router?.presentUnsupportedVersionAlert()
     }
 
-    private func shouldDisplayErrorAlert(for conversation: UUID) -> Bool {
+    private func shouldDisplayErrorAlert(for conversation: AVSIdentifier) -> Bool {
            guard let dateOfLastErrorAlert = dateOfLastErrorAlertByConversationId[conversation] else {
                return true
            }

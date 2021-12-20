@@ -28,7 +28,7 @@ extension AVSVideoView: AVSIdentifierProvider {
 
     var stream: Stream {
         return Stream(
-            streamId: AVSClient(userId: UUID(uuidString: userid)!, clientId: clientid),
+            streamId: AVSClient(userId: AVSIdentifier.from(string: userid), clientId: clientid),
             user: nil,
             microphoneState: .unmuted,
             videoState: .none,
