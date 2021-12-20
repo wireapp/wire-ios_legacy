@@ -147,6 +147,10 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     private func setupRecognizer() {
         revealDrawerGestureRecognizer.delegate = self
         revealDrawerGestureRecognizer.delaysTouchesEnded = false
@@ -206,7 +210,6 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
                 separatorLine.alpha = 0.0
                 setVisualDrawerOffset(0, updateUI: false)
-                NotificationCenter.default.removeObserver(self)
             } else {
                 if visualDrawerOffset > drawerWidth / CGFloat(2) {
                     openedFeedbackGenerator.impactOccurred()

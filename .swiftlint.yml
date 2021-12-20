@@ -10,7 +10,6 @@ disabled_rules:
     - todo
     - large_tuple
     - unused_setter_value
-    - notification_center_detachment
     - discarded_notification_center_observer
     - cyclomatic_complexity
     - weak_delegate
