@@ -42,12 +42,15 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         mockUser1 = MockUser.mockUsers()[0]
         mockUser1.remoteIdentifier = avsId1.identifier
         mockUser1.name = "bob"
+        mockUser1.domain = avsId1.domain
         mockUser2 = MockUser.mockUsers()[1]
         mockUser2.remoteIdentifier = avsId2.identifier
         mockUser2.name = "Alice"
+        mockUser2.domain = avsId2.domain
         mockUser3 = MockUser.mockUsers()[2]
         mockUser3.remoteIdentifier = avsId3.identifier
         mockUser3.name = "Cate"
+        mockUser3.domain = avsId3.domain
 
         let userClient = MockUserClient()
         userClient.remoteIdentifier = selfClientId
