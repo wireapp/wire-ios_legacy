@@ -1,5 +1,5 @@
 github "wireapp/wire-ios-ziphy" ~> 17.1.0
-github "wireapp/wire-ios-sync-engine" ~> 404.2.0
+github "wireapp/wire-ios-sync-engine" "feature/avs-qualified-ids-support-FS-12"
 github "wireapp/wire-ios-share-engine" ~> 238.2.0
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 14.0.2
