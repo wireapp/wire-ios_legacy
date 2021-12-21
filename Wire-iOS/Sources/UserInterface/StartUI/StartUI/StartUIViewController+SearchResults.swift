@@ -116,8 +116,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
             self.navigationController?.pushViewController(avoiding, animated: true) {
             }
-        }
-        else {
+        } else {
             let embeddedNavigationController = controller.wrapInNavigationController()
             embeddedNavigationController.modalPresentationStyle = .formSheet
             self.present(embeddedNavigationController, animated: true)

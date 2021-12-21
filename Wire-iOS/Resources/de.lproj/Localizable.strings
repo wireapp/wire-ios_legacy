@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Überprüft";
 "conversation.input_bar.placeholder" = "Eine Nachricht schreiben";
-"conversation.input_bar.placeholder_ephemeral" = "Temporäre Nachricht";
+"conversation.input_bar.placeholder_ephemeral" = "Selbstlöschende Nachricht";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Zum Senden tippen";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
-"conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
+"conversation.input_bar.shortcut.newline" = "Zeilenumbruch Einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Vorherige Erwähnung auswählen";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Gäste** anwesend";
-"conversation.banner.services_present" = "**Dienste** aktiv";
-"conversation.banner.externals_present" = "**Externe** anwesend";
-"conversation.banner.guests_services_present" = "**Gäste** anwesend, **Dienste** aktiv";
-"conversation.banner.externals_services_present" = "**Externe** anwesend, **Dienste** aktiv";
-"conversation.banner.externals_guests_present" = "**Externe** und **Gäste** anwesend";
-"conversation.banner.externals_guests_services_present" = "**Externe** und **Gäste** anwesend, **Dienste** aktiv";
+"conversation.banner.guests" = "**Gäste**";
+"conversation.banner.services" = "**Dienste**";
+"conversation.banner.externals" = "**Externe**";
+"conversation.banner.remotes" = "**Föderierte Nutzer**";
+"conversation.banner.are_present" = "%@ sind anwesend";
+"conversation.banner.are_active" = "%@ sind aktiv";
+"conversation.banner.separator" = "  und ";
 
 "conversation.action.search" = "Suche";
 
@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ haben das Gespräch verlassen";
 "content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
+"content.system.conversation.guest.you_joined" = "Sie sind beigetreten";
 
 "content.system.conversation.invite.title" = "Dienste und Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
 "content.system.conversation.invite.button" = "Personen einladen";
@@ -620,9 +621,12 @@
 
 "connection_request_pending_title" = "Kontaktanfrage";
 "connection_request.send_button_title" = "Kontaktanfrage";
+"inbox.title" = "Kontaktanfragen";
 "inbox.connection_request.connect_button_title" = "Verbinden";
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
+"error.connection.title" = "Fehler";
 "error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
+"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -647,9 +651,9 @@
 "voice.accept_button.title" = "Annehmen";
 "voice.decline_button.title" = "Ablehnen";
 "voice.hang_up_button.title" = "Beenden";
-"voice.mute_button.title" = "Stumm";
-"voice.video_button.title" = "Video";
-"voice.flip_video_button.title" = "Wechseln";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
+"voice.flip_video_button.title" = "Kamera wechseln";
 "voice.speaker_button.title" = "Lautsprecher";
 "voice.cancel_button.title" = "Abbrechen";
 "voice.call_button.title" = "Anruf";
@@ -681,7 +685,7 @@
 "call.status.constant_bitrate" = "Konstante Bitrate";
 "call.status.variable_bitrate" = "Variable Bitrate";
 
-"call.participants.show_all" = "Alle anzeigen (%@)";
+"call.participants.show_all" = "Teilnehmer (%d)";
 "call.participants.list.title" = "Teilnehmer";
 
 "call.overlay.switch_to.speakers" = "SPRECHER";
@@ -691,6 +695,7 @@
 
 "call.grid.hints.fullscreen" = "Für Vollbildmodus auf eine Kachel doppeltippen";
 "call.grid.hints.go_back_or_zoom" = "Zum Zurückgehen doppeltippen, zum Zoomen auf- und zuziehen";
+"call.grid.hints.go_back" = "Zum Zurückgehen doppeltippen";
 "call.grid.hints.zoom" = "Zum Zoomen auf- und zuziehen";
 
 "call.video.paused" = "Video wurde angehalten";
@@ -879,6 +884,7 @@
 "profile.details.guest" = "Gast";
 "profile.details.group_admin" = "Gruppen-Admin";
 "profile.details.partner" = "extern";
+"profile.details.federated" = "Föderiert";
 "profile.details.blocking_reason" = "Dieser Nutzer ist aufgrund der gesetzlichen Aufbewahrung gesperrt. [MEHR ERFAHREN](%@)";
 
 "profile_view.accessibility.handle" = "Benutzername";
@@ -917,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Gäste und Dienste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.timeout_options_cell.title" = "Temporäre Nachrichten";
+"group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
 "group_details.notification_options_cell.title" = "Benachrichtigungen";
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine Ihrer Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
@@ -931,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Personen, die der gesetzlichen Aufbewahrung unterliegen";
 "legalhold.header.title" = "Gesetzliche Aufbewahrung";
-"legalhold.header.other_description" = "Die gesetzlichen Aufbewahrung wurde für mindestens eine Person dieser Unterhaltung aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.";
-"legalhold.header.self_description" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+"legalhold.header.other_description" = "Die gesetzlichen Aufbewahrung wurde für mindestens eine Person dieser Unterhaltung aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.";
+"legalhold.header.self_description" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. \nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.\n    ";
 "legalhold.accessibility" = "Details zur gesetzlichen Aufbewahrung";
 
 
@@ -1007,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Benutzername";
 "self.settings.account_section.add_handle.title" = "Benutzernamen hinzufügen";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Mit diesen Angaben kann man Sie finden.";
 "self.settings.account_details_group.personal.footer" = "Diese Informationen sind nicht sichtbar.";
@@ -1126,7 +1134,7 @@
 "self.settings.callkit.description" = "Anrufe über Wire auf dem Sperrbildschirm und im iOS-Anrufverlauf anzeigen. Wenn iCloud aktiviert ist, wird der Anrufverlauf mit Apple geteilt.";
 
 "self.settings.vbr.title" = "Codierung mit variabler Bitrate";
-"self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
+"self.settings.vbr.description" = "Anrufe benötigen hierbei weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Schalten Sie diese Option aus, um die Kodierung mit konstanter Bitrate (CBR) zu verwenden. Diese Einstellung wirkt sich nur auf Einzelgespräche aus; Telefonkonferenzen verwenden immer CBR-Kodierung.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Anruf";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Nachricht";
@@ -1619,6 +1627,8 @@
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
 "error.conversation.offline" = "Es scheint ein Problem mit der Internetverbindung zu geben. Bitte stellen Sie sicher, dass sie funktioniert.";
 "error.conversation.missing_legalhold_consent" = "Aufgrund der gesetzlichen Aufbewahrung können nur Team-Mitglieder zu dieser Unterhaltung hinzugefügt werden.";
+"error.message.send.missing_legalhold_consent" = "Sie können diese Nachricht nicht senden, weil Sie mindestens ein veraltetes Gerät haben, das die gesetzliche Aufbewahrung nicht unterstützt. Bitte aktualisieren Sie all Ihre Geräte oder entfernen Sie sie in den App-Einstellungen.";
+"error.message.send.title" = "Nachrichten können nicht gesendet werden";
 
 "sketchpad.initial_hint" = "Tippen Sie auf Farben, um die Pinselgröße zu ändern";
 
@@ -1631,12 +1641,45 @@
 "push.notification.new_message" = "Neue Nachricht";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Aktualisierung erforderlich";
 "force.update.message" = "Sie verpassen neue Funktionen.\nLaden Sie die neueste Version von Wire herunter.";
 "force.update.ok_button" = "Zum App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "Es gab eine Änderung bei Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
+"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
+"feature_config.file_sharing_restrictions.file" = "Empfang von Dateien ist verboten";
+"feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern ist verboten";
+"feature_config.file_sharing_restrictions.video" = "Empfang von Videos ist verboten";
+"feature_config.file_sharing_restrictions.audio" = "Empfang von Audiodateien ist verboten";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise-Abo";
+"feature_config.update.conference_calling.alert.message" = "Ihr Team nutzt jetzt das Enterprise-Abo. Dadurch haben Sie nun Zugriff auf Funktionen wie das Starten von Telefonkonferenzen.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Erfahren Sie mehr über das Enterprise-Abo";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Auf Enterprise upgraden";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Ihr Team nutzt derzeit das kostenlose Basis-Abo. Upgraden Sie auf Enterprise für den Zugriff auf weitere Funktionen wie das Starten von Telefonkonferenzen.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Erfahren Sie mehr über Wires Preise";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Jetzt upgraden";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Funktion nicht verfügbar";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Um eine Telefonkonferenz zu starten, muss Ihr Team auf das Enterprise-Abo upgraden.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Funktion nicht verfügbar";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Die Option, eine Telefonkonferenz zu starten, ist nur in der kostenpflichtigen Version verfügbar.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Selbstlöschende Nachrichten sind deaktiviert.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Selbstlöschende Nachrichten sind aktiviert. Sie können einen Timer setzen, bevor Sie eine Nachricht schreiben.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Selbstlöschende Nachrichten sind ab jetzt verbindlich. Neue Nachrichten werden nach %@ gelöscht.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
 "jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";
 
@@ -1804,14 +1847,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Genehmigung ausstehend.";
 "legalhold_request.alert.title" = "Gesetzliche Aufbewahrung ersucht";
-"legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und temporärer Nachrichten in allen Unterhaltungen.";
+"legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten in allen Unterhaltungen.";
 "legalhold_request.alert.detail.enter_password" = "Bitte zur Bestätigung das Passwort eingeben.";
 "legalhold_request.alert.error_wrong_password" = "Falsches Passwort";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Gesetzliche Aufbewahrung ist aktiv";
 "legalhold_active.alert.learn_more" = "Mehr erfahren";
-"legalhold_active.alert.message" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. Alle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\n\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+"legalhold_active.alert.message" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. Alle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und selbstlöschender Nachrichten.\n\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.\n    ";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
@@ -1887,3 +1930,9 @@
 "appLockModule.message.passcodeUnavailable" = "Um Wire zu entsperren, Kennwort in den Geräteeinstellungen aktivieren";
 "appLockModule.unlockButton.title" = "Entsperren";
 "appLockModule.goToSettingsButton.title" = "Einstellungen öffnen";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Nach Unten Scrollen";
+"keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
+"keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
+"keyboardshortcut.openPeople" = "Kontakte";

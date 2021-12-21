@@ -59,11 +59,12 @@ final class SearchResultsView: UIView {
                                                object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         emptyResultContainer.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -119,8 +120,7 @@ final class SearchResultsView: UIView {
                     accessoryView.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
                     accessoryView.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor)
                 ])
-            }
-            else {
+            } else {
                 accessoryContainerHeightConstraint?.isActive = true
             }
 

@@ -26,11 +26,11 @@ import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-protocol AudioRecordBaseViewController: class {
+protocol AudioRecordBaseViewController: AnyObject {
     var delegate: AudioRecordViewControllerDelegate? { get set }
 }
 
-protocol AudioRecordViewControllerDelegate: class {
+protocol AudioRecordViewControllerDelegate: AnyObject {
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType)
@@ -313,8 +313,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         if recordingState == .recording {
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
             NSLayoutConstraint.activate(recordingDotViewVisible)
-        }
-        else {
+        } else {
             NSLayoutConstraint.deactivate(recordingDotViewVisible)
             NSLayoutConstraint.activate(recordingDotViewHidden)
         }

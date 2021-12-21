@@ -69,7 +69,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusBlocked() {
         // GIVEN
         let sut = self.otherUserConversation!
-        self.otherUser.block()
+        self.otherUser.connection?.status = .blocked
 
         // WHEN
         let status = sut.status.description(for: sut)

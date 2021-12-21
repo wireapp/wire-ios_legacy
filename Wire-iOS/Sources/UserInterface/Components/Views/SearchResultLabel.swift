@@ -63,7 +63,8 @@ final public class SearchResultLabel: UILabel, Copyable {
         textColor = .from(scheme: .textForeground)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder:) is not implemented")
     }
 
@@ -105,16 +106,14 @@ final public class SearchResultLabel: UILabel, Copyable {
                                                                              with: highlightedAttributes,
                                                                              upToWidth: self.bounds.width,
                                                                              totalMatches: &estimatedMatchesCount)
-            }
-            else {
+            } else {
                 self.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: self.bounds.width)
                     .highlightingAppearances(of: queries,
                                              with: highlightedAttributes,
                                              upToWidth: self.bounds.width,
                                              totalMatches: &estimatedMatchesCount)
             }
-        }
-        else {
+        } else {
             self.attributedText = attributedText
         }
     }

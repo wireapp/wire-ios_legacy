@@ -22,7 +22,7 @@ import WireDataModel
 import WireSyncEngine
 import avs
 
-protocol CallTopOverlayControllerDelegate: class {
+protocol CallTopOverlayControllerDelegate: AnyObject {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)
 }
 
@@ -55,6 +55,7 @@ final class CallTopOverlayController: UIViewController {
             super.init(frame: .zero)
         }
 
+        @available(*, unavailable)
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -163,7 +164,7 @@ final class CallTopOverlayController: UIViewController {
     private var displayMuteIcon: Bool = false {
         didSet {
             if displayMuteIcon {
-                muteIcon.setIcon(.microphoneWithStrikethrough, size: 12, color: .white)
+                muteIcon.setIcon(.microphoneOff, size: 12, color: .white)
                 muteIconWidth?.constant = 12
             } else {
                 muteIcon.image = nil
@@ -186,8 +187,7 @@ final class CallTopOverlayController: UIViewController {
     private func startCallDurationTimer() {
         stopCallDurationTimer()
 
-        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) {
-            [weak self] _ in
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.updateCallDuration()
         }
     }

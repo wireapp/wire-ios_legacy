@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 import WireCommonComponents
@@ -88,6 +87,7 @@ final class VideoMessageView: UIView, TransferView {
         layoutIfNeeded()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

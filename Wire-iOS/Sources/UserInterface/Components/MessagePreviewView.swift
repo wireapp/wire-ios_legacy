@@ -32,8 +32,7 @@ extension ZMConversationMessage {
     func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
             return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
-        }
-        else {
+        } else {
             return MessagePreviewView(message: self, displaySender: shouldDisplaySender)
         }
     }
@@ -106,12 +105,16 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         imagePreview.clipsToBounds = true
         imagePreview.contentMode = .scaleAspectFill
         imagePreview.imageSizeLimit = .maxDimensionForShortSide(MessageThumbnailPreviewView.thumbnailSize * UIScreen.main.scale)
         imagePreview.layer.cornerRadius = 4
+        imagePreview.isAccessibilityElement = true
+        imagePreview.accessibilityIdentifier = "ThumbnailImage_ReplyPreview"
 
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
@@ -148,37 +151,36 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
             return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
-        }
-        else {
+        } else {
             return NSAttributedString()
         }
     }
 
     private func updateForMessage() {
+        typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
+        imagePreview.isHidden = message.isRestricted
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
                                                              .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
             let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.image".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             if let imageResource = message.imageMessageData?.image {
                 imagePreview.setImageResource(imageResource)
             }
-        }
-        else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .videoCall, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.video".localized.localizedUppercase
+        } else if message.isVideo, let fileMessageData = message.fileMessageData {
+            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             imagePreview.setImageResource(fileMessageData.thumbnailImage)
-        }
-        else {
+        } else {
             fatal("Unknown message for preview: \(message)")
         }
     }
@@ -187,6 +189,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         updateForMessage()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -246,6 +249,8 @@ final class MessagePreviewView: UIView, Themeable {
             senderLabel.font = .mediumSemiboldFont
             senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            senderLabel.isAccessibilityElement = true
+            senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
 
         allViews.prepareForLayout()
@@ -276,8 +281,7 @@ final class MessagePreviewView: UIView, Themeable {
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
             return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
-        }
-        else {
+        } else {
             return NSAttributedString()
         }
     }
@@ -290,19 +294,16 @@ final class MessagePreviewView: UIView, Themeable {
 
         if let textMessageData = message.textMessageData {
             contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true, variant: colorSchemeVariant)
-        }
-        else if let location = message.locationMessageData {
+        } else if let location = message.locationMessageData {
 
             let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
-        }
-        else if message.isAudio {
+        } else if message.isAudio {
             let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
-        }
-        else if let fileData = message.fileMessageData {
+        } else if let fileData = message.fileMessageData {
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
@@ -313,6 +314,7 @@ final class MessagePreviewView: UIView, Themeable {
         updateForMessage()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

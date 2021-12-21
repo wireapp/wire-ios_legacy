@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ThreeDotsLoadingViewTests: ZMSnapshotTestCase {
+final class ThreeDotsLoadingViewTests: ZMSnapshotTestCase {
 
     var sut: ThreeDotsLoadingView!
 

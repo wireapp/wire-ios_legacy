@@ -17,9 +17,8 @@
 //
 
 import UIKit
-import Cartography
 
-protocol TabBarControllerDelegate: class {
+protocol TabBarControllerDelegate: AnyObject {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 
@@ -102,6 +101,7 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

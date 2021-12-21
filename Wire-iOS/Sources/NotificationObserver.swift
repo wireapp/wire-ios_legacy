@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 // MARK: - ObserverTokenStore
 protocol ObserverTokenStore: AnyObject {

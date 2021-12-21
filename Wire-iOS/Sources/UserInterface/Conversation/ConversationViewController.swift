@@ -24,6 +24,19 @@ final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
     private let visibleMessage: ZMConversationMessage?
 
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.scrollToBottom),
+            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.searchInConversation),
+            UIKeyCommand(input: "i", modifierFlags: [.command], action: #selector(titleViewTapped), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.conversationDetail)
+        ]
+    }
+
+    @objc
+    func gotoBottom(_: Any?) {
+        contentViewController.tableView.scrollToBottom(animated: true)
+    }
+
     var conversation: ZMConversation {
         didSet {
             if oldValue == conversation {
@@ -74,10 +87,7 @@ final class ConversationViewController: UIViewController {
             break
         }
 
-        let _participantsController = viewController?.wrapInNavigationController()
-
-        return _participantsController
-
+        return viewController?.wrapInNavigationController(setBackgroundColor: true)
     }
 
     required init(session: ZMUserSessionInterface,
@@ -165,15 +175,19 @@ final class ConversationViewController: UIViewController {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         outgoingConnectionViewController.buttonCallback = { [weak self] action in
-            self?.session.enqueue({
-                switch action {
-                case .cancel:
-                    self?.conversation.connectedUser?.cancelConnectionRequest()
-                case .archive:
-                    self?.conversation.isArchived = true
-                }
-            })
 
+            switch action {
+            case .cancel:
+                self?.conversation.connectedUser?.cancelConnectionRequest(completion: { (error) in
+                    if let error = error as? LocalizedError {
+                        self?.presentLocalizedErrorAlert(error)
+                    }
+                })
+            case .archive:
+                self?.session.enqueue({
+                    self?.conversation.isArchived = true
+                })
+            }
             self?.openConversationList()
         }
     }
@@ -310,12 +324,17 @@ final class ConversationViewController: UIViewController {
         view.setNeedsLayout()
     }
 
+    @objc
+    private func titleViewTapped() {
+        if let superview = titleView.superview,
+            let participantsController = participantsController {
+            presentParticipantsViewController(participantsController, from: superview)
+        }
+    }
+
     private func setupNavigatiomItem() {
         titleView.tapHandler = { [weak self] _ in
-            if let superview = self?.titleView.superview,
-                let participantsController = self?.participantsController {
-                self?.presentParticipantsViewController(participantsController, from: superview)
-            }
+            self?.titleViewTapped()
         }
         titleView.configure()
 
@@ -372,7 +391,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
 // MARK: - ZMConversationObserver
 
 extension ConversationViewController: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
+    func conversationDidChange(_ note: ConversationChangeInfo) {
         if note.causedByConversationPrivacyChange {
             presentPrivacyWarningAlert(for: note)
         }
@@ -407,14 +426,14 @@ extension ConversationViewController: ZMConversationObserver {
 // MARK: - ZMConversationListObserver
 
 extension ConversationViewController: ZMConversationListObserver {
-    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+    func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateLeftNavigationBarItems()
         if changeInfo.deletedObjects.contains(conversation) {
             ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
         }
     }
 
-    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
 }
@@ -480,4 +499,44 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
             self.conversation.draftMessage = message
         }
     }
+
+    var collectionsBarButtonItem: UIBarButtonItem {
+        let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
+        let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
+        let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
+        button.accessibilityIdentifier = "collection"
+        button.accessibilityLabel = "conversation.action.search".localized
+
+        if showingSearchResults {
+            button.tintColor = UIColor.accent()
+        }
+
+        return button
+    }
+
+    @objc
+    private func onCollectionButtonPressed(_ sender: AnyObject?) {
+        if collectionController == .none {
+            let collections = CollectionsViewController(conversation: conversation)
+            collections.delegate = self
+
+            collections.onDismiss = { [weak self] _ in
+                guard let weakSelf = self else {
+                    return
+                }
+
+                weakSelf.collectionController?.dismiss(animated: true)
+            }
+            collectionController = collections
+        } else {
+            collectionController?.refetchCollection()
+        }
+
+        collectionController?.shouldTrackOnNextOpen = true
+
+        let navigationController = KeyboardAvoidingViewController(viewController: collectionController!).wrapInNavigationController(setBackgroundColor: true)
+
+        ZClientViewController.shared?.present(navigationController, animated: true)
+    }
+
 }

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 
@@ -37,6 +36,7 @@ final class CollectionCellHeader: UIView {
         }
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
@@ -44,17 +44,18 @@ final class CollectionCellHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.dateLabel)
+        addSubview(nameLabel)
+        addSubview(dateLabel)
 
-        constrain(self, self.nameLabel, self.dateLabel) { selfView, nameLabel, dateLabel in
-            nameLabel.leading == selfView.leading
-            nameLabel.trailing <= dateLabel.leading
-            dateLabel.trailing == selfView.trailing
-            nameLabel.top == selfView.top
-            nameLabel.bottom == selfView.bottom
-            dateLabel.centerY == nameLabel.centerY
-        }
+        [nameLabel, dateLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+          nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: dateLabel.leadingAnchor),
+          dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+          nameLabel.topAnchor.constraint(equalTo: topAnchor),
+          nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+          dateLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
+        ])
     }
 
     var nameLabel: UILabel = {

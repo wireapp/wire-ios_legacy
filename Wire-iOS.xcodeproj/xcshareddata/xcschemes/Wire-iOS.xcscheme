@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1240"
+   LastUpgradeVersion = "1310"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -208,6 +208,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ConsoleAnalytics"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-FederationEnabled 1"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

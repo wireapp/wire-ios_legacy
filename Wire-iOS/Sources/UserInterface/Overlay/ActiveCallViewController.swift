@@ -24,7 +24,7 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "calling")
 
-protocol ActiveCallViewControllerDelegate: class {
+protocol ActiveCallViewControllerDelegate: AnyObject {
     func activeCallViewControllerDidDisappear(_ activeCallViewController: ActiveCallViewController,
                                               for conversation: ZMConversation?)
 }
@@ -51,6 +51,7 @@ final class ActiveCallViewController: UIViewController {
         zmLog.debug(String(format: "Presenting CallViewController: %p", visibleVoiceChannelViewController))
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -85,10 +86,6 @@ final class ActiveCallViewController: UIViewController {
 
     override var childForStatusBarHidden: UIViewController? {
         return visibleVoiceChannelViewController
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
     }
 
     func updateVisibleVoiceChannelViewController() {

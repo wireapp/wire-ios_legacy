@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 import WireSyncEngine
 
-protocol BackupRestoreControllerDelegate: class {
+protocol BackupRestoreControllerDelegate: AnyObject {
     func backupResoreControllerDidFinishRestoring(_ controller: BackupRestoreController)
 }
 

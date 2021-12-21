@@ -33,8 +33,6 @@ class MockUserType: NSObject, UserType, Decodable {
         initials = try? container.decode(String.self, forKey: .initials)
         handle = try? container.decode(String.self, forKey: .handle)
         isConnected = (try? container.decode(Bool.self, forKey: .isConnected)) ?? false
-        connectionRequestMessage = try? container.decode(String.self, forKey: .connectionRequestMessage)
-
         if let rawAccentColorValue = try? container.decode(Int16.self, forKey: .accentColorValue),
            let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue) {
             self.accentColorValue = accentColorValue
@@ -49,6 +47,7 @@ class MockUserType: NSObject, UserType, Decodable {
     let legalHoldDataSource = MockLegalHoldDataSource()
 
     var teamIdentifier: UUID?
+    var remoteIdentifier: UUID?
 
     var canLeaveConversation = false
     var canCreateConversation = true
@@ -135,8 +134,6 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Connections
 
-    var connectionRequestMessage: String?
-
     var canBeConnected: Bool = false
 
     var isConnected: Bool = false
@@ -151,17 +148,21 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isPendingApprovalByOtherUser: Bool = false
 
-    func accept() {
+    func accept(completion: @escaping (Error?) -> Void) {
         isBlocked = false
     }
 
-    func block() {
+    func block(completion: @escaping (Error?) -> Void) {
         isBlocked = true
     }
 
-    func ignore() { }
+    func ignore(completion: @escaping (Error?) -> Void) {
 
-    func cancelConnectionRequest() { }
+    }
+
+    func cancelConnectionRequest(completion: @escaping (Error?) -> Void) {
+
+    }
 
     // MARK: - Wireless
 
@@ -257,7 +258,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Methods
 
-    func connect(message: String) {
+    func connect(completion: @escaping (Error?) -> Void) {
         // No op
     }
 

@@ -19,7 +19,7 @@
 import WireSyncEngine
 import UIKit
 
-protocol ReplyComposingViewDelegate: class {
+protocol ReplyComposingViewDelegate: AnyObject {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }
@@ -31,23 +31,17 @@ fileprivate extension ZMConversationMessage {
 
         if let textData = textMessageData {
             contentDescriptionText = textData.messageText ?? ""
-        }
-        else if isImage {
+        } else if isImage {
             contentDescriptionText = "conversation.input_bar.message_preview.accessibility.image_message".localized
-        }
-        else if let locationData = locationMessageData {
+        } else if let locationData = locationMessageData {
             contentDescriptionText = locationData.name ?? "conversation.input_bar.message_preview.accessibility.location_message".localized
-        }
-        else if isVideo {
+        } else if isVideo {
             contentDescriptionText = "conversation.input_bar.message_preview.accessibility.video_message".localized
-        }
-        else if isAudio {
+        } else if isAudio {
             contentDescriptionText = "conversation.input_bar.message_preview.accessibility.audio_message".localized
-        }
-        else if let fileData = fileMessageData {
+        } else if let fileData = fileMessageData {
             contentDescriptionText = String(format: "conversation.input_bar.message_preview.accessibility.file_message".localized, fileData.filename ?? "")
-        }
-        else {
+        } else {
             contentDescriptionText = "conversation.input_bar.message_preview.accessibility.unknown_message".localized
         }
 
@@ -76,6 +70,7 @@ final class ReplyComposingView: UIView {
         setupConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -96,8 +91,6 @@ final class ReplyComposingView: UIView {
 
         previewView = message.replyPreview()!
         previewView.isUserInteractionEnabled = false
-        previewView.isAccessibilityElement = true
-        previewView.shouldGroupAccessibilityChildren = true
         previewView.accessibilityIdentifier = "replyView"
         previewView.accessibilityLabel = buildAccessibilityLabel()
 

@@ -23,7 +23,7 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
-protocol CameraKeyboardViewControllerDelegate: class {
+protocol CameraKeyboardViewControllerDelegate: AnyObject {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
                                       didSelectImageData: Data,
@@ -84,6 +84,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

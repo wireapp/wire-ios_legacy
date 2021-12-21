@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Patvirtintas";
 "conversation.input_bar.placeholder" = "Rašykite žinutę";
-"conversation.input_bar.placeholder_ephemeral" = "Laikina žinutė";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Perbraukę aukštyn išsiųsite";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Spustelėję išsiųsite";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "konktaktuose";
 
 "conversation.input_bar.shortcut.send" = "Siųsti žinutę";
-"conversation.input_bar.shortcut.newline" = "Įterpti naują eilutę";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Keisti naujausią žinutę";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Atsisakyti";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Žinutė ištrinta.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Ieškoti";
 
@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ išėjote";
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
 "content.system.conversation.guest.joined" = "%@ prisijungė";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Paslaugos ir žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
 "content.system.conversation.invite.button" = "Pakviesti žmones";
@@ -620,9 +621,12 @@
 
 "connection_request_pending_title" = "Prašymas susijungti";
 "connection_request.send_button_title" = "Užmegzti kontaktą";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.ignore_button_title" = "Nepaisyti";
+"error.connection.title" = "Klaida";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Įvyko klaida, bandykite dar kartą";
 
 // Save image errors
 "library.alert.permission_warning.title" = "„Wire“ reikia leidimo matyti jūsų nuotraukas";
@@ -647,9 +651,9 @@
 "voice.accept_button.title" = "Priimti";
 "voice.decline_button.title" = "Atmesti";
 "voice.hang_up_button.title" = "Užbaigti";
-"voice.mute_button.title" = "Nutildyti";
-"voice.video_button.title" = "Vaizdas";
-"voice.flip_video_button.title" = "Apversti";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Garsiakalbis";
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";
@@ -681,7 +685,7 @@
 "call.status.constant_bitrate" = "Pastovi sparta (bitais)";
 "call.status.variable_bitrate" = "Kintama sparta bitais";
 
-"call.participants.show_all" = "Rodyti visus (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Dalyviai";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -691,6 +695,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Vaizdas pristabdytas";
@@ -723,7 +728,7 @@
 "call.announcement.incoming" = "Jums skambina %@";
 "call.actions.label.toggle_mute_on" = "Išjungti mikrofoną";
 "call.actions.label.toggle_mute_off" = "Įjungti mikrofoną";
-"call.actions.label.flip_camera" = "Perjungti kamerą";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Įjungti garsiakalbį";
 "call.actions.label.toggle_speaker_off" = "Išjungti garsiakalbį";
 "call.actions.label.accept_call" = "Atsiliepti";
@@ -879,6 +884,7 @@
 "profile.details.guest" = "Svečias";
 "profile.details.group_admin" = "Grupės administratorius";
 "profile.details.partner" = "išorinis";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Naudotojo vardas";
@@ -917,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Svečiai ir paslaugos";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
-"group_details.timeout_options_cell.title" = "Laikinos žinutės";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Pranešimai";
 "group_details.notification_options_cell.description" = "Jūms bus pranešta apie viską (įskaitant garso ir vaizdo skambučius) arba tik kai kažkas jus pamini arba atsako į jūsų žinutę.";
 "group_details.receipt_options_cell.title" = "Perskaitymo patvirtinimai";
@@ -931,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Teisinio sulaikymo subjektai";
 "legalhold.header.title" = "Teisinis sulaikymas";
-"legalhold.header.other_description" = "Susirašinėjime yra bent vienas žmogus teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.";
-"legalhold.header.self_description" = "Jūs buvote teisiškai sulaikytas.\nVisos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.\nJūsų pašnekovai bus apie tai informuoti.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Teisinio sulaikymo duomenys";
 
 
@@ -1007,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Telefonas";
 "self.settings.account_section.handle.title" = "Naudotojo vardas";
 "self.settings.account_section.add_handle.title" = "Pridėti naudotojo vardą";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Žmonės gali jus rasti pagal šią informaciją.";
 "self.settings.account_details_group.personal.footer" = "Ši informacija nerodoma.";
@@ -1126,7 +1134,7 @@
 "self.settings.callkit.description" = "Rodyti „Wire“ skambučius užrakto ekrane ir „iOS“ skambučių praeityje. Jei „iCloud“ aktyvuota, skambučių praeitis bus pasidalinta su „Apple“.";
 
 "self.settings.vbr.title" = "Kodavimas kintama sparta (bitais)";
-"self.settings.vbr.description" = "Tai padeda sumažinti naudojamų duomenų kieki garso skambučiuose lėtuose tinkluose. Išjungę naudosite kodavimą pastovia sparta (bitais).";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "„Wire“ skambutis";
 "self.settings.sound_menu.sounds.wire_message" = "„Wire“ žinutė";
@@ -1619,6 +1627,8 @@
 "error.conversation.too_many_members" = "Susirašinėjimas pilnas";
 "error.conversation.offline" = "Panašu, kad yra nesklandumų su interneto ryšiu. Įsitikinkite, kad jis yra.";
 "error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Spustelėkite spalvas, kad pakeistumėte teptuko dydį";
 
@@ -1631,12 +1641,45 @@
 "push.notification.new_message" = "Nauja žinutė";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Naujinti būtina";
 "force.update.message" = "Negalite naudotis naujausiomis galimybėmis.\nAtsisiųskite naujausią „Wire“ versiją iš „App Store“.";
 "force.update.ok_button" = "Eiti į „App Store“";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Aptiktas įsilaužimas";
 "jailbrokendevice.alert.message" = "Dėl saugumo „Wire“ negalite naudotis šiame įrenginyje. Esantys „Wire“ duomenys buvo ištrinti.";
 
@@ -1663,7 +1706,7 @@
 "invite_banner.invite_button_title" = "Pakviesti daugiau žmonių";
 
 // Collections
-"collections.section.images.title" = "Paveikslai";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Failai";
 "collections.section.videos.title" = "Vaizdo įrašai";
 "collections.section.links.title" = "Nuorodos";
@@ -1804,14 +1847,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Laukia patvirtinimo.";
 "legalhold_request.alert.title" = "Prašomas sulaikymas dėl teisinių priežasčių";
-"legalhold_request.alert.detail" = "Įrenginys įrašys būsimas žinutes naudojant kontrolinį kodą: \n\n%@\n\nĮskaitant ištrintas, pakeistas, ir laikinas žinutes visuose susirašinėjimuose.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Norėdami patvirtinti, įveskite slaptažodį.";
 "legalhold_request.alert.error_wrong_password" = "Neteisingas slaptažodis";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Sulaikymas dėl teisinių priežasčių aktyvus";
 "legalhold_active.alert.learn_more" = "Sužinokite daugiau";
-"legalhold_active.alert.message" = "Jūs buvote teisiškai sulaikytas. Visos žinutės bus išsaugotos, įskaitant ištrintas, pakeistas ir laikinas žinutes.\n\nJūsų pašnekovai bus apie tai informuoti.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Sesijai skirtas laikas pasibaigė";
@@ -1887,3 +1930,9 @@
 "appLockModule.message.passcodeUnavailable" = "Norėdami atrakinti „Wire“ savo įrenginio nustatymuose įjunkite „Passcode“";
 "appLockModule.unlockButton.title" = "Atrakinti";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Žmonės";

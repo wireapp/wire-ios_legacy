@@ -19,7 +19,7 @@
 import Foundation
 import Photos
 
-protocol AssetLibraryDelegate: class {
+protocol AssetLibraryDelegate: AnyObject {
     func assetLibraryDidChange(_ library: AssetLibrary)
 }
 
@@ -67,8 +67,7 @@ class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
 
         if synchronous {
             syncOperation()
-        }
-        else {
+        } else {
             DispatchQueue(label: "WireAssetLibrary", qos: DispatchQoS.background, attributes: [], autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: .none).async(execute: syncOperation)
         }
     }

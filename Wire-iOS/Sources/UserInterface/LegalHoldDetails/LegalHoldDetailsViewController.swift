@@ -89,9 +89,7 @@ final class LegalHoldDetailsViewController: UIViewController {
 
         view.addSubview(collectionView)
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
     }
 
     fileprivate func createConstraints() {

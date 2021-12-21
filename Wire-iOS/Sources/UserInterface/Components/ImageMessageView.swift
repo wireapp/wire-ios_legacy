@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import WireDataModel
 import FLAnimatedImage
 
@@ -33,7 +32,7 @@ final class ImageMessageView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.createViews()
+        createViews()
     }
 
     @available(*, unavailable)
@@ -43,18 +42,17 @@ final class ImageMessageView: UIView {
 
     private var user: UserType? {
         didSet {
-            if let user = self.user {
-
-                self.userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.name
-                self.userImageView.user = user
+            if let user = user {
+                userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
+                userNameLabel.text = user.name
+                userImageView.user = user
             }
         }
     }
 
     var message: ZMConversationMessage? {
         didSet {
-            if let message = self.message {
+            if let message = message {
                 user = message.senderUser
 
                 updateForImage()
@@ -62,101 +60,103 @@ final class ImageMessageView: UIView {
         }
     }
 
-    func updateForImage() {
-        if let message = self.message,
-            let imageMessageData = message.imageMessageData,
-            let imageData = imageMessageData.imageData,
-            imageData.count > 0 {
+    private func updateForImage() {
+        if let message = message,
+           let imageMessageData = message.imageMessageData,
+           let imageData = imageMessageData.imageData,
+           !imageData.isEmpty {
 
-            self.dotsLoadingView.stopProgressAnimation()
-            self.dotsLoadingView.isHidden = true
+            dotsLoadingView.stopProgressAnimation()
+            dotsLoadingView.isHidden = true
 
             if imageMessageData.isAnimatedGIF {
                 let image = FLAnimatedImage(animatedGIFData: imageData)
-                self.imageSize = image?.size ?? .zero
-                self.imageView.animatedImage = image
-            }
-            else {
+                imageSize = image?.size ?? .zero
+                imageView.animatedImage = image
+            } else {
                 let image = UIImage(data: imageData, scale: 2.0)
-                self.imageSize = image?.size ?? .zero
-                self.imageView.image = image
+                imageSize = image?.size ?? .zero
+                imageView.image = image
             }
+        } else {
+            dotsLoadingView.isHidden = false
+            dotsLoadingView.startProgressAnimation()
         }
-        else {
-            self.dotsLoadingView.isHidden = false
-            self.dotsLoadingView.startProgressAnimation()
-        }
-        self.updateImageLayout()
+        updateImageLayout()
     }
 
     private func updateImageLayout() {
-        guard self.bounds.width != 0, self.aspectRatioConstraint == .none, self.imageSize.width != 0 else {
+        guard bounds.width != 0, aspectRatioConstraint == .none, imageSize.width != 0 else {
             return
         }
 
-        if self.imageSize.width / 2.0 > self.imageView.bounds.width {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
 
-            constrain(self.imageView) { imageView in
-                self.aspectRatioConstraint = imageView.height == imageView.width * (self.imageSize.height / self.imageSize.width)
-            }
+        if imageSize.width / 2.0 > imageView.bounds.width {
+            aspectRatioConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageSize.height / imageSize.width)
+        } else {
+            imageView.contentMode = .left
+            aspectRatioConstraint = imageView.heightAnchor.constraint(equalToConstant: imageSize.height)
         }
-        else {
-            self.imageView.contentMode = .left
 
-            constrain(self.imageView) { imageView in
-                self.aspectRatioConstraint = imageView.height == self.imageSize.height
-            }
-        }
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        aspectRatioConstraint?.isActive = true
+        setNeedsLayout()
     }
 
     private func createViews() {
+        userImageViewContainer.addSubview(userImageView)
 
-        self.userImageViewContainer.addSubview(self.userImageView)
+        [imageView, userImageViewContainer, userNameLabel].forEach(addSubview)
 
-        [self.imageView, self.userImageViewContainer, self.userNameLabel].forEach(self.addSubview)
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
 
-        self.imageView.contentMode = .scaleAspectFit
-        self.imageView.clipsToBounds = true
+        userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
+        userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
 
-        self.userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
-        self.userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
+        addSubview(dotsLoadingView)
 
-        constrain(self, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
-            userImageViewContainer.leading == selfView.leading
-            userImageViewContainer.width == 48
-            userImageViewContainer.height == 24
-            userImageViewContainer.top == selfView.top
+        createConstraints()
 
-            userImageView.top == userImageViewContainer.top
-            userImageView.bottom == userImageViewContainer.bottom
-            userImageView.centerX == userImageViewContainer.centerX
-            userImageView.width == userImageViewContainer.height
+        updateForImage()
+    }
 
-            userNameLabel.leading == userImageViewContainer.trailing
-            userNameLabel.trailing <= selfView.trailing
-            userNameLabel.centerY == userImageView.centerY
+    private func createConstraints() {
+        [imageView,
+         userImageView,
+         userImageViewContainer,
+         userNameLabel,
+         dotsLoadingView].prepareForLayout()
 
-            imageView.top == userImageViewContainer.bottom + 12
-            imageView.leading == userImageViewContainer.trailing
-            imageView.trailing == selfView.trailing
-            selfView.bottom == imageView.bottom
-            imageView.height >= 64
-        }
+        NSLayoutConstraint.activate([
+            userImageViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            userImageViewContainer.widthAnchor.constraint(equalToConstant: 48),
+            userImageViewContainer.heightAnchor.constraint(equalToConstant: 24),
+            userImageViewContainer.topAnchor.constraint(equalTo: topAnchor),
 
-        self.addSubview(self.dotsLoadingView)
+            userImageView.topAnchor.constraint(equalTo: userImageViewContainer.topAnchor),
+            userImageView.bottomAnchor.constraint(equalTo: userImageViewContainer.bottomAnchor),
+            userImageView.centerXAnchor.constraint(equalTo: userImageViewContainer.centerXAnchor),
+            userImageView.widthAnchor.constraint(equalTo: userImageViewContainer.heightAnchor),
 
-        constrain(self, self.dotsLoadingView) { selfView, dotsLoadingView in
-            dotsLoadingView.center == selfView.center
-        }
+            userNameLabel.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+            userNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            userNameLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
 
-        self.updateForImage()
+            imageView.topAnchor.constraint(equalTo: userImageViewContainer.bottomAnchor, constant: 12),
+            imageView.leadingAnchor.constraint(equalTo: userImageViewContainer.trailingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 64),
+
+            dotsLoadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dotsLoadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.updateImageLayout()
+        updateImageLayout()
     }
 }

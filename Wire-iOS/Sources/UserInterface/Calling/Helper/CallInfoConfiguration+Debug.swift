@@ -30,7 +30,6 @@ extension CallInfoViewControllerInput {
         mediaState: \(mediaState)
         appearance: \(appearance)
         isVideoCall: \(isVideoCall)
-        variant: \(variant.rawValue)
         state: \(state)
         isConstantBitRate: \(isConstantBitRate)
         title: \(title)

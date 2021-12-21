@@ -132,6 +132,7 @@ public class AppRootRouter: NSObject {
 
     private func setCallingSettings() {
         sessionManager.updateCallNotificationStyleFromSettings()
+        sessionManager.usePackagingFeatureConfig = true
         sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
             : Settings.shared[.callingConstantBitRate] ?? false
@@ -383,7 +384,8 @@ extension AppRootRouter {
                                    account: account,
                                    selfUser: ZMUser.selfUser(),
                                    isComingFromRegistration: isComingFromRegistration,
-                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog)
+                                   needToShowDataUsagePermissionDialog: needToShowDataUsagePermissionDialog,
+                                   featureServiceProvider: ZMUserSession.shared()!)
     }
 }
 
@@ -396,14 +398,18 @@ extension AppRootRouter {
     }
 
     private func applicationDidTransition(to appState: AppState) {
-        if case .unauthenticated(let error) = appState {
+        switch appState {
+        case .unauthenticated(error: let error):
             presentAlertForDeletedAccountIfNeeded(error)
-        }
-
-        if case .authenticated = appState {
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
+        case .authenticated:
             authenticatedRouter?.updateActiveCallPresentationState()
             urlActionRouter.authenticatedRouter = authenticatedRouter
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            sessionManager.processPendingURLActionRequiresAuthentication()
+            sessionManager.processPendingURLActionDoesNotRequireAuthentication()
+        default:
+            break
         }
 
         urlActionRouter.performPendingActions()

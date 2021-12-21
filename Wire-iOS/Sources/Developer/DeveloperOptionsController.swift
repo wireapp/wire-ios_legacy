@@ -16,14 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireSystem
 import WireSyncEngine
-import Cartography
 import MessageUI
 import UIKit
 
-class DeveloperOptionsController: UIViewController {
+final class DeveloperOptionsController: UIViewController {
 
     /// Cells
     var tableCells: [UITableViewCell]!
@@ -35,56 +32,42 @@ class DeveloperOptionsController: UIViewController {
     var uiButtonToAction: [UIButton: () -> Void] = [:]
 
     var mailViewController: MFMailComposeViewController?
-}
-
-extension DeveloperOptionsController {
 
     override func loadView() {
-        self.title = "OPTIONS"
-        self.view = UIView()
-        self.edgesForExtendedLayout = UIRectEdge()
-        self.view.backgroundColor = .clear
+        title = "OPTIONS"
+        view = UIView()
+        edgesForExtendedLayout = UIRectEdge()
+        view.backgroundColor = .clear
 
-        self.tableCells = [forwardLogCell()] + ZMSLog.allTags.sorted().map { logSwitchCell(tag: $0) }
+        tableCells = [forwardLogCell()] + ZMSLog.allTags.sorted().map { logSwitchCell(tag: $0) }
 
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = false
-        self.view.addSubview(tableView)
+        view.addSubview(tableView)
 
-        constrain(self.view, tableView) { view, tableView in
-            tableView.edges == view.edges
-        }
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
-}
-
-extension DeveloperOptionsController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tableCells.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.tableCells[indexPath.row]
-    }
-}
-
-// MARK: - Cells
-extension DeveloperOptionsController {
+    // MARK: - Cells
 
     /// Creates a cell to switch a specific log tag on or off
     func logSwitchCell(tag: String) -> UITableViewCell {
-        return self.createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
+        return createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
             Settings.shared.set(logTag: tag, enabled: isOn)
         }
     }
 
     /// Creates a cell to forward logs
     func forwardLogCell() -> UITableViewCell {
-        return self.createCellWithButton(labelText: "Forward log records") {
+        return createCellWithButton(labelText: "Forward log records") {
             let alert = UIAlertController(title: "Add explanation", message: "Please explain the problem that made you send the logs", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Send to Devs", style: .default, handler: { _ in
@@ -110,12 +93,15 @@ extension DeveloperOptionsController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
         button.titleLabel?.textAlignment = .right
-        constrain(button, button.titleLabel!) { button, titleLabel in
-            titleLabel.right == button.right
+
+        if let titleLabel = button.titleLabel {
+            NSLayoutConstraint.activate([
+                titleLabel.rightAnchor.constraint(equalTo: button.rightAnchor)
+            ])
         }
         button.addTarget(self, action: #selector(DeveloperOptionsController.didPressButton(sender:)), for: .touchDown)
-        self.uiButtonToAction[button] = onTouchDown
-        return self.createCellWithLabelAndView(labelText: labelText, view: button)
+        uiButtonToAction[button] = onTouchDown
+        return createCellWithLabelAndView(labelText: labelText, view: button)
     }
 
     /// Creates and sets the layout of a cell with a UISwitch
@@ -124,8 +110,8 @@ extension DeveloperOptionsController {
         toggle.translatesAutoresizingMaskIntoConstraints = false
         toggle.isOn = isOn
         toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)
-        self.uiSwitchToAction[toggle] = onValueChange
-        return self.createCellWithLabelAndView(labelText: labelText, view: toggle)
+        uiSwitchToAction[toggle] = onValueChange
+        return createCellWithLabelAndView(labelText: labelText, view: toggle)
     }
 
     /// Creates and sets the layout of a cell with a label and a view
@@ -137,31 +123,29 @@ extension DeveloperOptionsController {
         label.text = labelText
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(label)
-
-        constrain(cell.contentView, label) { contentView, label in
-            label.centerY == contentView.centerY
-            label.left == contentView.left + 20
+        [label, view].forEach {
+            cell.contentView.addSubview($0)
         }
 
-        cell.contentView.addSubview(view)
+        NSLayoutConstraint.activate([
+            label.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+            label.leftAnchor.constraint(equalTo: cell.contentView.leftAnchor, constant: 20),
 
-        constrain(cell.contentView, view, label) { contentView, view, label in
-            view.trailing == contentView.trailing - 20
-            label.trailing == view.leading
-            view.centerY == label.centerY
-        }
+            view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -20),
+            label.trailingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.centerYAnchor.constraint(equalTo: label.centerYAnchor)
+        ])
+
         return cell
     }
-}
 
-// MARK: - Actions
-extension DeveloperOptionsController {
+    // MARK: - Actions
 
     /// Invoked when one of the switches changes
-    @objc func switchDidChange(sender: AnyObject) {
+    @objc
+    func switchDidChange(sender: AnyObject) {
         if let toggle = sender as? UISwitch {
-            guard let action = self.uiSwitchToAction[toggle] else {
+            guard let action = uiSwitchToAction[toggle] else {
                 fatalError("Unknown switch?")
             }
             action(toggle.isOn)
@@ -169,12 +153,24 @@ extension DeveloperOptionsController {
     }
 
     /// Invoked when one of the buttons is pressed
-    @objc func didPressButton(sender: AnyObject) {
+    @objc
+    func didPressButton(sender: AnyObject) {
         if let button = sender as? UIButton {
-            guard let action = self.uiButtonToAction[button] else {
+            guard let action = uiButtonToAction[button] else {
                 fatalError("Unknown button?")
             }
             action()
         }
+    }
+}
+
+extension DeveloperOptionsController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableCells.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return tableCells[indexPath.row]
     }
 }

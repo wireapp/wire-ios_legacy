@@ -20,7 +20,7 @@ import Foundation
 import WireDataModel
 import UIKit
 
-protocol ConversationMessageCellMenuPresenter: class {
+protocol ConversationMessageCellMenuPresenter: AnyObject {
     func showMenu()
 }
 
@@ -139,6 +139,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
         singleTapGesture.delegate = self
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

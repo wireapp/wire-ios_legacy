@@ -49,7 +49,7 @@ extension ConversationInputBarViewController {
                              action: #selector(escapePressed),
                              discoverabilityTitle: Shortcut.cancelEditingMessage)
             )
-        } else if inputBar.textView.text.count == 0 {
+        } else if inputBar.textView.text.isEmpty {
             commands.append(
                 UIKeyCommand(input: UIKeyCommand.inputUpArrow,
                              modifierFlags: [],
@@ -96,7 +96,7 @@ extension ConversationInputBarViewController {
     }
 
     @objc
-    func upArrowPressed() {
+    private func upArrowPressed() {
         delegate?.conversationInputBarViewControllerEditLastMessage()
     }
 

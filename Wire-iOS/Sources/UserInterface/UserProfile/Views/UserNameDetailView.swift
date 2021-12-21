@@ -17,8 +17,7 @@
 //
 
 import UIKit
-import Cartography
- import WireDataModel
+import WireDataModel
 
 private let smallLightFont = FontSpec(.small, .light).font!
 private let smallBoldFont = FontSpec(.small, .medium).font!
@@ -102,8 +101,9 @@ final class UserNameDetailViewModel: NSObject {
     }
 
     static func attributedSubtitle(for user: UserType?) -> NSAttributedString? {
-        guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && UIColor.from(scheme: .textDimmed)
+        guard let user = user, let handle = user.handleDisplayString(withDomain: user.isFederated) else { return nil }
+
+        return handle && smallBoldFont && UIColor.from(scheme: .textDimmed)
     }
 
     static func attributedCorrelationText(for user: UserType?, addressBookName: String?) -> NSAttributedString? {
@@ -123,6 +123,7 @@ final class UserNameDetailView: UIView {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -146,16 +147,17 @@ final class UserNameDetailView: UIView {
     }
 
     private func createConstraints() {
-        constrain(self, subtitleLabel, correlationLabel) { view, subtitle, correlation in
-            subtitle.top == view.top
-            subtitle.centerX == view.centerX
-            subtitle.height == 16
+        [subtitleLabel, correlationLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          subtitleLabel.topAnchor.constraint(equalTo: topAnchor),
+          subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          subtitleLabel.heightAnchor.constraint(equalToConstant: 16),
 
-            correlation.top == subtitle.bottom
-            correlation.centerX == view.centerX
-            correlation.height == 16
-            correlation.bottom == view.bottom
-        }
+          correlationLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
+          correlationLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          correlationLabel.heightAnchor.constraint(equalToConstant: 16),
+          correlationLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
 }

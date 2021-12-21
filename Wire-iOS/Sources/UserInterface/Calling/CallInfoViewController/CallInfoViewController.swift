@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-protocol CallInfoViewControllerDelegate: class {
+protocol CallInfoViewControllerDelegate: AnyObject {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
@@ -47,7 +47,6 @@ extension CallInfoViewControllerInput {
             mediaState == other.mediaState &&
             appearance == other.appearance &&
             isVideoCall == other.isVideoCall &&
-            variant == other.variant &&
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
             title == other.title &&
@@ -56,7 +55,8 @@ extension CallInfoViewControllerInput {
             userEnabledCBR == other.userEnabledCBR &&
             callState.isEqual(toCallState: other.callState) &&
             videoGridPresentationMode == other.videoGridPresentationMode &&
-            allowPresentationModeUpdates == other.allowPresentationModeUpdates
+            allowPresentationModeUpdates == other.allowPresentationModeUpdates &&
+            isForcedCBR == other.isForcedCBR
     }
 }
 
@@ -105,6 +105,13 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         updateState()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
+
+        updateAccessoryView()
+    }
+
     private func setupViews() {
         addToSelf(backgroundViewController)
 
@@ -124,10 +131,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -40),
-            actionsView.widthAnchor.constraint(equalToConstant: 288),
-            actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
-            actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -25),
+            actionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            actionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
 
@@ -147,12 +153,19 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         navigationItem.leftBarButtonItem = minimizeItem
     }
 
+    private func updateAccessoryView() {
+        let isHidden = traitCollection.verticalSizeClass == .compact && !configuration.callState.isConnected
+
+        accessoryViewController.view.isHidden = isHidden
+    }
+
     private func updateState() {
         Log.calling.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
+        updateAccessoryView()
 
         if configuration.networkQuality.isNormal {
             navigationItem.titleView = nil

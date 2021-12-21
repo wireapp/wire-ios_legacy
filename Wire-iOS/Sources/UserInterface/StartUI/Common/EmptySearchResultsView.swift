@@ -43,7 +43,7 @@ extension EmptySearchResultsViewAction {
     }
 }
 
-protocol EmptySearchResultsViewDelegate: class {
+protocol EmptySearchResultsViewDelegate: AnyObject {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView)
 }
 
@@ -57,8 +57,7 @@ final class EmptySearchResultsView: UIView {
             if let action = self.buttonAction {
                 actionButton.isHidden = false
                 actionButton.setTitle(action.title, for: .normal)
-            }
-            else {
+            } else {
                 actionButton.isHidden = true
             }
         }
@@ -131,6 +130,7 @@ final class EmptySearchResultsView: UIView {
         state = .noUsers
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

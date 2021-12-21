@@ -118,7 +118,7 @@ extension ShareViewController {
          bottomSeparatorLine,
          topSeparatorView,
          closeButton,
-         sendButton].disableAutoresizingMaskTranslation()
+         sendButton].prepareForLayout()
 
         let shareablePreviewWrapperMargin: CGFloat = 16
         let tokenFieldMargin: CGFloat = 8
