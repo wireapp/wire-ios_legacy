@@ -69,7 +69,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-
+    private var isToastVisible: Bool = false
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
@@ -124,15 +124,19 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         addChild(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
-        addMutedStateToastMessage()
+        showMutedToastMessageIfNeeded()
     }
     
-    func addMutedStateToastMessage() {
+    private func showMutedToastMessageIfNeeded() {
         if case .established(let duration) = configuration.state,
-                   duration <= 5.0,
-                   configuration.isMuted {
-            let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message, colorScheme: ColorSchemeColor.utilityNeutral, variant: ColorSchemeVariant.light, dismissable: true, moreInfoAction: nil)
+            duration <= 5.0,
+           configuration.isMuted, !self.isToastVisible {
+            let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message,
+                                                 colorScheme: ColorSchemeColor.utilityNeutral,
+                                                 variant: ColorSchemeVariant.light,
+                                                 dismissable: true, moreInfoAction: nil)
             Toast.show(with: toastConfig)
+            self.isToastVisible = true
         }
     }
     
