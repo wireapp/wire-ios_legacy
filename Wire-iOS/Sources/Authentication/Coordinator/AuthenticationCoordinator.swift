@@ -24,7 +24,7 @@ import UIKit
  * Provides and asks for context when registering users.
  */
 
-protocol AuthenticationCoordinatorDelegate: class {
+protocol AuthenticationCoordinatorDelegate: AnyObject {
 
     /**
      * The coordinator finished authenticating the user.
@@ -731,7 +731,7 @@ extension AuthenticationCoordinator {
 
     var canStartCompanyLogin: Bool {
         switch stateController.currentStep {
-        case .landingScreen, .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
+        case .companyLogin:
             return true
         default:
             log.warn("Cannot start company login in step: \(stateController.currentStep)")

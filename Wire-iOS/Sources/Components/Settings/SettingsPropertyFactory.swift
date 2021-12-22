@@ -50,7 +50,7 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
-protocol SettingsPropertyFactoryDelegate: class {
+protocol SettingsPropertyFactoryDelegate: AnyObject {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
 
@@ -105,7 +105,10 @@ final class SettingsPropertyFactory {
         }
     }
 
-    private func getOnlyProperty(propertyName: SettingsPropertyName, getAction: @escaping GetAction) -> SettingsBlockProperty {
+    private func getOnlyProperty(propertyName: SettingsPropertyName, value: String?) -> SettingsBlockProperty {
+        let getAction: GetAction = { _ in
+            return SettingsPropertyValue.string(value: value ?? "")
+        }
         let setAction: SetAction = { _, _ in }
         return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
     }
@@ -136,25 +139,19 @@ final class SettingsPropertyFactory {
 
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .email:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.emailAddress ?? "")
-            }
-
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.emailAddress)
 
         case .phone:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.phoneNumber ?? "")
-            }
-
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            let getAction: GetAction = { [unowned self] _ in
-                return SettingsPropertyValue.string(value: self.selfUser?.handleDisplayString ?? "")
-            }
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: Settings.shared.federationEnabled))
 
-            return getOnlyProperty(propertyName: propertyName, getAction: getAction)
+        case .team:
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)
+
+        case .domain:
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.domain)
 
         case .accentColor:
             let getAction: GetAction = { [unowned self] _ in
@@ -204,8 +201,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let mediaManager = self.mediaManager {
                     return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(0)
                 }
             }
@@ -216,8 +212,7 @@ final class SettingsPropertyFactory {
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
                         var mediaManager = self.mediaManager {
                         mediaManager.intensityLevel = intensivityLevel
-                    }
-                    else {
+                    } else {
                         throw SettingsPropertyError.WrongValue("Cannot use value \(intValue) for AVSIntensivityLevel at \(propertyName)")
                     }
                 default:
@@ -230,8 +225,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableAnalyticsSharing)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(false)
                 }
             }
@@ -251,8 +245,7 @@ final class SettingsPropertyFactory {
             let getAction: GetAction = { [unowned self] _ in
                 if let tracking = self.tracking {
                     return SettingsPropertyValue(tracking.disableCrashSharing)
-                }
-                else {
+                } else {
                     return SettingsPropertyValue(false)
                 }
             }

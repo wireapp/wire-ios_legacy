@@ -29,7 +29,7 @@ private enum Section: Int {
     case buttons = 1
 }
 
-protocol ConfirmPhoneDelegate: class {
+protocol ConfirmPhoneDelegate: AnyObject {
     func resendVerificationCode(inController controller: ConfirmPhoneViewController)
     func didConfirmPhone(inController controller: ConfirmPhoneViewController)
 }
@@ -56,6 +56,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         timer?.cancel()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

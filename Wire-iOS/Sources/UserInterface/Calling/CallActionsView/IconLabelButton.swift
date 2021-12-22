@@ -19,12 +19,18 @@
 import UIKit
 import WireCommonComponents
 
+protocol IconLabelButtonInput {
+    func icon(forState state: UIControl.State) -> StyleKitIcon
+    var label: String { get }
+    var accessibilityIdentifier: String { get }
+}
+
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64
     private static let height: CGFloat = 88
 
     private(set) var iconButton = IconButton()
-    private(set) var subtitleLabel = TransformLabel()
+    private(set) var subtitleTransformLabel = TransformLabel()
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     var appearance: CallActionAppearance = .dark(blurred: false) {
@@ -33,13 +39,14 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    init(icon: StyleKitIcon, label: String, accessibilityIdentifier: String) {
+    init(input: IconLabelButtonInput) {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        iconButton.setIcon(icon, size: .tiny, for: .normal)
-        subtitleLabel.text = label
-        self.accessibilityIdentifier = accessibilityIdentifier
+        iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)
+        iconButton.setIcon(input.icon(forState: .selected), size: .tiny, for: .selected)
+        subtitleTransformLabel.text = input.label
+        self.accessibilityIdentifier = input.accessibilityIdentifier
     }
 
     @available(*, unavailable)
@@ -61,11 +68,11 @@ class IconLabelButton: ButtonWithLargerHitArea {
         blurView.clipsToBounds = true
         blurView.layer.cornerRadius = IconLabelButton.width / 2
         blurView.isUserInteractionEnabled = false
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textTransform = .upper
-        subtitleLabel.textAlignment = .center
+        subtitleTransformLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleTransformLabel.textTransform = .upper
+        subtitleTransformLabel.textAlignment = .center
         titleLabel?.font = FontSpec(.small, .semibold).font!
-        [blurView, iconButton, subtitleLabel].forEach(addSubview)
+        [blurView, iconButton, subtitleTransformLabel].forEach(addSubview)
     }
 
     private func createConstraints() {
@@ -81,16 +88,16 @@ class IconLabelButton: ButtonWithLargerHitArea {
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            subtitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subtitleLabel.heightAnchor.constraint(equalToConstant: 16)
-            ])
+            subtitleTransformLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            subtitleTransformLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            subtitleTransformLabel.heightAnchor.constraint(equalToConstant: 16)
+        ])
     }
 
     private func updateState() {
         apply(appearance)
-        subtitleLabel.font = titleLabel?.font
-        subtitleLabel.textColor = titleColor(for: state)
+        subtitleTransformLabel.font = titleLabel?.font
+        subtitleTransformLabel.textColor = titleColor(for: state)
     }
 
     override var isHighlighted: Bool {

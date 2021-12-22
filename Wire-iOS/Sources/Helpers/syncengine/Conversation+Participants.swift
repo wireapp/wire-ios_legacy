@@ -44,11 +44,12 @@ extension ZMConversation {
             return
         }
 
-        addParticipants(participants, userSession: ZMUserSession.shared()!) { result in
+        addParticipants(participants) { (result) in
             switch result {
             case .failure(let error):
                 self.showAlertForAdding(for: error)
-            default: break
+            default:
+                break
             }
         }
     }
@@ -60,18 +61,17 @@ extension ZMConversation {
             return
         }
 
-        // If the user is not in this conversation, result = .success
-        self.removeParticipant(user, userSession: ZMUserSession.shared()!) { result in
+        removeParticipant(user) { (result) in
             switch result {
             case .success:
                 if let serviceUser = user as? ServiceUser, user.isServiceUser {
                     Analytics.shared.tagDidRemoveService(serviceUser)
                 }
+                completion?(.success)
             case .failure(let error):
                 self.showAlertForRemoval(for: error)
+                completion?(.failure(error))
             }
-
-            completion?(result)
         }
     }
 
@@ -80,22 +80,24 @@ extension ZMConversation {
 
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
-            UIAlertController.showErrorAlert(message: ConversationError.tooManyMembers)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.tooManyMembers)
         case NetworkError.offline:
-            UIAlertController.showErrorAlert(message: ConversationError.offline)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.offline)
         case ConversationAddParticipantsError.missingLegalHoldConsent:
-            UIAlertController.showErrorAlert(message: ConversationError.missingLegalholdConsent)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.missingLegalholdConsent)
         default:
-            UIAlertController.showErrorAlert(message: ConversationError.cannotAdd)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.cannotAdd)
         }
     }
 
     private func showAlertForRemoval(for error: Error) {
+        typealias ConversationError = L10n.Localizable.Error.Conversation
+
         switch error {
         case NetworkError.offline:
-            UIAlertController.showErrorAlert(message: "error.conversation.offline".localized)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.offline.localized)
         default:
-            UIAlertController.showErrorAlert(message: "error.conversation.cannot_remove".localized)
+            UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.cannotRemove.localized)
         }
     }
 }

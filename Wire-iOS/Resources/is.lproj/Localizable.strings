@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Verified";
 "conversation.input_bar.placeholder" = "Type a message";
-"conversation.input_bar.placeholder_ephemeral" = "Timed message";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe up to send";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Ýttu til að senda";
@@ -307,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "í tengiliðum";
 
 "conversation.input_bar.shortcut.send" = "Senda skilaboð";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Hætta við";
 "conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "The message is deleted.";
 
 // Conversation banner
-"conversation.banner.guests_present" = "**Guests** are present";
-"conversation.banner.services_present" = "**Services** are active";
-"conversation.banner.externals_present" = "**Externals** are present";
-"conversation.banner.guests_services_present" = "**Guests** and **services** are present";
-"conversation.banner.externals_services_present" = "**External**s and **services** are present";
-"conversation.banner.externals_guests_present" = "**Externals** and **guests** are present";
-"conversation.banner.externals_guests_services_present" = "**Externals**, **guests**, and **services** are present";
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
 
 "conversation.action.search" = "Leita";
 
@@ -455,6 +455,7 @@
 "content.system.conversation.you.left" = "%@ fór";
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Invite people";
@@ -620,9 +621,12 @@
 
 "connection_request_pending_title" = "Connection Request";
 "connection_request.send_button_title" = "Tengist";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Tengist";
 "inbox.connection_request.ignore_button_title" = "Hunsað";
+"error.connection.title" = "Villa";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Something went wrong, please try again";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire needs access to your Photos";
@@ -647,9 +651,9 @@
 "voice.accept_button.title" = "Samþykkja";
 "voice.decline_button.title" = "Hafna";
 "voice.hang_up_button.title" = "Leggja á";
-"voice.mute_button.title" = "Þagga";
-"voice.video_button.title" = "Myndskeið";
-"voice.flip_video_button.title" = "Flip";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Hætta við";
 "voice.call_button.title" = "Hringja";
@@ -681,7 +685,7 @@
 "call.status.constant_bitrate" = "Constant Bit Rate";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Show All (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Participants";
 
 "call.overlay.switch_to.speakers" = "SPEAKERS";
@@ -691,6 +695,7 @@
 
 "call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
 "call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
 "call.grid.hints.zoom" = "Pinch to zoom";
 
 "call.video.paused" = "Video paused";
@@ -723,7 +728,7 @@
 "call.announcement.incoming" = "Incoming call from %@";
 "call.actions.label.toggle_mute_on" = "Þagga";
 "call.actions.label.toggle_mute_off" = "Unmute";
-"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
 "call.actions.label.accept_call" = "Accept call";
@@ -879,6 +884,7 @@
 "profile.details.guest" = "Gestur";
 "profile.details.group_admin" = "Group admin";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Notendanafn";
@@ -917,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "Kveikt";
 "group_details.guest_options_cell.disabled" = "Slökkt";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
@@ -931,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Legal hold subjects";
 "legalhold.header.title" = "Legal Hold";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Legal hold details";
 
 
@@ -1007,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Sími";
 "self.settings.account_section.handle.title" = "Notendanafn";
 "self.settings.account_section.add_handle.title" = "Bæta við notendanafni";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "People can find you with these details.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";
@@ -1126,7 +1134,7 @@
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire Call";
 "self.settings.sound_menu.sounds.wire_message" = "Wire Message";
@@ -1619,6 +1627,8 @@
 "error.conversation.too_many_members" = "The conversation is full";
 "error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 "error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Tap colors to change brush size";
 
@@ -1631,12 +1641,45 @@
 "push.notification.new_message" = "New message";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Update necessary";
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
@@ -1663,7 +1706,7 @@
 "invite_banner.invite_button_title" = "Invite more people";
 
 // Collections
-"collections.section.images.title" = "Pictures";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Skrár";
 "collections.section.videos.title" = "Myndbönd";
 "collections.section.links.title" = "Links";
@@ -1804,14 +1847,14 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Pending approval.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
 "legalhold_request.alert.error_wrong_password" = "Rangt lykilorð";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Legal Hold is Active";
 "legalhold_active.alert.learn_more" = "Learn More";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
@@ -1887,3 +1930,9 @@
 "appLockModule.message.passcodeUnavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "appLockModule.unlockButton.title" = "Unlock";
 "appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Fólk";

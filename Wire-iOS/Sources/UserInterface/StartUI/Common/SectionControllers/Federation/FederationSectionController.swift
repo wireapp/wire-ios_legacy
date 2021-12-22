@@ -78,4 +78,11 @@ class FederationSectionController: SearchSectionController {
         return cell
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard case .success(let searchUsers) = result else { return }
+        let user = searchUsers[indexPath.row]
+
+        delegate?.searchSectionController(self, didSelectUser: user, at: indexPath)
+    }
+
 }

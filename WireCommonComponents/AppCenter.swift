@@ -16,25 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Foundation
 import AppCenter
 import AppCenterCrashes
 import AppCenterDistribute
 import AppCenterAnalytics
 
-public extension MSAppCenter {
+public extension AppCenter {
     
     static func setTrackingEnabled(_ enabled: Bool) {
-        MSAnalytics.setEnabled(enabled)
-        MSDistribute.setEnabled(enabled)
-        MSCrashes.setEnabled(enabled)
+        Analytics.enabled = enabled
+        Distribute.enabled = enabled
+        Crashes.enabled = enabled
     }
     
     static func start() {
-        MSDistribute.updateTrack = .private
+        Distribute.updateTrack = .private
 
-        MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self,
-                                                                MSDistribute.self,
-                                                                MSAnalytics.self])
+        AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: [Crashes.self,
+                                                                Distribute.self,
+                                                                Analytics.self])
     }
 }

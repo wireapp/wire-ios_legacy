@@ -18,8 +18,6 @@
 
 import Foundation
 import UIKit
-import Cartography
-import WireDataModel
 import WireSyncEngine
 
 final class DatabaseStatisticsController: UIViewController {
@@ -43,12 +41,12 @@ final class DatabaseStatisticsController: UIViewController {
         self.title = "Database Statistics".localizedUppercase
 
         view.addSubview(stackView)
-
-        constrain(view, stackView) { view, stackView in
-            stackView.top == view.top + 20
-            stackView.leading == view.leading
-            stackView.trailing == view.trailing
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+          stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     func rowWith(title: String, contents: String) -> UIView {

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
@@ -67,25 +66,24 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSubviews() {
+    private func createSubviews() {
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
+        collectionView.contentInsetAdjustmentBehavior = .never
 
         [collectionView, footerView].forEach(view.addSubview)
 
-        constrain(view, collectionView, footerView) { container, collectionView, footerView in
-            collectionView.top == container.top
-            collectionView.leading == container.leading
-            collectionView.trailing == container.trailing
-            collectionView.bottom == footerView.top
-            footerView.leading == container.leading
-            footerView.trailing == container.trailing
-            footerView.bottom == container.bottom
-        }
+        [collectionView, footerView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+          footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
@@ -232,8 +230,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
-            let navigationController = addParticipantsViewController.wrapInNavigationController()
+            let navigationController = addParticipantsViewController.wrapInNavigationController(setBackgroundColor: true)
             navigationController.modalPresentationStyle = .currentContext
+
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation,

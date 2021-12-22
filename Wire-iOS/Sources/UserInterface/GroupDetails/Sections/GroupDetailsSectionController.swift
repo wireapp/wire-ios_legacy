@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 
-protocol GroupDetailsUserDetailPresenter: class {
+protocol GroupDetailsUserDetailPresenter: AnyObject {
     func presentDetails(for user: UserType)
 }
 

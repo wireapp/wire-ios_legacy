@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 
 final class ConversationListAccessoryView: UIView {
-    var icon: ConversationStatusIcon? = nil {
+    var icon: ConversationStatusIcon? {
         didSet {
             if icon != oldValue {
                 updateForIcon()
@@ -80,7 +80,7 @@ final class ConversationListAccessoryView: UIView {
         updateForIcon()
     }
 
-    func createConstraints() {
+    private func createConstraints() {
         transparentIconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -109,6 +109,7 @@ final class ConversationListAccessoryView: UIView {
         badgeView.fitInSuperview()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -138,8 +139,7 @@ final class ConversationListAccessoryView: UIView {
             if let mediaPlayer = activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.setIcon(.pause, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
-            }
-            else {
+            } else {
                 iconView.setIcon(.play, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }

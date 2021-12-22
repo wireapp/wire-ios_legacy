@@ -169,7 +169,7 @@ extension URL {
     }
 
     static var wr_searchSupport: URL {
-        return BackendEnvironment.websiteLink(path: "support/search") // TODO jacob update URL when support page exists
+        return BackendEnvironment.websiteLink(path: "support/username") // TODO jacob update URL when new support page for search exists
     }
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
@@ -182,6 +182,14 @@ extension URL {
 
     static var wr_legalHoldLearnMore: URL {
         return wr_support.appendingPathComponent("hc/articles/360002018278-What-is-legal-hold-")
+    }
+
+    static var wr_wirePricingLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "pricing")
+    }
+
+    static var wr_wireEnterpriseLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
     }
 
 }

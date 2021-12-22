@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     private let imageContainer = UIView()
@@ -34,11 +33,12 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         }
     }
 
-    private var imageContainerWidthConstraint: NSLayoutConstraint?
-    private var iconImageViewLeadingConstraint: NSLayoutConstraint?
+    private lazy var imageContainerWidthConstraint: NSLayoutConstraint = imageContainer.widthAnchor.constraint(equalToConstant: CGFloat.IconCell.IconWidth)
+    private lazy var iconImageViewLeadingConstraint: NSLayoutConstraint = iconImageView.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: CGFloat.IconCell.IconSpacing)
 
-    private var subtitleTopConstraint: NSLayoutConstraint?
-    private var subtitleBottomConstraint: NSLayoutConstraint?
+    private lazy var subtitleTopConstraint: NSLayoutConstraint = subtitleLabel.topAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: subtitleInsets.top)
+    private lazy var subtitleBottomConstraint: NSLayoutConstraint = subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -subtitleInsets.bottom)
+
     private let subtitleInsets = UIEdgeInsets(top: 16, left: 16, bottom: 24, right: 16)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,7 +53,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupViews() {
+    private func setupViews() {
         [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
         imageContainer.addSubview(iconImageView)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
@@ -65,27 +65,33 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func createConstraints() {
-        constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
-            self.imageContainerWidthConstraint = imageContainer.width == CGFloat.IconCell.IconWidth
-            iconImageView.centerY == topContainer.centerY
-            titleLabel.leading == iconImageView.trailing + CGFloat.IconCell.IconSpacing
-            self.iconImageViewLeadingConstraint = iconImageView.leading == topContainer.leading + CGFloat.IconCell.IconSpacing
+        [topContainer,
+         titleLabel,
+         toggle,
+         iconImageView,
+         imageContainer,
+         subtitleLabel].prepareForLayout()
 
-            toggle.centerY == topContainer.centerY
-            toggle.trailing == topContainer.trailing - CGFloat.IconCell.IconSpacing
-            titleLabel.centerY == topContainer.centerY
-        }
-        constrain(contentView, topContainer, subtitleLabel) { contentView, topContainer, subtitleLabel in
-            topContainer.top == contentView.top
-            topContainer.leading == contentView.leading
-            topContainer.trailing == contentView.trailing
-            topContainer.height == 56
+        NSLayoutConstraint.activate([
+            imageContainerWidthConstraint,
+            iconImageView.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: CGFloat.IconCell.IconSpacing),
+            iconImageViewLeadingConstraint,
 
-            subtitleLabel.leading == contentView.leading + self.subtitleInsets.leading
-            subtitleLabel.trailing == contentView.trailing - self.subtitleInsets.trailing
-            self.subtitleTopConstraint = subtitleLabel.top == topContainer.bottom + self.subtitleInsets.top
-            self.subtitleBottomConstraint = subtitleLabel.bottom == contentView.bottom - self.subtitleInsets.bottom
-        }
+            toggle.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+            toggle.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -CGFloat.IconCell.IconSpacing),
+            titleLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+
+            topContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            topContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            topContainer.heightAnchor.constraint(equalToConstant: 56),
+
+            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: subtitleInsets.leading),
+            subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -subtitleInsets.trailing),
+            subtitleTopConstraint,
+            subtitleBottomConstraint
+        ])
     }
 
     private func styleViews() {
@@ -113,11 +119,11 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
         if let icon = icon {
             iconImageView.setIcon(icon, size: .tiny, color: mainColor)
-            imageContainerWidthConstraint?.constant = CGFloat.IconCell.IconWidth
-            iconImageViewLeadingConstraint?.constant = CGFloat.IconCell.IconSpacing
+            imageContainerWidthConstraint.constant = CGFloat.IconCell.IconWidth
+            iconImageViewLeadingConstraint.constant = CGFloat.IconCell.IconSpacing
         } else {
-            imageContainerWidthConstraint?.constant = 0
-            iconImageViewLeadingConstraint?.constant = 0
+            imageContainerWidthConstraint.constant = 0
+            iconImageViewLeadingConstraint.constant = 0
         }
 
         titleLabel.textColor = mainColor
@@ -128,12 +134,12 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
         if subtitle.isEmpty {
             subtitleLabel.isHidden = true
-            subtitleTopConstraint?.constant = 0
-            subtitleBottomConstraint?.constant = 0
+            subtitleTopConstraint.constant = 0
+            subtitleBottomConstraint.constant = 0
         } else {
             subtitleLabel.isHidden = false
-            subtitleTopConstraint?.constant = subtitleInsets.top
-            subtitleBottomConstraint?.constant = -(subtitleInsets.bottom)
+            subtitleTopConstraint.constant = subtitleInsets.top
+            subtitleBottomConstraint.constant = -(subtitleInsets.bottom)
         }
 
         action = set

@@ -27,12 +27,10 @@ platform :ios do
                 override_folder = "CI configuration"
             end
 
-
             config_repo = options[:config_repo]
             if config_repo.nil? 
                 config_repo = "https://github.com/wireapp/wire-ios-build-configuration.git"
             end
-
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
@@ -57,7 +55,6 @@ platform :ios do
             end
         end
     end
-
 
     desc "Build for testing"
     lane :build do |options|
@@ -87,14 +84,16 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "14.4"
+        ios_version = "15.0"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
-            if xcode_version == "11.4"
-                ios_version = "13.4"
-            elsif xcode_version == "11.4.1"
-                ios_version = "13.4.1"
+            if xcode_version == "13.0"
+                ios_version = "15.0"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
             end
         end
 
@@ -152,6 +151,32 @@ platform :ios do
         end
     end
 
+    desc "Build for release to AppStore without symbols"
+    lane :build_for_release_without_symbols do |options|
+        xcode_version = options[:xcode_version]
+
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
+        end
+
+        build = Build.new(options: options)
+
+        build_app(
+            scheme: "Wire-iOS",
+            configuration: build.configuration,
+            export_method: build.export_method,
+            export_options: {"iCloudContainerEnvironment": "Production"},
+            derived_data_path: "DerivedData",
+            archive_path: build.archive_path(with_filename: true),
+            buildlog_path: build.build_path,
+            output_directory: build.artifact_path(with_filename: false),
+            output_name: build.filename,
+            include_bitcode: false,
+            include_symbols: false,
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
+        )
+    end
+
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
@@ -168,6 +193,7 @@ platform :ios do
             skip_app_version_update: true,
             skip_metadata: true,
             skip_screenshots: true,
+            api_key_path: options[:api_key_path]
         )
     end
 
@@ -225,7 +251,6 @@ platform :ios do
         sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
     end
 
-
     desc "Upload for internal use"
     lane :upload_app_center do |options|
         build = Build.new(options: options)
@@ -250,6 +275,9 @@ platform :ios do
         end
 
         
+        sh "echo SHA of IPA is:"
+        sh "shasum -a 256 ../#{build.artifact_path(with_filename: true)}.ipa || true"
+
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
@@ -287,6 +315,9 @@ platform :ios do
         codecov = "./codecov -J '^Wire$' -D ../DerivedData"
 
         if ENV["BUILD_REASON"] == "PullRequest"
+            if ENV["CODECOV_TOKEN"].nil?
+                UI.user_error! "codecov.io token missing for current repository. Set it in CODECOV_TOKEN environment variable"
+            end
 
             if ENV["BUILD_SOURCEBRANCH"].nil?
                 UI.user_error! "Source branch env variable missing. Set BUILD_SOURCEBRANCH to fix it"
@@ -294,7 +325,7 @@ platform :ios do
 
             pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
-            codecov << " -P #{pull_request_number}"
+            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
         end
 
         sh codecov
@@ -513,5 +544,4 @@ class Build
             "Wire-iOS-Release-Candidate"
         end
     end
-
 end

@@ -23,8 +23,7 @@ extension UIViewController {
     var safeBottomAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return self.view.safeAreaLayoutGuide.bottomAnchor
-        }
-        else {
+        } else {
             return self.bottomLayoutGuide.topAnchor
         }
     }
@@ -32,8 +31,7 @@ extension UIViewController {
     var safeTopAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return self.view.safeAreaLayoutGuide.topAnchor
-        }
-        else {
+        } else {
             return self.topLayoutGuide.bottomAnchor
         }
     }
@@ -41,8 +39,7 @@ extension UIViewController {
     var safeCenterYAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return view.safeAreaLayoutGuide.centerYAnchor
-        }
-        else {
+        } else {
             return view.centerYAnchor
         }
     }
@@ -85,8 +82,7 @@ extension UIView {
     var safeBottomAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide.bottomAnchor
-        }
-        else {
+        } else {
             return bottomAnchor
         }
     }
@@ -102,8 +98,7 @@ extension UIView {
     var safeCenterYAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide.centerYAnchor
-        }
-        else {
+        } else {
             return centerYAnchor
         }
     }
@@ -111,8 +106,7 @@ extension UIView {
     var safeCenterXAnchor: NSLayoutXAxisAnchor {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide.centerXAnchor
-        }
-        else {
+        } else {
             return centerXAnchor
         }
     }

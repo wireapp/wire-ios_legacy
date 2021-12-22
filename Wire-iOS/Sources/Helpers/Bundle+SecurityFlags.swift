@@ -20,16 +20,12 @@ import Foundation
 
 enum SecurityFlags {
     case clipboard
-    case saveMessage
-    case gifAction
-    case externalFilePicker
     case generateLinkPreviews
     case forceConstantBitRateCalls
-    case openFilePreview
     case customBackend
-    case shareExtension
     case cameraRoll
     case backup
+    case federation
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -39,28 +35,20 @@ enum SecurityFlags {
         switch self {
         case .clipboard:
             return "ClipboardEnabled"
-        case .saveMessage:
-            return "SaveMessageEnabled"
-        case .gifAction:
-            return "FileGifActionEnabled"
-        case .externalFilePicker:
-            return "ExternalFilePickerEnabled"
         case .generateLinkPreviews:
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:
             return "ForceCBREnabled"
-        case .openFilePreview:
-            return "OpenFilePreviewEnabled"
         case .customBackend:
             return "CustomBackendEnabled"
-        case .shareExtension:
-            return "ShareExtensionEnabled"
         case .cameraRoll:
             return "CameraRollEnabled"
         case .backup:
             return "BackupEnabled"
         case .forceEncryptionAtRest:
             return "ForceEncryptionAtRestEnabled"
+        case .federation:
+            return "FederationEnabled"
         }
     }
 

@@ -21,13 +21,23 @@ import XCTest
 
 final class CallInfoViewControllerSnapshotTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        CallingConfiguration.config = .largeConferenceCalls
+    }
+
+    override func tearDown() {
+        CallingConfiguration.resetDefaultConfig()
+        super.tearDown()
+    }
+
     // MARK: - OneToOne Audio
 
     func testOneToOneIncomingAudioRinging() {
         // given
         let otherUser = MockUserType.createConnectedUser(name: "Bruno")
         let selfUser = MockUserType.createSelfUser(name: "Alice")
-        let fixture = CallInfoTestFixture(otherUser: otherUser, mockUsers: SwiftMockLoader.mockUsers())
+        let fixture = CallInfoTestFixture(otherUser: otherUser, selfUser: selfUser, mockUsers: SwiftMockLoader.mockUsers())
 
         // when
         let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging, selfUser: selfUser)

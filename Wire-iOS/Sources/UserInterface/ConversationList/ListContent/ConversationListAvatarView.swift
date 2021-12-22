@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
-
 /// Source of random values.
 public protocol RandomGenerator {
     func rand<ContentType>() -> ContentType
@@ -150,8 +148,7 @@ final public class ConversationListAvatarView: UIView {
 
             if mode == .one {
                 layer.borderWidth = 0
-            }
-            else {
+            } else {
                 layer.borderWidth = .hairline
                 layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
             }
@@ -229,8 +226,7 @@ final public class ConversationListAvatarView: UIView {
             if xPosition + size.width >= containerSize.width {
                 xPosition = 0
                 yPosition += size.height + inset
-            }
-            else {
+            } else {
                 xPosition += size.width + inset
             }
         }

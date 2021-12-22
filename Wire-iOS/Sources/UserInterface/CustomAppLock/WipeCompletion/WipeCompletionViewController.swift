@@ -59,7 +59,7 @@ final class WipeCompletionViewController: UIViewController {
 
     private func createConstraints() {
         [wireLogoInfoView,
-         loginButton].disableAutoresizingMaskTranslation()
+         loginButton].prepareForLayout()
 
         NSLayoutConstraint.activate([
             wireLogoInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

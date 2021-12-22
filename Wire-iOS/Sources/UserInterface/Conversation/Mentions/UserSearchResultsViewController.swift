@@ -17,22 +17,21 @@
 //
 
 import UIKit
-import Cartography
 import WireDataModel
 
-protocol UserSearchResultsViewControllerDelegate: class {
+protocol UserSearchResultsViewControllerDelegate: AnyObject {
     func didSelect(user: UserType)
 }
 
-protocol Dismissable: class {
+protocol Dismissable: AnyObject {
     func dismiss()
 }
 
-protocol KeyboardCollapseObserver: class {
+protocol KeyboardCollapseObserver: AnyObject {
     var isKeyboardCollapsed: Bool { get }
 }
 
-protocol UserList: class {
+protocol UserList: AnyObject {
     var users: [UserType] { get set }
     var selectedUser: UserType? { get }
 
@@ -53,7 +52,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
         }
     }
     private var query: String = ""
-    private var collectionViewHeight: NSLayoutConstraint?
+    private lazy var collectionViewHeight: NSLayoutConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
     private let rowHeight: CGFloat = 56.0
     private var isKeyboardCollapsedFirstCalled = true
 
@@ -64,7 +63,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
         }
         set {
             if let newValue = newValue {
-                self._collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
+                _collectionViewSelectedIndex = min(searchResults.count - 1, max(0, newValue))
             } else {
                 _collectionViewSelectedIndex = newValue
             }
@@ -131,12 +130,13 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func setupConstraints() {
-        constrain(self.view, collectionView) { (selfView, collectionView) in
-            collectionView.bottom == selfView.bottom
-            collectionView.leading == selfView.leading
-            collectionView.trailing == selfView.trailing
-            collectionViewHeight = collectionView.height == 0
-        }
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+          collectionViewHeight
+        ])
     }
 
     @objc func reloadTable(with results: [UserType]) {
@@ -156,9 +156,9 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
     }
 
     private func resizeTable() {
-        let viewHeight = self.view.bounds.size.height
+        let viewHeight = view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        collectionViewHeight?.constant = minValue
+        collectionViewHeight.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
     }
 
@@ -194,7 +194,7 @@ final class UserSearchResultsViewController: UIViewController, KeyboardCollapseO
 
 extension UserSearchResultsViewController: Dismissable {
     func dismiss() {
-        self.view.isHidden = true
+        view.isHidden = true
         collectionViewSelectedIndex = .none
     }
 }

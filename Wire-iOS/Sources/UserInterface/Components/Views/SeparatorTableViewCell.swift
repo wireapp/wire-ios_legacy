@@ -46,9 +46,9 @@ class SeparatorTableViewCell: UITableViewCell, SeparatorViewProtocol, Themeable 
         configureSubviews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {
@@ -83,7 +83,7 @@ class SeparatorTableViewCell: UITableViewCell, SeparatorViewProtocol, Themeable 
     }
 
     // if nil the background color is the default content background color for the theme
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)

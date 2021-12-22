@@ -180,7 +180,7 @@ internal enum L10n {
         internal enum Label {
           /// Accept call
           internal static let acceptCall = L10n.tr("Localizable", "call.actions.label.accept_call")
-          /// Flip camera
+          /// Switch camera
           internal static let flipCamera = L10n.tr("Localizable", "call.actions.label.flip_camera")
           /// Join call
           internal static let joinCall = L10n.tr("Localizable", "call.actions.label.join_call")
@@ -278,6 +278,8 @@ internal enum L10n {
         internal enum Hints {
           /// Double tap on a tile for fullscreen
           internal static let fullscreen = L10n.tr("Localizable", "call.grid.hints.fullscreen")
+          /// Double tap to go back
+          internal static let goBack = L10n.tr("Localizable", "call.grid.hints.go_back")
           /// Double tap to go back, pinch to zoom
           internal static let goBackOrZoom = L10n.tr("Localizable", "call.grid.hints.go_back_or_zoom")
           /// Pinch to zoom
@@ -293,9 +295,9 @@ internal enum L10n {
         }
       }
       internal enum Participants {
-        /// Show All (%@)
-        internal static func showAll(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "call.participants.show_all", String(describing: p1))
+        /// Participants (%d)
+        internal static func showAll(_ p1: Int) -> String {
+          return L10n.tr("Localizable", "call.participants.show_all", p1)
         }
         internal enum List {
           /// Participants
@@ -420,7 +422,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "collections.section.files.title")
         }
         internal enum Images {
-          /// Pictures
+          /// Images
           internal static let title = L10n.tr("Localizable", "collections.section.images.title")
         }
         internal enum Links {
@@ -903,6 +905,8 @@ internal enum L10n {
             internal static func joined(_ p1: Any) -> String {
               return L10n.tr("Localizable", "content.system.conversation.guest.joined", String(describing: p1))
             }
+            /// You joined
+            internal static let youJoined = L10n.tr("Localizable", "content.system.conversation.guest.you_joined")
           }
           internal enum Invite {
             /// Invite people
@@ -1069,20 +1073,24 @@ internal enum L10n {
         internal static let messageDeleted = L10n.tr("Localizable", "conversation.alert.message_deleted")
       }
       internal enum Banner {
-        /// **Externals** and **guests** are present
-        internal static let externalsGuestsPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_present")
-        /// **Externals**, **guests**, and **services** are present
-        internal static let externalsGuestsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_guests_services_present")
-        /// **Externals** are present
-        internal static let externalsPresent = L10n.tr("Localizable", "conversation.banner.externals_present")
-        /// **External**s and **services** are present
-        internal static let externalsServicesPresent = L10n.tr("Localizable", "conversation.banner.externals_services_present")
-        /// **Guests** are present
-        internal static let guestsPresent = L10n.tr("Localizable", "conversation.banner.guests_present")
-        /// **Guests** and **services** are present
-        internal static let guestsServicesPresent = L10n.tr("Localizable", "conversation.banner.guests_services_present")
-        /// **Services** are active
-        internal static let servicesPresent = L10n.tr("Localizable", "conversation.banner.services_present")
+        /// %@ are active
+        internal static func areActive(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "conversation.banner.are_active", String(describing: p1))
+        }
+        /// %@ are present
+        internal static func arePresent(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "conversation.banner.are_present", String(describing: p1))
+        }
+        /// **Externals**
+        internal static let externals = L10n.tr("Localizable", "conversation.banner.externals")
+        /// **Guests**
+        internal static let guests = L10n.tr("Localizable", "conversation.banner.guests")
+        /// **Federated users**
+        internal static let remotes = L10n.tr("Localizable", "conversation.banner.remotes")
+        ///  and 
+        internal static let separator = L10n.tr("Localizable", "conversation.banner.separator")
+        /// **Services**
+        internal static let services = L10n.tr("Localizable", "conversation.banner.services")
       }
       internal enum Call {
         internal enum ManyParticipantsConfirmation {
@@ -1157,7 +1165,7 @@ internal enum L10n {
         internal static let closeReply = L10n.tr("Localizable", "conversation.input_bar.close_reply")
         /// Type a message
         internal static let placeholder = L10n.tr("Localizable", "conversation.input_bar.placeholder")
-        /// Timed message
+        /// Self-deleting message
         internal static let placeholderEphemeral = L10n.tr("Localizable", "conversation.input_bar.placeholder_ephemeral")
         /// Verified
         internal static let verified = L10n.tr("Localizable", "conversation.input_bar.verified")
@@ -1262,7 +1270,7 @@ internal enum L10n {
           internal static let choosePreviousMention = L10n.tr("Localizable", "conversation.input_bar.shortcut.choose_previous_mention")
           /// Edit Last Message
           internal static let editLastMessage = L10n.tr("Localizable", "conversation.input_bar.shortcut.edit_last_message")
-          /// Insert line break
+          /// Insert Line Break
           internal static let newline = L10n.tr("Localizable", "conversation.input_bar.shortcut.newline")
           /// Send Message
           internal static let send = L10n.tr("Localizable", "conversation.input_bar.shortcut.send")
@@ -1685,8 +1693,12 @@ internal enum L10n {
         }
       }
       internal enum Connection {
+        /// Something went wrong, please try again
+        internal static let genericError = L10n.tr("Localizable", "error.connection.generic_error")
         /// You cannot connect to this user due to legal hold.
         internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.connection.missing_legalhold_consent")
+        /// Error
+        internal static let title = L10n.tr("Localizable", "error.connection.title")
       }
       internal enum Conversation {
         /// Adding the participant failed
@@ -1736,6 +1748,14 @@ internal enum L10n {
         /// Please configure your SMS to be able to send the invites via SMS
         internal static let noMessagingProvider = L10n.tr("Localizable", "error.invite.no_messaging_provider")
       }
+      internal enum Message {
+        internal enum Send {
+          /// You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings
+          internal static let missingLegalholdConsent = L10n.tr("Localizable", "error.message.send.missing_legalhold_consent")
+          /// Messages cannot be sent
+          internal static let title = L10n.tr("Localizable", "error.message.send.title")
+        }
+      }
       internal enum Phone {
         /// Please enter a valid phone number
         internal static let invalid = L10n.tr("Localizable", "error.phone.invalid")
@@ -1771,6 +1791,94 @@ internal enum L10n {
         internal static let registrationUnknownError = L10n.tr("Localizable", "error.user.registration_unknown_error")
         /// Something went wrong, please try again
         internal static let unkownError = L10n.tr("Localizable", "error.user.unkown_error")
+      }
+    }
+    internal enum FeatureConfig {
+      internal enum Alert {
+        /// There has been a change in Wire
+        internal static let genericTitle = L10n.tr("Localizable", "feature_config.alert.generic_title")
+        internal enum SelfDeletingMessages {
+          internal enum Message {
+            /// Self-deleting messages are disabled.
+            internal static let disabled = L10n.tr("Localizable", "feature_config.alert.self_deleting_messages.message.disabled")
+            /// Self-deleting messages are enabled. You can set a timer before writing a message.
+            internal static let enabled = L10n.tr("Localizable", "feature_config.alert.self_deleting_messages.message.enabled")
+            /// Self-deleting messages are now mandatory. New messages will self-delete after %@.
+            internal static func forcedOn(_ p1: Any) -> String {
+              return L10n.tr("Localizable", "feature_config.alert.self_deleting_messages.message.forced_on", String(describing: p1))
+            }
+          }
+        }
+      }
+      internal enum ConferenceCallingRestrictions {
+        internal enum Admins {
+          internal enum Alert {
+            /// Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message")
+            /// Upgrade to Enterprise
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.title")
+            internal enum Action {
+              /// Upgrade now
+              internal static let upgrade = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.action.upgrade")
+            }
+            internal enum Message {
+              /// Learn more about Wire’s pricing
+              internal static let learnMore = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.admins.alert.message.learn_more")
+            }
+          }
+        }
+        internal enum Members {
+          internal enum Alert {
+            /// To start a conference call, your team needs to upgrade to the Enterprise plan.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.message")
+            /// Feature unavailable
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.members.alert.title")
+          }
+        }
+        internal enum Personal {
+          internal enum Alert {
+            /// The option to initiate a conference call is only available in the paid version of Wire.
+            internal static let message = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.message")
+            /// Feature unavailable
+            internal static let title = L10n.tr("Localizable", "feature_config.conference_calling_restrictions.personal.alert.title")
+          }
+        }
+      }
+      internal enum FileSharingRestrictions {
+        /// Receiving audio files is prohibited
+        internal static let audio = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.audio")
+        /// Receiving files is prohibited
+        internal static let file = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.file")
+        /// Receiving images is prohibited
+        internal static let picture = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.picture")
+        /// Receiving videos is prohibited
+        internal static let video = L10n.tr("Localizable", "feature_config.file_sharing_restrictions.video")
+      }
+      internal enum Update {
+        internal enum ConferenceCalling {
+          internal enum Alert {
+            /// Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.
+            internal static let message = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message")
+            /// Enterprise plan
+            internal static let title = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.title")
+            internal enum Message {
+              /// Learn more about the Enterprise plan
+              internal static let learnMore = L10n.tr("Localizable", "feature_config.update.conference_calling.alert.message.learn_more")
+            }
+          }
+        }
+        internal enum FileSharing {
+          internal enum Alert {
+            /// There has been a change in Wire
+            internal static let title = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.title")
+            internal enum Message {
+              /// Sharing and receiving files of any type is now disabled.
+              internal static let disabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.disabled")
+              /// Sharing and receiving files of any type is now enabled.
+              internal static let enabled = L10n.tr("Localizable", "feature_config.update.file_sharing.alert.message.enabled")
+            }
+          }
+        }
       }
     }
     internal enum Folder {
@@ -1911,7 +2019,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "group_details.receipt_options_cell.title")
       }
       internal enum TimeoutOptionsCell {
-        /// Timed messages
+        /// Self-deleting messages
         internal static let title = L10n.tr("Localizable", "group_details.timeout_options_cell.title")
       }
     }
@@ -1996,6 +2104,8 @@ internal enum L10n {
       internal static let confirm = L10n.tr("Localizable", "image_confirmer.confirm")
     }
     internal enum Inbox {
+      /// Connection Requests
+      internal static let title = L10n.tr("Localizable", "inbox.title")
       internal enum ConnectionRequest {
         /// Connect
         internal static let connectButtonTitle = L10n.tr("Localizable", "inbox.connection_request.connect_button_title")
@@ -2044,6 +2154,16 @@ internal enum L10n {
           internal static let settings = L10n.tr("Localizable", "keyboard_photos_access.denied.keyboard.settings")
         }
       }
+    }
+    internal enum Keyboardshortcut {
+      /// Conversation Details...
+      internal static let conversationDetail = L10n.tr("Localizable", "keyboardshortcut.conversationDetail")
+      /// People
+      internal static let openPeople = L10n.tr("Localizable", "keyboardshortcut.openPeople")
+      /// Scroll to Bottom
+      internal static let scrollToBottom = L10n.tr("Localizable", "keyboardshortcut.scrollToBottom")
+      /// Search in Conversation...
+      internal static let searchInConversation = L10n.tr("Localizable", "keyboardshortcut.searchInConversation")
     }
     internal enum Landing {
       /// Wire. Add your Account.
@@ -2123,9 +2243,9 @@ internal enum L10n {
       /// Legal hold details
       internal static let accessibility = L10n.tr("Localizable", "legalhold.accessibility")
       internal enum Header {
-        /// Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.
+        /// Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.
         internal static let otherDescription = L10n.tr("Localizable", "legalhold.header.other_description")
-        /// Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.
+        /// Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.
         internal static let selfDescription = L10n.tr("Localizable", "legalhold.header.self_description")
         /// Legal Hold
         internal static let title = L10n.tr("Localizable", "legalhold.header.title")
@@ -2141,7 +2261,7 @@ internal enum L10n {
       internal enum Alert {
         /// Learn More
         internal static let learnMore = L10n.tr("Localizable", "legalhold_active.alert.learn_more")
-        /// Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.
+        /// Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.
         internal static let message = L10n.tr("Localizable", "legalhold_active.alert.message")
         /// Legal Hold is Active
         internal static let title = L10n.tr("Localizable", "legalhold_active.alert.title")
@@ -2149,7 +2269,7 @@ internal enum L10n {
     }
     internal enum LegalholdRequest {
       internal enum Alert {
-        /// All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.
+        /// All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.
         internal static func detail(_ p1: Any) -> String {
           return L10n.tr("Localizable", "legalhold_request.alert.detail", String(describing: p1))
         }
@@ -2875,6 +2995,8 @@ internal enum L10n {
         internal static func blockingReason(_ p1: Any) -> String {
           return L10n.tr("Localizable", "profile.details.blocking_reason", String(describing: p1))
         }
+        /// Federated
+        internal static let federated = L10n.tr("Localizable", "profile.details.federated")
         /// Group admin
         internal static let groupAdmin = L10n.tr("Localizable", "profile.details.group_admin")
         /// Guest
@@ -3512,6 +3634,10 @@ internal enum L10n {
             /// Add username
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.add_handle.title")
           }
+          internal enum Domain {
+            /// Domain
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.domain.title")
+          }
           internal enum Email {
             /// Email
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.email.title")
@@ -3607,6 +3733,10 @@ internal enum L10n {
                 internal static let title = L10n.tr("Localizable", "self.settings.account_section.phone_number.change.verify.title")
               }
             }
+          }
+          internal enum Team {
+            /// Team
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.team.title")
           }
         }
         internal enum AddAccount {
@@ -3984,7 +4114,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "self.settings.technical_report_section.title")
         }
         internal enum Vbr {
-          /// This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.
+          /// This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.
           internal static let description = L10n.tr("Localizable", "self.settings.vbr.description")
           /// Variable Bit Rate Encoding
           internal static let title = L10n.tr("Localizable", "self.settings.vbr.title")
@@ -4387,7 +4517,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title")
       }
       internal enum FlipVideoButton {
-        /// Flip
+        /// Switch camera
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title")
       }
       internal enum HangUpButton {
@@ -4395,7 +4525,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.hang_up_button.title")
       }
       internal enum MuteButton {
-        /// Mute
+        /// Microphone
         internal static let title = L10n.tr("Localizable", "voice.mute_button.title")
       }
       internal enum NetworkError {
@@ -4447,7 +4577,7 @@ internal enum L10n {
         internal static let tapToReturn = L10n.tr("Localizable", "voice.top_overlay.tap_to_return")
       }
       internal enum VideoButton {
-        /// Video
+        /// Camera
         internal static let title = L10n.tr("Localizable", "voice.video_button.title")
       }
     }

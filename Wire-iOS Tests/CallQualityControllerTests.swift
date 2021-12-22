@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
+final class CallQualityControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
 
     var sut: MockCallQualityController!
     var coreDataFixture: CoreDataFixture!

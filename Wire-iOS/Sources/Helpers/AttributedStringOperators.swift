@@ -217,8 +217,7 @@ extension String {
 
         if povVersion != povPath, !povVersion.isEmpty {
             return povVersion
-        }
-        else {
+        } else {
             return self.localized
         }
     }

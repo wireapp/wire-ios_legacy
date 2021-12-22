@@ -34,10 +34,9 @@ final class ImageResourceThumbnailView: RoundedView {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {
@@ -87,7 +86,7 @@ final class ImageResourceThumbnailView: RoundedView {
             DispatchQueue.main.async {
                 let needsVideoCoverView = isVideoPreview && self.imageView.mediaAsset != nil
                 self.coverView.isHidden = !needsVideoCoverView
-                self.assetTypeBadge.image = needsVideoCoverView ? StyleKitIcon.videoCall.makeImage(size: .tiny, color: .white) : nil
+                self.assetTypeBadge.image = needsVideoCoverView ? StyleKitIcon.camera.makeImage(size: .tiny, color: .white) : nil
             }
         }
     }

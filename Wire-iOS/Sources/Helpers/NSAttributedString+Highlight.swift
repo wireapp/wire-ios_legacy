@@ -90,8 +90,7 @@ extension NSAttributedString {
         // There is no prior whitespace
         if previousSpace.location == NSNotFound {
             return self.attributedSubstring(from: NSRange(location: from, length: self.length - from)).prefixedWithEllipsis()
-        }
-        else {
+        } else {
             // Check if we accidentally jumped to the previous line
             let textSkipped = text.substring(with: NSRange(location: previousSpace.location + previousSpace.length, length: from - previousSpace.location))
             let skippedNewline = textSkipped.containsCharacters(from: .newlines)
@@ -107,8 +106,7 @@ extension NSAttributedString {
         // There is no whitespace before the previousSpace
         if prePreviousSpace.location == NSNotFound {
             prePreviousSpace = previousSpace
-        }
-        else {
+        } else {
             // Check if we accidentally jumped to the previous line
             let textSkipped = text.substring(with: NSRange(location: prePreviousSpace.location + prePreviousSpace.length, length: from - prePreviousSpace.location))
             let preSkippedNewline = textSkipped.containsCharacters(from: .newlines)
@@ -127,8 +125,7 @@ extension NSAttributedString {
 
         if textSize.width > fittingIntoWidth {
             return self.attributedSubstring(from: NSRange(location: from, length: self.length - from)).prefixedWithEllipsis()
-        }
-        else {
+        } else {
             let rangeFromPrePreviousSpaceToEnd = NSRange(location: prePreviousSpace.location + prePreviousSpace.length,
                                                          length: self.length - (prePreviousSpace.location + prePreviousSpace.length))
 
@@ -167,8 +164,7 @@ extension NSAttributedString {
 
                 if upToWidth == 0 || substring.layoutSize().width < upToWidth {
                     attributedText.addAttributes(attributes, range: currentRange)
-                }
-                else {
+                } else {
                     break
                 }
             }

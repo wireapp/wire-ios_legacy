@@ -73,8 +73,7 @@ final class ContinuousMaskLayer: CALayer {
         if let otherMaskLayer = layer as? ContinuousMaskLayer {
             self.shape = otherMaskLayer.shape
             self.roundedCorners = otherMaskLayer.roundedCorners
-        }
-        else {
+        } else {
             fatal("Cannot init with \(layer)")
         }
     }
@@ -84,7 +83,8 @@ final class ContinuousMaskLayer: CALayer {
         self.mask = CAShapeLayer()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

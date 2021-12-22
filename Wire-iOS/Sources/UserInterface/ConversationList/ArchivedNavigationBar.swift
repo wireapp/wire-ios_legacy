@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import Cartography
 
 final class ArchivedNavigationBar: UIView {
 
@@ -54,6 +53,7 @@ final class ArchivedNavigationBar: UIView {
         createConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,22 +69,27 @@ final class ArchivedNavigationBar: UIView {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }
 
-    func createConstraints() {
-        constrain(self, separatorView, titleLabel, dismissButton) { view, separator, title, button in
-            separator.height == .hairline
-            separator.left == view.left
-            separator.right == view.right
-            separator.bottom == view.bottom
+    private func createConstraints() {
+        [separatorView, titleLabel, dismissButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+          separatorView.heightAnchor.constraint(equalToConstant: .hairline),
+          separatorView.leftAnchor.constraint(equalTo: leftAnchor),
+          separatorView.rightAnchor.constraint(equalTo: rightAnchor),
+          separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            title.centerX == view.centerX
-            title.centerY == view.centerY
+          titleLabel
+            .centerXAnchor.constraint(equalTo: centerXAnchor),
+          titleLabel
+            .centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            button.centerY == title.centerY
-            button.right == view.right - 16
-            button.left >= title.right + 8
+          dismissButton.centerYAnchor.constraint(equalTo: titleLabel
+                                            .centerYAnchor),
+          dismissButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
+          dismissButton.leftAnchor.constraint(greaterThanOrEqualTo: titleLabel
+                                        .rightAnchor, constant: 8),
 
-            view.height == barHeight
-        }
+          heightAnchor.constraint(equalToConstant: barHeight)
+        ])
     }
 
     @objc func dismissButtonTapped(_ sender: IconButton) {

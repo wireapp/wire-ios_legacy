@@ -18,7 +18,7 @@
 import Foundation
 import UIKit
 
-protocol ParticipantDeviceHeaderViewDelegate: class {
+protocol ParticipantDeviceHeaderViewDelegate: AnyObject {
     func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView)
 }
 

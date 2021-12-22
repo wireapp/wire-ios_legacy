@@ -17,11 +17,10 @@
 //
 
 import UIKit
-import Cartography
 import Down
 import WireCommonComponents
 
-protocol MarkdownBarViewDelegate: class {
+protocol MarkdownBarViewDelegate: AnyObject {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
 }
@@ -54,6 +53,7 @@ final class MarkdownBarView: UIView {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -85,9 +85,13 @@ final class MarkdownBarView: UIView {
 
         addSubview(stackView)
 
-        constrain(self, stackView) { view, stackView in
-            stackView.edges == view.edges
-        }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          stackView.topAnchor.constraint(equalTo: topAnchor),
+          stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          stackView.leftAnchor.constraint(equalTo: leftAnchor),
+          stackView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
 
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
         headerButton.delegate = self

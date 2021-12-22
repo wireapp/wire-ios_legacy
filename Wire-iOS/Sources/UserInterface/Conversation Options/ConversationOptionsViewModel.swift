@@ -19,7 +19,7 @@
 import UIKit
 import WireUtilities
 
-protocol ConversationOptionsViewModelConfiguration: class {
+protocol ConversationOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowGuests: Bool { get }
     var isCodeEnabled: Bool { get }
@@ -31,7 +31,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
     func deleteLink(completion: @escaping (VoidResult) -> Void)
 }
 
-protocol ConversationOptionsViewModelDelegate: class {
+protocol ConversationOptionsViewModelDelegate: AnyObject {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
     func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?

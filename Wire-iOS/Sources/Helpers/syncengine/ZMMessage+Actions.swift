@@ -37,6 +37,9 @@ extension ZMConversationMessage {
 
     /// Whether the message can be copied.
     var canBeCopied: Bool {
+        guard !isRestricted else {
+            return false
+        }
         return SecurityFlags.clipboard.isEnabled
             && !isEphemeral
             && (isText || isImage || isLocation)
@@ -106,10 +109,13 @@ extension ZMConversationMessage {
 
     /// Wether it is possible to download the message content.
     var canBeDownloaded: Bool {
-        guard let fileMessageData = self.fileMessageData else {
+        guard let fileMessageData = self.fileMessageData,
+              !isRestricted else {
             return false
         }
-        return isFile && fileMessageData.transferState == .uploaded && fileMessageData.downloadState == .remote
+        return isFile
+            && fileMessageData.transferState == .uploaded
+            && fileMessageData.downloadState == .remote
     }
 
     var canCancelDownload: Bool {
@@ -121,37 +127,32 @@ extension ZMConversationMessage {
 
     /// Wether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !SecurityFlags.saveMessage.isEnabled {
+        if isEphemeral || isRestricted {
             return false
         }
 
         if isImage {
             return true
-        }
-        else if isVideo {
+        } else if isVideo {
             return videoCanBeSavedToCameraRoll()
-        }
-        else if isAudio {
+        } else if isAudio {
             return audioCanBeSaved()
-        }
-        else if isFile, let fileMessageData = self.fileMessageData {
+        } else if isFile, let fileMessageData = self.fileMessageData {
             return fileMessageData.fileURL != nil
-        }
-        else {
+        } else {
             return false
         }
     }
 
     /// Wether it should be possible to forward given message to another conversation.
     var canBeForwarded: Bool {
-        if isEphemeral {
+        if isEphemeral || isRestricted {
             return false
         }
 
         if isFile, let fileMessageData = self.fileMessageData {
             return fileMessageData.fileURL != nil
-        }
-        else {
+        } else {
             return (isText || isImage || isLocation || isFile)
         }
     }

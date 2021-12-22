@@ -24,7 +24,7 @@ import WireSyncEngine
  * An object that receives notifications from a profile details content controller.
  */
 
-protocol ProfileDetailsContentControllerDelegate: class {
+protocol ProfileDetailsContentControllerDelegate: AnyObject {
 
     /// Called when the profile details change.
     func profileDetailsContentDidChange()
@@ -159,7 +159,7 @@ final class ProfileDetailsContentController: NSObject,
 
             if let conversation = conversation {
                 let viewerCanChangeOtherRoles = viewer.canModifyOtherMember(in: conversation)
-                let userCanHaveRoleChanged = !user.isWirelessUser
+                let userCanHaveRoleChanged = !user.isWirelessUser && !user.isFederated
 
                 if viewerCanChangeOtherRoles && userCanHaveRoleChanged {
                     items.append(.groupAdminStatus(enabled: groupAdminEnabled))

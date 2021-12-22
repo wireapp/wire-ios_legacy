@@ -55,7 +55,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForOneRequest() {
-        verify(matching: sut)
+        verify(matching: sut.wrapInNavigationController(setBackgroundColor: true))
     }
 
     func testForTwoRequests() {
@@ -69,6 +69,6 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
         sut.connectionRequests = [secondConnectionRequest, mockConnectionRequest]
         sut.reload(animated: false)
 
-        verify(matching: sut)
+        verify(matching: sut.wrapInNavigationController(setBackgroundColor: true))
     }
 }

@@ -19,36 +19,34 @@ import XCTest
 @testable import Wire
 
 final class AVURLAsset_conversionTests: XCTestCase {
-////TODO katerina: uncomment
-    
-//    func testThatVideoIsConvertedToUploadFormat() {
-//        // GIVEN
-//        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
-//        let originalAsset: AVURLAsset = AVURLAsset(url: videoURL, options: nil)
-//
-//        // WHEN
-//        let expectation = self.expectation(description: "Video converted")
-//
-//        AVURLAsset.convertVideoToUploadFormat(at: videoURL,
-//                                              quality: AVAssetExportPresetLowQuality,
-//                                              deleteSourceFile: false) {
-//                                                url, asset, error in
-//                                                // THEN
-//
-//                                                // exported file URL
-//                                                XCTAssertEqual(url?.lastPathComponent, videoURL.lastPathComponent)
-//                                                // temp asset URL for upload
-//                                                XCTAssertEqual(asset?.url.lastPathComponent, videoURL.lastPathComponent)
-//                                                XCTAssertEqual(asset?.duration, originalAsset.duration)
-//                                                // converted file with low quality should be smaller
-//                                                XCTAssertLessThan(url!.fileSize!, videoURL.fileSize!)
-//
-//                                                XCTAssertNil(error)
-//                                                expectation.fulfill()
-//        }
-//
-//        waitForExpectations(timeout: 10) { error in
-//            XCTAssertNil(error)
-//        }
-//    }
+
+    func testThatVideoIsConvertedToUploadFormat() {
+        // GIVEN
+        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
+        let originalAsset: AVURLAsset = AVURLAsset(url: videoURL, options: nil)
+
+        // WHEN
+        let expectation = self.expectation(description: "Video converted")
+
+        AVURLAsset.convertVideoToUploadFormat(at: videoURL,
+                                              quality: AVAssetExportPresetLowQuality,
+                                              deleteSourceFile: false) { url, asset, error in
+                                                // THEN
+
+                                                // exported file URL
+                                                XCTAssertEqual(url?.lastPathComponent, videoURL.lastPathComponent)
+                                                // temp asset URL for upload
+                                                XCTAssertEqual(asset?.url.lastPathComponent, videoURL.lastPathComponent)
+                                                XCTAssertEqual(asset?.duration, originalAsset.duration)
+                                                // converted file with low quality should be smaller
+                                                XCTAssertLessThan(url!.fileSize!, videoURL.fileSize!)
+
+                                                XCTAssertNil(error)
+                                                expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10) { error in
+            XCTAssertNil(error)
+        }
+    }
 }

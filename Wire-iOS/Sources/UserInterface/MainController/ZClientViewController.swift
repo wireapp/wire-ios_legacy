@@ -38,6 +38,7 @@ final class ZClientViewController: UIViewController {
     var legalHoldDisclosureController: LegalHoldDisclosureController?
 
     var userObserverToken: Any?
+    var conferenceCallingUnavailableObserverToken: Any?
 
     private let topOverlayContainer: UIView = UIView()
     private var topOverlayViewController: UIViewController?
@@ -87,6 +88,20 @@ final class ZClientViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+
+        NotificationCenter.default.addObserver(forName: .featureDidChangeNotification, object: nil, queue: .main) { [weak self] (note) in
+            guard let change = note.object as? FeatureService.FeatureChange else { return }
+
+            switch change {
+            case .conferenceCallingIsAvailable:
+                guard let session = SessionManager.shared,
+                      session.usePackagingFeatureConfig else { break }
+                self?.presentConferenceCallingAvailableAlert()
+
+            default:
+                break
+            }
+        }
 
         setupAppearance()
 
@@ -163,6 +178,26 @@ final class ZClientViewController: UIViewController {
         }
 
         setupUserChangeInfoObserver()
+        setUpConferenceCallingUnavailableObserver()
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
+    override var shouldAutorotate: Bool {
+        return presentedViewController?.shouldAutorotate ?? true
+    }
+
+    // MARK: keyboard shortcut
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.openPeople)]
+    }
+
+    @objc
+    private func openStartUI(_ sender: Any?) {
+        conversationListViewController.bottomBarController.startUIButtonTapped(sender)
     }
 
     private func createBackgroundViewController() {
@@ -172,14 +207,6 @@ final class ZClientViewController: UIViewController {
         conversationListViewController.view.frame = backgroundViewController.view.bounds
 
         wireSplitViewController.leftViewController = backgroundViewController
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
-    override var shouldAutorotate: Bool {
-        return presentedViewController?.shouldAutorotate ?? true
     }
 
     // MARK: Status bar
@@ -321,7 +348,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = nil
 
         let inbox = ConnectRequestsViewController()
-        pushContentViewController(inbox, focusOnView: focus, animated: animated)
+        pushContentViewController(inbox.wrapInNavigationController(setBackgroundColor: true), focusOnView: focus, animated: animated)
     }
 
     /// Open the user clients detail screen
@@ -580,8 +607,7 @@ final class ZClientViewController: UIViewController {
                     heightConstraint.isActive = false
                     self.view.layoutIfNeeded()
                 })
-            }
-            else {
+            } else {
                 topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }

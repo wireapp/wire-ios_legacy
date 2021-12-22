@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 
 /// Observes events from the message toolbox.
-protocol MessageToolboxViewDelegate: class {
+protocol MessageToolboxViewDelegate: AnyObject {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
     func messageToolboxViewDidSelectDelete(_ sender: UIView?)
@@ -155,6 +155,7 @@ final class MessageToolboxView: UIView {
         addGestureRecognizer(tapGestureRecogniser)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

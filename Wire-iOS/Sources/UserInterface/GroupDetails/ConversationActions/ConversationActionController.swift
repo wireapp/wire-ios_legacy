@@ -146,6 +146,10 @@ final class ConversationActionController {
                 target: target)
     }
 
+    func presentError(_ error: LocalizedError) {
+        target.presentLocalizedErrorAlert(error)
+    }
+
     private func prepare(viewController: UIViewController, with context: PresentationContext) {
         viewController.popoverPresentationController.apply {
             $0.sourceView = context.view
