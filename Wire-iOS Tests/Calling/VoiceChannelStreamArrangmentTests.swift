@@ -196,4 +196,27 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         XCTAssert(streamArrangement.grid.elementsEqual([selfStream] + participantStreams))
         XCTAssert(streamArrangement.preview == nil)
     }
+    
+    func testThatItReturnsSortedParticipantsInGrid_ByVideoState() {
+        testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideoStateIsSorted(sortingEnabled: true)
+    }
+
+    func testThatItReturnsUnSortedParticipantsInGrid_ByVideoState() {
+        testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideoStateIsSorted(sortingEnabled: false)
+    }
+    
+    // MARK: - activeVideoStreamsSorting
+    func testThatActiveStreams_ReturnsSteams_ForParticipantsWithVideoStateIsSorted(sortingEnabled: Bool) {
+        // GIVEN
+        let participant1 = participantStub(for: mockUser1, videoEnabled: true)
+        let participant2 = participantStub(for: mockUser2, videoEnabled: true)
+        let participant3 = participantStub(for: mockUser3, videoEnabled: true)
+        sut.mockParticipants = [participant1, participant2, participant3]
+        
+        // WHEN
+        let streams = sut.activeStreams(from: sut.mockParticipants)
+        
+        // THEN
+        XCTAssertTrue(streams.contains(where: {$0.streamId.userId == remoteId1}))
+    }
 }
