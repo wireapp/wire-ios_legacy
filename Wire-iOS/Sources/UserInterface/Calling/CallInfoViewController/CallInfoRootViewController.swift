@@ -147,7 +147,7 @@ extension CallInfoRootViewController {
     func dismissToastView() {
         Toast.hide()
     }
-    func presentToastView(config:ToastConfiguration) {
+    func presentToastView(config: ToastConfiguration) {
         Toast.show(with: config)
     }
 }

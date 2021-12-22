@@ -126,7 +126,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         statusViewController.didMove(toParent: self)
         showMutedToastMessageIfNeeded()
     }
-    
     private func showMutedToastMessageIfNeeded() {
         if case .established(let duration) = configuration.state,
             duration <= 5.0,
