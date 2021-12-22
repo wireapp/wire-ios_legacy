@@ -105,6 +105,8 @@ extension NotificationService: UpdateEventsDelegate {
     }
 }
 
+
+
 extension NotificationService {
 
     public func processEvents(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
