@@ -162,13 +162,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         iphone_leadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8)
         iphone_trailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
 
-        let bottomAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>
-
-        if #available(iOS 11, *) {
-            bottomAnchor = view.safeAreaLayoutGuide.bottomAnchor
-        } else {
-            bottomAnchor = view.bottomAnchor
-        }
+        let bottomAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor> = view.safeAreaLayoutGuide.bottomAnchor
 
         iphone_bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
