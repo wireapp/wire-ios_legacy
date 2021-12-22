@@ -228,11 +228,7 @@ final class FullscreenImageViewController: UIViewController {
 
         scrollView.fitInSuperview()
 
-        if #available(iOS 11, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        scrollView.contentInsetAdjustmentBehavior = .never
 
         scrollView.delegate = self
         scrollView.accessibilityIdentifier = "fullScreenPage"
