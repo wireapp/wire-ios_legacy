@@ -19,19 +19,19 @@
 import Foundation
 
 class MockConversationDirectory: ConversationDirectoryType {
-    
+
     var allFolders: [LabelType] = []
     var mockGroupConversations: [ZMConversation] = []
     var mockContactsConversations: [ZMConversation] = []
-    
+
     func createFolder(_ name: String) -> LabelType? {
         return nil
     }
-    
+
     func addObserver(_ observer: ConversationDirectoryObserver) -> Any {
         return "token"
     }
-    
+
     func conversations(by type: ConversationListType) -> [ZMConversation] {
         switch type {
         case .groups:
@@ -42,5 +42,5 @@ class MockConversationDirectory: ConversationDirectoryType {
             return []
         }
     }
-    
+
 }

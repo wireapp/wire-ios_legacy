@@ -19,29 +19,29 @@
 import XCTest
 @testable import Wire
 
-fileprivate class ReplyComposingViewMockDelegate: NSObject, ReplyComposingViewDelegate {
+private class ReplyComposingViewMockDelegate: NSObject, ReplyComposingViewDelegate {
     var didCancelCalledCount: Int = 0
     func composingViewDidCancel(composingView: ReplyComposingView) {
-        didCancelCalledCount = didCancelCalledCount + 1
+        didCancelCalledCount += 1
     }
-    
+
     var composingViewWantsToShowMessage: Int = 0
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage) {
-        composingViewWantsToShowMessage = composingViewWantsToShowMessage + 1
+        composingViewWantsToShowMessage += 1
     }
 }
 
 final class ReplyComposingViewTests: XCTestCase {
     func testDeallocation() {
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         self.verifyDeallocation {
             return ReplyComposingView(message: message)
         }
     }
-    
+
     func testThatItCallsDelegateWhenTapped() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         let view = ReplyComposingView(message: message)
         let delegate = ReplyComposingViewMockDelegate()
         view.delegate = delegate
@@ -51,10 +51,10 @@ final class ReplyComposingViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(delegate.composingViewWantsToShowMessage, 1)
     }
-    
+
     func testThatItCallsDelegateWhenXCalled() {
         // GIVEN
-        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
         let view = ReplyComposingView(message: message)
         let delegate = ReplyComposingViewMockDelegate()
         view.delegate = delegate
@@ -64,5 +64,5 @@ final class ReplyComposingViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(delegate.didCancelCalledCount, 1)
     }
-    
+
 }

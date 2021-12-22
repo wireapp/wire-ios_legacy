@@ -49,9 +49,8 @@ extension NSAttributedString {
     }
 }
 
-
 extension String {
-    
+
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespaces)
     }

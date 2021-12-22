@@ -20,27 +20,39 @@ import Foundation
 import UIKit
 
 extension UIImage {
-    
-    /// Decode UIIMage. This will prevent it from happening later in the rendering path.
+
+    /// Decode UIImage. This will prevent it from happening later in the rendering path.
+
     var decoded: UIImage? {
-        guard let rawImage = cgImage else {
+        guard
+            let rawImage = cgImage,
+            let context = CGContext.fromRawImage(rawImage)
+        else {
             return  nil
         }
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        
-        guard let context = CGContext(data: nil, width: rawImage.width, height: rawImage.height, bitsPerComponent: 8, bytesPerRow: rawImage.width * 4, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
-            return nil
-        }
-        
+
         let imageBounds = CGRect(x: 0, y: 0, width: rawImage.width, height: rawImage.height)
         context.draw(rawImage, in: imageBounds)
-        
+
         guard let rawDecodedImage = context.makeImage() else {
             return nil
         }
-        
+
         return UIImage(cgImage: rawDecodedImage)
     }
-    
+
+}
+
+private extension CGContext {
+
+    static func fromRawImage(_ rawImage: CGImage) -> CGContext? {
+        return CGContext(data: nil,
+                         width: rawImage.width,
+                         height: rawImage.height,
+                         bitsPerComponent: 8,
+                         bytesPerRow: rawImage.width * 4,
+                         space: CGColorSpaceCreateDeviceRGB(),
+                         bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+    }
+
 }

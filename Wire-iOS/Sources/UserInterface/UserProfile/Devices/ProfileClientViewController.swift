@@ -16,78 +16,79 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
-import Cartography
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
-final class ProfileClientViewController: UIViewController {
+final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
-    let userClient: UserClient
-    let contentView = UIView()
-    let backButton = IconButton(style: .circular)
-    let showMyDeviceButton = ButtonWithLargerHitArea()
-    let descriptionTextView = UITextView()
-    let separatorLineView = UIView()
-    let typeLabel = UILabel()
-    let IDLabel = UILabel()
+    private let userClient: UserClient
+    private let contentView = UIView()
+    private let backButton = IconButton(style: .circular)
+    private let showMyDeviceButton = ButtonWithLargerHitArea()
+    private let descriptionTextView = UITextView()
+    private let separatorLineView = UIView()
+    private let typeLabel = UILabel()
+    private let IDLabel = UILabel()
     let spinner = UIActivityIndicatorView(style: .gray)
-    let fullIDLabel = CopyableLabel()
-    let verifiedToggle = UISwitch()
-    let verifiedToggleLabel = UILabel()
-    let resetButton = ButtonWithLargerHitArea()
+    private let fullIDLabel = CopyableLabel()
+    private let verifiedToggle = UISwitch()
+    private let verifiedToggleLabel = UILabel()
+    private let resetButton = ButtonWithLargerHitArea()
 
-    var userClientToken: NSObjectProtocol!
-    var resetSessionPending: Bool = false
+    var dismissSpinner: SpinnerCompletion?
+
+    private var userClientToken: NSObjectProtocol!
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
-    var debugMenuButton: ButtonWithLargerHitArea?
+    private var debugMenuButton: ButtonWithLargerHitArea?
 
     var showBackButton: Bool = true {
         didSet {
-            self.backButton.isHidden = !self.showBackButton
+            backButton.isHidden = !showBackButton
         }
     }
-    
-    fileprivate let fingerprintSmallFont = FontSpec(.small, .light).font!
-    fileprivate let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
-    fileprivate let fingerprintFont = FontSpec(.normal, .none).font!
-    fileprivate let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
 
-    convenience init(client: UserClient, fromConversation: Bool) {
+    private let fingerprintSmallFont = FontSpec(.small, .light).font!
+    private let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
+    private let fingerprintFont = FontSpec(.normal, .none).font!
+    private let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
+
+    convenience init(client: UserClient,
+                     fromConversation: Bool) {
         self.init(client: client)
         self.fromConversation = fromConversation
     }
-    
+
     required init(client: UserClient) {
-        self.userClient = client
+        userClient = client
 
         super.init(nibName: nil, bundle: nil)
-        
-        self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
+
+        userClientToken = UserClientChangeInfo.add(observer: self, for: client)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueue({ () -> Void in
                 self.userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.updateFingerprintLabel()
-        self.modalPresentationStyle = .overCurrentContext
-        self.title = NSLocalizedString("registration.devices.title", comment:"")
+        updateFingerprintLabel()
+        modalPresentationStyle = .overCurrentContext
+        title = L10n.Localizable.Registration.Devices.title
 
         setupViews()
     }
-    
+
+    @available(*, unavailable)
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         fatalError("init(nibNameOrNil:nibBundleOrNil:) has not been implemented")
     }
-    
+
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -96,43 +97,43 @@ final class ProfileClientViewController: UIViewController {
         return [.portrait]
     }
 
-    func setupViews() {
+    private func setupViews() {
         view.backgroundColor = UIColor.from(scheme: .background)
 
-        self.setupContentView()
-        self.setupBackButton()
-        self.setupShowMyDeviceButton()
-        self.setupDescriptionTextView()
-        self.setupSeparatorLineView()
-        self.setupTypeLabel()
-        self.setupIDLabel()
-        self.setupFullIDLabel()
-        self.setupSpinner()
-        self.setupVerifiedToggle()
-        self.setupVerifiedToggleLabel()
-        self.setupResetButton()
-        self.setupDebugMenuButton()
-        self.createConstraints()
-        self.updateFingerprintLabel()
+        setupContentView()
+        setupBackButton()
+        setupShowMyDeviceButton()
+        setupDescriptionTextView()
+        setupSeparatorLineView()
+        setupTypeLabel()
+        setupIDLabel()
+        setupFullIDLabel()
+        setupSpinner()
+        setupVerifiedToggle()
+        setupVerifiedToggleLabel()
+        setupResetButton()
+        setupDebugMenuButton()
+        createConstraints()
+        updateFingerprintLabel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = ""
     }
-    
+
     private func setupContentView() {
-        self.view.addSubview(contentView)
+        view.addSubview(contentView)
     }
 
     private func setupBackButton() {
         backButton.setIcon(.backArrow, size: .tiny, for: [])
         backButton.accessibilityIdentifier = "back"
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
-        backButton.isHidden = !self.showBackButton
-        self.view.addSubview(backButton)
+        backButton.isHidden = !showBackButton
+        view.addSubview(backButton)
     }
-    
+
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
         showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
@@ -141,53 +142,53 @@ final class ProfileClientViewController: UIViewController {
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: showMyDeviceButton)
     }
-    
+
     private func setupDescriptionTextView() {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
         descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
-        descriptionTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
-        
+        descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.accent()]
+
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
-        if let user = self.userClient.user {
+        if let user = userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
-                descriptionTextFont &&
-                UIColor.from(scheme: .textForeground)) +
+                                                    descriptionTextFont &&
+                                                    UIColor.from(scheme: .textForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
                     [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
-        self.contentView.addSubview(descriptionTextView)
+        contentView.addSubview(descriptionTextView)
     }
-    
+
     private func setupSeparatorLineView() {
         separatorLineView.backgroundColor = UIColor.from(scheme: .separator)
-        self.contentView.addSubview(separatorLineView)
+        contentView.addSubview(separatorLineView)
     }
-    
+
     private func setupTypeLabel() {
-        typeLabel.text = self.userClient.deviceClass?.localizedDescription.localizedUppercase
+        typeLabel.text = userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
         typeLabel.textColor = UIColor.from(scheme: .textForeground)
-        self.contentView.addSubview(typeLabel)
+        contentView.addSubview(typeLabel)
     }
-    
+
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
         IDLabel.textColor = UIColor.from(scheme: .textForeground)
-        self.contentView.addSubview(IDLabel)
-        self.updateIDLabel()
+        contentView.addSubview(IDLabel)
+        updateIDLabel()
     }
-    
+
     private func updateIDLabel() {
-        let fingerprintSmallMonospaceFont = self.fingerprintSmallFont.monospaced()
-        let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
-        
-        IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
+        let fingerprintSmallMonospaceFont = fingerprintSmallFont.monospaced()
+        let fingerprintSmallBoldMonospaceFont = fingerprintSmallBoldFont.monospaced()
+
+        IDLabel.attributedText = userClient.attributedRemoteIdentifier(
             [.font: fingerprintSmallMonospaceFont],
             boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
             uppercase: true
@@ -197,27 +198,25 @@ final class ProfileClientViewController: UIViewController {
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
         fullIDLabel.textColor = UIColor.from(scheme: .textForeground)
-        self.contentView.addSubview(fullIDLabel)
-    }
-    
-    private func setupSpinner() {
-        spinner.hidesWhenStopped = true
-        self.contentView.addSubview(spinner)
+        contentView.addSubview(fullIDLabel)
     }
 
-    fileprivate func updateFingerprintLabel() {
-        let fingerprintMonospaceFont = self.fingerprintFont.monospaced()
-        let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
-        
-        if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
+    private func setupSpinner() {
+        spinner.hidesWhenStopped = true
+        contentView.addSubview(spinner)
+    }
+
+    private func updateFingerprintLabel() {
+        let fingerprintMonospaceFont = fingerprintFont.monospaced()
+        let fingerprintBoldMonospaceFont = fingerprintBoldFont.monospaced()
+
+        if let attributedFingerprint = userClient.fingerprint?.attributedFingerprint(
             attributes: [.font: fingerprintMonospaceFont],
             boldAttributes: [.font: fingerprintBoldMonospaceFont],
-            uppercase: false)
-        {
+            uppercase: false) {
             fullIDLabel.attributedText = attributedFingerprint
             spinner.stopAnimating()
-        }
-        else {
+        } else {
             fullIDLabel.attributedText = NSAttributedString(string: "")
             spinner.startAnimating()
         }
@@ -225,29 +224,29 @@ final class ProfileClientViewController: UIViewController {
 
     private func setupVerifiedToggle() {
         verifiedToggle.onTintColor = UIColor(red: 0, green: 0.588, blue: 0.941, alpha: 1)
-        verifiedToggle.isOn = self.userClient.verified
+        verifiedToggle.isOn = userClient.verified
         verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
-        self.contentView.addSubview(verifiedToggle)
+        contentView.addSubview(verifiedToggle)
     }
-    
+
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
         verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
         verifiedToggleLabel.numberOfLines = 0
-        self.contentView.addSubview(verifiedToggleLabel)
+        contentView.addSubview(verifiedToggleLabel)
     }
-    
+
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
         resetButton.setTitle("profile.devices.detail.reset_session.title".localized(uppercased: true), for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
-        self.contentView.addSubview(resetButton)
+        contentView.addSubview(resetButton)
     }
-    
+
     private func setupDebugMenuButton() {
         guard Bundle.developerModeEnabled else { return }
         let debugButton = ButtonWithLargerHitArea()
@@ -255,176 +254,188 @@ final class ProfileClientViewController: UIViewController {
         debugButton.titleLabel?.font = FontSpec(.small, .light).font!
         debugButton.setTitle("DEBUG MENU", for: [])
         debugButton.addTarget(self, action: #selector(ProfileClientViewController.onShowDebugActions(_:)), for: .touchUpInside)
-        self.contentView.addSubview(debugButton)
-        self.debugMenuButton = debugButton
+        contentView.addSubview(debugButton)
+        debugMenuButton = debugButton
     }
-    
+
     private func createConstraints() {
-        constrain(view, contentView, descriptionTextView, separatorLineView) { view, contentView, reviewInvitationTextView, separatorLineView in
-            contentView.left == view.left + 16
-            contentView.right == view.right - 16
-            contentView.bottom == view.bottom - 32
-            contentView.top >= view.top + 24
-            reviewInvitationTextView.top == contentView.top
-            reviewInvitationTextView.left == contentView.left
-            reviewInvitationTextView.right == contentView.right
-            reviewInvitationTextView.bottom == separatorLineView.top - 24
-            separatorLineView.left == contentView.left
-            separatorLineView.right == contentView.right
-            separatorLineView.height == .hairline
-        }
-
-        constrain(contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel) { contentView, separatorLineView, typeLabel, IDLabel, fullIDLabel in
-            typeLabel.left == contentView.left
-            typeLabel.right == contentView.right
-            typeLabel.top == separatorLineView.bottom + 24
-            IDLabel.left == contentView.left
-            IDLabel.right == contentView.right
-            IDLabel.top == typeLabel.bottom - 2
-            fullIDLabel.left == contentView.left
-            fullIDLabel.right == contentView.right
-            fullIDLabel.top == IDLabel.bottom + 24
-        }
-
-        constrain(contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton) { contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton in
-            verifiedToggle.left == contentView.left
-            verifiedToggle.top == fullIDLabel.bottom + 32
-            verifiedToggle.bottom == contentView.bottom - UIScreen.safeArea.bottom
-            verifiedToggleLabel.left == verifiedToggle.right + 10
-            verifiedToggleLabel.centerY == verifiedToggle.centerY
-            resetButton.right == contentView.right
-            resetButton.centerY == verifiedToggle.centerY
-        }
-
         let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0
-        
-        constrain(contentView, backButton, view) { contentView, backButton, selfView in
-            backButton.left == contentView.left - 8
-            backButton.top == selfView.top + topMargin
-            backButton.width == 32
-            backButton.height == 32
-        }
 
-        constrain(contentView, spinner, verifiedToggle, IDLabel) { contentView, spinner, verifiedToggle, IDLabel in
-            spinner.centerX == contentView.centerX
-            spinner.top >= IDLabel.bottom + 24
-            spinner.bottom <= verifiedToggle.bottom - 32
-        }
+        [contentView,
+         descriptionTextView,
+         separatorLineView,
+         typeLabel,
+         fullIDLabel,
+         verifiedToggle,
+         verifiedToggleLabel,
+         resetButton,
+         backButton,
+         spinner,
+         IDLabel].prepareForLayout()
 
-        if let debugMenuButton = self.debugMenuButton {
-            constrain(contentView, descriptionTextView, debugMenuButton) { contentView, reviewInvitationTextView, debugMenuButton in
-                debugMenuButton.right == contentView.right
-                debugMenuButton.left == contentView.left
-                debugMenuButton.top == reviewInvitationTextView.bottom + 10
-            }
+        NSLayoutConstraint.activate([
+            contentView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            contentView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
+            contentView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 24),
+            descriptionTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            descriptionTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            descriptionTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            descriptionTextView.bottomAnchor.constraint(equalTo: separatorLineView.topAnchor, constant: -24),
+            separatorLineView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            separatorLineView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            separatorLineView.heightAnchor.constraint(equalToConstant: .hairline),
+
+            typeLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            typeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            typeLabel.topAnchor.constraint(equalTo: separatorLineView.bottomAnchor, constant: 24),
+            IDLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            IDLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            IDLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: -2),
+            fullIDLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            fullIDLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            fullIDLabel.topAnchor.constraint(equalTo: IDLabel.bottomAnchor, constant: 24),
+
+            verifiedToggle.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            verifiedToggle.topAnchor.constraint(equalTo: fullIDLabel.bottomAnchor, constant: 32),
+            verifiedToggle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -UIScreen.safeArea.bottom),
+            verifiedToggleLabel.leftAnchor.constraint(equalTo: verifiedToggle.rightAnchor, constant: 10),
+            verifiedToggleLabel.centerYAnchor.constraint(equalTo: verifiedToggle.centerYAnchor),
+            resetButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            resetButton.centerYAnchor.constraint(equalTo: verifiedToggle.centerYAnchor),
+
+            backButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: -8),
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: topMargin),
+            backButton.widthAnchor.constraint(equalToConstant: 32),
+            backButton.heightAnchor.constraint(equalToConstant: 32),
+
+            spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            spinner.topAnchor.constraint(greaterThanOrEqualTo: IDLabel.bottomAnchor, constant: 24),
+            spinner.bottomAnchor.constraint(lessThanOrEqualTo: verifiedToggle.bottomAnchor, constant: -32)
+        ])
+
+        if let debugMenuButton = debugMenuButton {
+            [contentView, descriptionTextView, debugMenuButton].prepareForLayout()
+            NSLayoutConstraint.activate([
+                debugMenuButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                debugMenuButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                debugMenuButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 10)
+            ])
         }
     }
 
     // MARK: Actions
 
     @objc private func onBackTapped(_ sender: AnyObject) {
-        self.presentingViewController?.dismiss(animated: true, completion: .none)
+        presentingViewController?.dismiss(animated: true, completion: .none)
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient!,
-                                                                fromConversation:self.fromConversation,
+                                                                fromConversation: fromConversation,
                                                                 variant: ColorScheme.default.variant)
 
         let navigationControllerWrapper = selfClientController.wrapInNavigationController()
 
         navigationControllerWrapper.modalPresentationStyle = .currentContext
-        self.present(navigationControllerWrapper, animated: true, completion: .none)
+        present(navigationControllerWrapper, animated: true, completion: .none)
     }
 
-    @objc private func onTrustChanged(_ sender: AnyObject) {
+    @objc
+    private func onTrustChanged(_ sender: AnyObject) {
         ZMUserSession.shared()?.enqueue({ [weak self] in
-            guard let `self` = self else { return }
+            guard let weakSelf = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient
-            if(self.verifiedToggle.isOn) {
-                selfClient?.trustClient(self.userClient)
+            if weakSelf.verifiedToggle.isOn {
+                selfClient?.trustClient(weakSelf.userClient)
             } else {
-                selfClient?.ignoreClient(self.userClient)
+                selfClient?.ignoreClient(weakSelf.userClient)
             }
-        }, completionHandler: {
-            self.verifiedToggle.isOn = self.userClient.verified
+        }, completionHandler: { [weak self] in
+            guard let weakSelf = self else { return }
+
+            weakSelf.verifiedToggle.isOn = weakSelf.userClient.verified
         })
     }
 
     @objc private func onResetTapped(_ sender: AnyObject) {
-        ZMUserSession.shared()?.perform {
-            self.userClient.resetSession()
+        ZMUserSession.shared()?.perform { [weak self] in
+            self?.userClient.resetSession()
         }
-        self.resetSessionPending = true
+        isLoadingViewVisible = true
     }
-    
+
     @objc private func onShowDebugActions(_ sender: AnyObject) {
         let actionSheet = UIAlertController(title: "Debug actions",
                                             message: "⚠️ will cause decryption errors ⚠️",
                                             preferredStyle: .actionSheet)
-        
+
         actionSheet.addAction(UIAlertAction(title: "Delete Session", style: .default, handler: { [weak self] (_) in
             self?.onDeleteDeviceTapped()
         }))
-        
+
         actionSheet.addAction(UIAlertAction(title: "Corrupt Session", style: .default, handler: { [weak self] (_) in
             self?.onCorruptSessionTapped()
         }))
-        
+
         actionSheet.addAction(.cancel())
-        
+
         present(actionSheet, animated: true)
     }
-    
-    @objc private func onDeleteDeviceTapped() {
-        let sync = self.userClient.managedObjectContext!.zm_sync!
-        sync.performGroupedBlockAndWait {
-            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+
+    @objc
+    private func onDeleteDeviceTapped() {
+        let sync = userClient.managedObjectContext!.zm_sync!
+        sync.performGroupedBlockAndWait { [weak self] in
+            guard let weakSelf = self else { return }
+
+            let client = try! sync.existingObject(with: weakSelf.userClient.objectID) as! UserClient
             client.deleteClientAndEndSession()
             sync.saveOrRollback()
         }
-        self.presentingViewController?.dismiss(animated: true, completion: .none)
+        presentingViewController?.dismiss(animated: true, completion: .none)
     }
-    
-    @objc private func onCorruptSessionTapped() {
-        let sync = self.userClient.managedObjectContext!.zm_sync!
+
+    @objc
+    private func onCorruptSessionTapped() {
+        let sync = userClient.managedObjectContext!.zm_sync!
         let selfClientID = ZMUser.selfUser()?.selfClient()?.objectID
-        sync.performGroupedBlockAndWait {
-            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+        sync.performGroupedBlockAndWait { [weak self] in
+            guard let weakSelf = self else { return }
+
+            let client = try! sync.existingObject(with: weakSelf.userClient.objectID) as! UserClient
             let selfClient = try! sync.existingObject(with: selfClientID!) as! UserClient
-            
+
             _ = selfClient.establishSessionWithClient(client, usingPreKey: "pQABAQACoQBYIBi1nXQxPf9hpIp1K1tBOj/tlBuERZHfTMOYEW38Ny7PA6EAoQBYIAZbZQ9KtsLVc9VpHkPjYy2+Bmz95fyR0MGKNUqtUUi1BPY=")
             sync.saveOrRollback()
         }
-        self.presentingViewController?.dismiss(animated: true, completion: .none)
+        presentingViewController?.dismiss(animated: true, completion: .none)
     }
 
 }
 
-
 // MARK: - UserClientObserver
-
 
 extension ProfileClientViewController: UserClientObserver {
 
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
-        self.updateFingerprintLabel()
-        
-        // This means the fingerprint is acquired
-        if self.resetSessionPending && self.userClient.fingerprint != .none {
+
+        if changeInfo.fingerprintChanged {
+            updateFingerprintLabel()
+        }
+
+        if changeInfo.sessionHasBeenReset {
             let alert = UIAlertController(title: "", message: NSLocalizedString("self.settings.device_details.reset_session.success", comment: ""), preferredStyle: .alert)
-            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler:  nil)
+            let okAction = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .destructive, handler: nil)
             alert.addAction(okAction)
-            self.present(alert, animated: true, completion: .none)
-            self.resetSessionPending = false
+            present(alert, animated: true, completion: .none)
+            isLoadingViewVisible = false
         }
     }
 
 }
 
-
 // MARK: - UITextViewDelegate
-
 
 extension ProfileClientViewController: UITextViewDelegate {
 

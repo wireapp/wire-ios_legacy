@@ -22,27 +22,26 @@ import WireSyncEngine
 
 final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
-    
     private let emptySectionHeaderHeight: CGFloat = 24
 
     let cellReuseIdentifier: String = GroupDetailsReceiptOptionsCell.zm_reuseIdentifier
 
     // MARK: - Properties
 
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     private let syncCompleted: Bool
 
     private var footerView = SectionFooter(frame: .zero)
     private weak var presentingViewController: UIViewController?
-    
+
     override var isHidden: Bool {
         return !SelfUser.current.canModifyReadReceiptSettings(in: conversation)
     }
 
-    init(conversation: ZMConversation,
-        syncCompleted: Bool,
-        collectionView: UICollectionView,
-        presentingViewController: UIViewController) {
+    init(conversation: GroupDetailsConversationType,
+         syncCompleted: Bool,
+         collectionView: UICollectionView,
+         presentingViewController: UIViewController) {
         self.conversation = conversation
         self.syncCompleted = syncCompleted
         self.presentingViewController = presentingViewController
@@ -51,7 +50,7 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
     }
 
     // MARK: - Collection View
-    
+
     override var sectionTitle: String {
         return ""
     }
@@ -70,51 +69,50 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! GroupDetailsReceiptOptionsCell
-        
+
         cell.configure(with: conversation)
         cell.action = { [weak self] enabled in
             guard let userSession = ZMUserSession.shared(), let conversation = self?.conversation else { return }
-            
+
             cell.isUserInteractionEnabled = false
-            conversation.setEnableReadReceipts(enabled, in: userSession, { result in
+            (conversation as? ZMConversation)?.setEnableReadReceipts(enabled, in: userSession, { result in
                 cell.isUserInteractionEnabled = true
-                
+
                 switch result {
-                case .failure(_):
+                case .failure:
                     cell.configure(with: conversation)
                     self?.presentingViewController?.present(UIAlertController.checkYourConnection(), animated: true)
                 default:
                     break
                 }
             })
-            
+
         }
-        
+
         cell.showSeparator = false
         cell.isUserInteractionEnabled = syncCompleted
         cell.alpha = syncCompleted ? 1 : 0.48
 
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return false
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return false
     }
 
-    ///MARK: - header
+    // MARK: - Header
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: emptySectionHeaderHeight)
     }
 
-    ///MARK: - footer
+    // MARK: - Footer
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
@@ -130,5 +128,5 @@ final class ReceiptOptionsSectionController: GroupDetailsSectionController {
         (view as? SectionFooter)?.titleLabel.text = "group_details.receipt_options_cell.description".localized
         return view
     }
-    
+
 }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireCommonComponents
 import WireSystem
@@ -25,11 +24,10 @@ import avs
 private let zmLog = ZMSLog(tag: "UI")
 
 extension String {
-    @discardableResult public func deleteFileAtPath() -> Bool {
+    @discardableResult func deleteFileAtPath() -> Bool {
         do {
             try FileManager.default.removeItem(atPath: self)
-        }
-        catch (let error) {
+        } catch {
             zmLog.error("Cannot delete file: \(self): \(error)")
             return false
         }
@@ -40,86 +38,82 @@ extension String {
 extension AVSAudioEffectType: CustomStringConvertible {
 
     var icon: StyleKitIcon {
-        get {
-            switch self {
-            case .none:
-                return .person
-            case .pitchupInsane:
-                return .effectBalloon // Helium
-            case .pitchdownInsane:
-                return .effectJellyfish // Jellyfish
-            case .paceupMed:
-                return .effectRabbit // Hare
-            case .reverbMax:
-                return .effectChurch // Cathedral
-            case .chorusMax:
-                return .alien // Alien
-            case .vocoderMed:
-                return .robot // Robot
-            case .pitchUpDownMax:
-                return .effectRollercoaster // Roller coaster
-            default:
-                return .exclamationMark
-            }
+        switch self {
+        case .none:
+            return .person
+        case .pitchupInsane:
+            return .effectBalloon
+        case .pitchdownInsane:
+            return .effectJellyfish
+        case .paceupMed:
+            return .effectRabbit
+        case .reverbMax:
+            return .effectChurch
+        case .chorusMax:
+            return .alien
+        case .vocoderMed:
+            return .robot
+        case .pitchUpDownMax:
+            return .effectRollercoaster
+        default:
+            return .exclamationMark
         }
     }
-    
+
     public var description: String {
-        get {
-            switch self {
-            case .chorusMin:
-                return "ChorusMin"
-            case .chorusMax:
-                return "Alien"
-            case .reverbMin:
-                return "ReverbMin"
-            case .reverbMed:
-                return "ReverbMed"
-            case .reverbMax:
-                return "Cathedral"
-            case .pitchupMin:
-                return "PitchupMin"
-            case .pitchupMed:
-                return "PitchupMed"
-            case .pitchupMax:
-                return "PitchupMax"
-            case .pitchupInsane:
-                return "Helium"
-            case .pitchdownMin:
-                return "PitchdownMin"
-            case .pitchdownMed:
-                return "PitchdownMed"
-            case .pitchdownMax:
-                return "PitchdownMax"
-            case .pitchdownInsane:
-                return "Jellyfish"
-            case .paceupMin:
-                return "PaceupMin"
-            case .paceupMed:
-                return "Hare"
-            case .paceupMax:
-                return "PaceupMax"
-            case .pacedownMin:
-                return "PacedownMin"
-            case .pacedownMed:
-                return "PacedownMed"
-            case .pacedownMax:
-                return "Turtle"
-            case .reverse:
-                return "UpsideDown"
-            case .vocoderMed:
-                return "VocoderMed"
-            case .pitchUpDownMax:
-                return "Roller coaster"
-            case .none:
-                return "None"
-            default:
-                return "Unknown"
-            }
+        switch self {
+        case .chorusMin:
+            return "ChorusMin"
+        case .chorusMax:
+            return "Alien"
+        case .reverbMin:
+            return "ReverbMin"
+        case .reverbMed:
+            return "ReverbMed"
+        case .reverbMax:
+            return "Cathedral"
+        case .pitchupMin:
+            return "PitchupMin"
+        case .pitchupMed:
+            return "PitchupMed"
+        case .pitchupMax:
+            return "PitchupMax"
+        case .pitchupInsane:
+            return "Helium"
+        case .pitchdownMin:
+            return "PitchdownMin"
+        case .pitchdownMed:
+            return "PitchdownMed"
+        case .pitchdownMax:
+            return "PitchdownMax"
+        case .pitchdownInsane:
+            return "Jellyfish"
+        case .paceupMin:
+            return "PaceupMin"
+        case .paceupMed:
+            return "Hare"
+        case .paceupMax:
+            return "PaceupMax"
+        case .pacedownMin:
+            return "PacedownMin"
+        case .pacedownMed:
+            return "PacedownMed"
+        case .pacedownMax:
+            return "Turtle"
+        case .reverse:
+            return "UpsideDown"
+        case .vocoderMed:
+            return "VocoderMed"
+        case .pitchUpDownMax:
+            return "Roller coaster"
+        case .none:
+            return "None"
+        default:
+            return "Unknown"
         }
     }
-    
-    public static let displayedEffects: [AVSAudioEffectType] = [.none,
+
+    static let displayedEffects: [AVSAudioEffectType] = [.none,
                                                                 .pitchupInsane,
                                                                 .pitchdownInsane,
                                                                 .paceupMed,
@@ -127,13 +121,16 @@ extension AVSAudioEffectType: CustomStringConvertible {
                                                                 .chorusMax,
                                                                 .vocoderMed,
                                                                 .pitchUpDownMax]
-    
+
     static let wr_convertQueue = DispatchQueue(label: "audioEffectQueue")
-    
-    public func apply(_ inPath: String, outPath: String, completion: (() -> ())? = .none) {
-        
+
+    func apply(_ inPath: String, outPath: String, completion: (() -> Void)? = .none) {
+        guard !ProcessInfo.processInfo.isRunningTests else {
+            return
+        }
+
         type(of: self).wr_convertQueue.async {
-            
+
             let result = AVSAudioEffect().applyWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
             zmLog.info("applyEffect \(self) from \(inPath) to \(outPath): \(result)")
             DispatchQueue.main.async {

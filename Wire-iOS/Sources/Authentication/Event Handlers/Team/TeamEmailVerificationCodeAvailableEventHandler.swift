@@ -39,7 +39,7 @@ class TeamEmailVerificationCodeAvailableEventHandler: AuthenticationEventHandler
         // Push verification screen if needed
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        if (!isResend) {
+        if !isResend {
             let nextState: TeamCreationState = .verifyEmail(teamName: teamName, email: email)
             let nextStep: AuthenticationFlowStep = .teamCreation(nextState)
             actions.append(.transition(nextStep, mode: .normal))

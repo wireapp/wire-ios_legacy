@@ -32,7 +32,7 @@ extension UIPasteboard {
         }
     }
 
-    ///TODO: get/set
+    /// TODO: get/set
     func mediaAsset() -> MediaAsset? {
         if contains(pasteboardTypes: [kUTTypeGIF as String]) {
             let data: Data? = self.data(forPasteboardType: kUTTypeGIF as String)

@@ -22,7 +22,7 @@ import AuthenticationServices
 import UIKit
 import WireSyncEngine
 
-protocol CompanyLoginFlowHandlerDelegate: class {
+protocol CompanyLoginFlowHandlerDelegate: AnyObject {
     /// Called when the user cancels the company login flow.
     func userDidCancelCompanyLoginFlow()
 }
@@ -93,36 +93,22 @@ final class CompanyLoginFlowHandler {
 
     // MARK: - Utilities
 
-    @available(iOS 11, *)
     private func openSafariAuthenticationSession(at url: URL) {
-        if #available(iOS 12, *) {
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
-                if let url = url {
-                    self.processURL(url)
-                }
-                
-                self.currentAuthenticationSession = nil
+        let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, _ in
+            if let url = url {
+                self.processURL(url)
             }
 
-            currentAuthenticationSession = session
-            session.start()
-        } else {
-            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
-                if let url = url {
-                    self.processURL(url)
-                }
-                
-                self.currentAuthenticationSession = nil
-            }
-
-            currentAuthenticationSession = session
-            session.start()
+            self.currentAuthenticationSession = nil
         }
+
+        currentAuthenticationSession = session
+        session.start()
     }
-    
+
     private func processURL(_ url: URL) {
         do {
-            _ = try SessionManager.shared?.openURL(url, options: [:])
+            try SessionManager.shared?.openURL(url)
         } catch let error as LocalizedError {
             UIApplication.shared.topmostViewController()?.showAlert(for: error)
         } catch {

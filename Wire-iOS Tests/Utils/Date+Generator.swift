@@ -31,7 +31,7 @@ extension Date {
 
         return calendar.date(from: components)!
     }
-    
+
     /// Return first day of the current year at 8am
     ///
     /// - Returns: a Date at ThisYear/1/1 8am

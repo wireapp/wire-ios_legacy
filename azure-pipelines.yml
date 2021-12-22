@@ -1,5 +1,5 @@
 pool:
-   vmImage: 'macOS-10.15'
+   vmImage: 'macOS-11'
    
 trigger:
   branches:
@@ -11,10 +11,13 @@ pr:
     include:
       - '*'
 
+variables:
+  coveragePath: './test-reports/'
+
 steps:
 - script: |
-    sudo xcode-select -switch /Applications/Xcode_11.4.1.app
-    fastlane prepare 
+    sudo xcode-select -switch /Applications/Xcode_13.1.app
+    fastlane prepare
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
@@ -36,6 +39,18 @@ steps:
 - script: |
     fastlane test
   displayName: "Test"
+
+- script: gem install slather
+  displayName: 'Install Slather'
+
+- script: |
+    slather coverage
+  displayName: "Run Slather to convert Code Coverage report to Cobertura XML format"
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(coveragePath)/cobertura.xml'
 
 - task: PublishTestResults@2
   inputs:

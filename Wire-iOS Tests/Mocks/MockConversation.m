@@ -49,6 +49,11 @@
     return self;
 }
 
+- (BOOL) localParticipantsContainWithUser:(BOOL)user
+{
+    return YES;
+}
+
 - (void)verifyLegalHoldSubjects
 {
   //no-op

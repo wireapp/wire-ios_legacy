@@ -21,7 +21,7 @@ import SnapshotTesting
 @testable import Wire
 
 final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: ConversationListTopBarViewController!
     var mockAccount: Account!
     var mockSelfUser: MockUserType!
@@ -31,7 +31,7 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
         mockAccount = Account.mockAccount(imageData: mockImageData)
         mockSelfUser = MockUserType.createSelfUser(name: "James Hetfield")
     }
-    
+
     override func tearDown() {
         sut = nil
         mockAccount = nil
@@ -45,7 +45,6 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
         sut.view.backgroundColor = .black
     }
-
 
     // MARK: - legal hold
 

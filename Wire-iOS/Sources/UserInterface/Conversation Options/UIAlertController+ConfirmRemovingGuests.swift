@@ -19,7 +19,7 @@
 import UIKit
 
 extension UIAlertController {
-    
+
     static func checkYourConnection() -> UIAlertController {
         let controller = UIAlertController(
             title: "guest_room.error.generic.title".localized,
@@ -30,7 +30,7 @@ extension UIAlertController {
         controller.view.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
         return controller
     }
-    
+
     static func confirmRemovingGuests(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
             title: "guest_room.remove_guests.message".localized,
@@ -38,7 +38,7 @@ extension UIAlertController {
             completion: completion
         )
     }
-    
+
     static func confirmRevokingLink(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
             title: "guest_room.revoke_link.message".localized,
@@ -46,7 +46,7 @@ extension UIAlertController {
             completion: completion
         )
     }
-    
+
     static func confirmController(title: String,
                                   message: String? = nil,
                                   confirmAction: UIAlertAction,

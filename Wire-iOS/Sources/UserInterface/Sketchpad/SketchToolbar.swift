@@ -17,111 +17,116 @@
 //
 
 import UIKit
-import Cartography
 
-class SketchToolbar : UIView {
+class SketchToolbar: UIView {
 
     let containerView = UIView()
-    let leftButton : UIButton!
-    let rightButton : UIButton!
-    let centerButtons : [UIButton]
+    let leftButton: UIButton!
+    let rightButton: UIButton!
+    let centerButtons: [UIButton]
     let centerButtonContainer = UIView()
     let separatorLine = UIView()
-    
+
     public init(buttons: [UIButton]) {
-        
+
         guard buttons.count >= 2 else {  fatalError("SketchToolbar needs to be initialized with at least two buttons") }
 
         var unassignedButtons = buttons
-        
+
         leftButton = unassignedButtons.removeFirst()
         rightButton = unassignedButtons.removeLast()
         centerButtons = unassignedButtons
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
-        
+
         super.init(frame: CGRect.zero)
-        
+
         setupSubviews()
         createButtonContraints(buttons: buttons)
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupSubviews() {
         backgroundColor = UIColor.from(scheme: .background)
         addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)
     }
-    
-    func createButtonContraints(buttons: [UIButton]) {
+
+    private func createButtonContraints(buttons: [UIButton]) {
         for button in buttons {
-            constrain(button) { button in
-                button.width == 32
-                button.height == 32
-            }
+            button.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+              button.widthAnchor.constraint(equalToConstant: 32),
+              button.heightAnchor.constraint(equalToConstant: 32)
+            ])
         }
     }
-    
-    func createConstraints() {
-        let buttonSpacing : CGFloat = 8
 
-        constrain(self, containerView) { parentView, container in
-            container.left == parentView.left
-            container.right == parentView.right
-            container.top == parentView.top
-            container.bottom == parentView.bottom - UIScreen.safeArea.bottom
-        }
+    private func createConstraints() {
+        let buttonSpacing: CGFloat = 8
 
-        constrain(containerView, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
-            container.height == 56
-            
-            leftButton.left == container.left + buttonSpacing
-            leftButton.centerY == container.centerY
-            
-            rightButton.right == container.right - buttonSpacing
-            rightButton.centerY == container.centerY
-            
-            centerButtonContainer.centerX == container.centerX
-            centerButtonContainer.top == container.top
-            centerButtonContainer.bottom == container.bottom
-            
-            separatorLine.top == container.top
-            separatorLine.left == container.left
-            separatorLine.right == container.right
-            separatorLine.height == .hairline
-        }
-        
+        [containerView, leftButton, rightButton, centerButtonContainer, separatorLine].prepareForLayout()
+        NSLayoutConstraint.activate([
+            containerView.leftAnchor.constraint(equalTo: leftAnchor),
+            containerView.rightAnchor.constraint(equalTo: rightAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UIScreen.safeArea.bottom),
+
+            containerView.heightAnchor.constraint(equalToConstant: 56),
+
+          leftButton.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: buttonSpacing),
+          leftButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+
+          rightButton.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -buttonSpacing),
+          rightButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+
+          centerButtonContainer.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+          centerButtonContainer.topAnchor.constraint(equalTo: containerView.topAnchor),
+          centerButtonContainer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+          separatorLine.topAnchor.constraint(equalTo: containerView.topAnchor),
+          separatorLine.leftAnchor.constraint(equalTo: containerView.leftAnchor),
+          separatorLine.rightAnchor.constraint(equalTo: containerView.rightAnchor),
+          separatorLine.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
+
         createCenterButtonConstraints()
     }
-    
-    func createCenterButtonConstraints() {
-        guard !centerButtons.isEmpty else { return }
-        
-        let buttonSpacing : CGFloat = 32
-        let leftButton = centerButtons.first!
-        let rightButton = centerButtons.last!
-        
-        constrain(centerButtonContainer, leftButton, rightButton) { container, leftButton, rightButton in
-            leftButton.left == container.left + buttonSpacing
-            leftButton.centerY == container.centerY
-            
-            rightButton.right == container.right - buttonSpacing
-            rightButton.centerY == container.centerY
-        }
-        
+
+    private func createCenterButtonConstraints() {
+        guard !centerButtons.isEmpty,
+        let leftButton = centerButtons.first,
+        let rightButton = centerButtons.last else { return }
+
+        let buttonSpacing: CGFloat = 32
+
+        [centerButtonContainer, leftButton, rightButton].prepareForLayout()
+
+        var constraints = [
+          leftButton.leftAnchor.constraint(equalTo: centerButtonContainer.leftAnchor, constant: buttonSpacing),
+          leftButton.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor),
+
+          rightButton.rightAnchor.constraint(equalTo: centerButtonContainer.rightAnchor, constant: -buttonSpacing),
+          rightButton.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor)
+        ]
+
         for i in 1..<centerButtons.count {
             let previousButton = centerButtons[i-1]
             let button = centerButtons[i]
-            
-            constrain(centerButtonContainer, button, previousButton) { container, button, previousButton in
-                button.left == previousButton.right + buttonSpacing
-                button.centerY == container.centerY
-            }
+
+            [button, previousButton].prepareForLayout()
+            constraints.append(contentsOf: [
+              button.leftAnchor.constraint(equalTo: previousButton.rightAnchor, constant: buttonSpacing),
+              button.centerYAnchor.constraint(equalTo: centerButtonContainer.centerYAnchor)
+            ])
         }
+
+        NSLayoutConstraint.activate(constraints)
     }
-    
+
 }

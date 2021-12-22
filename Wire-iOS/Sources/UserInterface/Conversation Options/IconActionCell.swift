@@ -17,25 +17,25 @@
 //
 
 import UIKit
-import Cartography
 
 final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
-    
+
     private let separator = UIView()
     private let imageContainer = UIView()
     private let iconImageView = UIImageView()
     private let label = UILabel()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
@@ -45,28 +45,33 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label, separator].forEach(contentView.addSubview)
     }
-    
+
     private func createConstraints() {
-        constrain(contentView, label, separator, imageContainer, iconImageView) { contentView, label, separator, imageContainer, imageView in
-            imageContainer.top == contentView.top
-            imageContainer.bottom == contentView.bottom
-            imageContainer.leading == contentView.leading
-            imageContainer.width == CGFloat.IconCell.IconWidth
-            imageView.center == imageContainer.center
-            
-            label.leading == imageContainer.trailing
-            label.top == contentView.top
-            label.trailing == contentView.trailing
-            label.bottom == contentView.bottom
-            label.height == 56
-            
-            separator.height == .hairline
-            separator.leading == label.leading
-            separator.trailing == label.trailing
-            separator.bottom == contentView.bottom
-        }
+        [label,
+         separator,
+         imageContainer,
+         iconImageView].prepareForLayout()
+        NSLayoutConstraint.activate([
+            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageContainer.widthAnchor.constraint(equalToConstant: CGFloat.IconCell.IconWidth),
+            iconImageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
+
+            label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            label.heightAnchor.constraint(equalToConstant: 56),
+
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
-    
+
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconAction(title, icon, color, _) = configuration else { preconditionFailure() }
         let mainColor = variant.mainColor(color: color)

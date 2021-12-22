@@ -16,79 +16,86 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
-import Cartography
 import WireCommonComponents
 
 class TitleView: UIView {
-    
-    internal var titleColor, titleColorSelected: UIColor?
-    internal var titleFont: UIFont?
-    internal let titleButton = UIButton()
-    var tapHandler: ((UIButton) -> Void)? = nil
-    
-    public init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
+
+    var titleColor, titleColorSelected: UIColor?
+    var titleFont: UIFont?
+    var tapHandler: ((UIButton) -> Void)?
+
+    private let stackView = UIStackView(axis: .vertical)
+    let titleButton = UIButton()
+    private let subtitleLabel = UILabel()
+
+    init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)
-        self.isAccessibilityElement = true
-        self.accessibilityIdentifier = "Name"
-        
+        isAccessibilityElement = true
+        accessibilityIdentifier = "Name"
+
         if let color = color, let selectedColor = selectedColor, let font = font {
-            self.titleColor = color
-            self.titleColorSelected = selectedColor
-            self.titleFont = font
+            titleColor = color
+            titleColorSelected = selectedColor
+            titleFont = font
         }
-        
+
         createViews()
     }
-    
+
     private func createConstraints() {
-        constrain(self, titleButton) { view, button in
-            button.edges == view.edges
-        }
+        [titleButton, stackView, subtitleLabel].prepareForLayout()
+
+        stackView.fitIn(view: self)
     }
-    
+
     private func createViews() {
         titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
-        addSubview(titleButton)
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
+        addSubview(stackView)
+        [titleButton, subtitleLabel].forEach(stackView.addArrangedSubview)
     }
-    
-    @objc func titleButtonTapped(_ sender: UIButton) {
+
+    @objc
+    func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
-    
+
     /// Configures the title view for the given conversation
     /// - parameter conversation: The conversation for which the view should be configured
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
-    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
-        configure(icons: icon == nil ? [] : [icon!], title: title, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
+    func configure(icon: NSTextAttachment?, title: String, subtitle: String? = nil, interactive: Bool, showInteractiveIcon: Bool = true) {
+        configure(icons: icon == nil ? [] : [icon!], title: title, subtitle: subtitle, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
     }
-    
-    internal func configure(icons: [NSTextAttachment], title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
-    
+
+    func configure(icons: [NSTextAttachment], title: String, subtitle: String? = nil, interactive: Bool, showInteractiveIcon: Bool = true) {
+
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
         let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
         let selectedLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
-        
+
         titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(normalLabel, for: [])
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
-        titleButton.sizeToFit()
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         accessibilityLabel = titleButton.titleLabel?.text
-        frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
+
+        subtitleLabel.isHidden = subtitle == nil
+        subtitleLabel.text = subtitle
+        subtitleLabel.font = .smallLightFont
+        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed)
+
         createConstraints()
-        setNeedsLayout()
-        layoutIfNeeded()
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 extension NSTextAttachment {

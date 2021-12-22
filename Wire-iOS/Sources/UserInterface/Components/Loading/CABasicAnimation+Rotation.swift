@@ -26,11 +26,11 @@ extension CABasicAnimation {
 
         fillMode = .forwards
         self.delegate = delegate
-        
+
         // (2PI is a full turn, so pi is a half turn)
         toValue = Double.pi
         repeatCount = .greatestFiniteMagnitude
-        
+
         duration = rotationSpeed / 2
         self.beginTime = beginTime
         isCumulative = true

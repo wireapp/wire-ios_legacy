@@ -31,29 +31,28 @@ final class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelega
     }
     var didFillInput: Int = 0
     func didFillInput(inputField: CharacterInputField, text: String) {
-        didFillInput = didFillInput + 1
+        didFillInput += 1
     }
 }
-
 
 final class CharacterInputFieldTests: XCTestCase {
     var sut: CharacterInputField! = nil
     var delegate: TestCharacterInputFieldDelegate! = nil
-    
+
     override func setUp() {
         super.setUp()
         sut = CharacterInputField(maxLength: 8, characterSet: CharacterSet.decimalDigits, size: CGSize(width: 375, height: 56))
         delegate = TestCharacterInputFieldDelegate()
         sut.delegate = delegate
     }
-    
+
     override func tearDown() {
         sut.removeFromSuperview()
         sut = nil
         delegate = nil
         super.tearDown()
     }
-    
+
     func testThatItCanBecomeFirstResponder() {
         // when
         UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(sut)
@@ -62,7 +61,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertTrue(sut.becomeFirstResponder())
         XCTAssertTrue(sut.isFirstResponder)
     }
-    
+
     func testThatItSupportsPaste() {
         XCTAssertTrue(sut.canPerformAction(#selector(UIControl.paste(_:)), withSender: nil))
     }
@@ -95,7 +94,6 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(sut.text, text)
     }
 
-    
     func testThatItDoesNotCallDelegateForSettingTextDirectly() {
         // when
         sut.text = "1234"
@@ -106,7 +104,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItAppendsOneSymbolAndCallsDelegate() {
         // when
         sut.insertText("1")
@@ -117,7 +115,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItDeletesSymbolAndCallsDelegate() {
         // given
         sut.text = "1234"
@@ -130,7 +128,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItDoesNotDeleteWhenNoSymbols() {
         // given
         sut.text = ""
@@ -143,7 +141,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItAllowsToPasteAndCallsDelegate() {
         // given
         sut.text = "1234"
@@ -157,7 +155,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItForbidsIncompatibleCharacters() {
         sut.text = "1234"
         // when
@@ -169,7 +167,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
-    
+
     func testThatItAllowsEnteringCharactersUpToMax() {
         // when
         sut.insertText("123456789")
@@ -180,7 +178,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertTrue(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 1)
     }
-    
+
     func testThatItWorksWithOtherSymbols() {
         // given
         let sut = CharacterInputField(maxLength: 100, characterSet: CharacterSet.uppercaseLetters, size: CGSize(width: 375, height: 56))
@@ -193,7 +191,7 @@ final class CharacterInputFieldTests: XCTestCase {
 
         // when
         sut.insertText("HELLOWORLD")
-        
+
         // then
         XCTAssertEqual(delegate.didChangeText, ["HELLOWORLD"])
         XCTAssertEqual(sut.text, "HELLOWORLD")
@@ -203,61 +201,61 @@ final class CharacterInputFieldTests: XCTestCase {
 
 final class CharacterInputFieldScreenshotTests: XCTestCase {
     var sut: CharacterInputField! = nil
-    
+
     override func setUp() {
         super.setUp()
         let size = CGSize(width: 375, height: 56)
         sut = CharacterInputField(maxLength: 8, characterSet: CharacterSet.decimalDigits, size: size)
-        
+
         sut.frame = CGRect(origin: .zero, size: size)
     }
-    
+
     override func tearDown() {
         sut.removeFromSuperview()
         sut = nil
         super.tearDown()
     }
-    
+
     func testDefaultState() {
         // then
         verify(matching: sut)
     }
-    
+
     func testFocusedState() {
         // given
         UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(sut)
 
         // when
         sut.becomeFirstResponder()
-        
+
         // then
         verify(matching: sut)
     }
-    
+
     func testFocusedDeFocusedState() {
         // given
         UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(sut)
-        
+
         // when
         sut.becomeFirstResponder()
         sut.resignFirstResponder()
-        
+
         // then
         verify(matching: sut)
     }
-    
+
     func testOneCharacterState() {
         // when
         sut.insertText("1")
-        
+
         // then
         verify(matching: sut)
     }
-    
+
     func testAllCharactersEnteredState() {
         // when
         sut.insertText("12345678")
-        
+
         // then
         verify(matching: sut)
     }

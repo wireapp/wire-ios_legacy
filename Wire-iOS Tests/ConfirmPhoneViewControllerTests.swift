@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
-    
+
     var sut: ConfirmPhoneViewController!
     var textFieldTint: UIColor!
 
@@ -40,7 +40,7 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
 
         sut.view.isUserInteractionEnabled = false
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

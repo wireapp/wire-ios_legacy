@@ -18,21 +18,74 @@
 
 import UIKit
 import FormatterKit
+import WireDataModel
 
 extension ConversationViewController {
 
+    typealias ConversationBanner = L10n.Localizable.Conversation.Banner
+
     /// The state that the guest bar should adopt in the current configuration.
     var currentGuestBarState: GuestsBarController.State {
-        switch conversation.externalParticipantsState {
-        case [.visibleGuests]:
-            return .visible(labelKey: "conversation.guests_present", identifier: "label.conversationview.hasguests")
-        case [.visibleServices]:
-            return .visible(labelKey: "conversation.services_present", identifier: "label.conversationview.hasservices")
-        case [.visibleGuests, .visibleServices]:
-            return .visible(labelKey: "conversation.guests_services_present", identifier: "label.conversationview.hasguestsandservices")
-        default:
+
+        let state = conversation.externalParticipantsState
+
+        if state.isEmpty {
             return .hidden
+        } else {
+            return .visible(labelKey: label(for: state), identifier: identifier(for: state))
         }
+    }
+
+    func label(for state: ZMConversation.ExternalParticipantsState) -> String {
+        var states: [String] = []
+
+        if conversation.externalParticipantsState.contains(.visibleRemotes) {
+            states.append(ConversationBanner.remotes)
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleExternals) {
+            states.append(ConversationBanner.externals)
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleGuests) {
+            states.append(ConversationBanner.guests)
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleServices) {
+            states.append(ConversationBanner.services)
+        }
+
+        let head = states[0]
+        let tail = states.dropFirst().map({ $0.localizedLowercase })
+        let list = ([head] + tail).joined(separator: ConversationBanner.separator)
+
+        if state == .visibleServices {
+            return ConversationBanner.areActive(list)
+        } else {
+            return ConversationBanner.arePresent(list)
+        }
+    }
+
+    func identifier(for state: ZMConversation.ExternalParticipantsState) -> String {
+        var identifiers: [String] = []
+
+        if conversation.externalParticipantsState.contains(.visibleRemotes) {
+            identifiers.append("remotes")
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleExternals) {
+            identifiers.append("externals")
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleGuests) {
+            identifiers.append("guests")
+        }
+
+        if conversation.externalParticipantsState.contains(.visibleServices) {
+            identifiers.append("services")
+        }
+
+        return "has\(identifiers.joined(separator: "and"))"
     }
 
     /// Updates the visibility of the guest bar.

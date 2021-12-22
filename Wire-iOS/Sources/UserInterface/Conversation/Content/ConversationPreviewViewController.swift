@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 import WireSyncEngine
 
@@ -34,11 +33,12 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
         actionController = ConversationActionController(conversation: conversation,
                                                         target: presentingViewController,
                                                         sourceView: sourceView)
-        
+
         contentViewController = ConversationContentViewController(conversation: conversation, mediaPlaybackManager: nil, session: ZMUserSession.shared()!)
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,10 +56,17 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
         view.backgroundColor = contentViewController.tableView.backgroundColor
     }
 
-    func createConstraints() {
-        constrain(view, contentViewController.view) { view, conversationView in
-            conversationView.edges == view.edges
-        }
+    private func createConstraints() {
+        guard let conversationView = contentViewController.view else { return }
+
+        conversationView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+          conversationView.topAnchor.constraint(equalTo: view.topAnchor),
+          conversationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          conversationView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          conversationView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

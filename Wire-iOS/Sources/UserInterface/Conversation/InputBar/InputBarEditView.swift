@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
 import WireCommonComponents
 import UIKit
 
@@ -24,7 +23,7 @@ enum EditButtonType {
     case undo, confirm, cancel
 }
 
-protocol InputBarEditViewDelegate: class {
+protocol InputBarEditViewDelegate: AnyObject {
     func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
@@ -42,25 +41,28 @@ final class InputBarEditView: UIView {
     let confirmButton = InputBarEditView.iconButtonTemplate
     let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
-    
+    private let margin: CGFloat = 16
+    private lazy var buttonMargin: CGFloat = margin + iconSize / 2
+
     weak var delegate: InputBarEditViewDelegate?
-    
+
     init() {
         super.init(frame: .zero)
         configureViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func configureViews() {
         [undoButton, confirmButton, cancelButton].forEach {
             addSubview($0)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
-        
+
         undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
         undoButton.setIcon(.undo, size: .tiny, for: [])
         undoButton.accessibilityIdentifier = "undoButton"
@@ -71,33 +73,37 @@ final class InputBarEditView: UIView {
         undoButton.isEnabled = false
         confirmButton.isEnabled = false
     }
-    
+
     fileprivate func createConstraints() {
-        let margin: CGFloat = 16
-        let buttonMargin: CGFloat = margin + iconSize / 2
-        constrain(self, undoButton, confirmButton, cancelButton) { view, undoButton, confirmButton, cancelButton in
-            align(top: view, undoButton, confirmButton, cancelButton)
-            align(bottom: view, undoButton, confirmButton, cancelButton)
-            
-            undoButton.centerX == view.leading + buttonMargin
-            undoButton.width == view.height
-            
-            confirmButton.centerX == view.centerX
-            confirmButton.width == view.height
-            cancelButton.centerX == view.trailing - buttonMargin
-            cancelButton.width == view.height
-        }
+        [undoButton, confirmButton, cancelButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: undoButton.topAnchor),
+            topAnchor.constraint(equalTo: confirmButton.topAnchor),
+            topAnchor.constraint(equalTo: cancelButton.topAnchor),
+
+            bottomAnchor.constraint(equalTo: undoButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: confirmButton.bottomAnchor),
+            bottomAnchor.constraint(equalTo: cancelButton.bottomAnchor),
+
+            undoButton.centerXAnchor.constraint(equalTo: leadingAnchor, constant: buttonMargin),
+            undoButton.widthAnchor.constraint(equalTo: heightAnchor),
+
+            confirmButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            confirmButton.widthAnchor.constraint(equalTo: heightAnchor),
+            cancelButton.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -buttonMargin),
+            cancelButton.widthAnchor.constraint(equalTo: heightAnchor)
+        ])
     }
-    
+
     @objc func buttonTapped(_ sender: IconButton) {
         let typeBySender = [undoButton: EditButtonType.undo, confirmButton: .confirm, cancelButton: .cancel]
         guard let type = typeBySender[sender] else { return }
         delegate?.inputBarEditView(self, didTapButtonWithType: type)
     }
-    
+
     @objc func didLongPressUndoButton(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         delegate?.inputBarEditViewDidLongPressUndoButton(self)
     }
-    
+
 }

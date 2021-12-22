@@ -31,6 +31,16 @@
 "share_extension.no_internet_connection.title" = "Ühendus puudub";
 "share_extension.not_signed_in.title" = "Enne jagamist logi Wire’sse sisse";
 "share_extension.not_signed_in.close_button" = "Sulge";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Pääsukood";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
 "share_extension.timeout.title" = "Ühendus aegus.";
 "share_extension.timeout.message" = "Kontrollige internetiühendust ja proovige uuesti. Saadetu on vestlusesse salvestatud.";
 "share_extension.privacy_security.lock_app.description" = "Tee lukust lahti";
@@ -43,3 +53,7 @@
 "meta.degraded.dialog_message" = "Kas tahad ikka seda sõnumit saata?";
 "meta.degraded.cancel_sending_button" = "Ära saada";
 "meta.degraded.send_anyway_button" = "Saada";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

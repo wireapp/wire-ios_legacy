@@ -17,16 +17,15 @@
 //
 
 import Foundation
-import WireDataModel
 import WireSyncEngine
 
 /// A helper class that provides a reference to the current self user.
 
-public class SelfUser {
+final class SelfUser {
 
     /// The underlying provider of the self user.
 
-    public static var provider: SelfUserProvider?
+    static var provider: SelfUserProvider?
 
     /// The current self user.
     ///
@@ -34,7 +33,7 @@ public class SelfUser {
     /// tradeoff for the convenience of not needing to unwrap the self user, as it is available in the
     /// majority of the codebase. For safe access, go through the provider instead.
 
-    public class var current: UserType & ZMEditableUser {
+    class var current: UserType & ZMEditableUser {
         guard let provider = provider else { fatalError("Self user provider not set") }
         return provider.selfUser
     }

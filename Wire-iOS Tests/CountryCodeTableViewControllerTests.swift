@@ -39,7 +39,7 @@ final class CountryCodeTableViewControllerTests: XCTestCase {
         // GIVEN & WHEN
         let filteredResult = sut.filter(searchText: "49") as? [Country]
 
-        //THEN
+        // THEN
         XCTAssertEqual(filteredResult?.first?.displayName, "Germany")
     }
 

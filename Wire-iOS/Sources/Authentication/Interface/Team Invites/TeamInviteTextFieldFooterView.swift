@@ -17,25 +17,24 @@
 //
 
 import UIKit
-import Cartography
 
 final class TeamInviteTextFieldFooterView: UIView {
-    
+
     private let textFieldDescriptor = TextFieldDescription(
         placeholder: "team.invite.textfield.placeholder".localized,
         actionDescription: "team.invite.textfield.accesibility".localized,
         kind: .email,
         uppercasePlaceholder: true
     )
-    
+
     var isLoading = false {
         didSet {
             updateLoadingState()
         }
     }
-    
+
     let errorButton = Button()
-    private let textField: AccessoryTextField
+    private let textField: ValidatedTextField
     private let errorLabel = UILabel()
 
     var shouldConfirm: ((String) -> Bool)? {
@@ -45,36 +44,37 @@ final class TeamInviteTextFieldFooterView: UIView {
             }
         }
     }
-    
+
     var onConfirm: ((Any) -> Void)? {
         didSet {
             textFieldDescriptor.valueSubmitted = onConfirm
         }
     }
-    
+
     var errorMessage: String? {
         didSet {
             errorLabel.text = errorMessage
         }
     }
-    
+
     @discardableResult override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
-    
+
     init() {
-        textField = textFieldDescriptor.create() as! AccessoryTextField
+        textField = textFieldDescriptor.create() as! ValidatedTextField
         super.init(frame: .zero)
         setupViews()
         createConstraints()
         isAccessibilityElement = false
         accessibilityElements = [textField, errorLabel, errorButton]
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         errorButton.isHidden = true
         errorLabel.textAlignment = .center
@@ -99,33 +99,34 @@ final class TeamInviteTextFieldFooterView: UIView {
         [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
     }
-    
-    private func createConstraints() {
-        constrain(self, textField, errorLabel, errorButton) { view, textField, errorLabel, errorButton in
-            textField.leading == view.leading
-            textField.trailing == view.trailing
-            textField.top == view.top + 4
-            textField.height == 56
-            errorLabel.centerX == view.centerX
-            errorLabel.top == textField.bottom + 8
-            errorLabel.height == 20
 
-            errorButton.centerX == view.centerX
-            errorButton.top == errorLabel.bottom + 24
-            errorButton.bottom == view.bottom - 12
-        }
+    private func createConstraints() {
+        [textField, errorLabel, errorButton].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+          textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+          textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+          textField.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+          textField.heightAnchor.constraint(equalToConstant: 56),
+          errorLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+          errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
+          errorLabel.heightAnchor.constraint(equalToConstant: 20),
+
+          errorButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+          errorButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 24),
+          errorButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)])
     }
-    
+
     func clearInput() {
         textField.text = ""
         textField.textFieldDidChange(textField: textField)
     }
-    
+
     @objc private func showLearnMorePage() {
         let url = URL.wr_emailAlreadyInUseLearnMore
         UIApplication.shared.open(url)
     }
-    
+
     private func updateLoadingState() {
         textField.isLoading = isLoading
         textFieldDescriptor.acceptsInput = !isLoading

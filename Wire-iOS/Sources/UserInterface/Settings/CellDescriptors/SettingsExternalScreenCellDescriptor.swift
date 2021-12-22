@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 import WireCommonComponents
@@ -45,11 +44,11 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
     weak var group: SettingsGroupCellDescriptorType?
     weak var viewController: UIViewController?
-    
+
     let previewGenerator: PreviewGeneratorType?
 
     let presentationAction: () -> (UIViewController?)
-    
+
     convenience init(title: String, presentationAction: @escaping () -> (UIViewController?)) {
         self.init(
             title: title,
@@ -61,8 +60,14 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             icon: .none
         )
     }
-    
-    convenience init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
+
+    convenience init(title: String,
+                     isDestructive: Bool,
+                     presentationStyle: PresentationStyle,
+                     presentationAction: @escaping () -> (UIViewController?),
+                     previewGenerator: PreviewGeneratorType? = .none,
+                     icon: StyleKitIcon? = nil,
+                     accessoryViewMode: AccessoryViewMode = .default) {
         self.init(
             title: title,
             isDestructive: isDestructive,
@@ -74,8 +79,16 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             accessoryViewMode: accessoryViewMode
         )
     }
-    
-    init(title: String, isDestructive: Bool, presentationStyle: PresentationStyle, identifier: String?, presentationAction: @escaping () -> (UIViewController?), previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessoryViewMode: AccessoryViewMode = .default) {
+
+    init(title: String,
+         isDestructive: Bool,
+         presentationStyle: PresentationStyle,
+         identifier: String?,
+         presentationAction: @escaping () -> (UIViewController?),
+         previewGenerator: PreviewGeneratorType? = .none,
+         icon: StyleKitIcon? = nil,
+         accessoryViewMode: AccessoryViewMode = .default) {
+
         self.title = title
         self.destructive = isDestructive
         self.presentationStyle = presentationStyle
@@ -85,12 +98,12 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         self.icon = icon
         self.accessoryViewMode = accessoryViewMode
     }
-    
+
     func select(_ value: SettingsPropertyValue?) {
         guard let controllerToShow = self.generateViewController() else {
             return
         }
-        
+
         switch self.presentationStyle {
         case .modal:
             if controllerToShow.modalPresentationStyle == .popover,
@@ -102,16 +115,15 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
             controllerToShow.modalPresentationCapturesStatusBarAppearance = true
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
-            
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         }
     }
-    
+
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
         cell.titleColor = UIColor.white
-        
+
         if let tableCell = cell as? SettingsTableCell {
             tableCell.valueLabel.accessibilityIdentifier = title + "Field"
             tableCell.valueLabel.isAccessibilityElement = true
@@ -135,10 +147,10 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             case .alwaysShow:
                 groupCell.accessoryType = .disclosureIndicator
             }
-            
+
         }
     }
-    
+
     func generateViewController() -> UIViewController? {
         return self.presentationAction()
     }

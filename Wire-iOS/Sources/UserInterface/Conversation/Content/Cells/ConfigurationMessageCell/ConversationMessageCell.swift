@@ -20,9 +20,8 @@ import UIKit
 import WireUtilities
 import WireDataModel
 
-
 protocol ConversationMessageCellDelegate: MessageActionResponder {
-    
+
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect)
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController)
@@ -35,7 +34,7 @@ protocol ConversationMessageCellDelegate: MessageActionResponder {
  * A generic view that displays conversation contents.
  */
 
-protocol ConversationMessageCell: class {
+protocol ConversationMessageCell: AnyObject {
     /// The object that contains the configuration of the view.
     associatedtype Configuration
 
@@ -47,13 +46,13 @@ protocol ConversationMessageCell: class {
 
     /// The frame to highlight when the cell is selected.
     var selectionRect: CGRect { get }
-    
+
     /// Top inset for ephemeral timer relative to the cell content
     var ephemeralTimerTopInset: CGFloat { get }
-    
+
     /// The message that is displayed.
     var message: ZMConversationMessage? { get set }
-    
+
     /// The delegate for the cell.
     var delegate: ConversationMessageCellDelegate? { get set }
 
@@ -64,10 +63,10 @@ protocol ConversationMessageCell: class {
      */
 
     func configure(with object: Configuration, animated: Bool)
-    
+
     /// Called before the cell will be displayed on the screen.
     func willDisplay()
-    
+
     /// Called after the cell as been moved off screen.
     func didEndDisplaying()
 }
@@ -81,15 +80,15 @@ extension ConversationMessageCell {
     var selectionRect: CGRect {
         return selectionView?.bounds ?? .zero
     }
-    
+
     var ephemeralTimerTopInset: CGFloat {
         return 8
     }
-    
+
     func willDisplay() {
         // to be overriden
     }
-    
+
     func didEndDisplaying() {
         // to be overriden
     }
@@ -104,21 +103,21 @@ extension ConversationMessageCell {
  * the view type it declares as the contents of the cell.
  */
 
-protocol ConversationMessageCellDescription: class {
+protocol ConversationMessageCellDescription: AnyObject {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
-    
+
     /// The top margin is used to configure the spacing between cells. This property will
     /// get updated by the ConversationMessageSectionController if necessary so any
     /// default value is just a recommendation.
     var topMargin: Float { get set }
-    
+
     /// Whether the view occupies the entire width of the cell.
     var isFullWidth: Bool { get }
 
     /// Whether the cell supports actions.
     var supportsActions: Bool { get }
-    
+
     /// Whether the cell should display an ephemeral timer in the margin given it's an ephemeral message
     var showEphemeralTimer: Bool { get set }
 
@@ -154,39 +153,39 @@ protocol ConversationMessageCellDescription: class {
 // MARK: - Table View Dequeuing
 
 extension ConversationMessageCellDescription {
-    
+
     func willDisplayCell() {
         _ = message?.startSelfDestructionIfNeeded()
     }
-    
+
     func didEndDisplayingCell() {
-        
+
     }
     func register(in tableView: UITableView) {
         tableView.register(cell: type(of: self))
     }
-    
+
     func makeView() -> UIView {
         let view = View()
         let container = UIView()
-        
+
         view.translatesAutoresizingMaskIntoConstraints = false
         container.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(view)
-        
+
         let leading = view.leadingAnchor.constraint(equalTo: container.leadingAnchor)
         let trailing = view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
         let top = view.topAnchor.constraint(equalTo: container.topAnchor)
         let bottom = view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        
+
         top.constant = CGFloat(topMargin)
         leading.constant = isFullWidth ? 0 : view.conversationHorizontalMargins.left
         trailing.constant = isFullWidth ? 0 : -view.conversationHorizontalMargins.right
-        
+
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
-        
+
         view.configure(with: configuration, animated: false)
-        
+
         return container
     }
 
@@ -197,18 +196,17 @@ extension ConversationMessageCellDescription {
         cell.accessibilityCustomActions = actionController?.makeAccessibilityActions()
         return cell
     }
-    
+
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
-        
+
         adapterCell.cellView.configure(with: configuration, animated: animated)
-        
+
         if cell.isVisible {
             _ = message?.startSelfDestructionIfNeeded()
         }
     }
-    
-    
+
     /// Default implementation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
     ///
     /// - Parameter other: other object to compare
@@ -216,18 +214,18 @@ extension ConversationMessageCellDescription {
     func isConfigurationEqual(with other: Any) -> Bool {
         return type(of: self) == type(of: other)
     }
-    
+
 }
 
-extension ConversationMessageCellDescription where View.Configuration : Equatable {
-    
+extension ConversationMessageCellDescription where View.Configuration: Equatable {
+
     /// Default implementation of isConfigurationEqual
     ///
     /// - Parameter other: other object to compare
     /// - Returns: true if both self and other having same type, and configures are equal
     func isConfigurationEqual(with other: Any) -> Bool {
         guard let otherConfig = (other as? Self)?.configuration else { return false }
-        
+
         return configuration == otherConfig
     }
 }
@@ -259,11 +257,11 @@ class AnyConversationMessageCellDescription: NSObject {
         registrationBlock = { tableView in
             description.register(in: tableView)
         }
-        
+
         configureBlock = { cell, animated in
             description.configureCell(cell, animated: animated)
         }
-        
+
         viewGenerator = {
             return description.makeView()
         }
@@ -275,15 +273,15 @@ class AnyConversationMessageCellDescription: NSObject {
         baseTypeGetter = {
             return T.self
         }
-        
+
         instanceGetter = {
             return description
         }
-        
+
         isConfigurationEqualBlock = { otherDescription in
             description.isConfigurationEqual(with: otherDescription.instance)
         }
-        
+
         _delegate = AnyMutableProperty(description, keyPath: \.delegate)
         _message = AnyMutableProperty(description, keyPath: \.message)
         _actionController = AnyMutableProperty(description, keyPath: \.actionController)
@@ -294,7 +292,7 @@ class AnyConversationMessageCellDescription: NSObject {
         _axLabel = AnyConstantProperty(description, keyPath: \.accessibilityLabel)
         _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
     }
-    
+
     var instance: AnyObject {
         return instanceGetter()
     }
@@ -317,7 +315,7 @@ class AnyConversationMessageCellDescription: NSObject {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
     }
-    
+
     var topMargin: Float {
         get { return _topMargin.getter() }
         set { _topMargin.setter(newValue) }
@@ -326,7 +324,7 @@ class AnyConversationMessageCellDescription: NSObject {
     var containsHighlightableContent: Bool {
         return _containsHighlightableContent.getter()
     }
-    
+
     var showEphemeralTimer: Bool {
         get { return _showEphemeralTimer.getter() }
         set { _showEphemeralTimer.setter(newValue) }
@@ -358,11 +356,11 @@ class AnyConversationMessageCellDescription: NSObject {
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         return cellGenerator(tableView, indexPath)
     }
-    
+
     func makeView() -> UIView {
         return viewGenerator()
     }
-    
+
     func isConfigurationEqual(with description: AnyConversationMessageCellDescription) -> Bool {
         return isConfigurationEqualBlock(description)
     }

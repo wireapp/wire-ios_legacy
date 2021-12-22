@@ -19,14 +19,13 @@
 import Foundation
 import UIKit
 
-protocol PopoverPresenter: class {
+protocol PopoverPresenter: AnyObject {
 
     /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
     var presentedPopover: UIPopoverPresentationController? {get set}
 
     /// The popover's arrow points to this view
     var popoverPointToView: UIView? {get set}
-
 
     /// call this method when the presented popover have to update its frame, e.g. when device roated or keyboard toggled
     func updatePopoverSourceRect()
@@ -40,7 +39,6 @@ extension PopoverPresenter where Self: UIViewController {
         presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
     }
 }
-
 
 extension UIPopoverPresentationController {
 

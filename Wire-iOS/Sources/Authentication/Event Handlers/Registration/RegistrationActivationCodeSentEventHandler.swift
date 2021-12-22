@@ -35,7 +35,7 @@ class RegistrationActivationCodeSentEventHandler: AuthenticationEventHandler {
         // Create the list of actions
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        if (!isResend) {
+        if !isResend {
             let nextStep = AuthenticationFlowStep.enterActivationCode(credentials, user: user)
             actions.append(AuthenticationCoordinatorAction.transition(nextStep, mode: .normal))
         } else {

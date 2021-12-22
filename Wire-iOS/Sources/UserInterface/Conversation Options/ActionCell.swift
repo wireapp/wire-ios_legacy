@@ -17,10 +17,9 @@
 //
 
 import UIKit
-import Cartography
 
 final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
-    
+
     private let imageContainer = UIView()
     private let iconImageView = UIImageView()
     private let label = UILabel()
@@ -30,11 +29,12 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
@@ -45,22 +45,24 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label].forEach(contentView.addSubview)
     }
-    
+
     private func createConstraints() {
-        constrain(contentView, label, imageContainer, iconImageView) { contentView, label, imageContainer, imageView in
-            imageContainer.top == contentView.top
-            imageContainer.bottom == contentView.bottom
-            imageContainer.leading == contentView.leading
-            imageContainer.width == 64
-            imageView.center == imageContainer.center
-            label.leading == imageContainer.trailing
-            label.top == contentView.top
-            label.trailing == contentView.trailing
-            label.bottom == contentView.bottom
-            label.height == 56
-        }
+        [label, imageContainer, iconImageView].prepareForLayout()
+        NSLayoutConstraint.activate([
+          imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+          imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+          imageContainer.widthAnchor.constraint(equalToConstant: 64),
+            iconImageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
+          label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
+          label.topAnchor.constraint(equalTo: contentView.topAnchor),
+          label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          label.heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
-    
+
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier

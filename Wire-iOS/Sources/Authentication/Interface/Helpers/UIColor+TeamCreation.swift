@@ -22,15 +22,15 @@ import UIKit
 extension UIColor {
     enum Team {
         static let background           = UIColor(rgb: 0xF8F8F8)
-        static let inactiveButton       = UIColor(rgb: 0x33373A, alpha:0.16)
-        static let activeButton         = UIColor(rgb: 0x2391D3, alpha:1.0)
+        static let inactiveButton       = UIColor(rgb: 0x33373A, alpha: 0.16)
+        static let activeButton         = UIColor(rgb: 0x2391D3, alpha: 1.0)
         static let createAccountBlue    = UIColor.strongBlue
         static let createTeamGreen      = UIColor.strongLimeGreen
         /// entered text/headline, entered text #33373A
-        static let textColor            = UIColor(rgb: 0x33373A, alpha:1.0)
-        static let subtitleColor        = UIColor(rgb: 0x272A2C, alpha:0.56)
+        static let textColor            = UIColor(rgb: 0x33373A, alpha: 1.0)
+        static let subtitleColor        = UIColor(rgb: 0x272A2C, alpha: 0.56)
         static let activeButtonColor    = UIColor(rgb: 0x2391D3)
-        static let inactiveButtonColor  = UIColor(rgb: 0x33373A, alpha:0.16)
+        static let inactiveButtonColor  = UIColor(rgb: 0x33373A, alpha: 0.16)
         static let textfieldColor       = UIColor.white
         static let placeholderColor     = UIColor(rgb: 0x8D989F)
     }

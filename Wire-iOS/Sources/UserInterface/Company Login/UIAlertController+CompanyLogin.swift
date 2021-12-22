@@ -25,7 +25,7 @@ extension UIAlertController {
   fileprivate enum CompanyLoginCopy: String {
         case ssoAndEmail = "sso_and_email"
         case ssoOnly = "sso_only"
-        
+
         init(ssoOnly: Bool) {
             self = ssoOnly ? .ssoOnly : .ssoAndEmail
         }
@@ -37,16 +37,16 @@ extension UIAlertController {
         var title: String {
             return "login.sso.alert.title".localized
         }
-        
+
         var message: String {
             return "login.sso.alert.message.\(self.rawValue)".localized
         }
-        
+
         var placeholder: String {
             return "login.sso.alert.text_field.placeholder.\(self.rawValue)".localized
         }
     }
-    
+
     enum CompanyLoginError {
         /// Input doesn't match an email or SSO code format
         case invalidFormat
@@ -60,7 +60,7 @@ extension UIAlertController {
         case domainAssociatedWithWrongServer
         /// Unknown error
         case unknown
-        
+
         fileprivate func description(for copy: CompanyLoginCopy) -> String {
             switch self {
             case .invalidFormat:
@@ -78,7 +78,7 @@ extension UIAlertController {
             }
         }
     }
-    
+
     /// Creates an `UIAlertController` with a textfield to get a SSO login code from the user.
     /// - parameter prefilledInput: Input which should be used to prefill the textfield of the controller (optional).
     /// - parameter ssoOnly: A boolean defining if the alert's copy should be for SSO only. default: false.
@@ -89,15 +89,15 @@ extension UIAlertController {
         ssoOnly: Bool = false,
         error: CompanyLoginError? = nil,
         completion: @escaping (_ ssoCode: String?) -> Void) -> UIAlertController {
-        
+
         let copy = CompanyLoginCopy(ssoOnly: ssoOnly)
-        
+
         let controller = UIAlertController(
             title: copy.title,
             message: "\n\(copy.message)",
             preferredStyle: .alert
         )
-        
+
         if let error = error {
             let attributedString = NSAttributedString.companyLoginString(
                 withMessage: copy.message,
@@ -105,17 +105,17 @@ extension UIAlertController {
             )
             controller.setValue(attributedString, forKey: "attributedMessage")
         }
-        
+
         let loginAction = UIAlertAction(title: copy.action, style: .default) { [controller] _ in
             completion(controller.textFields?.first?.text)
         }
-        
+
         controller.addTextField { textField in
             textField.text = prefilledInput
             textField.accessibilityIdentifier = "textfield.sso.code"
             textField.placeholder = copy.placeholder
         }
-        
+
         controller.addAction(.cancel { completion(nil) })
         controller.addAction(loginAction)
         return controller
@@ -131,5 +131,5 @@ extension UIAlertController {
 
         controller.addAction(.ok())
         return controller
-    }    
+    }
 }

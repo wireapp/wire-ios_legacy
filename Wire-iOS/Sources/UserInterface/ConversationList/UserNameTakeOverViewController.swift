@@ -16,18 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 
-protocol UserNameTakeOverViewControllerDelegate: class {
+protocol UserNameTakeOverViewControllerDelegate: AnyObject {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)
 }
-
 
 enum UserNameTakeOverViewControllerAction {
     case chooseOwn(String), keepSuggestion(String), learnMore
 }
-
 
 final class UserNameTakeOverViewController: UIViewController {
 
@@ -43,7 +40,7 @@ final class UserNameTakeOverViewController: UIViewController {
     private let name: String
 
     private let learnMore = "registration.select_handle.takeover.subtitle_link".localized
-    fileprivate let learnMoreURL = URL(string:"action://learn-more")!
+    fileprivate let learnMoreURL = URL(string: "action://learn-more")!
 
     weak var delegate: UserNameTakeOverViewControllerDelegate?
 
@@ -52,7 +49,8 @@ final class UserNameTakeOverViewController: UIViewController {
         self.name = name
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -68,12 +66,12 @@ final class UserNameTakeOverViewController: UIViewController {
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
-        
+
         displayNameLabel.font = FontSpec(.large, .thin).font!
         displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
-        
+
         suggestedHandleLabel.font = FontSpec(.large, .none).font!
         suggestedHandleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         suggestedHandleLabel.text = "@" + suggestedHandle
@@ -109,13 +107,12 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.delegate = self
     }
 
-    func createConstraints() {
+    private func createConstraints() {
 
         [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].prepareForLayout()
 
         displayNameLabel.fitInSuperview(exclude: [.top, .bottom])
         suggestedHandleLabel.fitInSuperview(exclude: [.top, .bottom])
-
 
         NSLayoutConstraint.activate([
             displayNameLabel.bottomAnchor.constraint(equalTo: topContainer.centerYAnchor, constant: -4),
@@ -126,25 +123,25 @@ final class UserNameTakeOverViewController: UIViewController {
         let edgeInsets = EdgeInsets(margin: inset)
 
         contentView.fitInSuperview()
-        topContainer.fitInSuperview(with:edgeInsets, exclude: [.bottom])
+        topContainer.fitInSuperview(with: edgeInsets, exclude: [.bottom])
 
         NSLayoutConstraint.activate([
             topContainer.bottomAnchor.constraint(equalTo: subtitleTextView.topAnchor)
             ])
 
-        subtitleTextView.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+        subtitleTextView.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
 
         NSLayoutConstraint.activate([
             subtitleTextView.bottomAnchor.constraint(equalTo: chooseOwnButton.topAnchor, constant: -inset)
             ])
 
-        chooseOwnButton.fitInSuperview(with:edgeInsets, exclude: [.top, .bottom])
+        chooseOwnButton.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
         NSLayoutConstraint.activate([
             chooseOwnButton.bottomAnchor.constraint(equalTo: keepSuggestedButton.topAnchor, constant: -8),
             chooseOwnButton.heightAnchor.constraint(equalToConstant: 40)
             ])
 
-        keepSuggestedButton.fitInSuperview(with:edgeInsets, exclude: [.top])
+        keepSuggestedButton.fitInSuperview(with: edgeInsets, exclude: [.top])
 
         NSLayoutConstraint.activate([
             keepSuggestedButton.heightAnchor.constraint(equalToConstant: 40)

@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+import UIKit
 
 final class LikeButton: IconButton {
     static var normalColor: UIColor {
@@ -33,17 +33,16 @@ final class LikeButton: IconButton {
         guard selected != self.isSelected else {
             return
         }
-        
+
         if animated {
             guard let imageView = self.imageView else {
                 return
             }
-            
+
             let prevState: UIControl.State
             if self.isSelected {
                 prevState = .selected
-            }
-            else {
+            } else {
                 prevState = []
             }
 
@@ -51,7 +50,7 @@ final class LikeButton: IconButton {
             let fakeImageView = UIImageView()
             fakeImageView.setIcon(currentIcon, size: .large, color: self.iconColor(for: prevState) ?? LikeButton.normalColor)
             fakeImageView.frame = imageView.frame
-            
+
             imageView.superview!.addSubview(fakeImageView)
 
             let selectedIcon = icon(for: prevState) ?? .liked
@@ -64,11 +63,11 @@ final class LikeButton: IconButton {
             if selected { // gets like
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
-                
+
                 UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform.identity
                 })
-                
+
                 UIView.animate(easing: .easeOutQuart, duration: 0.35, animations: {
                         animationImageView.alpha = 1
                     }, completion: { _ in
@@ -77,13 +76,12 @@ final class LikeButton: IconButton {
                         imageView.alpha = 1
                         self.isSelected = selected
                     })
-            }
-            else {
-                
+            } else {
+
                 UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 })
-                
+
                 UIView.animate(easing: .easeInQuart, duration: 0.35, animations: {
                     animationImageView.alpha = 0.0
                     }, completion: { _ in
@@ -93,10 +91,9 @@ final class LikeButton: IconButton {
                         self.isSelected = selected
                     })
             }
-            
+
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        }
-        else {
+        } else {
             self.isSelected = selected
         }
     }

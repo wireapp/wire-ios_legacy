@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -20,8 +19,8 @@ import Foundation
 import WireDataModel
 
 extension ConversationListCell: ZMConversationObserver {
-    public func conversationDidChange(_ change: ConversationChangeInfo) {
-        guard change.conversation == self.conversation,
+    func conversationDidChange(_ change: ConversationChangeInfo) {
+        guard change.conversation === conversation,
             (change.isArchivedChanged ||
             change.conversationListIndicatorChanged ||
             change.nameChanged ||
@@ -29,7 +28,6 @@ extension ConversationListCell: ZMConversationObserver {
             change.connectionStateChanged ||
             change.mutedMessageTypesChanged ||
             change.messagesChanged) else { return }
-
 
         updateAppearance()
     }

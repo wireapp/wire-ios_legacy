@@ -19,17 +19,17 @@
 import Foundation
 
 class MockLabel: NSObject, LabelType {
-    
+
     init(name: String? = nil, remoteIdentifier: UUID = UUID(), kind: Label.Kind = .folder) {
         self.remoteIdentifier = remoteIdentifier
         self.name = name
         self.kind = kind
     }
-    
+
     var remoteIdentifier: UUID?
-    
+
     var kind: Label.Kind
-    
+
     var name: String?
-    
+
 }

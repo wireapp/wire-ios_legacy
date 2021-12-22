@@ -19,8 +19,8 @@
 import Foundation
 import UIKit
 
-class ConversationCreateReceiptsSectionController: ConversationCreateSectionController {
-    
+final class ConversationCreateReceiptsSectionController: ConversationCreateSectionController {
+
     typealias Cell = ConversationCreateReceiptsCell
 
     var toggleAction: ((Bool) -> Void)?

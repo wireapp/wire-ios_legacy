@@ -25,9 +25,9 @@ final class MockConversationList: ConversationListHelperType {
 }
 
 final class ConversationListViewControllerTests: XCTestCase {
-    
+
     var sut: ConversationListViewController!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -40,14 +40,14 @@ final class ConversationListViewControllerTests: XCTestCase {
 
         sut.view.backgroundColor = .black
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
 
     }
 
-    //MARK: - View controller
+    // MARK: - View controller
 
     func testForNoConversations() {
         verify(matching: sut)
@@ -56,11 +56,11 @@ final class ConversationListViewControllerTests: XCTestCase {
     func testForEverythingArchived() {
         MockConversationList.hasArchivedConversations = true
         sut.showNoContactLabel(animated: false)
-        
+
         verify(matching: sut)
     }
 
-    //MARK: - PermissionDeniedViewController
+    // MARK: - PermissionDeniedViewController
     func testForPremissionDeniedViewController() {
         sut.showPermissionDeniedViewController()
 

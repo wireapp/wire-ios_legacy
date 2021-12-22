@@ -72,6 +72,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
     typealias Configuration = (_ view: UIView) -> Void
 
     var uiMOC: NSManagedObjectContext!
+    var coreDataStack: CoreDataStack!
 
     /// The color of the container view in which the view to
     /// be snapshot will be placed, defaults to UIColor.lightGrayColor
@@ -79,9 +80,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     /// If YES the uiMOC will have image and file caches. Defaults to NO.
     var needsCaches: Bool {
-        get {
-            return false
-        }
+        return false
     }
 
     var documentsDirectory: URL?
@@ -93,7 +92,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         if UIDevice.current.systemVersion.compare("13", options: .numeric, range: nil, locale: .current) == .orderedAscending {
             XCTFail("Snapshot tests need to be run on a device running at least iOS 13")
         }
-        AppRootViewController.configureAppearance()
+        AppRootRouter.configureAppearance()
         UIView.setAnimationsEnabled(false)
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear
@@ -102,21 +101,23 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         recordMode = strcmp(getenv("RECORDING_SNAPSHOTS"), "YES") == 0
 
         usesDrawViewHierarchyInRect = true
-        let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
-        StorageStack.reset()
-        StorageStack.shared.createStorageAsInMemory = true
+
         do {
             documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         } catch {
             XCTAssertNil(error, "Unexpected error \(error)")
         }
 
-        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
-            self.uiMOC = contextDirectory.uiContext
-            contextExpectation.fulfill()
-        })
+        let account = Account(userName: "", userIdentifier: UUID())
+        let coreDataStack = CoreDataStack(account: account,
+                                          applicationContainer: documentsDirectory!,
+                                          inMemoryStore: true)
 
-        wait(for: [contextExpectation], timeout: 0.1)
+        coreDataStack.loadStores(completionHandler: { error in
+            XCTAssertNil(error)
+        })
+        self.coreDataStack = coreDataStack
+        self.uiMOC = coreDataStack.viewContext
 
         if needsCaches {
             setUpCaches()
@@ -130,6 +131,7 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
         // Needs to be called before setting self.documentsDirectory to nil.
         removeContentsOfDocumentsDirectory()
         uiMOC = nil
+        coreDataStack = nil
         documentsDirectory = nil
         snapshotBackgroundColor = nil
         UIColor.setAccentOverride(.undefined)
@@ -185,7 +187,7 @@ extension ZMSnapshotTestCase {
                                                             defaultImageDiffDirectory: (IMAGE_DIFF_DIR))
 
         if errorDescription.count > 0 {
-            XCTFail("\(errorDescription)", file:file, line:line)
+            XCTFail("\(errorDescription)", file: file, line: line)
         } else {
             XCTAssert(true)
         }
@@ -301,7 +303,7 @@ extension ZMSnapshotTestCase {
         let identifier = finalIdentifier(deviceName: "\(Int(width))", identifier: identifier)
 
         snapshotVerify(view: container,
-                       identifier:identifier,
+                       identifier: identifier,
                        tolerance: tolerance,
                        file: file,
                        line: line)
@@ -385,7 +387,6 @@ extension ZMSnapshotTestCase {
         }
     }
 
-    @available(iOS 11.0, *)
     func verifySafeAreas(
         viewController: UIViewController,
         tolerance: Float = 0,
@@ -431,7 +432,7 @@ extension ZMSnapshotTestCase {
                                 configuration: Configuration? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, isPad in
+        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, _ in
             configuration?(view)
         }, file: file, line: line)
     }
@@ -450,20 +451,6 @@ extension ZMSnapshotTestCase {
                            line: line)
     }
 
-}
-
-extension ZMSnapshotTestCase {
-
-    func verifyAlertController(_ controller: UIAlertController,
-                               file: StaticString = #file,
-                               line: UInt = #line) {
-        /// ZClient VC changes alert tint color with init. Reset the tint color here
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = controller.view.tintColor
-
-        presentViewController(controller, file: file, line: line)
-        verify(view: controller.view, file: file, line: line)
-        dismissViewController(controller, file: file, line: line)
-    }
 }
 
 // MARK: - test with different color schemes

@@ -23,27 +23,30 @@ import WireUtilities
 @objc
 enum ColorSchemeVariant: UInt {
     case light, dark
-};
+}
 
 extension UIColor {
     static var graphite: UIColor = UIColor(rgb: (51, 55, 58))
-    static var graphiteAlpha4: UIColor = UIColor(rgba:(51, 55, 58, 0.04))
-    static var graphiteAlpha8: UIColor = UIColor(rgba:(51, 55, 58, 0.08))
-    static var graphiteAlpha16: UIColor = UIColor(rgba:(51, 55, 58, 0.16))
-    static var graphiteAlpha40: UIColor = UIColor(rgba:(51, 55, 58, 0.4))
+    static var graphiteAlpha4: UIColor = UIColor(rgba: (51, 55, 58, 0.04))
+    static var graphiteAlpha8: UIColor = UIColor(rgba: (51, 55, 58, 0.08))
+    static var graphiteAlpha16: UIColor = UIColor(rgba: (51, 55, 58, 0.16))
+    static var graphiteAlpha40: UIColor = UIColor(rgba: (51, 55, 58, 0.4))
 
-    static var backgroundLightGraphite: UIColor = UIColor(rgb:(30, 32, 33))
+    static var backgroundLightGraphite: UIColor = UIColor(rgb: (30, 32, 33))
 
-    static var lightGraphite: UIColor = UIColor(rgb:(141, 152, 159))
-    static var lightGraphiteAlpha8: UIColor = UIColor(rgba:(141, 152, 159, 0.08))
-    static var lightGraphiteAlpha24: UIColor = UIColor(rgba:(141, 152, 159, 0.24))
-    static var lightGraphiteAlpha48: UIColor = UIColor(rgba:(141, 152, 159, 0.48))
-    static var lightGraphiteAlpha64: UIColor = UIColor(rgba:(141, 152, 159, 0.64))
+    static var lightGraphite: UIColor = UIColor(rgb: (141, 152, 159))
+    static var lightGraphiteAlpha8: UIColor = UIColor(rgba: (141, 152, 159, 0.08))
+    static var lightGraphiteAlpha24: UIColor = UIColor(rgba: (141, 152, 159, 0.24))
+    static var lightGraphiteAlpha48: UIColor = UIColor(rgba: (141, 152, 159, 0.48))
+    static var lightGraphiteAlpha64: UIColor = UIColor(rgba: (141, 152, 159, 0.64))
     static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)
     static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
-    static var backgroundGraphite: UIColor = UIColor(rgb:(22, 24, 25))
-    static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba:(22, 24, 25, 0.4))
+    static var graphiteDark: UIColor = UIColor(rgb: (50, 54, 57))
+
+    static var backgroundGraphite: UIColor = UIColor(rgb: (22, 24, 25))
+    static var backgroundGraphiteAlpha40: UIColor = UIColor(rgba: (22, 24, 25, 0.4))
+    static var backgroundGraphiteAlpha12: UIColor = UIColor(rgba: (22, 24, 25, 0.12))
 
     static var white97: UIColor = UIColor(white: 0.97, alpha: 1)
     static var white98: UIColor = UIColor(white: 0.98, alpha: 1)
@@ -64,10 +67,9 @@ extension UIColor {
     static var blackAlpha40: UIColor = UIColor(white: 0.0, alpha: 0.4)
     static var blackAlpha80: UIColor = UIColor(white: 0.0, alpha: 0.8)
 
-    static var amberAlpha48: UIColor = UIColor(rgba:(254, 191, 2, 0.48))
-    static var amberAlpha80: UIColor = UIColor(rgba:(254, 191, 2, 0.8))
+    static var amberAlpha48: UIColor = UIColor(rgba: (254, 191, 2, 0.48))
+    static var amberAlpha80: UIColor = UIColor(rgba: (254, 191, 2, 0.8))
 }
-
 
 enum ColorSchemeColor: Int {
     case textForeground
@@ -120,7 +122,7 @@ enum ColorSchemeColor: Int {
 
     case selfMentionHighlight
     case cellHighlight
-    
+
     case replyBorder
     case replyHighlight
 
@@ -129,7 +131,13 @@ enum ColorSchemeColor: Int {
 
     case errorIndicator
 
-    fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
+    case landingScreen
+
+    case utilityError
+    case utilityNeutral
+    case utilitySuccess
+
+    fileprivate func colorPair(accentColor: UIColor) -> ColorPair {
         switch self {
         case .textForeground:
             return ColorPair(light: .graphite, dark: .white)
@@ -227,83 +235,86 @@ enum ColorSchemeColor: Int {
 
         case .errorIndicator:
             return ColorPair(light: UIColor(rgb: 0xE60606), dark: UIColor(rgb: 0xFC3E37))
+
+        case .landingScreen:
+            return ColorPair(light: .graphiteDark, dark: .white)
+
+        case .utilityError:
+            return ColorPair(light: UIColor(rgb: 0xE41734), dark: UIColor(rgb: 0xFC7887))
+        case .utilityNeutral:
+            return ColorPair(light: UIColor(rgb: 0x0772DE), dark: UIColor(rgb: 0x26BDFF))
+        case .utilitySuccess:
+            return ColorPair(light: UIColor(rgb: 0x148545), dark: UIColor(rgb: 0x35C763))
         }
     }
 }
 
 final class ColorScheme: NSObject {
-    private(set) var colors: [AnyHashable : Any]?
-    
+    private(set) var colors: [AnyHashable: Any]?
+
     var variant: ColorSchemeVariant = .light
-    
+
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
-        
+
     var keyboardAppearance: UIKeyboardAppearance {
         return ColorScheme.keyboardAppearance(for: variant)
     }
-    
+
     class func keyboardAppearance(for variant: ColorSchemeVariant) -> UIKeyboardAppearance {
         return variant == .light ? .light : .dark
     }
-    
+
     static let `default`: ColorScheme = ColorScheme()
 
-    func color(named: ColorSchemeColor) -> UIColor {
-        return color(named: named, variant: variant)
-    }
-    
-    func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+    func color(named: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
+        let colorSchemeVariant = variant ?? self.variant
+
         let colorPair = named.colorPair(accentColor: accentColor)
-        switch variant {
+        switch colorSchemeVariant {
         case .dark:
             return colorPair.dark
         case .light:
             return colorPair.light
         }
     }
-    
+
     func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
     }
-    
+
 }
 
-fileprivate struct ColorPair {
+private struct ColorPair {
     let light: UIColor
     let dark: UIColor
 }
 
-fileprivate extension ColorPair {
+private extension ColorPair {
     init(both color: UIColor) {
         self.init(light: color, dark: color)
     }
 }
 
 extension UIColor {
-    
-    static func from(scheme: ColorSchemeColor) -> UIColor {
-        return ColorScheme.default.color(named: scheme)
-    }
-    
-    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
+
+    static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant? = nil) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }
 
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     // NB: the order of coefficients must match ZMAccentColor enum ordering
-    private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
-    private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.0, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
-    
+    private static let accentColorNameColorBlendingCoefficientsDark: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.8, 0.64]
+    private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
+
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     class func nameColor(for accentColor: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-        
+
         assert(accentColor.rawValue <= ZMAccentColor.max.rawValue)
-        
+
         let coefficientsArray = variant == .dark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight
         let coefficient = coefficientsArray[Int(accentColor.rawValue)]
-    
-        
+
         let background: UIColor = variant == .dark ? .black : .white
         return background.mix(UIColor(fromZMAccentColor: accentColor), amount: coefficient)
     }

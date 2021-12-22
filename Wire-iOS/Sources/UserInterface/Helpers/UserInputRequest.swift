@@ -27,7 +27,7 @@ struct UserInputRequest {
     /**
      * Represents the configuration of an alert text field.
      */
-    
+
     struct InputConfiguration {
         /// The placeholder of the text field.
         let placeholder: String

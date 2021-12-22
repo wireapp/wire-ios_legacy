@@ -18,13 +18,13 @@
 
 import UIKit
 
-protocol TokenizedTextViewDelegate: class {
+protocol TokenizedTextViewDelegate: AnyObject {
     func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat)
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
 }
 
-//! Custom UITextView subclass to be used in TokenField.
-//! Shouldn't be used anywhere else.
+// ! Custom UITextView subclass to be used in TokenField.
+// ! Shouldn't be used anywhere else.
 // TODO: as a inner class of TokenField
 
 final class TokenizedTextView: TextView {
@@ -77,7 +77,7 @@ final class TokenizedTextView: TextView {
         // Find the character that's been tapped on
         var characterIndex: Int = 0
         var fraction: CGFloat = 0
-        
+
         withUnsafePointer(to: &fraction) {
             characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: UnsafeMutablePointer<CGFloat>(mutating: $0))
         }

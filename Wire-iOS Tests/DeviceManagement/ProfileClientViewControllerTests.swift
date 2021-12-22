@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ProfileClientViewController!
     var user: ZMUser!
     var client: UserClient!
@@ -35,7 +35,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         client.user = user
         client.deviceClass = .tablet
     }
-    
+
     override func tearDown() {
         sut = nil
         user = nil
@@ -55,12 +55,12 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view, tolerance: 0.1)
     }
 
-    func testTestForLightTheme(){
+    func testTestForLightTheme() {
         ColorScheme.default.variant = .light
         verify()
     }
 
-    func testTestForDarkTheme(){
+    func testTestForDarkTheme() {
         ColorScheme.default.variant = .dark
         verify()
     }

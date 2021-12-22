@@ -40,16 +40,16 @@ final class CrashReporter {
 
         
         //Enable after securing app extensions from App Center
-        MSAppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
-        MSAppCenter.configure(withAppSecret: Bundle.appCenterAppId)
-        MSAppCenter.start()
+        AppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashSharing)
+        AppCenter.configure(withAppSecret: Bundle.appCenterAppId)
+        AppCenter.start()
  
     }
 
     private static var appCenterEnabled: Bool {
         let configUseAppCenter = Bundle.useAppCenter // The preprocessor macro USE_APP_CENTER (from the .xcconfig files)
         let automationUseAppCenter = AutomationHelper.sharedHelper.useAppCenter // Command line argument used by automation
-        let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // User consent
+        let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashSharing // User consent
 
         return (automationUseAppCenter || (!automationUseAppCenter && configUseAppCenter))
             && !settingsDisableCrashAndAnalyticsSharing

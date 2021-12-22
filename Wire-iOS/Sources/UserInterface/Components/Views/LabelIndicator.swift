@@ -23,8 +23,9 @@ import WireCommonComponents
 enum LabelIndicatorContext {
     case guest,
          groupRole,
-         external
-    
+         external,
+         federated
+
     var icon: StyleKitIcon {
         switch self {
         case .guest:
@@ -33,9 +34,11 @@ enum LabelIndicatorContext {
             return .groupAdmin
         case .external:
             return .externalPartner
+        case .federated:
+            return .federated
         }
     }
-    
+
     var title: String {
         switch self {
         case .guest:
@@ -44,13 +47,15 @@ enum LabelIndicatorContext {
             return "profile.details.group_admin"
         case .external:
             return "profile.details.partner"
+        case .federated:
+            return "profile.details.federated"
         }
 
     }
 }
 
 final class LabelIndicator: UIView, Themeable {
-    
+
     private let indicatorIcon = UIImageView()
     private let titleLabel = UILabel()
     private let containerView = UIView()
@@ -63,29 +68,30 @@ final class LabelIndicator: UIView, Themeable {
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        
+
         indicatorIcon.setIcon(context.icon,
                               size: .nano,
                               color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
-    
+
     init(context: LabelIndicatorContext) {
         self.context = context
         super.init(frame: .zero)
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         var accessibilityString: String
-        
+
         switch context {
         case .guest:
             accessibilityString = "guest"
@@ -93,6 +99,8 @@ final class LabelIndicator: UIView, Themeable {
             accessibilityString = "group_role"
         case .external:
             accessibilityString = "team_role"
+        case .federated:
+            accessibilityString = "federated"
         }
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
@@ -100,35 +108,35 @@ final class LabelIndicator: UIView, Themeable {
         titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         titleLabel.text = context.title.localized(uppercased: true)
-        
+
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
         indicatorIcon.setIcon(context.icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-        
+
         containerView.addSubview(titleLabel)
         containerView.addSubview(indicatorIcon)
         accessibilityIdentifier = accessibilityString + " indicator"
-        
+
         addSubview(containerView)
     }
-    
+
     private func createConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         indicatorIcon.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: containerView.topAnchor),
-            
+
             // containerView
             containerView.heightAnchor.constraint(equalToConstant: 6),
             containerView.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
-            
+
             // indicatorIcon
             indicatorIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             indicatorIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            
+
             // titleLabel
             titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),

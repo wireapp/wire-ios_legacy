@@ -25,7 +25,7 @@ final class AvailabilityStringBuilderTests: XCTestCase {
     var team1: Team!
     var team2: Team!
     var fixture: CoreDataFixture!
-    
+
     override func setUp() {
         super.setUp()
         fixture = CoreDataFixture()
@@ -37,7 +37,7 @@ final class AvailabilityStringBuilderTests: XCTestCase {
         team2 = Team.insertNewObject(in: fixture.uiMOC)
         team2.remoteIdentifier = UUID()
     }
-    
+
     override func tearDown() {
         selfUser = nil
         otherUser = nil
@@ -46,29 +46,29 @@ final class AvailabilityStringBuilderTests: XCTestCase {
         fixture = nil
         super.tearDown()
     }
-    
+
     func testThatTheresAvailabilityInformationOtherUserIsNotTeammate() {
         // given
         let member = Member.insertNewObject(in: fixture.uiMOC)
         member.user = otherUser
         member.team = team2
         otherUser.updateAvailability(.available)
-        
+
         let selfMember = Member.insertNewObject(in: fixture.uiMOC)
         selfMember.user = selfUser
         selfMember.team = team1
-        
+
         // when
         let listString = AvailabilityStringBuilder.string(for: otherUser, with: .list, color: UIColor.black)
         let participantsString = AvailabilityStringBuilder.string(for: otherUser, with: .participants, color: UIColor.black)
         let placeholderString = AvailabilityStringBuilder.string(for: otherUser, with: .placeholder, color: UIColor.black)
-        
+
         // then
         XCTAssertFalse(listString!.allAttachments.isEmpty)
         XCTAssertFalse(participantsString!.allAttachments.isEmpty)
         XCTAssertNotNil(placeholderString)
     }
-    
+
     func testThatTheresAvailabilityInformationIfOtherUserIsTeamMember() {
         let member = Member.insertNewObject(in: fixture.uiMOC)
         member.user = otherUser
@@ -78,30 +78,30 @@ final class AvailabilityStringBuilderTests: XCTestCase {
         let selfMember = Member.insertNewObject(in: fixture.uiMOC)
         selfMember.user = selfUser
         selfMember.team = team1
-        
+
         // when
         let listString = AvailabilityStringBuilder.string(for: otherUser, with: .list, color: UIColor.black)
         let participantsString = AvailabilityStringBuilder.string(for: otherUser, with: .participants, color: UIColor.black)
         let placeholderString = AvailabilityStringBuilder.string(for: otherUser, with: .placeholder, color: UIColor.black)
-        
+
         // then
         XCTAssertFalse(listString!.allAttachments.isEmpty)
         XCTAssertFalse(participantsString!.allAttachments.isEmpty)
         XCTAssertNotNil(placeholderString)
     }
-    
+
     func testThatTheresAvailabilityInformationIfSelfUser() {
         // given
         let selfMember = Member.insertNewObject(in: fixture.uiMOC)
         selfMember.user = selfUser
         selfMember.team = team1
         selfUser.updateAvailability(.available)
-        
+
         // when
         let listString = AvailabilityStringBuilder.string(for: selfUser, with: .list, color: UIColor.black)
         let participantsString = AvailabilityStringBuilder.string(for: selfUser, with: .participants, color: UIColor.black)
         let placeholderString = AvailabilityStringBuilder.string(for: selfUser, with: .placeholder, color: UIColor.black)
-        
+
         // then
         XCTAssertFalse(listString!.allAttachments.isEmpty)
         XCTAssertFalse(participantsString!.allAttachments.isEmpty)

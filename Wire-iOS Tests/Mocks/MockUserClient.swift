@@ -23,28 +23,28 @@ final class MockUserClient: NSObject, UserClientType {
 
     var type: DeviceType = .permanent
 
-    var label: String? = nil
+    var label: String?
 
-    var remoteIdentifier: String? = nil
+    var remoteIdentifier: String?
 
-    var activationAddress: String? = nil
+    var activationAddress: String?
 
-    var activationDate: Date? = nil
+    var activationDate: Date?
 
-    var model: String? = nil
+    var model: String?
 
     var activationLatitude: Double = 0
 
     var activationLongitude: Double = 0
 
-    var fingerprint: Data? = nil
+    var fingerprint: Data?
 
     var verified: Bool = false
 
-    var user: ZMUser? = nil
-    
+    var user: ZMUser?
+
     var deviceClass: DeviceClass? = .phone
-    
+
     func isSelfClient() -> Bool {
         return false
     }
@@ -52,7 +52,7 @@ final class MockUserClient: NSObject, UserClientType {
     func resetSession() {
         // No-op
     }
-    
+
     func fetchFingerprintOrPrekeys() {
         // No-op
     }

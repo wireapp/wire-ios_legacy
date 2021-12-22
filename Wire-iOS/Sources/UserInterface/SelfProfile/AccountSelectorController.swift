@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import Cartography
 import WireSyncEngine
 
 final class AccountSelectorController: UIViewController {
@@ -29,59 +27,51 @@ final class AccountSelectorController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-            self.updateShowAccountsIfNeeded()
+            self?.updateShowAccountsIfNeeded()
         })
-        
+
         accountsView.delegate = self
-        self.view.addSubview(accountsView)
-        constrain(self.view, accountsView) { selfView, accountsView in
-            accountsView.edges == selfView.edges
-        }
-        
+        view.addSubview(accountsView)
+        accountsView.translatesAutoresizingMaskIntoConstraints = false
+        accountsView.fitIn(view: view)
+
         setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private var showAccounts: Bool = false
-    
+
     func updateShowAccountsIfNeeded() {
         let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
-        guard showAccounts != self.showAccounts else { return }
+        guard showAccounts != showAccounts else { return }
         setShowAccounts(to: showAccounts)
     }
-    
+
     private func setShowAccounts(to showAccounts: Bool) {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
-        self.view.frame.size = accountsView.frame.size
+        view.frame.size = accountsView.frame.size
     }
 }
 
 extension AccountSelectorController: AccountSelectorViewDelegate {
-    
-    func accountSelectorDidSelect(account: Account) {
-        guard account != SessionManager.shared?.accountManager.selectedAccount else { return }
-        
-        if ZClientViewController.shared?.conversationListViewController.presentedViewController != nil {
-            AppDelegate.shared.rootViewController.confirmSwitchingAccount { (confirmed) in
-                if confirmed {
-                    ZClientViewController.shared?.conversationListViewController.dismiss(animated: true, completion: {
-                        AppDelegate.shared.mediaPlaybackManager?.stop()
-                        SessionManager.shared?.select(account)
-                    })
-                }
-            }
-        }
-        else {
-            SessionManager.shared?.select(account)
-        }
-    }
-    
-}
 
+    func accountSelectorDidSelect(account: Account) {
+        guard
+            account != SessionManager.shared?.accountManager.selectedAccount,
+            ZClientViewController.shared?.conversationListViewController.presentedViewController != nil
+        else {
+            return
+        }
+
+        ZClientViewController.shared?.conversationListViewController.dismiss(animated: true,
+                                                                             completion: {
+            AppDelegate.shared.mediaPlaybackManager?.stop()
+            SessionManager.shared?.select(account)
+        })
+    }
+}

@@ -17,10 +17,9 @@
 //
 
 import UIKit
-import Cartography
 
 final class ToggleView: UIView, Themeable {
-    
+
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
@@ -31,13 +30,18 @@ final class ToggleView: UIView, Themeable {
     private let toggle = UISwitch()
     private let titleLabel = UILabel()
     private let title: String
-    
+
     var handler: ToggleHandler?
     var isOn: Bool {
-        set { toggle.isOn = newValue }
-        get { return toggle.isOn }
+        get {
+            return toggle.isOn
+        }
+
+        set {
+            toggle.isOn = newValue
+        }
     }
-    
+
     init(title: String, isOn: Bool, accessibilityIdentifier: String) {
         self.title = title
         super.init(frame: .zero)
@@ -47,7 +51,8 @@ final class ToggleView: UIView, Themeable {
         toggle.isOn = isOn
         toggle.accessibilityIdentifier = accessibilityIdentifier
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,19 +68,20 @@ final class ToggleView: UIView, Themeable {
         backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
     }
-    
+
     private func createConstraints() {
-        constrain(self, titleLabel, toggle) { view, titleLabel, toggle in
-            titleLabel.centerY == view.centerY
-            titleLabel.leading == view.leading + 16
-            toggle.centerY == view.centerY
-            toggle.trailing == view.trailing - 16
-            view.height == 56
-        }
+        [titleLabel, toggle].prepareForLayout()
+        NSLayoutConstraint.activate([
+          titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+          titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+          toggle.centerYAnchor.constraint(equalTo: centerYAnchor),
+          toggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+          heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
-    
+
     @objc private func toggleValueChanged(_ sender: UISwitch) {
         handler?(sender.isOn)
     }
-    
+
 }

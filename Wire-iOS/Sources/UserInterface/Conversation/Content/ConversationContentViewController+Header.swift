@@ -27,7 +27,7 @@ extension ConversationContentViewController {
             return
         }
 
-        var headerView: UIView? = nil
+        var headerView: UIView?
 
         let otherParticipant: ZMUser?
         if conversation.conversationType == .connection {

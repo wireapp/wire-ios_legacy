@@ -42,7 +42,6 @@ class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
         return true
     }
 
-
     var title: String {
         return text
     }

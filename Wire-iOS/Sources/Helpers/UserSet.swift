@@ -21,9 +21,11 @@ import WireDataModel
 
 /// A set of instances conforming to `UserType`.
 
+typealias HashBoxUser = HashBox<UserType>
+
 struct UserSet {
 
-    typealias Storage = Set<HashBox<UserType>>
+    typealias Storage = Set<HashBoxUser>
 
     private var storage: Storage
 

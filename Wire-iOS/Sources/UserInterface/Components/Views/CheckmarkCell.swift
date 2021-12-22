@@ -34,7 +34,7 @@ final class CheckmarkCell: RightIconDetailsCell {
             updateCheckmark(forColor: ColorScheme.default.variant)
         }
     }
-    
+
     override func setUp() {
         super.setUp()
         icon = nil
@@ -57,7 +57,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         let color: UIColor
-        
+
         switch (colorSchemeVariant, disabled) {
         case (.light, false):
             color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
@@ -68,7 +68,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         case (.dark, true):
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
-    
+
         accessory = StyleKitIcon.checkmark.makeImage(size: .tiny, color: color)
     }
 
@@ -79,7 +79,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 
@@ -89,7 +89,7 @@ final class CheckmarkCell: RightIconDetailsCell {
         }
 
         set {
-            //no op
+            // no op
         }
     }
 }

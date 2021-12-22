@@ -23,7 +23,7 @@ import SnapshotTesting
 final class TypingIndicatorViewSnapshotTests: XCTestCase {
 
     var sut: TypingIndicatorView!
-    
+
     override func setUp() {
         super.setUp()
         sut = TypingIndicatorView()
@@ -34,21 +34,21 @@ final class TypingIndicatorViewSnapshotTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testOneTypingUser() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(1))
         verify(matching: sut)
     }
-    
+
     func testTwoTypingUsers() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(2))
         verify(matching: sut)
     }
-    
+
     func testManyTypingUsers() {
         // limit width to test overflow behaviour
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        
+
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
         verify(matching: sut)
     }
@@ -56,14 +56,14 @@ final class TypingIndicatorViewSnapshotTests: XCTestCase {
     func testThatContainerIsHidden() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
         sut.setHidden(true, animated: false)
-        
+
         XCTAssertEqual(sut.container.alpha, 0)
     }
-    
+
     func testThatContainerIsHiddenWhenAnimated() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
         sut.setHidden(true, animated: true)
-        
+
         XCTAssertEqual(sut.container.alpha, 0)
     }
 
@@ -72,13 +72,13 @@ final class TypingIndicatorViewSnapshotTests: XCTestCase {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
 
         let animationExpectation = expectation(description: "Animation completed")
-        
+
         // WHEN
         sut.setHidden(false, animated: true) {
             XCTAssert(self.sut.animatedPen.isAnimating)
             animationExpectation.fulfill()
         }
-        
+
         // THEN
         XCTAssertEqual(sut.container.alpha, 1)
         waitForExpectations(timeout: 0.5, handler: nil)

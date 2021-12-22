@@ -16,39 +16,37 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-import Cartography
 import UIKit
 
-public enum DeniedAuthorizationType {
+enum DeniedAuthorizationType {
     case camera
     case photos
     case cameraAndPhotos
     case ongoingCall
 }
 
-class CameraKeyboardPermissionsCell: UICollectionViewCell {
+final class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     let settingsButton = Button()
     let cameraIcon = IconButton()
     let descriptionLabel = UILabel()
-    
+
     private let containerView = UIView()
-    
-    public override init(frame: CGRect) {
+
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .graphite
-        
+
         cameraIcon.setIcon(.cameraLens, size: .tiny, for: .normal)
         cameraIcon.setIconColor(.white, for: .normal)
         cameraIcon.isUserInteractionEnabled = false
-        
+
         descriptionLabel.backgroundColor = .clear
         descriptionLabel.textColor = .white
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
-        
+
         settingsButton.setTitleColor(.white, for: .normal)
         settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFont.Weight.semibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
@@ -59,93 +57,104 @@ class CameraKeyboardPermissionsCell: UICollectionViewCell {
         settingsButton.setBackgroundImageColor(UIColor.white.withAlphaComponent(0.16), for: .normal)
         settingsButton.setBackgroundImageColor(UIColor.white.withAlphaComponent(0.24), for: .highlighted)
         containerView.backgroundColor = .clear
-        
+
         containerView.addSubview(descriptionLabel)
-        
+
         if SecurityFlags.cameraRoll.isEnabled { addSubview(containerView) }
-        
+
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    public convenience init(frame: CGRect, deniedAuthorization: DeniedAuthorizationType) {
+
+    convenience init(frame: CGRect, deniedAuthorization: DeniedAuthorizationType) {
         self.init(frame: frame)
         configure(deniedAuthorization: deniedAuthorization)
     }
-    
+
     func configure(deniedAuthorization: DeniedAuthorizationType) {
         var title = ""
-        
+
         switch deniedAuthorization {
         case .camera:           title = "keyboard_photos_access.denied.keyboard.camera"
         case .photos:           title = "keyboard_photos_access.denied.keyboard.photos"
         case .cameraAndPhotos:  title = "keyboard_photos_access.denied.keyboard.camera_and_photos"
         case .ongoingCall:      title = "keyboard_photos_access.denied.keyboard.ongoing_call"
         }
-        
+
         descriptionLabel.font = UIFont.systemFont(ofSize: (deniedAuthorization == .ongoingCall ? 14.0 : 16.0),
                                                   weight: UIFont.Weight.light)
         descriptionLabel.text = title.localized
-        
+
         if SecurityFlags.cameraRoll.isEnabled {
             createConstraints(deniedAuthorization: deniedAuthorization)
         }
-        
+
     }
-    
-    @objc private func openSettings() {
-        guard let url = URL(string:UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
+
+    @objc
+    private func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url)
     }
-    
+
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
-        
-        constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { (selfView, container, description, settings, cameraIcon) in
-            description.leading == container.leading + 16
-            description.trailing == container.trailing - 16
-            container.centerY == selfView.centerY
-            container.leading == selfView.leading
-            container.trailing == selfView.trailing
+
+        [containerView,
+         descriptionLabel,
+         settingsButton,
+         cameraIcon].prepareForLayout()
+
+        var constraints: [NSLayoutConstraint] = [
+            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ]
+
+        defer {
+            NSLayoutConstraint.activate(constraints)
         }
-        
+
         if deniedAuthorization == .ongoingCall {
-            createConstraintsForOngoingCallAlert()
+            constraints.append(contentsOf: createConstraintsForOngoingCallAlert())
         } else {
-            createConstraintsForPermissionsAlert()
+            constraints.append(contentsOf: createConstraintsForPermissionsAlert())
         }
     }
-    
-    private func createConstraintsForPermissionsAlert() {
-        
+
+    private func createConstraintsForPermissionsAlert() -> [NSLayoutConstraint] {
+
         if cameraIcon.superview != nil {
             cameraIcon.removeFromSuperview()
         }
         containerView.addSubview(settingsButton)
-        
-        constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
-            settings.bottom == container.bottom
-            settings.top == description.bottom + 24
-            settings.height == 44.0
-            settings.centerX == container.centerX
-            description.top == container.top
-        }
+
+        return [
+            settingsButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            settingsButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 24),
+            settingsButton.heightAnchor.constraint(equalToConstant: 44),
+            settingsButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor)
+        ]
     }
-    
-    private func createConstraintsForOngoingCallAlert() {
-        
+
+    private func createConstraintsForOngoingCallAlert() -> [NSLayoutConstraint] {
+
         if settingsButton.superview != nil {
             settingsButton.removeFromSuperview()
         }
         containerView.addSubview(cameraIcon)
-        
-        constrain(self, containerView, descriptionLabel, cameraIcon) { (selfView, container, description, cameraIcon) in
-            description.bottom == container.bottom
-            description.top == cameraIcon.bottom + 16
-            cameraIcon.top == container.top
-            cameraIcon.centerX == container.centerX
-        }
+
+        return [
+            descriptionLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: cameraIcon.bottomAnchor, constant: 16),
+            cameraIcon.topAnchor.constraint(equalTo: containerView.topAnchor),
+            cameraIcon.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ]
     }
 
 }

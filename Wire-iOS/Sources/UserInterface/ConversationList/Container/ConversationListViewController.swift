@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,13 +18,13 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum ConversationListState {
     case conversationList
     case peoplePicker
     case archived
 }
-
 
 final class ConversationListViewController: UIViewController {
     let viewModel: ViewModel
@@ -49,7 +48,7 @@ final class ConversationListViewController: UIViewController {
         label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
         label.numberOfLines = 0
         label.backgroundColor = .clear
-        
+
         return label
     }()
 
@@ -80,13 +79,6 @@ final class ConversationListViewController: UIViewController {
         return viewController
     }()
 
-    let conversationListContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-
-        return view
-    }()
-
     fileprivate let onboardingHint: ConversationListOnboardingHint = {
         let conversationListOnboardingHint = ConversationListOnboardingHint()
         return conversationListOnboardingHint
@@ -94,36 +86,35 @@ final class ConversationListViewController: UIViewController {
 
     convenience init(account: Account, selfUser: SelfUserType) {
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
-        
+
         self.init(viewModel: viewModel)
 
         viewModel.viewController = self
     }
-    
+
     required init(viewModel: ViewModel) {
 
         self.viewModel = viewModel
 
-        topBarViewController = ConversationListTopBarViewController(account: viewModel.account, selfUser: viewModel.selfUser)
+        topBarViewController = ConversationListTopBarViewController(account: viewModel.account,
+                                                                    selfUser: viewModel.selfUser)
 
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
 
         definesPresentationContext = true
 
         /// setup UI
         view.addSubview(contentContainer)
 
-        contentContainer.addSubview(onboardingHint)
-        contentContainer.addSubview(conversationListContainer)
-
-        setupNoConversationLabel()
+        setupTopBar()
         setupListContentController()
         setupBottomBarController()
-        setupTopBar()
+        setupNoConversationLabel()
+        setupOnboardingHint()
         setupNetworkStatusBar()
 
         createViewConstraints()
-        
+
         onboardingHint.arrowPointToView = bottomBarController.startUIButton
     }
 
@@ -143,7 +134,7 @@ final class ConversationListViewController: UIViewController {
         /// update
         hideNoContactLabel(animated: false)
 
-        viewModel.setupObservers()
+        setupObservers()
 
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
     }
@@ -169,11 +160,15 @@ final class ConversationListViewController: UIViewController {
 
         shouldAnimateNetworkStatusView = true
 
+        ZClientViewController.shared?.notifyUserOfDisabledAppLockIfNeeded()
+
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
+
             ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
+
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -181,7 +176,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { context in
+        coordinator.animate(alongsideTransition: { _ in
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
             self.listContentController.reload()
@@ -200,85 +195,89 @@ final class ConversationListViewController: UIViewController {
 
     // MARK: - setup UI
 
-    fileprivate func setupNoConversationLabel() {
+    private func setupObservers() {
+        viewModel.setupObservers()
+    }
+
+    private func setupTopBar() {
+        add(topBarViewController, to: contentContainer)
+    }
+
+    private func setupListContentController() {
+        listContentController.contentDelegate = viewModel
+        add(listContentController, to: contentContainer)
+    }
+
+    private func setupNoConversationLabel() {
         contentContainer.addSubview(noConversationLabel)
     }
 
-    fileprivate func setupBottomBarController() {
-        bottomBarController.delegate = self
-        
-        add(bottomBarController, to: conversationListContainer)
+    private func setupOnboardingHint() {
+        contentContainer.addSubview(onboardingHint)
+    }
 
+    private func setupBottomBarController() {
+        bottomBarController.delegate = self
+        add(bottomBarController, to: contentContainer)
         listContentController.listViewModel.restorationDelegate = bottomBarController
     }
 
-    fileprivate func setupListContentController() {
-        listContentController.contentDelegate = viewModel
-
-        add(listContentController, to: conversationListContainer)
-    }
-    
-    fileprivate func setupTopBar() {
-        add(topBarViewController, to: contentContainer)
-    }
-    
-    fileprivate func setupNetworkStatusBar() {
+    private func setupNetworkStatusBar() {
         networkStatusViewController.delegate = self
-        addToSelf(networkStatusViewController)
+        add(networkStatusViewController, to: contentContainer)
     }
 
-    fileprivate func createViewConstraints() {
-        guard let bottomBar = bottomBarController.view,
-            let listContent = listContentController.view,
-            let topBarView = topBarViewController.view else { return }
-        
-        [conversationListContainer,
-         bottomBar,
-         networkStatusViewController.view,
-         topBarView,
-         contentContainer,
-         noConversationLabel,
-         onboardingHint,
-         listContent].forEach() { $0?.translatesAutoresizingMaskIntoConstraints = false }
-        
-        let bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
-        
+    private func createViewConstraints() {
+        guard
+            let topBarView = topBarViewController.view,
+            let bottomBar = bottomBarController.view,
+            let conversationList = listContentController.view
+        else {
+            return
+        }
+
+        [contentContainer,
+        topBarView,
+        conversationList,
+        bottomBar,
+        noConversationLabel,
+        onboardingHint,
+        networkStatusViewController.view].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         let constraints: [NSLayoutConstraint] = [
-            conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
-            conversationListContainer.leadingAnchor.constraint(equalTo: conversationListContainer.superview!.leadingAnchor),
-            conversationListContainer.trailingAnchor.constraint(equalTo: conversationListContainer.superview!.trailingAnchor),
-            
-            bottomBar.leftAnchor.constraint(equalTo: bottomBar.superview!.leftAnchor),
-            bottomBar.rightAnchor.constraint(equalTo: bottomBar.superview!.rightAnchor),
-            bottomBarBottomOffset,
-            
-            topBarView.leftAnchor.constraint(equalTo: topBarView.superview!.leftAnchor),
-            topBarView.rightAnchor.constraint(equalTo: topBarView.superview!.rightAnchor),
-            topBarView.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
-            
-            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             contentContainer.topAnchor.constraint(equalTo: safeTopAnchor),
             contentContainer.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
-            
-            noConversationLabel.centerXAnchor.constraint(equalTo: noConversationLabel.superview!.centerXAnchor),
-            noConversationLabel.centerYAnchor.constraint(equalTo: noConversationLabel.superview!.centerYAnchor),
-            noConversationLabel.heightAnchor.constraint(equalToConstant: 120),
-            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
-            
+            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+
+            networkStatusViewController.view.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            networkStatusViewController.view.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            networkStatusViewController.view.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+
+            topBarView.topAnchor.constraint(equalTo: networkStatusViewController.view.bottomAnchor),
+            topBarView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            topBarView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+
+            conversationList.topAnchor.constraint(equalTo: topBarView.bottomAnchor),
+            conversationList.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            conversationList.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            conversationList.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+
             onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
-            onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
-            onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
-            
-            listContent.topAnchor.constraint(equalTo: listContent.superview!.topAnchor),
-            listContent.leadingAnchor.constraint(equalTo: listContent.superview!.leadingAnchor),
-            listContent.trailingAnchor.constraint(equalTo: listContent.superview!.trailingAnchor),
-            listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
+            onboardingHint.leftAnchor.constraint(equalTo: contentContainer.leftAnchor),
+            onboardingHint.rightAnchor.constraint(equalTo: contentContainer.rightAnchor),
+
+            bottomBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            bottomBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            bottomBar.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+
+            noConversationLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
+            noConversationLabel.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
+            noConversationLabel.widthAnchor.constraint(equalToConstant: 240)
         ]
-        
-        ///TODO: merge this method and activate the constraints in a batch
-        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView, controller: self)
-        
+
         NSLayoutConstraint.activate(constraints)
     }
 
@@ -343,10 +342,10 @@ final class ConversationListViewController: UIViewController {
         if showArchived == bottomBarController.showArchived {
             return
         }
-        
+
         UIView.performWithoutAnimation {
             self.bottomBarController.showArchived = showArchived
-            
+
             UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
                 self.bottomBarController.view.layoutIfNeeded()
             })
@@ -354,7 +353,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     func hideArchivedConversations() {
-        setState(.conversationList, animated:true)
+        setState(.conversationList, animated: true)
     }
 
     func presentPeoplePicker() {
@@ -382,7 +381,7 @@ fileprivate extension NSAttributedString {
         paragraphStyle.paragraphSpacing = 10
         paragraphStyle.alignment = .center
 
-        let titleAttributes: [NSAttributedString.Key : Any] = [
+        let titleAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.smallMediumFont,
             NSAttributedString.Key.paragraphStyle: paragraphStyle

@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 enum ButtonStyle: Int {
+    // background color: accent, text color: white
     case full
     case empty
     case fullMonochrome
@@ -110,7 +111,7 @@ class Button: ButtonWithLargerHitArea {
         setTitleColor(UIColor.white, for: .normal)
         setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
     }
-    
+
     func updateEmptyStyle() {
         setBackgroundImageColor(nil, for: .normal)
         layer.borderWidth = 1
@@ -194,7 +195,7 @@ class Button: ButtonWithLargerHitArea {
 
     override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
-        state.expanded.forEach() { expandedState in
+        state.expanded.forEach { expandedState in
             if title != nil {
                 originalTitles[expandedState] = title
             } else {
@@ -210,7 +211,7 @@ class Button: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expanded.forEach() { expandedState in
+        state.expanded.forEach { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
             }

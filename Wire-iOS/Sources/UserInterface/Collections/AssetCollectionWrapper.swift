@@ -16,22 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireDataModel
 
 class MulticastDelegate<T: Any>: NSObject {
     private let delegates = NSHashTable<AnyObject>(options: .weakMemory, capacity: 0)
-    
+
     func add(_ delegate: T) {
         delegates.add(delegate as AnyObject)
     }
-    
+
     func remove(_ delegate: T) {
         delegates.remove(delegate as AnyObject)
     }
-    
-    func call(_ function:@escaping (T)->()) {
+
+    func call(_ function:@escaping (T) -> Void) {
         delegates.allObjects.forEach {
             function($0 as! T)
         }
@@ -42,13 +41,13 @@ final class AssetCollectionMulticastDelegate: MulticastDelegate<AssetCollectionD
 }
 
 extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
+    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch: [ZMConversationMessage]], hasMore: Bool) {
         self.call {
             $0.assetCollectionDidFetch(collection: collection, messages: messages, hasMore: hasMore)
         }
     }
-    
-    func assetCollectionDidFinishFetching(collection: ZMCollection, result : AssetFetchResult) {
+
+    func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
         self.call {
             $0.assetCollectionDidFinishFetching(collection: collection, result: result)
         }
@@ -56,32 +55,32 @@ extension AssetCollectionMulticastDelegate: AssetCollectionDelegate {
 }
 
 final class AssetCollectionWrapper: NSObject {
-    let conversation: ZMConversation
+    let conversation: ConversationLike
     let assetCollection: ZMCollection
     let assetCollectionDelegate: AssetCollectionMulticastDelegate
     let matchingCategories: [CategoryMatch]
-    
-    init(conversation: ZMConversation, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate, matchingCategories: [CategoryMatch]) {
+
+    init(conversation: ConversationLike, assetCollection: ZMCollection, assetCollectionDelegate: AssetCollectionMulticastDelegate, matchingCategories: [CategoryMatch]) {
         self.conversation = conversation
         self.assetCollection = assetCollection
         self.assetCollectionDelegate = assetCollectionDelegate
         self.matchingCategories = matchingCategories
     }
-    
-    convenience init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
+
+    convenience init(conversation: ConversationLike,
+                     matchingCategories: [CategoryMatch]) {
         let assetCollection: ZMCollection
         let delegate = AssetCollectionMulticastDelegate()
-        
+
         let enableBatchCollections: Bool? = Settings.shared[.enableBatchCollections]
         if enableBatchCollections == true {
             assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
-        }
-        else {
+        } else {
             assetCollection = AssetCollection(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
         }
         self.init(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: matchingCategories)
     }
-    
+
     deinit {
         assetCollection.tearDown()
     }

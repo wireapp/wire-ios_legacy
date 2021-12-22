@@ -27,15 +27,17 @@ extension NSNotification {
     static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name.colorSchemeControllerDidApplyColorSchemeChange
 }
 
-class ColorSchemeController: NSObject {
+final class ColorSchemeController: NSObject {
 
     var userObserverToken: Any?
 
     override init() {
         super.init()
 
-        if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: SelfUser.current, in: session)
+        // When SelfUser.provider is nil, e.g. running tests, do not set up UserChangeInfo observer
+        if let session = ZMUserSession.shared(),
+           SelfUser.provider != nil {
+            userObserverToken = UserChangeInfo.add(observer: self, for: SelfUser.current, in: session)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(settingsColorSchemeDidChange), name: .SettingsColorSchemeChanged, object: nil)

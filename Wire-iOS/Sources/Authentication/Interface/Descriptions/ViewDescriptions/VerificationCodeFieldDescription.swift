@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
 
 final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
@@ -29,25 +28,26 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
 
 fileprivate final class ResponderContainer<Child: UIView>: UIView {
     private let responder: Child
-    
+
     init(responder: Child) {
         self.responder = responder
         super.init(frame: .zero)
         self.addSubview(self.responder)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var canBecomeFirstResponder: Bool {
         return self.responder.canBecomeFirstResponder
     }
-    
+
     override func becomeFirstResponder() -> Bool {
         return self.responder.becomeFirstResponder()
     }
-    
+
     override func resignFirstResponder() -> Bool {
         return self.responder.resignFirstResponder()
     }
@@ -90,9 +90,9 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
             inputField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             inputField.topAnchor.constraint(equalTo: containerView.topAnchor),
             inputField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            inputField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            inputField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-        
+
         return containerView
     }
 }

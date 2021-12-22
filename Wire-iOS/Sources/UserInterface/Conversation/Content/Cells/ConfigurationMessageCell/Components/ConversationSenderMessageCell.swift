@@ -27,12 +27,12 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         let message: ZMConversationMessage
         let indicatorIcon: UIImage?
     }
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
 
     var isSelected: Bool = false
-    
+
     private let senderView = SenderCellComponent()
     private let indicatorImageView = UIImageView()
 
@@ -44,14 +44,13 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     func configure(with object: Configuration, animated: Bool) {
-        senderView.configure(with: object.user, conversation: object.message.conversation)
+        senderView.configure(with: object.user)
         indicatorImageView.isHidden = object.indicatorIcon == nil
         indicatorImageView.image = object.indicatorIcon
     }
@@ -76,7 +75,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
             senderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             senderView.topAnchor.constraint(equalTo: topAnchor),
             senderView.trailingAnchor.constraint(equalTo: indicatorImageView.leadingAnchor, constant: -8),
-            senderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            senderView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -94,7 +93,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var showEphemeralTimer: Bool = false
     var topMargin: Float = 16
 
@@ -107,8 +106,8 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
 
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message
-        
-        var icon: UIImage? = nil
+
+        var icon: UIImage?
         let iconColor = UIColor.from(scheme: .iconNormal)
 
         if message.isDeletion {
@@ -120,5 +119,5 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.configuration = View.Configuration(user: sender, message: message, indicatorIcon: icon)
         actionController = nil
     }
-    
+
 }

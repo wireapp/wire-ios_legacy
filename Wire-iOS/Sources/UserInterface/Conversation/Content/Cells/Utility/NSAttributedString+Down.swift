@@ -19,26 +19,29 @@
 import Foundation
 import Down
 
-extension NSMutableAttributedString {
-    
+extension NSAttributedString {
+
     @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
         let result: NSMutableAttributedString
-        
+
         if let attrStr = try? down.toAttributedString(using: style) {
-            result = NSMutableAttributedString(attributedString: attrStr)
+            result = .init(attributedString: attrStr)
         } else {
             result = NSMutableAttributedString(string: text)
         }
-        
+
         if result.string.last == "\n" {
             result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
         }
-        
+
+        guard !result.string.isEmpty else {
+            return .init(string: text)
+        }
+
         return result
     }
-    
 }
 
 extension NSAttributedString {

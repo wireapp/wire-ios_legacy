@@ -33,7 +33,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        
+
         icon = StyleKitIcon.eye.makeImage(
             size: .tiny,
             color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
@@ -42,7 +42,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 }
 
 extension GroupDetailsReceiptOptionsCell: ConversationOptionsConfigurable {
-    func configure(with conversation: ZMConversation) {
+    func configure(with conversation: GroupDetailsConversationType) {
          isOn = conversation.hasReadReceiptsEnabled
     }
 }

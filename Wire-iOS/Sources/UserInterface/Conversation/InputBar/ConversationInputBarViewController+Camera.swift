@@ -62,7 +62,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                     let popover = videoEditor.popoverPresentationController
                     popover?.sourceView = self.parent?.view
 
-                    ///arrow point to camera button.
+                    // Arrow point to camera button.
                     popover?.permittedArrowDirections = .down
 
                     popover?.sourceRect = self.photoButton.popoverSourceRect(from: self)
@@ -77,7 +77,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         } else {
             let context = ConfirmAssetViewController.Context(asset: .video(url: videoURL),
-                                                             onConfirm: { [unowned self] (editedImage: UIImage?) in
+                                                             onConfirm: { [unowned self] _ in
                                                                             self.dismiss(animated: true)
                                                                             self.uploadFile(at: videoURL)
                                                                             },
@@ -96,9 +96,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     }
 
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
-                                             didSelectImageData imageData: Data,
-                                             isFromCamera: Bool,
-                                             uti: String?) {
+                                      didSelectImageData imageData: Data,
+                                      isFromCamera: Bool,
+                                      uti: String?) {
         showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
 
@@ -123,7 +123,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .camera,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 
@@ -133,13 +133,13 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .photoLibrary,
                                     mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
                                     allowsEditing: false,
-                                    pointToView:self.photoButton.imageView)
+                                    pointToView: self.photoButton.imageView)
         }
     }
 
     func showConfirmationForImage(_ imageData: Data,
-                                           isFromCamera: Bool,
-                                           uti: String?) {
+                                  isFromCamera: Bool,
+                                  uti: String?) {
         let mediaAsset: MediaAsset
 
         if uti == kUTTypeGIF as String,
@@ -175,17 +175,16 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool) -> Void) {
         PHPhotoLibrary.requestAuthorization { status in
             DispatchQueue.main.async {
-            switch status {
-            case .authorized:
-                closure(true)
-            default:
-                closure(false)
-                break
-            }
+                switch status {
+                case .authorized:
+                    closure(true)
+                default:
+                    closure(false)
+                }
             }
         }
     }
-    
+
     private func writeToSavedPhotoAlbumIfNecessary(imageData: Data, isFromCamera: Bool) {
         guard isFromCamera,
               SecurityFlags.cameraRoll.isEnabled,
@@ -226,7 +225,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
 
         editor.isLoadingViewVisible = true
 
-        self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
+        self.convertVideoAtPath(editedVideoPath) { success, resultPath, _ in
             editor.isLoadingViewVisible = false
 
             guard let path = resultPath, success else {
@@ -272,9 +271,9 @@ extension ConversationInputBarViewController {
                 self.mode = .textInput
             }
         } else {
-            UIApplication.wr_requestVideoAccess({ granted in
+            UIApplication.wr_requestVideoAccess({ _ in
                 if SecurityFlags.cameraRoll.isEnabled {
-                    self.executeWithCameraRollPermission() { success in
+                    self.executeWithCameraRollPermission { _ in
                         self.mode = .camera
                         self.inputBar.textView.becomeFirstResponder()
                     }

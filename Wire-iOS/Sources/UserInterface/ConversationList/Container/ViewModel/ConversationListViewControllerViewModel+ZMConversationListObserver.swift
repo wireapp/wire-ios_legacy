@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -37,8 +36,8 @@ extension ConversationListViewController.ViewModel {
 
     func updateObserverTokensForActiveTeam() {
         if let userSession = ZMUserSession.shared() {
-            allConversationsObserverToken = ConversationListChangeInfo.add(observer:self, for: ZMConversationList.conversationsIncludingArchived(inUserSession: userSession), userSession: userSession)
-            
+            allConversationsObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversationsIncludingArchived(inUserSession: userSession), userSession: userSession)
+
             connectionRequestsObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
         }
     }

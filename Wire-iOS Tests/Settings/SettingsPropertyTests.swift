@@ -16,36 +16,37 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 import WireCommonComponents
 @testable import Wire
 
 final class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var needsRichProfileUpdate: Bool = false
-    
+
     var enableReadReceipts: Bool = false
     var originalProfileImageData: Data!
-    
+
     func deleteProfileImage() {
         // no-op
     }
-    
+
     static func validate(name: inout String?) throws -> Bool {
         return false
     }
-    
+
 }
 
 final class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     var isMicrophoneMuted: Bool = false
 
-    var intensityLevel : AVSIntensityLevel = .none
-    
+    var intensityLevel: AVSIntensityLevel = .none
+
     func playMediaByName(_ name: String!) { }
 }
 
 final class ZMMockTracking: TrackingInterface {
+    var disableCrashSharing: Bool = false
+    var disableAnalyticsSharing: Bool = false
     var disableCrashAndAnalyticsSharing: Bool = false
 }
 
@@ -62,14 +63,13 @@ final class SettingsPropertyTests: XCTestCase {
         super.tearDown()
     }
 
-    
     func saveAndCheck<T>(_ property: SettingsProperty,
                          value: T,
                          file: String = #file,
                          line: UInt = #line) throws where T: Equatable {
         var property = property
         try property << value
-        if let readValue : T = property.rawValue() as? T {
+        if let readValue: T = property.rawValue() as? T {
             if value != readValue {
                 recordFailure(
                     withDescription: "Wrong property value, read \(readValue) but expected \(value)",
@@ -78,8 +78,7 @@ final class SettingsPropertyTests: XCTestCase {
                     expected: true
                 )
             }
-        }
-        else {
+        } else {
             recordFailure(
                 withDescription: "Unable to read property value",
                 inFile: file,
@@ -88,32 +87,32 @@ final class SettingsPropertyTests: XCTestCase {
             )
         }
     }
-    
+
     // User defaults
-    
+
     func testThatIntegerUserDefaultsSettingSave() {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: SettingKey.colorScheme.rawValue, userDefaults: self.userDefaults)
         // when & then
         try! self.saveAndCheck(property, value: "light")
     }
-    
+
     func testThatBoolUserDefaultsSettingSave() {
         // given
         let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.chatHeadsDisabled, userDefaultsKey: SettingKey.chatHeadsDisabled.rawValue, userDefaults: self.userDefaults)
         // when & then
         try! self.saveAndCheck(property, value: NSNumber(value: true))
     }
-    
+
     func testThatNamePropertySetsValue() {
         // given
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
-        
+
         let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
-        
+
         let property = factory.property(SettingsPropertyName.profileName)
         // when & then
         try! self.saveAndCheck(property, value: "Test")
@@ -127,16 +126,15 @@ final class SettingsPropertyTests: XCTestCase {
 
         return SettingsPropertyFactory(userDefaults: userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
     }
-    
+
     func testThatDarkThemePropertySetsValue() {
         // given
         let factory = settingsPropertyFactory
-        
+
         let property = factory.property(SettingsPropertyName.darkMode)
         // when & then
         try! saveAndCheck(property, value: 2)
     }
-    
 
     func testThatSoundLevelPropertySetsValue() {
         // given
@@ -146,21 +144,21 @@ final class SettingsPropertyTests: XCTestCase {
         // when & then
         try! self.saveAndCheck(property, value: 1)
     }
-    
+
     func testThatAnalyticsPropertySetsValue() {
         // given
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
-        
+
         let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
-        
-        let property = factory.property(SettingsPropertyName.disableCrashAndAnalyticsSharing)
+
+        let property = factory.property(SettingsPropertyName.disableCrashSharing)
         // when & then
         try! self.saveAndCheck(property, value: true)
     }
-    
+
     func testThatIntegerBlockSettingSave() {
         // given
         let selfUser = MockZMEditableUser()
@@ -168,7 +166,7 @@ final class SettingsPropertyTests: XCTestCase {
         let mediaManager = ZMMockAVSMediaManager()
         let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
@@ -181,7 +179,7 @@ final class SettingsPropertyTests: XCTestCase {
             userDefaults: userDefaults,
             tracking: ZMMockTracking(),
             mediaManager: ZMMockAVSMediaManager(),
-            userSession : MockZMUserSession(),
+            userSession: MockZMUserSession(),
             selfUser: MockZMEditableUser()
         )
 
@@ -189,39 +187,39 @@ final class SettingsPropertyTests: XCTestCase {
         // when & then
         try? saveAndCheck(property, value: 2)
     }
-    
+
     // MARK: - Accounts
-    
+
     func testThatIntegerUserDefaultsSettingForAccountSave() {
         // given
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = SettingKey.blackListDownloadInterval
         XCTAssertNil(settings.value(for: key, in: account) as Int?)
-        
+
         // when
         settings.setValue(42, settingKey: key, in: account)
-        
+
         // then
         let result: Int? = settings.value(for: key, in: account)
         XCTAssertEqual(result, 42)
     }
-    
+
     func testThatBoolUserDefaultsSettingForAccountSave() {
         // given
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = SettingKey.disableMarkdown
         XCTAssertNil(settings.value(for: key, in: account) as Bool?)
-        
+
         // when
         settings.setValue(true, settingKey: key, in: account)
-        
+
         // then
         let result: Bool? = settings.value(for: key, in: account)
         XCTAssertEqual(result, true)
     }
-    
+
     func testThatSharedSettingIsMigratedToAccount() {
         // given
         let settings = Settings()
@@ -229,7 +227,7 @@ final class SettingsPropertyTests: XCTestCase {
         let key = SettingKey.blackListDownloadInterval
         let value: Int = 42
         settings[key] = value
-        
+
         // when & then
         let result: Int? = settings.value(for: key, in: account)
         let settingVal: Int? = settings[key]

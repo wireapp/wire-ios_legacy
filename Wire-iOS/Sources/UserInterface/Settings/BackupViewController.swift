@@ -23,25 +23,25 @@ import WireSyncEngine
 final class BackupStatusCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let iconView = UIImageView()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        
+
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
-        
+
         iconView.setIcon(.restore, size: .large, color: color)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
-        
+
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         contentView.addSubview(descriptionLabel)
-        
+
         NSLayoutConstraint.activate([
             iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             iconView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -50,14 +50,15 @@ final class BackupStatusCell: UITableViewCell {
             descriptionLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
-        
+
         descriptionLabel.attributedText = "self.settings.history_backup.description".localized && .paragraphSpacing(2)
         descriptionLabel.font = .systemFont(ofSize: 14)
         descriptionLabel.textColor = color
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,26 +66,27 @@ final class BackupStatusCell: UITableViewCell {
 
 final class BackupActionCell: UITableViewCell {
     let actionTitleLabel = UILabel()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        
+
         actionTitleLabel.textAlignment = .left
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(actionTitleLabel)
         actionTitleLabel.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-        
+
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
+
         actionTitleLabel.text = "self.settings.history_backup.action".localized
         actionTitleLabel.font = FontSpec(.normal, .regular).font
         actionTitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -106,30 +108,31 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     fileprivate let tableView = UITableView(frame: .zero)
     fileprivate var cells: [UITableViewCell.Type] = []
     let backupSource: BackupSource
-    
+
     init(backupSource: BackupSource) {
         self.backupSource = backupSource
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "self.settings.history_backup.title".localized(uppercased: true)
         setupViews()
         setupLayout()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .clear
-        
+
         tableView.isScrollEnabled = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
@@ -139,20 +142,20 @@ final class BackupViewController: UIViewController, SpinnerCapable {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         // this is necessary to remove the placeholder cells
         tableView.tableFooterView = UIView()
         cells = [BackupStatusCell.self, BackupActionCell.self]
-        
+
         cells.forEach {
             tableView.register($0.self, forCellReuseIdentifier: $0.reuseIdentifier)
         }
     }
-    
+
     private func setupLayout() {
         tableView.fitInSuperview()
     }
-    
+
     var loadingHostController: SpinnerCapableViewController {
         return (navigationController as? SpinnerCapableViewController) ?? self
     }
@@ -164,15 +167,15 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: cells[indexPath.row].reuseIdentifier, for: indexPath)
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cells.count
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.row == 1 else { return }
@@ -191,7 +194,7 @@ fileprivate extension BackupViewController {
 
             self.backupSource.backupActiveAccount(password: password) { backupResult in
                 self.loadingHostController.isLoadingViewVisible = false
-                
+
                 switch backupResult {
                 case .failure(let error):
                     self.presentAlert(for: error)
@@ -202,7 +205,7 @@ fileprivate extension BackupViewController {
             }
         }
     }
-    
+
     private func presentAlert(for error: Error) {
         let alert = UIAlertController(
             title: "self.settings.history_backup.error.title".localized,
@@ -210,22 +213,16 @@ fileprivate extension BackupViewController {
             alertAction: .ok(style: .cancel))
         present(alert, animated: true)
     }
-    
+
     private func presentShareSheet(with url: URL, from indexPath: IndexPath) {
-        #if arch(i386) || arch(x86_64)
-            let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
-            try! FileManager.default.moveItem(at: url, to: tmpURL)
-        #else
-            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            activityController.completionWithItemsHandler = { _, _, _, _ in
-                SessionManager.clearPreviousBackups()
-            }
-            activityController.popoverPresentationController.apply {
-                $0.sourceView = tableView
-                $0.sourceRect = tableView.rectForRow(at: indexPath)
-            }
-            self.present(activityController, animated: true)
-        #endif
-        BackupEvent.exportSucceeded.track()
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityController.completionWithItemsHandler = { _, _, _, _ in
+            SessionManager.clearPreviousBackups()
+        }
+        activityController.popoverPresentationController.apply {
+            $0.sourceView = tableView
+            $0.sourceRect = tableView.rectForRow(at: indexPath)
+        }
+        self.present(activityController, animated: true)
     }
 }

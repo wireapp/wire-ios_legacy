@@ -34,4 +34,3 @@ final class SetFullNameStepDescription: AuthenticationStepDescription {
         secondaryView = nil
     }
 }
-

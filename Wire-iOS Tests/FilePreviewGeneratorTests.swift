@@ -22,7 +22,7 @@ import WireCommonComponents
 
 import MobileCoreServices
 
-final class FilePreviewGeneratorTests : XCTestCase {
+final class FilePreviewGeneratorTests: XCTestCase {
     func testThatItDoesNotBreakOn0x0PDF() {
         // given
         let pdfPath = Bundle(for: type(of: self)).path(forResource: "0x0", ofType: "pdf")!
@@ -36,7 +36,7 @@ final class FilePreviewGeneratorTests : XCTestCase {
         // then
         self.waitForExpectations(timeout: 2, handler: nil)
     }
-    
+
     func testThatItDoesNotBreakOnHugePDF() {
         // given
         let pdfPath = Bundle(for: type(of: self)).path(forResource: "huge", ofType: "pdf")!

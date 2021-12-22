@@ -40,7 +40,7 @@ final class BadgeUserImageView: UserImageView {
     }
 
     /// The badge icon.
-    var badgeIcon: StyleKitIcon? = nil {
+    var badgeIcon: StyleKitIcon? {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
@@ -54,13 +54,14 @@ final class BadgeUserImageView: UserImageView {
     override convenience init(frame: CGRect) {
         self.init(size: .small)
     }
-    
+
     override init(size: UserImageView.Size = .small) {
         super.init(size: size)
         configureSubviews()
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -104,7 +105,7 @@ final class BadgeUserImageView: UserImageView {
 
     /// Updates the badge icon.
     private func updateBadgeIcon() {
-        guard let user = self.user else {
+        guard let user = user else {
             badgeIcon = .none
             return
         }

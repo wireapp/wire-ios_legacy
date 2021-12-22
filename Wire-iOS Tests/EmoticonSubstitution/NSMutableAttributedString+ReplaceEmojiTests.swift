@@ -31,7 +31,6 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
         // WHEN
         sut.replaceEmoticons(excluding: [])
 
-
         // THEN
         XCTAssertEqual(sut.string, "❤")
     }
@@ -46,7 +45,6 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
         // WHEN
         sut.replaceEmoticons(excluding: [5..<999])
 
-
         // THEN
         XCTAssertEqual(sut.string, "❤ Lorem Ipsum Dolor Sit Amed. :)")
     }
@@ -60,7 +58,6 @@ final class NSMutableAttributedStringReplaceEmojiTests: XCTestCase {
 
         // WHEN
         sut.replaceEmoticons(excluding: [5..<20])
-
 
         // THEN
         XCTAssertEqual(sut.string, "❤ Lorem Ipsum Dolor 😈Amed. 😊")

@@ -20,69 +20,69 @@ import XCTest
 @testable import Wire
 
 final class MockConversationListContainer: UIViewController, ConversationListContainerViewModelDelegate {
-    
+
     var isSelectedOnListContentController = false
-    
+
     init(viewModel: ConversationListViewController.ViewModel) {
-        super.init(nibName:nil, bundle:nil)
+        super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     var hasUsernameTakeoverViewController: Bool {
-        //no-op
+        // no-op
         return false
     }
-    
+
     @discardableResult
     func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
         isSelectedOnListContentController = true
         return false
     }
-    
+
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
     }
-    
+
     func scrollViewDidScroll(scrollView: UIScrollView!) {
-        //no-op
+        // no-op
     }
-    
+
     func setState(_ state: ConversationListState, animated: Bool, completion: Completion?) {
         completion?()
     }
-    
+
     func showNoContactLabel(animated: Bool) {
-        //no-op
+        // no-op
     }
-    
+
     func hideNoContactLabel(animated: Bool) {
-        //no-op
+        // no-op
     }
-    
+
     func openChangeHandleViewController(with handle: String) {
-        //no-op
+        // no-op
     }
-    
+
     func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping ResultHandler) {
-        //no-op
+        // no-op
     }
-    
+
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-        //no-op
+        // no-op
     }
-    
+
     func removeUsernameTakeover() {
-        //no-op
+        // no-op
     }
-    
+
     func showUsernameTakeover(suggestedHandle: String, name: String) {
-        //no-op
+        // no-op
     }
-    
+
     func showPermissionDeniedViewController() {
-        //no-op
+        // no-op
     }
 }
-

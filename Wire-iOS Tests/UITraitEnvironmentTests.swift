@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -20,7 +19,7 @@ import XCTest
 @testable import Wire
 
 final class UITraitEnvironmentTests: XCTestCase {
-    
+
     var sut: UITraitEnvironment!
     let compactMargins = HorizontalMargins(userInterfaceSizeClass: .compact)
     let regularMargins = HorizontalMargins(userInterfaceSizeClass: .regular)
@@ -28,13 +27,13 @@ final class UITraitEnvironmentTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForCompactMargins(){
+    func testForCompactMargins() {
         // GIVEN
         let view = UIView()
 
@@ -45,7 +44,7 @@ final class UITraitEnvironmentTests: XCTestCase {
         XCTAssertEqual(margins.right, compactMargins.right)
     }
 
-    func testForRegularMarginsWithDefaultSimulatorWidth(){
+    func testForRegularMarginsWithDefaultSimulatorWidth() {
         // GIVEN
         let mockView = MockRegularView()
 
@@ -57,13 +56,13 @@ final class UITraitEnvironmentTests: XCTestCase {
         XCTAssertEqual(margins.right, compactMargins.right)
     }
 
-    func testForRegularMarginsWithFullScreenWidth(){
+    func testForRegularMarginsWithFullScreenWidth() {
         // GIVEN
         let mockView = MockRegularView()
 
         // WHEN
         let margins = mockView.conversationHorizontalMargins(windowWidth: 1024)
-        
+
         // THEN
         XCTAssertEqual(margins.left, regularMargins.left)
         XCTAssertEqual(margins.right, regularMargins.right)
@@ -74,7 +73,7 @@ final class MockRegularView: NSObject, UITraitEnvironment {
     var traitCollection: UITraitCollection = UITraitCollection(horizontalSizeClass: .regular)
 
     func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        ///no-op
+        // no-op
     }
 
 }

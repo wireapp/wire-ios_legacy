@@ -19,55 +19,56 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
+import WireDataModel
 
-final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
-    
+final class ConnectRequestsViewControllerSnapshotTests: XCTestCase {
+
     var sut: ConnectRequestsViewController!
-    var mockConversation: ZMConversation!
+    var mockConnectionRequest: SwiftMockConversation!
 
-    var coreDataFixture: CoreDataFixture!
-    
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
+        UIColor.setAccentOverride(.vividRed)
 
         sut = ConnectRequestsViewController()
 
         sut.loadViewIfNeeded()
 
-        mockConversation = otherUserConversation
+        mockConnectionRequest = SwiftMockConversation()
+        let mockUser = MockUserType.createSelfUser(name: "Bruno")
+        mockUser.accentColorValue = .brightOrange
+        mockUser.handle = "bruno"
+        mockConnectionRequest.connectedUserType = mockUser
 
-        sut.connectionRequests = [mockConversation]
+        sut.connectionRequests = [mockConnectionRequest]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
     }
-    
+
     override func tearDown() {
         sut = nil
-        mockConversation = nil
-        coreDataFixture = nil
+        mockConnectionRequest = nil
 
         super.tearDown()
     }
 
     func testForOneRequest() {
-        verify(matching: sut)
+        verify(matching: sut.wrapInNavigationController(setBackgroundColor: true))
     }
 
     func testForTwoRequests() {
-        let otherUser = ZMUser.insertNewObject(in: coreDataFixture.uiMOC)
-        otherUser.remoteIdentifier = UUID()
-        otherUser.name = "Bill"
-        otherUser.setHandle("bill")
+        let otherUser = MockUserType.createConnectedUser(name: "Bill")
         otherUser.accentColorValue = .brightYellow
-        
-        let requestConversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser)
-        
-        sut.connectionRequests = [requestConversation, mockConversation]
+        otherUser.handle = "bill"
+
+        let secondConnectionRequest = SwiftMockConversation()
+        secondConnectionRequest.connectedUserType = otherUser
+
+        sut.connectionRequests = [secondConnectionRequest, mockConnectionRequest]
         sut.reload(animated: false)
-        
-        verify(matching: sut)
+
+        verify(matching: sut.wrapInNavigationController(setBackgroundColor: true))
     }
 }

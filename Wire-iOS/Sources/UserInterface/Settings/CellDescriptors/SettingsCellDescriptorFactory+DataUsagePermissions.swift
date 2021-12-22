@@ -19,16 +19,25 @@
 import Foundation
 
 extension SettingsCellDescriptorFactory {
-    func dataUsagePermissionsGroup() -> SettingsCellDescriptorType {
-        var items: [SettingsSectionDescriptor] = []
+    func dataUsagePermissionsGroup(isTeamMember: Bool) -> SettingsCellDescriptorType {
 
-        let sendAnonymousData = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableCrashAndAnalyticsSharing), inverse: true)
-        let sendAnonymousDataSection = SettingsSectionDescriptor(cellDescriptors: [sendAnonymousData], footer: "self.settings.privacy_analytics_menu.description.title".localized)
+        let sendCrashData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCrashSharing), inverse: true)
+        let sendCrashDataSection = SettingsSectionDescriptor(cellDescriptors: [sendCrashData], footer: "self.settings.privacy_crash_menu.description.title".localized)
 
-        let receiveNewsAndOffersData = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.receiveNewsAndOffers))
+        var items: [SettingsSectionDescriptor] = [sendCrashDataSection]
+
+        // show analytics toggle for team members only
+        if isTeamMember {
+            let sendAnalyticsData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableAnalyticsSharing), inverse: true)
+            let sendAnalyticsDataSection = SettingsSectionDescriptor(cellDescriptors: [sendAnalyticsData], footer: "self.settings.privacy_analytics_menu.description.title".localized)
+
+            items.append(sendAnalyticsDataSection)
+        }
+
+        let receiveNewsAndOffersData = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.receiveNewsAndOffers))
         let receiveNewsAndOffersSection = SettingsSectionDescriptor(cellDescriptors: [receiveNewsAndOffersData], footer: "self.settings.receiveNews_and_offers.description.title".localized)
 
-        items.append(contentsOf: [sendAnonymousDataSection, receiveNewsAndOffersSection])
+        items.append(receiveNewsAndOffersSection)
 
         return SettingsGroupCellDescriptor(
             items: items,

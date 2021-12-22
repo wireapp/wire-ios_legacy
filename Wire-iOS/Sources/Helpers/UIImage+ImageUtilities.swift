@@ -48,7 +48,7 @@ extension UIImage {
         return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
 
-    func with(insets: UIEdgeInsets, backgroundColor: UIColor?) -> UIImage? {
+    func with(insets: UIEdgeInsets, backgroundColor: UIColor? = nil) -> UIImage? {
         let newSize = CGSize(width: size.width + insets.left + insets.right, height: size.height + insets.top + insets.bottom)
 
         UIGraphicsBeginImageContextWithOptions(newSize, _: 0.0 != 0, _: 0.0)
@@ -90,10 +90,10 @@ extension UIImage {
 
     private class func thumbnailOptions(withMaxSize maxSize: CGFloat) -> CFDictionary {
         return [
-            kCGImageSourceCreateThumbnailWithTransform : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageIfAbsent : kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailFromImageAlways : kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: Float(maxSize))
+            kCGImageSourceCreateThumbnailWithTransform: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageIfAbsent: kCFBooleanTrue,
+            kCGImageSourceCreateThumbnailFromImageAlways: kCFBooleanTrue,
+            kCGImageSourceThumbnailMaxPixelSize: NSNumber(value: Float(maxSize))
             ] as CFDictionary
     }
 
@@ -133,7 +133,7 @@ extension UIImage {
 
         guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, UIImage.thumbnailOptions(withMaxSize: longSideLength)) else { return nil }
 
-        ///TODO: read screen scale
+        // TODO: read screen scale
         self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
     }
 

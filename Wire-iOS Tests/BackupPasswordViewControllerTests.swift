@@ -21,40 +21,39 @@ import XCTest
 @testable import Wire
 
 class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
-    
+
     func testDefaultState() {
         // GIVEN
-        let sut = BackupPasswordViewController { (_, _) in }
+        let sut = BackupPasswordViewController { _, _ in }
         // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
-    
+
     func testThatItCallsTheCallback() {
         // GIVEN
-        
+
         let validPassword = "Password123!"
         let expectation = self.expectation(description: "Callback called")
-        let sut = BackupPasswordViewController { (_, password) in
+        let sut = BackupPasswordViewController { _, password in
             XCTAssertEqual(password!.value, validPassword)
             expectation.fulfill()
         }
         // WHEN
-        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: validPassword))
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: validPassword))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
         // THEN
         self.waitForExpectations(timeout: 0.5) { error in
             XCTAssertNil(error)
         }
     }
-    
+
     func testThatWhitespacesPasswordIsNotGood() {
         // GIVEN
-        let sut = BackupPasswordViewController { (_, password) in
+        let sut = BackupPasswordViewController { _, _ in
             XCTFail()
         }
         // WHEN
-        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "              "))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "              "))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
     }
 }
-

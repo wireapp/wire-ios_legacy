@@ -16,15 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
-final class UnknownMessageCellTests: ConversationCellSnapshotTestCase {
+final class UnknownMessageCellTests: XCTestCase {
 
     func testCell() {
-        let systemMessage = otherUserConversation.appendInvalidSystemMessage(at: Date(), sender: selfUser)
-        verify(message: systemMessage)
+        let systemMessage = MockMessageFactory.systemMessage(with: .invalid)
+        verify(message: systemMessage!)
     }
 
 }

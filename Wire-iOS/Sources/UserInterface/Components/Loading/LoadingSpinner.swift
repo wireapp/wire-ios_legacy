@@ -21,7 +21,7 @@ import UIKit
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion
 
-protocol SpinnerCapable: class {
+protocol SpinnerCapable: AnyObject {
     var dismissSpinner: SpinnerCompletion? { get set }
 }
 
@@ -31,6 +31,10 @@ extension SpinnerCapable where Self: UIViewController {
     }
 
     var isLoadingViewVisible: Bool {
+        get {
+            return dismissSpinner != nil
+        }
+
         set {
             if newValue {
                 // do not show double spinners
@@ -41,10 +45,6 @@ extension SpinnerCapable where Self: UIViewController {
                 dismissSpinner?()
                 dismissSpinner = nil
             }
-        }
-
-        get {
-            return dismissSpinner != nil
         }
     }
 
@@ -78,7 +78,8 @@ extension SpinnerCapable where Self: UIViewController {
 
 }
 
-fileprivate final class LoadingSpinnerView: UIView {
+// MARK: - LoadingSpinnerView
+final class LoadingSpinnerView: UIView {
     let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
 
     init() {
@@ -99,6 +100,16 @@ fileprivate final class LoadingSpinnerView: UIView {
             spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
     }
+}
+
+// MARK: - SpinnerCapableNavigationController
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
+    override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+
 }
 
 extension UINavigationController {

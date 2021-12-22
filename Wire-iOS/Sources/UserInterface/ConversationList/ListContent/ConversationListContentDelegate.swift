@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,7 +17,7 @@
 
 import WireDataModel
 
-protocol ConversationListContentDelegate: class {
+protocol ConversationListContentDelegate: AnyObject {
     func conversationList(_ controller: ConversationListContentController?, didSelect conversation: ZMConversation?, focusOnView focus: Bool)
     /// This is called after a delete when there is an item to select
     func conversationList(_ controller: ConversationListContentController?, willSelectIndexPathAfterSelectionDeleted conv: IndexPath?)

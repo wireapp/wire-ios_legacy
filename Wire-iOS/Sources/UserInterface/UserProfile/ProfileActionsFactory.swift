@@ -137,7 +137,7 @@ final class ProfileActionsFactory {
 
         // Do not show any action if the user is blocked
         if user.isBlocked {
-            return [.block(isBlocked: true)]
+            return user.canBeUnblocked ? [.block(isBlocked: true)] : []
         }
 
         var conversation: ZMConversation?
@@ -154,7 +154,6 @@ final class ProfileActionsFactory {
                 return [.connect]
             }
         }
-
 
         var actions: [ProfileAction] = []
 
@@ -211,5 +210,18 @@ final class ProfileActionsFactory {
 
         return actions
     }
+
+}
+
+extension UserType {
+
+  var canBeUnblocked: Bool {
+    switch blockState {
+    case .blockedMissingLegalholdConsent:
+        return false
+    default:
+        return true
+    }
+  }
 
 }

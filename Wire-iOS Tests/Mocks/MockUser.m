@@ -351,7 +351,7 @@ static id<UserType> mockSelfUser = nil;
     return self.canModifyNotificationSettingsInConversation;
 }
 
-- (BOOL)canAddUserToConversation:(ZMConversation * _Nonnull)conversation
+- (BOOL)canAddUserToConversation:(id<ConversationLike>)conversation
 {
     return self.canAddUserToConversation;
 }

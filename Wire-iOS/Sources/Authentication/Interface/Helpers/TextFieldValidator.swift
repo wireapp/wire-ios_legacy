@@ -20,24 +20,42 @@ import Foundation
 import WireUtilities
 import UIKit
 
-class TextFieldValidator {
-    
+final class TextFieldValidator {
+
     var customValidator: ((String) -> ValidationError?)?
 
     enum ValidationError: Error, Equatable {
-        case tooShort(kind: AccessoryTextField.Kind)
-        case tooLong(kind: AccessoryTextField.Kind)
+        case tooShort(kind: ValidatedTextField.Kind)
+        case tooLong(kind: ValidatedTextField.Kind)
         case invalidEmail
         case invalidPhoneNumber
-        case invalidPassword(PasswordValidationResult)
+        case invalidPassword([PasswordValidationResult.Violation])
         case custom(String)
     }
 
-    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError? {
+    private func validatePasscode(text: String,
+                                  kind: ValidatedTextField.Kind,
+                                  isNew: Bool) -> TextFieldValidator.ValidationError? {
+        if isNew {
+            // If the user is registering, enforce the password rules
+            let result = PasswordRuleSet.shared.validatePassword(text)
+            switch result {
+            case .valid:
+                return nil
+            case .invalid(let violations):
+                return .invalidPassword(violations)
+            }
+        } else {
+            // If the user is signing in, we do not require any format
+            return text.isEmpty ? .tooShort(kind: kind) : nil
+        }
+    }
+
+    func validate(text: String?, kind: ValidatedTextField.Kind) -> TextFieldValidator.ValidationError? {
         guard let text = text else {
             return nil
         }
-        
+
         if let customError = customValidator?(text) {
             return customError
         }
@@ -49,16 +67,11 @@ class TextFieldValidator {
             } else if !text.isEmail {
                 return .invalidEmail
             }
-        case .password(let isNew):
-            if isNew {
-                // If the user is registering, enforce the password rules
-                let result = PasswordRuleSet.shared.validatePassword(text)
-                return result != .valid ? .invalidPassword(result) : nil
-            } else {
-                // If the user is signing in, we do not require any format
-                return text.isEmpty ? .tooShort(kind: kind) : nil
-            }
 
+        case .password(let isNew):
+            return validatePasscode(text: text, kind: kind, isNew: isNew)
+        case .passcode(let isNew):
+            return validatePasscode(text: text, kind: kind, isNew: isNew)
         case .name:
             /// We should ignore leading/trailing whitespace when counting the number of characters in the string
             let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -95,7 +108,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "name.guidance.tooshort".localized
             case .email:
                 return "email.guidance.tooshort".localized
-            case .password:
+            case .password, .passcode:
                 return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
@@ -108,7 +121,7 @@ extension TextFieldValidator.ValidationError: LocalizedError {
                 return "name.guidance.toolong".localized
             case .email:
                 return "email.guidance.toolong".localized
-            case .password:
+            case .password, .passcode:
                 return "password.guidance.toolong".localized
             case .unknown:
                 return "unknown.guidance.toolong".localized
@@ -121,14 +134,10 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             return "phone.guidance.invalid".localized
         case .custom(let description):
             return description
-        case .invalidPassword(let error):
-            switch error {
-            case .tooLong:
-                return "password.guidance.toolong".localized
-            default:
-                return PasswordRuleSet.localizedErrorMessage
-            }
-
+        case .invalidPassword(let violations):
+            return violations.contains(.tooLong)
+                ? "password.guidance.toolong".localized
+                : PasswordRuleSet.localizedErrorMessage
         }
     }
 

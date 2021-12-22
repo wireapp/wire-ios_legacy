@@ -29,7 +29,7 @@ extension Reusable {
         guard let `class` = self as? AnyClass else { return "\(self)" }
         return NSStringFromClass(`class`)
     }
-    
+
     var reuseIdentifier: String? {
         return type(of: self).reuseIdentifier
     }

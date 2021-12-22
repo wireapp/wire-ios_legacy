@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 
-
 extension CGSize {
     /// returns the longest length among width and height
     var longestLength: CGFloat {
@@ -44,7 +43,6 @@ extension UIImage {
     func downsizedImage() -> UIImage? {
         return downsized()
     }
-
 
     /// downsize an image to the size which the longer side length equal to maxLength
     ///

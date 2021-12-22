@@ -22,7 +22,7 @@ import UIKit
 import WireTransport
 import WireSyncEngine
 
-protocol CompanyLoginControllerDelegate: class {
+protocol CompanyLoginControllerDelegate: AnyObject {
 
     /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
@@ -34,7 +34,7 @@ protocol CompanyLoginControllerDelegate: class {
 
     /// Called when the company login controller is ready to switch backend
     func controllerDidStartBackendSwitch(_ controller: CompanyLoginController, toURL url: URL)
-    
+
     /// Called when the company login controller starts the company login flow.
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController)
 
@@ -53,27 +53,21 @@ protocol CompanyLoginControllerDelegate: class {
 final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
 
     weak var delegate: CompanyLoginControllerDelegate?
-    
-    var isAutoDetectionEnabled = true {
-        didSet {
-            isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
-        }
-    }
+
+    var isAutoDetectionEnabled = true
 
     // Whether the presence of a code should be checked periodically on iPad.
     // This is in order to work around https://openradar.appspot.com/28771678.
-    private static let isPollingEnabled = true
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
     static public let isCompanyLoginEnabled = true
 
     private var token: Any?
-    private var pollingTimer: Timer?
     private let detector: CompanyLoginRequestDetector
     private let requester: CompanyLoginRequester
     private let flowHandler: CompanyLoginFlowHandler
-    
+
     private weak var ssoAlert: UIAlertController?
 
     // MARK: - Initialization
@@ -82,13 +76,13 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
     convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled,
             let callbackScheme = Bundle.ssoURLScheme else { return nil } // Disable on public builds
-        
+
         requireInternal(nil != Bundle.ssoURLScheme, "no valid callback scheme")
 
         let requester = CompanyLoginController.createRequester(with: callbackScheme)
         self.init(detector: .shared, requester: requester)
     }
-    
+
     static private func createRequester(with scheme: String?) -> CompanyLoginRequester {
         return CompanyLoginRequester(
             callbackScheme: scheme ?? CompanyLoginController.fallbackURLScheme
@@ -109,7 +103,7 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
     deinit {
         token.apply(NotificationCenter.default.removeObserver)
     }
-    
+
     private func setupObservers() {
         requester.delegate = self
 
@@ -119,18 +113,6 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
             queue: .main,
             using: { [internalDetectSSOCode] _ in internalDetectSSOCode(false) }
         )
-    }
-    
-    private func startPollingTimer() {
-        guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { [internalDetectSSOCode] _ in
-            internalDetectSSOCode(true)
-        }
-    }
-    
-    private func stopPollingTimer() {
-        pollingTimer?.invalidate()
-        pollingTimer = nil
     }
 
 }
@@ -146,7 +128,7 @@ extension CompanyLoginController {
             presentCompanyLoginAlert(result?.code, nil, ssoOnly)
         }
     }
-    
+
     /// Presents the email/SSO login alert
     /// - parameter prefilledInput: fills the alert input field (optional)
     /// - parameter error: displays error in the alert (optional)
@@ -155,12 +137,12 @@ extension CompanyLoginController {
         prefilledInput: String? = nil,
         error: UIAlertController.CompanyLoginError? = nil,
         ssoOnly: Bool = false) {
-        
+
         // Do not repeatly show alert if exist
         guard ssoAlert == nil else { return }
-        
+
         let inputHandler = ssoOnly ? attemptLogin : parseAndHandle
-        
+
         let alertController = UIAlertController.companyLogin(
             prefilledInput: prefilledInput,
             ssoOnly: ssoOnly,
@@ -170,19 +152,19 @@ extension CompanyLoginController {
                 input.apply(inputHandler)
             }
         )
-        
+
         ssoAlert = alertController
         delegate?.controller(self, presentAlert: alertController)
     }
 
     // MARK: - Input Handling
-    
+
     /// Parses the input and starts the corresponding flow
     ///
     /// - Parameter input: the input the user entered in the dialog
     private func parseAndHandle(input: String) {
         let parsingResult = CompanyLoginRequestDetector.parse(input: input)
-        
+
         switch parsingResult {
         case .ssoCode(let uuid):
             attemptLoginWithSSOCode(uuid)
@@ -192,7 +174,7 @@ extension CompanyLoginController {
             presentCompanyLoginAlert(prefilledInput: input, error: .invalidFormat)
         }
     }
-    
+
     /// Attempt to login using the requester specified in `init`
     ///
     /// - Parameter ssoCode: the code used to attempt the SSO login.
@@ -203,7 +185,7 @@ extension CompanyLoginController {
         }
         attemptLoginWithSSOCode(uuid)
     }
-    
+
     /// Attemts to login with a SSO login code.
     ///
     /// - Parameter code: The SSO team code that was extracted from the link.
@@ -211,7 +193,7 @@ extension CompanyLoginController {
         guard !presentOfflineAlertIfNeeded() else { return }
 
         delegate?.controller(self, showLoadingView: true)
-        
+
         let host = BackendEnvironment.shared.backendURL.host!
         requester.validate(host: host, token: code) {
             self.delegate?.controller(self, showLoadingView: false)
@@ -221,7 +203,7 @@ extension CompanyLoginController {
     }
 
     // MARK: - Error Handling
-    
+
     private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
         guard let error = error else { return false }
 
@@ -250,7 +232,7 @@ extension CompanyLoginController {
 
 // MARK: - Automatic SSO flow
 extension CompanyLoginController {
-    
+
     /// Fetches SSO code and starts flow automatically if code is returned on completion
     /// - Parameter promptOnError: Prompt the user for SSO code if there is an error fetching code
     func startAutomaticSSOFlow(promptOnError: Bool = true) {
@@ -283,8 +265,7 @@ extension CompanyLoginController {
             self.delegate?.controllerDidStartBackendSwitch(self, toURL: domainInfo.configurationURL)
         }
     }
-    
-    
+
     /// Updates backend environment to the specified url
     ///
     /// - Parameter url: backend url to switch to
@@ -309,11 +290,11 @@ extension CompanyLoginController {
 
 // MARK: - SSO code detection
 extension CompanyLoginController {
-    
+
     func detectSSOCode() {
         internalDetectSSOCode(onlyNew: false)
     }
-    
+
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.

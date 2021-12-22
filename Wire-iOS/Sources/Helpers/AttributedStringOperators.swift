@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import WireDataModel
 
@@ -25,15 +24,15 @@ import WireDataModel
 // Concats the lhs and rhs and returns a NSAttributedString
 infix operator + : AdditionPrecedence
 
-func +(left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
     let result = NSMutableAttributedString()
     result.append(left)
     result.append(right)
     return NSAttributedString(attributedString: result)
 }
 
-func +(left: String, right: NSAttributedString) -> NSAttributedString {
-    var range : NSRange? = NSMakeRange(0, 0)
+func + (left: String, right: NSAttributedString) -> NSAttributedString {
+    var range: NSRange? = NSMakeRange(0, 0)
     let attributes = right.length > 0 ? right.attributes(at: 0, effectiveRange: &range!) : [:]
 
     let result = NSMutableAttributedString()
@@ -43,35 +42,37 @@ func +(left: String, right: NSAttributedString) -> NSAttributedString {
     return NSAttributedString(attributedString: result)
 }
 
-func +(left: NSAttributedString, right: String) -> NSAttributedString {
-    var range : NSRange? = NSMakeRange(0, 0)
+func + (left: NSAttributedString, right: String) -> NSAttributedString {
+    var range: NSRange? = NSMakeRange(0, 0)
     let attributes = left.length > 0 ? left.attributes(at: left.length - 1, effectiveRange: &range!) : [:]
-    
+
     let result = NSMutableAttributedString()
     result.append(left)
-    result.append(NSAttributedString(string:right, attributes: attributes))
+    result.append(NSAttributedString(string: right, attributes: attributes))
     return NSAttributedString(attributedString: result)
 }
 
 // Concats the lhs and rhs and assigns the result to the lhs
 infix operator += : AssignmentPrecedence
 
-@discardableResult func +=(left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
+@discardableResult func += (left: inout NSMutableAttributedString, right: String) -> NSMutableAttributedString {
     left.append(right.attributedString)
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: String) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: String) -> NSAttributedString {
+    // swiftlint:disable:next shorthand_operator
     left = left + right
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: NSAttributedString) -> NSAttributedString {
+    // swiftlint:disable:next shorthand_operator
     left = left + right
     return left
 }
 
-@discardableResult func +=(left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
+@discardableResult func += (left: inout NSAttributedString, right: NSAttributedString?) -> NSAttributedString {
     guard let rhs = right else { return left }
     return left += rhs
 }
@@ -79,35 +80,35 @@ infix operator += : AssignmentPrecedence
 // Applies the attributes on the rhs to the string on the lhs
 infix operator && : LogicalConjunctionPrecedence
 
-func &&(left: String, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
+func && (left: String, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)
     return result
 }
 
-func &&(left: String, right: UIFont) -> NSAttributedString {
+func && (left: String, right: UIFont) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: [.font: right])
     return result
 }
 
-func &&(left: NSAttributedString, right: UIFont?) -> NSAttributedString {
+func && (left: NSAttributedString, right: UIFont?) -> NSAttributedString {
     guard let font = right else { return left }
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.font: font], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: String, right: UIColor) -> NSAttributedString {
+func && (left: String, right: UIColor) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: [.foregroundColor: right])
     return result
 }
 
-func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
+func && (left: NSAttributedString, right: UIColor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.foregroundColor: right], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
+func && (left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes(right, range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
@@ -116,7 +117,7 @@ func &&(left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAtt
 // MARK: - Helper Functions
 
 extension String {
-    
+
     var attributedString: NSAttributedString {
         return NSAttributedString(string: self)
     }
@@ -127,7 +128,7 @@ extension String {
 enum ParagraphStyleDescriptor {
     case lineSpacing(CGFloat)
     case paragraphSpacing(CGFloat)
-    
+
     var style: NSParagraphStyle {
         let style = NSMutableParagraphStyle()
         switch self {
@@ -138,13 +139,13 @@ enum ParagraphStyleDescriptor {
     }
 }
 
-func &&(left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
+func && (left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes([.paragraphStyle: right.style], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
-func &&(left: String, right: ParagraphStyleDescriptor) -> NSAttributedString {
+func && (left: String, right: ParagraphStyleDescriptor) -> NSAttributedString {
     return left.attributedString && right
 }
 
@@ -164,7 +165,7 @@ enum PointOfView: UInt {
     case secondPerson
     // Third person: They/He/She/It case
     case thirdPerson
-    
+
     fileprivate var suffix: String {
         switch self {
         case .none:
@@ -190,7 +191,7 @@ extension String {
     var infoPlistLocalized: String {
         return localized(table: "InfoPlist")
     }
-    
+
     /// Returns the NSLocalizedString version of self as found in specified table
     func localized(table tableName: String, bundle: Bundle = Bundle.main) -> String {
         return NSLocalizedString(self, tableName: tableName, bundle: bundle, value: "", comment: "")
@@ -201,7 +202,7 @@ extension String {
         let text = NSLocalizedString(self, comment: "")
         return uppercased ? text.localizedUppercase : text
     }
-   
+
     /// Used to generate localized strings with plural rules from the stringdict
     func localized(uppercased: Bool = false, pov pointOfView: PointOfView = .none, args: CVarArg...) -> String {
         return withVaList(args) {
@@ -209,33 +210,32 @@ extension String {
             return uppercased ? text.localizedUppercase : text
         }
     }
-    
+
     func localized(pov pointOfView: PointOfView) -> String {
         let povPath = self + "-" + pointOfView.suffix
         let povVersion = povPath.localized
-        
+
         if povVersion != povPath, !povVersion.isEmpty {
             return povVersion
-        }
-        else {
+        } else {
             return self.localized
         }
     }
 }
 
 extension NSAttributedString {
-    
+
     // Adds the attribtues to the given substring in self and returns the resulting String
     func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.addAttributes(attributes, to: substring)
         return NSAttributedString(attributedString: mutableSelf)
     }
-    
+
     func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let substringRange = (string as NSString).range(of: substring)
         guard substringRange.location != NSNotFound else { return self }
-        
+
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.setAttributes(attributes, range: substringRange)
         return NSAttributedString(attributedString: mutableSelf)
@@ -244,7 +244,7 @@ extension NSAttributedString {
     func adding(color: UIColor, to substring: String) -> NSAttributedString {
         return addAttributes([.foregroundColor: color], toSubstring: substring)
     }
-    
+
     func adding(font: UIFont, to substring: String) -> NSAttributedString {
         return addAttributes([.font: font], toSubstring: substring)
     }
@@ -253,18 +253,18 @@ extension NSAttributedString {
 extension Sequence where Iterator.Element == NSAttributedString {
     func joined(separator: NSAttributedString? = nil) -> NSAttributedString {
         let result = NSMutableAttributedString()
-        
+
         var first = true
-        
+
         for string in self {
             if !first, let separator = separator {
                 result.append(separator)
             }
             result.append(string)
-            
+
             first = false
         }
-        
+
         return NSAttributedString(attributedString: result)
     }
 }
@@ -273,9 +273,9 @@ extension NSMutableAttributedString {
 
     func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
         let substringRange = (string as NSString).range(of: substring)
-        
+
         guard substringRange.location != NSNotFound else { return }
-        
+
         addAttributes(attributes, range: substringRange)
     }
 

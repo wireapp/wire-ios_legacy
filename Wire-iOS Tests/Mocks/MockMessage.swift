@@ -18,6 +18,7 @@
 
 import Foundation
 import WireLinkPreview
+import XCTest
 
 final class MockCompositeMessageData: NSObject, CompositeMessageData {
     var items: [CompositeMessageItem] = []
@@ -31,7 +32,18 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String?
     var mentions = [Mention]()
-    var quote: ZMMessage?
+
+    var quote: ZMMessage? {
+        get {
+            XCTFail("This property should not be used in tests")
+            return nil
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var quoteMessage: ZMConversationMessage?
     var isQuotingSelf: Bool = false
     var hasQuote: Bool = false
 
@@ -54,23 +66,57 @@ final class MockTextMessageData: NSObject, ZMTextMessageData {
 }
 
 final class MockSystemMessageData: NSObject, ZMSystemMessageData {
-
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
-    var users: Set<ZMUser> = Set()
+    var users: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var userTypes: Set<AnyHashable> = Set()
     var clients: Set<AnyHashable> = Set()
-    var addedUsers: Set<ZMUser> = Set()
-    var removedUsers: Set<ZMUser> = Set()
+    var addedUsers: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var addedUserTypes: Set<AnyHashable> = Set()
+    var removedUsers: Set<ZMUser> {
+        get {
+            XCTFail("This property should not be used in tests")
+            return Set()
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var removedUserTypes: Set<AnyHashable> = Set()
     var text: String? = ""
     var needsUpdatingUsers: Bool = false
     var userIsTheSender: Bool = false
+    var decryptionErrorCode: NSNumber?
+    var isDecryptionErrorRecoverable: Bool = true
+    var senderClientID: String? = "452367891023123"
 
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
     var parentMessage: ZMSystemMessageData?
+    var participantsRemovedReason: ZMParticipantsRemovedReason
 
-    init(systemMessageType: ZMSystemMessageType) {
+    init(systemMessageType: ZMSystemMessageType, reason: ZMParticipantsRemovedReason) {
         self.systemMessageType = systemMessageType
+        self.participantsRemovedReason = reason
     }
 }
 
@@ -125,7 +171,7 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
-    
+
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
@@ -149,11 +195,11 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -189,7 +235,7 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     var isPDF: Bool {
         return mimeType == "application/pdf"
     }
-    
+
     var v3_isImage: Bool {
         return false
     }
@@ -209,11 +255,11 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     func requestImagePreviewDownload() {
         // no-op
     }
-    
+
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
-    
+
     func retrievePDFSignature() {
         // no-op
     }
@@ -257,20 +303,40 @@ final class MockLocationMessageData: NSObject, LocationMessageData {
     var zoomLevel: Int32 = 0
 }
 
-final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
+class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
     // MARK: - ConversationCompositeMessage
     var compositeMessageData: CompositeMessageData?
 
-    typealias UsersByReaction = Dictionary<String, [ZMUser]>
+    typealias UsersByReaction = [String: [UserType]]
 
     // MARK: - ZMConversationMessage
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .none
+    var sender: ZMUser? {
+        get {
+            XCTFail("This property should not be used in tests")
+
+            return nil
+        }
+
+        set {
+            XCTFail("This property should not be used in tests")
+        }
+    }
+    var senderUser: UserType? {
+        didSet {
+            if senderUser is ZMUser {
+                XCTFail("ZMUser should not created for tests")
+            }
+        }
+    }
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
+
     var conversation: ZMConversation? = .none
+    var conversationLike: ConversationLike? = .none
+
     var deliveryState: ZMDeliveryState = .delivered
 
     var imageMessageData: ZMImageMessageData? = .none
@@ -281,6 +347,11 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     let objectIdentifier: String = UUID().uuidString
     var linkAttachments: [LinkAttachment]?
     var needsLinkAttachmentsUpdate: Bool = false
+    var isSilenced: Bool = false
+    var backingIsRestricted: Bool = false
+    var isRestricted: Bool {
+        return backingIsRestricted
+    }
 
     var isSent: Bool {
         switch deliveryState {
@@ -309,7 +380,7 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
 
     var replies: Set<ZMMessage> = Set()
 
-    var usersReaction: [String: [ZMUser]] {
+    var usersReaction: [String: [UserType]] {
         return backingUsersReaction
     }
 
@@ -348,4 +419,8 @@ final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeM
     var hasBeenDeleted = false
 
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
+
+    required override init() {
+
+    }
 }

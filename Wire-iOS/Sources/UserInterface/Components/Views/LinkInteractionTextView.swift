@@ -19,7 +19,7 @@
 import UIKit
 import WireDataModel
 
-protocol TextViewInteractionDelegate: class {
+protocol TextViewInteractionDelegate: AnyObject {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
@@ -40,9 +40,7 @@ final class LinkInteractionTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
 
-        if #available(iOS 11.0, *) {
-            textDragDelegate = self
-        }
+        textDragDelegate = self
     }
 
     @available(*, unavailable)
@@ -84,7 +82,7 @@ final class LinkInteractionTextView: UITextView {
     private func isMarkdownLink(in range: NSRange) -> Bool {
         return attributedText.ranges(containing: .link, inRange: range) == [range]
     }
-    
+
     /// An alert is shown (asking the user if they wish to open the url) if the
     /// link in the specified range is a markdown link.
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
@@ -92,7 +90,7 @@ final class LinkInteractionTextView: UITextView {
         guard isMarkdownLink(in: range) else {
             return false
         }
-        
+
         ZClientViewController.shared?.present(confirmationAlert(for: url), animated: true)
         return true
     }
@@ -173,7 +171,6 @@ extension LinkInteractionTextView: UITextViewDelegate {
 
 // MARK: - UITextDragDelegate
 
-@available(iOS 11.0, *)
 extension LinkInteractionTextView: UITextDragDelegate {
 
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {

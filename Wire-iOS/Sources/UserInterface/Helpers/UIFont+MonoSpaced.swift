@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 
 private let monospacedFeatureSettingsAttribute = [
@@ -30,12 +29,12 @@ private let monospaceAttribute = [
 
 private let smallCapsFeatureSettingsAttributeLowerCase = [
     UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
-    UIFontDescriptor.FeatureKey.typeIdentifier: kLowerCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kLowerCaseSmallCapsSelector
 ]
 
 private let smallCapsFeatureSettingsAttributeUpperCase = [
     UIFontDescriptor.FeatureKey.featureIdentifier: kUpperCaseType,
-    UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector
 ]
 
 private let proportionalNumberSpacingFeatureSettingAttribute = [
@@ -52,24 +51,23 @@ private let proportionalNumberSpacingAttribute = [
 ]
 
 extension UIFont {
-    
+
     @objc func monospaced() -> UIFont {
         let descriptor = fontDescriptor
         let monospaceFontDescriptor = descriptor.addingAttributes(monospaceAttribute)
         return UIFont(descriptor: monospaceFontDescriptor, size: 0.0)
     }
-    
+
     func smallCaps() -> UIFont {
         let descriptor = fontDescriptor
         let allCapsDescriptor = descriptor.addingAttributes(smallCapsAttribute)
         return UIFont(descriptor: allCapsDescriptor, size: 0.0)
     }
-    
+
     func proportionalNumberSpacing() -> UIFont {
         let descriptor = fontDescriptor
         let propertionalNumberSpacingDescriptor = descriptor.addingAttributes(proportionalNumberSpacingAttribute)
         return UIFont(descriptor: propertionalNumberSpacingDescriptor, size: 0.0)
     }
-    
-}
 
+}

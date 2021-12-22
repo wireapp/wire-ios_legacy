@@ -23,22 +23,22 @@ import SnapshotTesting
 final class SkeletonViewControllerTests: XCTestCase {
     var sut: SkeletonViewController!
     var mockAccount: Account!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         mockAccount = Account.mockAccount(imageData: Data())
-        
+
         sut = SkeletonViewController(from: mockAccount, to: mockAccount, randomizeDummyItem: false)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockAccount = nil
-        
+
         super.tearDown()
     }
-    
+
     func testForInitState() {
         verify(matching: sut)
     }

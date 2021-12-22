@@ -16,32 +16,39 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
+extension SelfUser {
+
+    /// setup self user as a team member if providing teamID with the name Tarja Turunen
+    /// - Parameter teamID: when providing a team ID, self user is a team member
+    static func setupMockSelfUser(inTeam teamID: UUID? = nil) {
+        provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Tarja Turunen", inTeam: teamID))
+    }
+}
+
 final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
-    
+
     var sut: ConversationImagesViewController! = nil
     var navigatorController: UINavigationController! = nil
 
     override var needsCaches: Bool {
         return true
     }
-    
+
     override func setUp() {
         super.setUp()
-
-        MockUser.mockSelf()?.name = "Tarja Turunen"
+        SelfUser.setupMockSelfUser()
 
         snapshotBackgroundColor = UIColor.white
-    
+
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let initialMessage = otherUserConversation.append(imageFromData: image.imageData!)!
+        let initialMessage = try! otherUserConversation.appendImage(from: image.imageData!)
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
-        let collection = MockCollection(messages: [ imagesCategoryMatch : [initialMessage] ])
+        let collection = MockCollection(messages: [ imagesCategoryMatch: [initialMessage] ])
         let delegate = AssetCollectionMulticastDelegate()
-        
+
         let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])
         sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true)
 
@@ -53,7 +60,6 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-
     func testForWrappedInNavigationController() {
         verify(view: navigatorController.view)
     }
@@ -63,16 +69,16 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
 
         verify(view: navigatorController.view)
     }
-    
+
     func testThatItDisplaysCorrectToolbarForImage_Ephemeral() {
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = true
         sut.currentMessage = message
-        
+
         sut.setBoundsSizeAsIPhone4_7Inch()
 
-        ///calls viewWillAppear
+        /// calls viewWillAppear
         sut.beginAppearanceTransition(true, animated: false)
 
         verify(view: navigatorController.view)
@@ -82,7 +88,7 @@ final class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     func testThatToolBarIsUpdateAfterScollToAnEphemeralImage() {
         // GIVEN
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let message = MockMessageFactory.imageMessage(with: image)!
+        let message = MockMessageFactory.imageMessage(with: image)
         message.isEphemeral = false
         sut.currentMessage = message
 

@@ -20,11 +20,11 @@ import WireCommonComponents
 import UIKit
 
 final class ConversationCreateOptionsCell: RightIconDetailsCell {
-    
+
     var expanded = false {
         didSet { applyColorScheme(colorSchemeVariant) }
     }
-    
+
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.options"
@@ -33,14 +33,14 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         showSeparator = false
         contentLeadingOffset = 16
     }
-    
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         backgroundColor = .from(scheme: .sectionBackgroundHighlighted, variant: colorSchemeVariant)
-        
+
         let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         let image = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color)
-        
+
         // flip upside down if necessary
         if let cgImage = image.cgImage, expanded {
             accessory = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored)

@@ -22,7 +22,7 @@ import PassKit
 import AVKit
 
 final class MessagePresenterTests: XCTestCase {
-    
+
     var sut: MessagePresenter!
     var mediaPlaybackManager: MediaPlaybackManager!
     var originalRootViewConttoller: UIViewController!
@@ -37,7 +37,7 @@ final class MessagePresenterTests: XCTestCase {
             originalRootViewConttoller = UIApplication.shared.keyWindow?.rootViewController
         }
     }
-    
+
     override func tearDown() {
         sut = nil
         mediaPlaybackManager = nil
@@ -47,16 +47,16 @@ final class MessagePresenterTests: XCTestCase {
     }
 
     // MARK: - Video
-    func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile(){
+    func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile() {
         // GIVEN
-        let message = MockMessageFactory.videoMessage()!
+        let message = MockMessageFactory.videoMessage()
         let fileURL = Bundle(for: MockAudioRecorder.self).url(forResource: "video", withExtension: "mp4")
         message.backingFileMessageData?.fileURL = fileURL
 
         let targetViewController = UIViewController()
         UIApplication.shared.keyWindow?.rootViewController = targetViewController
         sut.targetViewController = targetViewController
-        let _ = targetViewController.view
+        _ = targetViewController.view
 
         // WHEN
         sut.openFileMessage(message, targetView: UIView())
@@ -74,12 +74,11 @@ final class MessagePresenterTests: XCTestCase {
         XCTAssertNil(sut.videoPlayerObserver)
     }
 
-
     // MARK: - Pass
 
-    func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){
+    func testThatCreateAddPassesViewControllerReturnsNilForFileMessage() {
         // GIVEN
-        let message = MockMessageFactory.fileTransferMessage()!
+        let message = MockMessageFactory.fileTransferMessage()
 
         // WHEN
         let addPassesViewController = sut.createAddPassesViewController(fileMessageData: message.fileMessageData!)
@@ -88,7 +87,7 @@ final class MessagePresenterTests: XCTestCase {
         XCTAssertNil(addPassesViewController)
     }
 
-    func testThatCreateAddPassesViewControllerReturnsAViewControllerForPassFileMessage(){
+    func testThatCreateAddPassesViewControllerReturnsAViewControllerForPassFileMessage() {
         // GIVEN
         let message = MockMessageFactory.passFileTransferMessage()
 

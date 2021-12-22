@@ -39,6 +39,10 @@ final class ConversationListContentController: UICollectionViewController, Popov
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
     private var token: NSObjectProtocol?
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     init() {
         let flowLayout = BoundsAwareFlowLayout()
         flowLayout.minimumLineSpacing = 0
@@ -48,6 +52,8 @@ final class ConversationListContentController: UICollectionViewController, Popov
         super.init(collectionViewLayout: flowLayout)
 
         registerSectionHeader()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorAlertForConversationRequest), name: ZMConversation.missingLegalHoldConsentNotificationName, object: nil)
     }
 
     @available(*, unavailable)
@@ -94,6 +100,12 @@ final class ConversationListContentController: UICollectionViewController, Popov
             NotificationCenter.default.removeObserver(token)
             self.token = nil
         }
+    }
+
+    @objc
+    func showErrorAlertForConversationRequest() {
+        typealias ConversationError = L10n.Localizable.Error.Conversation
+        UIAlertController.showErrorAlert(title: ConversationError.title, message: ConversationError.missingLegalholdConsent)
     }
 
     private func activeMediaPlayerChanged() {
@@ -273,7 +285,7 @@ final class ConversationListContentController: UICollectionViewController, Popov
                                  contextMenuConfigurationForItemAt indexPath: IndexPath,
                                  point: CGPoint) -> UIContextMenuConfiguration? {
         guard let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
-                return nil                
+                return nil
         }
 
         let previewProvider: UIContextMenuContentPreviewProvider = {
@@ -370,7 +382,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         guard let item = item else {
             // Deselect all items in the collection view
             let indexPaths = collectionView.indexPathsForSelectedItems
-            (indexPaths as NSArray?)?.enumerateObjects({ obj, idx, stop in
+            (indexPaths as NSArray?)?.enumerateObjects({ obj, _, _ in
                 if let obj = obj as? IndexPath {
                     self.collectionView.deselectItem(at: obj, animated: false)
                 }
@@ -388,7 +400,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
             selectConversationCompletion = nil
 
             contentDelegate?.conversationList(self, didSelect: conversation, focusOnView: !focusOnNextSelection)
-        } else if (item is ConversationListConnectRequestsItem) {
+        } else if item is ConversationListConnectRequestsItem {
             ZClientViewController.shared?.loadIncomingContactRequestsAndFocus(onView: focusOnNextSelection, animated: true)
         } else {
             assert(false, "Invalid item in conversation list view model!!")
@@ -464,7 +476,7 @@ extension ConversationListContentController: ConversationListCellDelegate {
     }
 
     func conversationListCellOverscrolled(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else {
+        guard let conversation = cell.conversation as? ZMConversation else {
             return
         }
 
@@ -472,7 +484,7 @@ extension ConversationListContentController: ConversationListCellDelegate {
     }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else { return }
+        guard let conversation = cell.conversation as? ZMConversation else { return }
 
         startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()

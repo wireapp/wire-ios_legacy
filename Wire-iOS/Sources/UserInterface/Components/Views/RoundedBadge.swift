@@ -30,7 +30,7 @@ class RoundedBadge: UIButton {
         self.contentInset = contentInset
         containedView = view
         super.init(frame: .zero)
-        
+
         self.addSubview(containedView)
 
         createConstraints()
@@ -41,7 +41,7 @@ class RoundedBadge: UIButton {
         updateCornerRadius()
     }
 
-    func createConstraints(){
+    private func createConstraints() {
 
         containedView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
@@ -56,12 +56,12 @@ class RoundedBadge: UIButton {
             widthGreaterThanHeightConstraint,
 
             containedView.topAnchor.constraint(equalTo: topAnchor, constant: contentInset.top),
-            containedView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInset.bottom),
+            containedView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInset.bottom)
 
             ])
     }
 
-    func updateCollapseConstraints(isCollapsed: Bool){
+    func updateCollapseConstraints(isCollapsed: Bool) {
         if isCollapsed {
             widthGreaterThanHeightConstraint.isActive = false
             trailingConstraint.constant = 0
@@ -76,12 +76,13 @@ class RoundedBadge: UIButton {
     func updateCornerRadius() {
         self.layer.cornerRadius = ceil(self.bounds.height / 2.0)
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override public func layoutSubviews() {
+
+    override func layoutSubviews() {
         super.layoutSubviews()
         updateCornerRadius()
     }
@@ -89,7 +90,7 @@ class RoundedBadge: UIButton {
 
 final class RoundedTextBadge: RoundedBadge {
     var textLabel = UILabel()
-    
+
     init(contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4), font: UIFont = .smallSemiboldFont) {
         super.init(view: self.textLabel, contentInset: contentInset)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
@@ -98,9 +99,9 @@ final class RoundedTextBadge: RoundedBadge {
         textLabel.textColor = .from(scheme: .background)
         textLabel.font = font
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

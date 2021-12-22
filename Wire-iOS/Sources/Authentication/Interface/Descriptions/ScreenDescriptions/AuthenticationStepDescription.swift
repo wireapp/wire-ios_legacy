@@ -21,26 +21,26 @@ import UIKit
 
 typealias AuthenticationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
-typealias ValueSubmitted = (Any) -> ()
-typealias ValueValidated = (ValueValidation?) -> ()
+typealias ValueSubmitted = (Any) -> Void
+typealias ValueValidated = (ValueValidation?) -> Void
 
 enum ValueValidation {
     case info(String)
     case error(TextFieldValidator.ValidationError, showVisualFeedback: Bool)
 }
 
-protocol ViewDescriptor: class {
+protocol ViewDescriptor: AnyObject {
     func create() -> UIView
 }
 
-protocol ValueSubmission: class {
+protocol ValueSubmission: AnyObject {
     var acceptsInput: Bool { get set }
     var valueSubmitted: ValueSubmitted? { get set }
     var valueValidated: ValueValidated? { get set }
 }
 
 /// A protocol for views that support performing the magic tap.
-protocol MagicTappable: class {
+protocol MagicTappable: AnyObject {
     func performMagicTap() -> Bool
 }
 

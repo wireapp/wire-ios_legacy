@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSyncEngine
+
 // The ouput actions a `CallInfoViewController` can perform.
 enum CallAction {
     case toggleMuteState
@@ -30,4 +32,5 @@ enum CallAction {
     case flipCamera
     case minimizeOverlay
     case showParticipantsList
+    case updateVideoGridPresentationMode(_ mode: VideoGridPresentationMode)
 }

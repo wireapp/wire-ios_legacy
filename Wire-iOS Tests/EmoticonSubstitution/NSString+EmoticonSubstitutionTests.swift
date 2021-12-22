@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 
-
 extension String {
     func resolvingEmoticonShortcuts(configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) -> String {
         let mutableString = NSMutableString(string: self)
@@ -40,18 +39,17 @@ extension String {
 }
 
 final class NSString_EmoticonSubstitutionTests: XCTestCase {
-    
+
     var sut: EmoticonSubstitutionConfiguration!
 
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-
 
     func testThatAllEmoticonSubstitutionForNonMockedConfigurationWorks() {
         // Given
@@ -79,7 +77,6 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         // Then
         XCTAssertEqual(resolvedString, targetString)
     }
-
 
     func testThatSubstitutionInSpecificRangeWorks() {
         // Given
@@ -129,4 +126,3 @@ final class NSString_EmoticonSubstitutionTests: XCTestCase {
         XCTAssertEqual(resolvedString, targetString)
     }
 }
-

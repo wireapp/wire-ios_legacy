@@ -21,6 +21,22 @@ import WireSyncEngine
 import UIKit
 
 /**
+ * Provides and asks for context when registering users.
+ */
+
+protocol AuthenticationCoordinatorDelegate: AnyObject {
+
+    /**
+     * The coordinator finished authenticating the user.
+     * - parameter addedAccount: Whether the authentication action added a new account
+     * to this device.
+     */
+
+    func userAuthenticationDidComplete(addedAccount: Bool)
+
+}
+
+/**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
  *
@@ -41,7 +57,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
 
-
     // MARK: - Event Handling Properties
 
     /**
@@ -56,11 +71,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     let eventResponderChain: AuthenticationEventResponderChain
 
-    /// Shortcut for accessing the authentication status provider (returns the delegate).
-    var statusProvider: AuthenticationStatusProvider? {
-        return delegate
-    }
-
     // MARK: - State
 
     /// The displayed view controller.
@@ -68,6 +78,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     /// The object controlling the state of authentication.
     let stateController: AuthenticationStateController
+
+    /// The object hepls accessing to some authentication information.
+    let statusProvider: AuthenticationStatusProvider
 
     /// The object that manages active user sessions.
     let sessionManager: ObservableSessionManager
@@ -91,15 +104,14 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
     private var pendingAlert: AuthenticationCoordinatorAlert?
+    private var registrationStatus: RegistrationStatus {
+        return unauthenticatedSession.registrationStatus
+    }
+
     var pendingModal: UIViewController?
 
     /// Whether an account was added.
     var addedAccount: Bool = false
-
-    /// The object to use to register users and teams.
-    var registrationStatus: RegistrationStatus {
-        return unauthenticatedSession.registrationStatus
-    }
 
     /// The user session to use before authentication has finished.
     var unauthenticatedSession: UnauthenticatedSession {
@@ -109,11 +121,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController & SpinnerCapable, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController & SpinnerCapable,
+         sessionManager: ObservableSessionManager,
+         featureProvider: AuthenticationFeatureProvider,
+         statusProvider: AuthenticationStatusProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
-        self.stateController = AuthenticationStateController()
+        self.statusProvider = statusProvider
         self.featureProvider = featureProvider
+        self.stateController = AuthenticationStateController()
         self.interfaceBuilder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
         self.eventResponderChain = AuthenticationEventResponderChain(featureProvider: featureProvider)
         self.backupRestoreController = BackupRestoreController(target: presenter)
@@ -142,12 +158,13 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         }
     }
 
-    func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
+    func stateDidChange(_ newState: AuthenticationFlowStep,
+                        mode: AuthenticationStateController.StateChangeMode) {
         guard let presenter = self.presenter, newState.needsInterface else {
             return
         }
 
-        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
@@ -173,7 +190,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 // MARK: - Event Handling
 
 extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreatedSessionObserver {
-    
+
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
         currentPostRegistrationFields().apply(sendPostRegistrationFields)
@@ -186,15 +203,14 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func updateLoginObservers() {
         loginObservers = [
-            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
-            PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
-        
+
         if let userSession = SessionManager.shared?.activeUserSession {
             initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
 
+        sessionManager.loginDelegate = self
         registrationStatus.delegate = self
     }
 
@@ -208,17 +224,17 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             return
         }
 
-        guard let selfUser = delegate?.selfUser else {
+        guard let selfUser = statusProvider.selfUser else {
             log.error("Post login observers were not registered because there is no self user.")
             return
         }
 
-        guard let sharedSession = delegate?.sharedUserSession else {
+        guard let sharedSession = statusProvider.sharedUserSession else {
             log.error("Post login observers were not registered because there is no user session.")
             return
         }
 
-        guard let userProfile = delegate?.selfUserProfile else {
+        guard let userProfile = statusProvider.selfUserProfile else {
             log.error("Post login observers were not registered because there is no user profile.")
             return
         }
@@ -318,13 +334,12 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .updateBackendEnvironment(let url):
                 companyLoginController?.updateBackendEnvironment(with: url)
-                
+
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
-
             case .startSSOFlow:
                 startAutomaticSSOFlow()
-                
+
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
 
@@ -383,7 +398,6 @@ extension AuthenticationCoordinator {
 
 }
 
-
 // MARK: - Actions
 
 extension AuthenticationCoordinator {
@@ -414,7 +428,7 @@ extension AuthenticationCoordinator {
                   let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
                 fatal("No unauthenticated account to log out from")
             }
-            
+
             sessionManager.delete(account: unauthenticatedAccount)
         }
     }
@@ -555,7 +569,6 @@ extension AuthenticationCoordinator {
         eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
 
-
     /// Creates the user on the backend and advances the state.
     private func finishRegisteringUser() {
         guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
@@ -588,7 +601,7 @@ extension AuthenticationCoordinator {
 
     /// Sends the fields provided during registration that requires a registered user session.
     private func sendPostRegistrationFields(_ fields: AuthenticationPostRegistrationFields) {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Could not save the marketing consent as there is no user session for the user.")
             return
         }
@@ -600,7 +613,7 @@ extension AuthenticationCoordinator {
 
     /// Auto-assigns a random profile image to the user.
     private func assignRandomProfileImage() {
-        guard let userSession = statusProvider?.sharedUserSession else {
+        guard let userSession = statusProvider.sharedUserSession else {
             log.error("Not assigning a random profile picture, because the user session does not exist.")
             return
         }
@@ -688,7 +701,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        guard let profile = statusProvider?.selfUserProfile else {
+        guard let profile = statusProvider.selfUserProfile else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
         }
@@ -714,12 +727,11 @@ extension AuthenticationCoordinator {
         }
     }
 
-
     // MARK: - Company Login
 
     var canStartCompanyLogin: Bool {
         switch stateController.currentStep {
-        case .landingScreen, .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
+        case .companyLogin:
             return true
         default:
             log.warn("Cannot start company login in step: \(stateController.currentStep)")
@@ -735,7 +747,7 @@ extension AuthenticationCoordinator {
             companyLoginController?.displayCompanyLoginPrompt()
         }
     }
-    
+
     /// Automatically start the SSO flow if possible
     private func startAutomaticSSOFlow() {
         companyLoginController?.startAutomaticSSOFlow()

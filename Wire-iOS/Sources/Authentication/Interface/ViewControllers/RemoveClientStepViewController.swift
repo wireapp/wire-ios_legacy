@@ -25,7 +25,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     var authenticationCoordinator: AuthenticationCoordinator?
     let clientListController: ClientListViewController
-    var userInterfaceSizeClass :(UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
+    var userInterfaceSizeClass: (UITraitEnvironment) -> UIUserInterfaceSizeClass = {traitEnvironment in
        return traitEnvironment.traitCollection.horizontalSizeClass
     }
 
@@ -53,6 +53,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +83,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         NSLayoutConstraint.activate([
             clientListController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clientListController.view.topAnchor.constraint(equalTo: safeTopAnchor),
-            clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            clientListController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         // Adaptive Constraints
@@ -123,14 +124,13 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     // MARK: - AuthenticationCoordinatedViewController
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        //no-op
+        // no-op
     }
-    
+
     func displayError(_ error: Error) {
-        //no-op
+        // no-op
     }
 }
-
 
 // MARK: - ClientListViewControllerDelegate
 

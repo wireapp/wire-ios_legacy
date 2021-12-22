@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -27,13 +26,13 @@ extension ZMConversation: ConversationListItem {}
 // Placeholder for conversation requests item
 final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
 
-protocol ConversationListViewModelDelegate: class {
+protocol ConversationListViewModelDelegate: AnyObject {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
 
     func listViewModelShouldBeReloaded()
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool)
-    
+
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int)
@@ -45,6 +44,6 @@ protocol ConversationListViewModelDelegate: class {
     )
 }
 
-protocol ConversationListViewModelRestorationDelegate: class {
+protocol ConversationListViewModelRestorationDelegate: AnyObject {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool)
 }

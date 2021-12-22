@@ -20,95 +20,102 @@ import Foundation
 import UIKit
 import WireDataModel
 
-class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
-    
+final class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
+
     struct Configuration {
         let message: ZMConversationMessage
         var isObfuscated: Bool {
             return message.isObfuscated
         }
     }
-    
+
+    private var containerView = UIView()
     private let transferView = AudioMessageView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
-    
-    weak var delegate: ConversationMessageCellDelegate? = nil
-    weak var message: ZMConversationMessage? = nil
-    
+    private let restrictionView = AudioMessageRestrictionView()
+
+    weak var delegate: ConversationMessageCellDelegate?
+    weak var message: ZMConversationMessage?
+
     var isSelected: Bool = false
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureSubviews()
+        configureSubview()
         configureConstraints()
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configureSubviews() {
+
+    private func configureSubview() {
         shape = .rounded(radius: 4)
         backgroundColor = .from(scheme: .placeholderBackground)
         clipsToBounds = true
-        
-        transferView.delegate = self
-        obfuscationView.isHidden = true
-        
-        addSubview(self.transferView)
-        addSubview(self.obfuscationView)
+
+        addSubview(containerView)
     }
-    
+
     private func configureConstraints() {
-        transferView.translatesAutoresizingMaskIntoConstraints = false
-        obfuscationView.translatesAutoresizingMaskIntoConstraints = false
-        
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: 56),
-            
-            // transferView
-            transferView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            transferView.topAnchor.constraint(equalTo: topAnchor),
-            transferView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            transferView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            // obfuscationView
-            obfuscationView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            obfuscationView.topAnchor.constraint(equalTo: topAnchor),
-            obfuscationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            obfuscationView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            ])
+            // containerView
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
-    
-    func configure(with object: Configuration, animated: Bool) {
-        transferView.configure(for: object.message, isInitial: false)
 
-        obfuscationView.isHidden = !object.isObfuscated
-        transferView.isHidden = object.isObfuscated
+    func configure(with object: Configuration, animated: Bool) {
+        if object.isObfuscated {
+            setup(obfuscationView)
+        } else if object.message.isRestricted {
+            setup(restrictionView)
+            restrictionView.configure()
+        } else {
+            setup(transferView)
+            transferView.configure(for: object.message, isInitial: false)
+        }
     }
-    
+
+    private func setup(_ view: UIView) {
+        containerView.removeSubviews()
+        containerView.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+    }
+
     override public var tintColor: UIColor! {
         didSet {
             self.transferView.tintColor = self.tintColor
         }
     }
-    
+
     var selectionView: UIView! {
         return transferView
     }
-    
+
     var selectionRect: CGRect {
         return transferView.bounds
     }
-    
+
 }
 
 extension ConversationAudioMessageCell: TransferViewDelegate {
     func transferView(_ view: TransferView, didSelect action: MessageAction) {
         guard let message = message else { return }
-        
+
         delegate?.perform(action: action, for: message, view: self)
     }
 }
@@ -116,26 +123,26 @@ extension ConversationAudioMessageCell: TransferViewDelegate {
 final class ConversationAudioMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationAudioMessageCell
     let configuration: View.Configuration
-    
+
     var topMargin: Float = 8
     var showEphemeralTimer: Bool = false
-    
+
     let isFullWidth: Bool = false
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
-    
+
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
-    
+
     var accessibilityIdentifier: String? {
         return configuration.isObfuscated ? "ObfuscatedAudioCell" : "AudioCell"
     }
 
     let accessibilityLabel: String? = nil
-    
+
     init(message: ZMConversationMessage) {
         self.configuration = View.Configuration(message: message)
     }
-    
+
 }

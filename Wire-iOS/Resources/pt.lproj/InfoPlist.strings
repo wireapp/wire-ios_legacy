@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
+"NSMicrophoneUsageDescription" = "Permitir que o Wire aceda ao seu microfone de modo a poder falar com outras pessoas e enviar mensagens de áudio.";
+"NSLocationWhenInUseUsageDescription" = "Permitir que o Wire aceda à sua localização de modo a poder enviá-la a outros utilizadores.";
+"NSCameraUsageDescription" = "Permitir que o Wire aceda à sua câmara, para poder fazer chamadas de vídeo e enviar fotos.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Permitir que o Wire guarde fotografias que tira.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Permitir que o Wire tenha acesso às suas fotografias.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Para se autenticar na aplicação, permita que o Wire tenha acesso ao Face ID.";

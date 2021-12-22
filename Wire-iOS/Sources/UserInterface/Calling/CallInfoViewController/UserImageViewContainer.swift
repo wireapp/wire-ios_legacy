@@ -25,7 +25,7 @@ final class UserImageViewContainer: UIView {
     private let userImageView: UserImageView
     private let maxSize: CGFloat
     private let yOffset: CGFloat
-    
+
     var user: UserType? {
         didSet {
             userImageView.user = user
@@ -45,26 +45,26 @@ final class UserImageViewContainer: UIView {
 
         userImageView.userSession = userSession
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         userImageView.isAccessibilityElement = false
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userImageView)
-        
+
         let priority: Float = 249
         userImageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .vertical)
         userImageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .horizontal)
         userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .vertical)
         userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .horizontal)
-        
+
         userImageView.setImageConstraint(resistance: priority, hugging: priority)
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             userImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: yOffset),

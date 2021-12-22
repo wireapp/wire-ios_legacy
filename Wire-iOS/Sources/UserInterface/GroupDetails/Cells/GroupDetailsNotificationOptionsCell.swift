@@ -1,6 +1,6 @@
 ////
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2021 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,24 +21,24 @@ import WireDataModel
 import WireCommonComponents
 
 final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
-    
+
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.notificationsoptions"
         title = "group_details.notification_options_cell.title".localized
     }
-    
-    func configure(with conversation: ZMConversation) {
+
+    func configure(with conversation: GroupDetailsConversationType) {
         guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
-        
-        self.status = key.localized
+
+        status = key.localized
     }
-    
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        
+
         icon = StyleKitIcon.alerts.makeImage(size: .tiny,
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }

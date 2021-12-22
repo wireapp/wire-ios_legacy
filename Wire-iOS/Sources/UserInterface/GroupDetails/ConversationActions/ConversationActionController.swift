@@ -19,23 +19,23 @@ import UIKit
 import WireSyncEngine
 
 final class ConversationActionController {
-    
+
     struct PresentationContext {
         let view: UIView
         let rect: CGRect
     }
-    
+
     enum Context {
         case list, details
     }
 
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     unowned let target: UIViewController
     weak var sourceView: UIView?
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
-    
-    init(conversation: ZMConversation,
+
+    init(conversation: GroupDetailsConversationType,
          target: UIViewController,
          sourceView: UIView?) {
         self.conversation = conversation
@@ -50,15 +50,15 @@ final class ConversationActionController {
                 rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
             )
         }
-        
+
         let actions: [ZMConversation.Action]
         switch context {
         case .details:
-            actions = conversation.detailActions
+            actions = (conversation as? ZMConversation)?.detailActions ?? []
         case .list:
-            actions = conversation.listActions
+            actions = (conversation as? ZMConversation)?.listActions ?? []
         }
-        
+
         let title = context == .list ? conversation.displayName : nil
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         actions.map(alertAction).forEach(controller.addAction)
@@ -67,11 +67,11 @@ final class ConversationActionController {
 
         alertController = controller
     }
-    
+
     func enqueue(_ block: @escaping () -> Void) {
         ZMUserSession.shared()?.enqueue(block)
     }
-    
+
     func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true) {
             ZMUserSession.shared()?.enqueue(block)
@@ -79,57 +79,60 @@ final class ConversationActionController {
     }
 
     func handleAction(_ action: ZMConversation.Action) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         switch action {
         case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
 
-            requestDeleteGroupResult() { result in
-                self.handleDeleteGroupResult(result, conversation: self.conversation, in: userSession)
+            requestDeleteGroupResult { result in
+                self.handleDeleteGroupResult(result, conversation: conversation, in: userSession)
             }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
-            self.conversation.isArchived = !isArchived
+            conversation.isArchived = !isArchived
             }
         case .markRead: self.enqueue {
-            self.conversation.markAsRead()
+            conversation.markAsRead()
             }
         case .markUnread: self.enqueue {
-            self.conversation.markAsUnread()
+            conversation.markAsUnread()
             }
-        case .configureNotifications: self.requestNotificationResult(for: self.conversation) { result in
-            self.handleNotificationResult(result, for: self.conversation)
+        case .configureNotifications: self.requestNotificationResult(for: conversation) { result in
+            self.handleNotificationResult(result, for: conversation)
         }
         case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
+            conversation.mutedMessageTypes = isSilenced ? .none : .all
             }
         case .leave:
             request(LeaveResult.self) { result in
-                self.handleLeaveResult(result, for: self.conversation)
+                self.handleLeaveResult(result, for: conversation)
             }
-        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
-            self.handleClearContentResult(result, for: self.conversation)
+        case .clearContent:
+            requestClearContentResult(for: conversation) { result in
+            self.handleClearContentResult(result, for: conversation)
             }
         case .cancelRequest:
-            guard let user = self.conversation.connectedUser else { return }
+            guard let user = conversation.connectedUser else { return }
             self.requestCancelConnectionRequestResult(for: user) { result in
-                self.handleConnectionRequestResult(result, for: self.conversation)
+                self.handleConnectionRequestResult(result, for: conversation)
             }
-        case .block: self.requestBlockResult(for: self.conversation) { result in
-            self.handleBlockResult(result, for: self.conversation)
+        case .block: self.requestBlockResult(for: conversation) { result in
+            self.handleBlockResult(result, for: conversation)
             }
         case .moveToFolder:
-            self.openMoveToFolder(for: self.conversation)
+            self.openMoveToFolder(for: conversation)
         case .removeFromFolder:
             enqueue {
-                self.conversation.removeFromFolder()
+                conversation.removeFromFolder()
             }
         case .favorite(isFavorite: let isFavorite):
             enqueue {
-                self.conversation.isFavorite = !isFavorite
+                conversation.isFavorite = !isFavorite
             }
         case .remove: fatalError()
         }
     }
-    
+
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
         return action.alertAction { [weak self] in
             guard let `self` = self else { return }
@@ -142,24 +145,28 @@ final class ConversationActionController {
                 currentContext: currentContext,
                 target: target)
     }
-    
+
+    func presentError(_ error: LocalizedError) {
+        target.presentLocalizedErrorAlert(error)
+    }
+
     private func prepare(viewController: UIViewController, with context: PresentationContext) {
         viewController.popoverPresentationController.apply {
             $0.sourceView = context.view
             $0.sourceRect = context.rect
         }
     }
-    
+
     private func present(_ controller: UIViewController,
-                 currentContext: PresentationContext?,
-                 target: UIViewController) {
+                         currentContext: PresentationContext?,
+                         target: UIViewController) {
         currentContext.apply {
             prepare(viewController: controller, with: $0)
         }
-        
+
         controller.configPopover(pointToView: sourceView ?? target.view, popoverPresenter: target as? PopoverPresenterViewController)
 
         target.present(controller, animated: true)
     }
-    
+
 }

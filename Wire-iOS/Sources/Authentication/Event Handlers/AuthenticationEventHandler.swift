@@ -28,7 +28,7 @@ import Foundation
  * next handler will be used. The first handler that returns a valid value will be used, and the call loop will be stopped.
  */
 
-protocol AuthenticationEventHandler: class {
+protocol AuthenticationEventHandler: AnyObject {
 
     /**
      * The type of context objects required to process the event.
@@ -54,4 +54,14 @@ protocol AuthenticationEventHandler: class {
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationCoordinatorAction]?
 
+}
+
+extension AuthenticationEventHandler {
+    var isRegistered: Bool {
+        return statusProvider?.authenticatedUserWasRegisteredOnThisDevice == true
+    }
+
+    var postAction: AuthenticationCoordinatorAction {
+        return isRegistered ? .completeRegistrationFlow : .completeLoginFlow
+    }
 }

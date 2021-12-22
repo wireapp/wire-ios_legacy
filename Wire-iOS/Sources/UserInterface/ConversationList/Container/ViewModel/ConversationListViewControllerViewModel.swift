@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -22,18 +21,18 @@ import WireDataModel
 import WireSyncEngine
 import WireCommonComponents
 
-typealias Completion = () -> ()
+typealias Completion = () -> Void
 typealias ResultHandler = (_ succeeded: Bool) -> Void
 
-protocol ConversationListContainerViewModelDelegate: class {
+protocol ConversationListContainerViewModelDelegate: AnyObject {
     init(viewModel: ConversationListViewController.ViewModel)
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
-                    animated: Bool,
-                    completion: Completion?)
+                  animated: Bool,
+                  completion: Completion?)
 
     func showNoContactLabel(animated: Bool)
     func hideNoContactLabel(animated: Bool)
@@ -59,7 +58,7 @@ extension ConversationListViewController {
     final class ViewModel: NSObject {
         weak var viewController: ConversationListContainerViewModelDelegate? {
             didSet {
-                guard let _ = viewController else { return }
+                guard viewController != nil else { return }
 
                 updateNoConversationVisibility(animated: false)
                 updateArchiveButtonVisibility()
@@ -94,7 +93,7 @@ extension ConversationListViewController {
 
 extension ConversationListViewController.ViewModel {
     func setupObservers() {
-        if let userSession = ZMUserSession.shared(){
+        if let userSession = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession) as Any
             initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
@@ -123,7 +122,7 @@ extension ConversationListViewController.ViewModel {
                 completion: Completion? = nil) {
         selectedConversation = conversation
 
-        viewController?.setState(.conversationList, animated:animated) { [weak self] in
+        viewController?.setState(.conversationList, animated: animated) { [weak self] in
             self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         }
     }
@@ -152,7 +151,6 @@ extension ConversationListViewController.ViewModel {
     private var isComingFromRegistration: Bool {
         return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
-
 
     /// show PushPermissionDeniedDialog when necessary
     ///

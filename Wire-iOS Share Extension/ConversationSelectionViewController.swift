@@ -43,9 +43,9 @@ final class ConversationSelectionViewController : UITableViewController {
         tableView.estimatedRowHeight = 56
         tableView.register(TargetConversationCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
-        searchController.dimsBackgroundDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.isTranslucent = false
 
         preferredContentSize = UIScreen.main.bounds.size
         definesPresentationContext = true
@@ -89,7 +89,7 @@ extension ConversationSelectionViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             visibleConversations = allConversations.filter { conversation in
-                if let _ = conversation.name.range(of: searchText, options: .diacriticInsensitive) {
+                if let _ = conversation.name.range(of: searchText, options: [.diacriticInsensitive, .caseInsensitive]) {
                     return true
                 } else {
                     return false

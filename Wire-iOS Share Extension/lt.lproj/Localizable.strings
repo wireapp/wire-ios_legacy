@@ -33,6 +33,23 @@
 "share_extension.not_signed_in.close_button" = "Užverti";
 "share_extension.timeout.title" = "Susijungimui skirtas laikas pasibaigė.";
 "share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "„Passcode“";
+"share_extension.unlock.error_label" = "Neteisingas slaptažodis";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
+"share_extension.timeout.title" = "Susijungimui skirtas laikas pasibaigė.";
+"share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
+
+"content.file.too_big" = "Siunčiamų failų dydis negali viršyti %@";
+"content.file.unsupported_attachment" = "Nepalaikomas priedas";
+"share_extension.error.conversation_does_not_exist.message" = "Pasirinkite susirašinėjimą pasidalinimui";
+
 "share_extension.privacy_security.lock_app.description" = "Atrakinti „Wire“";
 "share_extension.logged_out.title" = "Buvote atjungti nuo šios paskyros.";
 "share_extension.logged_out.message" = "Pasirinkite kitą paskyrą.";
@@ -43,3 +60,7 @@
 "meta.degraded.dialog_message" = "Ar vis dar norite išsiųsti savo žinutę?";
 "meta.degraded.cancel_sending_button" = "Nesiųsti";
 "meta.degraded.send_anyway_button" = "Vis tiek siųsti";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

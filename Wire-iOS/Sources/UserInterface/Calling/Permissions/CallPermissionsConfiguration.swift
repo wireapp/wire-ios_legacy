@@ -47,7 +47,7 @@ extension CallPermissionsConfiguration {
 
 }
 
-func ==(lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
+func == (lhs: CallPermissionsConfiguration, rhs: CallPermissionsConfiguration) -> Bool {
     return lhs.canAcceptAudioCalls == rhs.canAcceptAudioCalls &&
            lhs.isPendingAudioPermissionRequest == rhs.isPendingAudioPermissionRequest &&
            lhs.canAcceptVideoCalls == rhs.canAcceptVideoCalls &&

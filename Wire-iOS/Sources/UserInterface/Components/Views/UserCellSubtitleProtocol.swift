@@ -19,10 +19,10 @@
 import Foundation
 import WireDataModel
 
-protocol UserCellSubtitleProtocol: class {
+protocol UserCellSubtitleProtocol: AnyObject {
     func subtitle(forRegularUser user: UserType?) -> NSAttributedString?
 
-    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] { get set }
+    static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] { get set }
 
     static var boldFont: UIFont { get }
     static var lightFont: UIFont { get }
@@ -34,8 +34,8 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
 
         var components: [NSAttributedString?] = []
 
-        if let handle = user.handle, !handle.isEmpty {
-            components.append("@\(handle)" && UserCell.boldFont)
+        if let handle = user.handleDisplayString(withDomain: user.isFederated), !handle.isEmpty {
+            components.append(handle && UserCell.boldFont)
         }
 
         WirelessExpirationTimeFormatter.shared.string(for: user).apply {

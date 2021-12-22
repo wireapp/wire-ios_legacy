@@ -1,24 +1,22 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-
+//
 
 import UIKit
-import Cartography
 import Down
 import WireDataModel
 
@@ -57,14 +55,14 @@ enum InputBarState: Equatable {
         default: return false
         }
     }
-    
+
     var isMarkingDown: Bool {
         switch self {
         case .markingDown: return true
         default: return false
         }
     }
-    
+
     var isEphemeral: Bool {
         switch self {
         case .markingDown(let ephemeral):
@@ -89,9 +87,9 @@ enum InputBarState: Equatable {
 
     mutating func changeEphemeralState(to newState: EphemeralState) {
         switch self {
-        case .markingDown(_):
+        case .markingDown:
             self = .markingDown(ephemeral: newState)
-        case .writing(_):
+        case .writing:
             self = .writing(ephemeral: newState)
         default:
             return
@@ -123,47 +121,46 @@ final class InputBar: UIView {
 
         return stackView
     }()
-    
+
     // Contains and clips the buttonInnerContainer
     let buttonContainer = UIView()
-    
+
     // Contains editingView and mardownView
     let secondaryButtonsView: InputBarSecondaryButtonsView
-    
+
     let buttonsView: InputBarButtonsView
     let editingView = InputBarEditView()
-    
+
     let markdownView = MarkdownBarView()
-    
+
     var editingBackgroundColor = UIColor.brightYellow
     var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
     var writingSeparatorColor: UIColor? = .from(scheme: .separator)
     var ephemeralColor: UIColor {
         return .accent()
     }
-    
+
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
-    fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
-    
+    private lazy var rowTopInsetConstraint: NSLayoutConstraint = buttonInnerContainer.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -constants.buttonsBarHeight)
+
     // Contains the secondaryButtonsView and buttonsView
-    fileprivate let buttonInnerContainer = UIView()
+    private let buttonInnerContainer = UIView()
 
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
-    fileprivate let notificationCenter = NotificationCenter.default
-    
-    fileprivate var leftAccessoryViewWidthConstraint: NSLayoutConstraint?
-    
+
+    private lazy var leftAccessoryViewWidthConstraint: NSLayoutConstraint = leftAccessoryView.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
+
     var isEditing: Bool {
         return inputBarState.isEditing
     }
-    
+
     var isMarkingDown: Bool {
         return inputBarState.isMarkingDown
     }
-    
+
     private var inputBarState: InputBarState = .writing(ephemeral: .none) {
         didSet {
             updatePlaceholder()
@@ -175,24 +172,24 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
+    var invisibleInputAccessoryView: InvisibleInputAccessoryView? {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
-    
-    var availabilityPlaceholder : NSAttributedString? {
+
+    var availabilityPlaceholder: NSAttributedString? {
         didSet {
             updatePlaceholder()
         }
     }
-    
+
     override var bounds: CGRect {
         didSet {
             invisibleInputAccessoryView?.overriddenIntrinsicContentSize = CGSize(width: UIView.noIntrinsicMetric, height: bounds.height)
         }
     }
-        
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
 
@@ -202,30 +199,27 @@ final class InputBar: UIView {
         textView.isScrollEnabled = true
     }
 
-    deinit {
-        notificationCenter.removeObserver(self)
-    }
-
     required init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
         secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
-        
+
         super.init(frame: CGRect.zero)
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
         buttonContainer.clipsToBounds = true
-        
+
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        
 
         setupViews()
         updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
-        
+
+        let notificationCenter = NotificationCenter.default
+
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
@@ -233,20 +227,20 @@ final class InputBar: UIView {
         notificationCenter.addObserver(self, selector: #selector(sendButtonEnablingDidApplyChanges), name: NSNotification.Name.disableSendButtonChanged, object: nil)
     }
 
-
     /// Update return key type when receiving a notification (from setting->toggle send key option)
     @objc
     private func sendButtonEnablingDidApplyChanges() {
         updateReturnKey()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func setupViews() {
         textView.accessibilityIdentifier = "inputField"
-        
+
         updatePlaceholder()
         textView.lineFragmentPadding = 0
         textView.textAlignment = .natural
@@ -259,7 +253,7 @@ final class InputBar: UIView {
         textView.font = .normalLightFont
         textView.placeholderFont = .smallSemiboldFont
         textView.backgroundColor = .clear
-        
+
         markdownView.delegate = textView
 
         updateReturnKey()
@@ -267,81 +261,89 @@ final class InputBar: UIView {
         updateInputBar(withState: inputBarState, animated: false)
         updateColors()
     }
-    
+
     fileprivate func createConstraints() {
-        
-        constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryStackView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
-            leftAccessoryView.leading == leftAccessoryView.superview!.leading
-            leftAccessoryView.top == leftAccessoryView.superview!.top
-            leftAccessoryView.bottom == buttonContainer.top
-            leftAccessoryViewWidthConstraint = leftAccessoryView.width == conversationHorizontalMargins.left
+        [buttonContainer,
+         textView,
+         buttonRowSeparator,
+         leftAccessoryView,
+         rightAccessoryStackView,
+         secondaryButtonsView,
+         buttonsView,
+         buttonInnerContainer].prepareForLayout()
 
-            rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
-            rightAccessoryView.top == rightAccessoryView.superview!.top
-            rightAccessoryView.width == 0 ~ 750.0
-            rightAccessoryView.bottom == buttonContainer.top
-            
-            buttonContainer.top == textView.bottom
-            textView.top == textView.superview!.top
-            textView.leading == leftAccessoryView.trailing
-            textView.trailing <= textView.superview!.trailing - 16
-            textView.trailing == rightAccessoryView.leading
-            textView.height >= 56
-            textView.height <= 120 ~ 1000.0
+        let rightAccessoryViewWidthConstraint =  rightAccessoryStackView.widthAnchor.constraint(equalToConstant: 0)
+        rightAccessoryViewWidthConstraint.priority = .defaultHigh
 
-            buttonRowSeparator.top == buttonContainer.top
-            buttonRowSeparator.leading == buttonRowSeparator.superview!.leading + 16
-            buttonRowSeparator.trailing == buttonRowSeparator.superview!.trailing - 16
-            buttonRowSeparator.height == .hairline
-        }
-        
-        constrain(secondaryButtonsView, buttonsView, buttonInnerContainer) { secondaryButtonsView, buttonsView, buttonInnerContainer in
-            secondaryButtonsView.top == buttonInnerContainer.top
-            secondaryButtonsView.leading == buttonInnerContainer.leading
-            secondaryButtonsView.trailing == buttonInnerContainer.trailing
-            secondaryButtonsView.bottom == buttonsView.top
-            secondaryButtonsView.height == constants.buttonsBarHeight
-            
-            buttonsView.leading == buttonInnerContainer.leading
-            buttonsView.trailing <= buttonInnerContainer.trailing
-            buttonsView.bottom == buttonInnerContainer.bottom
-        }
-        
-        constrain(buttonContainer, buttonInnerContainer)  { container, innerContainer in
-            container.bottom == container.superview!.bottom
-            container.leading == container.superview!.leading
-            container.trailing == container.superview!.trailing
-            container.height == constants.buttonsBarHeight
+        NSLayoutConstraint.activate([
+            leftAccessoryView.leadingAnchor.constraint(equalTo: leftAccessoryView.superview!.leadingAnchor),
+            leftAccessoryView.topAnchor.constraint(equalTo: leftAccessoryView.superview!.topAnchor),
+            leftAccessoryView.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            leftAccessoryViewWidthConstraint,
 
-            innerContainer.leading == container.leading
-            innerContainer.trailing == container.trailing
-            self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
-        }
+            rightAccessoryStackView.trailingAnchor.constraint(equalTo: rightAccessoryStackView.superview!.trailingAnchor),
+            rightAccessoryStackView.topAnchor.constraint(equalTo: rightAccessoryStackView.superview!.topAnchor),
+            rightAccessoryViewWidthConstraint,
+            rightAccessoryStackView.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor),
+
+            buttonContainer.topAnchor.constraint(equalTo: textView.bottomAnchor),
+            textView.topAnchor.constraint(equalTo: textView.superview!.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: leftAccessoryView.trailingAnchor),
+            textView.trailingAnchor.constraint(lessThanOrEqualTo: textView.superview!.trailingAnchor, constant: -16),
+            textView.trailingAnchor.constraint(equalTo: rightAccessoryStackView.leadingAnchor),
+            textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
+            textView.heightAnchor.constraint(lessThanOrEqualToConstant: 120),
+
+            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            buttonRowSeparator.leadingAnchor.constraint(equalTo: buttonRowSeparator.superview!.leadingAnchor, constant: 16),
+            buttonRowSeparator.trailingAnchor.constraint(equalTo: buttonRowSeparator.superview!.trailingAnchor, constant: -16),
+            buttonRowSeparator.heightAnchor.constraint(equalToConstant: .hairline),
+
+            secondaryButtonsView.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor),
+            secondaryButtonsView.leadingAnchor.constraint(equalTo: buttonInnerContainer.leadingAnchor),
+            secondaryButtonsView.trailingAnchor.constraint(equalTo: buttonInnerContainer.trailingAnchor),
+            secondaryButtonsView.bottomAnchor.constraint(equalTo: buttonsView.topAnchor),
+            secondaryButtonsView.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
+
+            buttonsView.leadingAnchor.constraint(equalTo: buttonInnerContainer.leadingAnchor),
+            buttonsView.trailingAnchor.constraint(lessThanOrEqualTo: buttonInnerContainer.trailingAnchor),
+            buttonsView.bottomAnchor.constraint(equalTo: buttonInnerContainer.bottomAnchor),
+
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor),
+            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor),
+            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor),
+            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
+
+            buttonInnerContainer.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
+            buttonInnerContainer.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
+            rowTopInsetConstraint
+        ])
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
+
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
-        
+
         updateLeftAccessoryViewWidth()
         updateRightAccessoryStackViewLayoutMargins()
     }
-    
+
     fileprivate func updateLeftAccessoryViewWidth() {
-        leftAccessoryViewWidthConstraint?.constant = conversationHorizontalMargins.left
+        leftAccessoryViewWidthConstraint.constant = conversationHorizontalMargins.left
     }
-    
+
     fileprivate func updateRightAccessoryStackViewLayoutMargins() {
         let rightInset = (conversationHorizontalMargins.left - InputBar.rightIconSize) / 2
         rightAccessoryStackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
     }
-    
-    @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
+
+    @objc
+    private func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
         guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
     }
-    
+
     func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared.returnKeyType
         textView.reloadInputViews()
@@ -353,9 +355,9 @@ final class InputBar: UIView {
     }
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
-        
+
         var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
-        
+
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
@@ -367,20 +369,18 @@ final class InputBar: UIView {
             return placeholder
         }
     }
-    
+
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
-    
+
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.textView.isFirstResponder {
             if super.point(inside: point, with: event) {
                 let locationInButtonRow = buttonInnerContainer.convert(point, from: self)
                 return locationInButtonRow.y < buttonInnerContainer.bounds.height / 1.3
-            }
-            else {
+            } else {
                 return false
             }
-        }
-        else {
+        } else {
             return super.point(inside: point, with: event)
         }
     }
@@ -397,7 +397,7 @@ final class InputBar: UIView {
         updateEditViewState()
         updatePlaceholder()
         updateReturnKey()
-        rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
+        rowTopInsetConstraint.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {
             switch state {
@@ -408,12 +408,12 @@ final class InputBar: UIView {
             case .editing(let text, let mentions):
                 self.setInputBarText(text, mentions: mentions)
                 self.secondaryButtonsView.setEditBarView()
-            
+
             case .markingDown:
                 self.secondaryButtonsView.setMarkdownBarView()
             }
         }
-        
+
         let completion: () -> Void = {
             self.updateColors()
             self.updatePlaceholderColors()
@@ -468,14 +468,14 @@ final class InputBar: UIView {
         textView.updateTextColor(base: textColor)
 
         var buttons = self.buttonsView.buttons
-        
+
         buttons.append(self.buttonsView.expandRowButton)
-        
+
         buttons.forEach { button in
             guard let button = button as? IconButton else {
                 return
             }
-            
+
             button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
             button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
         }
@@ -492,7 +492,7 @@ final class InputBar: UIView {
 
     func undo() {
         guard inputBarState.isEditing else { return }
-        guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
+        guard let undoManager = textView.undoManager, undoManager.canUndo else { return }
         undoManager.undo()
         updateEditViewState()
     }
@@ -516,11 +516,11 @@ extension InputBar {
     @objc func textViewTextDidChange(_ notification: Notification) {
         updateEditViewState()
     }
-    
+
     @objc func textViewDidBeginEditing(_ notification: Notification) {
         updateEditViewState()
     }
-    
+
     @objc func textViewDidEndEditing(_ notification: Notification) {
         updateEditViewState()
     }

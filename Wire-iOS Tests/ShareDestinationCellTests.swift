@@ -21,17 +21,17 @@ import XCTest
 @testable import Wire
 
 final class MockDestination: NSObject, ShareDestination {
-    
+
     var isUnderLegalHold: Bool
-    
+
     var showsGuestIcon: Bool
-    
+
     var displayName: String
-    
+
     var securityLevel: ZMConversationSecurityLevel
-    
+
     var avatarView: UIView?
-    
+
     init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure, showsGuestIcon: Bool = false, isUnderLegalHold: Bool = false) {
         self.displayName = displayName
         self.securityLevel = securityLevel
@@ -42,7 +42,7 @@ final class MockDestination: NSObject, ShareDestination {
 }
 
 final class ShareDestinationCellTests: XCTestCase {
-    
+
     var sut: ShareDestinationCell<MockDestination>!
     var destination: MockDestination?
     var mockAvatarView: UIImageView {
@@ -52,10 +52,10 @@ final class ShareDestinationCellTests: XCTestCase {
         imageView.clipsToBounds = true
         return imageView
     }
-    
+
     override func setUp() {
         super.setUp()
-        
+
         accentColor = .vividRed
         sut = ShareDestinationCell(style: .default, reuseIdentifier: "reuseIdentifier")
         sut.backgroundColor = .black
@@ -66,7 +66,7 @@ final class ShareDestinationCellTests: XCTestCase {
         destination = nil
         super.tearDown()
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -78,7 +78,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: view)
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked_Guest() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -90,7 +90,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked_LegalHold() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -102,7 +102,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Unchecked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -113,7 +113,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Unchecked_Guest() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -125,7 +125,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Checked() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -136,7 +136,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Checked_Guest() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -148,7 +148,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Checked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -159,7 +159,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Checked_Guest() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -171,7 +171,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Unchecked() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -182,7 +182,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Unchecked_Guest() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -194,7 +194,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Unchecked_Guest_LegalHold() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -207,7 +207,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Unchecked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -218,7 +218,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Unchecked_Guest() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -230,7 +230,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Checked() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -241,7 +241,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Checked_Guest() {
         // given
         let destination = MockDestination(displayName: "John Burger",
@@ -253,7 +253,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Checked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
@@ -264,7 +264,7 @@ final class ShareDestinationCellTests: XCTestCase {
         // then
         verify(matching: sut.prepareForSnapshotWithCellSelected())
     }
-    
+
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Checked_Guest() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",

@@ -19,9 +19,11 @@
 import WireSyncEngine
 import UIKit
 
-extension ZMConversation {
+extension ConversationLike where Self: SwiftConversationLike {
     var botCanBeAdded: Bool {
-        return self.conversationType != .oneOnOne && self.team != nil && self.allowGuests
+        return conversationType != .oneOnOne &&
+               teamType != nil &&
+               allowGuests
     }
 }
 
@@ -57,11 +59,11 @@ final class ServiceDetailViewController: UIViewController {
             self.detailView.service = service
         }
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -92,7 +94,7 @@ final class ServiceDetailViewController: UIViewController {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
         self.selfUser = selfUser
-        
+
         detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
@@ -117,6 +119,7 @@ final class ServiceDetailViewController: UIViewController {
         setupViews()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -161,7 +164,6 @@ final class ServiceDetailViewController: UIViewController {
             ])
     }
 
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -192,10 +194,10 @@ final class ServiceDetailViewController: UIViewController {
             switch type {
             case let .addService(conversation):
                 conversation.add(serviceUser: serviceUser, in: userSession) { result in
-                    
+
                     switch result {
                     case .success:
-                        Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
+                        Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         completion?(.success(conversation: conversation))
                     case .failure(let error):
                         completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
@@ -209,9 +211,9 @@ final class ServiceDetailViewController: UIViewController {
                 } else {
                     serviceUser.createConversation(in: userSession, completionHandler: { (result) in
                         if case let .success(conversation) = result {
-                            Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
+                            Analytics.shared.tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         }
-                        
+
                         switch result {
                         case .success(let conversation):
                             completion?(.success(conversation: conversation))
@@ -241,7 +243,7 @@ fileprivate extension Button {
         return button
     }
 
-    convenience init(style: ButtonStyle, title:String) {
+    convenience init(style: ButtonStyle, title: String) {
         self.init(style: style)
         setTitle(title, for: .normal)
     }

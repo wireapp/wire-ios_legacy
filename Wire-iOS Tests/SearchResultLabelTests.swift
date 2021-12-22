@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class SearchResultLabelTests: ZMSnapshotTestCase {
+final class SearchResultLabelTests: ZMSnapshotTestCase {
     var sut: SearchResultLabel!
 
     override func setUp() {

@@ -29,12 +29,13 @@ final class CollectionViewContainerCell: UICollectionViewCell {
             collectionView.fitInSuperview()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         accessibilityIdentifier = "topPeopleSection"
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

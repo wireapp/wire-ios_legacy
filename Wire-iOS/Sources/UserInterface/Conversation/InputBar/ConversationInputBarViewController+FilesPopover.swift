@@ -21,17 +21,9 @@ import WireSyncEngine
 
 extension ConversationInputBarViewController: UIDocumentPickerDelegate {
 
-    @available(iOS 11.0, *)
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         uploadFiles(at: urls)
     }
-
-
-    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Implement documentPicker:didPickDocumentsAtURLs: instead")
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        uploadItem(at: url)
-    }
-
 }
 
 extension ConversationInputBarViewController {
@@ -52,7 +44,7 @@ extension ConversationInputBarViewController {
     func createDocUploadActionSheet(sender: IconButton? = nil) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        /// alert actions  for debugging
+        // Alert actions  for debugging
         #if targetEnvironment(simulator)
         let plistHandler: ((UIAlertAction) -> Void) = { _ in
             ZMUserSession.shared()?.enqueue({
@@ -79,7 +71,7 @@ extension ConversationInputBarViewController {
         controller.addAction(uploadTestAlertAction(size: 41943040, title: "40 MB file", fileName: "40MBFile.bin"))
 
         if ZMUser.selfUser()?.hasTeam == true {
-            controller.addAction(uploadTestAlertAction(size: 83886080,  title: "80 MB file",  fileName: "80MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 83886080, title: "80 MB file", fileName: "80MBFile.bin"))
             controller.addAction(uploadTestAlertAction(size: 125829120, title: "120 MB file", fileName: "120MBFile.bin"))
         }
         #endif
@@ -104,7 +96,6 @@ extension ConversationInputBarViewController {
                                            tintColor: view.tintColor,
                                            handler: takeVideoHandler))
 
-
         let browseHandler: ((UIAlertAction) -> Void) = { _ in
             let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
             documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
@@ -115,11 +106,8 @@ extension ConversationInputBarViewController {
             }
 
             documentPickerViewController.delegate = self
+            documentPickerViewController.allowsMultipleSelection = true
 
-            if #available(iOS 11.0, *) {
-                documentPickerViewController.allowsMultipleSelection = true
-            }
-            
             self.parent?.present(documentPickerViewController, animated: true)
         }
 

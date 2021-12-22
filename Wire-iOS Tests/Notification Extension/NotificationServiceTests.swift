@@ -16,36 +16,36 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-//import WireCommonComponents
-//@testable import Wire
-@testable import Wire_Notification_Service_Extension
-    
-final class NotificationServiceTests: XCTestCase {
-//    var sut1: NotificationService!
-//    var sut: DestructionCountdownView!
-    
-    override func setUp() {
-        super.setUp()
-
-        let sut = NotificationService()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        
-//       sut = nil
-    }
-    
-    func testThatItDisplaysASingleLocalNotificationFromTheUpdateEvent() {
-        
-    }
-    
-    func testThatItDisplaysASingleLocalNotificationFromMultipleUpdateEvents() {
-        
-    }
-    
-    func testThatItDoesNotDisplayALocalNotificationWithEmptyArrayUpdateEvents() {
-        
-    }
-}
+//import XCTest
+////import WireCommonComponents
+////@testable import Wire
+//@testable import Wire_Notification_Service_Extension
+//    
+//final class NotificationServiceTests: XCTestCase {
+////    var sut1: NotificationService!
+////    var sut: DestructionCountdownView!
+//    
+//    override func setUp() {
+//        super.setUp()
+//
+//        let sut = NotificationService()
+//    }
+//    
+//    override func tearDown() {
+//        super.tearDown()
+//        
+////       sut = nil
+//    }
+//    
+//    func testThatItDisplaysASingleLocalNotificationFromTheUpdateEvent() {
+//        
+//    }
+//    
+//    func testThatItDisplaysASingleLocalNotificationFromMultipleUpdateEvents() {
+//        
+//    }
+//    
+//    func testThatItDoesNotDisplayALocalNotificationWithEmptyArrayUpdateEvents() {
+//        
+//    }
+//}

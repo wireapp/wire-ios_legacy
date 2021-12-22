@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol IncomingRequestFooterViewDelegate: class {
+protocol IncomingRequestFooterViewDelegate: AnyObject {
 
     /// Called when the user accepts or denies a connection request.
     func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction)
@@ -58,10 +58,9 @@ class IncomingRequestFooterView: UIView, Themeable {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {
@@ -111,7 +110,7 @@ class IncomingRequestFooterView: UIView, Themeable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
     }
 

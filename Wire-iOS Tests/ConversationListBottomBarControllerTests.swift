@@ -21,7 +21,7 @@ import XCTest
 
 class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBarControllerDelegate {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
-        switch (buttonType) {
+        switch buttonType {
         case .archive:
             self.archiveButtonTapCount += 1
         case .startUI:
@@ -40,7 +40,7 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
 }
 
 final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: ConversationListBottomBarController!
     var mockDelegate: MockConversationListBottomBarDelegate!
 
@@ -54,17 +54,17 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
             self.sut = ConversationListBottomBarController()
             self.sut.delegate = self.mockDelegate
 
-            ///SUT has a priority 750 height constraint. fix its height first
+            // SUT has a priority 750 height constraint. fix its height first
             NSLayoutConstraint.activate([
                 sut.view.heightAnchor.constraint(equalToConstant: 56)
                 ])
         })
     }
-    
+
     override func tearDown() {
         sut = nil
         mockDelegate = nil
-        
+
         super.tearDown()
     }
 
@@ -120,19 +120,19 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
     }
-    
+
     func testThatItCallsTheDelegateWhenTheListButtonIsTapped() {
         // when
         sut.listButton.sendActions(for: .touchUpInside)
-        
+
         // then
         XCTAssertEqual(mockDelegate.listButtonCallCount, 1)
     }
-    
+
     func testThatItCallsTheDelegateWhenTheFolderButtonIsTapped() {
         // when
         sut.folderButton.sendActions(for: .touchUpInside)
-        
+
         // then
         XCTAssertEqual(mockDelegate.folderButtonTapCount, 1)
     }

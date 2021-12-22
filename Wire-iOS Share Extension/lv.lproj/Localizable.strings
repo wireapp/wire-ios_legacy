@@ -1,0 +1,65 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+
+
+
+"general.ok" = "Labi";
+
+"share_extension.conversation_selection.account" = "Account:";
+"share_extension.conversation_selection.title" = "Conversation:";
+"share_extension.send_button.title" = "Nosūtīt";
+"share_extension.conversation_selection.empty.value" = "Choose";
+"share_extension.input.placeholder" = "Type a message";
+"share_extension.sending_progress.title" = "Sending…";
+"share_extension.preparing.title" = "Preparing…";
+"share_extension.no_internet_connection.title" = "No Internet Connection";
+"share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
+"share_extension.not_signed_in.close_button" = "Aizvērt";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Passcode";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+
+"content.file.too_big" = "You can send files up to %@";
+"content.file.unsupported_attachment" = "Unsupported attachment";
+"share_extension.error.conversation_does_not_exist.message" = "Please select a conversation for sharing";
+
+"share_extension.privacy_security.lock_app.description" = "Unlock Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
+
+"conversation.displayname.emptygroup" = "Empty group conversation";
+"meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
+"meta.degraded.degradation_reason_message.plural" = "%@ started using new devices.";
+"meta.degraded.dialog_message" = "Vai joprojām vēlaties nosūtīt ziņojumus?";
+"meta.degraded.cancel_sending_button" = "Do not send";
+"meta.degraded.send_anyway_button" = "Send anyway";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

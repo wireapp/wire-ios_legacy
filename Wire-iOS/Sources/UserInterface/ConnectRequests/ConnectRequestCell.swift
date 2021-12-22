@@ -26,10 +26,10 @@ final class ConnectRequestCell: UITableViewCell {
 
     private var connectRequestViewController: IncomingConnectionViewController?
 
-    var user: ZMUser! {
+    var user: UserType! {
         didSet {
             guard let user = user else { return }
-            
+
             connectRequestViewController?.view.removeFromSuperview()
 
             let incomingConnectionViewController = IncomingConnectionViewController(userSession: ZMUserSession.shared(), user: user)
@@ -61,6 +61,7 @@ final class ConnectRequestCell: UITableViewCell {
         backgroundColor = UIColor.clear
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

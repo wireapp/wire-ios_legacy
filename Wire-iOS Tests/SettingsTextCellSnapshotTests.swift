@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
-    
+
     var sut: SettingsTextCell!
     var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -34,13 +34,13 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
 
         settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForNameElementWithALongName(){
+    func testForNameElementWithALongName() {
         let cellDescriptor = settingsCellDescriptorFactory.nameElement()
         sut.descriptor = cellDescriptor
         cellDescriptor.featureCell(sut)
@@ -49,19 +49,19 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         let mockTableView = sut.wrapInTableView()
         mockTableView.backgroundColor = .black
 
-        XCTAssert(sut.textInput.isUserInteractionEnabled)
+        XCTAssert(sut.textInput.isEnabled)
 
         verify(view: mockTableView)
     }
 
-    func testThatTextFieldIsDisabledWhenEnabledFlagIsFalse(){
+    func testThatTextFieldIsDisabledWhenEnabledFlagIsFalse() {
         // GIVEN
         let cellDescriptor = settingsCellDescriptorFactory.nameElement(enabled: false)
 
         // WHEN
         cellDescriptor.featureCell(sut)
 
-        //THEN
-        XCTAssertFalse(sut.textInput.isUserInteractionEnabled)
+        // THEN
+        XCTAssertFalse(sut.textInput.isEnabled)
     }
 }

@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Engedélyezd, hogy a Wire hozzáférjen a névjegyeidhez, hogy másokkal kapcsolatba léphess. Az összes információt anonimizáljuk, mielőtt feltöltjük szerverünkre, és senkit sem osztunk meg.";
+"NSMicrophoneUsageDescription" = "Engedélyezd, hogy a Wire hozzáférjen a mikrofonodhoz, hogy részt vehess hívásokban és hangüzeneteket küldhess.";
+"NSLocationWhenInUseUsageDescription" = "Engedélyezd, hogy a Wire hozzáférjen a helyadataidhoz, hogy el tudd küldeni a helyzetedet másoknak.";
+"NSCameraUsageDescription" = "Engedélyezd, hogy a Wire hozzáférjen a kamerádhoz, hogy részt vehess videóhívásokban és fényképeket tudjál küldeni.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Engedélyezd, hogy a Wire a készített képeket a fotókönyvtárban tárolja.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Engedélyezd, hogy a Wire hozzáférjen a fotótárban tárolt képekhez.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Az alkalmazásban történő hitelesítés érdekében engedélyezd a Wire számára az Face ID funkció elérését.";

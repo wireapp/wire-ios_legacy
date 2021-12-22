@@ -19,8 +19,8 @@
 import Foundation
 import UIKit
 
-///TODO: remove public after MockUser is convert to Swift
-public final class ImageCache<T : AnyObject> {
+/// TODO: remove public after MockUser is convert to Swift
+public final class ImageCache<T: AnyObject> {
     var cache: NSCache<NSString, T> = NSCache()
     var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
     var dispatchGroup: DispatchGroup = DispatchGroup()

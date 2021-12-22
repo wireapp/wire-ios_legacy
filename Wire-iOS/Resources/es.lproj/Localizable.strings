@@ -27,7 +27,7 @@
 "general.edit" = "Editar";
 "general.done" = "Listo";
 "general.confirm" = "OK";
-"general.later" = "Más Tarde";
+"general.later" = "Después";
 "general.skip" = "Ahora no";
 "general.accept" = "Aceptar";
 "general.decline" = "No, gracias";
@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Contactos";
 "peoplepicker.header.contacts_personal" = "Contactos personales";
 "peoplepicker.header.directory" = "Conectar";
+"peoplepicker.header.federation" = "Connect with other domain";
 
 "peoplepicker.group.title.singular" = "Añadir Participantes";
 "peoplepicker.group.title.plural" = "Añadir Participantes (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "No hay contactos.";
 
-"peoplepicker.no_matching_results_title" = "Sin resultados.";
-"peoplepicker.no_matching_results_message" = "Introduce un email.";
 "peoplepicker.no_search_results" = "No se han encontrado resultados. Intente introducir un nombre diferente.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Enviar una invitación";
 "peoplepicker.no_matching_results.action.share_contacts" = "Compartir contactos";
+"peoplepicker.no_matching_results.action.learn_more" = "Más información";
+"peoplepicker.no_matching_results.action.manage_services" = "Gestionar los servicios";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Por favor, introduce una dirección de email válida";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No hay resultados.";
-"peoplepicker.no_matching_results_services_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo. Para activarlos, póngase en contacto con el administrador.";
-"peoplepicker.no_matching_results_services_admin_title" = "Los servicios son auxiliares que pueden mejorar su flujo de trabajo.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Gestionar los servicios";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Introduce un email completo o";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "compartir contactos";
-
-"peoplepicker.share_contacts.no_results.title" = "Encuentra usuarios por su nombre o email";
+"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.services" = "No hay resultados.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitación enviada";
 "peoplepicker.send_invitation.dialog.message" = "Puede aceptarse hasta pasadas 2 semanas. Envía una nueva si ésta caduca.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Crear una sala de invitados";
 "peoplepicker.quick-action.admin-services" = "Gestionar los servicios";
 
-"add_participants.all_contacts_added" = "Todos están aquí.";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "Grupo completo";
 "add_participants.alert.message.new_conversation" = "Hasta %d personas pueden unirse a una conversación.";
@@ -159,7 +156,7 @@
 "conversation_list.voiceover.status.typing" = "escribiendo";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "te mencionaron";
-"conversation_list.voiceover.status.reply" = "responder";
+"conversation_list.voiceover.status.reply" = "respuesta";
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "reciente";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "Listado de conversaciones recientes";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "carpetas";
@@ -289,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Verificado";
 "conversation.input_bar.placeholder" = "Escribe un mensaje";
-"conversation.input_bar.placeholder_ephemeral" = "Mensaje con caducidad";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Desliza hacia arriba para enviar";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Pulsa para enviar";
@@ -310,9 +307,11 @@
 "conversation.connection_view.in_address_book" = "En contactos";
 
 "conversation.input_bar.shortcut.send" = "Envía Mensaje";
-"conversation.input_bar.shortcut.newline" = "Insertar salto de línea";
+"conversation.input_bar.shortcut.newline" = "Insert Line Break";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar el último mensaje";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
+"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
 
 "conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
 "conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Este mensaje ha sido eliminado";
 
-"conversation.guests_present" = "Invitados presentes";
-"conversation.services_present" = "Servicios activos";
-"conversation.guests_services_present" = "Hay invitados y servicios activos";
+// Conversation banner
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
+
 "conversation.action.search" = "Buscar";
 
 // Reply message preview
@@ -439,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ inició un chat con %@";
 "content.system.conversation.other.added" = "%@ añadió a %@";
 "content.system.conversation.other.removed" = "%@ eliminó a %@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ se fue";
 
 "content.system.conversation.you.started" = "%@ inició un chat con %@";
 "content.system.conversation.you.added" = "%@ añadió a %@";
 "content.system.conversation.you.removed" = "%@ eliminó a %@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ se fue";
 "content.system.conversation.team.member-leave" = "%@ fue eliminado del equipo.";
 "content.system.conversation.guest.joined" = "%@ se ha unido";
+"content.system.conversation.guest.you_joined" = "You joined";
 
 "content.system.conversation.invite.title" = "Servicios y usuarios externos pueden unirse a la conversación";
 "content.system.conversation.invite.button" = "Invitar gente";
@@ -469,8 +478,10 @@
 "content.system.you_wanted_to_talk" = "Tu llamaste";
 "content.system.ephemeral_time_remaining" = "%@ se fue";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "Tú";
-"content.system.this_device" = "este dispositivo";
 
 "content.system.call.called" = "%@ llamó";
 "content.system.call.called-you" = "%@ llamó";
@@ -492,8 +503,8 @@
 
 "content.system.conversation.with_name.participants" = "con";
 
-"content.system.message_timer_changes" = "%@ puso un temporizador de mensaje de %@";
-"content.system.message_timer_changes-you" = "%@ puso un temporizador de %@";
+"content.system.message_timer_changes" = "%@ puso un temporizador de %@";
+"content.system.message_timer_changes-you" = "%@ puso un temporizador de mensaje de %@";
 
 "content.system.message_timer_off" = "%@ desactivó el temporizador de mensajes";
 "content.system.message_timer_off-you" = "%@ desactivó el temporizador de mensajes";
@@ -517,33 +528,32 @@
 
 //
 
-"content.system.reactivated_device" = "Has activado %@ de nuevo. Los mensajes enviados durante el intervalo de inactividad no aparecerán aquí.";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "un nuevo dispositivo";
-"content.system.started_using" = "comenzaste a utilizar";
 "content.system.is_verified" = "Se han verificado todas la huellas digitales";
 
 "content.system.new_users" = "Se unió un usuario nuevo.";
 "content.system.verify_devices" = "Verificar dispositivos";
 
-"content.system.unverified" = "%@ ha(s) revocado un dispositivo de %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "tus dispositivos";
-"content.system.other_devices" = "dispositivos de %@";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "No has utilizado este dispositivo durante un tiempo. Algunos mensajes no aparecerán aquí.";
 "content.system.missing_messages.subtitle_start" = "Mientras tanto,";
 
-"content.system.cannot_decrypt" = "Mensaje de %@ corrupto.";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "Fix future messages";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "tú";
-"content.system.cannot_decrypt.why_part" = "¿Por qué?";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "La identidad del dispositivo de %@ ha cambiado. Mensaje no entregado.";
-"content.system.cannot_decrypt.identity.you_part" = "Tu";
-"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Más información";
-"content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "No se puede mostrar el este mensaje. Puede que esté usando un versión antigua de Wire.";
 
@@ -611,8 +621,12 @@
 
 "connection_request_pending_title" = "Petición de conexión";
 "connection_request.send_button_title" = "Conectar";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
+"error.connection.title" = "Error";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "Algo salió mal. Por favor, inténtalo de nuevo";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire necesita acceder a tus fotos";
@@ -637,9 +651,9 @@
 "voice.accept_button.title" = "Aceptar";
 "voice.decline_button.title" = "Rechazar";
 "voice.hang_up_button.title" = "Colgar";
-"voice.mute_button.title" = "Silenciar";
-"voice.video_button.title" = "Vídeo";
-"voice.flip_video_button.title" = "Girar";
+"voice.mute_button.title" = "Microphone";
+"voice.video_button.title" = "Camera";
+"voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Altavoz";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Llamar";
@@ -671,11 +685,20 @@
 "call.status.constant_bitrate" = "Tasa de bits constante";
 "call.status.variable_bitrate" = "Variable Bit Rate";
 
-"call.participants.show_all" = "Mostrar Todo (%@)";
+"call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "Participantes";
 
-"call.video.paused" = "Video pausado";
+"call.overlay.switch_to.speakers" = "SPEAKERS";
+"call.overlay.switch_to.all" = "ALL";
 
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.zoom" = "Pinch to zoom";
+
+"call.video.paused" = "Video pausado";
 "call.video.too_many.alert.title" = "Demasiadas personas para Vídeo";
 "call.video.too_many.alert.message" = "Las videollamadas sólo funcionan en grupos de 4 personas o menos.";
 
@@ -684,6 +707,11 @@
 "call.degraded.alert.message.user" = "%@ comenzó a utilizar un dispositivo nuevo.";
 "call.degraded.alert.message.unknown" = "Alguien comenzó a usar un nuevo dispositivo.";
 "call.degraded.alert.action.continue" = "Llamar de todos modos";
+
+"call.degraded.ended.alert.title" = "Call ended";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "Esto terminará con su otra llamada.";
 
@@ -700,7 +728,7 @@
 "call.announcement.incoming" = "Llamada entrante de %@";
 "call.actions.label.toggle_mute_on" = "Silenciar";
 "call.actions.label.toggle_mute_off" = "No silenciar";
-"call.actions.label.flip_camera" = "Invertir cámara";
+"call.actions.label.flip_camera" = "Switch camera";
 "call.actions.label.toggle_speaker_on" = "Habilitar altavoz";
 "call.actions.label.toggle_speaker_off" = "Deshabilitar altavoz";
 "call.actions.label.accept_call" = "¿Acepta la llamada?";
@@ -727,7 +755,7 @@
 "participants.section.services" = "Servicios (%d)";
 "participants.section.settings" = "Opciones";
 "participants.footer.add_title" = "Añadir Participantes";
-"participants.section.name.footer" = "Hasta %1$d participantes pueden unirse a una conversación de grupo. Las llamadas de vídeo funcionan con hasta %2$d personas y tú.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "No hay administradores";
 "participants.section.members.footer" = "No hay miembros";
 
@@ -816,8 +844,8 @@
 "profile.connection_request_dialog.button_connect" = "Conectar";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_dialog.title" = "¿Desea eliminar la conversación?";
+"conversation.delete_request_dialog.message" = "Esta opción eliminará el grupo y el contenido para todos los participantes desde cualquier dispositivo. El contenido no podrá restaurarse. Se notificará a todos los participantes.";
 "conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
@@ -832,8 +860,8 @@
 "profile.unblock_button_title" = "Desbloquear…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "Agregar a Favoritos";
+"profile.unfavorite_button_title" = "Eliminar de Favoritos";
 
 "profile.block_button_title_action" = "Bloquear";
 "profile.unblock_button_title_action" = "Desbloquear";
@@ -856,6 +884,8 @@
 "profile.details.guest" = "Invitado";
 "profile.details.group_admin" = "Administración de grupo";
 "profile.details.partner" = "external";
+"profile.details.federated" = "Federated";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Nombre de usuario";
 "profile_view.accessibility.name" = "Nombre a mostrar";
@@ -893,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Invitados y servicios";
 "group_details.guest_options_cell.enabled" = "En";
 "group_details.guest_options_cell.disabled" = "Desactivar";
-"group_details.timeout_options_cell.title" = "Mensajes cronometrados";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notificaciones";
 "group_details.notification_options_cell.description" = "Se te notificará acerca de todo (incluidas llamadas de audio y video) o sólo cuando se te menciona.";
 "group_details.receipt_options_cell.title" = "Confirmaciones de lectura";
@@ -907,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Legal hold subjects";
 "legalhold.header.title" = "Legal Hold";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Legal hold details";
 
 
@@ -983,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Teléfono";
 "self.settings.account_section.handle.title" = "Nombre de usuario";
 "self.settings.account_section.add_handle.title" = "Añadir nombre de usuario";
+"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.domain.title" = "Domain";
 
 "self.settings.account_details_group.info.footer" = "Otros usuarios de Wire pueden encontrarte con estos datos.";
 "self.settings.account_details_group.personal.footer" = "Esta información no es visible.";
@@ -998,6 +1030,8 @@
 "self.settings.privacy_section_group.title" = "Privacidad";
 "self.settings.enable_read_receipts.title" = "Send Read Receipts";
 "self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
 "self.settings.account_picture_group.picture" = "Imagen";
 "self.settings.account_picture_group.color" = "Color";
@@ -1024,8 +1058,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";
-"self.settings.privacy_analytics.title" = "Enviar datos anónimos";
-"self.settings.privacy_analytics_menu.description.title" = "Ayude a mejorar Wire enviando informes anónimos de uso y de caídas.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Send anonymous crash data";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Enviar datos de uso anónimos";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "Recibir boletín de noticias";
 "self.settings.receiveNews_and_offers.description.title" = "Reciba noticias y actualizaciones de productos de Wire por correo electrónico.";
@@ -1094,7 +1134,7 @@
 "self.settings.callkit.description" = "Mostrar llamadas de Wire en la pantalla de bloqueo y en el historial de llamadas de iOS. Si iCloud se encuentra habilitado, el historial de llamadas será compartido con Apple.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
-"self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Tono de Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Tono de Wire";
@@ -1149,17 +1189,12 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Desbloquear con contraseña";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Contraseña incorrecta. Por favor, inténtelo de nuevo.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
-
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Desbloquea Wire con Touch ID o el código";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Desbloquear Wire con Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Para desbloquear Wire, habilite el uso de Passcode en la configuracion del dispositivo";
-"self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Crear vista previa de los enlaces";
 "self.settings.privacy_security.disable_link_previews.footer" = "Las vistas previas todavía pueden mostrarse para enlaces de otras personas.";
@@ -1170,13 +1205,12 @@
 "self.settings.privacy.clear_history.subtitle" = "Esto borrará permanentemente el contenido de tus chats.";
 
 "self.settings.advanced.title" = "Avanzado";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "Solución de problemas";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Informe de depuración";
 "self.settings.advanced.debugging_tools.title" = "Herramientas de depuracion";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Enter debug command";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Esta información ayuda al soporte de Wire a diagnosticar problemas de llamadas y a mejorar la experiencia general de la aplicación.";
 "self.settings.advanced.reset_push_token.title" = "Renovar token de notificaciones";
 "self.settings.advanced.reset_push_token.subtitle" = "Si tienes problemas con las notificaciones 'push', el soporte de Wire puede pedirte de renueves este token.";
@@ -1247,8 +1281,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Añada cuenta.";
-"landing.welcome_message" = "Bienvenido a %@";
-"landing.create_account.title" = "Crear cuenta";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Converse de forma privada con grupos de amigos y familiares";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Colaboración segura para empresas, instituciones y organizaciones";
@@ -1397,7 +1433,7 @@
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Iniciar sesión";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "Código SSO";
 
 "login.sso.start_error_title" = "Cannot Start Enterprise Login";
 "login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
@@ -1409,11 +1445,11 @@
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 "login.sso.error.alert.invalid_format.message.sso_only" = "Por favor, introduzca un código de acceso SSO válido";
 "login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
-"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_not_registered.message" = "Este correo electrónico no se puede utilizar para iniciar sesión empresarial. Por favor, introduce el código SSO para continuar.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
 "login.sso.error.alert.unknown.message" = "Por favor, inténtalo de nuevo más tarde.";
 "login.sso.backend_switch.title" = "Redirecting...";
-"login.sso.backend_switch.subtitle" = "You are being redirected to your dedicated enterprise service.";
+"login.sso.backend_switch.subtitle" = "Está siendo redirigido al servidor de su organización.";
 "login.sso.backend_switch.information" = "Provide credentials only if you're sure this is your organization's log in.";
 
 
@@ -1585,6 +1621,9 @@
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "La conversación está llena";
 "error.conversation.offline" = "Parece haber un problema con tu conexión a Internet. Por favor, asegúrate de que está funcionando.";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "Pulsa en los colores para cambiar el tamaño del pincel";
 
@@ -1597,14 +1636,55 @@
 "push.notification.new_message" = "Nuevo mensaje";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Actualización necesaria";
 "force.update.message" = "Te estás perdiendo nuevas características.\nObtén la última versión de Wire en la App Store.";
 "force.update.ok_button" = "Ir a la App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detected";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Not Enough Storage";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "Ve a Ajustes";
+"databaseloadingfailure.alert.delete_database" = "Delete Database";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
 // Third Party
 "giphy.conversation.message" = "%@ · vía giphy.com";
@@ -1621,7 +1701,7 @@
 "invite_banner.invite_button_title" = "Invitar a más gente";
 
 // Collections
-"collections.section.images.title" = "Fotos";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "Ficheros";
 "collections.section.videos.title" = "Vídeos";
 "collections.section.links.title" = "Enlaces";
@@ -1700,6 +1780,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
 "url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Entrar";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";
@@ -1755,18 +1842,21 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Pending approval.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "Introduce tu contraseña para confirmar.";
 "legalhold_request.alert.error_wrong_password" = "Wrong Password";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Legal Hold is Active";
 "legalhold_active.alert.learn_more" = "Más información";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Your session expired";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "unselected";
@@ -1774,3 +1864,70 @@
 "button_message_cell.state.confirmed" = "confirmed";
 
 "button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Contraseña";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "create passcode";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "A lowercase letter";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "A number";
+"create_passcode.validation.no_special_char" = "A special character";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Enter your passcode";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "Wrong passcode";
+"unlock.submit_button.title" = "unlock";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "Type 'Delete'";
+"wipe_database.alert.confirm" = "Eliminar";
+"wipe_database.alert.confirm_input" = "Eliminar";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "Database deleted";
+"wipe_database_completion.subtitle" = "Your data and messages have been deleted. You can now log in again as a new device.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Unlock Wire with Face ID or Passcode";
+"appLockModule.message.touchID" = "Desbloquea Wire con Touch ID o el código";
+"appLockModule.message.passcode" = "Desbloquear Wire con Passcode";
+"appLockModule.message.passcodeUnavailable" = "Para desbloquear Wire, habilite el uso de Passcode en la configuracion del dispositivo";
+"appLockModule.unlockButton.title" = "Desbloquear";
+"appLockModule.goToSettingsButton.title" = "Go to settings";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "Personas";

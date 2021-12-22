@@ -34,31 +34,30 @@ extension SettingsCellDescriptorFactory {
             soundAlertSection,
             callKitSection,
             SecurityFlags.forceConstantBitRateCalls.isEnabled ? nil : VBRSection,
-            conferenceCallingSection,
             soundsSection,
             externalAppsSection,
             popularDemandSendButtonSection,
             popularDemandDarkThemeSection,
-            appLockSection,
+            isAppLockAvailable ? appLockSection : nil,
             SecurityFlags.generateLinkPreviews.isEnabled ? linkPreviewSection : nil
         ].compactMap { $0 }
-        
+
         return SettingsGroupCellDescriptor(
             items: descriptors,
             title: "self.settings.options_menu.title".localized,
             icon: .settingsOptions
         )
     }
-    
+
     // MARK: - Sections
     private var shareContactsDisabledSection: SettingsSectionDescriptorType {
         let settingsButton = SettingsButtonCellDescriptor(
             title: "self.settings.privacy_contacts_menu.settings_button.title".localized,
             isDestructive: false,
             selectAction: { _ in
-                UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         })
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [settingsButton],
             header: "self.settings.privacy_contacts_section.title".localized,
@@ -67,15 +66,15 @@ extension SettingsCellDescriptorFactory {
                 return AddressBookHelper.sharedHelper.isAddressBookAccessDisabled
         })
     }
-    
+
     private var clearHistorySection: SettingsSectionDescriptorType {
         let clearHistoryButton = SettingsButtonCellDescriptor(
             title: "self.settings.privacy.clear_history.title".localized,
             isDestructive: false,
-            selectAction: { (cellDescriptor: SettingsCellDescriptorType) -> Void in
+            selectAction: { _ in
                 // erase history is not supported yet
         })
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [clearHistoryButton],
             header: .none,
@@ -83,7 +82,7 @@ extension SettingsCellDescriptorFactory {
             visibilityAction: { _ in return false }
         )
     }
-    
+
     private var notificationVisibleSection: SettingsSectionDescriptorType {
         let notificationToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.notificationContentVisible),
@@ -96,63 +95,50 @@ extension SettingsCellDescriptorFactory {
             footer: "self.settings.notifications.push_notification.footer".localized
         )
     }
-    
+
     private var chatHeadsSection: SettingsSectionDescriptorType {
         let chatHeadsToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.chatHeadsDisabled),
             inverse: true
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [chatHeadsToggle],
             header: nil,
             footer: "self.settings.notifications.chat_alerts.footer".localized
         )
     }
-    
+
     private var soundAlertSection: SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(cellDescriptors: [soundAlertGroup])
     }
-    
+
     private var callKitSection: SettingsSectionDescriptorType {
         let callKitToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.disableCallKit),
             inverse: true
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [callKitToggle],
-            header:  "self.settings.callkit.title".localized,
+            header: "self.settings.callkit.title".localized,
             footer: "self.settings.callkit.description".localized,
             visibilityAction: .none
         )
     }
-    
+
     private var VBRSection: SettingsSectionDescriptorType {
         let VBRToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
             inverse: true,
             identifier: "VBRSwitch"
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [VBRToggle],
             header: .none,
             footer: "self.settings.vbr.description".localized,
             visibilityAction: .none
-        )
-    }
-    
-    private var conferenceCallingSection: SettingsSectionDescriptor {
-        let betaToggle = SettingsPropertyToggleCellDescriptor(
-            settingsProperty: settingsPropertyFactory.property(.enableConferenceCallingBeta),
-            identifier: "Beta Toggle"
-        )
-
-        return SettingsSectionDescriptor(
-            cellDescriptors: [betaToggle],
-            header: "self.settings.advanced.conference_calling.title".localized,
-            footer: "self.settings.advanced.conference_calling.subtitle".localized
         )
     }
 
@@ -165,7 +151,7 @@ extension SettingsCellDescriptorFactory {
             customSounds: ZMSound.ringtones,
             defaultSound: ZMSound.WireCall
         )
-        
+
         let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
         let messageSoundGroup = soundGroupForSetting(
             messageSoundProperty,
@@ -173,7 +159,7 @@ extension SettingsCellDescriptorFactory {
             customSounds: ZMSound.soundEffects,
             defaultSound: ZMSound.WireText
         )
-        
+
         let pingSoundProperty = settingsPropertyFactory.property(.pingSoundName)
         let pingSoundGroup = soundGroupForSetting(
             pingSoundProperty,
@@ -181,16 +167,16 @@ extension SettingsCellDescriptorFactory {
             customSounds: ZMSound.soundEffects,
             defaultSound: ZMSound.WirePing
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup],
-            header:  "self.settings.sound_menu.sounds.title".localized
+            header: "self.settings.sound_menu.sounds.title".localized
         )
     }
-    
+
     private var externalAppsSection: SettingsSectionDescriptorType? {
         var descriptors = [SettingsCellDescriptorType]()
-        
+
         if BrowserOpeningOption.optionsAvailable {
             descriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
         }
@@ -212,49 +198,47 @@ extension SettingsCellDescriptorFactory {
             header: "self.settings.external_apps.header".localized
         )
     }
-    
+
     private var popularDemandSendButtonSection: SettingsSectionDescriptorType {
         let sendButtonToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.disableSendButton),
             inverse: true
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [sendButtonToggle],
             header: "self.settings.popular_demand.title".localized,
             footer: "self.settings.popular_demand.send_button.footer".localized
         )
     }
-    
+
     private var popularDemandDarkThemeSection: SettingsSectionDescriptorType {
         let darkThemeSection = SettingsCellDescriptorFactory.darkThemeGroup(for: settingsPropertyFactory.property(.darkMode))
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [darkThemeSection],
             footer: "self.settings.popular_demand.dark_mode.footer".localized
         )
     }
-    
+
     private var appLockSection: SettingsSectionDescriptorType {
         let appLockToggle = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.lockApp))
-        appLockToggle.settingsProperty.enabled = !AppLock.rules.forceAppLock
-        
+
+        appLockToggle.settingsProperty.enabled = !settingsPropertyFactory.isAppLockForced
+
         return SettingsSectionDescriptor(
             cellDescriptors: [appLockToggle],
             headerGenerator: { return nil },
-            footerGenerator: { return SettingsCellDescriptorFactory.appLockSectionSubtitle },
-            visibilityAction: { _ in
-                return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil)
-            }
+            footerGenerator: { return self.appLockSectionSubtitle }
         )
     }
-    
+
     private var linkPreviewSection: SettingsSectionDescriptorType {
         let linkPreviewToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews),
             inverse: true
         )
-        
+
         return SettingsSectionDescriptor(
             cellDescriptors: [linkPreviewToggle],
             header: nil,
@@ -275,9 +259,9 @@ extension SettingsCellDescriptorFactory {
         }
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
+        let preview: PreviewGeneratorType = { _ in
             let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ SettingsColorScheme(rawValue: $0) }) else { return .text(SettingsColorScheme.defaultPreference.displayString) }
+            guard let option = value.flatMap({ SettingsColorScheme(rawValue: $0) }) else { return .text(SettingsColorScheme.defaultPreference.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
@@ -294,9 +278,9 @@ extension SettingsCellDescriptorFactory {
         }
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
+        let preview: PreviewGeneratorType = { _ in
             let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
+            guard let option = value.flatMap({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
@@ -313,9 +297,9 @@ extension SettingsCellDescriptorFactory {
         }
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: nil, footer: "open_link.maps.footer".localized, visibilityAction: nil)
-        let preview: PreviewGeneratorType = { descriptor in
+        let preview: PreviewGeneratorType = { _ in
             let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
+            guard let option = value.flatMap({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
@@ -332,9 +316,9 @@ extension SettingsCellDescriptorFactory {
         }
 
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
+        let preview: PreviewGeneratorType = { _ in
             let value = property.value().value() as? Int
-            guard let option = value.flatMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
+            guard let option = value.flatMap({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
@@ -347,9 +331,9 @@ extension SettingsCellDescriptorFactory {
         formatter.zeroFormattingBehavior = .dropAll
         return formatter
     }
-    
-    private static var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLock.rules.appLockTimeout)
+
+    private var appLockSectionSubtitle: String {
+        let timeout = TimeInterval(settingsPropertyFactory.timeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {
@@ -359,7 +343,22 @@ extension SettingsCellDescriptorFactory {
             default: return "self.settings.privacy_security.lock_app.subtitle.none"
             }
         }()
-        
-        return lockDescription + " " + typeKey.localized
+
+        var components = [lockDescription, typeKey.localized]
+
+        if AuthenticationType.current == .unavailable {
+            let reminderKey = "self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder"
+            components.append(reminderKey.localized)
+        }
+
+        return components.joined(separator: " ")
+    }
+}
+
+// MARK: - Helpers
+extension SettingsCellDescriptorFactory {
+    // Encryption at rest will trigger its own variant of AppLock.
+    var isAppLockAvailable: Bool {
+        return !SecurityFlags.forceEncryptionAtRest.isEnabled && settingsPropertyFactory.isAppLockAvailable
     }
 }

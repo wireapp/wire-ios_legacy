@@ -17,13 +17,12 @@
 //
 
 import UIKit
-import Cartography
 import Ziphy
 import FLAnimatedImage
 import WireCommonComponents
 import WireDataModel
 
-protocol GiphySearchViewControllerDelegate: class {
+protocol GiphySearchViewControllerDelegate: AnyObject {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
@@ -61,6 +60,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         performSearch()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,7 +69,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         cleanUpPendingTask()
         cleanUpPendingTimer()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -97,12 +97,12 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     private func setupNoResultLabel() {
         extendedLayoutIncludesOpaqueBars = true
-        
+
         noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
     }
-    
+
     private func setupCollectionView() {
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
@@ -114,7 +114,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
                                                    bottom: 0,
                                                    right: 0)
     }
-    
+
     private func setupNavigationItem() {
         searchBar.text = searchTerm
         searchBar.delegate = self
@@ -133,17 +133,19 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     }
 
     private func createConstraints() {
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+        noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+          noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
-    
+
     private func applyStyle() {
         collectionView?.backgroundColor = UIColor.from(scheme: .background)
         noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
         noResultsLabel.font = UIFont.smallLightFont
     }
-    
+
     // MARK: - Presentation
 
     func wrapInsideNavigationController() -> UINavigationController {
@@ -161,11 +163,15 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         navigationController.navigationBar.barTintColor = UIColor.from(scheme: .background)
         navigationController.navigationBar.isTranslucent = false
 
+        if #available(iOS 15, *) {
+            navigationController.view.backgroundColor = UIColor.from(scheme: .barBackground, variant: ColorScheme.default.variant)
+        }
+
         return navigationController
     }
 
     @objc func onDismiss() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Collection View
@@ -210,7 +216,6 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         guard let representation = ziph.previewImage else {
             return .zero
         }
-
 
         return CGSize(width: representation.width.rawValue, height: representation.height.rawValue)
     }

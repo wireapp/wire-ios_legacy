@@ -16,63 +16,59 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 import UIKit
 
 final class RotationAwareNavigationController: UINavigationController, PopoverPresenter, SpinnerCapable {
 
-    //MARK: SpinnerCapable
+    // MARK: SpinnerCapable
     var dismissSpinner: SpinnerCompletion?
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
-    weak var popoverPointToView: UIView?    
-    
-    override var shouldAutorotate : Bool {
+    weak var popoverPointToView: UIView?
+
+    override var shouldAutorotate: Bool {
         if let topController = self.viewControllers.last {
             return topController.shouldAutorotate
-        }
-        else {
+        } else {
             return super.shouldAutorotate
         }
     }
-    
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if let topController = self.viewControllers.last {
             return topController.supportedInterfaceOrientations
-        }
-        else {
+        } else {
             return super.supportedInterfaceOrientations
         }
     }
-    
-    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         if let topController = self.viewControllers.last {
             return topController.preferredInterfaceOrientationForPresentation
-        }
-        else {
+        } else {
             return super.preferredInterfaceOrientationForPresentation
         }
     }
-    
+
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         viewControllers.forEach { $0.hideDefaultButtonTitle() }
-        
+
         super.setViewControllers(viewControllers, animated: animated)
     }
-    
+
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hideDefaultButtonTitle()
-        
+
         super.pushViewController(viewController, animated: animated)
     }
-    
+
     // MARK: - status bar
     override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
     override var childForStatusBarHidden: UIViewController? {
         return topViewController
     }

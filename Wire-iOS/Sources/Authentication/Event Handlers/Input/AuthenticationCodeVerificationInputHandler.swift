@@ -40,5 +40,5 @@ class AuthenticationCodeVerificationInputHandler: AuthenticationEventHandler {
             return nil
         }
     }
-    
+
 }

@@ -23,7 +23,7 @@ import UIKit
  */
 
 final class UserPropertyCell: SeparatorTableViewCell {
-    
+
     private let contentStack = UIStackView()
 
     private let propertyNameLabel: UILabel = {
@@ -34,7 +34,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         label.font = .smallRegularFont
         return label
     }()
-    
+
     private let propertyValueLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -43,9 +43,9 @@ final class UserPropertyCell: SeparatorTableViewCell {
         label.font = .normalLightFont
         return label
     }()
-    
+
     // MARK: - Contents
-    
+
     /// The name of the user property.
     var propertyName: String? {
         get {
@@ -57,7 +57,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
             accessibilityLabel = newValue
         }
     }
-    
+
     /// The value of the user property.
     var propertyValue: String? {
         get {
@@ -68,7 +68,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
             accessibilityValue = newValue
         }
     }
-    
+
     // MARK: - Initialization
 
     override func setUp() {
@@ -76,7 +76,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         configureSubviews()
         configureConstraints()
     }
-        
+
     private func configureSubviews() {
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
@@ -85,14 +85,14 @@ final class UserPropertyCell: SeparatorTableViewCell {
         contentStack.distribution = .equalSpacing
         contentStack.alignment = .leading
         contentView.addSubview(contentStack)
-        
+
         applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
     }
-    
+
     private func configureConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             contentStack.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -100,14 +100,14 @@ final class UserPropertyCell: SeparatorTableViewCell {
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
-    
+
     // MARK: - Configuration
-    
+
     override func applyColorScheme(_ variant: ColorSchemeVariant) {
         super.applyColorScheme(variant)
         propertyNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
         propertyValueLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         backgroundColor = UIColor.from(scheme: .background, variant: variant)
     }
-    
+
 }

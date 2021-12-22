@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCase {
+final class ConversationLinkAttachmentMessageCellTests: XCTestCase {
 
     var mockThumbnail: MockImageResource!
 

@@ -95,6 +95,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         userObserverToken = nil
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -208,7 +209,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
-        if size == .big{
+        if size == .big {
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
                 updateUserImage()
             }
@@ -232,8 +233,8 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
         let defaultAvatar = Avatar.text(initials.localizedUppercase)
         setAvatar(defaultAvatar, user: user, animated: false)
-
-        if let userSession = userSession as? ZMUserSession {
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = userSession as? ZMUserSession {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 

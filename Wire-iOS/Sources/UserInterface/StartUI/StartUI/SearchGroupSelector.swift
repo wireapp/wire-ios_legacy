@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import UIKit
 
 final class SearchGroupSelector: UIView, TabBarDelegate {
-    var onGroupSelected: ((SearchGroup)->())? = nil
+
+    var onGroupSelected: ((SearchGroup) -> Void)?
 
     var group: SearchGroup = .people {
         didSet {
@@ -37,7 +37,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
     private let groups: [SearchGroup]
 
     // MARK: - Initialization
-    
+
     init(style: ColorSchemeVariant) {
         groups = SearchGroup.all
         self.style = style
@@ -52,7 +52,8 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
         configureViews()
         configureConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

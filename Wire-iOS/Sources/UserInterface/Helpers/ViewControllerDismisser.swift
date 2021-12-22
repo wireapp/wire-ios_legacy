@@ -18,6 +18,6 @@
 
 import UIKit
 
-protocol ViewControllerDismisser: class {
+protocol ViewControllerDismisser: AnyObject {
     func dismiss(viewController: UIViewController, completion: Completion?)
 }

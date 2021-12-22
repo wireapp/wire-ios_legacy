@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,13 +18,10 @@
 
 import UIKit
 import WireCommonComponents
+import WireSyncEngine
 
 final class WireApplication: UIApplication {
-    
-    var shouldRegisterUserNotificationSettings: Bool {
-        return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
-    }
-    
+
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         DebugAlert.showSendLogsMessage(
@@ -32,3 +29,9 @@ final class WireApplication: UIApplication {
         )
     }
 }
+
+//extension WireApplication: NotificationSettingsRegistrable {
+//    var shouldRegisterUserNotificationSettings: Bool {
+//        return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
+//    }
+//}

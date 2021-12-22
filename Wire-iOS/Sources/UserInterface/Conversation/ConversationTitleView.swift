@@ -16,64 +16,72 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import WireCommonComponents
 import WireDataModel
 
 final class ConversationTitleView: TitleView {
-    var conversation: ZMConversation
+    var conversation: ConversationLike
     var interactive: Bool = true
-    
-    @objc init(conversation: ZMConversation, interactive: Bool = true) {
+
+    init(conversation: ConversationLike, interactive: Bool = true) {
         self.conversation = conversation
         self.interactive = interactive
         super.init()
         configure()
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc func configure() {
+
+    func configure() {
         titleColor = UIColor.from(scheme: .textForeground)
         titleColorSelected = UIColor.from(scheme: .textDimmed)
         titleFont = FontSpec(.medium, .semibold).font!
         accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
-        
+
         var attachments: [NSTextAttachment] = []
-        
+
         if conversation.isUnderLegalHold {
             attachments.append(.legalHold())
         }
-        
+
         if conversation.securityLevel == .secure {
             attachments.append(.verifiedShield())
         }
-        
+
+        var subtitle: String?
+        if conversation.conversationType == .oneOnOne,
+           let user = conversation.connectedUserType,
+           user.isFederated {
+            subtitle = user.handleDisplayString(withDomain: true)
+        }
+
         super.configure(icons: attachments,
                         title: conversation.displayName.localizedUppercase,
+                        subtitle: subtitle,
                         interactive: self.interactive && conversation.relatedConnectionState != .sent)
-        
+
         var components: [String] = []
         components.append(conversation.displayName.localizedUppercase)
-        
+
         if conversation.securityLevel == .secure {
             components.append("conversation.voiceover.verified".localized)
         }
-        
+
         if conversation.isUnderLegalHold {
             components.append("conversation.voiceover.legalhold".localized)
         }
-        
+
         if !UIApplication.isLeftToRightLayout {
             components.reverse()
         }
-        
+
         self.accessibilityLabel = components.joined(separator: ", ")
     }
-    
+
 }
 
 extension NSTextAttachment {
@@ -86,7 +94,7 @@ extension NSTextAttachment {
         attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
         return attachment
     }
-    
+
     static func legalHold() -> NSTextAttachment {
         let attachment = NSTextAttachment()
         let legalHold = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: .vividRed)
@@ -97,4 +105,3 @@ extension NSTextAttachment {
         return attachment
     }
 }
-

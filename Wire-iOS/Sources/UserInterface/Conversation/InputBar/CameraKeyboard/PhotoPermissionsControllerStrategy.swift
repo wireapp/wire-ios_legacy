@@ -19,7 +19,6 @@
 import Foundation
 import Photos
 
-
 final class PhotoPermissionsControllerStrategy: PhotoPermissionsController {
 
     // `unauthorized` state happens the first time before opening the keyboard,

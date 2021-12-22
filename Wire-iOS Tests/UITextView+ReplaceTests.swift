@@ -22,7 +22,7 @@ import XCTest
 class UITextView_ReplaceTests: XCTestCase {
 
     var sut: UITextView!
-    
+
     override func setUp() {
         super.setUp()
         sut = UITextView()
@@ -32,45 +32,45 @@ class UITextView_ReplaceTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testRangeIsOutsideTheReplacementString() {
         // GIVEN
         let text = "12345678"
         sut.text = text
         let attributedText = sut.attributedText
         let range = NSRange(location: 0, length: 24)
-        
+
         // WHEN
         sut.replace(range, withAttributedText: attributedText!)
-        
+
         // THEN
         XCTAssertEqual(sut.text, text)
     }
-    
+
     func testRangeIsInsideTheReplacementString() {
         // GIVEN
         let text = "12345678🐶"
         sut.text = text
         let attributedText = sut.attributedText
         let range = NSRange(location: 0, length: 4)
-        
+
         // WHEN
         sut.replace(range, withAttributedText: attributedText!)
-        
+
         // THEN
         XCTAssertEqual(sut.text, "12345678🐶5678🐶")
     }
-    
+
     func testGivenRangeIsOutsideTheWholeRange() {
         // GIVEN
         let text = "12345678"
         sut.text = text
         let attributedText = sut.attributedText
         let range = NSRange(location: 4, length: 6)
-        
+
         // WHEN
         sut.replace(range, withAttributedText: attributedText!)
-        
+
         // THEN
         XCTAssertEqual(sut.text, text)
     }

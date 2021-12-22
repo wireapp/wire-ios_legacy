@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Cho phép Wire truy cập vào danh bạ của bạn để kết nối bạn với những người khác. Chúng tôi ẩn toàn bộ thông tin trước khi tải nó lên máy chủ của chúng tôi và không chia sẽ nó với bất kỳ ai khác.";
+"NSMicrophoneUsageDescription" = "Cho phép Wire truy cập vào míc của bạn thế nên bạn có thể trò chuyện với mọi người và gửi tin nhắn thoại.";
+"NSLocationWhenInUseUsageDescription" = "Cho phép Wire truy cập vào vị trí của bạn để bạn có thể gửi vị trí của mình đến ai đó.";
+"NSCameraUsageDescription" = "Cho phép Wire truy cập vào máy ảnh của bạn để bạn có thể thực hiện gọi video và gửi ảnh.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Cho phép Wire lưu các hình ảnh bạn chụp vào thư viện.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Cho phép Wire truy cập vào ảnh đã lưu trong thư viện hình ảnh.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Để xác thực trong ứng dụng bạn cần cho phép Wire truy cập vào tính năng Face ID.";

@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
+"peoplepicker.header.federation" = "与其他域连接";
 
 "peoplepicker.group.title.singular" = "添加参与者";
 "peoplepicker.group.title.plural" = "添加参与者(%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "找不到联络人。";
 
-"peoplepicker.no_matching_results_title" = "没有结果。";
-"peoplepicker.no_matching_results_message" = "输入完整的电邮箱地址。";
 "peoplepicker.no_search_results" = "没有匹配结果。请尝试输入不同的名称。";
 
 "peoplepicker.no_matching_results.action.send_invite" = "发送邀请";
 "peoplepicker.no_matching_results.action.share_contacts" = "共享联络人";
+"peoplepicker.no_matching_results.action.learn_more" = "更多信息";
+"peoplepicker.no_matching_results.action.manage_services" = "管理服务";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "请输入有效的电邮箱地址";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
-"peoplepicker.no_matching_results_services_title" = "服务是可以为您的工作流程改善提供帮助。要启用服务，请联系您的管理员。";
-"peoplepicker.no_matching_results_services_admin_title" = "服务是可以为您的工作流程改善提供帮助。";
-"peoplepicker.no_matching_results_services_manage_services_title" = "管理服务";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "请输入完整的电邮箱地址或";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "共享联络人";
-
-"peoplepicker.share_contacts.no_results.title" = "按名称或电邮箱地址搜索";
+"peoplepicker.no_matching_results.message.users" = "通过名字或 @username 在Wire查找用户";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "用 @username@domainname 在 Wire 查找用户\n\n通过@username@domainname 在另一个域查找人员";
+"peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
+"peoplepicker.no_matching_results.message.services" = "没有结果。";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
 "peoplepicker.send_invitation.dialog.title" = "邀请已送出";
 "peoplepicker.send_invitation.dialog.message" = "邀请两周内有效。如果过期，请发送新的邀请。";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "创建访客聊天室";
 "peoplepicker.quick-action.admin-services" = "管理服务";
 
-"add_participants.all_contacts_added" = "所有用户已加入群聊";
+"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
 
 "add_participants.alert.title" = "通话人数已达上限";
 "add_participants.alert.message.new_conversation" = "最多 %d 人可以加入同一个群聊。";
@@ -282,14 +279,14 @@
 "conversation.invite_more_people.title" = "请大家告诉大家！";
 "conversation.invite_more_people.description" = "新增好友到此聊天室";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
-"conversation.invite_more_people.button_title" = "新增好友";
+"conversation.invite_more_people.button_title" = "添加好友";
 
 // Conversation names
 "conversation.displayname.emptygroup" = "空聊天室";
 
-"conversation.input_bar.verified" = "验证";
+"conversation.input_bar.verified" = "已验证";
 "conversation.input_bar.placeholder" = "键入一条消息";
-"conversation.input_bar.placeholder_ephemeral" = "阅后即焚";
+"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑动发送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "点击发送";
@@ -310,9 +307,11 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.newline" = "插入换行符";
+"conversation.input_bar.shortcut.newline" = "插入断行";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
+"conversation.input_bar.shortcut.choose_previous_mention" = "选择前面的引用";
+"conversation.input_bar.shortcut.choose_next_mention" = "选择下一个引用";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "消息已删除。";
 
-"conversation.guests_present" = "访客在对话中";
-"conversation.services_present" = "服务已启动";
-"conversation.guests_services_present" = "包含外部联系人和服务";
+// Conversation banner
+"conversation.banner.guests" = "**Guests**";
+"conversation.banner.services" = "**Services**";
+"conversation.banner.externals" = "**Externals**";
+"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.are_present" = "%@ are present";
+"conversation.banner.are_active" = "%@ are active";
+"conversation.banner.separator" = " and ";
+
 "conversation.action.search" = "搜索";
 
 // Reply message preview
@@ -360,7 +365,7 @@
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
 "image.add_sketch" = "添加一个手绘图";
-"image.add_emoji" = "Add an emoji";
+"image.add_emoji" = "添加表情符号";
 "image.edit_image" = "编辑图像";
 
 // Camera access
@@ -391,7 +396,7 @@
 
 // Ephemeral message
 "input.ephemeral.timeout.none" = "关闭";
-"input.ephemeral.title" = "设置阅后即焚的显示时间";
+"input.ephemeral.title" = "设置消息消失的时间";
 
 // System messages
 "content.system.you_nominative" = "你";
@@ -429,7 +434,7 @@
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud 播放列表预览";
 
 // Digital signature
-"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.error" = "不幸的是，您的数字签署失败。";
 "digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
 "digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
 "digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
@@ -439,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ 和 %@ 开始了聊天";
 "content.system.conversation.other.added" = "%@加了%@";
 "content.system.conversation.other.removed" = "%@移除了%@";
+"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
+"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.other.left" = "%@ 离开了";
 
 "content.system.conversation.you.started" = "%@和%@开始了聊天";
 "content.system.conversation.you.added" = "%@加了%@";
 "content.system.conversation.you.removed" = "%@移除了%@";
+"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
 "content.system.conversation.you.left" = "%@ 离开了";
 "content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
+"content.system.conversation.guest.you_joined" = "您已加入";
 
 "content.system.conversation.invite.title" = "服务和团队外的人员可以加入此对话。";
 "content.system.conversation.invite.button" = "邀请联系人";
@@ -469,19 +478,21 @@
 "content.system.you_wanted_to_talk" = "您曾打电话";
 "content.system.ephemeral_time_remaining" = "还余%@";
 
+"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+
 "content.system.you_started" = "你";
-"content.system.this_device" = "此设备";
 
 "content.system.call.called" = "%@曾打电话";
 "content.system.call.called-you" = "%@曾打电话";
-"content.system.call.called.you" = "你";
+"content.system.call.called.you" = "您";
 
 "content.system.call.missed-call" = "未接电话";
 "content.system.call.missed-call-you" = "未接电话";
 
 "content.system.call.missed-call.groups" = "从 %@ 的未接来电";
 "content.system.call.missed-call.groups-you" = "从 %2$@ 的未接来电";
-"content.system.call.missed-call.groups.you" = "你";
+"content.system.call.missed-call.groups.you" = "您";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
@@ -517,33 +528,32 @@
 
 //
 
-"content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
+"content.system.reactivated_device" = "You started using [this device](%@) again. Messages sent in the meantime will not appear here.";
 
-"content.system.new_device" = "一个新设备";
-"content.system.started_using" = "开始使用";
 "content.system.is_verified" = "所有的指纹完成验证";
 
 "content.system.new_users" = "新用户加入";
 "content.system.verify_devices" = "验证设备";
 
-"content.system.unverified" = "%@ 未经证实 %@ 之一"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "您的设备";
-"content.system.other_devices" = "%@ 的设备";
+"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "你有一段沒有使用此设备, 一些信息可能不会在这里出现";
 "content.system.missing_messages.subtitle_start" = "同时，";
 
-"content.system.cannot_decrypt" = "来至 %@ 的消息未被接收。";
+"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.reset_session" = "修复未来的消息";
+"content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "你";
-"content.system.cannot_decrypt.why_part" = "为什么呢？";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
 
-"content.system.cannot_decrypt.identity" = "%@ 设备标识改变。未送达的信息。";
-"content.system.cannot_decrypt.identity.you_part" = "你";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "了解更多信息";
-"content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
+"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
 
 "content.system.unknown_message.body" = "此消息无法显示，您可能在使用旧版本Wire。";
 
@@ -571,7 +581,7 @@
 "content.message.go_to_conversation" = "显示";
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
-"content.message.sign" = "Sign";
+"content.message.sign" = "签署";
 "content.message.copy" = "复制";
 "content.message.download" = "下载";
 "content.message.details" = "详细信息";
@@ -611,8 +621,12 @@
 
 "connection_request_pending_title" = "好友请求";
 "connection_request.send_button_title" = "新增好友";
+"inbox.title" = "Connection Requests";
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
+"error.connection.title" = "错误";
+"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.generic_error" = "出了点问题，请再试一次";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
@@ -637,9 +651,9 @@
 "voice.accept_button.title" = "接听";
 "voice.decline_button.title" = "拒绝";
 "voice.hang_up_button.title" = "结束通话";
-"voice.mute_button.title" = "静音";
-"voice.video_button.title" = "视频";
-"voice.flip_video_button.title" = "翻转";
+"voice.mute_button.title" = "麦克风";
+"voice.video_button.title" = "相机";
+"voice.flip_video_button.title" = "切换相机";
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
@@ -669,13 +683,22 @@
 "call.status.reconnecting" = "重连中...";
 "call.status.terminating" = "正在挂断...";
 "call.status.constant_bitrate" = "固定码率";
-"call.status.variable_bitrate" = "Variable Bit Rate";
+"call.status.variable_bitrate" = "可变比特率";
 
-"call.participants.show_all" = "全部显示 (%@)";
+"call.participants.show_all" = "参与者 (%d)";
 "call.participants.list.title" = "参与者";
 
-"call.video.paused" = "视频已暂停";
+"call.overlay.switch_to.speakers" = "发言者";
+"call.overlay.switch_to.all" = "所有人";
 
+"call.grid.no_active_speakers" = "No active video speakers...";
+
+"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
+"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.go_back" = "Double tap to go back";
+"call.grid.hints.zoom" = "Pinch to zoom";
+
+"call.video.paused" = "视频已暂停";
 "call.video.too_many.alert.title" = "超出群组通话人数";
 "call.video.too_many.alert.message" = "视频通话群不能超过4个人";
 
@@ -684,6 +707,11 @@
 "call.degraded.alert.message.user" = "%@ 开始使用新的设备。";
 "call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
+
+"call.degraded.ended.alert.title" = "通话结束";
+"call.degraded.ended.alert.message.self" = "The call was disconnected because you started using a new device.";
+"call.degraded.ended.alert.message.user" = "The call was disconnected because %@ is no longer a verified contact.";
+"call.degraded.ended.alert.message.unknown" = "The call was disconnected because someone is no longer a verified contact.";
 
 "call.alert.ongoing.alert_title" = "这将结束您的其他通话。";
 
@@ -700,7 +728,7 @@
 "call.announcement.incoming" = "收到来自%@的呼叫";
 "call.actions.label.toggle_mute_on" = "静音";
 "call.actions.label.toggle_mute_off" = "关闭静音";
-"call.actions.label.flip_camera" = "切换摄像头";
+"call.actions.label.flip_camera" = "切换相机";
 "call.actions.label.toggle_speaker_on" = "开启扬声器";
 "call.actions.label.toggle_speaker_off" = "禁用扬声器";
 "call.actions.label.accept_call" = "接受呼叫";
@@ -727,7 +755,7 @@
 "participants.section.services" = "服务 (%d)";
 "participants.section.settings" = "选项";
 "participants.footer.add_title" = "添加参与者";
-"participants.section.name.footer" = "一个群组最多%1$d个人，您最多可与%2$d个人同时视频通话。";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation.";
 "participants.section.admins.footer" = "没有管理员。";
 "participants.section.members.footer" = "暂时还没有成员";
 
@@ -856,6 +884,8 @@
 "profile.details.guest" = "游客";
 "profile.details.group_admin" = "群组管理员";
 "profile.details.partner" = "外部合作者";
+"profile.details.federated" = "联邦";
+"profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "用户名";
 "profile_view.accessibility.name" = "昵称";
@@ -893,7 +923,7 @@
 "group_details.guest_options_cell.title" = "访客选项";
 "group_details.guest_options_cell.enabled" = "开启";
 "group_details.guest_options_cell.disabled" = "关闭";
-"group_details.timeout_options_cell.title" = "阅后即焚";
+"group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到所有的通知(包括音频和视频通话)，或者只有当有人提到您或回复您的消息时才收到通知。";
 "group_details.receipt_options_cell.title" = "已读回执";
@@ -907,8 +937,8 @@
 
 "legalhold.participants.section.title" = "合法保留对象";
 "legalhold.header.title" = "证据保全";
-"legalhold.header.other_description" = "此对话中至少有一个人已激活证据保全。\n所有消息将被保存，以便将来访问，包括被编辑、已删除和阅后即焚消息。";
-"legalhold.header.self_description" = "您的帐户已开启证据保全。\n所有消息将被保存，以便用于未来访问，包括被编辑、已删除和阅后即焚消息。\n你的对话方将会被提醒。";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and self-deleting messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "证据保全详情";
 
 
@@ -983,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "电话";
 "self.settings.account_section.handle.title" = "用户名";
 "self.settings.account_section.add_handle.title" = "添加用户名";
+"self.settings.account_section.team.title" = "团队";
+"self.settings.account_section.domain.title" = "域";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息查找到您。";
 "self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";
@@ -998,6 +1030,8 @@
 "self.settings.privacy_section_group.title" = "隐私";
 "self.settings.enable_read_receipts.title" = "发送已读回执";
 "self.settings.privacy_section_group.subtitle" = "关闭后，你将无法查看他人的已读回执。\n该设定对群组聊天无效。";
+
+"self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
@@ -1024,8 +1058,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
-"self.settings.privacy_analytics.title" = "发送匿名数据";
-"self.settings.privacy_analytics_menu.description.title" = "发送匿名使用纪录和崩溃报告以改善Wire。";
+
+// Crash
+"self.settings.privacy_crash.title" = "发送匿名故障数据";
+"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Send anonymous usage data";
+"self.settings.privacy_analytics_menu.description.title" = "Usage data allows Wire to understand how the app is being used and how it can be improved. The data is anonymous and does not include the content of your communications (such as messages, files or calls).";
 
 "self.settings.receiveNews_and_offers.title" = "接收新闻动态";
 "self.settings.receiveNews_and_offers.description.title" = "通过邮件接收来自Wire的新闻动态和产品更新。";
@@ -1094,7 +1134,7 @@
 "self.settings.callkit.description" = "在锁屏界面与通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将同步到Apple服务器。";
 
 "self.settings.vbr.title" = "可变码率编码";
-"self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
+"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 通话";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 信息";
@@ -1149,17 +1189,12 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用触摸ID解锁或输入您的密码。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID或使用密码解锁。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "使用密码解锁";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "If forgotten, your passcode can not be recovered.";
 
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "用您的密码解锁。";
 "self.settings.privacy_security.lock_password.description.wrong_password" = "密码错误，请重试。";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "密码错误，如果您最近更改过密码，连接到网路并重试。";
-
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "使用Face ID或密码解锁Wire";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "通过Touch ID或Passcode解锁";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "使用密码解锁Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "要解锁Wire，请在设置中选择打开密码";
-"self.settings.privacy_security.lock_cancelled.action" = "解锁";
 
 "self.settings.privacy_security.disable_link_previews.title" = "创建链接预览";
 "self.settings.privacy_security.disable_link_previews.footer" = "仍会为其他人的链接显示预览";
@@ -1170,13 +1205,12 @@
 "self.settings.privacy.clear_history.subtitle" = "这将永久删除您的所有对话内容。";
 
 "self.settings.advanced.title" = "高级";
-"self.settings.advanced.conference_calling.title" = "Conference Calls";
-"self.settings.advanced.conference_calling.subtitle" = "When this is on, audio and video conference calling is enabled, which allows a higher number of participants.";
-"self.settings.advanced.conference_calling.toggle" = "Beta Program";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
 "self.settings.advanced.debugging_tools.title" = "调试工具";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一个未读对话";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Show my user ID";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "输入除错指令";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助于Wire诊断通话问题，并改善整个应用体验。";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
@@ -1247,8 +1281,10 @@
 // Landing screen
 
 "landing.header" = "Wire。添加您的帐号。";
-"landing.welcome_message" = "欢迎来到 %@";
-"landing.create_account.title" = "创建帐户";
+"landing.welcome_message" = "Trying to create a Pro or Enterprise account for your business or organization?";
+"landing.welcome_submessage" = "Unfortunately, that's not possible in the app - once you have created your team, you can log in here";
+"landing.create_account.title" = "Create a Wire personal account";
+"landing.create_account.infotitle" = "Chat with friends and family?";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "专业版";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
@@ -1547,7 +1583,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了点问题，请再试一次";
 "error.user.needs_credentials" = "用户名或密码错误，请重试。";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "此电子邮件需要团队邀请。请联系您的组织IT管理员收到邀请。";
 "error.user.invalid_credentials" = "请检查您提供的资料然后重试。";
 "error.user.account_pending_activation" = "您的账号尚未激活。";
 "error.user.network_error" = "您的网络好像有些问题，请稍候再试。";
@@ -1585,6 +1621,9 @@
 "error.conversation.cannot_remove" = "移除参与者失败";
 "error.conversation.too_many_members" = "对话人数已达上限";
 "error.conversation.offline" = "您的互联网连线似乎出现了问题。请确保您有网路连线。";
+"error.conversation.missing_legalhold_consent" = "Due to legal hold, only team members can be added to this conversation";
+"error.message.send.missing_legalhold_consent" = "You cannot send this message because you have at least one outdated device that does not support legal hold. Please update all your devices or remove them from the app settings";
+"error.message.send.title" = "Messages cannot be sent";
 
 "sketchpad.initial_hint" = "点击颜色更换画笔大小";
 
@@ -1597,14 +1636,55 @@
 "push.notification.new_message" = "新信息";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "必要更新";
 "force.update.message" = "您错过了些新功能。快到App Store中下载最新版本的Wire呀。";
 "force.update.ok_button" = "到App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "There has been a change in Wire";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
+"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
+"feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Enterprise plan";
+"feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.members.alert.message" = "To start a conference call, your team needs to upgrade to the Enterprise plan.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Feature unavailable";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "The option to initiate a conference call is only available in the paid version of Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "检测到越狱";
 "jailbrokendevice.alert.message" = "出于安全原因，Wire不能在此设备上使用，现有的所有Wire数据已被擦除。";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "储存空间不足";
+"databaseloadingfailure.alert.message" = "The database could not be loaded due to insufficient storage. Review your device storage usage and try again.";
+"databaseloadingfailure.alert.settings" = "打开设置";
+"databaseloadingfailure.alert.delete_database" = "删除数据库";
+"databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
+"databaseloadingfailure.alert.delete_database.continue" = "继续";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 来源 giphy.com";
@@ -1621,7 +1701,7 @@
 "invite_banner.invite_button_title" = "邀请更多人";
 
 // Collections
-"collections.section.images.title" = "图片";
+"collections.section.images.title" = "Images";
 "collections.section.files.title" = "文件";
 "collections.section.videos.title" = "视频";
 "collections.section.links.title" = "链接";
@@ -1700,10 +1780,17 @@
 "url_action.switch_backend.error.invalid_backend.title" = "服务器无响应";
 "url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "加入";
+
+"url_action.join_conversation.error.title" = "You could not join the conversation";
+"url_action.join_conversation.error.converation_is_full" = "对话已满。";
+"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire无法找到此人。";
-"url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
+"url_action.invalid_user.message" = "您可能没有访问该帐号的权限或该帐号不再存在。";
 
 "url_action.invalid_conversation.title" = "Wire不能打开此对话。";
 "url_action.invalid_conversation.message" = "You may not have permission with this account or the person may not be on Wire.";
@@ -1755,18 +1842,21 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "待同意。";
 "legalhold_request.alert.title" = "已请求证据保全";
-"legalhold_request.alert.detail" = "所有未来的消息都将由设备记录，指纹：\n\n%@\n\n，这包括在所有对话中被编辑、已和阅后即焚消息。";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and self-deleting messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "请输入您的密码以确认。";
 "legalhold_request.alert.error_wrong_password" = "密码错误";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "已激活证据保全";
 "legalhold_active.alert.learn_more" = "了解更多信息";
-"legalhold_active.alert.message" = "您的帐户已开启证据保全。\n所有消息将被保存，以便用于未来访问，包括被编辑、已删除和阅后即焚消息。\n你的对话方将会被提醒。";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and self-deleting messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "会话已过期";
 "account_deleted_session_expired_alert.message" = "应用程序长期未与服务器通信，或您的会话已被拒绝。";
+
+"account_deleted_missing_passcode_alert.title" = "No device passcode";
+"account_deleted_missing_passcode_alert.message" = "In order to use Wire, please set a passcode in your device settings.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "未选择";
@@ -1774,3 +1864,70 @@
 "button_message_cell.state.confirmed" = "已确认";
 
 "button_message_cell.generic_error" = "您的答案无法发送，请重试。";
+
+// Custom app lock
+
+"passcode.hint_label" = "密码锁";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Create a passcode";
+"create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
+"create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
+"create_passcode.create_button.title" = "创建密码";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "At least eight characters long";
+"create_passcode.validation.no_lowercase_char" = "小写字母";
+"create_passcode.validation.no_uppercase_char" = "An uppercase letter";
+"create_passcode.validation.no_number" = "一个数字";
+"create_passcode.validation.no_special_char" = "特殊字符";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "输入您的锁定码";
+"unlock.title_label" = "Enter passcode to unlock Wire";
+"unlock.wipe_button" = "Access as new device";
+"unlock.error_label" = "密码错误";
+"unlock.submit_button.title" = "解锁";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
+"warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
+"warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Access as new device";
+"wipe_database.info_label" = "此设备上存储的数据只能用您的密码访问。\n\n如果您忘记了您的密码，您可以删除数据库作为新设备重新登录。\n\n删除数据库， ";
+"wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
+
+"wipe_database.button.title" = "I want to delete the database";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Confirm database deletion";
+"wipe_database.alert.message" = "Type 'Delete' to verify you want to delete all data in this device.";
+"wipe_database.alert.placeholder" = "输入 'Delete'";
+"wipe_database.alert.confirm" = "删除";
+"wipe_database.alert.confirm_input" = "删除";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "数据库已删除";
+"wipe_database_completion.subtitle" = "您的数据和消息已被删除。您现在可以作为一个新的设备重新登录。";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "使用Face ID或密码解锁Wire";
+"appLockModule.message.touchID" = "通过Touch ID或Passcode解锁";
+"appLockModule.message.passcode" = "使用密码解锁Wire";
+"appLockModule.message.passcodeUnavailable" = "要解锁Wire，请在设置中选择打开密码";
+"appLockModule.unlockButton.title" = "解锁";
+"appLockModule.goToSettingsButton.title" = "前往设置";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
+"keyboardshortcut.conversationDetail" = "Conversation Details...";
+"keyboardshortcut.searchInConversation" = "Search in Conversation...";
+"keyboardshortcut.openPeople" = "联系人";

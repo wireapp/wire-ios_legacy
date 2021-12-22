@@ -5,6 +5,12 @@ platform :ios do
     desc "Fetch dependencies"
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
+        # Saving `Carthage bootstrap` running time by reusing the Cathage artifacts.
+        # When the Cathage framworks is not pre-built(e.g. in feature branch), this option can save the time of building.
+        # When cache_carthage = YES, 
+        # copy Carthage folder form ~/tmp/cache/Carthage before running setup.sh and 
+        # copy it back after at the end of this lane
+        cache_carthage = options[:cache_carthage]
 
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
@@ -21,12 +27,10 @@ platform :ios do
                 override_folder = "CI configuration"
             end
 
-
             config_repo = options[:config_repo]
             if config_repo.nil? 
                 config_repo = "https://github.com/wireapp/wire-ios-build-configuration.git"
             end
-
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
@@ -36,12 +40,21 @@ platform :ios do
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
+
+            if cache_carthage == "Yes"
+                sh "cd .. && cp -R ~/tmp/cache/Carthage ./Carthage || echo ⚠️ Carthage cache not exist, skip copying"
+            end
+
             sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o \'wire-ios-build-assets/#{override_folder}/#{build_type}\'"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
+
+            if cache_carthage == "Yes"
+                sh "rm -rf ~/tmp/cache/Carthage"
+                sh "cd .. && cp -R ./Carthage ~/tmp/cache/Carthage"
+            end
         end
     end
-
 
     desc "Build for testing"
     lane :build do |options|
@@ -71,14 +84,16 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        ios_version = "13.4.1"
+        ios_version = "15.0"
         if !xcode_version.nil? 
             xcversion(version: xcode_version)
 
-            if xcode_version == "11.4"
-                ios_version = "13.4"
-            elsif xcode_version == "11.4.1"
-                ios_version = "13.4.1"
+            if xcode_version == "13.0"
+                ios_version = "15.0"
+            elsif xcode_version == "13.1"
+                 ios_version = "15.0"
+            elsif xcode_version == "12.4"
+                ios_version = "14.4"
             end
         end
 
@@ -136,6 +151,32 @@ platform :ios do
         end
     end
 
+    desc "Build for release to AppStore without symbols"
+    lane :build_for_release_without_symbols do |options|
+        xcode_version = options[:xcode_version]
+
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
+        end
+
+        build = Build.new(options: options)
+
+        build_app(
+            scheme: "Wire-iOS",
+            configuration: build.configuration,
+            export_method: build.export_method,
+            export_options: {"iCloudContainerEnvironment": "Production"},
+            derived_data_path: "DerivedData",
+            archive_path: build.archive_path(with_filename: true),
+            buildlog_path: build.build_path,
+            output_directory: build.artifact_path(with_filename: false),
+            output_name: build.filename,
+            include_bitcode: false,
+            include_symbols: false,
+            xcargs: "BUILD_NUMBER=#{build.build_number}"
+        )
+    end
+
     desc "Upload to AppStore"
     lane :upload_app_store do |options|
         build = Build.new(options: options)
@@ -152,6 +193,7 @@ platform :ios do
             skip_app_version_update: true,
             skip_metadata: true,
             skip_screenshots: true,
+            api_key_path: options[:api_key_path]
         )
     end
 
@@ -190,14 +232,24 @@ platform :ios do
     desc "Upload to S3 (Automation builds)"
     lane :upload_s3 do |options|
         build = Build.new(options: options)
+        s3_subfolder = options[:s3_subfolder]
+
+        if s3_subfolder.nil? 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/"
+            sh "echo upload to s3 default folder "
+        else 
+            s3_path = "s3://#{ENV['S3_BUCKET']}/ios/#{s3_subfolder}/"
+            sh "echo upload to s3 subfolder: #{s3_subfolder}"
+        end
+
+
 
         if build.appstore_build
             sh "cd ../#{build.archive_path(with_filename: false)} && tar -czf #{build.filename}.xcarchive.tgz #{build.filename}.xcarchive"
         end
         
-        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
+        sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ #{s3_path}"
     end
-
 
     desc "Upload for internal use"
     lane :upload_app_center do |options|
@@ -223,6 +275,9 @@ platform :ios do
         end
 
         
+        sh "echo SHA of IPA is:"
+        sh "shasum -a 256 ../#{build.artifact_path(with_filename: true)}.ipa || true"
+
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
@@ -274,7 +329,6 @@ platform :ios do
         end
 
         sh codecov
-
     end
 end
 
@@ -490,5 +544,4 @@ class Build
             "Wire-iOS-Release-Candidate"
         end
     end
-
 end

@@ -28,7 +28,7 @@ final class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         conversation = self.createGroupConversation()
-        conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue.fiveMinutes)
+        conversation.setMessageDestructionTimeoutValue(.fiveMinutes, for: .selfUser)
         sut = EphemeralKeyboardViewController(conversation: conversation)
     }
 
@@ -38,11 +38,10 @@ final class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-
     func testThatItRendersCorrectInitially() {
         verify(view: sut.prepareForSnapshots())
     }
-    
+
     func testThatItRendersCorrectIntially_DarkMode() {
         ColorScheme.default.variant = .dark
         verify(view: sut.prepareForSnapshots())
@@ -55,7 +54,7 @@ fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: 290),
             view.widthAnchor.constraint(equalToConstant: 375)

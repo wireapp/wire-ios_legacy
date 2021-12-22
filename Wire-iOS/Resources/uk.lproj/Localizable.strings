@@ -60,6 +60,7 @@
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
 "peoplepicker.header.directory" = "Додати до контактів";
+"peoplepicker.header.federation" = "З'єднатися з іншим доменом";
 
 "peoplepicker.group.title.singular" = "Додати учасників";
 "peoplepicker.group.title.plural" = "Додати учасників (%d)";
@@ -80,24 +81,20 @@
 
 "peoplepicker.no_contacts_title" = "Контактів немає.";
 
-"peoplepicker.no_matching_results_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_message" = "Введіть адресу електронної пошти.";
 "peoplepicker.no_search_results" = "Немає відповідних результатів. Спробуйте ввести інше ім'я.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Надіслати запрошення";
 "peoplepicker.no_matching_results.action.share_contacts" = "Поділитись контактами";
+"peoplepicker.no_matching_results.action.learn_more" = "Дізнатися більше";
+"peoplepicker.no_matching_results.action.manage_services" = "Керування сервісами";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results_services_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
-"peoplepicker.no_matching_results_services_admin_title" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Керування сервісами";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
-"peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
-/*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
-
-"peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
+"peoplepicker.no_matching_results.message.users" = "Знайти людей в Wire по імені або @ніку";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Знаходьте людей в Wire по імені або @ніку\n\nЗнаходьте  людей з іншого домену,\nвикористовуючи формат @нік@ім'я_домену";
+"peoplepicker.no_matching_results.message.users_all_added" = "Всі вже тут.";
+"peoplepicker.no_matching_results.message.services" = "Нікого не знайдено.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до IT-адміністратора вашої команди.";
 
 "peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
 "peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
@@ -110,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Створити гостьову кімнату";
 "peoplepicker.quick-action.admin-services" = "Керування сервісами";
 
-"add_participants.all_contacts_added" = "Всі вже тут.";
+"peoplepicker.federation.domain_unvailable" = "Федеративний домен наразі не доступний. [Дізнатися більше](%@)";
 
 "add_participants.alert.title" = "Розмова переповнена";
 "add_participants.alert.message.new_conversation" = "До розмови може приєднатися до %d учасників.";
@@ -200,7 +197,7 @@
 "folder.creation.name.placeholder" = "Назва теки";
 
 "folder.picker.title" = "Перемістити до";
-"folder.picker.empty.hint" = "Створити нову папку за допомогою кнопки +";
+"folder.picker.empty.hint" = "Створити нову теку за допомогою кнопки +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -289,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Верифікований";
 "conversation.input_bar.placeholder" = "Напишіть повідомлення";
-"conversation.input_bar.placeholder_ephemeral" = "Тимчасове повідомлення";
+"conversation.input_bar.placeholder_ephemeral" = "Тимчасове повідомленя";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
@@ -313,6 +310,8 @@
 "conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Виберіть попередню згадку";
+"conversation.input_bar.shortcut.choose_next_mention" = "Виберіть наступну згадку";
 
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
@@ -335,9 +334,15 @@
 
 "conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
-"conversation.guests_present" = "Присутні гості";
-"conversation.services_present" = "Сервіси активовані";
-"conversation.guests_services_present" = "Присутні гості та сервіси";
+// Conversation banner
+"conversation.banner.guests" = "**Гості**";
+"conversation.banner.services" = "**Сервіси**";
+"conversation.banner.externals" = "**Зовнішні користувачі**";
+"conversation.banner.remotes" = "**Федеративні користувачі**";
+"conversation.banner.are_present" = "%@ присутні";
+"conversation.banner.are_active" = "%@ активні";
+"conversation.banner.separator" = " та ";
+
 "conversation.action.search" = "Пошук";
 
 // Reply message preview
@@ -439,14 +444,18 @@
 "content.system.conversation.other.started" = "%@ почав(-ла) розмову з %@";
 "content.system.conversation.other.added" = "%@ додав(-ла) %@";
 "content.system.conversation.other.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.other.removed.legalhold" = "%@ був(-ла) видалений(-а) з цієї розмови, тому що правовий режим було активовано.";
+"content.system.conversation.others.removed.legalhold" = "%@ були видалені з цієї розмови, тому що правовий режим було активовано.";
 "content.system.conversation.other.left" = "%@ вийшов(-ла)";
 
 "content.system.conversation.you.started" = "%@ почав(-ла) розмову з %@";
 "content.system.conversation.you.added" = "%@ додав(-ла) %@";
 "content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
+"content.system.conversation.you.removed.legalhold" = "%@ були видалені з цієї розмови, тому що правовий режим було активовано.";
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
+"content.system.conversation.guest.you_joined" = "Ви приєдналися";
 
 "content.system.conversation.invite.title" = "Сервіси та люди поза межами вашої команди можуть приєднатися до цієї розмови.";
 "content.system.conversation.invite.button" = "Запросити людей";
@@ -469,8 +478,10 @@
 "content.system.you_wanted_to_talk" = "Ви дзвонили";
 "content.system.ephemeral_time_remaining" = "%@ вийшов(-ла)";
 
+"content.system.self_user_new_client" = "**Ви** почали використовувати [новий пристрій](%@)";
+"content.system.self_user_new_self_client" = "**Ви** почали використовувати [цей пристрій](%@)";
+
 "content.system.you_started" = "Ви";
-"content.system.this_device" = "цей пристрій";
 
 "content.system.call.called" = "%@ дзвонив(-ла)";
 "content.system.call.called-you" = "%@ дзвонив(-ла)";
@@ -517,33 +528,32 @@
 
 //
 
-"content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
+"content.system.reactivated_device" = "Ви почали використовувати [цей пристрій](%@) знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
-"content.system.new_device" = "новий пристрій";
-"content.system.started_using" = "почали використовувати";
 "content.system.is_verified" = "Всі ідентифікатори були верифіковані";
 
 "content.system.new_users" = "Приєднався новий учасник.";
 "content.system.verify_devices" = "Верифікувати пристрої";
 
-"content.system.unverified" = "%@ скасував(-ла) верифікацію одного з %@"; // example "You unverified one of Jule’s devices"
-"content.system.your_devices" = "ваші пристрої";
-"content.system.other_devices" = "Пристрої, що належать %@";
+"content.system.unverified_self_devices" = "**Ви** скасували верифікацію одного з [ваших пристроїв](%@)";
+"content.system.unverified_other_devices" = "**Ви** скасували верифікацію одного з [пристроїв користувача %1$@](%2$@)";
 
 "content.system.missing_messages.title" = "Ви не користувались цим простроєм протягом певного часу. Деякі повідомлення можуть не відображатися тут.";
 "content.system.missing_messages.subtitle_start" = "Тим часом";
 
-"content.system.cannot_decrypt" = "Повідомлення від %@ не було отримане.";
+"content.system.cannot_decrypt.self" = "Не вдалося розшифрувати **ваше** повідомлення.";
+"content.system.cannot_decrypt.other" = "Не вдалося розшифрувати повідомлення від **%@**.";
+"content.system.cannot_decrypt.reset_session" = "Виправити майбутні повідомлення";
+"content.system.cannot_decrypt.error_details" = "(Виправлена помилка: %d ID: %@)";
 
-"content.system.cannot_decrypt.you_part" = "ви";
-"content.system.cannot_decrypt.why_part" = "Чому?";
+"content.system.cannot_decrypt_resolved.self" = "Тепер ви можете розшифрувати власні повідомлення. Щоб відновити втрачені повідомлення, **вам необхідно надіслати їх повторно**.";
+"content.system.cannot_decrypt_resolved.other" = "Тепер ви можете розшифрувати повідомлення від **%1$@**. Щоб відновити втрачені повідомлення, **попросіть %1$@ надіслати їх повторно.**";
 
-"content.system.cannot_decrypt.identity" = "%@ ідентифікатор пристрою змінився. Повідомлення не доставлено.";
-"content.system.cannot_decrypt.identity.you_part" = "Ваш";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
-"content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
-"content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
-// Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
+"content.system.cannot_decrypt_identity_changed.self" = "Ідентифікатор **вашого** пристрою змінився. Повідомлення не доставлене.";
+"content.system.cannot_decrypt_identity_changed.other" = "Ідентифікатор пристрою, що належить  користувачу **%@**, змінився. Повідомлення не доставлене."; // possessive apostrophe - might differ in different languages
+
+"content.system.session_reset.other" = "**%@ не зміг розшифрувати деякі з ваших повідомлень, але вирішив проблему з їх доставкою**. Це вплинуло на всі розмови, в яких ви обоє берете участь.";
+"content.system.session_reset.self" = "**Вам не вдалося розшифрувати деякі з ваших повідомлень, але ви вирішили проблему з їх доставкою**. Це вплинуло на всі ваші розмови.";
 
 "content.system.unknown_message.body" = "Це повідомлення не може бути показане. Можливо, ваша версія Wire вийшла із вжитку.";
 
@@ -611,8 +621,12 @@
 
 "connection_request_pending_title" = "Запит на додавання до контактів";
 "connection_request.send_button_title" = "Додати";
+"inbox.title" = "Запити на додавання до контактів";
 "inbox.connection_request.connect_button_title" = "Додати до контактів";
 "inbox.connection_request.ignore_button_title" = "Ігнорувати";
+"error.connection.title" = "Помилка";
+"error.connection.missing_legalhold_consent" = "Ви не можете додати цього користувача через правовий захист.";
+"error.connection.generic_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire потребує доступу до ваших фотографій";
@@ -637,9 +651,9 @@
 "voice.accept_button.title" = "Прийняти";
 "voice.decline_button.title" = "Скасувати";
 "voice.hang_up_button.title" = "Завершити";
-"voice.mute_button.title" = "Вимкнути звук";
-"voice.video_button.title" = "Відео";
-"voice.flip_video_button.title" = "Переключити";
+"voice.mute_button.title" = "Мікрофон";
+"voice.video_button.title" = "Камера";
+"voice.flip_video_button.title" = "Змінити камеру";
 "voice.speaker_button.title" = "Гучномовець";
 "voice.cancel_button.title" = "Скасувати";
 "voice.call_button.title" = "Аудіодзвінок";
@@ -671,11 +685,20 @@
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
 "call.status.variable_bitrate" = "Змінний бітрейт";
 
-"call.participants.show_all" = "Показати всіх (%@)";
+"call.participants.show_all" = "Учасники (%d)";
 "call.participants.list.title" = "Учасники";
 
-"call.video.paused" = "Відео призупинено";
+"call.overlay.switch_to.speakers" = "ДИНАМІКИ";
+"call.overlay.switch_to.all" = "ВСІ";
 
+"call.grid.no_active_speakers" = "Активні спікери відсутні...";
+
+"call.grid.hints.fullscreen" = "Торкніться двічі для повноекранного режиму";
+"call.grid.hints.go_back_or_zoom" = "Токніться двічі, щоб повернутись. Розведіть/зведіть пальці для збільшення/зменшення";
+"call.grid.hints.go_back" = "Торкніться двічі, щоб повернутися";
+"call.grid.hints.zoom" = "Зведіть або розведіть пальці для зміни масштабу";
+
+"call.video.paused" = "Відео призупинено";
 "call.video.too_many.alert.title" = "Занадто багато людей для відеодзвінка";
 "call.video.too_many.alert.message" = "Відеодзвінки працюють тільки в групах з 4-ма або менше учасниками.";
 
@@ -684,6 +707,11 @@
 "call.degraded.alert.message.user" = "%@ почав(-ла) використовувати новий пристрій.";
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
 "call.degraded.alert.action.continue" = "Подзвонити все-одно";
+
+"call.degraded.ended.alert.title" = "Дзвінок завершено";
+"call.degraded.ended.alert.message.self" = "Дзвінок було роз'єднано, оскільки ви почали використовувати новий пристрій.";
+"call.degraded.ended.alert.message.user" = "Дзвінок було роз'єднано, оскільки %@ більше не є верифікованим контактом.";
+"call.degraded.ended.alert.message.unknown" = "Дзвінок було роз'єднано, оскільки хтось більше не є верифікованим контактом.";
 
 "call.alert.ongoing.alert_title" = "Це завершить інший активний дзвінок.";
 
@@ -700,7 +728,7 @@
 "call.announcement.incoming" = "Вхідний дзвінок від %@";
 "call.actions.label.toggle_mute_on" = "Вимкнути звук";
 "call.actions.label.toggle_mute_off" = "Увімкнути звук";
-"call.actions.label.flip_camera" = "Переключити камеру";
+"call.actions.label.flip_camera" = "Змінити камеру";
 "call.actions.label.toggle_speaker_on" = "Увімкнути гучномовець";
 "call.actions.label.toggle_speaker_off" = "Вимкнути гучномовець";
 "call.actions.label.accept_call" = "Прийняти дзвінок";
@@ -727,8 +755,8 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "До цієї розмови може прєднатись не більше %1$d учасників. Відеодзвінки будуть працювати тільки в розмовах, що містять до %2$d учасників, окрім вас.";
-"participants.section.admins.footer" = "Немає адміністраторів.";
+"participants.section.name.footer" = "До цієї розмови може приєднатися до %1$d учасників.";
+"participants.section.admins.footer" = "Нема адміністраторів.";
 "participants.section.members.footer" = "Користувачі відсутні.";
 
 "profile.profile.group_admin_options.title" = "Адміністратор групи";
@@ -754,7 +782,7 @@
 "meta.menu.open_self_profile" = "Відкрити профіль";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Очистити вміст?";
+"meta.menu.delete_content.dialog_title" = "Видалити вміст?";
 "meta.menu.delete_content.dialog_message" = "Це очистить історію розмови на всіх ваших пристроях.";
 "meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
 "meta.menu.delete_content.button_cancel" = "Скасувати";
@@ -856,6 +884,8 @@
 "profile.details.guest" = "Гість";
 "profile.details.group_admin" = "Адміністратор групи";
 "profile.details.partner" = "зовнішній";
+"profile.details.federated" = "Федеративна система";
+"profile.details.blocking_reason" = "Цей користувач заблокований через правовий захист. [ДІЗНАТИСЯ БІЛЬШЕ](%@)";
 
 "profile_view.accessibility.handle" = "Нік";
 "profile_view.accessibility.name" = "Власне ім'я";
@@ -893,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Гості та сервіси";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
-"group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
+"group_details.timeout_options_cell.title" = "Тимчасові повідомленяя";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
 "group_details.receipt_options_cell.title" = "Звіти про перегляд";
@@ -907,8 +937,8 @@
 
 "legalhold.participants.section.title" = "Суб'єкти правового захисту";
 "legalhold.header.title" = "Правовий захист";
-"legalhold.header.other_description" = "В даній розмові правовий захист активовано, як мінімум, для одного учасника.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.";
-"legalhold.header.self_description" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\nВаші співрозмовники будуть повідомлені про це.";
+"legalhold.header.other_description" = "В даній розмові правовий захист було активовано мінімум для одного учасника.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.";
+"legalhold.header.self_description" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими, відредагованими та тимчасованими повідомленнями.\nВаші співрозмовники будуть повідомлені про це.";
 "legalhold.accessibility" = "Подробиці правового захисту";
 
 
@@ -983,6 +1013,8 @@
 "self.settings.account_section.phone.title" = "Номер телефону";
 "self.settings.account_section.handle.title" = "Нік";
 "self.settings.account_section.add_handle.title" = "Додати нік";
+"self.settings.account_section.team.title" = "Команда";
+"self.settings.account_section.domain.title" = "Домен";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
@@ -998,6 +1030,8 @@
 "self.settings.privacy_section_group.title" = "Політики конфіденційності";
 "self.settings.enable_read_receipts.title" = "Надсилати звіти про перегляд";
 "self.settings.privacy_section_group.subtitle" = "Ви не зможете отримувати звіти про перегляд від інших учасників розмови, якщо дана опція вимкнена.\n\nЦе налаштування не застосовується до групових розмов.";
+
+"self.settings.encrypt_messages_at_rest.title" = "Шифрувати повідомлення в режимі очікування";
 
 "self.settings.account_picture_group.picture" = "Картинка";
 "self.settings.account_picture_group.color" = "Колір";
@@ -1024,8 +1058,14 @@
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
-"self.settings.privacy_analytics.title" = "Надсилати анонімну статистику";
-"self.settings.privacy_analytics_menu.description.title" = "Допоможіть зробити Wire кращим, відправляючи анонімні звіти про використання та збої в роботі.";
+
+// Crash
+"self.settings.privacy_crash.title" = "Надсилати анонімну статистику про використання додатку";
+"self.settings.privacy_crash_menu.description.title" = "Надсилати анонімні звіти про збої та базові дані, такі як номер версії додатку та операційної системи, щоб допомогти Wire ідентифікувати та вирішити проблеми в додатку.";
+
+// Analytics
+"self.settings.privacy_analytics.title" = "Надсилати анонімну статистику про використання додатку";
+"self.settings.privacy_analytics_menu.description.title" = "Дані про використання додатку дозволяють Wire зрозуміти, як використовується програма, і як вона може бути вдосконалена. Дані анонімні та не містять даних з ваших розмов (наприклад, повідомлення, файли або дзвінки).";
 
 "self.settings.receiveNews_and_offers.title" = "Отримувати новини";
 "self.settings.receiveNews_and_offers.description.title" = "Отримувати новини та інформацію про оновлення Wire по електронній пошті.";
@@ -1094,7 +1134,7 @@
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
 
 "self.settings.vbr.title" = "Змінний бітрейт";
-"self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
+"self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість в мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт (CBR). Це налаштування впливає тільки на персональні дзвінки; конференційні дзвінки завжди використовують CBR.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Дзвінок у Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Повідомлення у Wire";
@@ -1149,17 +1189,12 @@
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Розблокуйте з Touch ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Розблокуйте з Face ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Розблокуйте, ввівши свій код.";
+"self.settings.privacy_security.lock_app.subtitle.custom_app_lock_reminder" = "Якщо ви забудете ваш код допуску, його неможливо буде відновити.";
 
 "self.settings.privacy_security.lock_app.description" = "Розблокувати Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "Розблокування паролем.";
 "self.settings.privacy_security.lock_password.description.wrong_password" = "Невірний пароль. Будь ласка, спробуйте ще раз.";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Невірний пароль. Якщо ви нещодавно змінили ваш пароль, підключіться до Інтернету та спробуйте ще раз.";
-
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Розблокувати Wire за допомогою Face ID або коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Розблокувати Wire за допомогою коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
-"self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
 "self.settings.privacy_security.disable_link_previews.footer" = "Дана опція не впливає на попередній перегляд лінків від інших людей.";
@@ -1170,13 +1205,12 @@
 "self.settings.privacy.clear_history.subtitle" = "Це назавжди зітре історію всіх ваших розмов.";
 
 "self.settings.advanced.title" = "Розширені налаштування";
-"self.settings.advanced.conference_calling.title" = "Конференц-дзвінки";
-"self.settings.advanced.conference_calling.subtitle" = "Якщо дана опція увімкнена, дзвінки для аудіо- та відеоконференцій можуть вмістити більшу кількість учасників.";
-"self.settings.advanced.conference_calling.toggle" = "Бета-функціональність";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Відлагоджувальний звіт";
 "self.settings.advanced.debugging_tools.title" = "Інструменти налагоджування";
 "self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Знайти першу непрочитану розмову";
+"self.settings.advanced.debugging_tools.show_user_id.title" = "Показати мій ID користувача";
+"self.settings.advanced.debugging_tools.enter_debug_command.title" = "Введіть налагоджувальну команду";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Дана інформація допоможе службі технічної підтримки Wire діагностувати проблеми із дзвінками та покращити загальний досвід користування додатком.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
 "self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщеннями, команда підтримки Wire може попросити вас виконати скидання цього токену.";
@@ -1247,8 +1281,10 @@
 // Landing screen
 
 "landing.header" = "Wire. Додати акаунт.";
-"landing.welcome_message" = "Ласкаво просимо до %@";
-"landing.create_account.title" = "Створити акаунт";
+"landing.welcome_message" = "Пробуєте створити Pro або корпоративний акаунт для свого бізнесу чи організації?";
+"landing.welcome_submessage" = "На жаль, це неможливо зробити в додатку - як тільки ви створите свою команду, то зможете увійти тут";
+"landing.create_account.title" = "Створити персональний акаунт в Wire";
+"landing.create_account.infotitle" = "Спілкуєтесь з друзями та сім'єю?";
 "landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
 "landing.create_team.subtitle" = "Безпечна співпраця для бізнесу, органів влади та профільних\U00A0організацій";
@@ -1407,8 +1443,8 @@
 
 "login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний код SSO вашої команди, та повторіть спробу.";
 "login.sso.error.alert.invalid_status.message" = "Будь ласка, спробуйте ще раз пізніше (помилка %@).";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Будь ласка, введіть правильний код SSO доступу";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Будь ласка, введіть правильний емейл або код SSO доступу";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Будь ласка, введіть правильний код доступу SSO";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Будь ласка, введіть правильний емейл або код доступу SSO";
 "login.sso.error.alert.domain_not_registered.message" = "Цей емейл не може використовуватися для корпоративної аутентифікації. Будь ласка, введіть SSO код, щоб продовжити.";
 "login.sso.error.alert.domain_associated_with_wrong_server.message" = "Цей емейл пов'язаний з іншим сервером, проте додаток може підключитися лише до одного серверу. Будь ласка, вийдіть з усіх акаунтів Wire на цьому пристрої та спробуйте ще раз.";
 "login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
@@ -1585,6 +1621,9 @@
 "error.conversation.cannot_remove" = "Не вдалося видалити учасника(-цю)";
 "error.conversation.too_many_members" = "Розмова переповнена";
 "error.conversation.offline" = "Схоже, що є проблема із інтернет-з'єднанням. Будь ласка, переконайтесь, що з ним все в порядку.";
+"error.conversation.missing_legalhold_consent" = "Тільки члени команди можуть бути додані до цієї розмови через правовий захист.";
+"error.message.send.missing_legalhold_consent" = "Ви не можете надіслати це повідомлення, тому що у вас є хоча б один застарілий пристрій, який не підтримує правовий захист. Будь ласка, оновіть всі ваші пристрої, або видаліть їх з налаштувань додатку.";
+"error.message.send.title" = "Неможливо надіслати повідомлення";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 
@@ -1597,14 +1636,55 @@
 "push.notification.new_message" = "Нове повідомлення";
 
 
-//Force Update
+// Force Update
 "force.update.title" = "Необхідне оновлення";
 "force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
 "force.update.ok_button" = "Перейти в App Store";
 
-//Jailbroken alert
+// Feature configs
+"feature_config.alert.generic_title" = "У Wire відбулися зміни";
+
+// Feature configs: file sharing
+"feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
+"feature_config.update.file_sharing.alert.message.disabled" = "Отримання та надсилання файлів будь-якого типу було вимкнено.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Отримання та надсилання файлів будь-якого типу було увімкнено.";
+"feature_config.file_sharing_restrictions.file" = "Отримання файлів заборонене";
+"feature_config.file_sharing_restrictions.picture" = "Отримання картинок заборонене";
+"feature_config.file_sharing_restrictions.video" = "Отримання відео заборонене";
+"feature_config.file_sharing_restrictions.audio" = "Отримання аудіоповідомлень заборонене";
+
+//Feature flag - Conference calling
+"feature_config.update.conference_calling.alert.title" = "Ентерпрайз-версія";
+"feature_config.update.conference_calling.alert.message" = "Ваша команда була оновлена до ентерпрайз-версії. Тепер у вас є доступ до таких функцій, як відео-конференції.";
+"feature_config.update.conference_calling.alert.message.learn_more" = "Дізнайтеся більше про ентерпрайз-версію";
+
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Оновити до ентерпрайз-версії";
+"feature_config.conference_calling_restrictions.admins.alert.message" = "Ваша команда наразі використовує безкоштовну базову версію. Оновіться до ентерпрайз-версії для доступу до таких функцій, як вихідні конференц-виклики.";
+"feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Дізнатися більше про ціни на Wire";
+"feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Оновити зараз";
+
+"feature_config.conference_calling_restrictions.members.alert.title" = "Функція недоступна";
+"feature_config.conference_calling_restrictions.members.alert.message" = "Щоб почати конференц-виклик, команда повинна оновитися до ентерпрайз-версії.";
+
+"feature_config.conference_calling_restrictions.personal.alert.title" = "Функція недоступна";
+"feature_config.conference_calling_restrictions.personal.alert.message" = "Можливість ініціювання конференц-виклику доступна тільки в платній версії Wire.";
+
+// Feature configs: self-deleting messages
+"feature_config.alert.self_deleting_messages.message.disabled" = "Тимчасові повідомлення вимкнені.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Тимчасові повідомлення були увімкнені. Ви можете встановити таймер перед тим, як писати повідомлення.";
+"feature_config.alert.self_deleting_messages.message.forced_on" = "Тимчасові повідомлення тепер є обов'язковими. Нові повідомлення будуть видалятися автоматично після %@.";
+
+// Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
 "jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";
+
+// Database Loading Failure alert
+"databaseloadingfailure.alert.title" = "Недостатньо місця";
+"databaseloadingfailure.alert.message" = "Не вдалося завантажити базу даних через нестачу вільного місця. Перевірте розмір вільного місця на вашому пристрої та спробуйте ще раз.";
+"databaseloadingfailure.alert.settings" = "Перейти до налаштувань";
+"databaseloadingfailure.alert.delete_database" = "Видалити базу даних";
+"databaseloadingfailure.alert.delete_database.message" = "З видаленням бази даних, всі локальні дані та повідомлення для цього акаунту також будуть остаточно видалені.";
+"databaseloadingfailure.alert.delete_database.continue" = "Продовжити";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
@@ -1700,6 +1780,13 @@
 "url_action.switch_backend.error.invalid_backend.title" = "Сервер не відповідає";
 "url_action.switch_backend.error.invalid_backend" = "Будь ласка, перевірте ваше інтернет-з'єднання та спробуйте ще раз.";
 
+// Placeholder: conversation name
+"url_action.join_conversation.confirmation.message" = "Вас запросили до розмови:\n%@";
+"url_action.join_conversation.confirmation.confirm_button" = "Приєднатись";
+
+"url_action.join_conversation.error.title" = "Не вдалося приєднатися до розмови";
+"url_action.join_conversation.error.converation_is_full" = "Розмова переповнена.";
+"url_action.join_conversation.error.link_is_invalid" = "Посилання на розмову недійсне.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
@@ -1755,18 +1842,21 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Очікує підтвердження.";
 "legalhold_request.alert.title" = "Отримано запит на правовий захист";
-"legalhold_request.alert.detail" = "Усі майбутні повідомлення будуть записані пристроєм з ідентифікатором:\n\n%@\n\nВ тому числі видалені, відредаговані та тимчасові повідомлення в усіх розмовах.";
+"legalhold_request.alert.detail" = "Усі майбутні повідомлення будуть записані пристроєм з ідентифікатором:\n\n%@\n\nВключно з видаленими, відредагованими та тимчасовими повідомленнями в усіх розмовах.";
 "legalhold_request.alert.detail.enter_password" = "Введіть ваш пароль для підтвердження.";
 "legalhold_request.alert.error_wrong_password" = "Невірний пароль";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Правовий захист активний";
 "legalhold_active.alert.learn_more" = "Дізнатися більше";
-"legalhold_active.alert.message" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\n\nВаші співрозмовники будуть повідомлені про це.";
+"legalhold_active.alert.message" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими, відредагованими та тимчасованими повідомленнями.\n\nВаші співрозмовники будуть повідомлені про це.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
 "account_deleted_session_expired_alert.message" = "Додаток не зв'язувався із сервером впродовж тривалого періоду часу, або ваша сесія була анульована.";
+
+"account_deleted_missing_passcode_alert.title" = "Код допуску для пристрою не заданий";
+"account_deleted_missing_passcode_alert.message" = "Для використання Wire встановіть код допуску в налаштуваннях пристрою.";
 
 // Button cell state
 "button_message_cell.state.unselected" = "не вибрано";
@@ -1774,3 +1864,70 @@
 "button_message_cell.state.confirmed" = "підтверджено";
 
 "button_message_cell.generic_error" = "Ваша відповідь не може бути відправлена. Будь ласка, спробуйте ще раз.";
+
+// Custom app lock
+
+"passcode.hint_label" = "Код допуску";
+
+// Custom app lock - create passcode
+"create_passcode.textfield.placeholder" = "";
+"create_passcode.title_label" = "Створіть код допуску";
+"create_passcode.info_label" = "Він буде використаний для розблокування Wire. Якщо ви забудете цей пароль, то **його неможливо буде відновити.**";
+"create_passcode.info_label_forced_applock" = "Створіть пароль для розблокування Wire. Будь ласка,  запам'ятайте, що **його неможливо буде відновити.**";
+"create_passcode.create_button.title" = "створити код допуску";
+
+// Custom app lock - create passcode validation
+"create_passcode.validation.too_short" = "Не менше восьми символів";
+"create_passcode.validation.no_lowercase_char" = "Маленька літера";
+"create_passcode.validation.no_uppercase_char" = "Велика літера";
+"create_passcode.validation.no_number" = "Число";
+"create_passcode.validation.no_special_char" = "Спеціальний символ";
+
+// Custom app lock - unlock
+"unlock.textfield.placeholder" = "Введіть ваш код допуску";
+"unlock.title_label" = "Введіть код допуску, щоб розблокувати Wire";
+"unlock.wipe_button" = "Доступ як з нового пристрою";
+"unlock.error_label" = "Невірний код допуску";
+"unlock.submit_button.title" = "розблокувати";
+
+// Custom app lock - warning screen
+"warning_screen.title_label" = "У Wire відбулися зміни";
+"warning_screen.main_info.forced_applock" = "Ваша організація має заблокувати Wire, якщо додаток не використовується, для підтримки безпеки всієї команди.";
+"warning_screen.info_label.forced_applock" = "Наступного разу, розблокуйте Wire так само, як ви розблоковуєте свій телефон.";
+"warning_screen.info_label.non_forced_applock" = "Ваша організація більше не потребує блокування Wire. З цього моменту ви можете мати безперешкодний доступ до додатку.";
+
+// Wipe database
+
+"wipe_database.title_label" = "Доступ як з нового пристрою";
+"wipe_database.info_label" = "Дані, що зберігаються на цьому пристрої, доступні лише з вашим кодом доступу.\n\nЯкщо ви забудете код доступу, то зможете очистити базу даних для входу в якості нового пристрою.\n\nВидаливши базу даних, ";
+"wipe_database.info_label.highlighted" = "всі локальні дані та повідомлення для цього облікового запису будуть остаточно видалені.";
+
+"wipe_database.button.title" = "Я хочу видалити базу даних";
+
+// Wipe database alert
+
+"wipe_database.alert.description" = "Підтвердити видалення бази даних";
+"wipe_database.alert.message" = "Введіть 'Видалити', щоб переконатися, що ви хочете видалити всі дані на цьому пристрої.";
+"wipe_database.alert.placeholder" = "Введіть 'Видалити'";
+"wipe_database.alert.confirm" = "Видалити";
+"wipe_database.alert.confirm_input" = "Видалити";
+
+// Wipe database completion
+
+"wipe_database_completion.title" = "База даних видалена";
+"wipe_database_completion.subtitle" = "Ваші дані та повідомлення було видалено. Тепер ви можете увійти ще раз з новим пристроєм.";
+
+// MARK: - App lock module
+
+"appLockModule.message.faceID" = "Розблокувати Wire за допомогою Face ID або коду допуску";
+"appLockModule.message.touchID" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
+"appLockModule.message.passcode" = "Розблокувати Wire за допомогою коду допуску";
+"appLockModule.message.passcodeUnavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
+"appLockModule.unlockButton.title" = "Розблокувати";
+"appLockModule.goToSettingsButton.title" = "Перейти до налаштувань";
+
+//MARK: - Keyboard shortcut
+"keyboardshortcut.scrollToBottom" = "Прокрутити донизу";
+"keyboardshortcut.conversationDetail" = "Деталі розмови...";
+"keyboardshortcut.searchInConversation" = "Пошук в розмові..";
+"keyboardshortcut.openPeople" = "Люди";

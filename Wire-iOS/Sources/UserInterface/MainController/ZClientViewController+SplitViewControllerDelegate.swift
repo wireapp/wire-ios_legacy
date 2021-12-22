@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -20,7 +19,9 @@ import Foundation
 
 extension ZClientViewController: SplitViewControllerDelegate {
     public func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool {
-        return splitViewController.rightViewController != nil && splitViewController.leftViewController == backgroundViewController && conversationListViewController.state == .conversationList && (conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == false)
-
+        return splitViewController.rightViewController != nil &&
+            splitViewController.leftViewController == backgroundViewController &&
+            conversationListViewController.state == .conversationList &&
+            (conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == false)
     }
 }

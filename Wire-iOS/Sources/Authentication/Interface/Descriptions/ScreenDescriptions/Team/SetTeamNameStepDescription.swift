@@ -50,4 +50,3 @@ final class SetTeamNameStepDescription: AuthenticationStepDescription {
         secondaryView = SetTeamNameStepSecondaryView()
     }
 }
-

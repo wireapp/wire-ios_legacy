@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Photos
 import WireSystem
 import WireUtilities
@@ -31,12 +30,12 @@ protocol PhotoLibraryProtocol {
 
 extension PHPhotoLibrary: PhotoLibraryProtocol {}
 
-protocol AssetChangeRequestProtocol: class {
+protocol AssetChangeRequestProtocol: AnyObject {
     @discardableResult static func creationRequestForAsset(from image: UIImage) -> Self
     @discardableResult static func creationRequestForAssetFromImage(atFileURL fileURL: URL) -> Self?
 }
 
-protocol AssetCreationRequestProtocol: class {
+protocol AssetCreationRequestProtocol: AnyObject {
     static func forAsset() -> Self
     func addResource(with type: PHAssetResourceType,
                      data: Data,
@@ -49,12 +48,12 @@ extension PHAssetCreationRequest: AssetCreationRequestProtocol {}
 private let log = ZMSLog(tag: "SavableImage")
 
 final class SavableImage: NSObject {
-    
+
     enum Source {
         case gif(URL)
         case image(Data)
     }
-    
+
     /// Protocols used to inject mock photo services in tests
     var photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()
     var assetChangeRequestType: AssetChangeRequestProtocol.Type = PHAssetChangeRequest.self
@@ -72,30 +71,30 @@ final class SavableImage: NSObject {
         imageData = data
         super.init()
     }
-    
+
     private static  func storeGIF(_ data: Data) -> URL {
         let url = URL(fileURLWithPath: NSTemporaryDirectory() + "\(UUID().uuidString).gif")
-        
+
         do {
             try data.write(to: url, options: .atomic)
         } catch {
             log.error("error writing image data to \(url): \(error)")
         }
-        
+
         return url
     }
-    
+
     // SavableImage instances get created when image cells etc are being created and
     // we don't want to write data to disk when we didn't start a save operation, yet.
     private func createSource() -> Source {
         return isGIF ? .gif(SavableImage.storeGIF(imageData)) : .image(imageData)
     }
-    
+
     public func saveToLibrary(withCompletion completion: ImageSaveCompletion? = .none) {
         guard !writeInProgess else { return }
         writeInProgess = true
         let source = createSource()
-        
+
         let cleanup: (Bool) -> Void = { [source] success in
             if case .gif(let url) = source {
                 try? FileManager.default.removeItem(at: url)
@@ -106,7 +105,7 @@ final class SavableImage: NSObject {
 
         applicationType.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
             guard granted else { return cleanup(false) }
-            
+
             self.photoLibrary.performChanges(papply(self.saveImage, source)) { success, error in
                 DispatchQueue.main.async {
                     self.writeInProgess = false

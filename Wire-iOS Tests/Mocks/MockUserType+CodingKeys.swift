@@ -28,7 +28,6 @@ extension MockUserType {
         case handle
         case isConnected
         case accentColorValue
-        case connectionRequestMessage
     }
 
 }

@@ -20,6 +20,10 @@ import Foundation
 import UIKit
 
 public extension Bundle {
+    var shortVersionString: String? {
+        return Bundle.main.infoForKey("CFBundleShortVersionString")
+    }
+    
     func infoForKey(_ key: String) -> String? {
         return infoDictionary?[key] as? String
     }

@@ -16,46 +16,49 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-import Cartography
 import UIKit
 import WireDataModel
 
 final class CollectionCellHeader: UIView {
-    public var message: ZMConversationMessage? {
+    var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {
+            guard let message = message,
+                  let serverTimestamp = message.serverTimestamp,
+                  let sender = message.senderUser else {
                 return
             }
-            
-            self.nameLabel.textColor = sender.nameAccentColor
-            self.nameLabel.text = sender.name
-            self.dateLabel.text = serverTimestamp.formattedDate
+
+            nameLabel.textColor = sender.nameAccentColor
+
+            nameLabel.text = sender.name
+            dateLabel.text = serverTimestamp.formattedDate
         }
     }
-    
-    public required init(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
     }
-    
-    public override init(frame: CGRect) {
+
+    override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.dateLabel)
-        
-        constrain(self, self.nameLabel, self.dateLabel) { selfView, nameLabel, dateLabel in
-            nameLabel.leading == selfView.leading
-            nameLabel.trailing <= dateLabel.leading
-            dateLabel.trailing == selfView.trailing
-            nameLabel.top == selfView.top
-            nameLabel.bottom == selfView.bottom
-            dateLabel.centerY == nameLabel.centerY
-        }
+
+        addSubview(nameLabel)
+        addSubview(dateLabel)
+
+        [nameLabel, dateLabel].prepareForLayout()
+        NSLayoutConstraint.activate([
+          nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+          nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: dateLabel.leadingAnchor),
+          dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+          nameLabel.topAnchor.constraint(equalTo: topAnchor),
+          nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+          dateLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
+        ])
     }
-    
-    public var nameLabel: UILabel = {
+
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "sender name"
         label.font = .smallSemiboldFont
@@ -63,7 +66,7 @@ final class CollectionCellHeader: UIView {
         return label
     }()
 
-    public var dateLabel: UILabel = {
+    var dateLabel: UILabel = {
         let label = UILabel()
         label.accessibilityLabel = "sent on"
         label.font = .smallLightFont

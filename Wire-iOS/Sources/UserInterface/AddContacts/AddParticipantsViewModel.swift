@@ -22,48 +22,48 @@ import WireDataModel
 struct AddParticipantsViewModel {
     let context: AddParticipantsViewController.Context
     let variant: ColorSchemeVariant
-    
+
     init(with context: AddParticipantsViewController.Context, variant: ColorSchemeVariant) {
         self.context = context
         self.variant = variant
     }
-    
+
     var botCanBeAdded: Bool {
         switch context {
         case .create: return false
         case .add(let conversation): return conversation.botCanBeAdded
         }
     }
-    
+
     var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
-            return conversation.connectedUser.map { [$0] } ?? []
+            return conversation.connectedUserType.map { [$0] } ?? []
         case .create(let values): return values.participants
         default: return []
         }
     }
-    
+
     func title(with users: UserSet) -> String {
         return users.isEmpty
             ? "peoplepicker.group.title.singular".localized(uppercased: true)
             : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)
     }
-    
+
     var filterConversation: ZMConversation? {
         switch context {
-        case .add(let conversation) where conversation.conversationType == .group: return conversation
+        case .add(let conversation) where conversation.conversationType == .group: return conversation as? ZMConversation
         default: return nil
         }
     }
-    
+
     var showsConfirmButton: Bool {
         switch context {
         case .add: return true
         case .create: return false
         }
     }
-    
+
     var confirmButtonTitle: String? {
         switch context {
         case .create: return nil
@@ -75,7 +75,7 @@ struct AddParticipantsViewModel {
             }
         }
     }
-    
+
     func rightNavigationItem(target: AnyObject, action: Selector) -> UIBarButtonItem {
         switch context {
         case .add:
@@ -90,5 +90,5 @@ struct AddParticipantsViewModel {
             return item
         }
     }
-    
+
 }

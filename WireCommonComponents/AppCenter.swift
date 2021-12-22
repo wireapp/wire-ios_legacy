@@ -16,48 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Foundation
 import AppCenter
 import AppCenterCrashes
 import AppCenterDistribute
 import AppCenterAnalytics
 
-public extension MSAppCenter {
+public extension AppCenter {
     
     static func setTrackingEnabled(_ enabled: Bool) {
-        MSAnalytics.setEnabled(enabled)
-        MSDistribute.setEnabled(enabled)
-        MSCrashes.setEnabled(enabled)
+        Analytics.enabled = enabled
+        Distribute.enabled = enabled
+        Crashes.enabled = enabled
     }
     
     static func start() {
-        MSDistribute.updateTrack = .private
+        Distribute.updateTrack = .private
 
-        MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self,
-                                                                MSDistribute.self,
-                                                                MSAnalytics.self])
-    }
-}
-
-public extension MSCrashes {
-    
-    static var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
-        guard let lastSessionCrashReport = lastSessionCrashReport() else { return nil }
-        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
-    }
-}
-
-public extension Bundle {
-    
-    static var appCenterAppId: String? {
-        guard let scheme = Bundle.appMainBundle.infoDictionary?["CFBundleURLTypes"] as? [[String:Any]],
-            let item = scheme.first,
-            let key = item["CFBundleURLSchemes"] as? [String],
-            let appCenterID = key.first else { return nil }
-        return appCenterID.replacingOccurrences(of: "appcenter-", with: "")
-    }
-    
-    static var useAppCenter: Bool {
-        return Bundle.appMainBundle.infoForKey("UseAppCenter") == "1"
+        AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: [Crashes.self,
+                                                                Distribute.self,
+                                                                Analytics.self])
     }
 }

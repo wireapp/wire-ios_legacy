@@ -17,43 +17,44 @@
 //
 
 import Foundation
-import Cartography
+import UIKit
 import WireCommonComponents
 
 class StartUIIconCell: UICollectionViewCell {
-    
+
     fileprivate let iconView = UIImageView()
     fileprivate let titleLabel = UILabel()
     fileprivate let separator = UIView()
-    
+
     fileprivate var icon: StyleKitIcon? {
         didSet {
             iconView.image = icon?.makeImage(size: .tiny, color: .white)
         }
     }
-    
+
     fileprivate var title: String? {
         didSet {
             titleLabel.text = title
         }
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted ? .init(white: 0, alpha: 0.08) : .clear
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func setupViews() {
         iconView.contentMode = .center
         titleLabel.font = FontSpec(.normal, .light).font
@@ -61,31 +62,32 @@ class StartUIIconCell: UICollectionViewCell {
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: .dark)
     }
-    
-    fileprivate  func createConstraints() {
+
+    fileprivate func createConstraints() {
         let iconSize: CGFloat = 32.0
-        
-        constrain(contentView, iconView, titleLabel, separator) { container, iconView, titleLabel, separator in
-            iconView.width == iconSize
-            iconView.height == iconSize
-            iconView.leading == container.leading + 16
-            iconView.centerY == container.centerY
-            
-            titleLabel.leading == container.leading + 64
-            titleLabel.trailing == container.trailing
-            titleLabel.top == container.top
-            titleLabel.bottom == container.bottom
-            
-            separator.leading == titleLabel.leading
-            separator.trailing == container.trailing
-            separator.bottom == container.bottom
-            separator.height == .hairline
-        }
+
+        [iconView, titleLabel, separator].prepareForLayout()
+        NSLayoutConstraint.activate([
+          iconView.widthAnchor.constraint(equalToConstant: iconSize),
+          iconView.heightAnchor.constraint(equalToConstant: iconSize),
+          iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+          titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
+          titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+          titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
+          separator.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+          separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+          separator.heightAnchor.constraint(equalToConstant: .hairline)
+        ])
     }
-    
+
 }
 
-final class InviteTeamMemberCell: StartUIIconCell  {
+final class InviteTeamMemberCell: StartUIIconCell {
 
     override func setupViews() {
         super.setupViews()
@@ -96,11 +98,11 @@ final class InviteTeamMemberCell: StartUIIconCell  {
         accessibilityTraits.insert(.button)
         accessibilityIdentifier = "button.searchui.invite_team"
     }
-    
+
 }
 
-final class CreateGroupCell: StartUIIconCell  {
-    
+final class CreateGroupCell: StartUIIconCell {
+
     override func setupViews() {
         super.setupViews()
         icon = .createConversation
@@ -110,11 +112,11 @@ final class CreateGroupCell: StartUIIconCell  {
         accessibilityTraits.insert(.button)
         accessibilityIdentifier = "button.searchui.creategroup"
     }
-    
+
 }
 
-final class CreateGuestRoomCell: StartUIIconCell  {
-    
+final class CreateGuestRoomCell: StartUIIconCell {
+
     override func setupViews() {
         super.setupViews()
         icon = .guest
@@ -124,35 +126,35 @@ final class CreateGuestRoomCell: StartUIIconCell  {
         accessibilityTraits.insert(.button)
         accessibilityIdentifier = "button.searchui.createguestroom"
     }
-    
+
 }
 
-final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
+final class OpenServicesAdminCell: StartUIIconCell, Themeable {
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+
+    @objc dynamic var contentBackgroundColor: UIColor? {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: colorSchemeVariant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         iconView.image = icon?.makeImage(size: .tiny, color: UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant))
     }
-    
+
     func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
         return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
@@ -160,7 +162,7 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
                 : contentBackgroundColor(for: colorSchemeVariant)
         }
     }
-    
+
     override func setupViews() {
         super.setupViews()
         icon = .bot
@@ -170,5 +172,5 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
         accessibilityIdentifier = "button.searchui.open-services"
         applyColorScheme(ColorScheme.default.variant)
     }
-    
+
 }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireSyncEngine
 import UIKit
@@ -30,30 +29,30 @@ extension UIApplicationShortcutItem {
 }
 
 public final class QuickActionsManager: NSObject {
-    let sessionManager: SessionManager
-    let application: UIApplication
-    
-    init(sessionManager: SessionManager, application: UIApplication) {
+
+    // MARK: - Public Property
+    var sessionManager: SessionManager?
+
+    // MARK: - Initialization
+    public init(sessionManager: SessionManager? = nil) {
         self.sessionManager = sessionManager
-        self.application = application
         super.init()
         updateQuickActions()
     }
-    
-    
+
     func updateQuickActions() {
         guard Bundle.developerModeEnabled else {
-            application.shortcutItems = []
+            UIApplication.shared.shortcutItems = []
             return
         }
 
-        application.shortcutItems = [.markAllAsRead]
+        UIApplication.shared.shortcutItems = [.markAllAsRead]
     }
-    
-    @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {
+
+    @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool) -> Void)?) {
         switch shortcutItem.type {
         case UIApplicationShortcutItem.markAllAsReadType:
-            sessionManager.markAllConversationsAsRead {
+            sessionManager?.markAllConversationsAsRead {
                 completionHandler?(true)
             }
         default:

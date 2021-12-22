@@ -31,6 +31,16 @@
 "share_extension.no_internet_connection.title" = "No hay conexión a Internet";
 "share_extension.not_signed_in.title" = "Para compartir contenidos debes registrarte en Wire";
 "share_extension.not_signed_in.close_button" = "Cerrar";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
+"share_extension.unlock.submit_button.title" = "unlock";
+"share_extension.unlock.textfield.placeholder" = "Enter your passcode";
+"share_extension.unlock.hint_label" = "Contraseña";
+"share_extension.unlock.error_label" = "Wrong passcode";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "Reveal passcode";
+
 "share_extension.timeout.title" = "La conexión expiró.";
 "share_extension.timeout.message" = "Verifica la conexión a Internet e intenta nuevamente. Los archivos adjuntos se guardaron en la conversación.";
 "share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
@@ -43,3 +53,7 @@
 "meta.degraded.dialog_message" = "¿Todavía deseas enviar el mensaje?";
 "meta.degraded.cancel_sending_button" = "No enviar";
 "meta.degraded.send_anyway_button" = "Enviar de todos modos";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

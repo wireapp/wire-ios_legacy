@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class MockTapGestureRecognizer: UITapGestureRecognizer {
     let mockState: UIGestureRecognizer.State

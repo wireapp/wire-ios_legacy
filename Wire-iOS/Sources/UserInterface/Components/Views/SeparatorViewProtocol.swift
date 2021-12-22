@@ -25,7 +25,7 @@ protocol ViewWithContentView {
 extension UICollectionViewCell: ViewWithContentView {}
 extension UITableViewCell: ViewWithContentView {}
 
-protocol SeparatorViewProtocol: class {
+protocol SeparatorViewProtocol: AnyObject {
     var separator: UIView { get }
     var separatorLeadingAnchor: NSLayoutXAxisAnchor { get }
     var separatorInsetConstraint: NSLayoutConstraint! { get set }
@@ -44,7 +44,7 @@ extension SeparatorViewProtocol where Self: ViewWithContentView {
             separatorInsetConstraint,
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.heightAnchor.constraint(equalToConstant: .hairline)
         ])
     }
 }

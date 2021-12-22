@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "URL")
 
 enum TeamSource: Int {
     case onboarding, settings
-    
+
     var parameterValue: String {
         switch self {
         case .onboarding: return "client_landing"
@@ -39,30 +39,13 @@ struct WireUrl: Codable {
     let randomProfilePictureSource: URL
 
     static var shared: WireUrl! = {
-        guard let filePath = Bundle.main.url(forResource: "url", withExtension: "json") else {
-            zmLog.error("Failed to get URL from bundle")
-            return nil
-        }
-
-        return WireUrl(filePath: filePath)
+        return WireUrl(filePath: Bundle.fileURL(for: "url", with: "json")!)
     }()
 
     private init?(filePath: URL) {
-
-        let data: Data
         do {
-            data = try Data(contentsOf: filePath)
+            self = try filePath.decode(WireUrl.self)
         } catch {
-            zmLog.error("Failed to load URL at path: \(filePath), error: \(error)")
-            return nil
-        }
-
-        let decoder = JSONDecoder()
-
-        do {
-            self = try decoder.decode(WireUrl.self, from: data)
-        } catch {
-            zmLog.error("Failed to parse JSON at path: \(filePath), error: \(error)")
             return nil
         }
     }
@@ -104,24 +87,23 @@ extension BackendEnvironment {
     fileprivate static func websiteLink(path: String) -> URL {
         return shared.websiteURL.appendingPathComponent(path)
     }
-    
+
     fileprivate static func accountsLink(path: String) -> URL {
         return shared.accountsURL.appendingPathComponent(path)
     }
-    
+
     fileprivate static func teamsLink(path: String) -> URL {
         return shared.teamsURL.appendingPathComponent(path)
     }
 
 }
 
-
 extension URL {
 
     static var wr_wireAppOnItunes: URL {
         return WireUrl.shared.wireAppOnItunes
     }
-    
+
     static var wr_randomProfilePictureSource: URL {
         return WireUrl.shared.randomProfilePictureSource
     }
@@ -129,7 +111,7 @@ extension URL {
     static var wr_emailAlreadyInUseLearnMore: URL {
         return wr_support.appendingPathComponent("hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")
     }
-    
+
     static var wr_support: URL {
         return WireUrl.shared.support
     }
@@ -165,7 +147,7 @@ extension URL {
     static var wr_askSupport: URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
-    
+
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }
@@ -186,7 +168,9 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "support/email-in-use")
     }
 
-    
+    static var wr_searchSupport: URL {
+        return BackendEnvironment.websiteLink(path: "support/username") // TODO jacob update URL when new support page for search exists
+    }
 
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
@@ -194,6 +178,18 @@ extension URL {
         } else {
             return BackendEnvironment.websiteLink(path: "legal/terms/personal")
         }
+    }
+
+    static var wr_legalHoldLearnMore: URL {
+        return wr_support.appendingPathComponent("hc/articles/360002018278-What-is-legal-hold-")
+    }
+
+    static var wr_wirePricingLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "pricing")
+    }
+
+    static var wr_wireEnterpriseLearnMore: URL {
+        return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
     }
 
 }

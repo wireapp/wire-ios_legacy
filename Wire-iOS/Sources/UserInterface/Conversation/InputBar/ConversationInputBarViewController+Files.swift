@@ -109,6 +109,8 @@ extension ConversationInputBarViewController {
     ///
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let completion: Completion = { [weak self] in
@@ -146,24 +148,28 @@ extension ConversationInputBarViewController {
 
                 var conversationMediaAction: ConversationMediaAction = .fileTransfer
 
-                if let message: ZMConversationMessage = weakSelf.conversation.append(file: metadata),
-                    let fileMessageData = message.fileMessageData {
-                    if fileMessageData.isVideo {
-                        conversationMediaAction = .videoMessage
-                    } else if fileMessageData.isAudio {
-                        conversationMediaAction = .audioMessage
+                do {
+                    let message = try conversation.appendFile(with: metadata)
+                    if let fileMessageData = message.fileMessageData {
+                        if fileMessageData.isVideo {
+                            conversationMediaAction = .videoMessage
+                        } else if fileMessageData.isAudio {
+                            conversationMediaAction = .audioMessage
+                        }
                     }
-                }
 
-                Analytics.shared().tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                    Analytics.shared.tagMediaActionCompleted(conversationMediaAction, inConversation: conversation)
+                } catch {
+                    Logging.messageProcessing.warn("Failed to append file. Reason: \(error.localizedDescription)")
+                }
 
                 completion()
             })
         }
         parent?.dismiss(animated: true)
     }
-    
-    func execute(videoPermissions toExecute: @escaping () -> ()) {
+
+    func execute(videoPermissions toExecute: @escaping () -> Void) {
         UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in
             if granted {
                 UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ granted in

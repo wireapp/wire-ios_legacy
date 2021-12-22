@@ -22,9 +22,9 @@ import UIKit
 extension UINavigationController {
 
     func closeItem() -> UIBarButtonItem {
-        let item = UIBarButtonItem(icon: .cross, target: self, action: #selector(closeTapped))
-        item.accessibilityIdentifier = "close"
-        item.accessibilityLabel = "general.close".localized
+        let item = UIBarButtonItem.createCloseItem()
+        item.target = self
+        item.action = #selector(closeTapped)
         return item
     }
 

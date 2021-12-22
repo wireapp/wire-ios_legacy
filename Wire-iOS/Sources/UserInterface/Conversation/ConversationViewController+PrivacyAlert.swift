@@ -72,7 +72,7 @@ extension ConversationViewController {
             let names = changeInfo.usersThatCausedConversationToDegrade.compactMap(\.name).joined(separator: ", ")
             let keySuffix = users.count <= 1 ? "singular" : "plural"
             title = "meta.degraded.degradation_reason_message.\(keySuffix)".localized(args: names)
-            
+
             actions += [.verifyDevices, .sendAnyway, .cancel]
         } else {
             // no-op: there is no privacy warning

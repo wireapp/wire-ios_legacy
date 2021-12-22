@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
+final class RandomGeneratorFromDataTests: XCTestCase {
     func testThatItGeneratesAPseudorandom() {
         // GIVEN
         let uuid = NSUUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")! as UUID
@@ -29,7 +29,7 @@ class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
         // THEN
         XCTAssertEqual(6505850725663318502, random)
     }
-    
+
     func testThatItGeneratesAStablePseudorandom() {
         // GIVEN
         let uuid = NSUUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")! as UUID
@@ -40,7 +40,7 @@ class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
         // THEN
         XCTAssertEqual(random1, random2)
     }
-    
+
     func testThatItGeneratesSeriesOfAStablePseudorandom() {
         // GIVEN
         let uuid = NSUUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")! as UUID
@@ -49,11 +49,11 @@ class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
         let seed2 = RandomGeneratorFromData(uuid: uuid)
         let random1: [Int] = (0...100).map { _ in seed1.rand() }
         let random2: [Int] = (0...100).map { _ in seed2.rand() }
-        
+
         // THEN
         XCTAssertEqual(random1, random2)
     }
-    
+
     func testThatItGeneratesAStableRandomArray() {
         // GIVEN
         let uuid = NSUUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")! as UUID
@@ -61,7 +61,7 @@ class RandomGeneratorFromDataTests: ZMSnapshotTestCase {
         // WHEN
         let random1 = RandomGeneratorFromData(uuid: uuid)
         let random2 = RandomGeneratorFromData(uuid: uuid)
-        
+
         // THEN
         XCTAssertEqual(array.shuffled(with: random1), array.shuffled(with: random2))
     }

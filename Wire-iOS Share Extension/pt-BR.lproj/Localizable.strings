@@ -33,6 +33,23 @@
 "share_extension.not_signed_in.close_button" = "Fechar";
 "share_extension.timeout.title" = "A conexão expirou.";
 "share_extension.timeout.message" = "Verifique sua conexão de Internet e tente novamente. Os anexos foram salvos na conversa.";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Insira o código de acesso para desbloquear o Wire";
+"share_extension.unlock.submit_button.title" = "desbloquear";
+"share_extension.unlock.textfield.placeholder" = "Digite seu código de acesso";
+"share_extension.unlock.hint_label" = "Código de Acesso";
+"share_extension.unlock.error_label" = "Código de acesso incorreto";
+"share_extension.unlock.alert.message" = "Abra o Wire para criar um código de acesso";
+"share_extension.unlock.reveal_passcode" = "Revelar código de acesso";
+
+"share_extension.timeout.title" = "A conexão expirou.";
+"share_extension.timeout.message" = "Verifique sua conexão de Internet e tente novamente. Os anexos foram salvos na conversa.";
+
+"content.file.too_big" = "Você pode enviar arquivos de até %@";
+"content.file.unsupported_attachment" = "Anexo não suportado";
+"share_extension.error.conversation_does_not_exist.message" = "Por favor, selecione uma conversa para compartilhar";
+
 "share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
 "share_extension.logged_out.title" = "Você foi deslogado dessa conta.";
 "share_extension.logged_out.message" = "Por favor, escolha outra conta.";
@@ -43,3 +60,7 @@
 "meta.degraded.dialog_message" = "Ainda quer enviar sua mensagem?";
 "meta.degraded.cancel_sending_button" = "Não enviar";
 "meta.degraded.send_anyway_button" = "Enviar assim mesmo";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "Restrições de compartilhamento de arquivos";
+"feature.flag.file_sharing.alert.message" = "Você não pode compartilhar este arquivo porque este recurso está desativado.";

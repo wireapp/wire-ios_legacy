@@ -30,4 +30,8 @@ extension MockConversation {
         return StyleKitIcon.timeoutWeek.makeImage(size: 64, color: .accent())
     }
 
+	@objc
+	func localParticipantsContain(user: UserType) -> Bool {
+		return true
+	}
 }

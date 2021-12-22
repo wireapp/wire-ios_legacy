@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,7 +18,7 @@
 import XCTest
 @testable import Wire
 
-extension UIColor {    
+extension UIColor {
     class var accentOverrideColor: ZMAccentColor? {
         return ZMUser.selfUser()?.accentColorValue
     }
@@ -28,20 +27,22 @@ extension UIColor {
 extension XCTestCase {
     /// If this is set the accent color will be overriden for the tests
     static var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(newValue)
-        }
         get {
             return UIColor.accentOverrideColor!
+        }
+
+        set {
+            UIColor.setAccentOverride(newValue)
         }
     }
 
     var accentColor: ZMAccentColor {
-        set {
-            XCTestCase.accentColor = newValue
-        }
         get {
             return XCTestCase.accentColor
+        }
+
+        set {
+            XCTestCase.accentColor = newValue
         }
     }
 }

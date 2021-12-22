@@ -29,21 +29,20 @@ extension MockConversation {
     var localParticipants: Set<AnyHashable> {
         return Set(sortedActiveParticipants as! [AnyHashable])
     }
-    
+
     @objc
     var activeParticipants: [AnyHashable] {
         get {
             return sortedActiveParticipants as! [AnyHashable]
         }
-        
+
         set {
             sortedActiveParticipants = newValue
         }
     }
 
-    static func oneOnOneConversation() -> MockConversation {
+    static func oneOnOneConversation(otherUser: UserType = MockUser.mockUsers().first!) -> MockConversation {
         let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
-        let otherUser = MockUser.mockUsers().first!
         let mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
         mockConversation.displayName = otherUser.name
@@ -53,10 +52,9 @@ extension MockConversation {
 
         return mockConversation
     }
-    
-    static func groupConversation() -> MockConversation {
-        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
-        let otherUser = MockUser.mockUsers().first!
+
+    static func groupConversation(selfUser: UserType = MockUserType.createSelfUser(name: "Alice"),
+                                  otherUser: UserType = SwiftMockLoader.mockUsers().first!) -> MockConversation {
         let mockConversation = MockConversation()
         mockConversation.conversationType = .group
         mockConversation.displayName = otherUser.name

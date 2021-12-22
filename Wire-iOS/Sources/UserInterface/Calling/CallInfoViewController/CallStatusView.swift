@@ -18,35 +18,6 @@
 
 import UIKit
 
-
-protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider, CBRSettingProvider {
-    var state: CallStatusViewState { get }
-    var isConstantBitRate: Bool { get }
-    var title: String { get }
-}
-
-protocol CallTypeProvider {
-    var isVideoCall: Bool { get }
-}
-
-protocol ColorVariantProvider {
-    var variant: ColorSchemeVariant { get }
-}
-
-protocol CBRSettingProvider {
-    var userEnabledCBR: Bool { get }
-}
-
-extension CallStatusViewInputType {
-    var overlayBackgroundColor: UIColor {
-        switch (isVideoCall, state) {
-        case (false, _): return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
-        case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
-        case (true, _): return UIColor.black.withAlphaComponent(0.64)
-        }
-    }
-}
-
 enum CallStatusViewState: Equatable {
     case none
     case connecting
@@ -63,14 +34,13 @@ final class CallStatusView: UIView {
     private let subtitleLabel = UILabel()
     private let bitrateLabel = BitRateLabel()
     private let stackView = UIStackView(axis: .vertical)
-    
+
     var configuration: CallStatusViewInputType {
         didSet {
             updateConfiguration()
         }
     }
-    
-    
+
     init(configuration: CallStatusViewInputType) {
         self.configuration = configuration
         super.init(frame: .zero)
@@ -78,12 +48,12 @@ final class CallStatusView: UIView {
         createConstraints()
         updateConfiguration()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         [stackView, bitrateLabel].forEach(addSubview)
         stackView.distribution = .fill
@@ -107,7 +77,7 @@ final class CallStatusView: UIView {
         bitrateLabel.accessibilityIdentifier = "bitrate-indicator"
         bitrateLabel.isHidden = true
     }
-    
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
@@ -119,18 +89,18 @@ final class CallStatusView: UIView {
             bitrateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
-        bitrateLabel.isHidden = !configuration.userEnabledCBR
+        bitrateLabel.isHidden = !configuration.shouldShowBitrateLabel
         bitrateLabel.bitRateStatus = BitRateStatus(configuration.isConstantBitRate)
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textColor = UIColor.from(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         }
     }
-    
+
 }
 
 // MARK: - Helper
@@ -142,8 +112,7 @@ private let callDurationFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
-extension CallStatusViewInputType {
-
+private extension CallStatusViewInputType {
     var displayString: String {
         switch state {
         case .none: return ""
@@ -156,10 +125,4 @@ extension CallStatusViewInputType {
         case .terminating: return "call.status.terminating".localized
         }
     }
-    
-    var effectiveColorVariant: ColorSchemeVariant {
-        guard !isVideoCall else { return .dark }
-        return variant
-    }
-    
 }

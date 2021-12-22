@@ -20,31 +20,31 @@ import Foundation
 import UIKit
 
 final class CreateGroupSection: NSObject, CollectionViewSectionController {
-    
+
     enum Row {
         case createGroup
         case createGuestRoom
     }
-    
+
     private var data: [Row] {
         return SelfUser.current.isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
     }
-    
+
     weak var delegate: SearchSectionControllerDelegate?
 
     var isHidden: Bool {
         return !SelfUser.current.canCreateConversation(type: .group)
     }
-    
+
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView?.register(CreateGroupCell.self, forCellWithReuseIdentifier: CreateGroupCell.zm_reuseIdentifier)
         collectionView?.register(CreateGuestRoomCell.self, forCellWithReuseIdentifier: CreateGuestRoomCell.zm_reuseIdentifier)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch data[indexPath.row] {
         case .createGroup:
@@ -53,15 +53,15 @@ final class CreateGroupSection: NSObject, CollectionViewSectionController {
             return collectionView.dequeueReusableCell(withReuseIdentifier: CreateGuestRoomCell.zm_reuseIdentifier, for: indexPath)
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .zero
     }
-        
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         switch data[indexPath.row] {
@@ -70,7 +70,7 @@ final class CreateGroupSection: NSObject, CollectionViewSectionController {
         case .createGuestRoom:
             delegate?.searchSectionController(self, didSelectRow: .createGuestRoom, at: indexPath)
         }
-        
+
     }
-    
+
 }

@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
-    
+
     var cell: GroupDetailsNotificationOptionsCell!
     var conversation: ZMConversation!
-    
+
     override func setUp() {
         selfUserInTeam = true
         super.setUp()
@@ -31,29 +31,29 @@ class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
         cell.colorSchemeVariant = .light
         conversation = self.createGroupConversation()
     }
-    
+
     override func tearDown() {
         cell = nil
         conversation = nil
         resetColorScheme()
         super.tearDown()
     }
-    
+
     func testThatItDisplaysCell_NoMuted() {
         update(.none)
         verify(view: cell)
     }
-    
+
     func testThatItDisplaysCell_NonMentionsMuted() {
         update(.regular)
         verify(view: cell)
     }
-    
+
     func testThatItDisplaysCell_AllMuted() {
         update(.all)
         verify(view: cell)
     }
-    
+
     func testThatItDisplaysCell_Dark() {
         cell.colorSchemeVariant = .dark
         update(.all)
@@ -64,5 +64,5 @@ class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
         conversation.mutedMessageTypes = newValue
         cell.configure(with: conversation)
     }
-    
+
 }

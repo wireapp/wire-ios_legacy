@@ -17,10 +17,7 @@
 //
 
 import Foundation
-import Cartography
 import UIKit
-import WireSystem
-import WireDataModel
 import WireSyncEngine
 import avs
 import WireCommonComponents
@@ -31,7 +28,7 @@ final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
-    
+
     var audioTrackPlayer: AudioTrackPlayer? {
         let mediaManager = mediaPlaybackManager ?? AppDelegate.shared.mediaPlaybackManager
         let audioTrackPlayer = mediaManager?.audioTrackPlayer
@@ -71,6 +68,7 @@ final class AudioMessageView: UIView, TransferView {
 
         return waveformProgressView
     }()
+
     private let loadingView = ThreeDotsLoadingView()
 
     private var allViews: [UIView] = []
@@ -85,7 +83,6 @@ final class AudioMessageView: UIView, TransferView {
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall: Bool
 
-    
     init(mediaPlaybackManager: MediaPlaybackManager? = nil) {
         isPausedForIncomingCall = false
         self.mediaPlaybackManager = mediaPlaybackManager
@@ -93,27 +90,27 @@ final class AudioMessageView: UIView, TransferView {
         super.init(frame: .zero)
         backgroundColor = .from(scheme: .placeholderBackground)
 
-        self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
-        self.playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
-        self.playButton.accessibilityIdentifier = "AudioActionButton"
-        self.playButton.layer.masksToBounds = true
+        playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
+        playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
+        playButton.accessibilityIdentifier = "AudioActionButton"
+        playButton.layer.masksToBounds = true
 
-        self.downloadProgressView.isUserInteractionEnabled = false
-        self.downloadProgressView.accessibilityIdentifier = "AudioProgressView"
+        downloadProgressView.isUserInteractionEnabled = false
+        downloadProgressView.accessibilityIdentifier = "AudioProgressView"
 
-        self.playerProgressView.setDeterministic(true, animated: false)
-        self.playerProgressView.accessibilityIdentifier = "PlayerProgressView"
+        playerProgressView.setDeterministic(true, animated: false)
+        playerProgressView.accessibilityIdentifier = "PlayerProgressView"
 
-        self.loadingView.isHidden = true
+        loadingView.isHidden = true
 
-        self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView]
-        self.allViews.forEach(self.addSubview)
+        allViews = [playButton, timeLabel, downloadProgressView, playerProgressView, waveformProgressView, loadingView]
+        allViews.forEach(addSubview)
 
-        self.createConstraints()
+        createConstraints()
 
-        var currentElements = self.accessibilityElements ?? []
+        var currentElements = accessibilityElements ?? []
         currentElements.append(contentsOf: [playButton, timeLabel])
-        self.accessibilityElements = currentElements
+        accessibilityElements = currentElements
 
         setNeedsLayout()
         layoutIfNeeded()
@@ -122,126 +119,132 @@ final class AudioMessageView: UIView, TransferView {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
         }
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
 
     private func createConstraints() {
-        constrain(self, self.playButton, self.timeLabel) { selfView, playButton, timeLabel in
-            selfView.height == 56
+        [self,
+         playButton,
+         timeLabel,
+         downloadProgressView,
+         playerProgressView,
+         waveformProgressView,
+         loadingView].prepareForLayout()
 
-            playButton.left == selfView.left + 12
-            playButton.centerY == selfView.centerY
-            playButton.width == 32
-            playButton.height == playButton.width
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(equalToConstant: 56),
 
-            timeLabel.left == playButton.right + 12
-            timeLabel.centerY == selfView.centerY
-            timeLabel.width >= 32
-        }
+            playButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            playButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: 32),
+            playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor),
 
-        constrain(self.downloadProgressView, self.playButton) { downloadProgressView, playButton in
-            downloadProgressView.center == playButton.center
-            downloadProgressView.width == playButton.width - 2
-            downloadProgressView.height == playButton.height - 2
-        }
+            timeLabel.leftAnchor.constraint(equalTo: playButton.rightAnchor, constant: 12),
+            timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 32),
 
-        constrain(self, self.playerProgressView, self.timeLabel, self.waveformProgressView, self.loadingView) { selfView, playerProgressView, timeLabel, waveformProgressView, loadingView in
-            playerProgressView.centerY == selfView.centerY
-            playerProgressView.left == timeLabel.right + 12
-            playerProgressView.right == selfView.right - 12
-            playerProgressView.height == 1
+            downloadProgressView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor),
+            downloadProgressView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
+            downloadProgressView.widthAnchor.constraint(equalTo: playButton.widthAnchor, constant: -2),
+            downloadProgressView.heightAnchor.constraint(equalTo: playButton.heightAnchor, constant: -2),
 
-            waveformProgressView.centerY == selfView.centerY
-            waveformProgressView.left == playerProgressView.left
-            waveformProgressView.right == playerProgressView.right
-            waveformProgressView.height == 32
+            playerProgressView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            playerProgressView.leftAnchor.constraint(equalTo: timeLabel.rightAnchor, constant: 12),
+            playerProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
+            playerProgressView.heightAnchor.constraint(equalToConstant: 1),
 
-            loadingView.center == selfView.center
-        }
+            waveformProgressView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            waveformProgressView.leftAnchor.constraint(equalTo: playerProgressView.leftAnchor),
+            waveformProgressView.rightAnchor.constraint(equalTo: playerProgressView.rightAnchor),
+            waveformProgressView.heightAnchor.constraint(equalToConstant: 32),
 
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 
     override var tintColor: UIColor! {
         didSet {
-            self.downloadProgressView.tintColor = self.tintColor
+            downloadProgressView.tintColor = tintColor
         }
     }
 
     func stopProximitySensor() {
-        self.proximityMonitorManager?.stopListening()
+        proximityMonitorManager?.stopListening()
     }
 
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
-        self.fileMessage = message
+        fileMessage = message
 
         guard let fileMessageData = message.fileMessageData else {
             return
         }
 
         if isInitial {
-            self.expectingDownload = false
+            expectingDownload = false
         } else {
-            if fileMessageData.downloadState == .downloaded && self.expectingDownload {
-                self.playTrack()
-                self.expectingDownload = false
+            if fileMessageData.downloadState == .downloaded && expectingDownload {
+                playTrack()
+                expectingDownload = false
             }
         }
 
-        self.configureVisibleViews(forFileMessageData: fileMessageData, isInitial: isInitial)
-        self.updateTimeLabel()
+        configureVisibleViews(forFileMessageData: fileMessageData, isInitial: isInitial)
+        updateTimeLabel()
 
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            self.updateActivePlayerProgressAnimated(false)
-            self.updateActivePlayButton()
+        if isOwnTrackPlayingInAudioPlayer() {
+            updateActivePlayerProgressAnimated(false)
+            updateActivePlayButton()
         } else {
-            self.playerProgressView.setProgress(0, animated: false)
-            self.waveformProgressView.setProgress(0, animated: false)
+            playerProgressView.setProgress(0, animated: false)
+            waveformProgressView.setProgress(0, animated: false)
         }
     }
 
     func willDeleteMessage() {
         proximityMonitorManager?.stopListening()
-        guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
+        guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(fileMessage) else { return }
         player.stop()
     }
 
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, isInitial: Bool) {
-        guard let fileMessage = self.fileMessage,
-            let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
+        guard let fileMessage = fileMessage,
+              let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
 
-        var visibleViews = [self.playButton, self.timeLabel]
+        var visibleViews = [playButton, timeLabel]
 
-        if (fileMessageData.normalizedLoudness?.count ?? 0 > 0) {
+        if fileMessageData.normalizedLoudness?.isEmpty == false {
             waveformProgressView.samples = fileMessageData.normalizedLoudness ?? []
-            if let accentColor = fileMessage.sender?.accentColor {
+            if let accentColor = fileMessage.senderUser?.accentColor {
                 waveformProgressView.barColor = accentColor
                 waveformProgressView.highlightedBarColor = UIColor.gray
             }
-            visibleViews.append(self.waveformProgressView)
+            visibleViews.append(waveformProgressView)
         } else {
-            visibleViews.append(self.playerProgressView)
+            visibleViews.append(playerProgressView)
         }
 
         switch state {
         case .obfuscated: visibleViews = []
-        case .unavailable: visibleViews = [self.loadingView]
+        case .unavailable: visibleViews = [loadingView]
         case .downloading, .uploading:
-            visibleViews.append(self.downloadProgressView)
-            self.downloadProgressView.setProgress(fileMessageData.progress, animated: !isInitial)
+            visibleViews.append(downloadProgressView)
+            downloadProgressView.setProgress(fileMessageData.progress, animated: !isInitial)
         default:
             break
         }
 
         if let viewsState = state.viewsStateForAudio() {
-            self.playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
-            self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
-            self.playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
+            playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
+            playButton.backgroundColor = viewsState.playButtonBackgroundColor
+            playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
         }
 
         updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
@@ -251,15 +254,15 @@ final class AudioMessageView: UIView, TransferView {
 
         var duration: Int? = .none
 
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            if let audioTrackPlayer = self.audioTrackPlayer {
+        if isOwnTrackPlayingInAudioPlayer() {
+            if let audioTrackPlayer = audioTrackPlayer {
                 duration = Int(audioTrackPlayer.elapsedTime)
             }
         } else {
-            guard let message = self.fileMessage,
-                let fileMessageData = message.fileMessageData else {
-                    return
-            }
+            guard let message = fileMessage,
+                  let fileMessageData = message.fileMessageData else {
+                      return
+                  }
             if fileMessageData.durationMilliseconds != 0 {
                 duration = Int(roundf(Float(fileMessageData.durationMilliseconds) / 1000.0))
             }
@@ -268,38 +271,38 @@ final class AudioMessageView: UIView, TransferView {
         if let durationUnboxed = duration {
             let (seconds, minutes) = (durationUnboxed % 60, durationUnboxed / 60)
             let time = String(format: "%d:%02d", minutes, seconds)
-            self.timeLabel.text = time
+            timeLabel.text = time
         } else {
-            self.timeLabel.text = ""
+            timeLabel.text = ""
         }
-        self.timeLabel.accessibilityValue = self.timeLabel.text
+        timeLabel.accessibilityValue = timeLabel.text
     }
 
     private func updateActivePlayButton() {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        guard let audioTrackPlayer = audioTrackPlayer else { return }
 
-        self.playButton.backgroundColor = FileMessageViewState.normalColor
+        playButton.backgroundColor = FileMessageViewState.normalColor
 
         if audioTrackPlayer.isPlaying {
-            self.playButton.setIcon(.pause, size: .tiny, for: [])
-            self.playButton.accessibilityValue = "pause"
+            playButton.setIcon(.pause, size: .tiny, for: [])
+            playButton.accessibilityValue = "pause"
         } else {
-            self.playButton.setIcon(.play, size: .tiny, for: [])
-            self.playButton.accessibilityValue = "play"
+            playButton.setIcon(.play, size: .tiny, for: [])
+            playButton.accessibilityValue = "play"
         }
     }
 
     private func updateInactivePlayer() {
-        self.playButton.backgroundColor = FileMessageViewState.normalColor
-        self.playButton.setIcon(.play, size: .tiny, for: [])
-        self.playButton.accessibilityValue = "play"
+        playButton.backgroundColor = FileMessageViewState.normalColor
+        playButton.setIcon(.play, size: .tiny, for: [])
+        playButton.accessibilityValue = "play"
 
-        self.playerProgressView.setProgress(0, animated: false)
-        self.waveformProgressView.setProgress(0, animated: false)
+        playerProgressView.setProgress(0, animated: false)
+        waveformProgressView.setProgress(0, animated: false)
     }
 
     private func updateActivePlayerProgressAnimated(_ animated: Bool) {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        guard let audioTrackPlayer = audioTrackPlayer else { return }
 
         let progress: Float
         var animated = animated
@@ -311,32 +314,32 @@ final class AudioMessageView: UIView, TransferView {
             progress = Float(audioTrackPlayer.progress)
         }
 
-        self.playerProgressView.setProgress(progress, animated: animated)
-        self.waveformProgressView.setProgress(progress, animated: animated)
+        playerProgressView.setProgress(progress, animated: animated)
+        waveformProgressView.setProgress(progress, animated: animated)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
+        playButton.layer.cornerRadius = playButton.bounds.size.width / 2.0
     }
 
     func stopPlaying() {
-        guard let player = self.audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
+        guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(fileMessage) else { return }
         player.pause()
     }
 
     private func playTrack() {
         let userSession = ZMUserSession.shared()
-        guard let fileMessage = self.fileMessage,
-            let fileMessageData = fileMessage.fileMessageData,
-            let audioTrackPlayer = self.audioTrackPlayer,
-            userSession == nil || userSession!.isCallOngoing == false else {
-                return
-        }
+        guard let fileMessage = fileMessage,
+              let fileMessageData = fileMessage.fileMessageData,
+              let audioTrackPlayer = audioTrackPlayer,
+              userSession == nil || userSession!.isCallOngoing == false else {
+                  return
+              }
 
-        self.proximityMonitorManager?.stateChanged = proximityStateDidChange
+        proximityMonitorManager?.stateChanged = proximityStateDidChange
 
-        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
+        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(fileMessage) ?? false
 
         // first play
         if let track = fileMessage.audioTrack, !audioTrackPlayingSame {
@@ -366,9 +369,9 @@ final class AudioMessageView: UIView, TransferView {
     /// is ephemeral and it would exceed its destruction date.
     private func extendEphemeralTimerIfNeeded(to endDate: Date) {
         guard let destructionDate = fileMessage?.destructionDate,
-            endDate > destructionDate,
-            let assetMsg = fileMessage as? ZMAssetClientMessage
-            else { return }
+              endDate > destructionDate,
+              let assetMsg = fileMessage as? ZMAssetClientMessage
+        else { return }
 
         assetMsg.extendDestructionTimer(to: endDate)
     }
@@ -377,14 +380,14 @@ final class AudioMessageView: UIView, TransferView {
     ///
     /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
-        guard let message = self.fileMessage,
-            let audioTrack = message.audioTrack,
-            let audioTrackPlayer = self.audioTrackPlayer
-            else {
-                return false
+        guard let message = fileMessage,
+              let audioTrack = message.audioTrack,
+              let audioTrackPlayer = audioTrackPlayer
+        else {
+            return false
         }
 
-        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
+        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(fileMessage) ?? false
         return audioTrackPlayingSame && (audioTrackPlayer.audioTrack?.isEqual(audioTrack) ?? false)
     }
 
@@ -393,27 +396,27 @@ final class AudioMessageView: UIView, TransferView {
     @objc private func onActionButtonPressed(_ sender: UIButton) {
         isPausedForIncomingCall = false
 
-        guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
+        guard let fileMessage = fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
 
-        switch(fileMessageData.transferState) {
+        switch fileMessageData.transferState {
         case .uploading:
             if .none != fileMessageData.fileURL {
-                self.delegate?.transferView(self, didSelect: .cancel)
+                delegate?.transferView(self, didSelect: .cancel)
             }
         case .uploadingCancelled, .uploadingFailed:
             if .none != fileMessageData.fileURL {
-                self.delegate?.transferView(self, didSelect: .resend)
+                delegate?.transferView(self, didSelect: .resend)
             }
         case .uploaded:
             switch fileMessageData.downloadState {
             case .remote:
-                self.expectingDownload = true
+                expectingDownload = true
                 ZMUserSession.shared()?.enqueue(fileMessageData.requestFileDownload)
             case .downloaded:
                 playTrack()
             case .downloading:
-                self.downloadProgressView.setProgress(0, animated: false)
-                self.delegate?.transferView(self, didSelect: .cancel)
+                downloadProgressView.setProgress(0, animated: false)
+                delegate?.transferView(self, didSelect: .cancel)
             }
         }
     }
@@ -435,7 +438,7 @@ final class AudioMessageView: UIView, TransferView {
             updateTimeLabel()
             updateProximityObserverState()
         }
-            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+        /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
         else if state == .completed {
             updateTimeLabel()
         } else {
@@ -446,7 +449,7 @@ final class AudioMessageView: UIView, TransferView {
     // MARK: - Proximity Listener
 
     private func updateProximityObserverState() {
-        guard let audioTrackPlayer = self.audioTrackPlayer, isOwnTrackPlayingInAudioPlayer() else { return }
+        guard let audioTrackPlayer = audioTrackPlayer, isOwnTrackPlayingInAudioPlayer() else { return }
 
         if audioTrackPlayer.isPlaying {
             proximityMonitorManager?.startListening()

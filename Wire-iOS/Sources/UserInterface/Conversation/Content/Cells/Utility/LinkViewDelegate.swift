@@ -20,13 +20,13 @@ import UIKit
 
 typealias ContextMenuLinkViewDelegate = ContextMenuDelegate & LinkViewDelegate
 
-protocol LinkViewDelegate: class {
+protocol LinkViewDelegate: AnyObject {
     var url: URL? { get }
     func linkViewWantsToOpenURL(_ view: UIView)
 }
 
 extension LinkViewDelegate {
-    
+
     /// default implementation
     /// - Parameter view: view to open the URL
     func linkViewWantsToOpenURL(_ view: UIView) {

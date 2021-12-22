@@ -78,7 +78,6 @@ struct VerticalColumnPositioning {
                            y: columnHeights[currentColumn] + itemVerticalSpacing,
                            width: context.columnWidth, height: adjustedHeight)
 
-
         // Create the attributes
 
         let rowAttributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)

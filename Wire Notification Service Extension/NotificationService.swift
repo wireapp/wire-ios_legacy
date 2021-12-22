@@ -70,62 +70,72 @@ public class NotificationService: UNNotificationServiceExtension {
     
 }
 
-extension NotificationService: UpdateEventsDelegate {
-    public func didReceive(events: [ZMUpdateEvent], in moc: NSManagedObjectContext) {
+//extension NotificationService: UpdateEventsDelegate {
+//    public func didReceive(events: [ZMUpdateEvent], in moc: NSManagedObjectContext) {
+//        if let bestAttemptContent = bestAttemptContent {
+//            let localNotifications = processEvents(events, liveEvents: true, prefetchResult: nil, moc: moc).compactMap { $0 }
+//            var bodyText = ""
+//            var titleText = ""
+//            switch localNotifications.count {
+//            case 0:
+//                let emptyContent = UNNotificationContent()
+//                contentHandler!(emptyContent)
+//            case 1:
+//                if let notification = localNotifications.first {
+//                    print(notification)
+//                    bodyText = notification.body
+//                    titleText = notification.title ?? ""
+//                }
+//            default:
+//                bodyText = "\(localNotifications.count) Notifications"
+//            }
+//            bestAttemptContent.body = bodyText
+//            bestAttemptContent.title = titleText
+//
+//
+//            //            if localNotifications.count > 1 {
+//            //                bestAttemptContent.body = "\(localNotifications.count) Notifications"
+//            //            } else {
+//            //                if let notification = localNotifications.first {
+//            //                    print(notification)
+//            //                }
+//            //            }
+//            contentHandler!(bestAttemptContent)
+//        }
+//    }
+//}
+extension NotificationService: NotificationSessionDelegate {
+
+    public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
         if let bestAttemptContent = bestAttemptContent {
-            let localNotifications = processEvents(events, liveEvents: true, prefetchResult: nil, moc: moc).compactMap { $0 }
-            var bodyText = ""
-            var titleText = ""
-            switch localNotifications.count {
-            case 0:
-                let emptyContent = UNNotificationContent()
-                contentHandler!(emptyContent)
-            case 1:
-                if let notification = localNotifications.first {
-                    print(notification)
-                    bodyText = notification.body
-                    titleText = notification.title ?? ""
-                }
-            default:
-                bodyText = "\(localNotifications.count) Notifications"
-            }
-            bestAttemptContent.body = bodyText
-            bestAttemptContent.title = titleText
-            
-            
-            //            if localNotifications.count > 1 {
-            //                bestAttemptContent.body = "\(localNotifications.count) Notifications"
-            //            } else {
-            //                if let notification = localNotifications.first {
-            //                    print(notification)
-            //                }
-            //            }
+            bestAttemptContent.body = alert.body
+            bestAttemptContent.title = alert.title
             contentHandler!(bestAttemptContent)
         }
     }
+
 }
 
 
-
-extension NotificationService {
-
-    public func processEvents(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
-        let eventsToForward = events.filter { $0.source.isOne(of: .pushNotification, .webSocket) }
-        return self.didConvert(events: eventsToForward, conversationMap: prefetchResult?.conversationsByRemoteIdentifier ?? [:], moc: moc)
-    }
-
-    private func didConvert(events: [ZMUpdateEvent], conversationMap: [UUID: ZMConversation], moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
-        var localNotifications: [ZMLocalNotification?] = []
-        events.forEach { event in
-            var conversation: ZMConversation?
-            if let conversationID = event.conversationUUID() {
-                // Fetch the conversation here to avoid refetching every time we try to create a notification
-                conversation = conversationMap[conversationID] ?? ZMConversation.fetch(withRemoteIdentifier: conversationID, in: moc)
-            }
-            
-            let note = ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: moc)
-            localNotifications.append(note)
-        }
-        return localNotifications
-    }
-}
+//extension NotificationService {
+//
+//    public func processEvents(_ events: [ZMUpdateEvent], liveEvents: Bool, prefetchResult: ZMFetchRequestBatchResult?, moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
+//        let eventsToForward = events.filter { $0.source.isOne(of: .pushNotification, .webSocket) }
+//        return self.didConvert(events: eventsToForward, conversationMap: prefetchResult?.conversationsByRemoteIdentifier ?? [:], moc: moc)
+//    }
+//
+//    private func didConvert(events: [ZMUpdateEvent], conversationMap: [UUID: ZMConversation], moc: NSManagedObjectContext) -> [ZMLocalNotification?] {
+//        var localNotifications: [ZMLocalNotification?] = []
+//        events.forEach { event in
+//            var conversation: ZMConversation?
+//            if let conversationID = event.conversationUUID {
+//                // Fetch the conversation here to avoid refetching every time we try to create a notification
+//                conversation = conversationMap[conversationID] ?? ZMConversation.fetch(with: conversationID, in: moc)
+//            }
+//
+//            let note = ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: moc)
+//            localNotifications.append(note)
+//        }
+//        return localNotifications
+//    }
+//}

@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
-import Cartography
 
 extension ConversationListViewController {
 
@@ -59,8 +57,14 @@ extension ConversationListViewController {
         addToSelf(usernameTakeoverViewController)
         concealContentContainer()
 
-        constrain(view, usernameTakeoverViewController.view) { view, takeover in
-            takeover.edges == view.edges
+        if let takeover = usernameTakeoverViewController.view {
+            takeover.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+              takeover.topAnchor.constraint(equalTo: view.topAnchor),
+              takeover.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+              takeover.leftAnchor.constraint(equalTo: view.leftAnchor),
+              takeover.rightAnchor.constraint(equalTo: view.rightAnchor)
+            ])
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
@@ -71,6 +75,6 @@ extension ConversationListViewController {
     }
 
     func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping ResultHandler) {
-        UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self, completionHandler: completionHandler)        
+        UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self, completionHandler: completionHandler)
     }
 }

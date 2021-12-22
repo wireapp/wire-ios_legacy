@@ -29,6 +29,7 @@ protocol SelfUserProviderUI {
 extension ZMUser {
 
     /// Return self's User object
+    /// Notice: This should be replaced with SelfUser.current
     ///
     /// - Returns: a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
     static func selfUser() -> EditableUser! {

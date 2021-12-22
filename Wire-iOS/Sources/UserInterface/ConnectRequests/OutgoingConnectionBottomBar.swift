@@ -16,15 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
-import Cartography
-
 
 enum OutgoingConnectionBottomBarAction: UInt {
     case cancel, archive
 }
-
 
 final class OutgoingConnectionViewController: UIViewController {
 
@@ -38,7 +34,8 @@ final class OutgoingConnectionViewController: UIViewController {
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -66,13 +63,14 @@ final class OutgoingConnectionViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, cancelButton, archiveButton) { view, cancelButton, archiveButton in
-            cancelButton.leading == view.leading + 24
-            cancelButton.top == view.top + 12
-            cancelButton.bottom == view.bottom - 24
-            archiveButton.centerY == cancelButton.centerY
-            archiveButton.trailing == view.trailing - 24
-        }
+        [cancelButton, archiveButton].prepareForLayout()
+        NSLayoutConstraint.activate([
+          cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+          cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+          cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
+          archiveButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
+          archiveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
+        ])
     }
 
     @objc private func buttonTapped(sender: IconButton) {

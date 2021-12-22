@@ -25,13 +25,12 @@ protocol MediaAsset: AnyObject {
     var isTransparent: Bool { get }
 }
 
-
 extension MediaAsset {
     var imageView: MediaAssetView {
         if isGIF {
             let animatedImageView = FLAnimatedImageView()
             animatedImageView.animatedImage = self as? FLAnimatedImage
-            
+
             return animatedImageView
         } else {
             return UIImageView(image: (self as? UIImage)?.downsized())
@@ -39,7 +38,6 @@ extension MediaAsset {
     }
 
 }
-
 
 protocol MediaAssetView: UIView {
     var mediaAsset: MediaAsset? { get set }
@@ -65,7 +63,7 @@ extension MediaAssetView where Self: FLAnimatedImageView {
         get {
             return animatedImage ?? image
         }
-        
+
         set {
             if let newValue = newValue {
                 if newValue.isGIF == true {
@@ -85,24 +83,23 @@ extension FLAnimatedImage: MediaAsset {
     var imageData: Data? {
         return data
     }
-    
+
     var isGIF: Bool {
         return true
     }
-    
+
     var isTransparent: Bool {
         return false
     }
 }
 
-
 extension UIImageView: MediaAssetView {
-    
+
     var imageData: Data? {
         get {
             return image?.imageData
         }
-        
+
         set {
             if let imageData = newValue {
                 image = UIImage(data: imageData)
@@ -110,6 +107,3 @@ extension UIImageView: MediaAssetView {
         }
     }
 }
-
-
-

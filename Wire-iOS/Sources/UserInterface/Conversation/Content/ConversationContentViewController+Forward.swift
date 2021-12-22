@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import Cartography
 import WireCommonComponents
 import UIKit
 
@@ -31,6 +30,9 @@ extension ZMConversation: ShareDestination {
                 $0.isGuest(in: self) } != nil
     }
 
+}
+
+extension ShareDestination where Self: ConversationAvatarViewConversation {
     var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.configure(context: .conversation(conversation: self))
@@ -43,72 +45,97 @@ extension Array where Element == ZMConversation {
     // Should be called inside ZMUserSession.shared().perform block
     func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
         forEach {
-            let timeout = $0.messageDestructionTimeout
-            $0.messageDestructionTimeout = nil
+            guard let timeout = $0.activeMessageDestructionTimeoutValue,
+                  let type = $0.activeMessageDestructionTimeoutType else {
+                      block($0)
+                      return
+                  }
+            $0.setMessageDestructionTimeoutValue(.init(rawValue: 0), for: type)
             block($0)
-            $0.messageDestructionTimeout = timeout
+            $0.setMessageDestructionTimeoutValue(timeout, for: type)
         }
-    }
-}
-
-func forward(_ message: ZMMessage, to: [AnyObject]) {
-
-    let conversations = to as! [ZMConversation]
-
-    if message.isText {
-        let fetchLinkPreview = !Settings.disableLinkPreviews
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral {
-                // We should not forward any mentions to other conversations
-                _ = $0.append(text: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
-            }
-        }
-    } else if message.isImage, let imageData = message.imageMessageData?.imageData {
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral { _ = $0.append(imageFromData: imageData) }
-        }
-    } else if message.isVideo || message.isAudio || message.isFile {
-        let url  = message.fileMessageData!.fileURL!
-        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
-            ZMUserSession.shared()?.perform {
-                conversations.forEachNonEphemeral { _ = $0.append(file: fileMetadata) }
-            }
-        }
-    } else if message.isLocation {
-        let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
-        ZMUserSession.shared()?.perform {
-            conversations.forEachNonEphemeral { _ = $0.append(location: locationData) }
-        }
-    } else {
-        fatal("Cannot forward message")
     }
 }
 
 extension ZMMessage: Shareable {
+    typealias I = ZMConversation
 
     func share<ZMConversation>(to: [ZMConversation]) {
-        forward(self, to: to as [AnyObject])
+        forward(to: to as [AnyObject])
     }
 
-    typealias I = ZMConversation
+    func forward(to: [AnyObject]) {
+
+        let conversations = to as! [ZMConversation]
+
+        if isText {
+            let fetchLinkPreview = !Settings.disableLinkPreviews
+            ZMUserSession.shared()?.perform {
+                conversations.forEachNonEphemeral {
+                    do {
+                        // We should not forward any mentions to other conversations
+                        try $0.appendText(content: self.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append text message. Reason: \(error.localizedDescription)")
+                    }
+                }
+            }
+        } else if isImage, let imageData = imageMessageData?.imageData {
+            ZMUserSession.shared()?.perform {
+                conversations.forEachNonEphemeral {
+                    do {
+                        try $0.appendImage(from: imageData)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append image message. Reason: \(error.localizedDescription)")
+                    }
+                }
+            }
+        } else if isVideo || isAudio || isFile {
+            let url  = fileMessageData!.fileURL!
+            FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
+                ZMUserSession.shared()?.perform {
+                    conversations.forEachNonEphemeral {
+                        do {
+                            try $0.appendFile(with: fileMetadata)
+                        } catch {
+                            Logging.messageProcessing.warn("Failed to append file message. Reason: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        } else if isLocation {
+            let locationData = LocationData.locationData(withLatitude: locationMessageData!.latitude, longitude: locationMessageData!.longitude, name: locationMessageData!.name, zoomLevel: locationMessageData!.zoomLevel)
+            ZMUserSession.shared()?.perform {
+                conversations.forEachNonEphemeral {
+                    do {
+                        try $0.appendLocation(with: locationData)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append location message. Reason: \(error.localizedDescription)")
+                    }
+                }
+            }
+        } else {
+            fatal("Cannot forward message")
+        }
+    }
 
 }
 
 extension ZMConversationMessage {
     func previewView() -> UIView? {
-        let view = self.preparePreviewView(shouldDisplaySender: false)
+        let view = preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }
 }
 
-extension ZMConversationList {///TODO mv to DM
-    func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
-        return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
+extension ZMConversationList {/// TODO mv to DM
+    func shareableConversations(excluding: ConversationLike? = nil) -> [ZMConversation] {
+        return map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
-                conversation != excluding
+                !(conversation === excluding)
         }
     }
 }
@@ -140,11 +167,12 @@ extension ConversationContentViewController {
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
     func showForwardFor(message: ZMConversationMessage?, from view: UIView?) {
-        guard let message = message else { return }
+        guard let userSession = ZMUserSession.shared(),
+              let message = message else { return }
 
         endEditing()
 
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession ).shareableConversations(excluding: message.conversationLike)
 
         let shareViewController = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message as! ZMMessage,

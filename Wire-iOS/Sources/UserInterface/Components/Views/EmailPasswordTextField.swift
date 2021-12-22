@@ -18,7 +18,7 @@
 
 import UIKit
 
-protocol EmailPasswordTextFieldDelegate: class {
+protocol EmailPasswordTextFieldDelegate: AnyObject {
     func textFieldDidUpdateText(_ textField: EmailPasswordTextField)
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField)
     func textField(_ textField: EmailPasswordTextField, didConfirmCredentials credentials: (String, String))
@@ -26,12 +26,17 @@ protocol EmailPasswordTextFieldDelegate: class {
 
 class EmailPasswordTextField: UIView, MagicTappable {
 
-    let emailField = AccessoryTextField(kind: .email)
-    let passwordField = AccessoryTextField(kind: .password(isNew: false))
+    let emailField = ValidatedTextField(kind: .email)
+    let passwordField = ValidatedTextField(kind: .password(isNew: false))
     let contentStack = UIStackView()
     let separatorContainer: ContentInsetView
 
     var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updateEmailFieldisEnabled()
+        }
+    }
 
     weak var delegate: EmailPasswordTextFieldDelegate?
 
@@ -62,13 +67,9 @@ class EmailPasswordTextField: UIView, MagicTappable {
         configureConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        let separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        separatorContainer = ContentInsetView(UIView(), inset: separatorInset)
-        super.init(coder: aDecoder)
-
-        configureSubviews()
-        configureConstraints()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     private func configureSubviews() {
@@ -122,7 +123,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -130,6 +131,11 @@ class EmailPasswordTextField: UIView, MagicTappable {
     func prefill(email: String?) {
         hasPrefilledValue = email != nil
         emailField.text = email
+        updateEmailFieldisEnabled()
+    }
+
+    func updateEmailFieldisEnabled() {
+        emailField.isEnabled = !hasPrefilledValue || allowEditingPrefilledValue
     }
 
     // MARK: - Appearance
@@ -193,7 +199,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return
         }
-        
+
         delegate?.textField(self, didConfirmCredentials: (emailField.input, passwordField.input))
     }
 
@@ -243,4 +249,3 @@ extension EmailPasswordTextField: TextFieldValidationDelegate {
         }
     }
 }
-

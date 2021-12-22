@@ -24,7 +24,7 @@ enum VideoIconStyle: String, IconImageStyle {
     case video
     case screenshare
     case hidden
-    
+
     var icon: StyleKitIcon? {
         switch self {
         case .hidden:
@@ -32,7 +32,7 @@ enum VideoIconStyle: String, IconImageStyle {
         case .screenshare:
             return .screenshare
         case .video:
-            return .videoCall
+            return .camera
         }
     }
 

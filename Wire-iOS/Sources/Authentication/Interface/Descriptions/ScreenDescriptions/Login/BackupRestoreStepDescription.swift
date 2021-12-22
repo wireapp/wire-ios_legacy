@@ -42,7 +42,6 @@ class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDesc
  */
 
 class BackupRestoreStepDescription: AuthenticationStepDescription {
-
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
@@ -62,6 +61,10 @@ class BackupRestoreStepDescription: AuthenticationStepDescription {
             subtext = "registration.no_history.logged_out.subtitle".localized
         }
 
+        guard SecurityFlags.backup.isEnabled else {
+            secondaryView = nil
+            return
+        }
         secondaryView = BackupRestoreStepDescriptionSecondaryView()
     }
 

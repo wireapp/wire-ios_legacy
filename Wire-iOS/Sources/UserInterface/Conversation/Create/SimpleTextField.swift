@@ -19,7 +19,7 @@
 import Foundation
 import UIKit
 
-protocol SimpleTextFieldDelegate: class {
+protocol SimpleTextFieldDelegate: AnyObject {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
     func textFieldReturnPressed(_ textField: SimpleTextField)
     func textFieldDidEndEditing(_ textField: SimpleTextField)
@@ -37,14 +37,14 @@ extension Optional where Wrapped == String {
 }
 
 final class SimpleTextField: UITextField, Themeable {
-    
+
     var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
         }
     }
-    
+
     enum Value {
         case valid(String)
         case error(SimpleTextFieldValidator.ValidationError)
@@ -57,12 +57,11 @@ final class SimpleTextField: UITextField, Themeable {
     public var value: Value? {
         return text.value
     }
-    
-    // MARK:- UI constants
+
+    // MARK: - UI constants
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
-
 
     var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     var placeholderInsets: UIEdgeInsets
@@ -90,6 +89,7 @@ final class SimpleTextField: UITextField, Themeable {
         tintColor = .accent()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,11 +100,11 @@ final class SimpleTextField: UITextField, Themeable {
         accessibilityIdentifier = "NameField"
         autocorrectionType = .no
         contentVerticalAlignment = .center
-        font = AccessoryTextField.enteredTextFont
+        font = ValidatedTextField.enteredTextFont
         delegate = textFieldValidator
         textFieldValidator.delegate = self
     }
-    
+
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
@@ -126,18 +126,19 @@ final class SimpleTextField: UITextField, Themeable {
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
-                                        .font: AccessoryTextField.placeholderFont]
+                                        .font: ValidatedTextField.placeholderFont]
         return placeholder && attribute
     }
 
     override var placeholder: String? {
+        get {
+            return super.placeholder
+        }
+
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
-        }
-        get {
-            return super.placeholder
         }
     }
 
@@ -154,14 +155,13 @@ extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     func textFieldValueSubmitted(_ value: String) {
         textFieldDelegate?.textFieldReturnPressed(self)
     }
-    
+
     func textFieldDidEndEditing() {
         textFieldDelegate?.textFieldDidEndEditing(self)
     }
-    
+
     func textFieldDidBeginEditing() {
         textFieldDelegate?.textFieldDidBeginEditing(self)
     }
 
 }
-

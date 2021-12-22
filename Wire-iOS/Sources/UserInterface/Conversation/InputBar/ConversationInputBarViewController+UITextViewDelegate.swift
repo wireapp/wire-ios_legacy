@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 // MARK: SplitViewController reveal
 
@@ -35,7 +36,9 @@ extension ConversationInputBarViewController {
 }
 
 extension ConversationInputBarViewController: UITextViewDelegate {
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
         // In case the conversation isDeleted
         if conversation.managedObjectContext == nil {
             return
@@ -47,12 +50,12 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateRightAccessoryView()
     }
 
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return textAttachment.image == nil
     }
 
     var isMentionsViewKeyboardCollapsed: Bool {
-        /// press tab or enter to insert mention if iPhone keyboard is collapsed
+        // Press tab or enter to insert mention if iPhone keyboard is collapsed
         if let isKeyboardCollapsed = mentionsView?.isKeyboardCollapsed {
             return isKeyboardCollapsed
         } else {
@@ -66,8 +69,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             if UIDevice.current.type == .iPad,
                 canInsertMention {
                 insertBestMatchMention()
-            }
-            else {
+            } else {
                 inputBar.textView.autocorrectLastWord()
                 sendText()
             }
@@ -79,7 +81,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
             canInsertMention,
             UIDevice.current.type == .iPad || isMentionsViewKeyboardCollapsed {
-            
+
             insertBestMatchMention()
             return false
         }
@@ -119,10 +121,9 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         if textView.text.count > 0 {
             conversation.setIsTyping(false)
         }
-        
+
         guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
         let draft = draftMessage(from: textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 }
-

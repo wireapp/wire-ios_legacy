@@ -31,36 +31,36 @@ final class ButtonTests: XCTestCase {
     }
 
     func testForLongTitleCanBeWrapped() {
-        //GIVEN
+        // GIVEN
         sut.titleLabel?.lineBreakMode = .byWordWrapping
         sut.titleLabel?.numberOfLines = 0
         sut.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
         sut.setTitle("Dummy button with long long long long long long long long title", for: .normal)
 
-        //WHEN & THEN
+        // WHEN & THEN
         verifyInAllPhoneWidths(matching: sut)
     }
 
     func testForStyleChangedToFull() {
-        //GIVEN
+        // GIVEN
         sut.setTitle("Dummy button", for: .normal)
 
-        //WHEN
+        // WHEN
         sut.style = .full
 
-        //THEN
+        // THEN
         verify(matching: sut)
     }
 
     func testForStyleChangedToEmpty() {
-        //GIVEN
+        // GIVEN
         sut.setTitle("Dummy button", for: .normal)
 
-        //WHEN
+        // WHEN
         sut.style = .full
         sut.style = .empty
 
-        //THEN
+        // THEN
         verify(matching: sut)
     }
 }

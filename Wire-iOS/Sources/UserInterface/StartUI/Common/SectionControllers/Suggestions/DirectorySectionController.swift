@@ -21,77 +21,94 @@ import WireDataModel
 import UIKit
 import WireSyncEngine
 
-class DirectorySectionController: SearchSectionController {
-    
+final class DirectorySectionController: SearchSectionController {
+
     var suggestions: [ZMSearchUser] = []
-    var delegate: SearchSectionControllerDelegate? = nil
-    var token: AnyObject? = nil
-    weak var collectionView: UICollectionView? = nil
-    
+    weak var delegate: SearchSectionControllerDelegate?
+    var token: AnyObject?
+    weak var collectionView: UICollectionView?
+
     override var isHidden: Bool {
         return self.suggestions.isEmpty
     }
-    
+
     override var sectionTitle: String {
         return "peoplepicker.header.directory".localized
     }
-    
-    override func prepareForUse(in collectionView : UICollectionView?) {
+
+    override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
-        
+
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
-        
+
         self.token = UserChangeInfo.add(searchUserObserver: self, in: ZMUserSession.shared()!)
-        
+
         self.collectionView = collectionView
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return suggestions.count
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = suggestions[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
-        
-        cell.configure(with: user)
+
+        cell.configure(with: user, selfUser: ZMUser.selfUser())
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.userTypeIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
-        cell.connectButton.isHidden = false
+        cell.connectButton.isHidden = !user.canBeUnblocked
         cell.connectButton.tag = indexPath.row
         cell.connectButton.addTarget(self, action: #selector(connect(_:)), for: .touchUpInside)
-        
+
         return cell
     }
-    
+
     @objc func connect(_ sender: AnyObject) {
         guard let button = sender as? UIButton else { return }
-        
+
         let indexPath = IndexPath(row: button.tag, section: 0)
         let user = suggestions[indexPath.row]
-        
-        ZMUserSession.shared()?.enqueue {
-            let username = user.name ?? ""
-            let selfUsername = SelfUser.current.name ?? ""
-            let messageText = "missive.connection_request.default_message".localized(args: username, selfUsername)
-            user.connect(message: messageText)
+
+        if user.isBlocked {
+            user.accept { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? UpdateConnectionError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
+        } else {
+            user.connect { [weak self] error in
+                guard
+                    let strongSelf = self,
+                    let error = error as? ConnectToUserError
+                else {
+                    return
+                }
+
+                self?.delegate?.searchSectionController(strongSelf, wantsToDisplayError: error)
+            }
         }
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = suggestions[indexPath.row]
         delegate?.searchSectionController(self, didSelectUser: user, at: indexPath)
     }
-    
+
 }
 
 extension DirectorySectionController: ZMUserObserver {
-    
+
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged else { return }
-        
+
         collectionView?.reloadData()
     }
-    
+
 }

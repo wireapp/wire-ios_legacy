@@ -25,13 +25,13 @@ enum ConversationType: Int {
 }
 
 extension ConversationType {
-    var analyticsTypeString : String {
+    var analyticsTypeString: String {
         switch  self {
         case .oneToOne:     return "one_to_one"
         case .group:        return "group"
         }
     }
-    
+
     static func type(_ conversation: ZMConversation) -> ConversationType? {
         switch conversation.conversationType {
         case .oneOnOne:
@@ -45,43 +45,59 @@ extension ConversationType {
 }
 
 extension ZMConversation {
-    
-    func analyticsTypeString() -> String? {
+
+    var analyticsTypeString: String? {
         return ConversationType.type(self)?.analyticsTypeString
     }
-        
-    ///TODO: move to DM
+
+    /// TODO: move to DM
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
         guard self.localParticipants.count == 2,
              let otherUser = firstActiveParticipantOtherThanSelf else {
             return false
         }
-        
+
         return otherUser.serviceIdentifier != nil &&
                 otherUser.providerIdentifier != nil
     }
-    
-    ///TODO: move to DM
+
+    /// TODO: move to DM
     /// Whether the conversation includes at least 1 service user.
     var includesServiceUser: Bool {
         let participants = Array(localParticipants)
         return participants.any { $0.isServiceUser }
     }
-    
-    static let userNameSorter: (UserType, UserType) -> Bool = { user0, user1 in
-        user0.name < user1.name
-    }
-    
-    ///TODO: move to DM
-    var sortedServiceUsers: [UserType] {
-        return localParticipants.filter { $0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
+
+    var attributesForConversation: [String: Any] {
+        let participants = sortedActiveParticipants
+
+        let attributes: [String: Any] = [
+            "conversation_type": analyticsTypeString ?? "invalid",
+            "with_service": includesServiceUser ? true : false,
+            "is_allow_guests": accessMode == ConversationAccessMode.allowGuests ? true : false,
+            "conversation_size": participants.count.logRound(),
+            "is_global_ephemeral": hasSyncedMessageDestructionTimeout,
+            "conversation_services": sortedServiceUsers.count.logRound(),
+            "conversation_guests_wireless": participants.filter({
+                $0.isWirelessUser && $0.isGuest(in: self)
+            }).count.logRound(),
+            "conversation_guests_pro": participants.filter({
+                $0.isGuest(in: self) && $0.hasTeam
+            }).count.logRound()]
+
+        return attributes.updated(other: guestAttributes)
     }
 
-    ///TODO: move to DM
-    var sortedOtherParticipants: [UserType] {
-        return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
-    }
+    var guestAttributes: [String: Any] {
 
+        let numGuests = sortedActiveParticipants.filter({
+            $0.isGuest(in: self)
+        }).count
+
+        return [
+            "conversation_guests": numGuests.logRound(),
+            "user_type": SelfUser.current.isGuest(in: self) ? "guest" : "user"
+        ]
+    }
 }
-

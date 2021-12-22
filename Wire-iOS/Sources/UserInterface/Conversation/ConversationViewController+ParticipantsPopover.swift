@@ -23,7 +23,6 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
     func createAndPresentParticipantsPopoverController(with rect: CGRect,
                                                        from view: UIView,
                                                        contentViewController controller: UIViewController) {
-
         endEditing()
 
         controller.presentationController?.delegate = self
@@ -46,7 +45,7 @@ extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 extension ConversationViewController: ViewControllerDismisser {
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+    func dismiss(viewController: UIViewController, completion: (() -> Void)?) {
         dismiss(animated: true, completion: completion)
     }
 }

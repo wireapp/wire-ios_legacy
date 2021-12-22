@@ -31,6 +31,16 @@
 "share_extension.no_internet_connection.title" = "沒有網路連線";
 "share_extension.not_signed_in.title" = "您在登錄Wire後才可以使用分享功能";
 "share_extension.not_signed_in.close_button" = "關閉";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "請輸入登錄密碼解鎖Wire";
+"share_extension.unlock.submit_button.title" = "解除鎖定";
+"share_extension.unlock.textfield.placeholder" = "輸入您的通行密碼";
+"share_extension.unlock.hint_label" = "密碼";
+"share_extension.unlock.error_label" = "錯誤的解鎖密碼";
+"share_extension.unlock.alert.message" = "Open Wire to create a passcode";
+"share_extension.unlock.reveal_passcode" = "顯示密碼";
+
 "share_extension.timeout.title" = "連線逾時。";
 "share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
 "share_extension.privacy_security.lock_app.description" = "解鎖Wire";
@@ -43,3 +53,7 @@
 "meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
 "meta.degraded.cancel_sending_button" = "不傳送";
 "meta.degraded.send_anyway_button" = "確定發送";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";

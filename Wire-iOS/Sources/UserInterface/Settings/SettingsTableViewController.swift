@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
-import Cartography
 import WireSyncEngine
 
 class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
@@ -47,15 +45,16 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
         }
     }
-    
+
     init(style: UITableView.Style) {
         tableView = IntrinsicSizeTableView(frame: .zero, style: style)
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = UIRectEdge()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -91,25 +90,30 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
     }
 
     private func createConstraints() {
-        constrain(view, tableView, topSeparator, footerContainer, footerSeparator) { view, tableView, topSeparator, footerContainer, footerSeparator in
-            tableView.left == view.left
-            tableView.right == view.right
-            tableView.top == view.top
+        [tableView, topSeparator, footerContainer, footerSeparator].prepareForLayout()
 
-            topSeparator.left == tableView.left
-            topSeparator.right == tableView.right
-            topSeparator.top == tableView.top
+        let footerContainerHeightConstraint = footerContainer.heightAnchor.constraint(equalToConstant: 0)
+        footerContainerHeightConstraint.priority = .defaultHigh
 
-            footerContainer.top == tableView.bottom
-            footerContainer.left == tableView.left
-            footerContainer.right == tableView.right
-            footerContainer.bottom == view.bottom
-            footerContainer.height == 0 ~ 750.0
-            
-            footerSeparator.left == footerContainer.left
-            footerSeparator.right == footerContainer.right
-            footerSeparator.top == footerContainer.top
-        }
+        NSLayoutConstraint.activate([
+          tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+          tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+          tableView.topAnchor.constraint(equalTo: view.topAnchor),
+
+          topSeparator.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          topSeparator.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          topSeparator.topAnchor.constraint(equalTo: tableView.topAnchor),
+
+          footerContainer.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+          footerContainer.leftAnchor.constraint(equalTo: tableView.leftAnchor),
+          footerContainer.rightAnchor.constraint(equalTo: tableView.rightAnchor),
+          footerContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+          footerContainerHeightConstraint,
+
+          footerSeparator.leftAnchor.constraint(equalTo: footerContainer.leftAnchor),
+          footerSeparator.rightAnchor.constraint(equalTo: footerContainer.rightAnchor),
+          footerSeparator.topAnchor.constraint(equalTo: footerContainer.topAnchor)
+        ])
     }
 
     private func updateFooter(_ newFooter: UIView?) {
@@ -117,9 +121,13 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         footerSeparator.isHidden = newFooter == nil
         guard let newFooter = newFooter else { return }
         footerContainer.addSubview(newFooter)
-        constrain(footerContainer, newFooter) { container, footer in
-            footer.edges == container.edges
-        }
+        [footerContainer, newFooter].prepareForLayout()
+        NSLayoutConstraint.activate([
+            newFooter.topAnchor.constraint(equalTo: footerContainer.topAnchor),
+            newFooter.bottomAnchor.constraint(equalTo: footerContainer.bottomAnchor),
+            newFooter.leftAnchor.constraint(equalTo: footerContainer.leftAnchor),
+            newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
+        ])
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -154,13 +162,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     let group: SettingsInternalGroupCellDescriptorType
     fileprivate var sections: [SettingsSectionDescriptorType]
     fileprivate var selfUserObserver: NSObjectProtocol!
-    
+
     required init(group: SettingsInternalGroupCellDescriptorType) {
         self.group = group
         self.sections = group.visibleItems
         super.init(style: group.style == .plain ? .plain : .grouped)
         self.title = group.title.localizedUppercase
-        
+
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
                 groupDescriptor.viewController = self
@@ -170,12 +178,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let userSession = ZMUserSession.shared() {
             self.selfUserObserver = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        fatalError()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -185,18 +194,26 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTableView()
-        
+
         self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self, SettingsStaticTextTableCell.self]
+        let allCellTypes: [SettingsTableCell.Type] = [
+            SettingsTableCell.self,
+            SettingsGroupCell.self,
+            SettingsButtonCell.self,
+            SettingsToggleCell.self,
+            SettingsValueCell.self,
+            SettingsTextCell.self,
+            SettingsStaticTextTableCell.self
+        ]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
     }
-    
+
     func refreshData() {
         sections = group.visibleItems
         tableView.reloadData()
@@ -260,12 +277,12 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 }
 
 extension SettingsTableViewController {
-    
+
     @objc
     func applicationDidBecomeActive() {
         refreshData()
     }
-    
+
 }
 
 extension SettingsTableViewController: ZMUserObserver {

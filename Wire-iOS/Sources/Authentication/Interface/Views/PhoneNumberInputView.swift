@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 
 /// An object that receives notification about the phone number input view.
-protocol PhoneNumberInputViewDelegate: class {
+protocol PhoneNumberInputViewDelegate: AnyObject {
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didPickPhoneNumber phoneNumber: PhoneNumber)
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?)
     func phoneNumberInputViewDidRequestCountryPicker(_ inputView: PhoneNumberInputView)
@@ -42,6 +42,16 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     /// The validation error for the current input.
     private(set) var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
 
+    var hasPrefilledValue: Bool = false
+    var allowEditingPrefilledValue: Bool = true {
+        didSet {
+            updatePhoneNumberInputFieldIsEnabled()
+        }
+    }
+    var allowEditing: Bool {
+        return !hasPrefilledValue || allowEditingPrefilledValue
+    }
+
     /// Whether to show the confirm button.
     var showConfirmButton: Bool = true {
         didSet {
@@ -56,7 +66,11 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     var text: String? {
         get { return textField.text }
-        set { textField.text = newValue }
+        set {
+            hasPrefilledValue = newValue != nil
+            textField.text = newValue
+            updatePhoneNumberInputFieldIsEnabled()
+        }
     }
 
     // MARK: - Views
@@ -65,7 +79,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     private let inputStack = UIStackView()
     private let countryCodeInputView = IconButton()
-    private let textField = AccessoryTextField(kind: .phoneNumber, leftInset: 8)
+    private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8)
 
     // MARK: - Initialization
 
@@ -242,15 +256,24 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     /// Sets the phone number to display.
     func setPhoneNumber(_ phoneNumber: PhoneNumber) {
+        hasPrefilledValue = true
         selectCountry(phoneNumber.country)
         textField.updateText(phoneNumber.numberWithoutCode)
+        updatePhoneNumberInputFieldIsEnabled()
+    }
+
+    func updatePhoneNumberInputFieldIsEnabled() {
+        countryPickerButton.isEnabled = allowEditing
     }
 
     // MARK: - Text Update
 
     /// Returns whether the text should be updated.
     func shouldChangeCharacters(in range: NSRange, replacementString: String) -> Bool {
-        guard let replacementRange = Range(range, in: input) else {
+        guard
+            allowEditing,
+            let replacementRange = Range(range, in: input)
+        else {
             return false
         }
 

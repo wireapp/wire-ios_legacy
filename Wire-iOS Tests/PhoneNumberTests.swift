@@ -21,30 +21,30 @@ import XCTest
 final class PhoneNumberTests: XCTestCase {
 
     func testThatPhoneNumberStructWithLeadingZeroCanBeCompared() {
-        //GIVEN
+        // GIVEN
         let phoneNumber1 = PhoneNumber(fullNumber: "+49017612345678")
         let phoneNumber2 = PhoneNumber(fullNumber: "+4917612345678")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(phoneNumber1, phoneNumber2)
 
     }
 
     func testThatDifferentNumbersAreNotEqual() {
-        //GIVEN
+        // GIVEN
         let phoneNumber1 = PhoneNumber(fullNumber: "+4917212345678")
         let phoneNumber2 = PhoneNumber(fullNumber: "+4917612345678")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertNotEqual(phoneNumber1, phoneNumber2)
     }
 
     func testThatUSnumberAreCamparable() {
-        //GIVEN
+        // GIVEN
         let phoneNumber1 = PhoneNumber(countryCode: 1, numberWithoutCode: "5417543010")
         let phoneNumber2 = PhoneNumber(fullNumber: "+1-541-754-3010")
 
-        //WHEN & THEN
+        // WHEN & THEN
         XCTAssertEqual(phoneNumber1, phoneNumber2)
     }
 }

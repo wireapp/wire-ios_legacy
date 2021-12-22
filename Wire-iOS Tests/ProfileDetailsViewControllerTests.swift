@@ -20,31 +20,30 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-
 final class ProfileDetailsViewControllerTests: XCTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUserType!
     var defaultRichProfile: [UserRichProfileField]!
-    
+
     override func setUp() {
         super.setUp()
         selfUserTeam = UUID()
         selfUser = MockUserType.createSelfUser(name: "George Johnson", inTeam: selfUserTeam)
-        
+
         defaultRichProfile = [
             UserRichProfileField(type: "Title", value: "Chief Design Officer"),
-            UserRichProfileField(type: "Entity",  value: "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA")
+            UserRichProfileField(type: "Entity", value: "ACME/OBS/EQUANT/CSO/IBO/OEC/SERVICE OP/CS MGT/CSM EEMEA")
         ]
     }
-    
+
     override func tearDown() {
         selfUser = nil
         selfUserTeam = nil
         defaultRichProfile = nil
         super.tearDown()
     }
-    
+
     // MARK: - 1:1 Conversation
 
     // MARK: Viewer is a team member
@@ -93,19 +92,19 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.emailAddress = nil
-        
+
         selfUser.readReceiptsEnabled = true
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
             ])
     }
-    
+
     func test_OneToOne_OtherUserIsPartner_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -145,7 +144,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
             .readReceiptsStatus(enabled: false)
         ])
     }
-    
+
     func test_OneToOne_OtherUserIsPartner_NoSCIM_NoEmail() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -153,12 +152,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.richProfile = []
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         selfUser.readReceiptsEnabled = false
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
@@ -239,20 +238,20 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
             .readReceiptsStatus(enabled: true)
         ])
     }
-    
+
     func test_OneToOne_OtherUserInTeam_ViewerIsPartner_SCIM_NoEmail() {
         // GIVEN
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
@@ -286,16 +285,16 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [
@@ -303,7 +302,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
             .readReceiptsStatus(enabled: true)
             ])
     }
-    
+
     func test_OneToOne_OtherUserIsGuest_ViewerIsPartner_SCIM() {
         // GIVEN
         selfUser.teamRole = .partner
@@ -355,14 +354,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
@@ -401,21 +400,21 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
             ])
     }
-    
+
     func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -447,36 +446,36 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
         otherUser.emailAddress = nil
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
-        
+
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: conversation, context: .oneToOneConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: conversation, expectedContents: [
             .readReceiptsStatus(enabled: true)
             ])
     }
-    
+
     // MARK: - Group Conversation
 
     // MARK: Viewer is a team member
-    
+
     func test_Group_OtherUser_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
-        
+
         selfUser.readReceiptsEnabled = true
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser,
@@ -490,12 +489,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
-        
+
         selfUser.readReceiptsEnabled = true
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
@@ -509,12 +508,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.emailAddress = nil
-        
+
         selfUser.readReceiptsEnabled = true
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
@@ -565,18 +564,18 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.richProfile = []
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         selfUser.readReceiptsEnabled = true
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
     }
-    
-    func test_Group_SelfUser_SCIM() {///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+
+    func test_Group_SelfUser_SCIM() {/// FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
@@ -592,7 +591,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         ])
     }
 
-    ///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
+    /// FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
     func test_Group_SelfUser_NoSCIM() {
         // GIVEN
         selfUser.availability = .busy
@@ -648,26 +647,26 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
-    
+
     func test_Group_OtherUserInTeam_ViewerIsPartner_SCIM_NoEmail() {
         // GIVEN
         selfUser.teamRole = .partner
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
@@ -697,23 +696,23 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     func test_Group_OtherUserIsPartner_ViewerIsPartner_SCIM_NoEmail() {
         // GIVEN
         selfUser.teamRole = .partner
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
             ])
     }
-    
+
     func test_Group_OtherUserIsGuest_ViewerIsPartner_SCIM() {
         // GIVEN
         selfUser.teamRole = .partner
@@ -739,14 +738,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
@@ -761,19 +760,19 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
-    
+
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -795,7 +794,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
             .richProfile([richProfileFieldWithEmail(for: otherUser)])]
         )
     }
-    
+
     func test_Group_OtherUserIsAdmin_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
@@ -803,14 +802,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .admin
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
@@ -826,19 +825,19 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
-        
+
         let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
-    
+
     func test_Group_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
@@ -858,7 +857,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
     }
-    
+
     func test_Group_OtherUserInTeam_ViewerIsGuestFromOtherTeam_SCIM() {
         // GIVEN
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
@@ -881,7 +880,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     func test_Group_UserAndViewerAreGuestsFromSameTeam_SCIM() {
         // GIVEN
         let otherTeamID = UUID()
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .admin
@@ -892,7 +891,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
@@ -903,7 +902,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     func test_Group_UserAndViewerAreGuestsFromSameTeam_SCIM_NoEmail() {
         // GIVEN
         let otherTeamID = UUID()
-        
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .admin
@@ -915,7 +914,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
-        
+
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
@@ -1032,6 +1031,25 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
                        expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
+    func test_Group_ViewIsAdmin_OtherIsFederated() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = false
+        otherUser.isFederated = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
     // MARK: - Pending Connection
 
     func test_Group_ConnectionRequest() {
@@ -1050,6 +1068,26 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [])
     }
 
+    // MARK: - Blocking Connection
+
+    func test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1() {
+        // GIVEN
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        otherUser.isConnected = false
+        otherUser.readReceiptsEnabled = true
+        otherUser.isGuestInConversation = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.isBlocked = true
+        otherUser.blockState = .blockedMissingLegalholdConsent
+
+        let conversation = MockConversation.groupConversation()
+        conversation.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: conversation, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: selfUser, conversation: conversation, expectedContents: [.blockingReason])
+    }
+
     // MARK: Deep Link
 
     func test_ProfileViewer_OtherUserIsGuest() {
@@ -1062,10 +1100,8 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyProfile(user: guest, viewer: selfUser, conversation: nil, context: .profileViewer)
     }
 
-
-
     // MARK: - Helpers
-    
+
     private func verifyProfile(user: UserType,
                                viewer: UserType,
                                conversation: MockConversation?,
@@ -1083,11 +1119,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
                testName: testName,
                line: line)
     }
-    
+
     private func richProfileFieldWithEmail(for user: UserType) -> UserRichProfileField {
         return UserRichProfileField(type: "Email", value: user.emailAddress!)
     }
-    
+
     private func richProfileItemWithEmailAndDefaultData(for user: UserType) -> ProfileDetailsContentController.Content {
         var items = [richProfileFieldWithEmail(for: user)]
         items.append(contentsOf: defaultRichProfile)

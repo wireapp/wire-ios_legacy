@@ -21,8 +21,10 @@ import WireCommonComponents
 import UIKit
 
 final class BackButtonDescription {
-    var buttonTapped: (() -> ())? = nil
+
+    var buttonTapped: (() -> Void)?
     var accessibilityIdentifier: String? = "backButton"
+
 }
 
 extension BackButtonDescription: ViewDescriptor {
@@ -43,4 +45,3 @@ extension BackButtonDescription: ViewDescriptor {
         buttonTapped?()
     }
 }
-

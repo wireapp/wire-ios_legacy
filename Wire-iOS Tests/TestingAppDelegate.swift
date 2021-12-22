@@ -26,7 +26,7 @@ final class TestingAppDelegate: AppDelegate {
     // We don't want the self user to be automatically configured as it is in production code.
     // Explicit configuration (via `SelfUser.provider = someSelfUserProvider` ) helps clarify
     // mocking scenarios by asserting that the test writer provides the self user themselves.
-    
+
     override var shouldConfigureSelfUserProvider: Bool {
         return false
     }

@@ -16,53 +16,52 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Contacts
 import WireSyncEngine
 import UIKit
 
-protocol AddressBookHelperProtocol: class {
-    var isAddressBookAccessGranted : Bool { get }
-    var isAddressBookAccessUnknown : Bool { get }
-    var isAddressBookAccessDisabled : Bool { get }
+protocol AddressBookHelperProtocol: AnyObject {
+    var isAddressBookAccessGranted: Bool { get }
+    var isAddressBookAccessUnknown: Bool { get }
+    var isAddressBookAccessDisabled: Bool { get }
     var accessStatusDidChangeToGranted: Bool { get }
-    
-    static var sharedHelper : AddressBookHelperProtocol { get }
-    
-    func requestPermissions(_ callback: ((Bool)->())?)
+
+    static var sharedHelper: AddressBookHelperProtocol { get }
+
+    func requestPermissions(_ callback: ((Bool) -> Void)?)
     func persistCurrentAccessStatus()
 }
 
 /// Allows access to address book for search
-final class AddressBookHelper : AddressBookHelperProtocol {
+final class AddressBookHelper: AddressBookHelperProtocol {
 
     /// Singleton
-    static var sharedHelper : AddressBookHelperProtocol = AddressBookHelper()
+    static var sharedHelper: AddressBookHelperProtocol = AddressBookHelper()
 
     // MARK: - Constants
 
     private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
 
     // MARK: - Permissions
-    
-    var isAddressBookAccessUnknown : Bool {
+
+    var isAddressBookAccessUnknown: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
     }
-    
-    var isAddressBookAccessGranted : Bool {
+
+    var isAddressBookAccessGranted: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
-    
-    var isAddressBookAccessDisabled : Bool {
+
+    var isAddressBookAccessDisabled: Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .denied
     }
-    
+
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
-    func requestPermissions(_ callback: ((Bool)->())?) {
+    func requestPermissions(_ callback: ((Bool) -> Void)?) {
         CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
-            DispatchQueue.main.async {                
+            DispatchQueue.main.async {
                 self?.persistCurrentAccessStatus()
                 callback?(authorized)
             }

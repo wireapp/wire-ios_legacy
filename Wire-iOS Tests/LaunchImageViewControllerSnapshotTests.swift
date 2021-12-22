@@ -21,25 +21,25 @@ import XCTest
 import SnapshotTesting
 
 final class LaunchImageViewControllerSnapshotTests: XCTestCase {
-    
+
     var sut: LaunchImageViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = LaunchImageViewController()
         sut.loadViewIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 
-    func testForShowingSpinner(){
+    func testForShowingSpinner() {
         sut.showLoadingScreen()
 
         verify(matching: sut)

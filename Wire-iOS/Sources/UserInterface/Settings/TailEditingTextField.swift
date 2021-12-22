@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 
 /**
@@ -27,32 +26,31 @@ import UIKit
 class TailEditingTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         self.setup()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        self.setup()
+        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
-    
+
     func setup() {
         self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), for: UIControl.Event.editingDidBegin)
         self.addTarget(self, action: #selector(TailEditingTextField.replaceNormalSpacesWithNonBreakingSpaces), for: UIControl.Event.editingChanged)
         self.addTarget(self, action: #selector(TailEditingTextField.replaceNonBreakingSpacesWithNormalSpaces), for: UIControl.Event.editingDidEnd)
     }
-    
+
     @objc func replaceNormalSpacesWithNonBreakingSpaces() {
         guard let isContainsNormalSpace = (self.text?.contains(String.breakingSpace)), isContainsNormalSpace else {
             return }
 
         self.text = self.text?.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
     }
-    
+
     @objc func replaceNonBreakingSpacesWithNormalSpaces() {
         guard let isContainsNonBreakingSpace = (self.text?.contains(String.nonBreakingSpace)), isContainsNonBreakingSpace else { return }
-        
+
         self.text = self.text?.replacingOccurrences(of: String.nonBreakingSpace, with: String.breakingSpace)
     }
 }

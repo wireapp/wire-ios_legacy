@@ -25,12 +25,15 @@ extension ConversationContentViewController: CanvasViewControllerDelegate {
             if let imageData = image.pngData() {
 
                 ZMUserSession.shared()?.enqueue({
-                    self.conversation.append(imageFromData: imageData)
+                    do {
+                        try self.conversation.appendImage(from: imageData)
+                    } catch {
+                        Logging.messageProcessing.warn("Failed to append image message from canvas. Reason: \(error.localizedDescription)")
+                    }
                 }, completionHandler: {
-                    Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
+                    Analytics.shared.tagMediaActionCompleted(.photo, inConversation: self.conversation)
                 })
             }
         }
     }
 }
-

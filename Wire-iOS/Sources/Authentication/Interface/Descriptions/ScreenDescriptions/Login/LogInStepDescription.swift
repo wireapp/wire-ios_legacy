@@ -29,7 +29,7 @@ struct AuthenticationPrefilledCredentials: Equatable {
 
     /// The raw credentials value.
     let credentials: LoginCredentials
-    
+
     /// Whether the credentials are expired.
     let isExpired: Bool
 }

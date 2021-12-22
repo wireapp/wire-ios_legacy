@@ -21,7 +21,7 @@
 class InputBarEditViewTests: ZMSnapshotTestCase {
 
     var sut: InputBarEditView!
-    
+
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = UIColor.white

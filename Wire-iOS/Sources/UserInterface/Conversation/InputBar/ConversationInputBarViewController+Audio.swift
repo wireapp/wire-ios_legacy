@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import Cartography
 import WireDataModel
 import WireSyncEngine
 import avs
@@ -28,30 +27,10 @@ import WireCommonComponents
 extension ConversationInputBarViewController {
 
     func setupCallStateObserver() {
-        if let userSession = ZMUserSession.shared() {
-            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
+        if !ProcessInfo.processInfo.isRunningTests,
+           let userSession = ZMUserSession.shared() {
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
-    }
-
-    func setupAppLockedObserver() {
-
-        NotificationCenter.default.addObserver(self,
-        selector: #selector(revealRecordKeyboardWhenAppLocked),
-        name: .appUnlocked,
-        object: .none)
-
-        // If the app is locked and not yet reach the time to unlock and the app became active, reveal the keyboard (it was dismissed when app resign active)
-        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc
-    private func revealRecordKeyboardWhenAppLocked() {
-        guard AppLock.isActive,
-              !AppLockViewController.isLocked,
-              mode == .audioRecord,
-              !self.inputBar.textView.isFirstResponder else { return }
-
-        displayRecordKeyboard()
     }
 
     @objc
@@ -82,7 +61,7 @@ extension ConversationInputBarViewController {
     }
 
     private func displayAudioMessageAlertIfNeeded() -> Bool {
-        return CameraAccess.displayAlertIfOngoingCall(at:.recordAudioMessage, from:self)
+        return CameraAccess.displayAlertIfOngoingCall(at: .recordAudioMessage, from: self)
     }
 
     @objc func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
@@ -206,7 +185,7 @@ extension ConversationInputBarViewController {
             }, completion: nil)
     }
 
-    func hideCameraKeyboardViewController(_ completion: @escaping ()->Void) {
+    func hideCameraKeyboardViewController(_ completion: @escaping () -> Void) {
         self.inputBar.textView.resignFirstResponder()
         delay(0.3) {
             self.mode = .textInput

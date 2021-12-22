@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 
-typealias DismissAction = (_ completion: Completion?)->()
+typealias DismissAction = (_ completion: Completion?) -> Void
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
 
@@ -102,6 +102,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         self.collection.assetCollectionDelegate.remove(self)
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -241,7 +242,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         // if the current message is ephemeral, then it will be the only
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
-
             let copyButton = iconButton(messageAction:
                 .copy)
 
@@ -277,7 +277,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     private func createControlsBar() {
         let buttons = createControlsBarButtons()
 
-        self.buttonsBar = InputBarButtonsView(buttons: buttons)
+        buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(UIColor.from(scheme: .textForeground), for: .normal)
         self.buttonsBar.backgroundColor = UIColor.from(scheme: .barBackground)
@@ -316,7 +316,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     private func createNavigationTitle() {
-        guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
+        guard let sender = currentMessage.senderUser, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
         navigationItem.titleView = TwoLineTitleView(first: (sender.name ?? "").localizedUppercase, second: serverTimestamp.formattedDate)
@@ -331,13 +331,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     var currentController: FullscreenImageViewController? {
-        get {
-            guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
-                return .none
-            }
-
-            return imageController
+        guard let imageController = self.pageViewController.viewControllers?.first as? FullscreenImageViewController else {
+            return .none
         }
+
+        return imageController
     }
 
     private func perform(action: MessageAction,
@@ -347,6 +345,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
                                        for: message ?? currentMessage,
                                        view: sender as? UIView ?? view)
     }
+
+    // MARK: icon button actions
 
     @objc
     private func copyCurrent(_ sender: AnyObject!) {

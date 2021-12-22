@@ -19,7 +19,7 @@
 import UIKit
 import WireUtilities
 
-protocol ConversationOptionsViewModelConfiguration: class {
+protocol ConversationOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowGuests: Bool { get }
     var isCodeEnabled: Bool { get }
@@ -31,11 +31,11 @@ protocol ConversationOptionsViewModelConfiguration: class {
     func deleteLink(completion: @escaping (VoidResult) -> Void)
 }
 
-protocol ConversationOptionsViewModelDelegate: class {
+protocol ConversationOptionsViewModelDelegate: AnyObject {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
+    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRevokingLink completion: @escaping (Bool) -> Void)
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
@@ -45,13 +45,13 @@ final class ConversationOptionsViewModel {
         var isLoading = false
         var title = ""
     }
-    
+
     private var showLoadingCell = false {
         didSet {
             updateRows()
         }
     }
-    
+
     private var link: String?
 
     var copyInProgress = false {
@@ -59,21 +59,21 @@ final class ConversationOptionsViewModel {
             updateRows()
         }
     }
-    
+
     var state = State() {
         didSet {
             delegate?.viewModel(self, didUpdateState: state)
         }
     }
-    
+
     weak var delegate: ConversationOptionsViewModelDelegate? {
         didSet {
             delegate?.viewModel(self, didUpdateState: state)
         }
     }
-    
+
     private let configuration: ConversationOptionsViewModelConfiguration
-    
+
     init(configuration: ConversationOptionsViewModelConfiguration) {
         self.configuration = configuration
         state.title = configuration.title
@@ -86,25 +86,25 @@ final class ConversationOptionsViewModel {
                 self.updateRows()
             }
         }
-        
+
         if configuration.allowGuests && configuration.isCodeEnabled {
             fetchLink()
         }
     }
-    
+
     private func updateRows() {
         state.rows = computeVisibleRows()
     }
-    
-    private func computeVisibleRows() -> [CellConfiguration] {///TODO: copy?
+
+    private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
-                get: { [unowned self] in return self.configuration.allowGuests },
-                set: { [unowned self] in self.setAllowGuests($0) }
-            )]
+            get: { [unowned self] in return self.configuration.allowGuests },
+            set: { [unowned self] in self.setAllowGuests($0, view: $1) }
+        )]
 
         if configuration.allowGuests {
             rows.append(.linkHeader)
-            
+
             if showLoadingCell {
                 rows.append(.loading)
             } else {
@@ -115,7 +115,7 @@ final class ConversationOptionsViewModel {
                     rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
                     rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
                 } else {
-                    rows.append(.createLinkButton { [weak self] _ in 
+                    rows.append(.createLinkButton { [weak self] _ in
                         self?.createLink() })
                 }
             }
@@ -123,12 +123,14 @@ final class ConversationOptionsViewModel {
 
         return rows
     }
-    
-    private func revokeLink() {
-        delegate?.viewModel(self, confirmRevokingLink: { [weak self] revoke in
+
+    /// revoke a conversation link
+    ///
+    /// - Parameter view: the source view which triggers revokeLink action
+    private func revokeLink(view: UIView? = nil) {
+        delegate?.viewModel(self, sourceView: view, confirmRevokingLink: { [weak self] revoke in
             guard let `self` = self else { return }
             guard revoke else { return self.updateRows() }
-            GuestLinkEvent.revoked.track()
 
             let item = CancelableItem(delay: 0.4) { [weak self] in
                 self?.state.isLoading = true
@@ -142,33 +144,30 @@ final class ConversationOptionsViewModel {
                 case .failure(let error):
                     self.delegate?.viewModel(self, didReceiveError: error)
                 }
-                
+
                 item.cancel()
                 self.state.isLoading = false
             }
         })
     }
 
-
     /// share a conversation link
     ///
     /// - Parameter view: the source view which triggers shareLink action
     private func shareLink(view: UIView? = nil) {
         guard let link = link else { return }
-        GuestLinkEvent.shared.track()
         let message = "guest_room.share.message".localized(args: link)
         delegate?.viewModel(self, wantsToShareMessage: message, sourceView: view)
     }
-    
+
     private func copyLink() {
-        GuestLinkEvent.copied.track()
         UIPasteboard.general.string = link
         copyInProgress = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.copyInProgress = false
         }
     }
-    
+
     private func fetchLink() {
         let item = CancelableItem(delay: 0.4) { [weak self] in
             self?.showLoadingCell = true
@@ -177,40 +176,43 @@ final class ConversationOptionsViewModel {
         configuration.fetchConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-                case .success(let link): self.link = link
-                case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+            case .success(let link): self.link = link
+            case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
 
             item.cancel()
             self.showLoadingCell = false
         }
     }
-    
+
     private func createLink() {
-        GuestLinkEvent.created.track()
-        
         let item = CancelableItem(delay: 0.4) { [weak self] in
             self?.showLoadingCell = true
         }
-        
+
         configuration.createConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let link): self.link = link
             case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
-            
+
             item.cancel()
             self.showLoadingCell = false
         }
     }
-    
-    @discardableResult func setAllowGuests(_ allowGuests: Bool) -> UIAlertController? {
+
+    /// set conversation option AllowGuestsAndServices
+    /// - Parameters:
+    ///   - allowGuests: new state AllowGuestsAndServices
+    ///   - view: the source view which triggers setAllowGuests action
+    /// - Returns: alert controller
+    @discardableResult func setAllowGuests(_ allowGuests: Bool, view: UIView? = nil) -> UIAlertController? {
         func _setAllowGuests() {
             let item = CancelableItem(delay: 0.4) { [weak self] in
                 self?.state.isLoading = true
             }
-            
+
             configuration.setAllowGuests(allowGuests) { [weak self] result in
                 guard let `self` = self else { return }
                 item.cancel()
@@ -226,14 +228,14 @@ final class ConversationOptionsViewModel {
                 }
             }
         }
-        
+
         guard allowGuests != configuration.allowGuests else { return nil }
-        
+
         // In case allow guests mode should be deactivated & guest/service in conversation, ask the delegate
         // to confirm this action as all guests will be removed.
-        if !allowGuests && configuration.areGuestOrServicePresent{
+        if !allowGuests && configuration.areGuestOrServicePresent {
             // Make "remove guests and services" warning only appear if guests or services are present
-            return delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
+            return delegate?.viewModel(self, sourceView: view, confirmRemovingGuests: { [weak self] remove in
                 guard let `self` = self else { return }
                 guard remove else { return self.updateRows() }
                 self.link = nil
@@ -245,5 +247,5 @@ final class ConversationOptionsViewModel {
 
         return nil
     }
-    
+
 }

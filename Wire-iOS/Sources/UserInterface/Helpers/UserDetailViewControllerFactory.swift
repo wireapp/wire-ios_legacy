@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-final class UserDetailViewControllerFactory: NSObject {
+final class UserDetailViewControllerFactory {
 
     /// Create a ServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
     ///

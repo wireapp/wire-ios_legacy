@@ -19,7 +19,7 @@
 import Foundation
 
 extension ProfileSelfPictureViewController: ZMUserObserver {
-    
+
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.imageMediumDataChanged,
             let userSession = ZMUserSession.shared(),
@@ -32,5 +32,5 @@ extension ProfileSelfPictureViewController: ZMUserObserver {
             self.selfUserImageView.image = image
         }
     }
-    
+
 }

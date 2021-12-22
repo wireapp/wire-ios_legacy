@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Tillat Wire å få tilgang til kontaktene dine for å koble deg til andre. Vi anonymiserer all informasjon før vi laster den opp til vår server og deler den ikke med noen andre.";
+"NSMicrophoneUsageDescription" = "Tillate Wire å få tilgang til mikrofonen din slik at du kan snakke med folk og sende meldinger med lyd innspilling.";
+"NSLocationWhenInUseUsageDescription" = "Tillate Wire å se din posisjon, slik at du kan sende posisjonen din til andre.";
+"NSCameraUsageDescription" = "Tillate Wire å få tilgang til kameraet slik at du kan ha videosamtaler og sende bilder.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Tillate Wire å lagre bildene du tar i bildebiblioteket ditt.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Tillate Wire å se bildene du har tatt og har blitt lagret i bildebiblioteket ditt.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "For å bruke Face-ID i programmet, må du tillate Wire å bruke funksjonen Face-ID.";

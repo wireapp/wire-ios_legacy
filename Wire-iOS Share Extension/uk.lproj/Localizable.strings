@@ -31,6 +31,16 @@
 "share_extension.no_internet_connection.title" = "Відстунє з'єднання з Інтернетом";
 "share_extension.not_signed_in.title" = "Ви повинні увійти в Wire, щоб поділитися чим-небудь";
 "share_extension.not_signed_in.close_button" = "Закрити";
+
+// Custom app lock - unlock
+"share_extension.unlock.title_label" = "Введіть код допуску, щоб розблокувати Wire";
+"share_extension.unlock.submit_button.title" = "розблокувати";
+"share_extension.unlock.textfield.placeholder" = "Введіть ваш код допуску";
+"share_extension.unlock.hint_label" = "Код допуску";
+"share_extension.unlock.error_label" = "Невірний код допуску";
+"share_extension.unlock.alert.message" = "Відкрити Wire, щоб створити код допуску";
+"share_extension.unlock.reveal_passcode" = "Показати код допуску";
+
 "share_extension.timeout.title" = "Перевищено термін очікування з’єднання.";
 "share_extension.timeout.message" = "Перевірте підключення до Інтернету і повторіть спробу. Вкладення були збережені в розмові.";
 
@@ -48,3 +58,7 @@
 "meta.degraded.dialog_message" = "Усе одно надіслати ваше повідомлення?";
 "meta.degraded.cancel_sending_button" = "Не надсилати";
 "meta.degraded.send_anyway_button" = "Все одно надіслати";
+
+//Feature flag - File sharing
+"feature.flag.file_sharing.alert.title" = "Обмеження на обмін файлами";
+"feature.flag.file_sharing.alert.message" = "Ви не можете поділитися файлом, тому що ця функціональність вимкнена.";

@@ -19,7 +19,7 @@
 import Foundation
 import WireDataModel
 
-protocol GroupOptionsSectionControllerDelegate: class {
+protocol GroupOptionsSectionControllerDelegate: AnyObject {
     func presentTimeoutOptions(animated: Bool)
     func presentGuestOptions(animated: Bool)
     func presentNotificationsOptions(animated: Bool)
@@ -32,15 +32,16 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         fileprivate static let count = Option.allCases.count
 
         case notifications = 0, guests, timeout
-        
-        func accessible(in conversation: ZMConversation, by user: UserType) -> Bool {
+
+        func accessible(in conversation: GroupDetailsConversationType,
+                        by user: UserType) -> Bool {
             switch self {
             case .notifications: return user.canModifyNotificationSettings(in: conversation)
             case .guests:        return user.canModifyAccessControlSettings(in: conversation)
-            case .timeout:       return user.canModifyEphemeralSettings(in: conversation) 
+            case .timeout:       return user.canModifyEphemeralSettings(in: conversation)
             }
         }
-        
+
         var cellReuseIdentifier: String {
             switch self {
             case .guests: return GroupDetailsGuestOptionsCell.zm_reuseIdentifier
@@ -54,15 +55,15 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
     // MARK: - Properties
 
     private weak var delegate: GroupOptionsSectionControllerDelegate?
-    private let conversation: ZMConversation
+    private let conversation: GroupDetailsConversationType
     private let syncCompleted: Bool
     private let options: [Option]
-    
+
     var hasOptions: Bool {
         return !options.isEmpty
     }
-    
-    init(conversation: ZMConversation, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
+
+    init(conversation: GroupDetailsConversationType, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted
@@ -70,7 +71,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
     }
 
     // MARK: - Collection View
-    
+
     override var sectionTitle: String {
         return "participants.section.settings".localized(uppercased: true)
     }

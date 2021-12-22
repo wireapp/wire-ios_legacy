@@ -48,4 +48,3 @@ class AuthenticationStartCompanyLoginLinkEventHandler: AuthenticationEventHandle
     }
 
 }
-

@@ -24,7 +24,6 @@ extension String {
     }
 }
 
-
 extension CFString {
     var string: String {
         return self as String

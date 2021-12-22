@@ -44,7 +44,7 @@ final class ClientListViewController: UIViewController,
 
     var editingList: Bool = false {
         didSet {
-            guard clients.count > 0 else {
+            guard !clients.isEmpty else {
                 self.navigationItem.rightBarButtonItem = nil
                 self.navigationItem.setHidesBackButton(false, animated: true)
                 return
@@ -63,10 +63,10 @@ final class ClientListViewController: UIViewController,
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
             self.clientsTableView?.reloadData()
 
-            if clients.count > 0 {
+            if !clients.isEmpty {
                 createRightBarButtonItem()
             } else {
-                self.navigationItem.rightBarButtonItem = nil
+                self.editingList = false
             }
         }
     }
@@ -146,7 +146,7 @@ final class ClientListViewController: UIViewController,
     }
 
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
-        self.clients = clientsList
+        self.clients = clientsList.filter { !$0.isSelfClient() }
         self.editingList = false
     }
 
@@ -173,7 +173,7 @@ final class ClientListViewController: UIViewController,
         super.viewDidDisappear(animated)
         dismissLoadingView()
 
-        ///prevent more then one removalObserver in self and SettingsClientViewController
+        // Prevent more then one removalObserver in self and SettingsClientViewController
         removalObserver = nil
     }
 
@@ -220,7 +220,7 @@ final class ClientListViewController: UIViewController,
     }
 
     fileprivate func convertSection(_ section: Int) -> Int {
-        if let _ = self.selfClient {
+        if self.selfClient != nil {
             return section
         } else {
             return section + 1
@@ -283,7 +283,7 @@ final class ClientListViewController: UIViewController,
     // MARK: - UITableViewDataSource & UITableViewDelegate
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = self.selfClient, self.sortedClients.count > 0 {
+        if self.selfClient != nil, self.sortedClients.count > 0 {
             return 2
         } else {
             return 1
@@ -293,7 +293,7 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.convertSection(section) {
         case 0:
-            if let _ = self.selfClient {
+            if self.selfClient != nil {
                 return 1
             } else {
                 return 0
@@ -307,27 +307,27 @@ final class ClientListViewController: UIViewController,
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch self.convertSection(section) {
-            case 0:
-                if let _ = self.selfClient {
-                    return NSLocalizedString("registration.devices.current_list_header", comment: "")
-                } else {
-                    return nil
-                }
-            case 1:
-                return NSLocalizedString("registration.devices.active_list_header", comment: "")
-            default:
+        case 0:
+            if self.selfClient != nil {
+                return NSLocalizedString("registration.devices.current_list_header", comment: "")
+            } else {
                 return nil
+            }
+        case 1:
+            return NSLocalizedString("registration.devices.active_list_header", comment: "")
+        default:
+            return nil
         }
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch self.convertSection(section) {
-            case 0:
-                return nil
-            case 1:
-                return NSLocalizedString("registration.devices.active_list_subtitle", comment: "")
-            default:
-                return nil
+        case 0:
+            return nil
+        case 1:
+            return NSLocalizedString("registration.devices.active_list_subtitle", comment: "")
+        default:
+            return nil
         }
     }
 
@@ -402,15 +402,16 @@ final class ClientListViewController: UIViewController,
         if !self.detailedView {
             return
         }
+
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 0:
             if let selfClient = self.selfClient {
                 self.openDetailsOfClient(selfClient)
             }
-            break
+
         case 1:
             self.openDetailsOfClient(self.sortedClients[indexPath.row])
-            break
+
         default:
             break
         }

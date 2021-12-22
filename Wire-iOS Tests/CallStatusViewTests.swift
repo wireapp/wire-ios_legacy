@@ -26,27 +26,28 @@ struct MockStatusViewConfiguration: CallStatusViewInputType {
     var isConstantBitRate: Bool
     let title: String
     let userEnabledCBR: Bool
+    let isForcedCBR: Bool
 }
 
 final class CallStatusViewTests: ZMSnapshotTestCase {
-    
+
     private var sut: CallStatusView!
 
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        sut = CallStatusView(configuration: MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false))
+        sut = CallStatusView(configuration: MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false))
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testLongTitleMargins() {
         // When
         sut.configuration = MockStatusViewConfiguration(
@@ -55,188 +56,189 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
             variant: .light,
             isConstantBitRate: false,
             title: "Amazing Way Too Long Group Conversation Name",
-            userEnabledCBR: false
+            userEnabledCBR: false,
+            isForcedCBR: false
         )
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testConnectingAudioCallLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testConnectingAudioCallDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testIncomingAudioLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testIncomingAudioLightOneOnOne() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: nil), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Miguel", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testIncomingAudioDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testIncomingVideoLight() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testIncomingVideoDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testOutgoingLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testOutgoingDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testEstablishedBriefLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testEstablishedBriefDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testEstablishedLongLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testEstablishedLongDark() {
-        // When
-        snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
-        // Then
-        verify(view: sut)
-    }
-    
-    func testConstantBitRateLight() {
-        // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true)
 
         // Then
         verify(view: sut)
     }
-    
+
+    func testConnectingAudioCallLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testConnectingAudioCallDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testIncomingAudioLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testIncomingAudioLightOneOnOne() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: nil), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Miguel", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testIncomingAudioDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: false, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testIncomingVideoLight() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testIncomingVideoDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: "Ulrike"), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testOutgoingLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testOutgoingDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .ringingOutgoing, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testEstablishedBriefLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testEstablishedBriefDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 42), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testEstablishedLongLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testEstablishedLongDark() {
+        // When
+        snapshotBackgroundColor = .black
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
+    func testConstantBitRateLight() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true, isForcedCBR: false)
+
+        // Then
+        verify(view: sut)
+    }
+
     func testConstantBitRateDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: true, title: "Italy Trip", userEnabledCBR: true, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testVariableBitRateLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testVariableBitRateDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .established(duration: 321), isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: true, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testReconnectingLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testReconnectingDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .reconnecting, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testEndingLight() {
         // When
-        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }
-    
+
     func testEndingDark() {
         // When
         snapshotBackgroundColor = .black
-        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false)
-        
+        sut.configuration = MockStatusViewConfiguration(state: .terminating, isVideoCall: true, variant: .dark, isConstantBitRate: false, title: "Italy Trip", userEnabledCBR: false, isForcedCBR: false)
+
         // Then
         verify(view: sut)
     }

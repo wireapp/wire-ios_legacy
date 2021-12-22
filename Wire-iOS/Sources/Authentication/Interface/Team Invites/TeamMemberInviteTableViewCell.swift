@@ -17,9 +17,7 @@
 //
 
 import UIKit
-import Cartography
 import WireCommonComponents
-import WireDataModel
 import WireSyncEngine
 
 fileprivate extension InviteResult {
@@ -32,12 +30,12 @@ fileprivate extension InviteResult {
 }
 
 final class TeamMemberInviteTableViewCell: UITableViewCell {
-    
+
     private let emailLabel = UILabel()
     private let errorLabel = UILabel()
     private let stackView = UIStackView()
     private let iconImageView = UIImageView()
-    
+
     var content: InviteResult? {
         didSet {
             switch content {
@@ -50,23 +48,24 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
                 errorLabel.text = error.errorDescription
             default: break
             }
-            
+
             content.apply {
                 iconImageView.setIcon($0.iconType, size: .tiny, color: UIColor.Team.inactiveButton)
             }
         }
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         stackView.axis = .vertical
         emailLabel.font = FontSpec(.normal, .regular).font!
@@ -79,14 +78,16 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
         stackView.spacing = 2
         contentView.addSubview(iconImageView)
     }
-    
+
     private func createConstraints() {
-        constrain(contentView, stackView, iconImageView) { contentView, stackView, iconImageView in
-            stackView.leading == contentView.leading + 24
-            stackView.centerY == contentView.centerY
-            stackView.trailing <= iconImageView.leading - 8
-            iconImageView.centerY == contentView.centerY
-            iconImageView.trailing == contentView.trailing - 24
-        }
+        [contentView, stackView, iconImageView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+          stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+          stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+          stackView.trailingAnchor.constraint(lessThanOrEqualTo: iconImageView.leadingAnchor, constant: -8),
+          iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+          iconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24)
+        ])
     }
 }

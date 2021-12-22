@@ -42,23 +42,23 @@ extension CGSize {
             return .square
         }
     }
-    
+
     var isLandscape: Bool {
         return aspectRatio == .landscape
     }
-    
+
     var isPortrait: Bool {
         return aspectRatio == .portrait
     }
-    
+
     var isSquare: Bool {
         return aspectRatio == .square
     }
-    
+
     func flipped() -> CGSize {
         return CGSize(width: height, height: width)
     }
-    
+
     func withOrientation(_ orientation: UIDeviceOrientation) -> CGSize {
         guard orientation.aspectRatio != aspectRatio else { return self }
         return flipped()

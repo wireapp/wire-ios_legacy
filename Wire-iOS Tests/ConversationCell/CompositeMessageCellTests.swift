@@ -18,39 +18,52 @@
 import XCTest
 @testable import Wire
 
-final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
+final class CompositeMessageCellTests: XCTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
+    var mockSelfUser: MockUserType!
+
     override func setUp() {
         super.setUp()
+
+        mockSelfUser = MockUserType.createDefaultSelfUser()
+
         // make sure the button's color is alarm red, not accent color
-        coreDataFixture.accentColor = .strongBlue
+        UIColor.setAccentOverride(.strongBlue)
+    }
+
+    override func tearDown() {
+        mockSelfUser = nil
+
+        super.tearDown()
     }
 
     func testThatItRendersErrorMessage() {
         // given
-        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
-                                             createItem(title: "Stone age", state:.unselected, isExpired: true),
-                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
-                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state: .selected),
+                                             createItem(title: "Stone age", state: .unselected, isExpired: true),
+                                             createItem(title: "Ludwig van Beethoven", state: .confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state: .unselected)]
 
         // when & then
-        verify(message: makeMessage(items: items),
+        let message = makeMessage(sender: mockSelfUser, items: items)
+
+        verify(message: message,
                allWidths: false,
                snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
     }
 
     func testThatItRendersButton() {
-        verify(message: makeMessage(),
+        verify(message: makeMessage(sender: mockSelfUser),
                snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
     }
 
     func testThatButtonStyleIsUpdatedAfterStateChange() {
         // given
-        let message = makeMessage() { config in
+        let message = makeMessage(sender: mockSelfUser) { config in
             // when
-            let item = self.createItem(title: "J.S. Bach", state:.unselected)
+            let item = self.createItem(title: "J.S. Bach", state: .unselected)
             (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
         }
 
@@ -70,10 +83,11 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         return buttonItem
     }
 
-    fileprivate var mockTextMessage = MockMessageFactory.textMessage(withText: "# Question:\nWho is/are your most favourite musician(s)  ?")!
-    
-    private func makeMessage(items: [CompositeMessageItem]) -> MockMessage {
-        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
+    fileprivate lazy var mockTextMessage = MockMessageFactory.textMessage(withText: "# Question:\nWho is/are your most favourite musician(s)  ?")
+
+    private func makeMessage(sender: UserType? = nil,
+                             items: [CompositeMessageItem]) -> MockMessage {
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage(sender: sender)
 
         let mockCompositeMessageData = MockCompositeMessageData()
         let textItem: CompositeMessageItem = .text(mockTextMessage.backingTextMessageData)
@@ -84,16 +98,17 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         return mockCompositeMessage
     }
 
-    private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
+    private func makeMessage(sender: UserType? = nil,
+                             _ config: CellConfiguration? = nil) -> MockMessage {
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage(sender: sender)
 
         let mockCompositeMessageData = MockCompositeMessageData()
         let textItem: CompositeMessageItem = .text(mockTextMessage.backingTextMessageData)
 
-        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
-                                             createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state:.unselected),
-                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
-                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state: .selected),
+                                             createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state: .unselected),
+                                             createItem(title: "Ludwig van Beethoven", state: .confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state: .unselected)]
 
         mockCompositeMessageData.items = [textItem] + items
 
@@ -110,7 +125,7 @@ final class MockButtonMessageData: ButtonMessageData {
     var state: ButtonMessageState = .unselected
 
     func touchAction() {
-        //no-op
+        // no-op
     }
 
     var isExpired: Bool = false

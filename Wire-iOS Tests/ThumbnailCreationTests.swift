@@ -20,55 +20,55 @@ import XCTest
 @testable import Wire
 
 final class ThumbnailCreationTests: ZMSnapshotTestCase {
-    
+
     func testThatItCreatesThumbnailForSquareImage() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
         guard let data = image.imageData else { return XCTFail() }
-        
+
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
-        
+
         // Then
         XCTAssertEqual(thumbnail.size.width, 100, accuracy: 1)
         XCTAssertEqual(thumbnail.size.height, 100, accuracy: 1)
         verify(view: thumbnail.wrappedInImageView())
     }
-    
+
     func testThatItCreatesThumbnailForVerticalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
         guard let data = image.imageData else { return XCTFail() }
-        
+
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
-        
+
         // Then
         XCTAssertEqual(thumbnail.size.width, 100, accuracy: 1)
         verify(view: thumbnail.wrappedInImageView())
     }
-    
+
     func testThatItCreatesThumbnailForHorizontalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
         guard let data = image.imageData else { return XCTFail() }
-        
+
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
-        
+
         // Then
         XCTAssertEqual(thumbnail.size.height, 100, accuracy: 1)
         verify(view: thumbnail.wrappedInImageView())
     }
-    
+
     func testThatItReturnsEarlyForInvalidImage() {
         // Given & When
         let thumbnail = UIImage(from: Data(), withShorterSideLength: 100 * UIScreen.main.scale)
-        
+
         // Then
         XCTAssertNil(thumbnail)
     }
-    
+
 }
 
 // MARK: - Helper

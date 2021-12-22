@@ -23,9 +23,9 @@ import WireSyncEngine
 // Describes the icon to be shown for the conversation in the list.
 enum ConversationStatusIcon: Equatable {
     case pendingConnection
-    
+
     case typing
-    
+
     case unreadMessages(count: Int)
     case unreadPing
     case missedCall
@@ -33,19 +33,19 @@ enum ConversationStatusIcon: Equatable {
     case reply
 
     case silenced
-    
+
     case playingMedia
-    
+
     case activeCall(showJoin: Bool)
 }
 
 // Describes the status of the conversation.
 struct ConversationStatus {
     let isGroup: Bool
-    
+
     let hasMessages: Bool
     let hasUnsentMessages: Bool
-    
+
     let messagesRequiringAttention: [ZMConversationMessage]
     let messagesRequiringAttentionByType: [StatusMessageType: UInt]
     let isTyping: Bool
@@ -80,18 +80,18 @@ enum StatusMessageType: Int, CaseIterable {
 
     private var localizationKeySuffix: String? {
         switch self {
-            case .mention:
-                return "mention"
-            case .reply:
-                return "reply"
-            case .missedCall:
-                return "missedcall"
-            case .knock:
-                return "knock"
-            case .text:
-                return "generic_message"
-            default:
-                return nil
+        case .mention:
+            return "mention"
+        case .reply:
+            return "reply"
+        case .missedCall:
+            return "missedcall"
+        case .knock:
+            return "knock"
+        case .text:
+            return "generic_message"
+        default:
+            return nil
         }
     }
 
@@ -122,55 +122,43 @@ extension StatusMessageType {
     }
 
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
-        .participantsAdded:   .addParticipants,
+        .participantsAdded: .addParticipants,
         .participantsRemoved: .removeParticipants,
-        .missedCall:          .missedCall,
-        .newConversation:     .newConversation
+        .missedCall: .missedCall,
+        .newConversation: .newConversation
     ]
-    
+
     init?(message: ZMConversationMessage) {
-        
+
         if message.isText, let textMessage = message.textMessageData {
             if textMessage.isMentioningSelf {
                 self = .mention
-            }
-            else if textMessage.isQuotingSelf {
+            } else if textMessage.isQuotingSelf {
                 self = .reply
-            }
-            else if let _ = textMessage.linkPreview {
+            } else if textMessage.linkPreview != nil {
                 self = .link
-            }
-            else {
+            } else {
                 self = .text
             }
-        }
-        else if message.isImage {
+        } else if message.isImage {
             self = .image
-        }
-        else if message.isLocation {
+        } else if message.isLocation {
             self = .location
-        }
-        else if message.isAudio {
+        } else if message.isAudio {
             self = .audio
-        }
-        else if message.isVideo {
+        } else if message.isVideo {
             self = .video
-        }
-        else if message.isFile {
+        } else if message.isFile {
             self = .file
-        }
-        else if message.isKnock {
+        } else if message.isKnock {
             self = .knock
-        }
-        else if message.isSystem, let system = message.systemMessageData {
+        } else if message.isSystem, let system = message.systemMessageData {
             if let statusMessageType = StatusMessageType.conversationSystemMessageTypeToStatusMessageType[system.systemMessageType] {
                 self = statusMessageType
-            }
-            else {
+            } else {
                 return nil
             }
-        }
-        else {
+        } else {
             return nil
         }
     }
@@ -180,9 +168,9 @@ extension StatusMessageType {
 // Provides rich description and status icon.
 protocol ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon?
-    
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString?
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon?
+
     // An array of matchers that are compatible with the current one. Leads to display the description of all matching 
     // in one row, like "description1 | description2"
     var combinesWith: [ConversationStatusMatcher] { get }
@@ -200,27 +188,26 @@ extension TypedConversationStatusMatcher {
 }
 
 extension ConversationStatusMatcher {
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return nil
     }
-    
+
     func addEmphasis(to string: NSAttributedString, for substring: String) -> NSAttributedString {
         return string.setAttributes(type(of: self).emphasisStyle, toSubstring: substring)
     }
 }
 
-
 final class ContentSizeCategoryUpdater {
-    private let callback: () -> ()
+    private let callback: () -> Void
     private var observer: NSObjectProtocol!
-    
+
     deinit {
         if let observer = observer {
             NotificationCenter.default.removeObserver(observer)
         }
     }
-    
-    init(callback: @escaping () -> ()) {
+
+    init(callback: @escaping () -> Void) {
         self.callback = callback
         callback()
         self.observer = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification,
@@ -235,28 +222,28 @@ final class ConversationStatusStyle {
     private(set) var regularStyle: [NSAttributedString.Key: AnyObject] = [:]
     private(set) var emphasisStyle: [NSAttributedString.Key: AnyObject] = [:]
     private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
-    
+
     init() {
         contentSizeStyleUpdater = ContentSizeCategoryUpdater { [weak self] in
             guard let `self` = self else {
                 return
             }
-            
+
             self.regularStyle = [.font: FontSpec(.medium, .none).font!,
-                                 .foregroundColor: UIColor(white:1.0, alpha:0.64)]
+                                 .foregroundColor: UIColor(white: 1.0, alpha: 0.64)]
             self.emphasisStyle = [.font: FontSpec(.medium, .medium).font!,
-                                  .foregroundColor: UIColor(white:1.0, alpha:0.64)]
+                                  .foregroundColor: UIColor(white: 1.0, alpha: 0.64)]
         }
     }
 }
 
-fileprivate let statusStyle = ConversationStatusStyle()
+private let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
     static var regularStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
-    
+
     static var emphasisStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
@@ -267,27 +254,26 @@ extension ZMConversation {
     static func statusRegularStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
-    
+
     static func statusEmphasisStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
-
 
 // "You left"
 final class SelfUserLeftMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages && status.isGroup && !status.isSelfAnActiveMember
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         return "conversation.status.you_left".localized && type(of: self).regularStyle
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return nil
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -296,11 +282,11 @@ final class BlockedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isBlocked
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         return "conversation.status.blocked".localized && type(of: self).regularStyle
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -309,8 +295,8 @@ final class CallingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isOngoingCall
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         if conversation.voiceChannel?.state.canJoinCall == true {
             if let callerDisplayName = conversation.voiceChannel?.initiator?.name {
                 return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
@@ -320,26 +306,26 @@ final class CallingMatcher: ConversationStatusMatcher {
         }
         return .none
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation)
     }
-    
-    public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon? {
-        
+
+    public static func icon(for state: CallState?, conversation: ConversationStatusProvider?) -> ConversationStatusIcon? {
+
         guard let state = state else {
             return nil
         }
-        
+
         if state.canJoinCall {
             return .activeCall(showJoin: true)
         } else if state.isCallOngoing {
             return .activeCall(showJoin: false)
         }
-        
+
         return nil
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -347,8 +333,8 @@ final class SecurityAlertMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.messagesRequiringAttention.contains(where: { $0.isComposite })
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
             $0.isComposite
@@ -357,7 +343,7 @@ final class SecurityAlertMatcher: ConversationStatusMatcher {
         }
 
         let textItem = (message as? ConversationCompositeMessage)?.compositeMessageData?.items.first(where: {
-            if case .text(_) = $0 {
+            if case .text = $0 {
                 return true
             }
             return false
@@ -374,11 +360,11 @@ final class SecurityAlertMatcher: ConversationStatusMatcher {
 
         return text && Swift.type(of: self).regularStyle
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
-        return nil ///TODO: icon for poll message
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
+        return nil /// TODO: icon for poll message
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -387,25 +373,25 @@ final class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isTyping && status.showingAllMessages
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
+
         let statusString: NSAttributedString
         if status.isGroup {
             let typingUsersString = conversation.typingUsers.compactMap(\.name).joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
-        }
-        else {
+        } else {
             statusString = "conversation.status.typing".localized && type(of: self).regularStyle
         }
         return statusString
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return .typing
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -414,12 +400,12 @@ final class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.showingAllMessages
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         return .none
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         if status.showingOnlyMentionsAndReplies {
             if status.hasSelfMention {
                 return .mention
@@ -430,10 +416,9 @@ final class SilencedMatcher: ConversationStatusMatcher {
 
         return .silenced
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
-
 
 extension ConversationStatus {
 
@@ -448,7 +433,7 @@ extension ConversationStatus {
     var completelyMuted: Bool {
         return mutedMessageTypes == .all
     }
-        
+
     var shouldSummarizeMessages: Bool {
         if completelyMuted {
             // Always summarize for completely muted conversation
@@ -477,7 +462,6 @@ extension ConversationStatus {
     }
 }
 
-
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
@@ -489,20 +473,20 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
     let localizationRootPath = "conversation.status.message"
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
-        .mention:    "mention",
-        .reply:      "reply",
+        .mention: "mention",
+        .reply: "reply",
         .missedCall: "missedcall",
-        .knock:      "knock",
-        .text:       "text",
-        .link:       "link",
-        .image:      "image",
-        .location:   "location",
-        .audio:      "audio",
-        .video:      "video",
-        .file:       "file"
+        .knock: "knock",
+        .text: "text",
+        .link: "link",
+        .image: "image",
+        .location: "location",
+        .audio: "audio",
+        .video: "video",
+        .file: "file"
     ]
 
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         if status.shouldSummarizeMessages {
             // Get the count of each category we can summarize, and group them under their parent type
             let flattenedCount: [StatusMessageType: UInt] = matchedTypes
@@ -531,23 +515,22 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
 
             let resultString = localizedMatchedItems.joined(separator: ", ")
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
-        }
-        else {
+        } else {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                    if let _ = $0.sender,
+                    if $0.senderUser != nil,
                        let type = StatusMessageType(message: $0),
-                       let _ = matchedTypesDescriptions[type] {
+                       matchedTypesDescriptions[type] != nil {
                         return true
                     } else {
                         return false
                     }
                 }),
-                    let sender = message.sender,
+                    let sender = message.senderUser,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
                 return "" && Swift.type(of: self).regularStyle
             }
-            
+
             let messageDescription: String
 
             if message.isEphemeral {
@@ -562,30 +545,28 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
                     typeSuffix += ".group"
                 }
                 messageDescription = (localizationRootPath + typeSuffix).localized
-            }
-            else {
+            } else {
                 var format = localizationRootPath + "." + localizationKey
-                
+
                 if status.isGroup && type == .missedCall {
                     format += ".groups"
                     return format.localized(args: sender.name ?? "") && Swift.type(of: self).regularStyle
                 }
-                
+
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
-            
+
             if status.isGroup && !message.isEphemeral {
                 return (((sender.name ?? "") + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
-            }
-            else {
+            } else {
                 return messageDescription && Swift.type(of: self).regularStyle
             }
         }
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
-        
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
+
         if status.hasSelfMention {
             return .mention
         } else if status.hasSelfReply {
@@ -593,19 +574,18 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
 
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
-                if let _ = $0.sender,
+                if $0.senderUser != nil,
                    let type = StatusMessageType(message: $0),
-                   let _ = matchedTypesDescriptions[type] {
+                   matchedTypesDescriptions[type] != nil {
                     return true
-                }
-                else {
+                } else {
                     return false
                 }
             }),
             let type = StatusMessageType(message: message) else {
             return nil
         }
-        
+
         switch type {
         case .knock:
             return .unreadPing
@@ -615,7 +595,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
             return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.firstIndex(of: $0) != .none }.count)
         }
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -624,25 +604,25 @@ final class FailedSendMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.hasUnsentMessages
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         return "conversation.status.unsent".localized && type(of: self).regularStyle
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
 // "[You|User] [added|removed|left] [_|users|you]"
 final class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
-    
-    private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
+
+    private func addedString(for messages: [ZMConversationMessage], in conversation: MatcherConversation) -> NSAttributedString? {
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
-           let sender = message.sender,
+           let sender = message.senderUser,
            !sender.isSelfUser {
-            
-            if systemMessage.users.contains(where: { $0.isSelfUser }) {
+
+            if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 let fullName = sender.name ?? ""
                 let result = String(format: "conversation.status.you_was_added".localized, fullName) && type(of: self).regularStyle
                 return self.addEmphasis(to: result, for: fullName)
@@ -650,38 +630,39 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
         }
         return .none
     }
-    
-    private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
-        
+
+    private func removedString(for messages: [ZMConversationMessage],
+                               in conversation: MatcherConversation) -> NSAttributedString? {
+
         if let message = messages.last,
            let systemMessage = message.systemMessageData,
-           let sender = message.sender,
-           !sender.isSelfUser{
+           let sender = message.senderUser,
+           !sender.isSelfUser {
 
-            if systemMessage.users.contains(where: { $0.isSelfUser }) {
+            if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
                 return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
             }
         }
         return .none
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         var allStatusMessagesByType: [StatusMessageType: [ZMConversationMessage]] = [:]
-        
+
         self.matchedTypes.forEach { type in
             allStatusMessagesByType[type] = status.messagesRequiringAttention.filter {
                 StatusMessageType(message: $0) == type
             }
         }
-        
+
         let resultString = [addedString(for: allStatusMessagesByType[.addParticipants] ?? [], in: conversation),
                             removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].compactMap { $0 }.joined(separator: "; " && type(of: self).regularStyle)
         return resultString
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return .unreadMessages(count: status.messagesRequiringAttention
             .compactMap { StatusMessageType(message: $0) }
             .filter { matchedTypes.contains($0) }
@@ -692,10 +673,10 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
 // [Someone] started a conversation
 final class StartConversationMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.newConversation]
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
-              let sender = message.sender,
+              let sender = message.senderUser,
               !sender.isSelfUser
             else {
             return .none
@@ -705,29 +686,29 @@ final class StartConversationMatcher: TypedConversationStatusMatcher {
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }
-    
-    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+
+    func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
         return ConversationStatusIcon.unreadMessages(count: 1)
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
 // Fallback for empty conversations: showing the handle.
-final class UnsernameMatcher: ConversationStatusMatcher {
+final class UsernameMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages
     }
-    
-    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        guard let connectedUser = conversation.connectedUser,
-                let handle = connectedUser.handle else {
-            return .none
-        }
-        
-        return "@" + handle && type(of: self).regularStyle
+
+    func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
+        guard
+            let user = conversation.connectedUserType,
+            let handle = user.handleDisplayString(withDomain: user.isFederated)
+        else { return .none }
+
+        return handle && type(of: self).regularStyle
     }
-    
+
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
@@ -763,19 +744,21 @@ private var allMatchers: [ConversationStatusMatcher] = {
             newMessageMatcher,
             failedSendMatcher,
             groupActivityMatcher,
-            StartConversationMatcher(), UnsernameMatcher()]
+            StartConversationMatcher(),
+            UsernameMatcher()]
 }()
 
 extension ConversationStatus {
-    func appliedMatchersForDescription(for conversation: ZMConversation) -> [ConversationStatusMatcher] {
+    func appliedMatchersForDescription(for conversation: MatcherConversation) -> [ConversationStatusMatcher] {
         guard let topMatcher = allMatchers.first(where: { $0.isMatching(with: self) && $0.description(with: self, conversation: conversation) != .none }) else {
             return []
         }
-        
+
         return [topMatcher] + topMatcher.combinesWith.filter { $0.isMatching(with: self) && $0.description(with: self, conversation: conversation) != .none }
     }
-    
-    func appliedMatcherForIcon(for conversation: ZMConversation) -> ConversationStatusMatcher? {
+
+    func appliedMatcherForIcon(for conversation: MatcherConversation) -> ConversationStatusMatcher? {
+
         for matcher in allMatchers.filter({ $0.isMatching(with: self) }) {
             let icon = matcher.icon(with: self, conversation: conversation)
             switch icon {
@@ -785,33 +768,33 @@ extension ConversationStatus {
                 return matcher
             }
         }
-        
+
         return .none
     }
-    
-    func description(for conversation: ZMConversation) -> NSAttributedString {
+
+    func description(for conversation: MatcherConversation) -> NSAttributedString {
         let allMatchers = appliedMatchersForDescription(for: conversation)
-        guard allMatchers.count > 0 else {
+        guard !allMatchers.isEmpty else {
             return "" && [:]
         }
         let allStrings = allMatchers.compactMap { $0.description(with: self, conversation: conversation) }
         return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
-    
-    func icon(for conversation: ZMConversation) -> ConversationStatusIcon? {
-        guard let topMatcher = self.appliedMatcherForIcon(for: conversation) else {
+
+    func icon(for conversation: MatcherConversation) -> ConversationStatusIcon? {
+        guard let topMatcher = appliedMatcherForIcon(for: conversation) else {
             return nil
         }
-        
+
         return topMatcher.icon(with: self, conversation: conversation)
     }
 }
 
 extension ZMConversation {
-    
+
     var status: ConversationStatus {
         let messagesRequiringAttention = estimatedUnreadCount > 0 ? unreadMessages : []
-        
+
         let messagesRequiringAttentionByType: [StatusMessageType: UInt] = messagesRequiringAttention.reduce(into: [:]) { histogram, element in
             guard let messageType = StatusMessageType(message: element) else {
                 return
@@ -828,7 +811,7 @@ extension ZMConversation {
             default: return true
             }
         }()
-        
+
         return ConversationStatus(
             isGroup: conversationType == .group,
             hasMessages: estimatedHasMessages,

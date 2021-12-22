@@ -25,14 +25,13 @@ extension ConversationViewController {
         let outgoingConnection: Bool = conversation.relatedConnectionState == .sent
         contentViewController.tableView.isScrollEnabled = !outgoingConnection
 
-
         if outgoingConnection {
             if outgoingConnectionViewController != nil {
                 return
             }
-            
+
             createOutgoingConnectionViewController()
-            
+
             if let outgoingConnectionViewController = outgoingConnectionViewController {
                 outgoingConnectionViewController.willMove(toParent: self)
                 view.addSubview(outgoingConnectionViewController.view)
@@ -50,13 +49,13 @@ extension ConversationViewController {
     func createConstraints() {
         [conversationBarController.view,
          contentViewController.view,
-         inputBarController.view].forEach(){$0?.translatesAutoresizingMaskIntoConstraints = false}
+         inputBarController.view].forEach {$0?.translatesAutoresizingMaskIntoConstraints = false}
 
         conversationBarController.view.fitInSuperview(exclude: [.bottom])
         contentViewController.view.fitInSuperview(exclude: [.bottom])
 
         contentViewController.view.bottomAnchor.constraint(equalTo: inputBarController.view.topAnchor).isActive = true
-        let constraints = inputBarController.view.fitInSuperview(exclude:[.top])
+        let constraints = inputBarController.view.fitInSuperview(exclude: [.top])
 
         inputBarBottomMargin = constraints[.bottom]
 

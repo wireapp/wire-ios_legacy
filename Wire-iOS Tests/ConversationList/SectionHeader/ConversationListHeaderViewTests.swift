@@ -20,24 +20,24 @@ import XCTest
 @testable import Wire
 
 final class ConversationListHeaderViewTests: XCTestCase {
-    
+
     var sut: ConversationListHeaderView!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         sut = ConversationListHeaderView()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testThatAccessibilityValueForCollapsedAndFolderBadgeIsGenerated() {
         sut.collapsed = true
         sut.folderBadge = 999
-        
+
         XCTAssertEqual(sut.accessibilityValue, "collapsed 999")
     }
 }
