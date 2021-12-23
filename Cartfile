@@ -1,5 +1,5 @@
 github "wireapp/wire-ios-ziphy" ~> 17.1.0
-github "wireapp/wire-ios-sync-engine" ~> 405.0.1
+github "wireapp/wire-ios-sync-engine" ~> 405.0.2
 github "wireapp/wire-ios-share-engine" ~> 239.0.1
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 14.0.2
