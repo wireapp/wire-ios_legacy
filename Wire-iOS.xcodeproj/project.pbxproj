@@ -13,10 +13,13 @@
 		061282632379C25500C1A53C /* UITextView+ReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061282622379C25500C1A53C /* UITextView+ReplaceTests.swift */; };
 		0617001523E48B66005C262D /* VerticalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0617001423E48B66005C262D /* VerticalTransition.swift */; };
 		0619FBBB258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0619FBBA258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift */; };
-		061F63522772B0FC00FA8981 /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
 		0622D6A2265B38DE00D759DB /* UserBlockingReasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D6A1265B38DD00D759DB /* UserBlockingReasonCell.swift */; };
 		0630E4C42580469300C75BFB /* AppLockChangeWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */; };
 		064AD4C425DD31A600143D74 /* UIApplication+OpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */; };
+		064C79242774866F009EF8D6 /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
+		064C79252774866F009EF8D6 /* WireNotificationEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		064C792627748688009EF8D6 /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
+		064C792727748688009EF8D6 /* WireNotificationEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0661925726F889DC006969AA /* PerformClipboardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661925626F889DC006969AA /* PerformClipboardAction.swift */; };
@@ -1725,6 +1728,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				067BBC07247E6F1A00D73407 /* WireCommonComponents.framework in Embed Frameworks */,
+				064C792727748688009EF8D6 /* WireNotificationEngine.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1764,6 +1768,7 @@
 				A96867AB26A5E59F00679D95 /* WireCryptobox.xcframework in Embed Frameworks */,
 				A96867B326A5E5A000679D95 /* WireProtos.xcframework in Embed Frameworks */,
 				A96867BF26A5E5A000679D95 /* WireUtilities.xcframework in Embed Frameworks */,
+				064C79252774866F009EF8D6 /* WireNotificationEngine.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3520,6 +3525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				067BBC06247E6F1A00D73407 /* WireCommonComponents.framework in Frameworks */,
+				064C792627748688009EF8D6 /* WireNotificationEngine.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3537,7 +3543,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				061F63522772B0FC00FA8981 /* WireNotificationEngine.xcframework in Frameworks */,
 				A96867FA26A5EB8400679D95 /* WireCommonComponents.framework in Frameworks */,
 				A96867A626A5E52F00679D95 /* WireCanvas.xcframework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
@@ -3551,6 +3556,7 @@
 				A96867B226A5E5A000679D95 /* WireProtos.xcframework in Frameworks */,
 				A96867C726A5E68100679D95 /* FormatterKit.xcframework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
+				064C79242774866F009EF8D6 /* WireNotificationEngine.xcframework in Frameworks */,
 				A96867D626A5E70D00679D95 /* SwiftProtobuf.xcframework in Frameworks */,
 				A96867AA26A5E59F00679D95 /* WireCryptobox.xcframework in Frameworks */,
 				A96867AC26A5E59F00679D95 /* WireDataModel.xcframework in Frameworks */,
