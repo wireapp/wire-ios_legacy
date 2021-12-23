@@ -26,56 +26,6 @@ private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 
 extension ConversationInputBarViewController {
 
-    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Upload a directory is no longer allowed in Document picker")
-    /// Tested with iOS 10 simulator and confirmed that folder is not selectable for upload.
-    /// This method should be removed in the future
-    ///
-    /// - Parameter itemURL: url of the directory
-    func updateDirectory(itemURL: URL) {
-        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
-
-        let itemPath = itemURL.path
-
-        do {
-            try FileManager.default.moveItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpURL.path).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
-        } catch {
-            zmLog.error("Cannot move \(itemPath) to \(tmpURL): \(error)")
-            removeItem(atPath: tmpURL.path)
-            return
-        }
-
-        let archivePath = itemPath + (".zip")
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpURL.path)
-
-        if zipSucceded {
-            uploadFile(at: URL(fileURLWithPath: archivePath))
-        } else {
-            zmLog.error("Cannot archive folder at path: \(itemURL)")
-        }
-
-        removeItem(atPath: tmpURL.path)
-
-    }
-
-    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Upload a directory is no longer allowed in Document picker")
-    func uploadItem(at itemURL: URL) {
-        let itemPath = itemURL.path
-        var isDirectory: ObjCBool = false
-        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
-        if !fileExists {
-            zmLog.error("File not found for uploading: \(itemURL)")
-            return
-        }
-
-        guard isDirectory.boolValue else {
-            uploadFile(at: itemURL)
-            return
-        }
-
-        // zip and upload the directory
-        updateDirectory(itemURL: itemURL)
-    }
-
     @discardableResult
     private func removeItem(atPath path: String) -> Bool {
         do {
