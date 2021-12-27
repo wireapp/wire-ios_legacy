@@ -76,6 +76,8 @@
 	<string>${CAMERA_ROLL_ENABLED}</string>
 	<key>ClipboardEnabled</key>
 	<string>${CLIPBOARD_ENABLED}</string>
+	<key>MaxNumberAccounts</key>
+	<string>${MAX_NUMBER_ACCOUNTS}</string>
 	<key>CountlyAppKey</key>
 	<string>$(COUNTLY_APP_KEY)</string>
 	<key>CountlyHost</key>
