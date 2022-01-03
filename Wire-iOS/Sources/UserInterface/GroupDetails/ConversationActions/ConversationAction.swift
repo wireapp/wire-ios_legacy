@@ -100,8 +100,7 @@ extension ZMConversation {
         if !isReadOnly {
             if ZMUser.selfUser()?.isTeamMember ?? false {
                 actions.append(.configureNotifications)
-            }
-            else {
+            } else {
                 let isSilenced = mutedMessageTypes != .none
                 actions.append(.silence(isSilenced: isSilenced))
             }

@@ -607,8 +607,7 @@ final class ZClientViewController: UIViewController {
                     heightConstraint.isActive = false
                     self.view.layoutIfNeeded()
                 })
-            }
-            else {
+            } else {
                 topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }

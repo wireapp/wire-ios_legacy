@@ -57,8 +57,7 @@ final class EmptySearchResultsView: UIView {
             if let action = self.buttonAction {
                 actionButton.isHidden = false
                 actionButton.setTitle(action.title, for: .normal)
-            }
-            else {
+            } else {
                 actionButton.isHidden = true
             }
         }
