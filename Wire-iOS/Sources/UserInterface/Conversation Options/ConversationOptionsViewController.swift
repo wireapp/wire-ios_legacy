@@ -96,7 +96,18 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
 
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
-        present(UIAlertController.checkYourConnection(), animated: false)
+        /// We shouldn't display an error message if the guestLinks feature flag is disabled. There's a UI element that explains why the user cannot use/create links to join the conversation.
+        guard let error = error as? WirelessLinkError else {
+            present(UIAlertController.checkYourConnection(), animated: false)
+            return
+        }
+
+        switch error {
+        case .guestLinksDisabled:
+            break
+        case .noCode, .invalidOperation, .unknown:
+            present(UIAlertController.checkYourConnection(), animated: false)
+        }
     }
 
     func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView? = nil, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
