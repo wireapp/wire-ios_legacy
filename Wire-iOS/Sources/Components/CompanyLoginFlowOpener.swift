@@ -77,11 +77,7 @@ final class CompanyLoginFlowHandler {
             return
         }
 
-        if #available(iOS 11, *) {
-            openSafariAuthenticationSession(at: authenticationURL)
-        } else {
-            openSafariEmbed(at: authenticationURL)
-        }
+        openSafariAuthenticationSession(at: authenticationURL)
     }
 
     private func startListeningToFlowCompletion() {

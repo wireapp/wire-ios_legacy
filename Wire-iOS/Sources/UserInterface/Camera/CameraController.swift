@@ -274,32 +274,6 @@ final class CameraController {
 
             handler(PhotoResult(imageData, nil))
         }
-
-        @available(iOS, introduced: 10.0, deprecated: 11.0, message: "Use -captureOutput:didFinishProcessingPhoto:error: instead.")
-        func photoOutput(_ output: AVCapturePhotoOutput,
-                         didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
-                         previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
-                         resolvedSettings: AVCaptureResolvedPhotoSettings,
-                         bracketSettings: AVCaptureBracketedStillImageSettings?,
-                         error: Error?) {
-            if #available(iOS 11, *) { return }
-
-            defer { completion() }
-
-            if let error = error {
-                zmLog.error("PhotoCaptureDelegate encountered error while processing photo:\(error.localizedDescription)")
-                handler(PhotoResult(nil, error))
-                return
-            }
-
-            guard let buffer = photoSampleBuffer else { return }
-
-            let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(
-                    forJPEGSampleBuffer: buffer,
-                    previewPhotoSampleBuffer: previewPhotoSampleBuffer)
-
-            handler(PhotoResult(imageData, nil))
-        }
     }
 }
 

@@ -72,13 +72,7 @@ final class SimpleTextField: UITextField, Themeable {
     init() {
         let leftInset: CGFloat = 8
 
-        var topInset: CGFloat = 0
-        if #available(iOS 11, *) {
-            topInset = 0
-        } else {
-            /// Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            topInset = 8
-        }
+        let topInset: CGFloat = 0
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
 
         super.init(frame: .zero)
