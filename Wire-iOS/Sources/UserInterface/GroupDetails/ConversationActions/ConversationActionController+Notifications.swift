@@ -66,8 +66,7 @@ enum NotificationResult: CaseIterable {
 
         if let mutedMessageTypes = self.mutedMessageTypes, conversation.mutedMessageTypes == mutedMessageTypes {
             checkmarkText = " ✓"
-        }
-        else {
+        } else {
             checkmarkText = ""
         }
 

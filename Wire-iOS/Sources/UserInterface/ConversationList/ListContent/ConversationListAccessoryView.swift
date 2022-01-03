@@ -139,8 +139,7 @@ final class ConversationListAccessoryView: UIView {
             if let mediaPlayer = activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.setIcon(.pause, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
-            }
-            else {
+            } else {
                 iconView.setIcon(.play, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
