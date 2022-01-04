@@ -18,8 +18,10 @@
 
 import Foundation
 import SafariServices
+#if DISABLE_APPCENTER_CRASH_LOGGING
+#else
 import AppCenterCrashes
-import WireDataModel
+#endif
 import WireSyncEngine
 import avs
 
