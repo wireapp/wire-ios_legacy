@@ -18,10 +18,7 @@
 
 import Foundation
 import WireSyncEngine
-#if DISABLE_APPCENTER_CRASH_LOGGING
-#else
 import AppCenterCrashes
-#endif
 
 enum DebugActions {
 
