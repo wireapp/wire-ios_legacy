@@ -279,7 +279,6 @@ final class CallViewController: UIViewController {
                 self.updateVideoStatusPlaceholder()
                 self.updateConfiguration()
             }
-            return
         }
 
         let newState = voiceChannel.videoState.toggledState
