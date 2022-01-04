@@ -17,7 +17,10 @@
 // 
 
 import AppCenter
+#if DISABLE_APPCENTER_CRASH_LOGGING
+#else
 import AppCenterCrashes
+#endif
 import AppCenterDistribute
 import AppCenterAnalytics
 
