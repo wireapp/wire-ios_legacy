@@ -47,7 +47,6 @@ class ColorPickerController: UIViewController {
         modalPresentationStyle = .custom
     }
 
-    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

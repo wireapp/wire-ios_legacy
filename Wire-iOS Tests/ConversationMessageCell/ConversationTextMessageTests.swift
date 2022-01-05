@@ -150,11 +150,11 @@ final class ConversationTextMessageTests: XCTestCase {
         ]
 
         // THEN
-        let options = XCTExpectedFailure.Options()
-        options.isStrict = false
-        XCTExpectFailure("This test is flaky, may be related to sound cloud preview text view?", options: options) {
+//        let options = XCTExpectedFailure.Options()
+//        options.isStrict = false
+//        XCTExpectFailure("This test is flaky, may be related to sound cloud preview text view?", options: options) {
             verify(message: message, waitForTextViewToLoad: true)
-        }
+//        }
 
     }
 
