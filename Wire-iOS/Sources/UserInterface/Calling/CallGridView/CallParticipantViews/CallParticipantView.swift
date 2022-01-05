@@ -122,7 +122,7 @@ final class CallParticipantView: BaseCallParticipantView {
     private func createPreviewView() {
         let preview = AVSVideoView()
         preview.backgroundColor = .clear
-        preview.userid = stream.streamId.userId.transportString()
+        preview.userid = stream.streamId.avsIdentifier.serialized
         preview.clientid = stream.streamId.clientId
         preview.shouldFill = shouldFill
         previewView = preview
