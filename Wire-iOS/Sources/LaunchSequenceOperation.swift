@@ -20,7 +20,10 @@ import Foundation
 import WireSyncEngine
 import WireCommonComponents
 import AppCenter
+#if DISABLE_APPCENTER_CRASH_LOGGING
+#else
 import AppCenterCrashes
+#endif
 import AppCenterDistribute
 import avs
 
@@ -119,7 +122,10 @@ final class AppCenterOperation: NSObject, LaunchSequenceOperation {
             return
         }
 
+#if DISABLE_APPCENTER_CRASH_LOGGING
+#else
         Crashes.delegate = self
+#endif
         Distribute.delegate = self
 
         AppCenter.start()
@@ -171,6 +177,8 @@ extension AppCenterOperation: DistributeDelegate {
     }
 }
 
+#if DISABLE_APPCENTER_CRASH_LOGGING
+#else
 extension AppCenterOperation: CrashesDelegate {
 
     func crashes(_ crashes: Crashes, shouldProcess errorReport: ErrorReport) -> Bool {
@@ -185,3 +193,4 @@ extension AppCenterOperation: CrashesDelegate {
         zmLog.error("AppCenter: failed sending the crash report with error: \(String(describing: error?.localizedDescription))")
     }
 }
+#endif

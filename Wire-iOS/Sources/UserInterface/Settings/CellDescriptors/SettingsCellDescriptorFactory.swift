@@ -18,8 +18,6 @@
 
 import Foundation
 import SafariServices
-import AppCenterCrashes
-import WireDataModel
 import WireSyncEngine
 import avs
 
@@ -69,7 +67,7 @@ class SettingsCellDescriptorFactory {
 
         let presentationAction: () -> UIViewController? = {
 
-            if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
+            if SessionManager.shared?.accountManager.accounts.count < SessionManager.shared?.maxNumberAccounts {
                 SessionManager.shared?.addAccount()
             } else {
                 if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {

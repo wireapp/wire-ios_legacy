@@ -16,14 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import WireCommonComponents
 
 import AppCenter
 import AppCenterAnalytics
-import AppCenterCrashes
 import AppCenterDistribute
-
 
 /// Flag to determine if the App Center SDK has already been initialized
 private var didSetupAppCenter = false
