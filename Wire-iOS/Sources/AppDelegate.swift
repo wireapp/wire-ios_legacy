@@ -256,15 +256,19 @@ private extension AppDelegate {
         configuration.supportFederation = Settings.shared.federationEnabled
         let jailbreakDetector = JailbreakDetector()
 
-        let sessionManager = SessionManager(appVersion: appVersion,
-                                            mediaManager: mediaManager,
-                                            analytics: Analytics.shared,
-                                            delegate: appStateCalculator,
-                                            application: UIApplication.shared,
-                                            environment: BackendEnvironment.shared,
-                                            configuration: configuration,
-                                            detector: jailbreakDetector)
-        return sessionManager
+        /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
+        let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
+
+        return SessionManager(maxNumberAccounts: maxNumberAccounts,
+                              appVersion: appVersion,
+                              mediaManager: mediaManager,
+                              analytics: Analytics.shared,
+                              delegate: appStateCalculator,
+                              application: UIApplication.shared,
+                              environment: BackendEnvironment.shared,
+                              configuration: configuration,
+                              detector: jailbreakDetector)
+
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
