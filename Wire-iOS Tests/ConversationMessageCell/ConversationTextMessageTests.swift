@@ -156,7 +156,7 @@ final class ConversationTextMessageTests: XCTestCase {
         XCTExpectFailure("This test is flaky, may be related to sound cloud preview text view?", options: options) {
             verify(message: message, waitForTextViewToLoad: true)
         }
-        #elseif
+        #else
         verify(message: message, waitForTextViewToLoad: true)
         #endif
     }
