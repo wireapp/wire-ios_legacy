@@ -91,7 +91,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
                         self.layoutIfNeeded()
-                    }) { _ in
+                    }, completion: { _ in
                         // reset gesture state
                         let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
 
@@ -105,7 +105,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
                         self.scrollingFraction = newOffset.x / self.bounds.size.width
                         self.layoutIfNeeded()
-                    }
+                    })
 
                     revealDrawerOverscrolled = false
                 }

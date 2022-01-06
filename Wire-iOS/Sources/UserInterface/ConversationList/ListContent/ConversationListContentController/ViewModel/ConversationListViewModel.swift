@@ -520,11 +520,11 @@ final class ConversationListViewModel: NSObject {
         } else {
             delegate?.reload(using: changeset, interrupt: { _ in
                 return false
-            }) { data in
+            }, setData: { data in
                 if let data = data {
                     self.sections = data
                 }
-            }
+            })
         }
 
         if let kind = kind,
@@ -617,11 +617,11 @@ final class ConversationListViewModel: NSObject {
 
             delegate?.reload(using: changeset, interrupt: { _ in
                 return false
-            }) { data in
+            }, setData: { data in
                 if let data = data {
                     self.sections = data
                 }
-            }
+            })
         } else {
             sections = newValue
             delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: true)

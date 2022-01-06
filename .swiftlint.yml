@@ -16,7 +16,6 @@ disabled_rules:
     - class_delegate_protocol
     - legacy_constructor
     - legacy_hashing
-    - multiple_closures_with_trailing_closure
     - nesting
     - function_parameter_count
     - xctfail_message
