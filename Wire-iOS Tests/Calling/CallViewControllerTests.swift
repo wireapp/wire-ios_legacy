@@ -86,7 +86,7 @@ final class CallViewControllerTests: XCTestCase {
 
         for _ in 0..<amount {
             participants.append(
-                CallParticipant(user: MockUserType(), userId: UUID(), clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
+                CallParticipant(user: MockUserType(), userId: AVSIdentifier.stub, clientId: UUID().transportString(), state: .connected(videoState: .started, microphoneState: .unmuted), activeSpeakerState: .inactive)
             )
         }
 
@@ -120,8 +120,8 @@ final class CallViewControllerTests: XCTestCase {
         let configuration = MockCallGridViewControllerInput()
         let viewController = CallGridViewController(configuration: configuration)
         let clients = [
-            AVSClient(userId: UUID(), clientId: UUID().transportString()),
-            AVSClient(userId: UUID(), clientId: UUID().transportString())
+            AVSClient(userId: AVSIdentifier.stub, clientId: UUID().transportString()),
+            AVSClient(userId: AVSIdentifier.stub, clientId: UUID().transportString())
         ]
 
         // When
