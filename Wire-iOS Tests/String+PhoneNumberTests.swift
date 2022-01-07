@@ -39,7 +39,7 @@ final class String_PhoneNumberTests: XCTestCase {
             XCTAssertEqual(country.iso, "ch")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
         } else {
-            XCTFail()
+            XCTFail("Failed to parse phone number with space")
         }
     }
 
@@ -55,7 +55,7 @@ final class String_PhoneNumberTests: XCTestCase {
             XCTAssertEqual(country.iso, "ch")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
         } else {
-            XCTFail()
+            XCTFail("Failed to parse phone number with dash")
         }
     }
 
@@ -70,7 +70,7 @@ final class String_PhoneNumberTests: XCTestCase {
             XCTAssertEqual(country.iso, "de")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "017612345678")
         } else {
-            XCTFail()
+            XCTFail("Failed to parse phone number with leading zero")
         }
     }
 
@@ -85,7 +85,7 @@ final class String_PhoneNumberTests: XCTestCase {
             XCTAssertEqual(country.iso, "ch")
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
         } else {
-            XCTFail()
+            XCTFail("Failed to parse phone number without space")
         }
     }
 
@@ -100,7 +100,7 @@ final class String_PhoneNumberTests: XCTestCase {
             XCTAssertEqual(country.e164, 49)
             XCTAssertEqual(phoneNumberWithoutCountryCode, "860792093637")
         } else {
-            XCTFail()
+            XCTFail("Failed to parse phone number with no country code")
         }
     }
 

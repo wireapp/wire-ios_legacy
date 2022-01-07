@@ -51,7 +51,7 @@ final class ChangePhoneViewControllerTests: XCTestCase {
             // THEN
             XCTAssertTrue(changed)
         } else {
-            XCTFail()
+            XCTFail("Failed to change characters")
         }
     }
 }
