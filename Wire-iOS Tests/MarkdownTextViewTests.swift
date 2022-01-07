@@ -81,7 +81,7 @@ final class MarkdownTextViewTests: XCTestCase {
 
     func select(_ markdown: Markdown) {
         guard let button = button(for: markdown) else {
-            XCTFail()
+            XCTFail("Failed to create button for markdown")
             return
         }
         sut.markdownBarView(bar, didSelectMarkdown: markdown, with: button)
@@ -93,7 +93,7 @@ final class MarkdownTextViewTests: XCTestCase {
 
     func deselect(_ markdown: Markdown) {
         guard let button = button(for: markdown) else {
-            XCTFail()
+            XCTFail("Failed to create button for markdown")
             return
         }
         sut.markdownBarView(bar, didDeselectMarkdown: markdown, with: button)

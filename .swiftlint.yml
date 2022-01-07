@@ -18,7 +18,6 @@ disabled_rules:
     - legacy_hashing
     - nesting
     - function_parameter_count
-    - xctfail_message
 
 included:
     - Wire-iOS/Sources
