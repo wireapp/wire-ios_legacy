@@ -14,7 +14,6 @@ disabled_rules:
     - weak_delegate
     - inclusive_language
     - class_delegate_protocol
-    - legacy_hashing
     - nesting
     - function_parameter_count
 
