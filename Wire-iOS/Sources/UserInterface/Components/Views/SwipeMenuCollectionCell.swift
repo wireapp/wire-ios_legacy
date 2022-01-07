@@ -91,7 +91,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
                         self.layoutIfNeeded()
-                    }) { _ in
+                    }, completion: { _ in
                         // reset gesture state
                         let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
 
@@ -105,7 +105,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
                         self.scrollingFraction = newOffset.x / self.bounds.size.width
                         self.layoutIfNeeded()
-                    }
+                    })
 
                     revealDrawerOverscrolled = false
                 }
@@ -145,6 +145,10 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func setupRecognizer() {
@@ -206,7 +210,6 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
                 separatorLine.alpha = 0.0
                 setVisualDrawerOffset(0, updateUI: false)
-                NotificationCenter.default.removeObserver(self)
             } else {
                 if visualDrawerOffset > drawerWidth / CGFloat(2) {
                     openedFeedbackGenerator.impactOccurred()
