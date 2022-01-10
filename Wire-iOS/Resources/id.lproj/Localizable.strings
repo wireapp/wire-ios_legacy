@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Ada yang tidak beres, coba lagi";
 "error.user.needs_credentials" = "Silakan verifikasi data Anda dan coba lagi.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Silakan verifikasi data Anda dan coba lagi.";
 "error.user.account_pending_activation" = "Akun yang Anda coba akses adalah aktivasi yang tertunda. Harap verifikasi data Anda.";
 "error.user.network_error" = "Sepertinya ada masalah dengan jaringan Anda. Silakan coba lagi nanti.";

@@ -1,14 +1,17 @@
-name: Xcode 13 iOS 15 Simulator Test
+name: Xcode 12 iOS 14 Simulator Test
 
 on: 
   workflow_dispatch:
+  pull_request:
+    branches:
+      - develop
 jobs:
-  Run_Tests_Xcode_13_0_iOS_14_4:
+  Run_Tests_Xcode_12_0_iOS_14_4:
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
     - name: Select Xcode
-      run: sudo xcode-select -switch /Applications/Xcode_13.0.app && /usr/bin/xcodebuild -version
+      run: sudo xcode-select -switch /Applications/Xcode_12.4.app && /usr/bin/xcodebuild -version
       
     - name: Carthage
       env:

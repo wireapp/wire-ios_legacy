@@ -18,8 +18,6 @@
 
 import Foundation
 import SafariServices
-import AppCenterCrashes
-import WireDataModel
 import WireSyncEngine
 import avs
 

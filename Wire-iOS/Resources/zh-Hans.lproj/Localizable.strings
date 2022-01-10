@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了点问题，请再试一次";
 "error.user.needs_credentials" = "用户名或密码错误，请重试。";
-"error.user.domain_blocked" = "此电子邮件需要团队邀请。请联系您的组织IT管理员收到邀请。";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "请检查您提供的资料然后重试。";
 "error.user.account_pending_activation" = "您的账号尚未激活。";
 "error.user.network_error" = "您的网络好像有些问题，请稍候再试。";

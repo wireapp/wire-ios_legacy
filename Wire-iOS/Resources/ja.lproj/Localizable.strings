@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "問題が生じたようです。もう一度やり直してください。";
 "error.user.needs_credentials" = "詳細を確認して、もう一度やり直してください。";
-"error.user.domain_blocked" = "このメールはチームの招待が必要です。招待を受けるには組織の IT 管理者にお問い合わせください。";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "詳細を確認して、もう一度やり直してください。";
 "error.user.account_pending_activation" = "アクセスをしようとしているアカウントは、ライセンス認証の保留中です。詳細をご確認ください。";
 "error.user.network_error" = "ネットワークに問題があるようです。後でもう一度お試しください。";

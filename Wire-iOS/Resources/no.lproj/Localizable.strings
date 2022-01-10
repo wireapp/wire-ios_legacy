@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Noe gikk galt, vennligst prøv igjen";
 "error.user.needs_credentials" = "Kontroller dine detaljer og prøv på nytt.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Kontroller dine detaljer og prøv på nytt.";
 "error.user.account_pending_activation" = "Kontoen du prøver å få tilgang til, venter på aktivering. Vennligst bekreft detaljene dine.";
 "error.user.network_error" = "Det ser ut til å være et problem med nettverket ditt. Prøv igjen senere.";

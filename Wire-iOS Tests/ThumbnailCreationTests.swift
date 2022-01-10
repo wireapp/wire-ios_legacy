@@ -24,10 +24,13 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForSquareImage() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
-        guard let data = image.imageData else { return XCTFail() }
+        guard let data = image.imageData else {
+            return XCTFail("Failed to create image data")
+        }
 
         // When
-        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
+        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else {
+            return XCTFail("Failed to create thumbnail") }
 
         // Then
         XCTAssertEqual(thumbnail.size.width, 100, accuracy: 1)
@@ -38,10 +41,14 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForVerticalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
-        guard let data = image.imageData else { return XCTFail() }
+        guard let data = image.imageData else {
+            return XCTFail("Failed to create image data")
+        }
 
         // When
-        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
+        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else {
+            return XCTFail("Failed to create thumbnail")
+        }
 
         // Then
         XCTAssertEqual(thumbnail.size.width, 100, accuracy: 1)
@@ -51,10 +58,14 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForHorizontalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
-        guard let data = image.imageData else { return XCTFail() }
+        guard let data = image.imageData else {
+            return XCTFail("Failed to create image data")
+        }
 
         // When
-        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
+        guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else {
+            return XCTFail("Failed to create a thumbnail")
+        }
 
         // Then
         XCTAssertEqual(thumbnail.size.height, 100, accuracy: 1)
