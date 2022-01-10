@@ -167,9 +167,9 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         update(for: size)
 
         coordinator.animate(alongsideTransition: { _ in
-        }) { _ in
+        }, completion: { _ in
             self.updateLayoutSizeAndLeftViewVisibility()
-        }
+        })
 
     }
 

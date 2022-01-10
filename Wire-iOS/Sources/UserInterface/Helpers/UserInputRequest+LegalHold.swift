@@ -41,7 +41,7 @@ extension UserType where Self: SelfLegalHoldSubject {
                 placeholder: "password.placeholder".localized,
                 prefilledText: nil,
                 isSecure: true,
-                textContentType: .passwordIfAvailable,
+                textContentType: .password,
                 accessibilityIdentifier: "legalhold-request-password-input",
                 validator: { !$0.isEmpty }
             )

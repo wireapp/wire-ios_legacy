@@ -50,8 +50,7 @@ final class SimpleTextFieldValidator: NSObject {
                                                     minimumStringLength: 1,
                                                     maximumStringLength: 64,
                                                     maximumByteLength: 256)
-        }
-        catch let stringValidationError as NSError {
+        } catch let stringValidationError as NSError {
 
             switch stringValidationError.code {
             case Int(ZMManagedObjectValidationErrorCode.tooLong.rawValue):

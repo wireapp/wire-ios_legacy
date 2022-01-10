@@ -24,8 +24,7 @@ extension ZMConversationMessage {
             fileMessageData.fileURL != nil,
             fileMessageData.isAudio {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }

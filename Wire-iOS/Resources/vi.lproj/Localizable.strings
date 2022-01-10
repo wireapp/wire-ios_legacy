@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Đã xảy ra lỗi, vui lòng thử lại";
 "error.user.needs_credentials" = "Vui lòng xác minh thông tin của bạn và thử lại.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Vui lòng xác minh thông tin của bạn và thử lại.";
 "error.user.account_pending_activation" = "Tài khoản bạn đang cố truy cập đang chờ kích hoạt. Vui lòng xác minh thông tin của bạn.";
 "error.user.network_error" = "Xem ra đã có vấn đề với mạng của bạn. Vui lòng thử lại sau.";

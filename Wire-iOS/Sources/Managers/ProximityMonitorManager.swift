@@ -44,6 +44,7 @@ final class ProximityMonitorManager: NSObject {
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
         self.stopListening()
+        NotificationCenter.default.removeObserver(self)
     }
 
     override init() {
@@ -102,7 +103,6 @@ final class ProximityMonitorManager: NSObject {
         self.listening = false
 
         UIDevice.current.isProximityMonitoringEnabled = false
-        NotificationCenter.default.removeObserver(self)
     }
 
     @objc func handleProximityChange(_ notification: Notification) {

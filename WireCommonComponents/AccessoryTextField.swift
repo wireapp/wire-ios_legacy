@@ -86,13 +86,7 @@ open class AccessoryTextField: UITextField {
          accessoryTrailingInset: CGFloat = 16,
          textFieldAttributes: Attributes) {
         
-        var topInset: CGFloat = 0
-        if #available(iOS 11, *) {
-            topInset = 0
-        } else {
-            /// Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            topInset = 8
-        }
+        let topInset: CGFloat = 0
 
         self.placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: horizonalInset)
         self.textInsets = UIEdgeInsets(top: 0, left: horizonalInset, bottom: 0, right: horizonalInset)

@@ -731,7 +731,7 @@ extension AuthenticationCoordinator {
 
     var canStartCompanyLogin: Bool {
         switch stateController.currentStep {
-        case .landingScreen, .provideCredentials, .createCredentials, .reauthenticate, .teamCreation(.setTeamName):
+        case .companyLogin:
             return true
         default:
             log.warn("Cannot start company login in step: \(stateController.currentStep)")

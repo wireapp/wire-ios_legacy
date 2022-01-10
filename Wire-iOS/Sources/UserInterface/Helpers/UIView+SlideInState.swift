@@ -41,9 +41,8 @@ extension UIView {
         UIView.animate(easing: .easeInOutExpo, duration: 0.20, animations: {
             self.frame = screenshot.frame
             screenshot.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y - offset, width: self.frame.size.width, height: self.frame.size.height)
-            }) { _ in
-
+            }, completion: { _ in
                 screenshot.removeFromSuperview()
-        }
+        })
     }
 }

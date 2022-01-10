@@ -133,17 +133,13 @@ extension ZMConversationMessage {
 
         if isImage {
             return true
-        }
-        else if isVideo {
+        } else if isVideo {
             return videoCanBeSavedToCameraRoll()
-        }
-        else if isAudio {
+        } else if isAudio {
             return audioCanBeSaved()
-        }
-        else if isFile, let fileMessageData = self.fileMessageData {
+        } else if isFile, let fileMessageData = self.fileMessageData {
             return fileMessageData.fileURL != nil
-        }
-        else {
+        } else {
             return false
         }
     }
@@ -156,8 +152,7 @@ extension ZMConversationMessage {
 
         if isFile, let fileMessageData = self.fileMessageData {
             return fileMessageData.fileURL != nil
-        }
-        else {
+        } else {
             return (isText || isImage || isLocation || isFile)
         }
     }
