@@ -32,7 +32,7 @@ func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedStri
 }
 
 func + (left: String, right: NSAttributedString) -> NSAttributedString {
-    var range: NSRange? = NSMakeRange(0, 0)
+    var range: NSRange? = NSRange(location: 0, length: 0)
     let attributes = right.length > 0 ? right.attributes(at: 0, effectiveRange: &range!) : [:]
 
     let result = NSMutableAttributedString()
@@ -43,7 +43,7 @@ func + (left: String, right: NSAttributedString) -> NSAttributedString {
 }
 
 func + (left: NSAttributedString, right: String) -> NSAttributedString {
-    var range: NSRange? = NSMakeRange(0, 0)
+    var range: NSRange? = NSRange(location: 0, length: 0)
     let attributes = left.length > 0 ? left.attributes(at: left.length - 1, effectiveRange: &range!) : [:]
 
     let result = NSMutableAttributedString()
@@ -93,7 +93,7 @@ func && (left: String, right: UIFont) -> NSAttributedString {
 func && (left: NSAttributedString, right: UIFont?) -> NSAttributedString {
     guard let font = right else { return left }
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([.font: font], range: NSMakeRange(0, result.length))
+    result.addAttributes([.font: font], range: NSRange(location: 0, length: result.length))
     return NSAttributedString(attributedString: result)
 }
 
@@ -104,13 +104,13 @@ func && (left: String, right: UIColor) -> NSAttributedString {
 
 func && (left: NSAttributedString, right: UIColor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([.foregroundColor: right], range: NSMakeRange(0, result.length))
+    result.addAttributes([.foregroundColor: right], range: NSRange(location: 0, length: result.length))
     return NSAttributedString(attributedString: result)
 }
 
 func && (left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes(right, range: NSMakeRange(0, result.length))
+    result.addAttributes(right, range: NSRange(location: 0, length: result.length))
     return NSAttributedString(attributedString: result)
 }
 
@@ -141,7 +141,7 @@ enum ParagraphStyleDescriptor {
 
 func && (left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([.paragraphStyle: right.style], range: NSMakeRange(0, result.length))
+    result.addAttributes([.paragraphStyle: right.style], range: NSRange(location: 0, length: result.length))
     return NSAttributedString(attributedString: result)
 }
 

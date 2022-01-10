@@ -33,7 +33,7 @@ extension NSAttributedString {
         }
 
         if result.string.last == "\n" {
-            result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
+            result.deleteCharacters(in: NSRange(location: result.length - 1, length: 1))
         }
 
         guard !result.string.isEmpty else {
@@ -56,7 +56,7 @@ extension NSAttributedString {
         if lines.count > numberOfLinesLimit {
             let headLines = lines.prefix(numberOfLinesLimit).joined(separator: "\n")
 
-            return attributedSubstring(from: NSMakeRange(0, headLines.count)) + String.ellipsis
+            return attributedSubstring(from: NSRange(location: 0, length: headLines.count)) + String.ellipsis
         } else {
             return self
         }

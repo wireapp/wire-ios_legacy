@@ -88,10 +88,10 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
             snapshotView?.center = targetCenter
             snapshotView?.alpha = 0
             snapshotView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) { _ in
+        }, completion: { _ in
             snapshotView?.removeFromSuperview()
             self.inputBarController.bounceCameraIcon()
-        }
+        })
     }
 
     func conversationContentViewControllerWants(toDismiss controller: ConversationContentViewController) {
