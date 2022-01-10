@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Něco se pokazilo. Zkuste prosím znovu";
 "error.user.needs_credentials" = "Zkontrolujte své údaje a zkuste znovu.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Zkontrolujte své údaje a zkuste znovu.";
 "error.user.account_pending_activation" = "Účet, na který se zkoušíte přihlásit, čeká na aktivaci. Zkontrolujte prosím své údaje.";
 "error.user.network_error" = "Zdá se, že došlo k problému s připojením. Prosím zkuste to znovu později.";

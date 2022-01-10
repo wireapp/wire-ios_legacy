@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Qualcosa è andato storto, si prega di riprovare";
 "error.user.needs_credentials" = "Verifica i tuoi dati e riprova.";
-"error.user.domain_blocked" = "Questa email richiede un invito di squadra. Contatta gli amministratori IT della tua organizzazione per ricevere un invito.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Verifica i tuoi dati e riprova.";
 "error.user.account_pending_activation" = "L'account a cui stai cercando di accedere è in attesa di attivazione. Verifica i dati inseriti.";
 "error.user.network_error" = "Sembra esserci un problema con la tua rete. Per favore, riprova più tardi.";
