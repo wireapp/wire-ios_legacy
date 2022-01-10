@@ -277,7 +277,7 @@ final class CallViewController: UIViewController {
             permissions.requestOrWarnAboutVideoPermission { isVideoPermissionGranted in
                 self.disableVideoIfNeeded()
                 self.updateVideoStatusPlaceholder()
-                if !isVideoPermissionGranted { return }
+                guard isVideoPermissionGranted else { return }
             }
         }
 
