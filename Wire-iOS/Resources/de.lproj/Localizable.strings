@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
 "error.user.needs_credentials" = "Bitte die Eingaben überprüfen und erneut versuchen.";
-"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
+"error.user.domain_blocked" = "Sie können dieses Benutzerkonto nicht einrichten, da Ihre E-Mail-Domain absichtlich blockiert ist. Bitte fragen Sie Ihren Team-Admin, Sie per E-Mail einzuladen.";
 "error.user.invalid_credentials" = "Bitte die Eingaben überprüfen und erneut versuchen.";
 "error.user.account_pending_activation" = "Dieses Benutzerkonto ist noch nicht aktiviert. Bitte bestätigen Sie Ihre Angaben.";
 "error.user.network_error" = "Es gibt ein Problem mit Ihrem Netzwerk. Bitte versuchen Sie es später noch einmal.";
