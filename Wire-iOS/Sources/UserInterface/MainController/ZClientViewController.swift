@@ -571,14 +571,14 @@ final class ZClientViewController: UIViewController {
 
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
-                }) { _ in
+                }, completion: { _ in
                     heightConstraint.isActive = false
 
                     self.topOverlayViewController?.removeFromParent()
                     previousViewController.view.removeFromSuperview()
                     self.topOverlayViewController = nil
                     self.updateSplitViewTopConstraint()
-                }
+                })
             } else {
                 self.topOverlayViewController?.removeFromParent()
                 previousViewController.view.removeFromSuperview()

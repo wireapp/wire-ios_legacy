@@ -52,7 +52,7 @@ class SoundEventListener: NSObject {
     static let SoundEventListenerIgnoreTimeForPushStart = 2.0
 
     let soundEventWatchDog = SoundEventRulesWatchDog(ignoreTime: SoundEventListenerIgnoreTimeForPushStart)
-    var previousCallStates: [UUID: CallState] = [:]
+    var previousCallStates: [AVSIdentifier: CallState] = [:]
 
     var unreadMessageObserverToken: NSObjectProtocol?
     var unreadKnockMessageObserverToken: NSObjectProtocol?
@@ -145,12 +145,12 @@ extension SoundEventListener: WireCallCenterCallStateObserver {
 
         guard let mediaManager = AVSMediaManager.sharedInstance(),
               let userSession = userSession,
-              let callCenter = userSession.callCenter
+              let callCenter = userSession.callCenter,
+              let conversationId = conversation.avsIdentifier
         else {
             return
         }
 
-        let conversationId = conversation.remoteIdentifier!
         let previousCallState = previousCallStates[conversationId] ?? .none
         previousCallStates[conversationId] = callState
 
@@ -158,7 +158,7 @@ extension SoundEventListener: WireCallCenterCallStateObserver {
         case .incoming(video: _, shouldRing: true, degraded: _):
             guard let sessionManager = SessionManager.shared, conversation.mutedMessageTypesIncludingAvailability == .none else { return }
 
-            let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, _) -> Bool in
+            let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: AVSIdentifier, _) -> Bool in
                 return key != conversationId
             })
 

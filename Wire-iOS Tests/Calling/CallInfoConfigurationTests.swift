@@ -56,11 +56,13 @@ final class CallInfoConfigurationTests: XCTestCase {
     }
 
     private func mockCallParticipants(mockUsers: [MockUserType], count: Int, state: CallParticipantState) -> [CallParticipant] {
-        return (mockUsers[0..<count]).map({ CallParticipant(user: $0,
-                                                                       userId: UUID(),
-                                                                       clientId: "123",
-                                                                       state: state,
-                                                                       activeSpeakerState: .inactive) })
+        return (mockUsers[0..<count]).map({
+            CallParticipant(user: $0,
+                            userId: AVSIdentifier.stub,
+                            clientId: "123",
+                            state: state,
+                            activeSpeakerState: .inactive)
+        })
     }
 
     // MARK: - OneToOne Audio

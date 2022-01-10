@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Something went wrong, please try again";
 "error.user.needs_credentials" = "Παρακαλούμε επιβεβαιώστε τα στοιχεία σας και προσπαθήστε ξανά.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Παρακαλούμε επιβεβαιώστε τα στοιχεία σας και προσπαθήστε ξανά.";
 "error.user.account_pending_activation" = "The account you are trying access is pending activation. Please verify your details.";
 "error.user.network_error" = "There seems to be a problem with your network. Please try again later.";
