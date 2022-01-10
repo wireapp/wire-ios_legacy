@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 "error.user.needs_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
-"error.user.domain_blocked" = "Цей емейл потребує запрошення в команду. Зверніться до ІТ-адміністраторів вашої організації для отримання запрошення.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
 "error.user.account_pending_activation" = "Акаунт, який ви намагаєтесь використовувати, очікує активації. Будь ласка, перевірте ваші дані.";
 "error.user.network_error" = "Спостерігаються тимчасові проблеми з вашою мережею. Будь ласка, спробуйте знову пізніше.";

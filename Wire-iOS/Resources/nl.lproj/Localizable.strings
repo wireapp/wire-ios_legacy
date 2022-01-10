@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Er is een fout opgetreden, probeer het nogmaals";
 "error.user.needs_credentials" = "Controleer je gegevens en probeer het nogmaals.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Controleer je gegevens en probeer het nogmaals.";
 "error.user.account_pending_activation" = "Het account dat je probeert te bereiken is nog niet geactiveerd. Verifieer je gegevens.";
 "error.user.network_error" = "Er lijkt een probleem te zijn met het netwerk. Probeer het later opnieuw.";

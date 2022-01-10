@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Bir şeyler ters gitti, lütfen tekrar deneyin";
 "error.user.needs_credentials" = "Lütfen bilgilerinizi doğrulayın ve yeniden deneyin.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Lütfen bilgilerinizi doğrulayın ve yeniden deneyin.";
 "error.user.account_pending_activation" = "Ulaşmaya çalıştığınız hesap aktivosyan beklemesindedir. Lütfen bilgilerinizi doğrulayınız.";
 "error.user.network_error" = "Ağınızda problem var gibi gözüküyor. Lütfen daha sonra yeniden deneyin.";
