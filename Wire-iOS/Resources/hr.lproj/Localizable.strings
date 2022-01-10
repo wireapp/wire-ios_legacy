@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Nešto ne funkcionira dobro. Molimo, pokušajte ponovno";
 "error.user.needs_credentials" = "Molimo provjerite vaše podatke i pokušajte ponovno.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Molimo provjerite vaše podatke i pokušajte ponovno.";
 "error.user.account_pending_activation" = "Račun u koji se pokušavate prijaviti čeka na aktivaciju. Molimo da potvrdite svoje detalje.";
 "error.user.network_error" = "Čini se da postoji problem s Vašom mrežom. Pokušajte ponovno kasnije.";

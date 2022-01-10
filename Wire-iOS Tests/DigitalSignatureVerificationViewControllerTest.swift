@@ -42,7 +42,7 @@ class DigitalSignatureVerificationViewControllerTest: XCTestCase {
 
         // then
         guard case .success? = response else {
-            XCTFail()
+            XCTFail("Digital Signature Verification URL didn't return success")
             return
         }
     }
@@ -56,7 +56,7 @@ class DigitalSignatureVerificationViewControllerTest: XCTestCase {
 
         // then
         guard case .failure? = response else {
-            XCTFail()
+            XCTFail("Digital Signature Verification URL didn't return failure")
             return
         }
     }

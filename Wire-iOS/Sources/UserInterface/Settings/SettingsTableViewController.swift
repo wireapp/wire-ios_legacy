@@ -52,7 +52,6 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         self.edgesForExtendedLayout = UIRectEdge()
     }
 
-    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }

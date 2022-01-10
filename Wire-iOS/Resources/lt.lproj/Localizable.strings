@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Įvyko klaida, bandykite dar kartą";
 "error.user.needs_credentials" = "Patvirtinkite savo duomenis ir bandykite dar kartą.";
-"error.user.domain_blocked" = "Šiam el. pašto adresui būtinas komandos kvietimas. Susisiekite su savo įmonės IT administratoriumi, kad atsiųstų kvietimą.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Patvirtinkite savo duomenis ir bandykite dar kartą.";
 "error.user.account_pending_activation" = "Paskyra, prie kurios bandote prisijungti, nepatvirtinta. Patvirtinkite duomenis.";
 "error.user.network_error" = "Panašu, kad yra nesklandumų su jūsų tinklu. Bandykite dar kartą.";
