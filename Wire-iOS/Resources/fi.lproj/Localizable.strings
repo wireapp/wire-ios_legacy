@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Jokin meni pieleen, yritä uudelleen";
 "error.user.needs_credentials" = "Vahvista tietosi ja yritä uudelleen.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Vahvista tietosi ja yritä uudelleen.";
 "error.user.account_pending_activation" = "Tili jota yrität käyttää odottaa aktivointia. Vahvista tietosi.";
 "error.user.network_error" = "Vaikuttaa siltä, että sinun verkkoyhteydessäsi on ongelma. Yritä myöhemmin uudelleen.";

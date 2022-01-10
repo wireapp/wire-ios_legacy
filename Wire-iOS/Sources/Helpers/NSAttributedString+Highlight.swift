@@ -47,7 +47,7 @@ extension NSString {
 
         for query in strings {
             var queryRange = initialQueryRange
-            var currentRange: NSRange = NSMakeRange(NSNotFound, 0)
+            var currentRange: NSRange = NSRange(location: NSNotFound, length: 0)
 
             var queryResult = [NSRange]()
 

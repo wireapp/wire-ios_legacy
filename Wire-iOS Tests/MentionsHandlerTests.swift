@@ -42,14 +42,14 @@ class MentionsHandlerTests: XCTestCase {
 
     func testThereIsNoMentionNilSearchString() {
         let handler = MentionsHandler(text: "@", cursorPosition: 1)
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         XCTAssertNil(sut.searchString(in: nil))
     }
 
     func testThereIsNoMentionWithWrongSearchString() {
         let handler = MentionsHandler(text: "hey @mention", cursorPosition: 5)
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         XCTAssertNil(sut.searchString(in: "my"))
     }
@@ -57,7 +57,7 @@ class MentionsHandlerTests: XCTestCase {
     func testThereIsMentionWithOnlyAtSymbol() {
         let handler = MentionsHandler(text: "@", cursorPosition: 1)
 
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         XCTAssertEqual(sut.searchString(in: "@"), "")
     }
@@ -65,7 +65,7 @@ class MentionsHandlerTests: XCTestCase {
     func testThereIsMentionAtBeginningOfString() {
         let handler = MentionsHandler(text: "@bill", cursorPosition: 1)
 
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         XCTAssertEqual(sut.searchString(in: "@bill"), "bill")
     }
@@ -88,7 +88,7 @@ class MentionsHandlerTests: XCTestCase {
         let query = "Hi @bill how are you?"
         let handler = MentionsHandler(text: query, cursorPosition: 4)
 
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         XCTAssertEqual(sut.searchString(in: query), "bill")
     }
@@ -97,13 +97,13 @@ class MentionsHandlerTests: XCTestCase {
         let mockUser = SwiftMockLoader.mockUsers()[0]
         let query = "Hi @bill how are you?"
         let handler = MentionsHandler(text: query, cursorPosition: 4)
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         let (range, replacement) = sut.replacement(forMention: mockUser, in: query.attributedString)
 
         let attachments = replacement.allAttachments
         XCTAssertEqual(attachments.count, 1)
-        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail(); return}
+        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail("Failed to create a mention"); return}
         XCTAssertEqual(mention.user.name, mockUser.name)
         XCTAssertEqual(range, (query as NSString).range(of: "@bill") )
 
@@ -115,13 +115,13 @@ class MentionsHandlerTests: XCTestCase {
         let mockUser = SwiftMockLoader.mockUsers()[0]
         let query = "Hi @bill"
         let handler = MentionsHandler(text: query, cursorPosition: 4)
-        guard let sut = handler else { XCTFail(); return }
+        guard let sut = handler else { XCTFail("Handler is nil"); return }
 
         let (range, replacement) = sut.replacement(forMention: mockUser, in: query.attributedString)
 
         let attachments = replacement.allAttachments
         XCTAssertEqual(attachments.count, 1)
-        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail(); return}
+        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail("Failed to create a mention"); return}
         XCTAssertEqual(mention.user.name, mockUser.name)
         XCTAssertEqual(range, (query as NSString).range(of: "@bill") )
 
