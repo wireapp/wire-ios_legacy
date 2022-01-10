@@ -208,6 +208,8 @@ class Settings {
         loadEnabledLogs()
         #endif
 
+        #if !DISABLE_LOGGING
         ZMSLog.startRecording(isInternal: Bundle.developerModeEnabled)
+        #endif
     }
 }
