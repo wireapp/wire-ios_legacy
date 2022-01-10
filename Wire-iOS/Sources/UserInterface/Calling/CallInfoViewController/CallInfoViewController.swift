@@ -181,7 +181,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
         updateAccessoryView()
         showMutedToastMessageIfNeeded()
-        
         if configuration.networkQuality.isNormal {
             navigationItem.titleView = nil
         } else {
