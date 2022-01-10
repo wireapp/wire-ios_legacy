@@ -1588,7 +1588,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Hoppá... valami hiba történt, kérjük, próbáld meg újra!";
 "error.user.needs_credentials" = "Kérjük, ellenőrizd az adataidat, majd próbáld meg újra.";
-"error.user.domain_blocked" = "This email requires a team invitation. Contact your organization's IT administrators to receive an invite.";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "Kérjük, ellenőrizd az adataidat, majd próbáld meg újra.";
 "error.user.account_pending_activation" = "Ennek a fióknak az aktiválása folyamatban van. Kérjük, ellenőrizd a beírt adatokat.";
 "error.user.network_error" = "Úgy tűnik, probléma van a hálózattal. Kérjük, próbálkozz később.";
