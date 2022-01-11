@@ -69,7 +69,7 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
             let pasteboard = UIPasteboard.general
             guard shouldAllowPerformAction(isText: pasteboard.hasText,
                                          isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
-                                         canFilesBeShared: canFilesBeShared) else { return false }
+                                           canFilesBeShared: ZMUserSession.canFilesBeShared) else { return false }
             fallthrough
         default:
             return super.canPerformAction(action, withSender: sender)
@@ -623,18 +623,6 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 
         activeMarkdown.subtract(markdown)
     }
-}
-
-// MARK: - Helpers
-
-extension MarkdownTextView {
-
-    /// Whether files can be shared and received
-    private var canFilesBeShared: Bool {
-        guard let session = ZMUserSession.shared() else { return true }
-        return session.fileSharingFeature.status == .enabled
-    }
-
 }
 
 // MARK: - DownStyle Presets

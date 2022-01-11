@@ -44,4 +44,13 @@ extension ZMUserSession {
     var maxVideoLength: TimeInterval {
         return selfUserHasTeam ? ZMUserSession.MaxTeamVideoLength : ZMUserSession.MaxVideoLength
     }
+
+    /// Whether files can be shared and received
+    static var canFilesBeShared: Bool {
+        guard let session = shared() else {
+            return true
+        }
+
+        return session.fileSharingFeature.status == .enabled
+    }
 }

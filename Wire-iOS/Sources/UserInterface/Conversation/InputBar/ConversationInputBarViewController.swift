@@ -195,14 +195,14 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        return canFilesBeShared ? [
+        return ZMUserSession.canFilesBeShared ? [
             photoButton,
             mentionButton,
             sketchButton,
-            SecurityFlags.gifAction.isEnabled ? gifButton: nil,
+            gifButton,
             audioButton,
             pingButton,
-            SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton: nil,
+            uploadFileButton,
             locationButton,
             videoButton
         ].compactMap{ $0 } : [
@@ -843,12 +843,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return otherGestureRecognizer is UIPanGestureRecognizer
-    }
-
-    /// Whether files can be shared and received
-    var canFilesBeShared: Bool {
-        guard let session = ZMUserSession.shared() else { return true }
-        return session.fileSharingFeature.status == .enabled
     }
 
     // MARK: setup views
