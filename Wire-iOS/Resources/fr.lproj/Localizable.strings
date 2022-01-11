@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Une erreur est survenue";
 "guest_room.error.generic.message" = "Vérifiez votre connexion et réessayez";
 
-"guest_room.link.header.title" = "Inviter des contacts avec un lien";
-"guest_room.link.header.subtitle" = "Tout le monde disposant du lien peut rejoindre la conversation, même s’ils n’utilisent pas Wire.";
+"guest_room.link.header.title" = "Guest Links";
+"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
 
 "guest_room.link.button.title" = "Créer le lien";
 
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Aller sur l'App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Il y a eu un changement dans Wire";
+"feature_config.alert.generic_title" = "Team settings changed";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "Les messages éphémères sont désactivés";
 "feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages éphémères sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";

@@ -79,19 +79,16 @@ final class LinkInteractionTextView: UITextView {
         return alert
     }
 
-    private func isMarkdownLink(in range: NSRange) -> Bool {
-        return attributedText.ranges(containing: .link, inRange: range) == [range]
-    }
-
     /// An alert is shown (asking the user if they wish to open the url) if the
     /// link in the specified range is a markdown link.
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
         // only show alert if the link is a markdown link
-        guard isMarkdownLink(in: range) else {
+        guard attributedText.containsMismatchedLink(in: range) else {
             return false
         }
 
         ZClientViewController.shared?.present(confirmationAlert(for: url), animated: true)
+
         return true
     }
 }
@@ -116,7 +113,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
         if #available(iOS 13.0, *),
             UIApplication.shared.canOpenURL(URL),
             interaction == .presentActions,
-            !isMarkdownLink(in: characterRange) {
+            !attributedText.containsMismatchedLink(in: characterRange) {
             return true
         }
 
@@ -139,7 +136,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
 
             let performLinkInteraction: () -> Bool = {
                 // if alert shown, link opening is handled in alert actions
-                if self.showAlertIfNeeded(for: URL, in: characterRange) { return false }
+                if self.showAlertIfNeeded(for: URL, in: characterRange) {
+                    return false
+                }
 
                 // data detector links should be handle by the system
                 return self.dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(self.interactionDelegate?.textView(self, open: URL) ?? false)

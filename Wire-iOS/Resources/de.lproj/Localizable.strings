@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Ein Fehler ist aufgetreten";
 "guest_room.error.generic.message" = "Prüfen Sie Ihre Datenverbindung und versuchen Sie es erneut";
 
-"guest_room.link.header.title" = "Andere per Link einladen";
-"guest_room.link.header.subtitle" = "Jeder kann der Gruppe mit diesem Link beitreten – auch ohne ein Wire-Benutzerkonto.";
+"guest_room.link.header.title" = "Gäste-Links";
+"guest_room.link.header.subtitle" = "Laden Sie andere mit einem Link zu dieser Unterhaltung ein. Jeder kann mit dem Link an der Unterhaltung teilnehmen –  auch ohne Wire.";
+"guest_room.link.not_allowed.explaination" = "Erstellen von Gäste-Links ist in Ihrem Team nicht erlaubt.";
 
 "guest_room.link.button.title" = "Link erstellen";
 
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Zum App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Es gab eine Änderung bei Wire";
+"feature_config.alert.generic_title" = "Team-Einstellungen geändert";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "Selbstlöschende Nachrichten sind deaktiviert.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "Selbstlöschende Nachrichten sind aktiviert. Sie können einen Timer setzen, bevor Sie eine Nachricht schreiben.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Selbstlöschende Nachrichten sind ab jetzt verbindlich. Neue Nachrichten werden nach %@ gelöscht.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Erstellen von Gäste-Links ist nun für alle Gruppen-Admins deaktiviert.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Erstellen von Gäste-Links ist nun für alle Gruppen-Admins aktiviert.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak erkannt";
