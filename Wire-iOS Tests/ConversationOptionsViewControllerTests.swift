@@ -24,6 +24,7 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
 
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
+    var allowGuestLinks: Bool
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
     var title: String
@@ -33,8 +34,9 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     var isCodeEnabled = true
     var areGuestOrServicePresent = true
 
-    init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
+    init(allowGuests: Bool, allowGuestLinks: Bool = true, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
+        self.allowGuestLinks = allowGuestLinks
         self.setAllowGuests = setAllowGuests
         self.title = title
     }
@@ -167,6 +169,28 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersAllowGuests_WithoutLink_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success(nil)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+
+        // Then
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenItIsNotAllowed() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
+        config.linkResult = .success(nil)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+
+        // Then
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenItIsNotAllowed_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
         config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)

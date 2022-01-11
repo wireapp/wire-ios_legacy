@@ -37,6 +37,7 @@
 		06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */; };
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
+		06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */; };
 		06E69AB425C8301D00B678BF /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		06E69AB825C9A37700B678BF /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		06E89AFE25C82C51008E3846 /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E89AFD25C82C50008E3846 /* UnlockViewController.swift */; };
@@ -1792,6 +1793,7 @@
 		06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSetTests.swift; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
+		06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestLinkInfoCell.swift; sourceTree = "<group>"; };
 		06E89AFD25C82C50008E3846 /* UnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewController.swift; sourceTree = "<group>"; };
 		06E89AFF25C82CA9008E3846 /* PasscodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTextField.swift; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
@@ -6806,6 +6808,7 @@
 				D5189476205045A100C095C1 /* LinkHeaderCell.swift */,
 				D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */,
 				D54224C320513A9800526A57 /* TextCell.swift */,
+				06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */,
 				D51894782050490E00C095C1 /* ActionCell.swift */,
 				D54224C720513EC100526A57 /* IconActionCell.swift */,
 			);
@@ -8321,6 +8324,7 @@
 				EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */,
 				5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
+				06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,
