@@ -17,6 +17,7 @@
 //
 
 import WireSyncEngine
+import WireCommonComponents
 
 extension ZMUserSession {
     static let MaxVideoWidth: UInt64 = 1920 // FullHD
@@ -47,6 +48,10 @@ extension ZMUserSession {
 
     /// Whether files can be shared and received
     static var canFilesBeShared: Bool {
+        guard SecurityFlags.canFilesBeShared.isEnabled else {
+            return false
+        }
+
         guard let session = shared() else {
             return true
         }
