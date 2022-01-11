@@ -47,6 +47,7 @@ final class PostContent {
     func send(text: String,
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
+        ///TODO: check for the flag
         guard sharingSession.fileSharingFeature.status == .enabled else {
             stateCallback(.fileSharingRestriction)
             return
