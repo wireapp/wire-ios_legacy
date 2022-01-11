@@ -20,6 +20,7 @@ import Photos
 import AVFoundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 

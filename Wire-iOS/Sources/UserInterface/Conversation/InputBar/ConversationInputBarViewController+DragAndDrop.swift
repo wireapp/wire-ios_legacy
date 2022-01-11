@@ -20,6 +20,7 @@ import Foundation
 import WireSystem
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "Drag and drop images")
 

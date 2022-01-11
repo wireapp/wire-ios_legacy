@@ -20,6 +20,7 @@ import UIKit
 import WireSystem
 import WireTransport
 import WireSyncEngine
+import WireCommonComponents
 
 protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()

@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum SecurityFlags {
+public enum SecurityFlags {
     case clipboard
     case generateLinkPreviews
     case forceConstantBitRateCalls
@@ -27,6 +27,7 @@ enum SecurityFlags {
     case backup
     case federation
     case maxNumberAccounts
+    case canFilesBeShared
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -52,10 +53,12 @@ enum SecurityFlags {
             return "ForceEncryptionAtRestEnabled"
         case .federation:
             return "FederationEnabled"
+        case .canFilesBeShared:
+            return "CanFilesBeShared"
         }
     }
 
-    var intValue: Int? {
+    public var intValue: Int? {
         guard let string = Bundle.appMainBundle.infoForKey(bundleKey) else {
             return nil
         }
@@ -63,7 +66,7 @@ enum SecurityFlags {
         return Int(string)
     }
 
-    var isEnabled: Bool {
+    public var isEnabled: Bool {
         return Bundle.appMainBundle.infoForKey(bundleKey) == "1"
     }
 }

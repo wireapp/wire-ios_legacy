@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import WireDataModel
+import WireCommonComponents
 
 extension ZMConversationMessage {
 

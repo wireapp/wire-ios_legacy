@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireShareEngine
 import MobileCoreServices
+import WireCommonComponents
 
 /// Content that is shared on a share extension post attempt
 final class PostContent {
@@ -47,7 +48,10 @@ final class PostContent {
     func send(text: String,
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
-        ///TODO: check for the flag
+        guard SecurityFlags.canFilesBeShared.isEnabled else {
+            return
+        }
+
         guard sharingSession.fileSharingFeature.status == .enabled else {
             stateCallback(.fileSharingRestriction)
             return

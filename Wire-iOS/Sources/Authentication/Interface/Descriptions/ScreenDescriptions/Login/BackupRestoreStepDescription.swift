@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 /**
  * The view that displays the restore from backup button.

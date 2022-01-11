@@ -17,6 +17,7 @@
 //
 
 import WireSyncEngine
+import WireCommonComponents
 
 extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
