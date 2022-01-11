@@ -213,7 +213,8 @@ final class AccentColorPickerController: ColorPickerController {
         allAccentColors = AccentColor.allSelectable()
 
         super.init(colors: allAccentColors.map { UIColor(for: $0) })
-        title = "settings.account_picture_group.color".localized(uppercased: true)
+
+        title = L10n.Localizable.Self.Settings.AccountPictureGroup.color.uppercased()
 
         if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = allAccentColors.firstIndex(of: accentColor) {
             currentColor = colors[currentColorIndex]
