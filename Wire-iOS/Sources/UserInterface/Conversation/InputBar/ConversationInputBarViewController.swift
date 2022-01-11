@@ -199,13 +199,13 @@ final class ConversationInputBarViewController: UIViewController,
             photoButton,
             mentionButton,
             sketchButton,
-            gifButton,
+            SecurityFlags.gifAction.isEnabled ? gifButton: nil,
             audioButton,
             pingButton,
-            uploadFileButton,
+            SecurityFlags.externalFilePicker.isEnabled ? uploadFileButton: nil,
             locationButton,
             videoButton
-        ] : [
+        ].compactMap{ $0 } : [
             mentionButton,
             pingButton,
             locationButton
