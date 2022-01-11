@@ -81,31 +81,31 @@ class ColorPickerController: UIViewController {
         [contentView, headerView, titleLabel, closeButton, tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          headerView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
           headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-          headerView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-          headerView.heightAnchor.constraint(equalToConstant: 44),
+          headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+          headerView.heightAnchor.constraint(equalToConstant: Self.rowHeight),
 
           titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
           titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-          titleLabel.leftAnchor.constraint(greaterThanOrEqualTo: headerView.leftAnchor),
-          titleLabel.rightAnchor.constraint(lessThanOrEqualTo: closeButton.leftAnchor),
+          titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.leadingAnchor),
+          titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: closeButton.leadingAnchor),
 
           closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-          closeButton.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+          closeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
           closeButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
           closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
 
-          tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+          tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
           tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-          tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+          tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 
           tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
 
           contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
           contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
           contentView.widthAnchor.constraint(equalToConstant: 300),
-          contentView.heightAnchor.constraint(equalTo: headerView.heightAnchor, constant: type(of: self).rowHeight * CGFloat(colors.count))
+          contentView.heightAnchor.constraint(equalTo: headerView.heightAnchor, constant: Self.rowHeight * CGFloat(colors.count))
         ])
 
         tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
