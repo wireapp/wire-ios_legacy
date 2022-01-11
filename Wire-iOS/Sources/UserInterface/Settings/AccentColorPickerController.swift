@@ -78,7 +78,7 @@ class ColorPickerController: UIViewController {
         contentView.addSubview(tableView)
         contentView.addSubview(headerView)
 
-        [contentView, headerView, titleLabel, closeButton].prepareForLayout()
+        [contentView, headerView, titleLabel, closeButton, tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
           headerView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
