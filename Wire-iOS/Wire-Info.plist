@@ -242,7 +242,7 @@
 	<string>${WIRE_SSO_URL_SCHEME}</string>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
-	<key>CanFilesBeShared</key>
-	<string>${CAN_FILES_BE_SHARED}</string>
+	<key>FileSharingDisabled</key>
+	<string>${FILE_SHARING_DISABLED}</string>
 </dict>
 </plist>

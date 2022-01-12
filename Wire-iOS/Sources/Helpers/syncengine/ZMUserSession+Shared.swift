@@ -48,7 +48,7 @@ extension ZMUserSession {
 
     /// Whether files can be shared and received
     static var canFilesBeShared: Bool {
-        guard SecurityFlags.canFilesBeShared.isEnabled else {
+        guard !SecurityFlags.fileSharingDisabled.isEnabled else {
             return false
         }
 

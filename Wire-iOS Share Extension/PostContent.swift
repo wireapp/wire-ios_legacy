@@ -48,7 +48,7 @@ final class PostContent {
     func send(text: String,
               sharingSession: SharingSession,
               stateCallback: @escaping SendingStateCallback) {
-        guard SecurityFlags.canFilesBeShared.isEnabled else {
+        guard !SecurityFlags.fileSharingDisabled.isEnabled else {
             return
         }
 
