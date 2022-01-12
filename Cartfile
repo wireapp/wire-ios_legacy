@@ -1,6 +1,6 @@
 github "wireapp/wire-ios-ziphy" ~> 17.1.0
-github "wireapp/wire-ios-sync-engine" ~> 410.0.0
-github "wireapp/wire-ios-share-engine" ~> 241.0.0
+github "wireapp/wire-ios-sync-engine" ~> 411.0.0
+github "wireapp/wire-ios-share-engine" ~> 241.0.1
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 14.0.3
 github "wireapp/appcenter-sdk-apple" "4.3.0"
