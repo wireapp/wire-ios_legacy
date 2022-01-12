@@ -30,6 +30,7 @@ enum CellConfiguration {
     case leadingButton(title: String, identifier: String, action: Action)
     case loading
     case text(String)
+    case info
     case iconAction(title: String,
                     icon: StyleKitIcon,
                     color: UIColor?,
@@ -52,6 +53,7 @@ enum CellConfiguration {
         case .leadingButton: return ActionCell.self
         case .loading: return LoadingIndicatorCell.self
         case .text: return TextCell.self
+        case .info: return GuestLinkInfoCell.self
         case .iconAction: return IconActionCell.self
         }
     }
@@ -61,7 +63,8 @@ enum CellConfiguration {
         case .iconToggle,
              .linkHeader,
              .loading,
-             .text: return nil
+             .text,
+             .info: return nil
         case let .leadingButton(_, _, action: action): return action
         case let .iconAction(_, _, _, action: action): return action
         }
@@ -76,6 +79,7 @@ enum CellConfiguration {
             ActionCell.self,
             LoadingIndicatorCell.self,
             TextCell.self,
+            GuestLinkInfoCell.self,
             IconActionCell.self
         ]
     }

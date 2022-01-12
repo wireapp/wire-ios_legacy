@@ -42,6 +42,10 @@ extension ZMConversation {
             return conversation.allowGuests
         }
 
+        var allowGuestLinks: Bool {
+            return userSession.conversationGuestLinksFeature.status == .enabled
+        }
+
         var isCodeEnabled: Bool {
             return conversation.accessMode?.contains(.code) ?? false
         }
