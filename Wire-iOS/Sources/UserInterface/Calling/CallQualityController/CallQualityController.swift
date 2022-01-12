@@ -113,7 +113,9 @@ class CallQualityController: NSObject {
             return
         }
 
+        #if !DISABLE_CALL_QUALITY_SURVEY
         router?.presentCallQualitySurvey(with: callDuration)
+        #endif
     }
 
     /// Presents the debug log prompt after a call failure.
