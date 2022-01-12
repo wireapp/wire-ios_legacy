@@ -86,10 +86,6 @@
 	<string>${CUSTOM_BACKEND_ENABLED}</string>
 	<key>EnableDeveloperMenu</key>
 	<string>${DEVELOPER_MODE_ENABLED}</string>
-	<key>ExternalFilePickerEnabled</key>
-	<string>${EXTERNAL_FILE_PICKER_ACTION_ENABLED}</string>
-	<key>FileGifActionEnabled</key>
-	<string>${FILE_GIF_ACTION_ENABLED}</string>
 	<key>ForceCBREnabled</key>
 	<string>${FORCE_CBR_ENABLED}</string>
 	<key>ForceEncryptionAtRestEnabled</key>
@@ -147,12 +143,6 @@
 	<string>Allow Wire to store pictures you take in the photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Wire to access pictures stored in photo library.</string>
-	<key>OpenFilePreviewEnabled</key>
-	<string>${OPEN_FILE_PREVIEW_ENABLED}</string>
-	<key>SaveMessageEnabled</key>
-	<string>${SAVE_MESSAGE_ENABLED}</string>
-	<key>ShareExtensionEnabled</key>
-	<string>${SHARE_EXTENSION_ENABLED}</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RedactedScript-Regular.ttf</string>
