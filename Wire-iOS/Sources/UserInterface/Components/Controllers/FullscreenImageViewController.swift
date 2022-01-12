@@ -286,9 +286,9 @@ final class FullscreenImageViewController: UIViewController {
             ghostImageView.center = targetCenter
             ghostImageView.alpha = 0
             ghostImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        }) { _ in
+        }, completion: { _ in
             ghostImageView.removeFromSuperview()
-        }
+        })
     }
 
     private func loadImageAndSetupImageView() {
@@ -448,12 +448,12 @@ final class FullscreenImageViewController: UIViewController {
             if weakSelf.imageViewIsOffscreen {
                 UIView.animate(withDuration: 0.1, animations: {
                     weakSelf.updateBackgroundColor(progress: 1)
-                }) { _ in
+                }, completion: { _ in
                     weakSelf.animator.removeAllBehaviors()
                     weakSelf.attachmentBehavior = nil
                     weakSelf.imageView?.removeFromSuperview()
                     weakSelf.dismiss()
-                }
+                })
             }
         }
         if let attachmentBehavior = attachmentBehavior {
@@ -544,11 +544,11 @@ final class FullscreenImageViewController: UIViewController {
             if animated {
                 UIView.animate(withDuration: fadeAnimationDuration, animations: {
                     self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
-                }) { finished in
+                }, completion: { finished in
                     if finished {
                         removeLayerClosure()
                     }
-                }
+                })
             } else {
                 highlightLayer?.backgroundColor = UIColor.clear.cgColor
                 removeLayerClosure()

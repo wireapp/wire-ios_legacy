@@ -91,6 +91,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
@@ -111,7 +115,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeObservers()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -296,10 +299,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private func configureObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardPresentation), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardPresentation), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(self)
     }
 
     @objc private func handleKeyboardPresentation(notification: Notification) {

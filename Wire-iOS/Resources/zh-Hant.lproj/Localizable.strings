@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "出了點問題";
 "guest_room.error.generic.message" = "請檢查您的網路，然後再次嘗試";
 
-"guest_room.link.header.title" = "透過連結邀請其他人";
-"guest_room.link.header.subtitle" = "任何有連結的人都可以加入對話，即使他們沒有安裝Wire。";
+"guest_room.link.header.title" = "Guest Links";
+"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
 
 "guest_room.link.button.title" = "建立連結";
 
@@ -1588,7 +1589,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了點問題，請再試一次";
 "error.user.needs_credentials" = "請檢查您提供的資料後重試。";
-"error.user.domain_blocked" = "這封電子郵件需要團隊邀請。 請與您組織的IT管理員聯繫，以接收邀請。";
+"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
 "error.user.invalid_credentials" = "請檢查您的資訊後再重試。";
 "error.user.account_pending_activation" = "您的帳號未被啟用，請完成啟動程序。";
 "error.user.network_error" = "您的網路連線似乎有問題，請稍候再試。";
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "到App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "There has been a change in Wire";
+"feature_config.alert.generic_title" = "Team settings changed";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "Self-deleting messages are disabled.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Self-deleting messages are now mandatory. New messages will self-delete after %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "發現這部裝置已越獄";

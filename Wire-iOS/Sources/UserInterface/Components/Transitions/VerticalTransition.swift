@@ -73,13 +73,13 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
         UIView.animate(easing: EasingFunction.easeOutExpo, duration: transitionDuration(using: transitionContext), animations: {
             fromView.transform = CGAffineTransform(translationX: 0.0, y: sign * finalRect.size.height)
             toView.transform = CGAffineTransform.identity
-        }) { _ in
+        }, completion: { _ in
             fromView.transform = CGAffineTransform.identity
             if let viewsToHide = self.dataSource?.viewsToHideDuringVerticalTransition(transition: self) {
                 viewsToHide.forEach { $0.isHidden = false }
             }
 
             transitionContext.completeTransition(true)
-        }
+        })
     }
 }

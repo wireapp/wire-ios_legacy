@@ -130,6 +130,7 @@ final class CallViewController: UIViewController {
 
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
+        NotificationCenter.default.removeObserver(self)
         stopOverlayTimer()
     }
 
@@ -152,7 +153,6 @@ final class CallViewController: UIViewController {
         super.viewWillDisappear(animated)
         proximityMonitorManager?.stopListening()
         pauseVideoIfNeeded()
-        NotificationCenter.default.removeObserver(self)
         isInteractiveDismissal = transitionCoordinator?.isInteractive == true
     }
 
