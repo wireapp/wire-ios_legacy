@@ -313,7 +313,14 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     func presentGuestOptions(animated: Bool) {
         guard let conversation = conversation as? ZMConversation else { return }
 
-        let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        let menu = ConversationGuestOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        navigationController?.pushViewController(menu, animated: animated)
+    }
+
+    func presentServicesOptions(animated: Bool) {
+        guard let conversation = conversation as? ZMConversation else { return }
+
+        let menu = ConversationServicesOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
 

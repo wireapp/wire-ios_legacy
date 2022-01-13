@@ -19,13 +19,13 @@
 import WireSyncEngine
 
 extension ZMConversation {
-
-    class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
+    class OptionsConfigurationContainer: NSObject, ConversationGuestOptionsViewModelConfiguration, ConversationServicesOptionsViewModelConfiguration, ZMConversationObserver {
 
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
         private let userSession: ZMUserSession
         var allowGuestsChangedHandler: ((Bool) -> Void)?
+        var allowServicesChangedHandler: ((Bool) -> Void)?
 
         init(conversation: ZMConversation, userSession: ZMUserSession) {
             self.conversation = conversation
@@ -42,6 +42,11 @@ extension ZMConversation {
             return conversation.allowGuests
         }
 
+        var allowServices: Bool {
+            //TODO: Change to conversation.allowServices when I make the changes to Data Model
+            return conversation.allowGuests
+        }
+
         var allowGuestLinks: Bool {
             return userSession.conversationGuestLinksFeature.status == .enabled
         }
@@ -50,8 +55,12 @@ extension ZMConversation {
             return conversation.accessMode?.contains(.code) ?? false
         }
 
-        var areGuestOrServicePresent: Bool {
-            return conversation.areGuestsPresent || conversation.areServicesPresent
+        var areGuestPresent: Bool {
+            return conversation.areGuestsPresent
+        }
+
+        var areServicePresent: Bool {
+            return conversation.areServicesPresent
         }
 
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
@@ -60,9 +69,20 @@ extension ZMConversation {
             }
         }
 
+        func setAllowServices(_ allowServices: Bool, completion: @escaping (VoidResult) -> Void) {
+            //TODO: Change into conversation.setAllowServices when I make the changes to Sync Engine
+            conversation.setAllowServices(allowServices, in: userSession) {
+                completion($0)
+            }
+        }
+
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+            //TODO: When making the changes in ConversationChangeInfo in DataModel
+            // need a guard statement
+            // guard changeInfo.allowServicesChanged else { return }
             guard changeInfo.allowGuestsChanged else { return }
             allowGuestsChangedHandler?(allowGuests)
+            allowServicesChangedHandler?(allowServices)
         }
 
         func createConversationLink(completion: @escaping (Result<String>) -> Void) {
