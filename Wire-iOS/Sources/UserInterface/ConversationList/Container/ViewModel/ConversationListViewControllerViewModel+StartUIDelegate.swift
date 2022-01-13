@@ -41,6 +41,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                  createConversationWith users: UserSet,
                  name: String,
                  allowGuests: Bool,
+                 allowServices: Bool,
                  enableReceipts: Bool) {
 
         let createConversationClosure = {

@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
+final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModelConfiguration {
 
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
@@ -32,7 +32,7 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     var deleteResult: VoidResult = .success
     var createResult: Result<String>?
     var isCodeEnabled = true
-    var areGuestOrServicePresent = true
+    var areGuestPresent = true
 
     init(allowGuests: Bool, allowGuestLinks: Bool = true, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -63,9 +63,9 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatNoAlertIsShowIfNoGuestOrService() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
-        config.areGuestOrServicePresent = false
+        config.areGuestPresent = false
 
-        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
 
         /// Show the alert
         let sut = viewModel.setAllowGuests(false)
@@ -77,10 +77,10 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersRemoveGuestsAndServicesWarning() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
 
         /// for ConversationOptionsViewModel's delegate
-        _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        _ = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         /// Show the alert
         let sut = viewModel.setAllowGuests(false)!
@@ -92,8 +92,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersTeamOnly() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut)
@@ -102,8 +102,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 
         // Then
         verify(matching: sut)
@@ -113,8 +113,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut)
@@ -124,8 +124,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 
         // Then
         verify(matching: sut)
@@ -135,8 +135,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
         viewModel.copyInProgress = true
 
         // Then
@@ -147,8 +147,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         viewModel.copyInProgress = true
 
         // Then
@@ -159,8 +159,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success(nil)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut)
@@ -170,8 +170,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success(nil)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 
         // Then
         verify(matching: sut)
@@ -181,8 +181,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
         config.linkResult = .success(nil)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut)
@@ -192,8 +192,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
         config.linkResult = .success(nil)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 
         // Then
         verify(matching: sut)
@@ -202,8 +202,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersItsTitle() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut.wrapInNavigationController())
@@ -212,8 +212,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersNotTeamOnly() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         // Then
         verify(matching: sut)
@@ -223,8 +223,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         config.linkResult = .success(nil)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
@@ -237,8 +237,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItUpdatesWhenItReceivesAChange_Loading() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
 
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
@@ -251,8 +251,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersNotTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 
         // Then
         verify(matching: sut)
@@ -261,8 +261,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersLoading() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
         let navigationController = sut.wrapInNavigationController()
 
         // When
@@ -275,8 +275,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     func testThatItRendersLoading_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         let navigationController = sut.wrapInNavigationController()
 
         // When
