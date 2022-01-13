@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Что-то пошло не так";
 "guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
 
-"guest_room.link.header.title" = "Пригласить других пользователей ссылкой";
-"guest_room.link.header.subtitle" = "Любой, у кого есть ссылка, может присоединиться к беседе, даже если у него нет Wire.";
+"guest_room.link.header.title" = "Гостевые ссылки";
+"guest_room.link.header.subtitle" = "Приглашайте ссылкой на эту беседу.  Любой, у кого есть ссылка, сможет присоединиться к беседе, даже если у него нет Wire.";
+"guest_room.link.not_allowed.explaination" = "Генерация гостевых ссылок запрещена в вашей команде.";
 
 "guest_room.link.button.title" = "Создать ссылку";
 
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "В Wire произошли изменения";
+"feature_config.alert.generic_title" = "Настройки команды изменены";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "В Wire произошли изменения";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "Самоудаляющиеся сообщения отключены.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "Самоудаляющиеся сообщения включены. Перед написанием сообщения можно установить таймер.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Самоудаляющиеся сообщения теперь обязательны. Новые сообщения будут самоудаляться спустя %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Генерация гостевых ссылок теперь отключена для всех администраторов групп.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Генерация гостевых ссылок теперь включена для всех администраторов групп.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";

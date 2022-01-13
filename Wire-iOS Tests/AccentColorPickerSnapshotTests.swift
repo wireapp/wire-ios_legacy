@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2022 Wire Swiss GmbH
 //
@@ -16,14 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import XCTest
+import SnapshotTesting
+@testable import Wire
 
-// Conditionally inject App Delegate depending on whether we're running tests or not.
-let appDelegateClass: AnyClass = NSClassFromString("TestingAppDelegate") ?? AppDelegate.self
+final class AccentColorPickerSnapshotTests: XCTestCase {
 
-UIApplicationMain(
-    CommandLine.argc,
-    CommandLine.unsafeArgv,
-    NSStringFromClass(WireApplication.self),
-    NSStringFromClass(appDelegateClass)
-)
+    func testItIsLaidOutCorrectly() {
+        // Given
+        let sut = AccentColorPickerController()
+
+        // Then
+        verify(matching: sut)
+    }
+
+}

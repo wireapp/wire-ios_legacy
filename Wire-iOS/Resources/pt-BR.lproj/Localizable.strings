@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Algo deu errado";
 "guest_room.error.generic.message" = "Verifique sua conexão e tente novamente";
 
-"guest_room.link.header.title" = "Convide outros com um link";
-"guest_room.link.header.subtitle" = "Qualquer um com o link pode se juntar a conversa por 24 horas, até quem não possui Wire.";
+"guest_room.link.header.title" = "Guest Links";
+"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
 
 "guest_room.link.button.title" = "Criar Link";
 
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Houve uma mudança no Wire";
+"feature_config.alert.generic_title" = "Team settings changed";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Houve uma mudança no Wire";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "A auto-exclusão de mensagens está desabilitada.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "A auto-exclusão de mensagens está habilitada. Você pode definir um temporizador antes de escrever uma mensagem.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "A auto-exclusão de mensagens agora é obrigatória. Novas mensagens serão excluídas automaticamente após %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detectado";

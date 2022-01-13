@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Щось пішло не так";
 "guest_room.error.generic.message" = "Перевірте з'єднання і спробуйте ще раз";
 
-"guest_room.link.header.title" = "Запросити інших користувачів за допомогою лінка";
-"guest_room.link.header.subtitle" = "З цим лінком кожен може приєднатися до розмови, навіть якщо він або вона не зареєстровані в Wire.";
+"guest_room.link.header.title" = "Guest Links";
+"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
 
 "guest_room.link.button.title" = "Створити лінк";
 
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "У Wire відбулися зміни";
+"feature_config.alert.generic_title" = "Team settings changed";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "Тимчасові повідомлення вимкнені.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "Тимчасові повідомлення були увімкнені. Ви можете встановити таймер перед тим, як писати повідомлення.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Тимчасові повідомлення тепер є обов'язковими. Нові повідомлення будуть видалятися автоматично після %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
