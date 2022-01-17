@@ -276,22 +276,4 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         // then
         verify(matching: sut)
     }
-
-    // MARK: - Toast Message
-    func testToastView() {
-        // given / when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupVideoEstablished(mockUsers: mockUsers), selfUser: mockSelfUser)
-        let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message, colorScheme: ColorSchemeColor.utilityNeutral, variant: ColorSchemeVariant.light, dismissable: true, moreInfoAction: nil)
-        sut.presentToastView(config: toastConfig)
-        // then
-        verify(matching: sut)
-    }
-    func testToastViewWithNetworkQualityView() {
-        // given / when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupVideoEstablishedPoorConnection, selfUser: mockSelfUser)
-        let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message, colorScheme: ColorSchemeColor.utilityNeutral, variant: ColorSchemeVariant.light, dismissable: true, moreInfoAction: nil)
-        sut.presentToastView(config: toastConfig)
-        // then
-        verify(matching: sut)
-    }
 }
