@@ -39,8 +39,8 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
             expectation.fulfill()
         }
         // WHEN
-        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: validPassword))
-        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: validPassword))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "\n"))
         // THEN
         self.waitForExpectations(timeout: 0.5) { error in
             XCTAssertNil(error)
@@ -50,10 +50,10 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
     func testThatWhitespacesPasswordIsNotGood() {
         // GIVEN
         let sut = BackupPasswordViewController { _, _ in
-            XCTFail()
+            XCTFail("Sut is nil")
         }
         // WHEN
-        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "              "))
-        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "              "))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSRange(location: 0, length: 0), replacementString: "\n"))
     }
 }

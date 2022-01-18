@@ -93,8 +93,7 @@ final class ProgressView: UIView {
 
         if animated {
             UIView.animate(withDuration: 0.35, delay: 0.0, options: [.beginFromCurrentState], animations: setBlock, completion: .none)
-        }
-        else {
+        } else {
             setBlock()
         }
     }
@@ -104,8 +103,7 @@ final class ProgressView: UIView {
             self.progressView.isHidden = false
             self.spinner.isHidden = true
             self.spinner.animating = false
-        }
-        else {
+        } else {
             self.progressView.isHidden = true
             self.spinner.isHidden = false
             self.spinner.animating = true

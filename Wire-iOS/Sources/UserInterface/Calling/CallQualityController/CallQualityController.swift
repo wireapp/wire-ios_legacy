@@ -58,9 +58,13 @@ class CallQualityController: NSObject {
      */
 
     var canPresentCallQualitySurvey: Bool {
+        #if DISABLE_CALL_QUALITY_SURVEY
+        return false
+        #else
         return Bundle.developerModeEnabled
             && !AutomationHelper.sharedHelper.disableCallQualitySurvey
             && AppDelegate.shared.launchType != .unknown
+        #endif
     }
 
     // MARK: - Events
@@ -113,7 +117,9 @@ class CallQualityController: NSObject {
             return
         }
 
+        #if !DISABLE_CALL_QUALITY_SURVEY
         router?.presentCallQualitySurvey(with: callDuration)
+        #endif
     }
 
     /// Presents the debug log prompt after a call failure.

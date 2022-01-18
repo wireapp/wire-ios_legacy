@@ -29,8 +29,8 @@ jobs:
 
           create_pull_request: true
           localization_branch_name: chore/update-localization
-          commit_message: "[Chore] Update localization"
-          pull_request_title: "[Chore] Update localization"
+          commit_message: "chore: Update localization"
+          pull_request_title: "chore: Update localization SQPIT-786"
           pull_request_body: "This PR pulls in the latest localization translations from Crowdin."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

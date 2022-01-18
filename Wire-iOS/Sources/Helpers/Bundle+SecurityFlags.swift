@@ -26,6 +26,7 @@ enum SecurityFlags {
     case cameraRoll
     case backup
     case federation
+    case maxNumberAccounts
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -33,6 +34,8 @@ enum SecurityFlags {
 
     var bundleKey: String {
         switch self {
+        case .maxNumberAccounts:
+            return "MaxNumberAccounts"
         case .clipboard:
             return "ClipboardEnabled"
         case .generateLinkPreviews:
@@ -50,6 +53,14 @@ enum SecurityFlags {
         case .federation:
             return "FederationEnabled"
         }
+    }
+
+    var intValue: Int? {
+        guard let string = Bundle.appMainBundle.infoForKey(bundleKey) else {
+            return nil
+        }
+
+        return Int(string)
     }
 
     var isEnabled: Bool {

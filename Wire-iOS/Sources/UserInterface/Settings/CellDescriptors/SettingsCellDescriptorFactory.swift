@@ -18,8 +18,6 @@
 
 import Foundation
 import SafariServices
-import AppCenterCrashes
-import WireDataModel
 import WireSyncEngine
 import avs
 
@@ -69,10 +67,9 @@ class SettingsCellDescriptorFactory {
 
         let presentationAction: () -> UIViewController? = {
 
-            if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
+            if SessionManager.shared?.accountManager.accounts.count < SessionManager.shared?.maxNumberAccounts {
                 SessionManager.shared?.addAccount()
-            }
-            else {
+            } else {
                 if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
                     let alert = UIAlertController(
                         title: "self.settings.add_account.error.title".localized,
@@ -159,8 +156,7 @@ class SettingsCellDescriptorFactory {
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
                 return .text(enumValue.descriptionLocalizationKey.localized)
-            }
-            else {
+            } else {
                 return .text(defaultSound.descriptionLocalizationKey.localized)
             }
         }

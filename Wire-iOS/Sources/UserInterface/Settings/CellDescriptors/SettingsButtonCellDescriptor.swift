@@ -29,8 +29,7 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
     var visible: Bool {
         if let visibilityAction = self.visibilityAction {
             return visibilityAction(self)
-        }
-        else {
+        } else {
             return true
         }
     }

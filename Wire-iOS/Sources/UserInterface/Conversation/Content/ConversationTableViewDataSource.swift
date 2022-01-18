@@ -279,8 +279,7 @@ final class ConversationTableViewDataSource: NSObject {
     func index(of message: ZMConversationMessage) -> Int? {
         if let indexPath = fetchController?.indexPath(forObject: message as! ZMMessage) {
             return indexPath.row
-        }
-        else {
+        } else {
             return nil
         }
     }

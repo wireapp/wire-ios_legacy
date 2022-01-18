@@ -34,11 +34,11 @@
 "share_extension.not_signed_in.close_button" = "Zamknij";
 
 // Custom app lock - unlock
-"share_extension.unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
+"share_extension.unlock.title_label" = "Wprowadź kod dostępu, aby odblokować Wire";
 "share_extension.unlock.submit_button.title" = "odblokuj";
-"share_extension.unlock.textfield.placeholder" = "Wprowadź swoje hasło";
+"share_extension.unlock.textfield.placeholder" = "Wprowadź kod dostępu";
 "share_extension.unlock.hint_label" = "Kod dostępu";
-"share_extension.unlock.error_label" = "Błędne hasło";
+"share_extension.unlock.error_label" = "Nieprawidłowy kod dostępu";
 "share_extension.unlock.alert.message" = "Otwórz Wire aby utworzyć hasło";
 "share_extension.unlock.reveal_passcode" = "Odkryj hasło";
 

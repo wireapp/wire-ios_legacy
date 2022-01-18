@@ -21,21 +21,17 @@ import UIKit
 extension UIScreen {
 
     static var safeArea: UIEdgeInsets {
-        if #available(iOS 11, *), hasNotch {
+        if hasNotch {
             return UIApplication.shared.keyWindow!.safeAreaInsets
         }
         return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 
     static var hasBottomInset: Bool {
-        if #available(iOS 11, *) {
-            guard let window = UIApplication.shared.keyWindow else { return false }
-            let insets = window.safeAreaInsets
+        guard let window = UIApplication.shared.keyWindow else { return false }
+        let insets = window.safeAreaInsets
 
-            return insets.bottom > 0
-        }
-
-        return false
+        return insets.bottom > 0
     }
 
     static var hasNotch: Bool {

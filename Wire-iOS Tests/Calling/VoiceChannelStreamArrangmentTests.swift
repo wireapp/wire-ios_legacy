@@ -25,12 +25,12 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
     var mockUser1: ZMUser!
     var mockUser2: ZMUser!
     var mockUser3: ZMUser!
-    var remoteId1 = UUID()
-    var remoteId2 = UUID()
-    var remoteId3 = UUID()
+    var avsId1 = AVSIdentifier.stub
+    var avsId2 = AVSIdentifier.stub
+    var avsId3 = AVSIdentifier.stub
 
     var mockSelfUser: ZMUser!
-    var selfUserId = UUID()
+    var selfUserId = AVSIdentifier.stub
     var selfClientId = UUID().transportString()
 
     var stubProvider = StreamStubProvider()
@@ -40,14 +40,17 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
         sut = MockVoiceChannel(conversation: mockConversation)
         mockUser1 = MockUser.mockUsers()[0]
-        mockUser1.remoteIdentifier = remoteId1
+        mockUser1.remoteIdentifier = avsId1.identifier
         mockUser1.name = "bob"
+        mockUser1.domain = avsId1.domain
         mockUser2 = MockUser.mockUsers()[1]
-        mockUser2.remoteIdentifier = remoteId2
+        mockUser2.remoteIdentifier = avsId2.identifier
         mockUser2.name = "Alice"
+        mockUser2.domain = avsId2.domain
         mockUser3 = MockUser.mockUsers()[2]
-        mockUser3.remoteIdentifier = remoteId3
+        mockUser3.remoteIdentifier = avsId3.identifier
         mockUser3.name = "Cate"
+        mockUser3.domain = avsId3.domain
 
         let userClient = MockUserClient()
         userClient.remoteIdentifier = selfClientId
@@ -55,7 +58,7 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         // Workaround to have the self user mock be of ZMUser type.
         mockSelfUser = MockUser.mockUsers()[3]
         MockUser.setMockSelf(mockSelfUser)
-        MockUser.mockSelf()?.remoteIdentifier = selfUserId
+        MockUser.mockSelf()?.remoteIdentifier = selfUserId.identifier
         MockUser.mockSelf()?.clients = [userClient]
         MockUser.mockSelf()?.isSelfUser = true
 
@@ -90,8 +93,8 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(streams.count, 2)
-        XCTAssertTrue(streams.contains(where: {$0.streamId.userId == remoteId1}))
-        XCTAssertTrue(streams.contains(where: {$0.streamId.userId == remoteId2}))
+        XCTAssertTrue(streams.contains(where: {$0.streamId.avsIdentifier == avsId1}))
+        XCTAssertTrue(streams.contains(where: {$0.streamId.avsIdentifier == avsId2}))
     }
 
     func testThatActiveStreams_ReturnsVideoStreams_ForParticipantsWithVideo() {
@@ -117,9 +120,9 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         // THEN
         let userIds = participants.map(\.userId)
         XCTAssertEqual(userIds.count, 3)
-        XCTAssertEqual(userIds[0], remoteId2)
-        XCTAssertEqual(userIds[1], remoteId1)
-        XCTAssertEqual(userIds[2], remoteId3)
+        XCTAssertEqual(userIds[0], avsId2)
+        XCTAssertEqual(userIds[1], avsId1)
+        XCTAssertEqual(userIds[2], avsId3)
     }
 
     func testThatParticipants_ForMode_AllVideoStreams_GetsParticipantsList_OfKind_All() {

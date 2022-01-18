@@ -377,12 +377,10 @@ final class InputBar: UIView {
             if super.point(inside: point, with: event) {
                 let locationInButtonRow = buttonInnerContainer.convert(point, from: self)
                 return locationInButtonRow.y < buttonInnerContainer.bounds.height / 1.3
-            }
-            else {
+            } else {
                 return false
             }
-        }
-        else {
+        } else {
             return super.point(inside: point, with: event)
         }
     }

@@ -48,8 +48,7 @@ final class SearchServicesSectionController: SearchSectionController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if canSelfUserManageTeam {
             return services.count + 1
-        }
-        else {
+        } else {
             return services.count
         }
     }
@@ -61,8 +60,7 @@ final class SearchServicesSectionController: SearchSectionController {
     func service(for indexPath: IndexPath) -> ServiceUser {
         if canSelfUserManageTeam {
             return services[indexPath.row - 1]
-        }
-        else {
+        } else {
             return services[indexPath.row]
         }
     }
@@ -74,8 +72,7 @@ final class SearchServicesSectionController: SearchSectionController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if canSelfUserManageTeam && indexPath.row == 0 {
             return collectionView.dequeueReusableCell(withReuseIdentifier: OpenServicesAdminCell.zm_reuseIdentifier, for: indexPath)
-        }
-        else {
+        } else {
             let service = self.service(for: indexPath)
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
@@ -91,8 +88,7 @@ final class SearchServicesSectionController: SearchSectionController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if canSelfUserManageTeam && indexPath.row == 0 {
             delegate?.addServicesSectionDidRequestOpenServicesAdmin()
-        }
-        else {
+        } else {
             let service = self.service(for: indexPath)
             delegate?.searchSectionController(self, didSelectUser: service, at: indexPath)
         }

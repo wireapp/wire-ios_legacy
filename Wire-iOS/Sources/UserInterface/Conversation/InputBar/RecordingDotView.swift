@@ -44,8 +44,7 @@ final class RecordingDotView: UIView {
 
             if animating {
                 self.startAnimation()
-            }
-            else {
+            } else {
                 self.stopAnimation()
             }
         }

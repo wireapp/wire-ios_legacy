@@ -69,8 +69,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             if UIDevice.current.type == .iPad,
                 canInsertMention {
                 insertBestMatchMention()
-            }
-            else {
+            } else {
                 inputBar.textView.autocorrectLastWord()
                 sendText()
             }

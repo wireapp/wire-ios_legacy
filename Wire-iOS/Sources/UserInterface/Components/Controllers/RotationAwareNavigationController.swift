@@ -31,8 +31,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
     override var shouldAutorotate: Bool {
         if let topController = self.viewControllers.last {
             return topController.shouldAutorotate
-        }
-        else {
+        } else {
             return super.shouldAutorotate
         }
     }
@@ -40,8 +39,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if let topController = self.viewControllers.last {
             return topController.supportedInterfaceOrientations
-        }
-        else {
+        } else {
             return super.supportedInterfaceOrientations
         }
     }
@@ -49,8 +47,7 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         if let topController = self.viewControllers.last {
             return topController.preferredInterfaceOrientationForPresentation
-        }
-        else {
+        } else {
             return super.preferredInterfaceOrientationForPresentation
         }
     }

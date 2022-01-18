@@ -223,9 +223,9 @@ final class CollectionsViewController: UIViewController {
                         contentView.collectionView.reloadSections(IndexSet(integer: (CollectionsSectionSet.visible.firstIndex(of: section))!))
                     }
                 }
-            }) { _ in
+            }, completion: { _ in
                 self.contentView.collectionView.reloadData()
-            }
+            })
         }
     }
 
@@ -253,9 +253,9 @@ final class CollectionsViewController: UIViewController {
 
         coordinator.animate(alongsideTransition: { _ in
             self.flushLayout()
-        }) { _ in
+        }, completion: { _ in
             self.reloadData()
-        }
+        })
     }
 
     override var prefersStatusBarHidden: Bool {

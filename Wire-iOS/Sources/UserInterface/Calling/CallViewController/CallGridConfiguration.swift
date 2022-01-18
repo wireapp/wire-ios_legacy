@@ -142,7 +142,6 @@ extension VoiceChannel {
     private func createSelfStream() -> Stream? {
         guard
             let selfUser = ZMUser.selfUser(),
-            let userId = selfUser.remoteIdentifier,
             let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
             return nil
@@ -159,7 +158,7 @@ extension VoiceChannel {
         }
 
         return Stream(
-            streamId: AVSClient(userId: userId, clientId: clientId),
+            streamId: AVSClient(userId: selfUser.avsIdentifier, clientId: clientId),
             user: selfUser,
             microphoneState: .unmuted,
             videoState: videoState,
