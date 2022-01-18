@@ -106,16 +106,14 @@ final public class SearchResultLabel: UILabel, Copyable {
                                                                              with: highlightedAttributes,
                                                                              upToWidth: self.bounds.width,
                                                                              totalMatches: &estimatedMatchesCount)
-            }
-            else {
+            } else {
                 self.attributedText = attributedText.cutAndPrefixedWithEllipsis(from: nsRange.location, fittingIntoWidth: self.bounds.width)
                     .highlightingAppearances(of: queries,
                                              with: highlightedAttributes,
                                              upToWidth: self.bounds.width,
                                              totalMatches: &estimatedMatchesCount)
             }
-        }
-        else {
+        } else {
             self.attributedText = attributedText
         }
     }

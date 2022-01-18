@@ -22,6 +22,7 @@ import WireUtilities
 protocol ConversationOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowGuests: Bool { get }
+    var allowGuestLinks: Bool { get }
     var isCodeEnabled: Bool { get }
     var areGuestOrServicePresent: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
@@ -101,23 +102,28 @@ final class ConversationOptionsViewModel {
             get: { [unowned self] in return self.configuration.allowGuests },
             set: { [unowned self] in self.setAllowGuests($0, view: $1) }
         )]
+        guard configuration.allowGuests else {
+            return rows
+        }
 
-        if configuration.allowGuests {
-            rows.append(.linkHeader)
+        rows.append(.linkHeader)
+        guard configuration.allowGuestLinks else {
+            rows.append(.info)
+            return rows
+        }
 
-            if showLoadingCell {
-                rows.append(.loading)
+        if showLoadingCell {
+            rows.append(.loading)
+        } else {
+            // Check if we have a link already
+            if let link = link {
+                rows.append(.text(link))
+                rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] _ in self?.copyLink() })
+                rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
+                rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
             } else {
-                // Check if we have a link already
-                if let link = link {
-                    rows.append(.text(link))
-                    rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] _ in self?.copyLink() })
-                    rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
-                    rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
-                } else {
-                    rows.append(.createLinkButton { [weak self] _ in
-                        self?.createLink() })
-                }
+                rows.append(.createLinkButton { [weak self] _ in
+                    self?.createLink() })
             }
         }
 

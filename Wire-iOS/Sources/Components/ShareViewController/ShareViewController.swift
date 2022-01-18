@@ -135,8 +135,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
                     let name = $0.displayName
                     return name.range(of: filterString, options: .caseInsensitive) != nil
                 }
-            }
-            else {
+            } else {
                 self.filteredDestinations = self.destinations
             }
 

@@ -1,0 +1,92 @@
+name: review PR by Zenkins v0.1.3
+
+on: 
+  issue_comment:
+    types: [created]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    env:
+      ADMINS: ('billypchan' 'marcoconti83' 'typfel' 'johnxnguyen' 'David-Henner' 'KaterinaWire' 'sb88k' 'agisilaos')
+
+    steps:
+      - name: guard for magic spell
+        if: ${{ github.event.comment.body != '@zenkins review' }}
+        run: exit 1
+
+      - name: guard for pull requests
+        if: ${{ !github.event.issue.pull_request }}
+        run: exit 1
+
+      - name: guard for title
+        if: ${{ !(startsWith(github.event.issue.title, 'chore') && endsWith(github.event.issue.title, 'bump components SQPIT-776')) }}
+        run: |
+          echo "github: ${{ github }}"
+          echo "title not match. Exit. Title is ${{ github.event.issue.title }}"
+          exit 1
+
+      - name: guard for admins
+        run: |
+          admins=${{ env.ADMINS }}
+          adminFound=0
+          for admin in ${admins[*]}
+          do
+            if [[ "$admin" == "${{ github.actor }}" ]]; then
+              echo ${{ github.actor }} is allowed for releasing
+              adminFound=1
+            fi
+          done
+          if [ $adminFound = 0 ]; then
+            echo ${{ github.actor }} is not allowed for requesting zenkins to review
+            exit 1
+          fi
+              
+      - name: gh auth
+        run: |
+          # auth with zenkins to prevent self approval not allowed issue
+          echo ${{ secrets.ZENKINS_SECRET }} > .githubtoken
+          gh auth login --with-token < .githubtoken
+          rm .githubtoken
+
+      - name: Checkout
+        run: |
+          gh repo clone wireapp/${{ github.event.repository.name }}
+          
+          cd ${{ github.event.repository.name }}
+          
+          gh pr checkout ${{ github.event.issue.number }} --repo wireapp/${{ github.event.repository.name }}
+          
+      - name: Diff
+        run: |
+          cd ${{ github.event.repository.name }}
+          pwd
+          # check the different contains Cartfile and related files only
+          DIFF_OUTPUT="$(git diff --name-only origin/develop HEAD)"
+          
+          ##TODO: Rewrite these check logic in Swift
+          
+          # replace longer string first, since Cartfile.resolved contains Cartfile and prevent replace Cartfile twice
+          
+          if [[ $DIFF_OUTPUT =~ 'Cartfile.resolved' ]]; then
+            echo "contains Cartfile.resolved"
+            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile.resolved/}
+          fi
+
+          echo $DIFF_OUTPUT
+
+          if [[ $DIFF_OUTPUT =~ 'Cartfile' ]]; then
+            echo "contains Cartfile"
+            DIFF_OUTPUT=${DIFF_OUTPUT//Cartfile/}
+          fi
+          
+          echo $DIFF_OUTPUT
+
+          # clean line break
+          DIFF_OUTPUT=$(echo $DIFF_OUTPUT|tr -d '\n')
+          
+          # if diff only contains Cartfile and Cartfile.resolved, Zenkins approve this PR
+          if [ -z "$DIFF_OUTPUT" ]; then 
+            gh pr review ${{ github.event.issue.number }} --approve -R wireapp/${{ github.event.repository.name }}
+          fi
+

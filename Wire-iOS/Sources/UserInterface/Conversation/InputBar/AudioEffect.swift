@@ -27,8 +27,7 @@ extension String {
     @discardableResult func deleteFileAtPath() -> Bool {
         do {
             try FileManager.default.removeItem(atPath: self)
-        }
-        catch {
+        } catch {
             zmLog.error("Cannot delete file: \(self): \(error)")
             return false
         }

@@ -45,8 +45,7 @@ extension UITableView {
 
                 self.tableHeaderView?.layoutIfNeeded()
                 self.tableHeaderView = newHeader
-            }
-            else {
+            } else {
                 self.tableHeaderView = nil
             }
         }

@@ -37,6 +37,7 @@
 		06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */; };
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
+		06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */; };
 		06E69AB425C8301D00B678BF /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		06E69AB825C9A37700B678BF /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		06E89AFE25C82C51008E3846 /* UnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E89AFD25C82C50008E3846 /* UnlockViewController.swift */; };
@@ -234,7 +235,6 @@
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
 		5501FFAB22B28F330050D8FC /* MockSelfLegalHoldSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFA922B28D210050D8FC /* MockSelfLegalHoldSubject.swift */; };
 		5501FFC922B398B30050D8FC /* UserInputRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFC822B398B20050D8FC /* UserInputRequest.swift */; };
-		5501FFCB22B399CE0050D8FC /* UITextContentType+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */; };
 		5501FFCD22B399F30050D8FC /* UserInputRequest+LegalHold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5501FFCC22B399F30050D8FC /* UserInputRequest+LegalHold.swift */; };
 		5502C6E222B7B729000684B7 /* LegalHoldAlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */; };
 		5502C6E522B7B800000684B7 /* LegalHoldAlertFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502C6E322B7B7FC000684B7 /* LegalHoldAlertFactoryTests.swift */; };
@@ -1277,6 +1277,7 @@
 		EEC94D4223BF49D6003AF93D /* UserType+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC94D4123BF49D6003AF93D /* UserType+Helpers.swift */; };
 		EECA835426F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
+		EED92353278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */; };
 		EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */; };
 		EEE104052126F68A003C779B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE104042126F68A003C779B /* CameraController.swift */; };
 		EEE60E2C2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE60E2B2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift */; };
@@ -1791,6 +1792,7 @@
 		06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSetTests.swift; sourceTree = "<group>"; };
 		06C412AB238FCAA80018866F /* Int+Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Const.swift"; sourceTree = "<group>"; };
 		06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
+		06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestLinkInfoCell.swift; sourceTree = "<group>"; };
 		06E89AFD25C82C50008E3846 /* UnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewController.swift; sourceTree = "<group>"; };
 		06E89AFF25C82CA9008E3846 /* PasscodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeTextField.swift; sourceTree = "<group>"; };
 		06F2664123881A0D006BD21F /* LabelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIndicator.swift; sourceTree = "<group>"; };
@@ -1985,7 +1987,6 @@
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
 		5501FFA922B28D210050D8FC /* MockSelfLegalHoldSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSelfLegalHoldSubject.swift; sourceTree = "<group>"; };
 		5501FFC822B398B20050D8FC /* UserInputRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInputRequest.swift; sourceTree = "<group>"; };
-		5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextContentType+Availability.swift"; sourceTree = "<group>"; };
 		5501FFCC22B399F30050D8FC /* UserInputRequest+LegalHold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserInputRequest+LegalHold.swift"; sourceTree = "<group>"; };
 		5502C6E122B7B729000684B7 /* LegalHoldAlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalHoldAlertFactory.swift; sourceTree = "<group>"; };
 		5502C6E322B7B7FC000684B7 /* LegalHoldAlertFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegalHoldAlertFactoryTests.swift; sourceTree = "<group>"; };
@@ -2706,7 +2707,6 @@
 		A99EE1A0266657AF00E713FC /* PINCache.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PINCache.xcframework; path = Carthage/Build/PINCache.xcframework; sourceTree = "<group>"; };
 		A99EE1A1266657AF00E713FC /* WireProtos.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireProtos.xcframework; path = Carthage/Build/WireProtos.xcframework; sourceTree = "<group>"; };
 		A99EE1A2266657AF00E713FC /* HTMLString.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HTMLString.xcframework; path = Carthage/Build/HTMLString.xcframework; sourceTree = "<group>"; };
-		A99EE1A3266657AF00E713FC /* Cartography.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Cartography.xcframework; path = Carthage/Build/Cartography.xcframework; sourceTree = "<group>"; };
 		A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireShareEngine.xcframework; path = Carthage/Build/WireShareEngine.xcframework; sourceTree = "<group>"; };
 		A99EE1A5266657B000E713FC /* WireDataModel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireDataModel.xcframework; path = Carthage/Build/WireDataModel.xcframework; sourceTree = "<group>"; };
 		A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
@@ -3120,6 +3120,7 @@
 		EEC94D4123BF49D6003AF93D /* UserType+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+Helpers.swift"; sourceTree = "<group>"; };
 		EECA835326F211210087ECB0 /* UIAlertControllerFeatureConfigSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerFeatureConfigSnapshotTests.swift; sourceTree = "<group>"; };
 		EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorage.swift; sourceTree = "<group>"; };
+		EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccentColorPickerSnapshotTests.swift; path = "Wire-iOS Tests/AccentColorPickerSnapshotTests.swift"; sourceTree = SOURCE_ROOT; };
 		EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Invite.swift"; sourceTree = "<group>"; };
 		EEE104042126F68A003C779B /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		EEE60E2B2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsNotificationOptionsCellTests.swift; sourceTree = "<group>"; };
@@ -4698,7 +4699,6 @@
 				A99EE203266660D300E713FC /* AppCenterAnalytics.xcframework */,
 				A99EE204266660D300E713FC /* AppCenterCrashes.xcframework */,
 				A99EE199266657AE00E713FC /* avs.xcframework */,
-				A99EE1A3266657AF00E713FC /* Cartography.xcframework */,
 				A99EE1A2266657AF00E713FC /* HTMLString.xcframework */,
 				A99EE1A0266657AF00E713FC /* PINCache.xcframework */,
 				A99EE1A6266657B000E713FC /* SwiftProtobuf.xcframework */,
@@ -4967,7 +4967,6 @@
 				16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
-				5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */,
 				164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */,
 				BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */,
 				EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */,
@@ -6797,6 +6796,7 @@
 				D5189476205045A100C095C1 /* LinkHeaderCell.swift */,
 				D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */,
 				D54224C320513A9800526A57 /* TextCell.swift */,
+				06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */,
 				D51894782050490E00C095C1 /* ActionCell.swift */,
 				D54224C720513EC100526A57 /* IconActionCell.swift */,
 			);
@@ -7132,6 +7132,7 @@
 		EF61B33E1FC8461200D8E631 /* AccessoryTextField */ = {
 			isa = PBXGroup;
 			children = (
+				EED92352278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift */,
 				EEAC654B206BD64700365C0C /* LinkInteractionTextViewTests.swift */,
 				EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */,
 				EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */,
@@ -7779,7 +7780,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Adds support for Apple Silicon brew directory\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n \nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		EEF9786E25D2923A00F7333E /* Run SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7797,7 +7798,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
+			shellScript = "# Adds support for Apple Silicon brew directory\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftgen >/dev/null; then\n  swiftgen\nelse\n  echo \"warning: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -8312,6 +8313,7 @@
 				EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */,
 				5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
+				06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,
@@ -8644,7 +8646,6 @@
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				A9275F6124223AB4007CB2BC /* DynamicsProxy.swift in Sources */,
 				5E769C5821AE948F00785EB7 /* MessageDetailsDataSource.swift in Sources */,
-				5501FFCB22B399CE0050D8FC /* UITextContentType+Availability.swift in Sources */,
 				EF066E1621EF938C00D56CAD /* MessageActionResponder.swift in Sources */,
 				637387C726443C31004FEF79 /* VideoKind.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
@@ -9114,6 +9115,7 @@
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
 				5E35F7722180B8CD00D3F4FE /* ConversationMessageSectionControllerTests.swift in Sources */,
 				EF1D8BA821EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift in Sources */,
+				EED92353278DA9D2002D4D9D /* AccentColorPickerSnapshotTests.swift in Sources */,
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
 				EF21A07121305FD700B9120C /* DeleteMessageTests.swift in Sources */,
 				A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */,

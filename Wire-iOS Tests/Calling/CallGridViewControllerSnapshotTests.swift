@@ -59,7 +59,12 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         mockSelfClient.remoteIdentifier = "selfClient123"
         MockUser.mockSelf().clients = Set([mockSelfClient])
 
-        selfAVSClient = AVSClient(userId: MockUser.mockSelf().remoteIdentifier, clientId: mockSelfClient.remoteIdentifier!)
+        let identifier = AVSIdentifier(identifier: MockUser.mockSelf().remoteIdentifier,
+                                       domain: nil)
+
+        selfAVSClient = AVSClient(userId: identifier,
+                                  clientId: mockSelfClient.remoteIdentifier!)
+
         selfStream = stubProvider.stream(
             user: MockUserType.createUser(name: "Alice"),
             client: selfAVSClient,
@@ -275,7 +280,7 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
         // Page 2 - Second half with video enabled
         var expectedClients = [AVSClient]()
         for _ in half..<CallGridViewController.maxItemsPerPage {
-            let client = AVSClient(userId: UUID(), clientId: UUID().transportString())
+            let client = AVSClient(userId: AVSIdentifier.stub, clientId: UUID().transportString())
             configuration.streams += [stubProvider.stream(client: client, videoState: .started)]
             expectedClients += [client]
         }

@@ -32,8 +32,7 @@ extension ZMConversationMessage {
     func preparePreviewView(shouldDisplaySender: Bool = true) -> UIView {
         if self.isImage || self.isVideo {
             return MessageThumbnailPreviewView(message: self, displaySender: shouldDisplaySender)
-        }
-        else {
+        } else {
             return MessagePreviewView(message: self, displaySender: shouldDisplaySender)
         }
     }
@@ -152,8 +151,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
             return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
-        }
-        else {
+        } else {
             return NSAttributedString()
         }
     }
@@ -176,15 +174,13 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
             if let imageResource = message.imageMessageData?.image {
                 imagePreview.setImageResource(imageResource)
             }
-        }
-        else if message.isVideo, let fileMessageData = message.fileMessageData {
+        } else if message.isVideo, let fileMessageData = message.fileMessageData {
             let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
             imagePreview.setImageResource(fileMessageData.thumbnailImage)
-        }
-        else {
+        } else {
             fatal("Unknown message for preview: \(message)")
         }
     }
@@ -285,8 +281,7 @@ final class MessagePreviewView: UIView, Themeable {
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
             return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
-        }
-        else {
+        } else {
             return NSAttributedString()
         }
     }
@@ -299,19 +294,16 @@ final class MessagePreviewView: UIView, Themeable {
 
         if let textMessageData = message.textMessageData {
             contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true, variant: colorSchemeVariant)
-        }
-        else if let location = message.locationMessageData {
+        } else if let location = message.locationMessageData {
 
             let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
-        }
-        else if message.isAudio {
+        } else if message.isAudio {
             let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
-        }
-        else if let fileData = message.fileMessageData {
+        } else if let fileData = message.fileMessageData {
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes

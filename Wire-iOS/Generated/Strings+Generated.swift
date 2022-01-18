@@ -1775,7 +1775,8 @@ internal enum L10n {
         internal static let accountSuspended = L10n.tr("Localizable", "error.user.account_suspended")
         /// You have been logged out from another device.
         internal static let deviceDeletedRemotely = L10n.tr("Localizable", "error.user.device_deleted_remotely")
-        /// This email requires a team invitation. Contact your organization's IT administrators to receive an invite.
+        /// You can't create this account as your email domain is intentionally blocked.
+        /// Please ask your team admin to invite you via email.
         internal static let domainBlocked = L10n.tr("Localizable", "error.user.domain_blocked")
         /// The email address you provided has already been registered. Please try again.
         internal static let emailIsTaken = L10n.tr("Localizable", "error.user.email_is_taken")
@@ -1801,8 +1802,16 @@ internal enum L10n {
     }
     internal enum FeatureConfig {
       internal enum Alert {
-        /// There has been a change in Wire
+        /// Team settings changed
         internal static let genericTitle = L10n.tr("Localizable", "feature_config.alert.generic_title")
+        internal enum ConversationGuestLinks {
+          internal enum Message {
+            /// Generating guest links is now disabled for all group admins.
+            internal static let disabled = L10n.tr("Localizable", "feature_config.alert.conversation_guest_links.message.disabled")
+            /// Generating guest links is now enabled for all group admins.
+            internal static let enabled = L10n.tr("Localizable", "feature_config.alert.conversation_guest_links.message.enabled")
+          }
+        }
         internal enum SelfDeletingMessages {
           internal enum Message {
             /// Self-deleting messages are disabled.
@@ -2070,10 +2079,14 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "guest_room.link.button.title")
         }
         internal enum Header {
-          /// Anyone with the link can join the conversation, even if they don’t have Wire.
+          /// Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.
           internal static let subtitle = L10n.tr("Localizable", "guest_room.link.header.subtitle")
-          /// Invite others with a link
+          /// Guest Links
           internal static let title = L10n.tr("Localizable", "guest_room.link.header.title")
+        }
+        internal enum NotAllowed {
+          /// Generating guest links is not allowed in your team.
+          internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.explaination")
         }
       }
       internal enum RemoveGuests {

@@ -318,8 +318,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
             badge.backgroundColor = UIColor.white
             badgeLabel.textColor = UIColor.black
-        }
-        else {
+        } else {
             backgroundColor = UIColor.clear
         }
     }
@@ -456,8 +455,7 @@ final class SettingsTextCell: SettingsTableCell,
         if string.rangeOfCharacter(from: CharacterSet.newlines) != .none {
             textField.resignFirstResponder()
             return false
-        }
-        else {
+        } else {
             return true
         }
     }

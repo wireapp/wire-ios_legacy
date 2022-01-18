@@ -45,13 +45,11 @@ extension LocationData {
             let longitudeFloatUnwrap = longitude as? Float {
             latitudeFloat = latitudeFloatUnwrap
             longitudeFloat = longitudeFloatUnwrap
-        }
-        else if let latitudeDoubleUnwrap = latitude as? Double,
+        } else if let latitudeDoubleUnwrap = latitude as? Double,
                 let longitudeDoubleUnwrap = longitude as? Double {
             latitudeFloat = Float(latitudeDoubleUnwrap)
             longitudeFloat = Float(longitudeDoubleUnwrap)
-        }
-        else {
+        } else {
             return nil
         }
 

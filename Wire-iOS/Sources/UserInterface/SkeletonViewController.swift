@@ -259,8 +259,7 @@ final class SkeletonViewController: UIViewController {
 
         if let fromUnwrapped = from, to.imageData == nil, to.teamName == nil {
             account = fromUnwrapped
-        }
-        else {
+        } else {
             account = to
         }
 

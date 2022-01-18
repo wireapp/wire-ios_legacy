@@ -62,8 +62,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
 
             do {
                 try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
-            }
-            catch let error as NSError {
+            } catch let error as NSError {
 
                 // specific error message for name string is too short
                 if error.domain == ZMObjectValidationErrorDomain &&
@@ -77,8 +76,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                     UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(for: error)
                 }
 
-            }
-            catch let generalError {
+            } catch let generalError {
                 zmLog.error("Error setting property: \(generalError)")
             }
         }
