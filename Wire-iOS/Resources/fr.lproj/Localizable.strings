@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "Le message est supprimé.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
+"conversation.banner.guests" = "**Invités**";
 "conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.externals" = "**Externes**";
+"conversation.banner.remotes" = "**Utilisateurs fédérés**";
+"conversation.banner.are_present" = "%@ sont présents";
+"conversation.banner.are_active" = "%@ sont actifs";
+"conversation.banner.separator" = " et ";
 
 "conversation.action.search" = "Chercher";
 
@@ -621,7 +621,7 @@
 
 "connection_request_pending_title" = "Demande de Connexion";
 "connection_request.send_button_title" = "Se connecter";
-"inbox.title" = "Connection Requests";
+"inbox.title" = "Demandes de connexion";
 "inbox.connection_request.connect_button_title" = "Se connecter";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
 "error.connection.title" = "Erreur";
@@ -1361,9 +1361,9 @@
 "guest_room.error.generic.title" = "Une erreur est survenue";
 "guest_room.error.generic.message" = "Vérifiez votre connexion et réessayez";
 
-"guest_room.link.header.title" = "Guest Links";
-"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.header.title" = "Liens d'invitation";
+"guest_room.link.header.subtitle" = "Invitez d'autres personnes avec un lien vers cette conversation. N'importe qui avec le lien peut rejoindre la conversation, même s'ils n'ont pas Wire.";
+"guest_room.link.not_allowed.explaination" = "La génération de liens d'invitation n'est pas autorisée dans votre équipe.";
 
 "guest_room.link.button.title" = "Créer le lien";
 
@@ -1589,7 +1589,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Une erreur s'est produite, veuillez réessayer";
 "error.user.needs_credentials" = "Veuillez vérifier vos informations et réessayez.";
-"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
+"error.user.domain_blocked" = "Vous ne pouvez pas créer ce compte car votre domaine de messagerie est intentionnellement bloqué.\nVeuillez demander à l'administrateur de votre équipe de vous inviter par e-mail.";
 "error.user.invalid_credentials" = "Veuillez vérifier vos informations et réessayez.";
 "error.user.account_pending_activation" = "Le compte auquel vous tentez d’accéder est en attente d’activation. Merci de vérifier vos informations.";
 "error.user.network_error" = "Il semble y avoir un problème avec votre réseau. Veuillez réessayer ultérieurement.";
@@ -1648,7 +1648,7 @@
 "force.update.ok_button" = "Aller sur l'App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Team settings changed";
+"feature_config.alert.generic_title" = "Paramètres de l'équipe modifiés";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Il y a eu un changement dans Wire";
@@ -1677,12 +1677,12 @@
 
 // Feature configs: self-deleting messages
 "feature_config.alert.self_deleting_messages.message.disabled" = "Les messages éphémères sont désactivés";
-"feature_config.alert.self_deleting_messages.message.enabled" = "Self-deleting messages are enabled. You can set a timer before writing a message.";
+"feature_config.alert.self_deleting_messages.message.enabled" = "Les messages éphémères sont activés. Vous pouvez définir un délai avant de rédiger un message.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Les messages éphémères sont maintenant obligatoires. Les nouveaux messages seront auto-supprimés après %@.";
 
 // Feature configs: conversation guest links
-"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
-"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.disabled" = "La génération de liens d'invitation est maintenant désactivée pour tous les administrateurs de groupes.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "La génération de liens d'invitation est maintenant activée pour tous les administrateurs de groupes.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak détecté";
