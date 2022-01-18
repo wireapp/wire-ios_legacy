@@ -120,8 +120,7 @@ final class SearchResultsView: UIView {
                     accessoryView.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
                     accessoryView.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor)
                 ])
-            }
-            else {
+            } else {
                 accessoryContainerHeightConstraint?.isActive = true
             }
 

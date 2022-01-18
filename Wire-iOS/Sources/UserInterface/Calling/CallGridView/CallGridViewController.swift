@@ -524,13 +524,12 @@ extension ZMEditableUser {
 
         guard
             let selfUser = ZMUser.selfUser(),
-            let userId = selfUser.remoteIdentifier,
             let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
             fatal("Could not create self user stream which should always exist")
         }
 
-        return AVSClient(userId: userId, clientId: clientId)
+        return AVSClient(userId: selfUser.avsIdentifier, clientId: clientId)
     }
 }
 

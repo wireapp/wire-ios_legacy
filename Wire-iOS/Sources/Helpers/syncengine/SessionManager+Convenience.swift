@@ -56,8 +56,7 @@ extension SessionManager {
 
         if isCallKitEnabled && isCallKitSupported && hasAudioPermissions {
             self.callNotificationStyle = .callKit
-        }
-        else {
+        } else {
             self.callNotificationStyle = .pushNotifications
         }
     }

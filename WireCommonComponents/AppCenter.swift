@@ -26,14 +26,25 @@ public extension AppCenter {
     static func setTrackingEnabled(_ enabled: Bool) {
         Analytics.enabled = enabled
         Distribute.enabled = enabled
+#if DISABLE_APPCENTER_CRASH_LOGGING
+        Crashes.enabled = false
+#else
         Crashes.enabled = enabled
+#endif
     }
     
     static func start() {
         Distribute.updateTrack = .private
 
-        AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: [Crashes.self,
-                                                                Distribute.self,
-                                                                Analytics.self])
+#if DISABLE_APPCENTER_CRASH_LOGGING
+        let services = [Distribute.self,
+                        Analytics.self]
+#else
+        let services = [Crashes.self,
+                        Distribute.self,
+                        Analytics.self]
+#endif
+
+        AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: services)
     }
 }

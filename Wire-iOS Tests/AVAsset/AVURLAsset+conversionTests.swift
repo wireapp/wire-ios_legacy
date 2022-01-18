@@ -30,8 +30,7 @@ final class AVURLAsset_conversionTests: XCTestCase {
 
         AVURLAsset.convertVideoToUploadFormat(at: videoURL,
                                               quality: AVAssetExportPresetLowQuality,
-                                              deleteSourceFile: false) {
-                                                url, asset, error in
+                                              deleteSourceFile: false) { url, asset, error in
                                                 // THEN
 
                                                 // exported file URL

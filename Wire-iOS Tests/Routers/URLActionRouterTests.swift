@@ -85,7 +85,7 @@ final class URLActionRouterTests: XCTestCase {
 
         // THEN
         guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
-            return XCTFail()
+            return XCTFail("Failed to perform navigation")
         }
     }
 
@@ -101,7 +101,7 @@ final class URLActionRouterTests: XCTestCase {
 
         // THEN
         guard case .conversationList = authenticatedRouter.didNavigateToDestination else {
-            return XCTFail()
+            return XCTFail("Failed to perform navigation")
         }
     }
 }

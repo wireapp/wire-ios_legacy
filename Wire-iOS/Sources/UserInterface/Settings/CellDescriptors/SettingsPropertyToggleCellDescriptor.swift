@@ -49,8 +49,7 @@ final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptor
             var boolValue = false
             if let value = self.settingsProperty.value().value() as? NSNumber {
                 boolValue = value.boolValue
-            }
-            else {
+            } else {
                 boolValue = false
             }
 

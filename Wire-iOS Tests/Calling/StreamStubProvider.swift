@@ -22,7 +22,7 @@ import Foundation
 class StreamStubProvider {
     func stream(
         user: UserType = MockUserType.createUser(name: "Bob"),
-        client: AVSClient = AVSClient(userId: UUID(), clientId: UUID().transportString()),
+        client: AVSClient = AVSClient(userId: AVSIdentifier.stub, clientId: UUID().transportString()),
         muted: Bool = false,
         videoState: VideoState = .started,
         activeSpeakerState: ActiveSpeakerState = .inactive,

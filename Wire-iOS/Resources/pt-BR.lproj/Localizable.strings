@@ -335,13 +335,13 @@
 "conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.guests" = "**Convidados**";
+"conversation.banner.services" = "**Serviços**";
+"conversation.banner.externals" = "**Externos**";
+"conversation.banner.remotes" = "**Usuários federados**";
+"conversation.banner.are_present" = "%@ estão presentes";
+"conversation.banner.are_active" = "%@ estão ativos";
+"conversation.banner.separator" = " e ";
 
 "conversation.action.search" = "Procurar";
 
@@ -621,7 +621,7 @@
 
 "connection_request_pending_title" = "Solicitação de Conexão";
 "connection_request.send_button_title" = "Conectar";
-"inbox.title" = "Connection Requests";
+"inbox.title" = "Solicitações de Conexão";
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
 "error.connection.title" = "Erro";
@@ -1361,8 +1361,9 @@
 "guest_room.error.generic.title" = "Algo deu errado";
 "guest_room.error.generic.message" = "Verifique sua conexão e tente novamente";
 
-"guest_room.link.header.title" = "Convide outros com um link";
-"guest_room.link.header.subtitle" = "Qualquer um com o link pode se juntar a conversa por 24 horas, até quem não possui Wire.";
+"guest_room.link.header.title" = "Links de Convidados";
+"guest_room.link.header.subtitle" = "Convide outras pessoas com um link para esta conversa. Qualquer pessoa com o link pode participar da conversa, mesmo que não possuam o Wire.";
+"guest_room.link.not_allowed.explaination" = "A geração de links de convidados não é permitida em sua equipe.";
 
 "guest_room.link.button.title" = "Criar Link";
 
@@ -1588,7 +1589,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Algo deu errado, por favor tente novamente";
 "error.user.needs_credentials" = "Por favor, verifique seus dados e tente novamente.";
-"error.user.domain_blocked" = "Este e-mail requer um convite para uma equipe. Entre em contato com os administradores de TI da sua organização para receber um convite.";
+"error.user.domain_blocked" = "Você não pode criar esta conta porque seu domínio de e-mail está intencionalmente bloqueado.\nPor favor, peça ao administrador da sua equipe para convidá-lo por e-mail.";
 "error.user.invalid_credentials" = "Por favor, verifique seus dados e tente novamente.";
 "error.user.account_pending_activation" = "A conta que você está tentando acessar ainda está com a ativação pendente. Por favor, verifique seus detalhes.";
 "error.user.network_error" = "Parece que há um problema com a sua rede. Por favor, tente novamente mais tarde.";
@@ -1647,7 +1648,7 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Houve uma mudança no Wire";
+"feature_config.alert.generic_title" = "As configurações de equipe foram alteradas";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Houve uma mudança no Wire";
@@ -1678,6 +1679,10 @@
 "feature_config.alert.self_deleting_messages.message.disabled" = "A auto-exclusão de mensagens está desabilitada.";
 "feature_config.alert.self_deleting_messages.message.enabled" = "A auto-exclusão de mensagens está habilitada. Você pode definir um temporizador antes de escrever uma mensagem.";
 "feature_config.alert.self_deleting_messages.message.forced_on" = "A auto-exclusão de mensagens agora é obrigatória. Novas mensagens serão excluídas automaticamente após %@.";
+
+// Feature configs: conversation guest links
+"feature_config.alert.conversation_guest_links.message.disabled" = "A geração de links de convidados agora está desabilitada para todos os administradores do grupo.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "A geração de links de convidados agora está habilitada para todos os administradores do grupo.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detectado";

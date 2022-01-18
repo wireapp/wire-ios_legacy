@@ -101,7 +101,9 @@ final class InputBarTests: ZMSnapshotTestCase {
     }
 
     func testTruncatedMention() {
-        guard let userWithLongName = MockUser.realMockUsers()?.last else { return XCTFail() }
+        guard let userWithLongName = MockUser.realMockUsers()?.last else {
+            return XCTFail("Failed to create user with long name")
+        }
         userWithLongName.name = "Matt loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name"
         let text = "Hello @\(userWithLongName.name!)"
         sut.textView.setText(text, withMentions: [Mention(range: (text as NSString).range(of: "@\(userWithLongName.name!)"), user: userWithLongName)])

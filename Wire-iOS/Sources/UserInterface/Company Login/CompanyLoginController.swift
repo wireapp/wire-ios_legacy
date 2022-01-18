@@ -54,22 +54,16 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
 
     weak var delegate: CompanyLoginControllerDelegate?
 
-    var isAutoDetectionEnabled = true {
-        didSet {
-            isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
-        }
-    }
+    var isAutoDetectionEnabled = true
 
     // Whether the presence of a code should be checked periodically on iPad.
     // This is in order to work around https://openradar.appspot.com/28771678.
-    private static let isPollingEnabled = true
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
     static public let isCompanyLoginEnabled = true
 
     private var token: Any?
-    private var pollingTimer: Timer?
     private let detector: CompanyLoginRequestDetector
     private let requester: CompanyLoginRequester
     private let flowHandler: CompanyLoginFlowHandler
@@ -119,18 +113,6 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
             queue: .main,
             using: { [internalDetectSSOCode] _ in internalDetectSSOCode(false) }
         )
-    }
-
-    private func startPollingTimer() {
-        guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { [internalDetectSSOCode] _ in
-            internalDetectSSOCode(true)
-        }
-    }
-
-    private func stopPollingTimer() {
-        pollingTimer?.invalidate()
-        pollingTimer = nil
     }
 
 }

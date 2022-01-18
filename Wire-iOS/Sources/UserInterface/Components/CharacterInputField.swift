@@ -70,8 +70,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
             if let character = storage.count > index ? storage[storage.index(storage.startIndex, offsetBy: index)] : nil {
                 characterView.character = character
-            }
-            else {
+            } else {
                 characterView.character = .none
             }
         }
@@ -107,8 +106,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
                 if let character = self.character {
                     label.text = String(character)
                     label.isHidden = false
-                }
-                else {
+                } else {
                     label.isHidden = true
                 }
             }

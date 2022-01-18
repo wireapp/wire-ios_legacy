@@ -29,8 +29,7 @@ extension SelfProfileViewController {
         if clientsRequiringUserAttention.count > 0 {
             self.presentNewLoginAlertController(clientsRequiringUserAttention)
             return true
-        }
-        else {
+        } else {
             return false
         }
     }

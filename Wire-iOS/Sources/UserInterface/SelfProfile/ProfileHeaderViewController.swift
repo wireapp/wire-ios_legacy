@@ -294,8 +294,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         if let handle = user.handle, !handle.isEmpty, !options.contains(.hideHandle) {
             handleLabel.text = "@" + handle
             handleLabel.accessibilityValue = handleLabel.text
-        }
-        else {
+        } else {
             handleLabel.isHidden = true
         }
     }
