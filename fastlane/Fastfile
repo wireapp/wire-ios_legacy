@@ -17,6 +17,7 @@ platform :ios do
         end
 
         build_type = options[:build_type]
+        
         # Delete configurations in case we switch to different branch or repo
         sh "rm -rf ../Configuration"
         if build_type.nil? 
