@@ -3747,6 +3747,10 @@ internal enum L10n {
               }
             }
           }
+          internal enum ProfileLink {
+            /// Profile link
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.profile_link.title")
+          }
           internal enum Team {
             /// Team
             internal static let title = L10n.tr("Localizable", "self.settings.account_section.team.title")

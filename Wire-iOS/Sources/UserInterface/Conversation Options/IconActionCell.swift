@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
+final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 
     private let separator = UIView()
     private let imageContainer = UIView()
@@ -80,4 +80,13 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         label.text = title
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
     }
+
+}
+
+extension IconActionCell: IconActionCellDelegate {
+
+    func updateLayout() {
+        descriptor?.featureCell(self)
+    }
+
 }

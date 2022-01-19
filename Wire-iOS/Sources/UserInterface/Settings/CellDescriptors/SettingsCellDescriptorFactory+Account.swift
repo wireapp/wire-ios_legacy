@@ -95,6 +95,12 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(domainElement())
         }
 
+        if let _ = URL.selfUserProfile {
+            cellDescriptors.append(profileLinkTitle())
+            cellDescriptors.append(profileLinkElement())
+            cellDescriptors.append(profileLinkButton())
+        }
+
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
@@ -259,6 +265,21 @@ extension SettingsCellDescriptorFactory {
 
     func domainElement() -> SettingsCellDescriptorType {
         return textValueCellDescriptor(propertyName: .domain, enabled: false)
+    }
+
+    func profileLinkTitle() -> SettingsCellDescriptorType {
+        typealias Settings = L10n.Localizable.Self.Settings
+        typealias Account = Settings.AccountSection
+
+        return SettingsStaticTextCellDescriptor(text: Account.ProfileLink.title)
+    }
+
+    func profileLinkElement() -> SettingsCellDescriptorType {
+        return SettingsProfileLinkCellDescriptor()
+    }
+
+    func profileLinkButton() -> SettingsCellDescriptorType {
+        return SettingsCopyButtonCellDescriptor()
     }
 
     func pictureElement() -> SettingsCellDescriptorType {

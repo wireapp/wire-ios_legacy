@@ -480,3 +480,40 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
     }
 
 }
+
+final class SettingsProfileLinkCell: SettingsTableCell {
+
+    // MARK: - Properties
+
+    var label = CopyableLabel()
+
+    override func setup() {
+        super.setup()
+
+        setupViews()
+        createConstraints()
+    }
+
+    // MARK: - Helpers
+
+    private func setupViews() {
+        backgroundColor = .clear
+        contentView.addSubview(label)
+
+        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        label.font = FontSpec(.normal, .light).font
+        label.lineBreakMode = .byClipping
+        label.numberOfLines = 0
+    }
+
+    private func createConstraints() {
+        [label].prepareForLayout()
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: contentView.topAnchor),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+
+}
