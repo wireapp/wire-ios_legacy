@@ -45,8 +45,7 @@ class SettingsCopyButtonCellDescriptor: SettingsCellDescriptorType {
 
     // MARK: - Helpers
 
-    typealias GuestRoom = L10n.Localizable.GuestRoom
-    typealias Actions = GuestRoom.Actions
+    typealias Actions =  L10n.Localizable.GuestRoom.Actions
 
     let copiedLink: CellConfiguration = .iconAction(title: Actions.copiedLink,
                                                     icon: .checkmark,
