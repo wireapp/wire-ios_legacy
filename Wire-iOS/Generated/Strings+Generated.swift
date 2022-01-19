@@ -1147,7 +1147,7 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "conversation.create.receipts.title")
         }
         internal enum Services {
-          /// Open this conversation to services outside your team.
+          /// Open this conversation to services.
           internal static let subtitle = L10n.tr("Localizable", "conversation.create.services.subtitle")
           /// Allow services
           internal static let title = L10n.tr("Localizable", "conversation.create.services.title")
@@ -2066,13 +2066,13 @@ internal enum L10n {
         internal static let shareLink = L10n.tr("Localizable", "guest_room.actions.share_link")
       }
       internal enum AllowGuests {
-        /// Open this conversation to services and people outside your team.
+        /// Open this conversation to people outside your team.
         internal static let subtitle = L10n.tr("Localizable", "guest_room.allow_guests.subtitle")
         /// Allow guests
         internal static let title = L10n.tr("Localizable", "guest_room.allow_guests.title")
       }
       internal enum AllowServices {
-        /// Open this conversation to services outside your team.
+        /// Open this conversation to services.
         internal static let subtitle = L10n.tr("Localizable", "guest_room.allow_services.subtitle")
         /// Allow services
         internal static let title = L10n.tr("Localizable", "guest_room.allow_services.title")
