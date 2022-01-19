@@ -1361,9 +1361,9 @@
 "guest_room.error.generic.title" = "Algo deu errado";
 "guest_room.error.generic.message" = "Verifique sua conexão e tente novamente";
 
-"guest_room.link.header.title" = "Guest Links";
-"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.header.title" = "Links de Convidados";
+"guest_room.link.header.subtitle" = "Convide outras pessoas com um link para esta conversa. Qualquer pessoa com o link pode participar da conversa, mesmo que não possuam o Wire.";
+"guest_room.link.not_allowed.explaination" = "A geração de links de convidados não é permitida em sua equipe.";
 
 "guest_room.link.button.title" = "Criar Link";
 
@@ -1589,7 +1589,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Algo deu errado, por favor tente novamente";
 "error.user.needs_credentials" = "Por favor, verifique seus dados e tente novamente.";
-"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
+"error.user.domain_blocked" = "Você não pode criar esta conta porque seu domínio de e-mail está intencionalmente bloqueado.\nPor favor, peça ao administrador da sua equipe para convidá-lo por e-mail.";
 "error.user.invalid_credentials" = "Por favor, verifique seus dados e tente novamente.";
 "error.user.account_pending_activation" = "A conta que você está tentando acessar ainda está com a ativação pendente. Por favor, verifique seus detalhes.";
 "error.user.network_error" = "Parece que há um problema com a sua rede. Por favor, tente novamente mais tarde.";
@@ -1648,7 +1648,7 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Team settings changed";
+"feature_config.alert.generic_title" = "As configurações de equipe foram alteradas";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Houve uma mudança no Wire";
@@ -1681,8 +1681,8 @@
 "feature_config.alert.self_deleting_messages.message.forced_on" = "A auto-exclusão de mensagens agora é obrigatória. Novas mensagens serão excluídas automaticamente após %@.";
 
 // Feature configs: conversation guest links
-"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
-"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.disabled" = "A geração de links de convidados agora está desabilitada para todos os administradores do grupo.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "A geração de links de convidados agora está habilitada para todos os administradores do grupo.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Jailbreak detectado";
