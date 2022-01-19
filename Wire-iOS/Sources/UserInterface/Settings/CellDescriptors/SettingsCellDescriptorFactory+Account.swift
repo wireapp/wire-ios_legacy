@@ -95,7 +95,7 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(domainElement())
         }
 
-        if let _ = URL.selfUserProfile {
+        if URL.selfUserProfile != nil {
             cellDescriptors.append(profileLinkTitle())
             cellDescriptors.append(profileLinkElement())
             cellDescriptors.append(profileLinkButton())
