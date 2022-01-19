@@ -31,11 +31,6 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         createConstraints()
     }
 
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private func setupViews() {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
