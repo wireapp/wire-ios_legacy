@@ -500,7 +500,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
         backgroundColor = .clear
         contentView.addSubview(label)
 
-        label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        label.textColor = UIColor.from(scheme: .iconGuest, variant: .dark)
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
@@ -508,12 +508,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
 
     private func createConstraints() {
         [label].prepareForLayout()
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: contentView.topAnchor),
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
     }
 
 }

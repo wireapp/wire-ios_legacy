@@ -95,7 +95,7 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(domainElement())
         }
 
-        if URL.selfUserProfile != nil {
+        if URL.selfUserProfileLink != nil {
             cellDescriptors.append(profileLinkTitle())
             cellDescriptors.append(profileLinkElement())
             cellDescriptors.append(profileLinkButton())
@@ -268,8 +268,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func profileLinkTitle() -> SettingsCellDescriptorType {
-        typealias Settings = L10n.Localizable.Self.Settings
-        typealias Account = Settings.AccountSection
+        typealias Account = L10n.Localizable.Self.Settings.AccountSection
 
         return SettingsStaticTextCellDescriptor(text: Account.ProfileLink.title)
     }

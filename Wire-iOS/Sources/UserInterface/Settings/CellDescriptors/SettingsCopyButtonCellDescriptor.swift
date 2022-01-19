@@ -67,7 +67,7 @@ class SettingsCopyButtonCellDescriptor: SettingsCellDescriptorType {
     }
 
     var title: String {
-        return URL.selfUserProfile?.absoluteString.removingPercentEncoding ?? ""
+        return URL.selfUserProfileLink?.absoluteString.removingPercentEncoding ?? ""
     }
 
     var identifier: String?

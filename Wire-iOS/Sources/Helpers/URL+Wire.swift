@@ -98,7 +98,7 @@ extension BackendEnvironment {
     }
 
     fileprivate static var selfUserProfileLink: URL? {
-        guard let userID: String = ZMUser.selfUser()?.remoteIdentifier.uuidString else {
+        guard let userID = SelfUser.provider?.selfUser.remoteIdentifier?.uuidString else {
             return nil
         }
         return shared.accountsURL.appendingPathComponent("user-profile/?id=\(userID)")
@@ -200,7 +200,7 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
     }
 
-    static var selfUserProfile: URL? {
+    static var selfUserProfileLink: URL? {
         guard let link = BackendEnvironment.selfUserProfileLink else {
             return nil
         }
