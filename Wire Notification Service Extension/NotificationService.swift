@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@ public class NotificationService: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     var notificationSessions: [UUID: NotificationSession] = [:]
-    
+
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         var currentNotificationSession: NotificationSession?
         guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier /*request.content.userInfo.accountId()*/ else {
             return
         }
-        
+
         if let session = notificationSessions[accountIdentifier] {
             currentNotificationSession = session
         } else {
@@ -42,7 +42,7 @@ public class NotificationService: UNNotificationServiceExtension {
             notificationSessions[accountIdentifier] = notificationSession
             currentNotificationSession = notificationSession
         }
-        
+
         currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isAuthenticatedUser in
             if !isAuthenticatedUser {
                 let emptyContent = UNNotificationContent()
@@ -52,14 +52,14 @@ public class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
-    
+
     private var accountManager: AccountManager? {
            guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
            let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
            let account = AccountManager(sharedDirectory: sharedContainerURL)
            return account
        }
-    
+
     //TODO: discuss with product/design what should we display
     public override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
@@ -67,7 +67,7 @@ public class NotificationService: UNNotificationServiceExtension {
         let emptyContent = UNNotificationContent()
         contentHandler?(emptyContent)
     }
-    
+
     private func createNotificationSession(_ payload: UNMutableNotificationContent?) throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
             let accountIdentifier = accountManager?.selectedAccount?.userIdentifier //payload?.userInfo.accountId()
@@ -102,3 +102,30 @@ extension NotificationService: NotificationSessionDelegate {
         }
     }
 }
+
+//class NotificationService: UNNotificationServiceExtension {
+//
+//    var contentHandler: ((UNNotificationContent) -> Void)?
+//    var bestAttemptContent: UNMutableNotificationContent?
+//
+//    override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+//        self.contentHandler = contentHandler
+//        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+//
+//        if let bestAttemptContent = bestAttemptContent {
+//            // Modify the notification content here...
+//            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
+//
+//            contentHandler(bestAttemptContent)
+//        }
+//    }
+//
+//    override func serviceExtensionTimeWillExpire() {
+//        // Called just before the extension will be terminated by the system.
+//        // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
+//        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
+//            contentHandler(bestAttemptContent)
+//        }
+//    }
+//
+//}
