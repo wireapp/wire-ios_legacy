@@ -20,7 +20,7 @@ import Foundation
 import WireTesting
 @testable import Wire
 
-class MentionsHandlerTests: XCTestCase {
+final class MentionsHandlerTests: XCTestCase {
 
     func testThereIsNoMentionWithNilString() {
         let sut = MentionsHandler(text: nil, cursorPosition: 0)
