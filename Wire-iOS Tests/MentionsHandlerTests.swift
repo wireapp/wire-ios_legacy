@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import Foundation
 import WireTesting
 @testable import Wire
 
-class MentionsHandlerTests: XCTestCase {
+final class MentionsHandlerTests: XCTestCase {
 
     func testThereIsNoMentionWithNilString() {
         let sut = MentionsHandler(text: nil, cursorPosition: 0)
