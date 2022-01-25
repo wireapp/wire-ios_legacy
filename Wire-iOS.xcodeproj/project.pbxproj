@@ -2684,9 +2684,9 @@
 		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
+		A9561737271875E4009FF376 /* ConversationCellBurstTimestampViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellBurstTimestampViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A956A42B2703B17900D7D3EA /* NSAttributedString+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Link.swift"; sourceTree = "<group>"; };
 		A956A4302703B38C00D7D3EA /* AttributedStringLinkDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringLinkDetectionTests.swift; sourceTree = "<group>"; };
-		A9561737271875E4009FF376 /* ConversationCellBurstTimestampViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellBurstTimestampViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A95B63EF24250DA8008A2974 /* FileManager+TempDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+TempDirectory.swift"; sourceTree = "<group>"; };
 		A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationButtonMessageCell.swift; sourceTree = "<group>"; };
 		A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeMessageCellTests.swift; sourceTree = "<group>"; };
@@ -7649,8 +7649,6 @@
 				TargetAttributes = {
 					067BBBFA247E693400D73407 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = W5KEQBF9B5;
-						ProvisioningStyle = Manual;
 					};
 					168A16A81D9597C2005CFA6C = {
 						CreatedOnToolsVersion = 8.0;
@@ -9699,7 +9697,9 @@
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = arm64;
 				"ARCHS[sdk=iphonesimulator*]" = x86_64;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = EDF3JCE8BC;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				EXCLUDED_ARCHS = i386;
@@ -9719,6 +9719,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(WIRE_BUNDLE_ID).$(NOTIFICATION_EXTENSION_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "iOS Store Notification Service Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
