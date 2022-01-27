@@ -107,6 +107,9 @@
 @property (nonatomic, readwrite) int refreshMembershipCount;
 @property (nonatomic, readwrite) int refreshTeamDataCount;
 
+// We need to declare this so that in case the code under test references the
+// context of a `ZMUser` it won't crash.
+@property (nonatomic, readonly, assign) NSManagedObjectContext *managedObjectContext;
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
