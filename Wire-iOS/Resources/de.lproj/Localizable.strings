@@ -1652,8 +1652,8 @@
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
-"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
-"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
+"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert.";
 "feature_config.file_sharing_restrictions.file" = "Empfang von Dateien ist verboten";
 "feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern ist verboten";
 "feature_config.file_sharing_restrictions.video" = "Empfang von Videos ist verboten";
