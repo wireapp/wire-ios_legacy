@@ -20,10 +20,12 @@ jobs:
         run: exit 1
 
       - name: guard for title
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
         if: ${{ !(startsWith(github.event.issue.title, 'chore') && endsWith(github.event.issue.title, 'bump components SQPIT-776')) }}
         run: |
           echo "github: ${{ github }}"
-          echo "title not match. Exit. Title is ${{ github.event.issue.title }}"
+          echo "title not match. Exit. Title is $ISSUE_TITLE"
           exit 1
 
       - name: guard for admins
