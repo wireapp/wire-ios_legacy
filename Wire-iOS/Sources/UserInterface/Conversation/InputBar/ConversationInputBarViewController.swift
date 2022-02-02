@@ -848,7 +848,7 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     /// Whether files can be shared and received
     var canFilesBeShared: Bool {
         guard let session = ZMUserSession.shared() else { return true }
-        return session.fileSharingFeature.status == .enabled
+        return session.fileSharingFeature.status == .enabled && SecurityFlags.fileSharing.isEnabled
     }
 
     // MARK: setup views

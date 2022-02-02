@@ -162,7 +162,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
                                                          .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
-        imagePreview.isHidden = message.isRestricted
+        imagePreview.isHidden = !message.canBeShared
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
