@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
+final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 
     private let separator = UIView()
     private let imageContainer = UIView()
@@ -29,11 +29,6 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupViews() {
@@ -80,4 +75,13 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         label.text = title
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
     }
+
+}
+
+extension IconActionCell: IconActionCellDelegate {
+
+    func updateLayout() {
+        descriptor?.featureCell(self)
+    }
+
 }

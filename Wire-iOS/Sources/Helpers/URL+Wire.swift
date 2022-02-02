@@ -19,6 +19,7 @@
 import Foundation
 import WireSystem
 import WireTransport
+import WireDataModel
 
 private let zmLog = ZMSLog(tag: "URL")
 
@@ -94,6 +95,13 @@ extension BackendEnvironment {
 
     fileprivate static func teamsLink(path: String) -> URL {
         return shared.teamsURL.appendingPathComponent(path)
+    }
+
+    fileprivate static var selfUserProfileLink: URL? {
+        guard let userID = SelfUser.provider?.selfUser.remoteIdentifier?.uuidString else {
+            return nil
+        }
+        return shared.accountsURL.appendingPathComponent("user-profile/?id=\(userID)")
     }
 
 }
@@ -190,6 +198,13 @@ extension URL {
 
     static var wr_wireEnterpriseLearnMore: URL {
         return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
+    }
+
+    static var selfUserProfileLink: URL? {
+        guard let link = BackendEnvironment.selfUserProfileLink else {
+            return nil
+        }
+        return link
     }
 
 }

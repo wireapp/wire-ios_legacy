@@ -10,16 +10,12 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CUSTOM_PR_LABEL: "Fix PR Title 🤦‍♂️"
+      HEAD: ${{github.head_ref}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
-      - name: Set environment variables
-        run: | 
-          echo "HEAD=${{github.head_ref}}" >> $GITHUB_ENV
-          
       # Please look up the latest version from
       # https://github.com/amannn/action-semantic-pull-request/releases
       - name: Run Semantic Commint Linter

@@ -35,14 +35,14 @@ final class CollectionFileCell: CollectionCell {
         }
 
         headerView.message = message
-        if message.isRestricted {
-            setup(restrictionView)
-            restrictionView.configure(for: message)
-        } else {
+        if message.canBeShared {
             fileTransferView.delegate = self
 
             setup(fileTransferView)
             fileTransferView.configure(for: message, isInitial: changeInfo == .none)
+        } else {
+            setup(restrictionView)
+            restrictionView.configure(for: message)
         }
     }
 
