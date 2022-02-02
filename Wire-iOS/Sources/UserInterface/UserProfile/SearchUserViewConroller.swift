@@ -81,7 +81,7 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
             else { return }
 
         let profileUser: UserType?
-        if let searchUser = searchResult.directory.first {
+        if let searchUser = searchResult.directory.first, !searchUser.isAccountDeleted {
             profileUser = searchUser
         } else if let memberUser = searchResult.teamMembers.first?.user {
             profileUser = memberUser
