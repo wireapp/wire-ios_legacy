@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Felhasználónév hozzáadása";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Más emberek ezek alapján tudnak megtalálni.";
 "self.settings.account_details_group.personal.footer" = "Ez az információ nem látható.";
