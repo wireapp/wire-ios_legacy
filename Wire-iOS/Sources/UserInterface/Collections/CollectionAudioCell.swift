@@ -43,14 +43,14 @@ final class CollectionAudioCell: CollectionCell {
         guard let message = self.message else { return }
         headerView.message = message
 
-        if message.isRestricted {
-            setup(restrictionView)
-            restrictionView.configure()
-        } else {
+        if message.canBeShared {
             audioMessageView.delegate = self
 
             setup(audioMessageView)
             audioMessageView.configure(for: message, isInitial: true)
+        } else {
+            setup(restrictionView)
+            restrictionView.configure()
         }
     }
 

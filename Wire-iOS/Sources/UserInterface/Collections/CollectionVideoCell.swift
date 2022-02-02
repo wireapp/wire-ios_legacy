@@ -43,15 +43,15 @@ final class CollectionVideoCell: CollectionCell {
             return
         }
 
-        if message.isRestricted {
-            setup(restrictionView)
-            restrictionView.configure()
-        } else {
+        if message.canBeShared {
             videoMessageView.delegate = self
             videoMessageView.timeLabelHidden = true
 
             setup(videoMessageView)
             videoMessageView.configure(for: message, isInitial: true)
+        } else {
+            setup(restrictionView)
+            restrictionView.configure()
         }
     }
 

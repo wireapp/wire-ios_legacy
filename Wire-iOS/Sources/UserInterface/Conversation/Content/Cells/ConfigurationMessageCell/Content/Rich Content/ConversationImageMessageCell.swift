@@ -112,7 +112,7 @@ final class ConversationImageMessageCell: UIView,
         let imageAspectRatio = imageSize.width > 0 ? imageSize.height / imageSize.width : 1.0
 
         aspectConstraint.apply({ containerView.removeConstraint($0) })
-        let isRestricted = (object.message.isRestricted && !object.isObfuscated)
+        let isRestricted = (!object.message.canBeShared && !object.isObfuscated)
         aspectConstraint = containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor,
                                                                  multiplier: !isRestricted ? imageAspectRatio : 9/16)
         aspectConstraint?.isActive = true
@@ -123,7 +123,7 @@ final class ConversationImageMessageCell: UIView,
 
         if object.isObfuscated {
             setup(obfuscationView)
-        } else if object.message.isRestricted {
+        } else if !object.message.canBeShared {
             setup(restrictionView)
             restrictionView.configure()
         } else {
