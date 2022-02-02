@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "أضف مُعرّف";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "سيتمكن الناس من ايجادك من خلال هذه التفاصيل.";
 "self.settings.account_details_group.personal.footer" = "هذه المعلومة غير مرئيّة.";

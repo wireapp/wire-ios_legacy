@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Dodaj nazwę użytkownika";
 "self.settings.account_section.team.title" = "Zespół";
 "self.settings.account_section.domain.title" = "Domena";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Dzięki tych informacjom inni mogą cię znaleźć.";
 "self.settings.account_details_group.personal.footer" = "Informacje nie są dostępne.";
