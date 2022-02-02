@@ -74,7 +74,7 @@ final class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
     func configure(with object: Configuration, animated: Bool) {
         if object.isObfuscated {
             setup(obfuscationView)
-        } else if object.message.isRestricted {
+        } else if !object.message.canBeShared {
             setup(restrictionView)
             restrictionView.configure()
         } else {

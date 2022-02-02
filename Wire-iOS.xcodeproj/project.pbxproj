@@ -15,6 +15,7 @@
 		0619FBBB258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0619FBBA258A1DF700A0F3E2 /* ZClientViewController+FeatureChange.swift */; };
 		0622D6A2265B38DE00D759DB /* UserBlockingReasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0622D6A1265B38DD00D759DB /* UserBlockingReasonCell.swift */; };
 		0630E4C42580469300C75BFB /* AppLockChangeWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */; };
+		0646CC7627A9703B00BC0FAA /* Bundle+SecurityFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */; };
 		064AD4C425DD31A600143D74 /* UIApplication+OpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */; };
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
@@ -7810,6 +7811,7 @@
 				06F9864725CC14BB005572C5 /* CGFloat+Const.swift in Sources */,
 				06F9864A25CC1B2B005572C5 /* UIColor+Const.swift in Sources */,
 				06E89AFE25C82C51008E3846 /* UnlockViewController.swift in Sources */,
+				0646CC7627A9703B00BC0FAA /* Bundle+SecurityFlags.swift in Sources */,
 				06E69AB425C8301D00B678BF /* UIColor+TeamCreation.swift in Sources */,
 				EF3B26E52370596300245701 /* CrashReporter.swift in Sources */,
 				EF2DB834231678360055BDB4 /* UnsentGifImageSendable.swift in Sources */,

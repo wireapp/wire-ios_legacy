@@ -73,7 +73,7 @@ final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     func configure(with object: Configuration, animated: Bool) {
         if object.isObfuscated {
             setup(obfuscationView)
-        } else if object.message.isRestricted {
+        } else if !object.message.canBeShared {
             setup(restrictionView, heightMultiplier: 9/16)
             restrictionView.configure()
         } else {
