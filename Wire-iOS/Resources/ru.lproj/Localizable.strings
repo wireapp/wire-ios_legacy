@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Добавить псевдоним";
 "self.settings.account_section.team.title" = "Команда";
 "self.settings.account_section.domain.title" = "Домен";
+"self.settings.account_section.profile_link.title" = "Ссылка на профиль";
+"self.settings.account_section.profile_link.actions.copy_link" = "Скопировать ссылку на профиль";
+"self.settings.account_section.profile_link.actions.copied_link" = "Ссылка на профиль скопирована!";
 
 "self.settings.account_details_group.info.footer" = "Пользователи могут вас найти по этим данным.";
 "self.settings.account_details_group.personal.footer" = "Эта информация не видна.";

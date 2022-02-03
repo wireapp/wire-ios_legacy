@@ -1782,8 +1782,7 @@ internal enum L10n {
         internal static let accountSuspended = L10n.tr("Localizable", "error.user.account_suspended")
         /// You have been logged out from another device.
         internal static let deviceDeletedRemotely = L10n.tr("Localizable", "error.user.device_deleted_remotely")
-        /// You can't create this account as your email domain is intentionally blocked.
-        /// Please ask your team admin to invite you via email.
+        /// You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.
         internal static let domainBlocked = L10n.tr("Localizable", "error.user.domain_blocked")
         /// The email address you provided has already been registered. Please try again.
         internal static let emailIsTaken = L10n.tr("Localizable", "error.user.email_is_taken")
@@ -3810,6 +3809,16 @@ internal enum L10n {
                 /// Verify
                 internal static let title = L10n.tr("Localizable", "self.settings.account_section.phone_number.change.verify.title")
               }
+            }
+          }
+          internal enum ProfileLink {
+            /// Profile link
+            internal static let title = L10n.tr("Localizable", "self.settings.account_section.profile_link.title")
+            internal enum Actions {
+              /// Profile Link Copied!
+              internal static let copiedLink = L10n.tr("Localizable", "self.settings.account_section.profile_link.actions.copied_link")
+              /// Copy Profile Link
+              internal static let copyLink = L10n.tr("Localizable", "self.settings.account_section.profile_link.actions.copy_link")
             }
           }
           internal enum Team {

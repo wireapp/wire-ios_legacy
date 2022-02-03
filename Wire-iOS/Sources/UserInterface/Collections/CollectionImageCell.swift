@@ -89,16 +89,17 @@ final class CollectionImageCell: CollectionCell {
     private func updateViews() {
         guard let message = self.message else { return }
 
-        if message.isRestricted {
-            setup(restrictionView)
-            restrictionView.configure()
-        } else {
+        if message.canBeShared {
             imageView.contentMode = .scaleAspectFill
             imageView.accessibilityIdentifier = "image"
             imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
             imageView.imageResource = message.imageMessageData?.image
 
             setup(imageView)
+
+        } else {
+            setup(restrictionView)
+            restrictionView.configure()
         }
     }
 

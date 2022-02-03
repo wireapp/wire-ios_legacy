@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Choisir un identifiant";
 "self.settings.account_section.team.title" = "Équipe";
 "self.settings.account_section.domain.title" = "Domaine";
+"self.settings.account_section.profile_link.title" = "Lien de profil";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copier le lien de profil";
+"self.settings.account_section.profile_link.actions.copied_link" = "Lien de profil copié !";
 
 "self.settings.account_details_group.info.footer" = "Vos contacts peuvent vous retrouver grâce à ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";

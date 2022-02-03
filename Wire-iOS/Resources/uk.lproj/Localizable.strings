@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Додати нік";
 "self.settings.account_section.team.title" = "Команда";
 "self.settings.account_section.domain.title" = "Домен";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
