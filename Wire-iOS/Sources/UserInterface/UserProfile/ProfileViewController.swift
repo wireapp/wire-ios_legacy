@@ -53,6 +53,7 @@ final class ProfileViewController: UIViewController {
     private let profileFooterView: ProfileFooterView = ProfileFooterView()
     private let incomingRequestFooter: IncomingRequestFooterView = IncomingRequestFooterView()
     private let usernameDetailsView: UserNameDetailView = UserNameDetailView()
+    private let securityLevelView = SecurityLevelView()
 
     private let profileTitleView: ProfileTitleView = ProfileTitleView()
 
@@ -123,6 +124,9 @@ final class ProfileViewController: UIViewController {
         navigationItem.titleView = profileTitleView
 
         navigationItem.titleView = profileTitleView
+
+        securityLevelView.configure(with: [viewModel.user], variant: ColorScheme.default.variant)
+        view.addSubview(securityLevelView)
     }
 
     // MARK: - Actions
@@ -238,6 +242,7 @@ final class ProfileViewController: UIViewController {
         guard let tabsView = tabsController?.view else { fatal("Tabs view is not created") }
 
         usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        securityLevelView.translatesAutoresizingMaskIntoConstraints = false
         tabsView.translatesAutoresizingMaskIntoConstraints = false
         profileFooterView.translatesAutoresizingMaskIntoConstraints = false
         incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
@@ -247,7 +252,11 @@ final class ProfileViewController: UIViewController {
             usernameDetailsView.topAnchor.constraint(equalTo: view.topAnchor),
             usernameDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-            tabsView.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor),
+            securityLevelView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            securityLevelView.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor),
+            securityLevelView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            tabsView.topAnchor.constraint(equalTo: securityLevelView.bottomAnchor),
 
             tabsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

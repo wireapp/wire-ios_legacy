@@ -31,6 +31,7 @@ final class IncomingConnectionView: UIView {
 
     private let usernameLabel = UILabel()
     private let userDetailView = UserNameDetailView()
+    private let securityLevelView = SecurityLevelView()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
     private let acceptButton = Button(style: .full)
@@ -79,7 +80,7 @@ final class IncomingConnectionView: UIView {
         incomingConnectionFooter.addSubview(acceptButton)
         incomingConnectionFooter.addSubview(ignoreButton)
 
-        [usernameLabel, userDetailView, userImageView, incomingConnectionFooter].forEach(addSubview)
+        [usernameLabel, userDetailView, securityLevelView, userImageView, incomingConnectionFooter].forEach(addSubview)
         setupLabelText()
     }
 
@@ -93,6 +94,7 @@ final class IncomingConnectionView: UIView {
         usernameLabel.attributedText = viewModel.title
         usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
+        securityLevelView.configure(with: [user], variant: ColorScheme.default.variant)
     }
 
     private func createConstraints() {
@@ -101,6 +103,7 @@ final class IncomingConnectionView: UIView {
          ignoreButton,
          usernameLabel,
          userDetailView,
+         securityLevelView,
          userImageView].prepareForLayout()
 
         NSLayoutConstraint.activate([
@@ -122,7 +125,13 @@ final class IncomingConnectionView: UIView {
             userDetailView.centerXAnchor.constraint(equalTo: centerXAnchor),
             userDetailView.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 4),
             userDetailView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
-            userDetailView.bottomAnchor.constraint(lessThanOrEqualTo: userImageView.topAnchor),
+            userDetailView.bottomAnchor.constraint(lessThanOrEqualTo: securityLevelView.topAnchor),
+
+            securityLevelView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            securityLevelView.topAnchor.constraint(equalTo: userDetailView.bottomAnchor, constant: 4),
+            securityLevelView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            securityLevelView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            securityLevelView.bottomAnchor.constraint(lessThanOrEqualTo: userImageView.topAnchor),
 
             userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             userImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
