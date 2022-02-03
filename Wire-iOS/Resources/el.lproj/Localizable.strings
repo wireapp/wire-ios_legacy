@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Προσθέστε όνομα χρήστη";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Τα άτομα μπορούν να σας βρουν με αυτές τις λεπτομέρειες.";
 "self.settings.account_details_group.personal.footer" = "This information is not visible .";
