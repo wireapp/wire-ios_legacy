@@ -45,12 +45,12 @@ final class SecurityLevelView: UIView {
             isHidden = true
 
         case .classified:
-            securityLevelLabel.text = "Classified"
+            securityLevelLabel.text = "Classified" // TODO: Translation: Need to clarify
             securityLevelLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
             backgroundColor = UIColor.from(scheme: .textBackground, variant: variant)
 
         case .notClassified:
-            securityLevelLabel.text = "NOT Classified"
+            securityLevelLabel.text = "NOT Classified" // TODO: Translation: Need to clarify
             securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified, variant: variant)
             backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified, variant: variant)
         }
