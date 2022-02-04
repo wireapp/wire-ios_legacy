@@ -128,7 +128,7 @@ final class IncomingConnectionView: UIView {
             userDetailView.bottomAnchor.constraint(lessThanOrEqualTo: securityLevelView.topAnchor),
 
             securityLevelView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            securityLevelView.topAnchor.constraint(equalTo: userDetailView.bottomAnchor, constant: 4),
+            securityLevelView.topAnchor.constraint(equalTo: userDetailView.bottomAnchor),
             securityLevelView.leadingAnchor.constraint(equalTo: leadingAnchor),
             securityLevelView.trailingAnchor.constraint(equalTo: trailingAnchor),
             securityLevelView.bottomAnchor.constraint(lessThanOrEqualTo: userImageView.topAnchor),
