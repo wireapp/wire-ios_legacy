@@ -160,6 +160,8 @@ final class ConversationInputBarViewController: UIViewController,
         return view
     }()
 
+    let securityLevelView = SecurityLevelView()
+
     // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
@@ -864,6 +866,9 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
         inputBar.addSubview(typingIndicatorView)
 
+        securityLevelView.configure(with: conversation.participants, variant: ColorScheme.default.variant)
+        view.addSubview(securityLevelView)
+
         createConstraints()
     }
 
@@ -893,7 +898,7 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     }
 
     private func createConstraints() {
-        [inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
+        [securityLevelView, inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
 
         let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
         bottomConstraint.priority = .defaultLow
@@ -901,7 +906,11 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         let senderDiameter: CGFloat = 28
 
         NSLayoutConstraint.activate([
-            inputBar.topAnchor.constraint(equalTo: inputBar.superview!.topAnchor),
+            securityLevelView.topAnchor.constraint(equalTo: securityLevelView.superview!.topAnchor),
+            securityLevelView.leadingAnchor.constraint(equalTo: securityLevelView.superview!.leadingAnchor),
+            securityLevelView.trailingAnchor.constraint(equalTo: securityLevelView.superview!.trailingAnchor),
+
+            inputBar.topAnchor.constraint(equalTo: securityLevelView.bottomAnchor),
             inputBar.leadingAnchor.constraint(equalTo: inputBar.superview!.leadingAnchor),
             inputBar.trailingAnchor.constraint(equalTo: inputBar.superview!.trailingAnchor),
             bottomConstraint,
