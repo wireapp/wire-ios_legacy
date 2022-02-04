@@ -94,7 +94,7 @@ final class IncomingConnectionView: UIView {
         usernameLabel.attributedText = viewModel.title
         usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
-        securityLevelView.configure(with: [user], variant: ColorScheme.default.variant)
+        securityLevelView.configure(with: [user])
     }
 
     private func createConstraints() {
