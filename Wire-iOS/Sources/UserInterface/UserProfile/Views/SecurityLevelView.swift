@@ -35,28 +35,34 @@ final class SecurityLevelView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with otherUsers: [UserType], variant: ColorSchemeVariant) {
-        guard let userSession = ZMUserSession.shared() else { return }
-
+    func configure(with classification: SecurityClassification) {
         securityLevelLabel.font = FontSpec(.small, .bold).font
 
-        switch userSession.classification(with: otherUsers) {
+        switch classification {
         case .none:
             isHidden = true
 
         case .classified:
-            securityLevelLabel.text = "Classified"
-            securityLevelLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-            backgroundColor = UIColor.from(scheme: .textBackground, variant: variant)
+            securityLevelLabel.text = "Classified" // TODO: Translation: Need to clarify
+            securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
+            backgroundColor = UIColor.from(scheme: .textBackground)
 
         case .notClassified:
-            securityLevelLabel.text = "NOT Classified"
-            securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified, variant: variant)
-            backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified, variant: variant)
+            securityLevelLabel.text = "NOT Classified" // TODO: Translation: Need to clarify
+            securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
+            backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
         }
 
         layer.borderWidth = 1
         layer.borderColor = UIColor.from(scheme: .separator).cgColor
+    }
+
+    func configure(with otherUsers: [UserType]) {
+        guard let userSession = ZMUserSession.shared() else { return }
+
+        let classification = userSession.classification(with: otherUsers)
+
+        configure(with: classification)
     }
 
     private func setupViews() {
