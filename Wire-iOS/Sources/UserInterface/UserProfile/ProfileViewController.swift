@@ -125,7 +125,7 @@ final class ProfileViewController: UIViewController {
 
         navigationItem.titleView = profileTitleView
 
-        securityLevelView.configure(with: [viewModel.user], variant: ColorScheme.default.variant)
+        securityLevelView.configure(with: [viewModel.user])
         view.addSubview(securityLevelView)
     }
 
