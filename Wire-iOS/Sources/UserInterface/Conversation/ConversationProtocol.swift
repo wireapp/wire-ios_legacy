@@ -81,7 +81,6 @@ extension ZMConversation: InputBarConversation {
     var participants: [UserType] {
         Array(localParticipants) as [UserType]
     }
-
 }
 
 // MARK: - GroupDetailsConversation View controllers and child VCs
