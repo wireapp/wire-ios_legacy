@@ -866,7 +866,7 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
         inputBar.addSubview(typingIndicatorView)
 
-        securityLevelView.configure(with: conversation.participants, variant: ColorScheme.default.variant)
+        securityLevelView.configure(with: conversation.participants)
         view.addSubview(securityLevelView)
 
         createConstraints()
