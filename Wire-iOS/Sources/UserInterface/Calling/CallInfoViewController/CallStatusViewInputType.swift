@@ -18,11 +18,13 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 protocol CallStatusViewInputType: CallTypeProvider, CBRSettingProvider, ColorVariantProvider {
     var state: CallStatusViewState { get }
     var isConstantBitRate: Bool { get }
     var title: String { get }
+    var classification: SecurityClassification { get }
 }
 
 protocol ColorVariantProvider {

@@ -117,6 +117,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
     let videoGridPresentationMode: VideoGridPresentationMode
     let allowPresentationModeUpdates: Bool
     let variant: ColorSchemeVariant
+    let classification: SecurityClassification
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -128,27 +129,36 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
         userEnabledCBR: Bool,
         selfUser: UserType) {
-        self.permissions = permissions
-        self.cameraType = cameraType
-        self.mediaManager = mediaManager
-        self.userEnabledCBR = userEnabledCBR
-        voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
-        degradationState = voiceChannel.degradationState
-        accessoryType = voiceChannel.accessoryType()
-        isMuted = mediaManager.isMicrophoneMuted
-        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
-        isVideoCall = voiceChannel.internalIsVideoCall
-        isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
-        isForcedCBR = SecurityFlags.forceConstantBitRateCalls.isEnabled
-        title = voiceChannel.conversation?.displayName ?? ""
-        mediaState = voiceChannel.mediaState(with: permissions)
-        videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
-        disableIdleTimer = voiceChannel.disableIdleTimer
-        networkQuality = voiceChannel.networkQuality
-        callState = voiceChannel.state
-        videoGridPresentationMode = voiceChannel.videoGridPresentationMode
-        allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
-        variant = ColorScheme.default.variant
+            self.permissions = permissions
+            self.cameraType = cameraType
+            self.mediaManager = mediaManager
+            self.userEnabledCBR = userEnabledCBR
+            voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
+            degradationState = voiceChannel.degradationState
+            accessoryType = voiceChannel.accessoryType()
+            isMuted = mediaManager.isMicrophoneMuted
+            canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions, selfUser: selfUser)
+            isVideoCall = voiceChannel.internalIsVideoCall
+            isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
+            isForcedCBR = SecurityFlags.forceConstantBitRateCalls.isEnabled
+            title = voiceChannel.conversation?.displayName ?? ""
+            mediaState = voiceChannel.mediaState(with: permissions)
+            videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
+            disableIdleTimer = voiceChannel.disableIdleTimer
+            networkQuality = voiceChannel.networkQuality
+            callState = voiceChannel.state
+            videoGridPresentationMode = voiceChannel.videoGridPresentationMode
+            allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
+            variant = ColorScheme.default.variant
+
+            guard
+                let userSession = ZMUserSession.shared(),
+                let participants = voiceChannel.conversation?.participants
+            else {
+                classification = .none
+                return
+            }
+            classification = userSession.classification(with: participants)
     }
 
     // This property has to be computed in order to return the correct call duration
