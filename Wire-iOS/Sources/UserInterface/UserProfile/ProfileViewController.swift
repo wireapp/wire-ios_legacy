@@ -230,6 +230,8 @@ final class ProfileViewController: UIViewController {
         }
 
         addToSelf(tabsController!)
+
+        tabsController?.isTabBarHidden = viewControllers.count < 2
     }
 
     // MARK: - Constraints
