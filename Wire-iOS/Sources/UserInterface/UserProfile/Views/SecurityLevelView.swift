@@ -45,7 +45,6 @@ final class SecurityLevelView: UIView {
             return
         }
 
-
         switch classification {
         case .none:
             isHidden = true
