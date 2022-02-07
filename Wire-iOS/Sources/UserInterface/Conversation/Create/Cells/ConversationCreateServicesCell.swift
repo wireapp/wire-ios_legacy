@@ -25,7 +25,6 @@ final class ConversationCreateServicesCell: IconToggleCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowservices"
-        title = "conversation.create.services.title".localized
         title = L10n.Localizable.Conversation.Create.Services.title
         showSeparator = false
     }
