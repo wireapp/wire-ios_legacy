@@ -480,3 +480,35 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
     }
 
 }
+
+final class SettingsProfileLinkCell: SettingsTableCell {
+
+    // MARK: - Properties
+
+    var label = CopyableLabel()
+
+    override func setup() {
+        super.setup()
+
+        setupViews()
+        createConstraints()
+    }
+
+    // MARK: - Helpers
+
+    private func setupViews() {
+        backgroundColor = .clear
+        contentView.addSubview(label)
+
+        label.textColor = UIColor.from(scheme: .iconGuest, variant: .dark)
+        label.font = FontSpec(.normal, .light).font
+        label.lineBreakMode = .byClipping
+        label.numberOfLines = 0
+    }
+
+    private func createConstraints() {
+        [label].prepareForLayout()
+        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
+    }
+
+}

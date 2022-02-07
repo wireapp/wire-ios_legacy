@@ -1015,6 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "添加使用者名稱";
 "self.settings.account_section.team.title" = "團隊";
 "self.settings.account_section.domain.title" = "網域";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "其他使用者能透過這些資料找到您。";
 "self.settings.account_details_group.personal.footer" = "這個信息是隱藏的。";
