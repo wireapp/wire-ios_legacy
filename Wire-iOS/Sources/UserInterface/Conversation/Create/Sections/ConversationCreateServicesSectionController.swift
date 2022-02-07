@@ -29,7 +29,7 @@ final class ConversationCreateServicesSectionController: ConversationCreateSecti
         super.prepareForUse(in: collectionView)
         collectionView.flatMap(Cell.register)
         headerHeight = 40
-        footerText = "conversation.create.services.subtitle".localized
+        footerText = L10n.Localizable.Conversation.Create.Services.subtitle
     }
 }
 

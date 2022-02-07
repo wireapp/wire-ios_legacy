@@ -55,7 +55,7 @@ extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable 
         let guests = values.allowGuests.localized.localizedUppercase
         let services = values.allowServices.localized.localizedUppercase
         let receipts = values.enableReceipts.localized.localizedUppercase
-        status = "conversation.create.options.subtitle".localized(args: guests, services, receipts)
+        status = L10n.Localizable.Conversation.Create.Options.subtitle(guests, services, receipts)
     }
 }
 
