@@ -96,9 +96,7 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
     }
 
     func viewModel(_ viewModel: ConversationServicesOptionsViewModel, didReceiveError error: Error) {
-        // We shouldn't display an error message if the services is disabled. There's a UI element that explains why the user cannot use/create links to join the conversation.
-        //TODO: Sync with Backend for this potential error
-            present(UIAlertController.checkYourConnection(), animated: false)
+        present(UIAlertController.checkYourConnection(), animated: false)
     }
 
     func viewModel(_ viewModel: ConversationServicesOptionsViewModel, sourceView: UIView? = nil, confirmRemovingServices completion: @escaping (Bool) -> Void) -> UIAlertController? {

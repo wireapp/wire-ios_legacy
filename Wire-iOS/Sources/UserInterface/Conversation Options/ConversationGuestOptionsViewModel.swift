@@ -95,10 +95,10 @@ final class ConversationGuestOptionsViewModel {
     }
 
     private func updateRows() {
-        state.rows = computeVisibleRowsForGuests()
+        state.rows = computeVisibleRows()
     }
 
-    private func computeVisibleRowsForGuests() -> [CellConfiguration] {/// TODO: copy?
+    private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         /// Need to do the same for allowServicesToggle etc
         var rows: [CellConfiguration] = [.allowGuestsToogle(
             get: { [unowned self] in return self.configuration.allowGuests },

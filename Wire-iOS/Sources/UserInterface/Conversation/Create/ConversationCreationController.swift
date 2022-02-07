@@ -38,7 +38,7 @@ final class ConversationCreationValues {
             var result = unfilteredParticipants
 
             if !allowGuests {
-                let noGuests = result.filter {$0.isOnSameTeam(otherUser: selfUser) }
+                let noGuests = result.filter { $0.isOnSameTeam(otherUser: selfUser) }
                 result = UserSet(noGuests)
             }
 
