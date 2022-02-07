@@ -73,7 +73,7 @@ extension IconButton {
         backgroundColor: [UIControl.State: UIColor],
         iconColor: [UIControl.State: UIColor],
         width: CGFloat? = nil
-        ) {
+    ) {
         self.init()
         circular = true
         setIcon(icon, size: size, for: .normal)
@@ -100,7 +100,7 @@ extension IconButton {
 }
 
 extension UIControl.State: Hashable {
-    public var hashValue: Int {
-        return Int(self.rawValue)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rawValue)
     }
 }
