@@ -81,12 +81,7 @@ final class CallStatusViewController: UIViewController {
     private func updateState() {
         statusView.configuration = configuration
 
-        switch configuration.classification {
-        case .none:
-            securityLevelView.isHidden = true
-        case .classified, .notClassified:
-            securityLevelView.configure(with: configuration.classification)
-        }
+        securityLevelView.configure(with: configuration.classification)
 
         switch configuration.state {
         case .established: startCallDurationTimer()
