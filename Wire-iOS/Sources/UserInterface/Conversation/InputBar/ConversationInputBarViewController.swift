@@ -160,7 +160,7 @@ final class ConversationInputBarViewController: UIViewController,
         return view
     }()
 
-    let securityLevelView = SecurityLevelView()
+    private let securityLevelView = SecurityLevelView()
 
     // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
@@ -906,9 +906,9 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         let senderDiameter: CGFloat = 28
 
         NSLayoutConstraint.activate([
-            securityLevelView.topAnchor.constraint(equalTo: securityLevelView.superview!.topAnchor),
-            securityLevelView.leadingAnchor.constraint(equalTo: securityLevelView.superview!.leadingAnchor),
-            securityLevelView.trailingAnchor.constraint(equalTo: securityLevelView.superview!.trailingAnchor),
+            securityLevelView.topAnchor.constraint(equalTo: view.topAnchor),
+            securityLevelView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            securityLevelView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             inputBar.topAnchor.constraint(equalTo: securityLevelView.bottomAnchor),
             inputBar.leadingAnchor.constraint(equalTo: inputBar.superview!.leadingAnchor),
