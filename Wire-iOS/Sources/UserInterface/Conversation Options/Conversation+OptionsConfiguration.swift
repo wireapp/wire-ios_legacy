@@ -44,7 +44,7 @@ extension ZMConversation {
 
         var allowServices: Bool {
             //TODO: Change to conversation.allowServices when I make the changes to Data Model
-            return conversation.allowGuests
+            return conversation.allowServices
         }
 
         var allowGuestLinks: Bool {
@@ -81,6 +81,7 @@ extension ZMConversation {
             // need a guard statement
             // guard changeInfo.allowServicesChanged else { return }
             guard changeInfo.allowGuestsChanged else { return }
+            guard changeInfo.allowServicesChanged else { return }
             allowGuestsChangedHandler?(allowGuests)
             allowServicesChangedHandler?(allowServices)
         }

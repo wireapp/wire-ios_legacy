@@ -211,6 +211,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             changeInfo.participantsChanged ||
             changeInfo.nameChanged ||
             changeInfo.allowGuestsChanged ||
+            changeInfo.allowServicesChanged ||
             changeInfo.destructionTimeoutChanged ||
             changeInfo.mutedMessageTypesChanged ||
             changeInfo.legalHoldStatusChanged

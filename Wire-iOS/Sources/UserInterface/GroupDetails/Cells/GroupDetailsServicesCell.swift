@@ -37,7 +37,7 @@ final class GroupDetailsServicesCell: GroupDetailsDisclosureOptionsCell {
 
     func configure(with conversation: GroupDetailsConversationType) {
         //TODO: This needs to change to .allowServices when I make the changes to Data Model
-        isOn = conversation.allowGuests
+        isOn = conversation.allowServices
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

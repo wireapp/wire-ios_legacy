@@ -20,6 +20,10 @@ import Foundation
 
 /// TODO: rename to MockConversation after objc MockConversation is retired
 class SwiftMockConversation: NSObject, Conversation {
+    var allowServices: Bool = false
+
+    var accessRoles: Set<ConversationAccessRoleV2> = [.teamMember]
+
 	var relatedConnectionState: ZMConnectionStatus = .invalid
 
 	var sortedOtherParticipants: [UserType] = []

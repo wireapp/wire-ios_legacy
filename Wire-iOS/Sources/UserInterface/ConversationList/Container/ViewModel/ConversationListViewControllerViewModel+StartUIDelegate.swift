@@ -45,7 +45,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                  enableReceipts: Bool) {
 
         let createConversationClosure = {
-            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, allowServices: allowServices, enableReceipts: enableReceipts)
         }
 
         (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
@@ -72,7 +72,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         }
     }
 
-    private func createConversation(withUsers users: UserSet?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
+    private func createConversation(withUsers users: UserSet?, name: String?, allowGuests: Bool, allowServices: Bool, enableReceipts: Bool) {
         guard let users = users, let userSession = ZMUserSession.shared() else { return }
 
         var conversation: ZMConversation! = nil
@@ -83,6 +83,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                                                                   name: name,
                                                                   team: ZMUser.selfUser().team,
                                                                   allowGuests: allowGuests,
+                                                                  allowServices: allowServices,
                                                                   readReceipts: enableReceipts)
         }, completionHandler: {
             delay(0.3) {
