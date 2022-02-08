@@ -17,6 +17,7 @@
 //
 
 import Foundation
+
 @testable import Wire
 
 final class MockClassificationProvider: ClassificationProviding {
