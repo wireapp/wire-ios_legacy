@@ -59,16 +59,15 @@ final class CallStatusViewController: UIViewController {
     }
 
     private func setupViews() {
+        [stackView, statusView, securityLevelView].prepareForLayout()
+
         stackView.axis = .vertical
         stackView.spacing = 12
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
 
         statusView.accessibilityTraits = .header
-        statusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusView)
 
-        securityLevelView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(securityLevelView)
 
         stackView.addArrangedSubview(statusView)
