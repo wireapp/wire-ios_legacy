@@ -69,7 +69,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-
+    private var hasMutedToastBeenShown: Bool = false
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
@@ -125,7 +125,21 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
     }
-
+    
+    private func showMutedToastMessageIfNeeded() {
+        if case .established(let duration) = configuration.state,
+            duration <= 5.0,
+            configuration.isMuted,
+            !hasMutedToastBeenShown {
+            let toastConfig = ToastConfiguration(message: L10n.Localizable.Call.Toast.MutedOnJoin.message,
+                                                 colorScheme: ColorSchemeColor.utilityNeutral,
+                                                 variant: ColorSchemeVariant.light,
+                                                 dismissable: true, moreInfoAction: nil)
+            Toast.show(with: toastConfig)
+            hasMutedToastBeenShown = true
+        }
+    }
+    
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -166,7 +180,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
         updateAccessoryView()
-
+        showMutedToastMessageIfNeeded()
         if configuration.networkQuality.isNormal {
             navigationItem.titleView = nil
         } else {
