@@ -36,6 +36,7 @@ final class CallViewController: UIViewController {
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
+    fileprivate var classification: SecurityClassification = .none
 
     private var observerTokens: [Any] = []
     private var callGridConfiguration: CallGridConfiguration
@@ -71,12 +72,18 @@ final class CallViewController: UIViewController {
         self.proximityMonitorManager = proximityMonitorManager
         callGridConfiguration = CallGridConfiguration(voiceChannel: voiceChannel)
 
+        if let userSession = ZMUserSession.shared(),
+           let participants = voiceChannel.conversation?.participants {
+            classification = userSession.classification(with: participants)
+        }
+
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
                                                       preferedVideoPlaceholderState: preferedVideoPlaceholderState,
                                                       permissions: permissionsConfiguration,
                                                       cameraType: cameraType,
                                                       mediaManager: mediaManager,
                                                       userEnabledCBR: CallViewController.userEnabledCBR,
+                                                      classification: classification,
                                                       selfUser: selfUser)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
@@ -227,6 +234,7 @@ final class CallViewController: UIViewController {
                                                       cameraType: cameraType,
                                                       mediaManager: mediaManager,
                                                       userEnabledCBR: CallViewController.userEnabledCBR,
+                                                      classification: classification,
                                                       selfUser: ZMUser.selfUser())
 
         callInfoRootViewController.configuration = callInfoConfiguration

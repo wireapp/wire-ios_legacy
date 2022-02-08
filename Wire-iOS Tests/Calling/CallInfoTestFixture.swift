@@ -73,7 +73,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxSelfUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxSelfUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -98,7 +151,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -123,7 +177,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -148,7 +203,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -173,7 +229,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -198,7 +307,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedAudioEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedAudioEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -223,7 +385,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedAudioEstablishedCBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedAudioEstablishedCBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -248,7 +463,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedAudioEstablishedVBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedAudioEstablishedVBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .stopped, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -273,7 +541,60 @@ struct CallInfoTestFixture {
             networkQuality: .poor,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedAudioEstablishedPoorNetwork: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .poor,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedAudioEstablishedPoorNetwork: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .poor,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -300,7 +621,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -325,7 +647,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: nil),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: nil),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -350,7 +725,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -375,7 +751,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -400,7 +777,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -425,7 +803,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedVideoConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .sendingVideo,
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedVideoConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .sendingVideo,
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -450,7 +881,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedVideoEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .started, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedVideoEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: 2, videoState: .started, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -477,7 +961,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxSelfUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxSelfUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -502,7 +1039,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -527,7 +1065,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(hashBoxOtherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.connecting,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: false,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -552,7 +1143,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -577,7 +1169,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -602,7 +1195,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -627,7 +1221,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -654,7 +1249,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedOutgoingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .sendingVideo,
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedOutgoingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.outgoing,
+            mediaState: .sendingVideo,
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -679,7 +1327,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -704,7 +1405,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -729,7 +1431,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoEstablishedScreenSharing: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .screenSharing, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoEstablishedScreenSharing: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .screenSharing, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -754,7 +1509,60 @@ struct CallInfoTestFixture {
             networkQuality: .poor,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoEstablishedPoorConnection: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .poor,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoEstablishedPoorConnection: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .poor,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -779,7 +1587,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    func groupClassifiedVideoEstablished(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    func groupNotClassifiedVideoEstablished(mockUsers: [MockUserType]) -> CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: true,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, microphoneState: .unmuted, mockUsers: mockUsers)),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -804,7 +1665,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoEstablishedCBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoEstablishedCBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -829,7 +1743,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoEstablishedVBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoEstablishedVBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsListHelper.participants(count: groupSize.rawValue, videoState: .started, mockUsers: SwiftMockLoader.mockUsers())),
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.ongoing,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -855,7 +1822,62 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
+        let permissions = MockCallPermissions.videoPendingApproval
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
+        let permissions = MockCallPermissions.videoPendingApproval
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -881,7 +1903,62 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var groupClassifiedVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
+        let permissions = MockCallPermissions.videoDeniedForever
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var groupNotClassifiedVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
+        let permissions = MockCallPermissions.videoDeniedForever
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .ringingIncoming(name: otherUser.name ?? ""),
+            isConstantBitRate: true,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: true,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 

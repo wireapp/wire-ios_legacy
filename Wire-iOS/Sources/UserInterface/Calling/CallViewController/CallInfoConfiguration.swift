@@ -128,11 +128,13 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
         cameraType: CaptureDevice,
         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
         userEnabledCBR: Bool,
+        classification: SecurityClassification = .none,
         selfUser: UserType) {
             self.permissions = permissions
             self.cameraType = cameraType
             self.mediaManager = mediaManager
             self.userEnabledCBR = userEnabledCBR
+            self.classification = classification
             voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
             degradationState = voiceChannel.degradationState
             accessoryType = voiceChannel.accessoryType()
@@ -150,15 +152,6 @@ struct CallInfoConfiguration: CallInfoViewControllerInput {
             videoGridPresentationMode = voiceChannel.videoGridPresentationMode
             allowPresentationModeUpdates = voiceChannel.allowPresentationModeUpdates
             variant = ColorScheme.default.variant
-
-            guard
-                let userSession = ZMUserSession.shared(),
-                let participants = voiceChannel.conversation?.participants
-            else {
-                classification = .none
-                return
-            }
-            classification = userSession.classification(with: participants)
     }
 
     // This property has to be computed in order to return the correct call duration
