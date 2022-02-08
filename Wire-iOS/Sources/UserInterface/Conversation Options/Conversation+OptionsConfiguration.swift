@@ -43,7 +43,6 @@ extension ZMConversation {
         }
 
         var allowServices: Bool {
-            //TODO: Change to conversation.allowServices when I make the changes to Data Model
             return conversation.allowServices
         }
 
@@ -70,16 +69,12 @@ extension ZMConversation {
         }
 
         func setAllowServices(_ allowServices: Bool, completion: @escaping (VoidResult) -> Void) {
-            //TODO: Change into conversation.setAllowServices when I make the changes to Sync Engine
             conversation.setAllowServices(allowServices, in: userSession) {
                 completion($0)
             }
         }
 
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-            //TODO: When making the changes in ConversationChangeInfo in DataModel
-            // need a guard statement
-            // guard changeInfo.allowServicesChanged else { return }
             guard changeInfo.allowGuestsChanged else { return }
             guard changeInfo.allowServicesChanged else { return }
             allowGuestsChangedHandler?(allowGuests)

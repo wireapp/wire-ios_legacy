@@ -99,7 +99,6 @@ final class ConversationGuestOptionsViewModel {
     }
 
     private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
-        /// Need to do the same for allowServicesToggle etc
         var rows: [CellConfiguration] = [.allowGuestsToogle(
             get: { [unowned self] in return self.configuration.allowGuests },
             set: { [unowned self] in self.setAllowGuests($0, view: $1) }
