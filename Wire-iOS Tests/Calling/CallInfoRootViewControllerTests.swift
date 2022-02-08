@@ -48,7 +48,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
 
         super.tearDown()
     }
-
     // MARK: - OneToOne Audio
 
     func testOneToOneOutgoingAudioRinging() {
@@ -277,5 +276,4 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         // then
         verify(matching: sut)
     }
-
 }
