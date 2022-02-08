@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "ProfileViewController")
 
@@ -74,6 +75,7 @@ final class ProfileViewController: UIViewController {
                      viewer: UserType,
                      conversation: ZMConversation? = nil,
                      context: ProfileViewControllerContext? = nil,
+                     classificationProvider: ClassificationProviding? = ZMUserSession.shared(),
                      viewControllerDismisser: ViewControllerDismisser? = nil) {
         let profileViewControllerContext: ProfileViewControllerContext
 
@@ -86,7 +88,8 @@ final class ProfileViewController: UIViewController {
         let viewModel = ProfileViewControllerViewModel(user: user,
                                                        conversation: conversation,
                                                        viewer: viewer,
-                                                       context: profileViewControllerContext)
+                                                       context: profileViewControllerContext,
+                                                       classificationProvider: classificationProvider)
 
         self.init(viewModel: viewModel)
 
@@ -125,7 +128,7 @@ final class ProfileViewController: UIViewController {
 
         navigationItem.titleView = profileTitleView
 
-        securityLevelView.configure(with: [viewModel.user])
+        securityLevelView.configure(with: viewModel.classification)
         view.addSubview(securityLevelView)
     }
 
@@ -241,6 +244,8 @@ final class ProfileViewController: UIViewController {
     private func setupConstraints() {
         guard let tabsView = tabsController?.view else { fatal("Tabs view is not created") }
 
+        let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
+
         usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
         securityLevelView.translatesAutoresizingMaskIntoConstraints = false
         tabsView.translatesAutoresizingMaskIntoConstraints = false
@@ -255,6 +260,7 @@ final class ProfileViewController: UIViewController {
             securityLevelView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             securityLevelView.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor),
             securityLevelView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            securityLevelView.heightAnchor.constraint(equalToConstant: securityBannerHeight),
 
             tabsView.topAnchor.constraint(equalTo: securityLevelView.bottomAnchor),
 
