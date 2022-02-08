@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Chame de qualquer maneira";
 "call.alert.ongoing.join.button" = "Junte-se de qualquer maneira";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Sua retransmissão de chamada não está acessível. Isso pode afetar sua experiência de chamada.";
 "call.quality.indicator.more_info.button.text" = "Mais informações";
 

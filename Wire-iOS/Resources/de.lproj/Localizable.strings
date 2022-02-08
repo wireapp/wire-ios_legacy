@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Ihr Anrufrelais ist nicht erreichbar. Dies kann Ihr Gespräch beeinträchtigen.";
 "call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
