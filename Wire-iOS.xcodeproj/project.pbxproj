@@ -534,6 +534,7 @@
 		63F65EFF24699D6500534A69 /* PreBackendSwitchViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F65EFE24699D6500534A69 /* PreBackendSwitchViewControllerSnapshotTests.swift */; };
 		669105C327397E6A00324115 /* NSAttributedString+DownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669105C227397E6900324115 /* NSAttributedString+DownTests.swift */; };
 		70355A7127AAD96E00F02C76 /* SecurityLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70355A7027AAD96E00F02C76 /* SecurityLevelView.swift */; };
+		70C5560D27B2E6B300119A7D /* MockClassificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
@@ -2300,6 +2301,7 @@
 		63F65EFE24699D6500534A69 /* PreBackendSwitchViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreBackendSwitchViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		669105C227397E6900324115 /* NSAttributedString+DownTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+DownTests.swift"; sourceTree = "<group>"; };
 		70355A7027AAD96E00F02C76 /* SecurityLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityLevelView.swift; sourceTree = "<group>"; };
+		70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClassificationProvider.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
@@ -7180,6 +7182,7 @@
 				EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */,
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 				061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */,
+				70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */,
 			);
 			path = ConversationInputBarViewController;
 			sourceTree = "<group>";
@@ -9268,6 +9271,7 @@
 				EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */,
 				A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */,
 				1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */,
+				70C5560D27B2E6B300119A7D /* MockClassificationProvider.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				63654F8025B8CD260015344C /* RoundedSegmentedViewTests.swift in Sources */,
 				EFD4B9C822F08297008CA042 /* UIImage+DownsizeTests.swift in Sources */,
