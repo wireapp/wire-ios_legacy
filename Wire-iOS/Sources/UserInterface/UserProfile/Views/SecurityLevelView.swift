@@ -20,8 +20,14 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
+protocol ClassificationProviding {
+    func classification(with users: [UserType]) -> SecurityClassification
+}
+
+extension ZMUserSession: ClassificationProviding {}
+
 final class SecurityLevelView: UIView {
-    let securityLevelLabel = UILabel()
+    private let securityLevelLabel = UILabel()
 
     init() {
         super.init(frame: .zero)
@@ -38,29 +44,38 @@ final class SecurityLevelView: UIView {
     func configure(with classification: SecurityClassification) {
         securityLevelLabel.font = FontSpec(.small, .bold).font
 
+        guard
+            classification != .none,
+            let levelText = classification.levelText
+        else {
+            return
+        }
+
         switch classification {
         case .none:
             isHidden = true
 
         case .classified:
-            securityLevelLabel.text = "Classified" // TODO: Translation: Need to clarify
             securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
             backgroundColor = UIColor.from(scheme: .textBackground)
 
         case .notClassified:
-            securityLevelLabel.text = "NOT Classified" // TODO: Translation: Need to clarify
             securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
             backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
         }
+
+        let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
+        securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
 
         layer.borderWidth = 1
         layer.borderColor = UIColor.from(scheme: .separator).cgColor
     }
 
-    func configure(with otherUsers: [UserType]) {
-        guard let userSession = ZMUserSession.shared() else { return }
-
-        let classification = userSession.classification(with: otherUsers)
+    func configure(
+        with otherUsers: [UserType],
+        provider: ClassificationProviding? = ZMUserSession.shared()
+    ) {
+        guard let classification = provider?.classification(with: otherUsers) else { return }
 
         configure(with: classification)
     }
@@ -75,11 +90,25 @@ final class SecurityLevelView: UIView {
     private func createConstraints() {
         securityLevelLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        securityLevelLabel.fitIn(view: self)
+
         NSLayoutConstraint.activate([
-          securityLevelLabel.topAnchor.constraint(equalTo: topAnchor),
-          securityLevelLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
-          securityLevelLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
+    }
+}
+
+private extension SecurityClassification {
+    var levelText: String? {
+        switch self {
+        case .none:
+            return nil
+
+        case .classified:
+            return L10n.Localizable.SecurityClassification.Level.bund
+
+        case .notClassified:
+            return L10n.Localizable.SecurityClassification.Level.notClassified
+        }
     }
 }
