@@ -20,6 +20,12 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
+protocol ClassificationProviding {
+    func classification(with users: [UserType]) -> SecurityClassification
+}
+
+extension ZMUserSession: ClassificationProviding {}
+
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
 
@@ -65,10 +71,11 @@ final class SecurityLevelView: UIView {
         layer.borderColor = UIColor.from(scheme: .separator).cgColor
     }
 
-    func configure(with otherUsers: [UserType]) {
-        guard let userSession = ZMUserSession.shared() else { return }
-
-        let classification = userSession.classification(with: otherUsers)
+    func configure(
+        with otherUsers: [UserType],
+        provider: ClassificationProviding? = ZMUserSession.shared()
+    ) {
+        guard let classification = provider?.classification(with: otherUsers) else { return }
 
         configure(with: classification)
     }
