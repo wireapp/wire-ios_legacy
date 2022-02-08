@@ -48,12 +48,11 @@ final class SecurityLevelView: UIView {
             classification != .none,
             let levelText = classification.levelText
         else {
+            isHidden = true
             return
         }
 
         switch classification {
-        case .none:
-            isHidden = true
 
         case .classified:
             securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
@@ -62,6 +61,10 @@ final class SecurityLevelView: UIView {
         case .notClassified:
             securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
             backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
+
+        default:
+            isHidden = true
+            assertionFailure("should not reach this point")
         }
 
         let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
@@ -75,7 +78,10 @@ final class SecurityLevelView: UIView {
         with otherUsers: [UserType],
         provider: ClassificationProviding? = ZMUserSession.shared()
     ) {
-        guard let classification = provider?.classification(with: otherUsers) else { return }
+        guard let classification = provider?.classification(with: otherUsers) else {
+            isHidden = true
+            return
+        }
 
         configure(with: classification)
     }
