@@ -199,4 +199,25 @@ class VoiceChannelStreamArrangementTests: XCTestCase {
         XCTAssert(streamArrangement.grid.elementsEqual([selfStream] + participantStreams))
         XCTAssert(streamArrangement.preview == nil)
     }
+
+    // MARK: - Video streams sorting
+
+    func testThatItReturnsSortedParticipantsInGrid_ByVideoState() {
+        // GIVEN
+        let participant1 = participantStub(for: mockUser1, videoEnabled: true)
+        let participant2 = participantStub(for: mockUser2, videoEnabled: false)
+        let participant3 = participantStub(for: mockUser3, videoEnabled: true)
+        sut.mockParticipants = [participant1, participant2, participant3]
+
+        // WHEN
+        let streams = sut.activeStreams(from: sut.mockParticipants)
+        let sortedStreams = sut.sortByVideo(streamData: streams)
+
+        // THEN
+        let userIds = sortedStreams.map(\.streamId.avsIdentifier)
+        XCTAssertEqual(userIds.count, 3)
+        XCTAssertEqual(userIds[0], avsId1)
+        XCTAssertEqual(userIds[1], avsId3)
+        XCTAssertEqual(userIds[2], avsId2)
+    }
 }
