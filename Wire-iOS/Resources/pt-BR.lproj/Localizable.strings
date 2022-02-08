@@ -1015,9 +1015,9 @@
 "self.settings.account_section.add_handle.title" = "Adicionar nome de usuário";
 "self.settings.account_section.team.title" = "Equipe";
 "self.settings.account_section.domain.title" = "Domínio";
-"self.settings.account_section.profile_link.title" = "Profile link";
-"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
-"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
+"self.settings.account_section.profile_link.title" = "Link do perfil";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copiar link do perfil";
+"self.settings.account_section.profile_link.actions.copied_link" = "O link do perfil foi copiado!";
 
 "self.settings.account_details_group.info.footer" = "Pessoas podem te encontrar com esses detalhes.";
 "self.settings.account_details_group.personal.footer" = "Esta informação ainda não está disponível .";
