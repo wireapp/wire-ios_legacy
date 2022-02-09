@@ -93,8 +93,6 @@ final class MockInputBarConversationType: SwiftMockConversation, InputBarConvers
     
     var participants: [UserType] = []
 
-    var participants: [UserType] = []
-
     var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?
     var hasSyncedMessageDestructionTimeout = false
     var isSelfDeletingMessageSendingDisabled = false
