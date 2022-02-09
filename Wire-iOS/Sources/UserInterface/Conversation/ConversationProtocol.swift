@@ -79,7 +79,7 @@ extension ZMConversation: InputBarConversation {
     }
 
     var participants: [UserType] {
-            Array(localParticipants) as [UserType]
+        Array(localParticipants) as [UserType]
     }
 }
 
