@@ -278,4 +278,21 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
+    // MARK: - Classification
+
+    func testOneToOneClassifiedIncomingVideoRinging() {
+        // when
+        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
+
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
+
+    func testOneToOneNotClassifiedIncomingVideoRinging() {
+        // when
+        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
+
+        // then
+        verifyAllIPhoneSizes(matching: sut)
+    }
 }

@@ -28,11 +28,12 @@ struct MockCallStatusViewInputType: CallStatusViewInputType {
     var userEnabledCBR: Bool
     var isForcedCBR: Bool
     var variant: ColorSchemeVariant
+    var classification: SecurityClassification
 }
 
 extension MockCallStatusViewInputType {
     static func fixture(isForcedCBR: Bool, userEnabledCBR: Bool) -> CallStatusViewInputType {
-        return MockCallStatusViewInputType(state: .established(duration: 200), isConstantBitRate: true, title: "title", isVideoCall: false, userEnabledCBR: userEnabledCBR, isForcedCBR: isForcedCBR, variant: .dark)
+        return MockCallStatusViewInputType(state: .established(duration: 200), isConstantBitRate: true, title: "title", isVideoCall: false, userEnabledCBR: userEnabledCBR, isForcedCBR: isForcedCBR, variant: .dark, classification: .none)
     }
 }
 

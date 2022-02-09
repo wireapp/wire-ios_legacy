@@ -73,7 +73,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -98,7 +99,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -123,7 +125,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -148,7 +151,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -173,7 +177,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -198,7 +203,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -223,7 +229,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -248,7 +255,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -273,7 +281,8 @@ struct CallInfoTestFixture {
             networkQuality: .poor,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -300,7 +309,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -325,7 +335,60 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
+        )
+    }
+
+    var oneToOneClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: nil),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .classified
+        )
+    }
+
+    var oneToOneNotClassifiedIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            allowPresentationModeUpdates: false,
+            videoGridPresentationMode: .allVideoStreams,
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            callState: CallStateMock.incoming,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: nil),
+            isConstantBitRate: false,
+            title: otherUser.name ?? "",
+            isVideoCall: true,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkQuality: .normal,
+            userEnabledCBR: false,
+            variant: .dark,
+            isForcedCBR: false,
+            classification: .notClassified
         )
     }
 
@@ -350,7 +413,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -375,7 +439,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -400,7 +465,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -425,7 +491,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -450,7 +517,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -477,7 +545,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -502,7 +571,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -527,7 +597,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -552,7 +623,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -577,7 +649,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -602,7 +675,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -627,7 +701,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -654,7 +729,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -679,7 +755,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -704,7 +781,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -729,7 +807,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -754,7 +833,8 @@ struct CallInfoTestFixture {
             networkQuality: .poor,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -779,7 +859,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: false,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -804,7 +885,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -829,7 +911,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -855,7 +938,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
@@ -881,7 +965,8 @@ struct CallInfoTestFixture {
             networkQuality: .normal,
             userEnabledCBR: true,
             variant: .dark,
-            isForcedCBR: false
+            isForcedCBR: false,
+            classification: .none
         )
     }
 
