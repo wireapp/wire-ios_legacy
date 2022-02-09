@@ -23,7 +23,7 @@ import WireDataModel
 final class GroupDetailsServicesCell: GroupDetailsDisclosureOptionsCell {
 
     typealias ServicesOptionCell = L10n.Localizable.GroupDetails.ServicesOptionsCell
-    
+
     var isOn = false {
         didSet {
             status = isOn ? ServicesOptionCell.enabled : ServicesOptionCell.disabled
