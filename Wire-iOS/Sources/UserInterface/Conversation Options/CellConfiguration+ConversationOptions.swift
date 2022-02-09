@@ -50,8 +50,8 @@ extension CellConfiguration {
 
     static func allowServicesToggle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void) -> CellConfiguration {
         return .iconToggle(
-            title: "guest_room.allow_services.title".localized,
-            subtitle: "guest_room.allow_services.subtitle".localized,
+            title: "services_room.allow_services.title".localized,
+            subtitle: "services_room.allow_services.subtitle".localized,
             identifier: "toggle.guestoptions.allowservices",
             titleIdentifier: "label.guestoptions.services.description",
             icon: nil,
