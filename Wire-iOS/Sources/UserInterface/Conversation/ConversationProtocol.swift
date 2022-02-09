@@ -58,6 +58,8 @@ protocol InputBarConversation {
     var isSelfDeletingMessageTimeoutForced: Bool { get }
 
     var isReadOnly: Bool { get }
+
+    var participants: [UserType] { get }
 }
 
 typealias InputBarConversationType = InputBarConversation & TypingStatusProvider & ConversationLike
@@ -76,6 +78,9 @@ extension ZMConversation: InputBarConversation {
         return feature.config.enforcedTimeoutSeconds > 0
     }
 
+    var participants: [UserType] {
+        Array(localParticipants) as [UserType]
+    }
 }
 
 // MARK: - GroupDetailsConversation View controllers and child VCs

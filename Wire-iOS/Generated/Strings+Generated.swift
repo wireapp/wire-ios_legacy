@@ -1776,7 +1776,8 @@ internal enum L10n {
         internal static let accountSuspended = L10n.tr("Localizable", "error.user.account_suspended")
         /// You have been logged out from another device.
         internal static let deviceDeletedRemotely = L10n.tr("Localizable", "error.user.device_deleted_remotely")
-        /// You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.
+        /// You can't create this account as your email domain is intentionally blocked.
+        /// Please ask your team admin to invite you via email.
         internal static let domainBlocked = L10n.tr("Localizable", "error.user.domain_blocked")
         /// The email address you provided has already been registered. Please try again.
         internal static let emailIsTaken = L10n.tr("Localizable", "error.user.email_is_taken")
@@ -3519,6 +3520,16 @@ internal enum L10n {
         internal static func resendPlaceholder(_ p1: Float) -> String {
           return L10n.tr("Localizable", "registration.verify_phone_number.resend_placeholder", p1)
         }
+      }
+    }
+    internal enum SecurityClassification {
+      /// SECURITY LEVEL:
+      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level")
+      internal enum Level {
+        /// VS-NfD
+        internal static let bund = L10n.tr("Localizable", "security_classification.level.bund")
+        /// NOT CLASSIFIED
+        internal static let notClassified = L10n.tr("Localizable", "security_classification.level.not_classified")
       }
     }
     internal enum `Self` {

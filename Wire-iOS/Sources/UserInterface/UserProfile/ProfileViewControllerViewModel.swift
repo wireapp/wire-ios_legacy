@@ -37,6 +37,7 @@ final class ProfileViewControllerViewModel: NSObject {
     let conversation: ZMConversation?
     let viewer: UserType
     let context: ProfileViewControllerContext
+    let classificationProvider: ClassificationProviding?
 
     weak var delegate: ProfileViewControllerDelegate? {
         didSet {
@@ -52,17 +53,24 @@ final class ProfileViewControllerViewModel: NSObject {
     init(user: UserType,
          conversation: ZMConversation?,
          viewer: UserType,
-         context: ProfileViewControllerContext) {
+         context: ProfileViewControllerContext,
+         classificationProvider: ClassificationProviding? = ZMUserSession.shared()
+    ) {
         self.user = user
         self.conversation = conversation
         self.viewer = viewer
         self.context = context
+        self.classificationProvider = classificationProvider
 
         super.init()
 
         if let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
+    }
+
+    var classification: SecurityClassification {
+        classificationProvider?.classification(with: [user]) ?? .none
     }
 
     var hasLegalHoldItem: Bool {

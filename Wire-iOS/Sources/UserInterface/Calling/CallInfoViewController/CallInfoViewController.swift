@@ -132,6 +132,8 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             stackView.topAnchor.constraint(equalTo: safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -25),
+            statusViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor),
+
             actionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             actionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
