@@ -28,6 +28,8 @@ extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
+    private let topBorderView = UIView()
+    private let bottomBorderView = UIView()
 
     init() {
         super.init(frame: .zero)
@@ -69,9 +71,6 @@ final class SecurityLevelView: UIView {
 
         let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
-
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.from(scheme: .separator).cgColor
     }
 
     func configure(
@@ -91,15 +90,33 @@ final class SecurityLevelView: UIView {
 
         securityLevelLabel.textAlignment = .center
         addSubview(securityLevelLabel)
+
+        topBorderView.backgroundColor = UIColor.from(scheme: .separator)
+        addSubview(topBorderView)
+        bringSubviewToFront(topBorderView)
+
+        bottomBorderView.backgroundColor = UIColor.from(scheme: .separator)
+        addSubview(bottomBorderView)
+        bringSubviewToFront(bottomBorderView)
     }
 
     private func createConstraints() {
-        securityLevelLabel.translatesAutoresizingMaskIntoConstraints = false
+        [securityLevelLabel, topBorderView, bottomBorderView].prepareForLayout()
 
         securityLevelLabel.fitIn(view: self)
 
         NSLayoutConstraint.activate([
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24)
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
+
+          topBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          topBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
+          topBorderView.topAnchor.constraint(equalTo: topAnchor),
+          topBorderView.heightAnchor.constraint(equalToConstant: 1),
+
+          bottomBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
+          bottomBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
+          bottomBorderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+          bottomBorderView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
 }
