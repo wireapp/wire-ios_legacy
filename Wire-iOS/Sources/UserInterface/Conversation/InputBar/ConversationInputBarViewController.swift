@@ -342,6 +342,7 @@ final class ConversationInputBarViewController: UIViewController,
         updateWritingState(animated: false)
         updateButtonIcons()
         updateAvailabilityPlaceholder()
+        updateClassificationBanner()
 
         setInputLanguage()
         setupStyle()
@@ -513,6 +514,12 @@ final class ConversationInputBarViewController: UIViewController,
             $0.setIconColor(.from(scheme: .iconNormal), for: .normal)
         }
         inputBar.buttonsView.setNeedsLayout()
+    }
+
+    // MARK: - Security Banner
+
+    private func updateClassificationBanner() {
+        securityLevelView.configure(with: conversation.participants, provider: classificationProvider)
     }
 
     // MARK: - Save draft message
@@ -816,6 +823,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
         if change.participantsChanged ||
             change.connectionStateChanged {
             updateInputBarVisibility()
+            updateClassificationBanner()
         }
 
         if change.destructionTimeoutChanged {
@@ -872,7 +880,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
         inputBar.addSubview(typingIndicatorView)
 
-        securityLevelView.configure(with: conversation.participants, provider: classificationProvider)
         view.addSubview(securityLevelView)
 
         createConstraints()
