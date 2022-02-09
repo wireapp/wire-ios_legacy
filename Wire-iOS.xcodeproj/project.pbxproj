@@ -7183,6 +7183,7 @@
 				EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */,
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 				061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */,
+				70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */,
 			);
 			path = ConversationInputBarViewController;
 			sourceTree = "<group>";
