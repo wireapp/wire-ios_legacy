@@ -59,41 +59,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testOneToOneClassifiedOutgoingAudioRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedOutgoingAudioRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedOutgoingAudioRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedOutgoingAudioRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testOneToOneAudioConnecting() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneAudioConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneClassifiedAudioConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedAudioConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedAudioConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedAudioConnecting, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -107,22 +75,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testOneToOneClassifiedAudioEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedAudioEstablished, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedAudioEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedAudioEstablished, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testOneToOneAudioEstablishedCBR() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneAudioEstablishedCBR, selfUser: mockSelfUser)
@@ -131,41 +83,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testOneToOneClassifiedAudioEstablishedCBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedAudioEstablishedCBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedAudioEstablishedCBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedAudioEstablishedCBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testOneToOneAudioEstablishedVBR() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneAudioEstablishedVBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneClassifiedAudioEstablishedVBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedAudioEstablishedVBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedAudioEstablishedVBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedAudioEstablishedVBR, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -189,43 +109,11 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testOneToOneClassifiedAudioEstablishedPoorConnection() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedAudioEstablishedPoorNetwork, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedAudioEstablishedPoorConnection() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedAudioEstablishedPoorNetwork, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     // MARK: - OneToOne Video
 
     func testOneToOneIncomingVideoRinging() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneIncomingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneClassifiedIncomingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedIncomingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -239,41 +127,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testOneToOneClassifiedVideoConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedVideoConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedVideoConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedVideoConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testOneToOneVideoEstablished() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneVideoEstablished, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneClassifiedVideoEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedVideoEstablished, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testOneToOneNotClassifiedVideoEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedVideoEstablished, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -289,41 +145,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupClassifiedOutgoingAudioRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedOutgoingAudioRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedOutgoingAudioRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedOutgoingAudioRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testGroupAudioConnecting() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.groupAudioConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupClassifiedAudioConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedAudioConnecting, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedAudioConnecting() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedAudioConnecting, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -364,41 +188,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupClassifiedIncomingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedIncomingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testGroupOutgoingVideoRinging() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.groupOutgoingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupClassifiedOutgoingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedOutgoingVideoRinging, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedOutgoingVideoRinging() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedOutgoingVideoRinging, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -412,41 +204,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupClassifiedVideoEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoEstablished(mockUsers: mockUsers), selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoEstablished() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoEstablished(mockUsers: mockUsers), selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testGroupVideoEstablishedScreenSharing() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.groupVideoEstablishedScreenSharing, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupClassifiedVideoEstablishedScreenSharing() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoEstablishedScreenSharing, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoEstablishedScreenSharing() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoEstablishedScreenSharing, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -460,41 +220,9 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupClassifiedVideoEstablishedPoorConnection() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoEstablishedPoorConnection, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoEstablishedPoorConnection() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoEstablishedPoorConnection, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
     func testGroupVideoEstablishedCBR() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.groupVideoEstablishedCBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupClassifiedVideoEstablishedCBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoEstablishedCBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoEstablishedCBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoEstablishedCBR, selfUser: mockSelfUser)
 
         // then
         verifyAllIPhoneSizes(matching: sut)
@@ -507,23 +235,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-
-    func testGroupClassifiedVideoEstablishedVBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoEstablishedVBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoEstablishedVBR() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoEstablishedVBR, selfUser: mockSelfUser)
-
-        // then
-        verifyAllIPhoneSizes(matching: sut)
-    }
-
 
     // MARK: - Landscape
     func disable_testOneToOneAudioOutgoingLandscape() {
@@ -559,22 +270,6 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testGroupClassifiedVideoUndeterminedVideoPermissions() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoIncomingUndeterminedPermissions, selfUser: mockSelfUser)
-
-        // then
-        verify(matching: sut)
-    }
-
-    func testGroupNotClassifiedVideoUndeterminedVideoPermissions() {
-        // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoIncomingUndeterminedPermissions, selfUser: mockSelfUser)
-
-        // then
-        verify(matching: sut)
-    }
-
     func testGroupVideoDeniedVideoPermissions() {
         // when
         sut = CallInfoRootViewController(configuration: defaultFixture.groupVideoIncomingDeniedPermissions, selfUser: mockSelfUser)
@@ -583,20 +278,21 @@ final class CallInfoRootViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testGroupClassifiedVideoDeniedVideoPermissions() {
+    // MARK: - Classification
+
+    func testOneToOneClassifiedIncomingVideoRinging() {
         // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupClassifiedVideoIncomingDeniedPermissions, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
 
         // then
-        verify(matching: sut)
+        verifyAllIPhoneSizes(matching: sut)
     }
 
-    func testGroupNotClassifiedVideoDeniedVideoPermissions() {
+    func testOneToOneNotClassifiedIncomingVideoRinging() {
         // when
-        sut = CallInfoRootViewController(configuration: defaultFixture.groupNotClassifiedVideoIncomingDeniedPermissions, selfUser: mockSelfUser)
+        sut = CallInfoRootViewController(configuration: defaultFixture.oneToOneNotClassifiedIncomingVideoRinging, selfUser: mockSelfUser)
 
         // then
-        verify(matching: sut)
+        verifyAllIPhoneSizes(matching: sut)
     }
-
 }
