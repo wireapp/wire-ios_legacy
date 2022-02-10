@@ -125,7 +125,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
     }
-    
     private func showMutedToastMessageIfNeeded() {
         guard
             case .established(let duration) = configuration.state,
@@ -147,7 +146,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         Toast.show(with: toastConfig)
         hasMutedToastBeenShown = true
     }
-    
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
