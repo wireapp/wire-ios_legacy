@@ -207,7 +207,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
     }
 
     // MARK: Renders Guests Screen when a change is occured
-    
+
     func testThatItUpdatesWhenItReceivesAChange() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
