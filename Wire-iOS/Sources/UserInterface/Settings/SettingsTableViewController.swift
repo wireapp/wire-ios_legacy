@@ -205,7 +205,9 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             SettingsToggleCell.self,
             SettingsValueCell.self,
             SettingsTextCell.self,
-            SettingsStaticTextTableCell.self
+            SettingsStaticTextTableCell.self,
+            IconActionCell.self,
+            SettingsProfileLinkCell.self
         ]
 
         for aClass in allCellTypes {

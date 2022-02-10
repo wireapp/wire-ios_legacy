@@ -122,9 +122,9 @@ extension FontSpec {
 #if !swift(>=4.2)
 
 extension FontSpec {
-    public var hashValue: Int {
-        return self.size.hashValue &* 1000 &+ (self.weight?.hashValue ?? 100)
-    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(size.hashValue &* 1000 &+ (self.weight?.hashValue ?? 100))
+      }
 }
 
 #endif

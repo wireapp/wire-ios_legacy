@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-//
+//  
 
 import Foundation
 import UIKit
@@ -81,9 +81,9 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
             else { return }
 
         let profileUser: UserType?
-        if let searchUser = searchResult.directory.first {
+        if let searchUser = searchResult.directory.first, !searchUser.isAccountDeleted {
             profileUser = searchUser
-        } else if let memberUser = searchResult.teamMembers.first?.user {
+        } else if let memberUser = searchResult.teamMembers.first?.user, !memberUser.isAccountDeleted {
             profileUser = memberUser
         } else {
             profileUser = nil

@@ -192,8 +192,7 @@ platform :ios do
             precheck_include_in_app_purchases: false,
             skip_app_version_update: true,
             skip_metadata: true,
-            skip_screenshots: true,
-            api_key_path: options[:api_key_path]
+            skip_screenshots: true
         )
     end
 

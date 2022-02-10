@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Dzwoń mimo to";
 "call.alert.ongoing.join.button" = "Dołącz mimo to";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Przekazywanie połączeń jest niedostępne. Może to mieć wpływ na Twoje wrażenia z połączenia.";
 "call.quality.indicator.more_info.button.text" = "Więcej informacji";
 
@@ -1015,6 +1017,9 @@
 "self.settings.account_section.add_handle.title" = "Dodaj nazwę użytkownika";
 "self.settings.account_section.team.title" = "Zespół";
 "self.settings.account_section.domain.title" = "Domena";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Dzięki tych informacjom inni mogą cię znaleźć.";
 "self.settings.account_details_group.personal.footer" = "Informacje nie są dostępne.";
