@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Vis tiek skambinti";
 "call.alert.ongoing.join.button" = "Vis tiek jungtis";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Skambučio persiuntimas nepasiekiamas. Tai gali įtakoti skambučio kokybę.";
 "call.quality.indicator.more_info.button.text" = "Daugiau informacijos";
 
@@ -1015,6 +1017,9 @@
 "self.settings.account_section.add_handle.title" = "Pridėti naudotojo vardą";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Žmonės gali jus rasti pagal šią informaciją.";
 "self.settings.account_details_group.personal.footer" = "Ši informacija nerodoma.";

@@ -36,6 +36,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         selfUser.name = "John Doe"
         selfUser.domain = "wire.com"
         selfUser.emailAddress = "john.doe@wire.com"
+        selfUser.remoteIdentifier = UUID(uuidString: "AFBDFB29-AA40-4444-94D2-F484D0A44600")
 
         SelfUser.provider = SelfProvider(selfUser: selfUser)
 

@@ -62,7 +62,7 @@ final class ConversationReplyContentView: UIView {
 
         var showRestriction: Bool {
             guard let message = quotedMessage,
-                  message.isRestricted else {
+                  !message.canBeShared else {
                 return false
             }
             return true
@@ -70,7 +70,7 @@ final class ConversationReplyContentView: UIView {
 
         var restrictionDescription: String? {
             guard let message = quotedMessage,
-                  message.isRestricted else {
+                  !message.canBeShared else {
                 return nil
             }
 
@@ -117,7 +117,7 @@ final class ConversationReplyContentView: UIView {
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.audio.localizedUppercase
                 return .text(initialString && attributes)
 
-            case let message? where message.isImage && message.isRestricted:
+            case let message? where message.isImage && !message.canBeShared:
                 let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground))
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
                 return .text(initialString && attributes)
@@ -125,7 +125,7 @@ final class ConversationReplyContentView: UIView {
             case let message? where message.isImage:
                 return .imagePreview(thumbnail: message.imageMessageData!.image, isVideo: false)
 
-            case let message? where message.isVideo && message.isRestricted:
+            case let message? where message.isVideo && !message.canBeShared:
                 let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground))
                 let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
                 return .text(initialString && attributes)

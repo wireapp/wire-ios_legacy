@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Helista ikkagi";
 "call.alert.ongoing.join.button" = "Liitu ikkagi";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
 
@@ -1015,6 +1017,9 @@
 "self.settings.account_section.add_handle.title" = "Lisa kasutajanimi";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profile link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
 
 "self.settings.account_details_group.info.footer" = "Inimesed leiavad sind nende andmete põhjal.";
 "self.settings.account_details_group.personal.footer" = "Need andmed pole avalikud.";

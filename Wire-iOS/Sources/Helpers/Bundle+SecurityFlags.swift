@@ -27,6 +27,7 @@ enum SecurityFlags {
     case backup
     case federation
     case maxNumberAccounts
+    case fileSharing
 
     /// Whether encryption at rest is enabled and can't be disabled.
 
@@ -52,6 +53,8 @@ enum SecurityFlags {
             return "ForceEncryptionAtRestEnabled"
         case .federation:
             return "FederationEnabled"
+        case .fileSharing:
+            return "FileSharingEnabled"
         }
     }
 

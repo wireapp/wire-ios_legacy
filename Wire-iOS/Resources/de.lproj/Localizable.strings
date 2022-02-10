@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
 
+"call.toast.muted_on_join.message" = "Wenn Sie an einer Telefonkonferenz teilnehmen, sind Sie zunächst stumm geschaltet";
+
 "call.quality.indicator.message" = "Ihr Anrufrelais ist nicht erreichbar. Dies kann Ihr Gespräch beeinträchtigen.";
 "call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
@@ -1015,6 +1017,9 @@
 "self.settings.account_section.add_handle.title" = "Benutzernamen hinzufügen";
 "self.settings.account_section.team.title" = "Team";
 "self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.profile_link.title" = "Profil-Link";
+"self.settings.account_section.profile_link.actions.copy_link" = "Profil-Link kopieren";
+"self.settings.account_section.profile_link.actions.copied_link" = "Profil-Link kopiert!";
 
 "self.settings.account_details_group.info.footer" = "Mit diesen Angaben kann man Sie finden.";
 "self.settings.account_details_group.personal.footer" = "Diese Informationen sind nicht sichtbar.";
@@ -1652,8 +1657,8 @@
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "Es gab eine Änderung bei Wire";
-"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert";
-"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert";
+"feature_config.update.file_sharing.alert.message.disabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt deaktiviert.";
+"feature_config.update.file_sharing.alert.message.enabled" = "Das Teilen und Empfangen von Dateien jeder Art ist jetzt aktiviert.";
 "feature_config.file_sharing_restrictions.file" = "Empfang von Dateien ist verboten";
 "feature_config.file_sharing_restrictions.picture" = "Empfang von Bildern ist verboten";
 "feature_config.file_sharing_restrictions.video" = "Empfang von Videos ist verboten";

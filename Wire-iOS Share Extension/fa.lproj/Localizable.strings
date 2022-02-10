@@ -61,5 +61,5 @@
 "meta.degraded.send_anyway_button" = "بفرست مشکلی نیست";
 
 //Feature flag - File sharing
-"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
+"feature.flag.file_sharing.alert.title" = "محدودیتهای اشتراک فایل";
 "feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";
