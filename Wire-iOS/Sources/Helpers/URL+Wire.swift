@@ -184,7 +184,7 @@ extension URL {
         if isTeamAccount {
             return BackendEnvironment.websiteLink(path: "legal/terms/teams")
         } else {
-            return BackendEnvironment.websiteLink(path: "legal/terms/personal")
+            return BackendEnvironment.websiteLink(path: "legal/terms-of-use-personal")
         }
     }
 
