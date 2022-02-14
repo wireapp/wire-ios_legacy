@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Panggil saja";
 "call.alert.ongoing.join.button" = "Join anyway";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
 

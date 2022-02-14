@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Все равно позвонить";
 "call.alert.ongoing.join.button" = "Все равно присоединиться";
 
+"call.toast.muted_on_join.message" = "Когда вы присоединяетесь к конференц-звонку, ваш микрофон изначально отключен";
+
 "call.quality.indicator.message" = "Ретрансляторы вызовов недоступны. Это может повлиять на качество вызова.";
 "call.quality.indicator.more_info.button.text" = "Подробнее";
 
