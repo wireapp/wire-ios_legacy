@@ -4226,18 +4226,18 @@ internal enum L10n {
       /// I’m on Wire. Visit get.wire.com to connect with me.
       internal static let text = L10n.tr("Localizable", "send_invitation_no_email.text")
     }
-    internal enum ServicesRoom {
+    internal enum ServicesOptions {
       internal enum AllowServices {
         /// Open this conversation to services.
-        internal static let subtitle = L10n.tr("Localizable", "services_room.allow_services.subtitle")
+        internal static let subtitle = L10n.tr("Localizable", "services_options.allow_services.subtitle")
         /// Allow services
-        internal static let title = L10n.tr("Localizable", "services_room.allow_services.title")
+        internal static let title = L10n.tr("Localizable", "services_options.allow_services.title")
       }
       internal enum RemoveServices {
         /// Remove
-        internal static let action = L10n.tr("Localizable", "services_room.remove_services.action")
+        internal static let action = L10n.tr("Localizable", "services_options.remove_services.action")
         /// Current services will be removed from the conversation. New services will not be allowed.
-        internal static let message = L10n.tr("Localizable", "services_room.remove_services.message")
+        internal static let message = L10n.tr("Localizable", "services_options.remove_services.message")
       }
     }
     internal enum ShareExtension {

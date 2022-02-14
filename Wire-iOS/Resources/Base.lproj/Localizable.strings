@@ -1387,12 +1387,13 @@
 "guest_room.expiration.hours_left" = "%@h left";
 "guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
-// Services Room
+// Services Options
 
-"services_room.allow_services.title" = "Allow services";
-"services_room.allow_services.subtitle" = "Open this conversation to services.";
-"services_room.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
-"services_room.remove_services.action" = "Remove";
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Remove";
+
 
 // Registration
 
