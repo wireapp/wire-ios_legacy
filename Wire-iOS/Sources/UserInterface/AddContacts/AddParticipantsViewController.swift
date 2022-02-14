@@ -30,8 +30,8 @@ extension ConversationLike where Self: SwiftConversationLike {
 
         // Access mode and/or role is unknown: let's try to add and observe the result.
         guard let accessMode = accessMode else {
-                  return true
-              }
+            return true
+        }
 
         let canAddGuest = accessMode.contains(.invite)
         let guestCanBeAdded = accessRoles.contains(.nonTeamMember) && accessRoles.contains(.guest)
@@ -271,8 +271,8 @@ final class AddParticipantsViewController: UIViewController {
         guard let searchHeaderView = searchHeaderViewController.view,
               let searchResultsView = searchResultsViewController.view,
               let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
-            return
-        }
+                  return
+              }
 
         [searchHeaderView,
          searchResultsView,
