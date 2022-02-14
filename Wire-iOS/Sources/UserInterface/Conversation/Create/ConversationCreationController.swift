@@ -119,7 +119,6 @@ final class ConversationCreationController: UIViewController {
         section.toggleAction = { [unowned self] allowServices in
             self.values.allowServices = allowServices
             self.updateOptions()
-
         }
         return section
     }()

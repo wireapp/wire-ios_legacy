@@ -83,7 +83,7 @@ final class ConversationServicesOptionsViewModel {
             }
 
             configuration.setAllowServices(allowServices) { [weak self] result in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 item.cancel()
                 self.state.isLoading = false
 
