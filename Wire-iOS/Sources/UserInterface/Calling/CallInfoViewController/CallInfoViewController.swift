@@ -132,8 +132,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     private func showMutedToastMessageIfNeeded() {
-        guard configuration.state != .terminating
-        else {
+        guard configuration.state != .terminating else {
             Toast.hide()
             return
         }
