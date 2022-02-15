@@ -37,6 +37,8 @@ final class IncomingConnectionView: UIView {
     private let acceptButton = Button(style: .full)
     private let ignoreButton = Button(style: .empty)
 
+    private let classificationProvider: ClassificationProviding?
+
     var user: UserType {
         didSet {
             setupLabelText()
@@ -48,8 +50,10 @@ final class IncomingConnectionView: UIView {
     var onAccept: UserAction?
     var onIgnore: UserAction?
 
-    init(user: UserType) {
+    init(user: UserType, classificationProvider: ClassificationProviding? = ZMUserSession.shared()) {
         self.user = user
+        self.classificationProvider = classificationProvider
+
         super.init(frame: .zero)
 
         userImageView.userSession = ZMUserSession.shared()
@@ -94,7 +98,7 @@ final class IncomingConnectionView: UIView {
         usernameLabel.attributedText = viewModel.title
         usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
-        securityLevelView.configure(with: [user])
+        securityLevelView.configure(with: [user], provider: classificationProvider)
     }
 
     private func createConstraints() {
@@ -125,8 +129,8 @@ final class IncomingConnectionView: UIView {
             userDetailView.centerXAnchor.constraint(equalTo: centerXAnchor),
             userDetailView.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 4),
             userDetailView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor),
-            userDetailView.bottomAnchor.constraint(lessThanOrEqualTo: securityLevelView.topAnchor),
 
+            securityLevelView.topAnchor.constraint(equalTo: userDetailView.bottomAnchor, constant: 4),
             securityLevelView.centerXAnchor.constraint(equalTo: centerXAnchor),
             securityLevelView.leadingAnchor.constraint(equalTo: leadingAnchor),
             securityLevelView.trailingAnchor.constraint(equalTo: trailingAnchor),
