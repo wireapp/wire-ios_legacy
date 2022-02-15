@@ -49,6 +49,7 @@ class IconImageView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         image = UIImage()
+        isAccessibilityElement = true
     }
 
     convenience init() {
