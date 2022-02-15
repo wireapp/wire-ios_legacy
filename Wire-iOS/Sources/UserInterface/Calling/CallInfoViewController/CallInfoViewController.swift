@@ -109,7 +109,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         super.viewWillDisappear(animated)
         Toast.hide()
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
