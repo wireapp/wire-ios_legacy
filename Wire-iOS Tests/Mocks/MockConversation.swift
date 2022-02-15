@@ -90,7 +90,7 @@ final class MockInputBarConversationType: SwiftMockConversation, InputBarConvers
     }
 
     var isReadOnly: Bool = false
-    
+
     var participants: [UserType] = []
 
     var activeMessageDestructionTimeoutValue: MessageDestructionTimeoutValue?
