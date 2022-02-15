@@ -76,7 +76,8 @@ public class NotificationService: UNNotificationServiceExtension {
                                         accountIdentifier: accountIdentifier,
                                         environment: BackendEnvironment.shared,
                                         analytics: nil,
-                                        delegate: self)
+                                        delegate: self,
+                                        useLegacyPushNotifications: false)
     }
 }
 
