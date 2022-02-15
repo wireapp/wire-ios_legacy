@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Chiama comunque";
 "call.alert.ongoing.join.button" = "Entra comunque";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Il tuo relè di chiamata non è raggiungibile. Questo potrebbe influenzare la tua esperienza di chiamata.";
 "call.quality.indicator.more_info.button.text" = "Altre Informazioni";
 

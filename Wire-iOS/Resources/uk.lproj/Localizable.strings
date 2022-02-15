@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Подзвонити все одно";
 "call.alert.ongoing.join.button" = "Приєднатися все-одно";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Ретранслятори викликів недоступні. Це може вплинути на роботу ваших дзвінків.";
 "call.quality.indicator.more_info.button.text" = "Детальніше";
 

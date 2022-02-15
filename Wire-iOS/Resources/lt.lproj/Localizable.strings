@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "Vis tiek skambinti";
 "call.alert.ongoing.join.button" = "Vis tiek jungtis";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "Skambučio persiuntimas nepasiekiamas. Tai gali įtakoti skambučio kokybę.";
 "call.quality.indicator.more_info.button.text" = "Daugiau informacijos";
 

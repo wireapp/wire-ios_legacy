@@ -720,6 +720,8 @@
 "call.alert.ongoing.start.button" = "仍然要通話";
 "call.alert.ongoing.join.button" = "仍要加入";
 
+"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
+
 "call.quality.indicator.message" = "您的呼叫中繼無法接通。 這可能會影響您的通話體驗。";
 "call.quality.indicator.more_info.button.text" = "更多資訊";
 
