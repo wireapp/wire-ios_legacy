@@ -346,12 +346,6 @@ internal enum L10n {
           }
         }
       }
-      internal enum Toast {
-        internal enum MutedOnJoin {
-          /// When you join a conference call, you are initially muted
-          internal static let message = L10n.tr("Localizable", "call.toast.muted_on_join.message")
-        }
-      }
       internal enum Video {
         /// Video paused
         internal static let paused = L10n.tr("Localizable", "call.video.paused")

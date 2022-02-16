@@ -48,6 +48,7 @@ final class CallInfoRootViewControllerTests: XCTestCase {
 
         super.tearDown()
     }
+
     // MARK: - OneToOne Audio
 
     func testOneToOneOutgoingAudioRinging() {
