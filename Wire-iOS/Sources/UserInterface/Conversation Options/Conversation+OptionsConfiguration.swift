@@ -79,7 +79,7 @@ extension ZMConversation {
             if changeInfo.allowGuestsChanged {
                allowGuestsChangedHandler?(allowGuests)
             }
-            
+
             if changeInfo.allowServicesChanged {
               allowServicesChangedHandler?(allowServices)
             }
