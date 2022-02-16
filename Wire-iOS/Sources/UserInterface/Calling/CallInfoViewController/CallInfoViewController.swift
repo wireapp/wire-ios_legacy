@@ -105,11 +105,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         updateState()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        Toast.hide()
-    }
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.didSizeClassChange(from: previousTraitCollection) else { return }
@@ -130,12 +125,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
     }
-
     private func showMutedToastMessageIfNeeded() {
-        guard configuration.state != .terminating else {
-            Toast.hide()
-            return
-        }
         guard
             case .established(let duration) = configuration.state,
             duration <= 5.0,
@@ -156,7 +146,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         Toast.show(with: toastConfig)
         hasMutedToastBeenShown = true
     }
-
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
