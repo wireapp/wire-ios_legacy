@@ -112,7 +112,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
 
     func conversationContentViewController(_ controller: ConversationContentViewController, presentServicesOptionFrom sourceView: UIView) {
         guard conversation.conversationType == .group else {
-            zmLog.error("Illegal Operation: Trying to show guest options for non-group conversation")
+            zmLog.error("Illegal Operation: Trying to show services options for non-group conversation")
             return
         }
 
