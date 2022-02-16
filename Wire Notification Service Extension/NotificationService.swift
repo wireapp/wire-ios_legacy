@@ -31,7 +31,8 @@ public class NotificationService: UNNotificationServiceExtension {
 
     public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         var currentNotificationSession: NotificationSession?
-        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier /*request.content.userInfo.accountId()*/ else {
+        // TODO: Check if we have accountID in request.content.userInfo
+        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier else {
             return
         }
 
@@ -70,7 +71,8 @@ public class NotificationService: UNNotificationServiceExtension {
 
     private func createNotificationSession(_ payload: UNMutableNotificationContent?) throws -> NotificationSession? {
         guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier //payload?.userInfo.accountId()
+              // TODO: Check if we have accountID in payload?.userInfo
+            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
             else { return nil}
         return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
                                         accountIdentifier: accountIdentifier,
@@ -103,30 +105,3 @@ extension NotificationService: NotificationSessionDelegate {
         }
     }
 }
-
-//class NotificationService: UNNotificationServiceExtension {
-//
-//    var contentHandler: ((UNNotificationContent) -> Void)?
-//    var bestAttemptContent: UNMutableNotificationContent?
-//
-//    override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-//        self.contentHandler = contentHandler
-//        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-//
-//        if let bestAttemptContent = bestAttemptContent {
-//            // Modify the notification content here...
-//            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
-//
-//            contentHandler(bestAttemptContent)
-//        }
-//    }
-//
-//    override func serviceExtensionTimeWillExpire() {
-//        // Called just before the extension will be terminated by the system.
-//        // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-//        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
-//            contentHandler(bestAttemptContent)
-//        }
-//    }
-//
-//}
