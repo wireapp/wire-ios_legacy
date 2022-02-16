@@ -140,14 +140,3 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     }
 
 }
-// MARK: - Test Helpers
-
-extension CallInfoRootViewController {
-    // used by snapshot tests
-    func dismissToastView() {
-        Toast.hide()
-    }
-    func presentToastView(config: ToastConfiguration) {
-        Toast.show(with: config)
-    }
-}
