@@ -238,7 +238,7 @@ final class ConversationGuestOptionsViewModel {
 
         guard allowGuests != configuration.allowGuests else { return nil }
 
-        // In case allow guests mode should be deactivated & guest/service in conversation, ask the delegate
+        // In case allow guests mode should be deactivated & guest in conversation, ask the delegate
         // to confirm this action as all guests will be removed.
         if !allowGuests && configuration.areGuestPresent {
             // Make "remove guests and services" warning only appear if guests or services are present
