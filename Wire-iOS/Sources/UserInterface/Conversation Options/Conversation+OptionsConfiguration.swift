@@ -75,10 +75,14 @@ extension ZMConversation {
         }
 
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-            guard changeInfo.allowGuestsChanged else { return }
-            guard changeInfo.allowServicesChanged else { return }
-            allowGuestsChangedHandler?(allowGuests)
-            allowServicesChangedHandler?(allowServices)
+
+            if changeInfo.allowGuestsChanged {
+               allowGuestsChangedHandler?(allowGuests)
+            }
+            
+            if changeInfo.allowServicesChanged {
+              allowServicesChangedHandler?(allowServices)
+            }
         }
 
         func createConversationLink(completion: @escaping (Result<String>) -> Void) {
