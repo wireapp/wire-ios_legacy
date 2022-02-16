@@ -239,6 +239,11 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
+        if let userSession = ZMUserSession.shared(),
+           let participants = conversation?.participants {
+            classification = userSession.classification(with: participants)
+        }
+
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
                                                       preferedVideoPlaceholderState: preferedVideoPlaceholderState,
                                                       permissions: permissions,
