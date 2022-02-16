@@ -36,7 +36,12 @@ final class CallViewController: UIViewController {
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
-    fileprivate var classification: SecurityClassification = .none
+
+    fileprivate var classification: SecurityClassification = .none {
+        didSet {
+            updateConfiguration()
+        }
+    }
 
     private var voiceChannelObserverTokens: [Any] = []
     private var conversationObserverToken: Any?
@@ -244,11 +249,6 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        if let userSession = ZMUserSession.shared(),
-           let participants = conversation?.participants {
-            classification = userSession.classification(with: participants)
-        }
-
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel,
                                                       preferedVideoPlaceholderState: preferedVideoPlaceholderState,
                                                       permissions: permissions,
@@ -335,9 +335,15 @@ final class CallViewController: UIViewController {
 
 extension CallViewController: ZMConversationObserver {
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        guard changeInfo.participantsChanged else { return }
+        guard
+            changeInfo.participantsChanged,
+            let userSession = ZMUserSession.shared(),
+            let participants = conversation?.participants
+        else {
+            return
+        }
 
-        updateConfiguration()
+        classification = userSession.classification(with: participants)
     }
 }
 
