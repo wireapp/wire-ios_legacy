@@ -214,7 +214,12 @@ final class CallViewController: UIViewController {
                            voiceChannel.addMuteStateObserver(self),
                            voiceChannel.addActiveSpeakersObserver(self)]
 
-        guard let conversation = conversation else { return }
+        guard
+            let conversation = conversation,
+            conversation.managedObjectContext != nil
+        else {
+            return
+        }
 
         conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
