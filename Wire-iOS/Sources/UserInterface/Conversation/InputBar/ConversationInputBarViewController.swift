@@ -823,6 +823,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
         if change.participantsChanged ||
             change.connectionStateChanged ||
             change.allowGuestsChanged {
+            // Sometime participantsChanged is not observed after allowGuestsChanged 
             updateInputBarVisibility()
             updateClassificationBanner()
         }
