@@ -36,9 +36,15 @@ final class CallViewController: UIViewController {
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
-    fileprivate var classification: SecurityClassification = .none
 
-    private var observerTokens: [Any] = []
+    fileprivate var classification: SecurityClassification = .none {
+        didSet {
+            updateConfiguration()
+        }
+    }
+
+    private var voiceChannelObserverTokens: [Any] = []
+    private var conversationObserverToken: Any?
     private var callGridConfiguration: CallGridConfiguration
     private let callGridViewController: CallGridViewController
     private var cameraType: CaptureDevice = .front
@@ -92,12 +98,9 @@ final class CallViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
         callGridViewController.delegate = self
-        observerTokens += [voiceChannel.addCallStateObserver(self),
-                           voiceChannel.addParticipantObserver(self),
-                           voiceChannel.addConstantBitRateObserver(self),
-                           voiceChannel.addNetworkQualityObserver(self),
-                           voiceChannel.addMuteStateObserver(self),
-                           voiceChannel.addActiveSpeakersObserver(self)]
+
+        setupObservers()
+
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
         }
@@ -208,6 +211,24 @@ final class CallViewController: UIViewController {
         [callGridViewController, callInfoRootViewController].forEach { $0.view.fitInSuperview() }
     }
 
+    private func setupObservers() {
+        voiceChannelObserverTokens += [voiceChannel.addCallStateObserver(self),
+                           voiceChannel.addParticipantObserver(self),
+                           voiceChannel.addConstantBitRateObserver(self),
+                           voiceChannel.addNetworkQualityObserver(self),
+                           voiceChannel.addMuteStateObserver(self),
+                           voiceChannel.addActiveSpeakersObserver(self)]
+
+        guard
+            let conversation = conversation,
+            conversation.managedObjectContext != nil
+        else {
+            return
+        }
+
+        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+    }
+
     fileprivate func minimizeOverlay() {
         delegate?.callViewControllerDidDisappear(self, for: conversation)
     }
@@ -310,6 +331,20 @@ final class CallViewController: UIViewController {
         }
     }
 
+}
+
+extension CallViewController: ZMConversationObserver {
+    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        guard
+            changeInfo.participantsChanged,
+            let userSession = ZMUserSession.shared(),
+            let participants = conversation?.participants
+        else {
+            return
+        }
+
+        classification = userSession.classification(with: participants)
+    }
 }
 
 extension CallViewController: WireCallCenterCallStateObserver {
