@@ -36,6 +36,8 @@ final class SecurityLevelView: UIView {
 
         setupViews()
         createConstraints()
+
+        accessibilityIdentifier = "ClassificationBanner"
     }
 
     @available(*, unavailable)
