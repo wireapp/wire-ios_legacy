@@ -37,6 +37,7 @@ final class SecurityLevelView: UIView {
         setupViews()
         createConstraints()
 
+        isAccessibilityElement = true
         accessibilityIdentifier = "ClassificationBanner"
     }
 
