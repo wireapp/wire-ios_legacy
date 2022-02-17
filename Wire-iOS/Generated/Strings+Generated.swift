@@ -3528,7 +3528,7 @@ internal enum L10n {
       internal enum Level {
         /// VS-NfD
         internal static let bund = L10n.tr("Localizable", "security_classification.level.bund")
-        /// NOT CLASSIFIED
+        /// UNCLASSIFIED
         internal static let notClassified = L10n.tr("Localizable", "security_classification.level.not_classified")
       }
     }
