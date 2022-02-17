@@ -38,7 +38,6 @@ final class SecurityLevelView: UIView {
         createConstraints()
 
         isAccessibilityElement = true
-        accessibilityIdentifier = "ClassificationBanner"
     }
 
     @available(*, unavailable)
@@ -62,10 +61,12 @@ final class SecurityLevelView: UIView {
         case .classified:
             securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
             backgroundColor = UIColor.from(scheme: .textBackground)
+            accessibilityIdentifier = "ClassificationBanner.classified"
 
         case .notClassified:
             securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
             backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
+            accessibilityIdentifier = "ClassificationBanner.notClassified"
 
         default:
             isHidden = true
