@@ -53,7 +53,7 @@ final class IncomingConnectionViewTests: XCTestCase {
         verify(matching: sut.layoutForTest())
     }
 
-    func testTahtItRendersWithSecurityClassification_whenNotClassified() {
+    func testThatItRendersWithSecurityClassification_whenNotClassified() {
         let user = SwiftMockLoader.mockUsers().first!
         let mockClassificationProvider = MockClassificationProvider()
         mockClassificationProvider.returnClassification = .notClassified
