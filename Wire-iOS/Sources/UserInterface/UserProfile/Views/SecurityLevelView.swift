@@ -38,7 +38,6 @@ final class SecurityLevelView: UIView {
         createConstraints()
 
         isAccessibilityElement = true
-        accessibilityIdentifier = "ClassificationBanner"
     }
 
     @available(*, unavailable)
@@ -74,6 +73,8 @@ final class SecurityLevelView: UIView {
 
         let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
+
+        accessibilityIdentifier = "ClassificationBanner" + classification.accessibilitySuffix
     }
 
     func configure(
@@ -135,6 +136,19 @@ private extension SecurityClassification {
 
         case .notClassified:
             return L10n.Localizable.SecurityClassification.Level.notClassified
+        }
+    }
+
+    var accessibilitySuffix: String {
+        switch self {
+        case .none:
+            return ""
+
+        case .classified:
+            return "Classified"
+
+        case .notClassified:
+            return "Unclassified"
         }
     }
 }
