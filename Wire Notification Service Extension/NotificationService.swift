@@ -23,14 +23,31 @@ import WireCommonComponents
 import WireDataModel
 import WireRequestStrategy
 import WireSyncEngine
+import UIKit
 
-public class NotificationService: UNNotificationServiceExtension {
+public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
+
+    private typealias Content = UNMutableNotificationContent
+    private typealias Handler = (UNNotificationContent) -> Void
 
     // MARK: - Properties
 
-    private var contentHandler: ((UNNotificationContent) -> Void)?
-    private var bestAttemptContent: UNMutableNotificationContent?
     private var notificationSessions = [UUID: NotificationSession]()
+    private var contentAndHandler: (content: Content, handler: Handler)?
+
+    private lazy var accountManager: AccountManager = {
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupID)
+        let account = AccountManager(sharedDirectory: sharedContainerURL)
+        return account
+    }()
+
+    private var appGroupID: String {
+        guard let groupID = Bundle.main.applicationGroupIdentifier else {
+            fatalError("cannot get app group identifier")
+        }
+
+        return groupID
+    }
 
     // MARK: - Methods
 
@@ -38,58 +55,72 @@ public class NotificationService: UNNotificationServiceExtension {
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        var currentNotificationSession: NotificationSession?
+        // TODO: what to do when no content?
+        guard let content = request.mutableContent else { return }
+
+        contentAndHandler = (content, contentHandler)
 
         // TODO: Check if we have accountID in request.content.userInfo
-        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier else {
+        guard
+            let accountID = accountManager.selectedAccount?.userIdentifier,
+            let session = try? currentSession(accountID: accountID)
+        else {
+            // TODO: what happens here?
             return
         }
 
-        if let session = notificationSessions[accountIdentifier] {
-            currentNotificationSession = session
-        } else {
-            // TODO: handle failure
-            let notificationSession = try? self.createNotificationSession(accountIdentifier: accountIdentifier)
-            notificationSessions[accountIdentifier] = notificationSession
-            currentNotificationSession = notificationSession
-        }
-
-        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
+        session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
             if !isUserAuthenticated {
                 let emptyContent = UNNotificationContent()
                 contentHandler(emptyContent)
             }
         }
-
-        self.contentHandler = contentHandler
-        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
 
     public override func serviceExtensionTimeWillExpire() {
         // TODO: discuss with product/design what should we display
         let emptyContent = UNNotificationContent()
-        contentHandler?(emptyContent)
+        contentAndHandler?.handler(emptyContent)
+    }
+
+    public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
+        // TODO: what to do in else?
+        guard let (content, handler) = contentAndHandler else { return }
+
+        switch messageCount {
+        case 0:
+            content.title = "Oops"
+            content.body = "No content to show"
+
+        case 1:
+            content.title = alert.title
+            content.body = alert.body
+
+        default:
+            content.title = alert.title
+            content.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
+
+        }
+
+        handler(content)
     }
 
     // MARK: - Helpers
 
-    private var appGroupId: String? {
-        return Bundle.main.appGroupIdentifier
+    private func currentSession(accountID: UUID) throws -> NotificationSession {
+        if let session = notificationSessions[accountID] {
+            return session
+        } else {
+            let session = try createSession(accountID: accountID)
+            notificationSessions[accountID] = session
+            return session
+        }
     }
 
-    private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = appGroupId else { return nil }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        let account = AccountManager(sharedDirectory: sharedContainerURL)
-        return account
-    }
-
-    private func createNotificationSession(accountIdentifier: UUID) throws -> NotificationSession? {
-        guard let applicationGroupIdentifier = appGroupId else { return nil }
-
+    private func createSession(accountID: UUID) throws -> NotificationSession {
         return try NotificationSession(
-            applicationGroupIdentifier: applicationGroupIdentifier,
-            accountIdentifier: accountIdentifier,
+            applicationGroupIdentifier: appGroupID,
+            accountIdentifier: accountID,
             environment: BackendEnvironment.shared,
             analytics: nil,
             delegate: self,
@@ -98,25 +129,12 @@ public class NotificationService: UNNotificationServiceExtension {
     }
 }
 
-// MARK: - Notification Session Delegate
+// MARK: - Extensions
 
-extension NotificationService: NotificationSessionDelegate {
-    public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
-        if let bestAttemptContent = bestAttemptContent {
-            switch messageCount {
-            case 0:
-                bestAttemptContent.title = "alert.title"
-                bestAttemptContent.body = "alert.body"
-                contentHandler?(bestAttemptContent)
-            case 1:
-                bestAttemptContent.title = alert.title
-                bestAttemptContent.body = alert.body
-                contentHandler?(bestAttemptContent)
-            default:
-                bestAttemptContent.title = alert.title
-                bestAttemptContent.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
-                contentHandler?(bestAttemptContent)
-            }
-        }
+extension UNNotificationRequest {
+
+    var mutableContent: UNMutableNotificationContent? {
+        return content.mutableCopy() as? UNMutableNotificationContent
     }
+
 }
