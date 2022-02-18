@@ -169,6 +169,7 @@ final class SearchResultsViewController: UIViewController {
 
     var filterConversation: ZMConversation?
     let shouldIncludeGuests: Bool
+    let shouldIncludeServices: Bool
 
     weak var delegate: SearchResultsViewControllerDelegate?
 
@@ -185,11 +186,13 @@ final class SearchResultsViewController: UIViewController {
     init(userSelection: UserSelection,
          isAddingParticipants: Bool = false,
          shouldIncludeGuests: Bool,
+         shouldIncludeServices: Bool,
          isFederationEnabled: Bool) {
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
         self.shouldIncludeGuests = shouldIncludeGuests
+        self.shouldIncludeServices = shouldIncludeServices
         self.isFederationEnabled = isFederationEnabled
 
         let team = ZMUser.selfUser().team
@@ -383,7 +386,9 @@ final class SearchResultsViewController: UIViewController {
 
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
+        if shouldIncludeServices {
         servicesSection.services = searchResult.services
+        }
         federationSection.result = searchResult.federation
 
         sectionController.collectionView?.reloadData()
