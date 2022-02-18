@@ -96,7 +96,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         default:
             content.title = alert.title
             content.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
-
         }
 
         handler(content)
