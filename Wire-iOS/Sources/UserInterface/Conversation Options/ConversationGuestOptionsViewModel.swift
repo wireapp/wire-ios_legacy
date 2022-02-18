@@ -19,12 +19,12 @@
 import UIKit
 import WireUtilities
 
-protocol ConversationOptionsViewModelConfiguration: AnyObject {
+protocol ConversationGuestOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowGuests: Bool { get }
     var allowGuestLinks: Bool { get }
     var isCodeEnabled: Bool { get }
-    var areGuestOrServicePresent: Bool { get }
+    var areGuestPresent: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
     func createConversationLink(completion: @escaping (Result<String>) -> Void)
@@ -32,15 +32,15 @@ protocol ConversationOptionsViewModelConfiguration: AnyObject {
     func deleteLink(completion: @escaping (VoidResult) -> Void)
 }
 
-protocol ConversationOptionsViewModelDelegate: AnyObject {
-    func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
-    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView?, confirmRevokingLink completion: @escaping (Bool) -> Void)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
+protocol ConversationGuestOptionsViewModelDelegate: AnyObject {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didUpdateState state: ConversationGuestOptionsViewModel.State)
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didReceiveError error: Error)
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, sourceView: UIView?, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, sourceView: UIView?, confirmRevokingLink completion: @escaping (Bool) -> Void)
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
-final class ConversationOptionsViewModel {
+final class ConversationGuestOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false
@@ -67,15 +67,15 @@ final class ConversationOptionsViewModel {
         }
     }
 
-    weak var delegate: ConversationOptionsViewModelDelegate? {
+    weak var delegate: ConversationGuestOptionsViewModelDelegate? {
         didSet {
             delegate?.viewModel(self, didUpdateState: state)
         }
     }
 
-    private let configuration: ConversationOptionsViewModelConfiguration
+    private let configuration: ConversationGuestOptionsViewModelConfiguration
 
-    init(configuration: ConversationOptionsViewModelConfiguration) {
+    init(configuration: ConversationGuestOptionsViewModelConfiguration) {
         self.configuration = configuration
         state.title = configuration.title
         updateRows()
@@ -91,6 +91,7 @@ final class ConversationOptionsViewModel {
         if configuration.allowGuests && configuration.isCodeEnabled {
             fetchLink()
         }
+
     }
 
     private func updateRows() {
@@ -208,9 +209,9 @@ final class ConversationOptionsViewModel {
         }
     }
 
-    /// set conversation option AllowGuestsAndServices
+    /// set conversation option AllowGuests
     /// - Parameters:
-    ///   - allowGuests: new state AllowGuestsAndServices
+    ///   - allowGuests: new state AllowGuests
     ///   - view: the source view which triggers setAllowGuests action
     /// - Returns: alert controller
     @discardableResult func setAllowGuests(_ allowGuests: Bool, view: UIView? = nil) -> UIAlertController? {
@@ -237,9 +238,9 @@ final class ConversationOptionsViewModel {
 
         guard allowGuests != configuration.allowGuests else { return nil }
 
-        // In case allow guests mode should be deactivated & guest/service in conversation, ask the delegate
+        // In case allow guests mode should be deactivated & guest in conversation, ask the delegate
         // to confirm this action as all guests will be removed.
-        if !allowGuests && configuration.areGuestOrServicePresent {
+        if !allowGuests && configuration.areGuestPresent {
             // Make "remove guests and services" warning only appear if guests or services are present
             return delegate?.viewModel(self, sourceView: view, confirmRemovingGuests: { [weak self] remove in
                 guard let `self` = self else { return }

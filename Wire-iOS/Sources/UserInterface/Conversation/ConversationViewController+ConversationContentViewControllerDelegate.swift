@@ -110,6 +110,18 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
         presentParticipantsViewController(navigationController, from: sourceView)
     }
 
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentServicesOptionFrom sourceView: UIView) {
+        guard conversation.conversationType == .group else {
+            zmLog.error("Illegal Operation: Trying to show services options for non-group conversation")
+            return
+        }
+
+        let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
+        let navigationController = groupDetailsViewController.wrapInNavigationController()
+        groupDetailsViewController.presentServicesOptions(animated: false)
+        presentParticipantsViewController(navigationController, from: sourceView)
+    }
+
     func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [UserType], from sourceView: UIView) {
         if let groupDetailsViewController = (participantsController as? UINavigationController)?.topViewController as? GroupDetailsViewController {
                 groupDetailsViewController.presentParticipantsDetails(with: conversation.sortedOtherParticipants, selectedUsers: selectedUsers, animated: false)

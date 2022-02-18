@@ -48,6 +48,19 @@ extension CellConfiguration {
         )
     }
 
+    static func allowServicesToggle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void) -> CellConfiguration {
+        return .iconToggle(
+            title: L10n.Localizable.ServicesOptions.AllowServices.title,
+            subtitle: L10n.Localizable.ServicesOptions.AllowServices.subtitle,
+            identifier: "toggle.guestoptions.allowservices",
+            titleIdentifier: "label.guestoptions.services.description",
+            icon: nil,
+            color: nil,
+            get: get,
+            set: set
+        )
+    }
+
     static func createLinkButton(action: @escaping Action) -> CellConfiguration {
         return .leadingButton(
             title: "guest_room.link.button.title".localized,

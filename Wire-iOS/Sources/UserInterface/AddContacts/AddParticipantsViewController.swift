@@ -29,15 +29,23 @@ extension ConversationLike where Self: SwiftConversationLike {
         }
 
         // Access mode and/or role is unknown: let's try to add and observe the result.
-        guard let accessMode = accessMode,
-              let accessRole = accessRole else {
-                  return true
-              }
+        guard let accessMode = accessMode else {
+            return true
+        }
 
         let canAddGuest = accessMode.contains(.invite)
-        let guestCanBeAdded = accessRole != .team
+        let guestCanBeAdded = accessRoles.contains(.nonTeamMember) && accessRoles.contains(.guest)
 
         return canAddGuest && guestCanBeAdded
+    }
+
+    var canAddService: Bool {
+        // if not a team conversation: possible to add any contact.
+        guard teamType != nil else {
+            return true
+        }
+
+        return accessRoles.contains(.service)
     }
 }
 
@@ -52,6 +60,15 @@ extension AddParticipantsViewController.Context {
             return conversation.canAddGuest
         case .create(let creationValues):
             return creationValues.allowGuests
+        }
+    }
+
+    var includeServices: Bool {
+        switch self {
+        case .add(let conversation):
+            return conversation.canAddService
+        case .create(let creationValues):
+            return creationValues.allowServices
         }
     }
 
@@ -254,8 +271,8 @@ final class AddParticipantsViewController: UIViewController {
         guard let searchHeaderView = searchHeaderViewController.view,
               let searchResultsView = searchResultsViewController.view,
               let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
-            return
-        }
+                  return
+              }
 
         [searchHeaderView,
          searchResultsView,
@@ -306,6 +323,7 @@ final class AddParticipantsViewController: UIViewController {
             let updated = ConversationCreationValues(name: values.name,
                                                      participants: userSelection.users,
                                                      allowGuests: true,
+                                                     allowServices: true,
                                                      selfUser: ZMUser.selfUser())
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
