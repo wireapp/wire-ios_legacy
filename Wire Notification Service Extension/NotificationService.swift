@@ -29,29 +29,41 @@ public class NotificationService: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
     var notificationSessions: [UUID: NotificationSession] = [:]
 
-    public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        var currentNotificationSession: NotificationSession?
-        // TODO: Check if we have accountID in request.content.userInfo
-        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier else {
-            return
-        }
+//    public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+//        var currentNotificationSession: NotificationSession?
+//        // TODO: Check if we have accountID in request.content.userInfo
+//        guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier else {
+//            return
+//        }
+//
+//        if let session = notificationSessions[accountIdentifier] {
+//            currentNotificationSession = session
+//        } else {
+//            let notificationSession = try? self.createNotificationSession(request.content as? UNMutableNotificationContent)
+//            notificationSessions[accountIdentifier] = notificationSession
+//            currentNotificationSession = notificationSession
+//        }
+//
+//        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isAuthenticatedUser in
+//            if !isAuthenticatedUser {
+//                let emptyContent = UNNotificationContent()
+//                contentHandler(emptyContent)
+    //            }
+    //        }
+    //        self.contentHandler = contentHandler
+    //        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+    //    }
 
-        if let session = notificationSessions[accountIdentifier] {
-            currentNotificationSession = session
-        } else {
-            let notificationSession = try? self.createNotificationSession(request.content as? UNMutableNotificationContent)
-            notificationSessions[accountIdentifier] = notificationSession
-            currentNotificationSession = notificationSession
-        }
-
-        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isAuthenticatedUser in
-            if !isAuthenticatedUser {
-                let emptyContent = UNNotificationContent()
-                contentHandler(emptyContent)
-            }
-        }
+    override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+
+        if let bestAttemptContent = bestAttemptContent {
+            // Modify the notification content here...
+            bestAttemptContent.title = "Sent from NE [modified]"
+
+            contentHandler(bestAttemptContent)
+        }
     }
 
     private var accountManager: AccountManager? {
