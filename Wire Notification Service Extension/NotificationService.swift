@@ -21,8 +21,6 @@ import UserNotifications
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
-import WireRequestStrategy
-import WireSyncEngine
 import UIKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
