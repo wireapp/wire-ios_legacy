@@ -30,6 +30,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     // MARK: - Properties
 
+    private var session: NotificationSession?
     private var contentAndHandler: (content: Content, handler: Handler)?
 
     private lazy var accountManager: AccountManager = {
@@ -72,6 +73,9 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
                 contentHandler(emptyContent)
             }
         }
+
+        // Retain the session otherwise it will tear down.
+        self.session = session
     }
 
     public override func serviceExtensionTimeWillExpire() {
