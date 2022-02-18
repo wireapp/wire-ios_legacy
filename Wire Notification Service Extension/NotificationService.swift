@@ -25,12 +25,21 @@ import WireRequestStrategy
 import WireSyncEngine
 
 public class NotificationService: UNNotificationServiceExtension {
-    var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
-    var notificationSessions: [UUID: NotificationSession] = [:]
 
-    public override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+    // MARK: - Properties
+
+    private var contentHandler: ((UNNotificationContent) -> Void)?
+    private var bestAttemptContent: UNMutableNotificationContent?
+    private var notificationSessions = [UUID: NotificationSession]()
+
+    // MARK: - Methods
+
+    public override func didReceive(
+        _ request: UNNotificationRequest,
+        withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
+    ) {
         var currentNotificationSession: NotificationSession?
+
         // TODO: Check if we have accountID in request.content.userInfo
         guard let accountIdentifier = accountManager?.selectedAccount?.userIdentifier else {
             return
@@ -39,57 +48,63 @@ public class NotificationService: UNNotificationServiceExtension {
         if let session = notificationSessions[accountIdentifier] {
             currentNotificationSession = session
         } else {
-            let notificationSession = try? self.createNotificationSession(request.content as? UNMutableNotificationContent)
+            // TODO: handle failure
+            let notificationSession = try? self.createNotificationSession(accountIdentifier: accountIdentifier)
             notificationSessions[accountIdentifier] = notificationSession
             currentNotificationSession = notificationSession
         }
 
-        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isAuthenticatedUser in
-            if !isAuthenticatedUser {
+        currentNotificationSession?.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
+            if !isUserAuthenticated {
                 let emptyContent = UNNotificationContent()
                 contentHandler(emptyContent)
             }
         }
+
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
     }
 
-    private var accountManager: AccountManager? {
-           guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return nil }
-           let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-           let account = AccountManager(sharedDirectory: sharedContainerURL)
-           return account
-       }
-
-    //TODO: discuss with product/design what should we display
     public override func serviceExtensionTimeWillExpire() {
-        // Called just before the extension will be terminated by the system.
-        // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
+        // TODO: discuss with product/design what should we display
         let emptyContent = UNNotificationContent()
         contentHandler?(emptyContent)
     }
 
-    private func createNotificationSession(_ payload: UNMutableNotificationContent?) throws -> NotificationSession? {
-        guard let applicationGroupIdentifier = Bundle.main.applicationGroupIdentifier,
-              // TODO: Check if we have accountID in payload?.userInfo
-            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
-            else { return nil}
-        return  try NotificationSession(applicationGroupIdentifier: applicationGroupIdentifier,
-                                        accountIdentifier: accountIdentifier,
-                                        environment: BackendEnvironment.shared,
-                                        analytics: nil,
-                                        delegate: self,
-                                        useLegacyPushNotifications: false)
+    // MARK: - Helpers
+
+    private var appGroupId: String? {
+        return Bundle.main.appGroupIdentifier
+    }
+
+    private var accountManager: AccountManager? {
+        guard let applicationGroupIdentifier = appGroupId else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        let account = AccountManager(sharedDirectory: sharedContainerURL)
+        return account
+    }
+
+    private func createNotificationSession(accountIdentifier: UUID) throws -> NotificationSession? {
+        guard let applicationGroupIdentifier = appGroupId else { return nil }
+
+        return try NotificationSession(
+            applicationGroupIdentifier: applicationGroupIdentifier,
+            accountIdentifier: accountIdentifier,
+            environment: BackendEnvironment.shared,
+            analytics: nil,
+            delegate: self,
+            useLegacyPushNotifications: false
+        )
     }
 }
+
+// MARK: - Notification Session Delegate
 
 extension NotificationService: NotificationSessionDelegate {
     public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
         if let bestAttemptContent = bestAttemptContent {
             switch messageCount {
             case 0:
-               // let emptyContent = UNNotificationContent()
-//                contentHandler?(emptyContent)
                 bestAttemptContent.title = "alert.title"
                 bestAttemptContent.body = "alert.body"
                 contentHandler?(bestAttemptContent)
