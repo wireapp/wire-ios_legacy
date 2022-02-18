@@ -64,7 +64,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         self.addressBookHelperType = addressBookHelperType
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
                                                                        isAddingParticipants: false,
-                                                                       shouldIncludeGuests: true, shouldIncludeServices: true,
+                                                                       shouldIncludeGuests: true,
+                                                                       shouldIncludeServices: true,
                                                                        isFederationEnabled: isFederationEnabled)
 
         super.init(nibName: nil, bundle: nil)
