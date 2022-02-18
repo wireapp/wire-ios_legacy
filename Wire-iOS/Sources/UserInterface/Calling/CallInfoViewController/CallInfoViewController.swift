@@ -56,7 +56,8 @@ extension CallInfoViewControllerInput {
             callState.isEqual(toCallState: other.callState) &&
             videoGridPresentationMode == other.videoGridPresentationMode &&
             allowPresentationModeUpdates == other.allowPresentationModeUpdates &&
-            isForcedCBR == other.isForcedCBR
+            isForcedCBR == other.isForcedCBR &&
+            classification == other.classification
     }
 }
 
