@@ -30,7 +30,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     // MARK: - Properties
 
-    private var notificationSessions = [UUID: NotificationSession]()
     private var contentAndHandler: (content: Content, handler: Handler)?
 
     private lazy var accountManager: AccountManager = {
@@ -61,7 +60,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         // TODO: Check if we have accountID in request.content.userInfo
         guard
             let accountID = accountManager.selectedAccount?.userIdentifier,
-            let session = try? currentSession(accountID: accountID)
+            let session = try? createSession(accountID: accountID)
         else {
             // TODO: what happens here?
             return
@@ -104,16 +103,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     // MARK: - Helpers
-
-    private func currentSession(accountID: UUID) throws -> NotificationSession {
-        if let session = notificationSessions[accountID] {
-            return session
-        } else {
-            let session = try createSession(accountID: accountID)
-            notificationSessions[accountID] = session
-            return session
-        }
-    }
 
     private func createSession(accountID: UUID) throws -> NotificationSession {
         return try NotificationSession(
