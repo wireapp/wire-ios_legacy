@@ -196,7 +196,6 @@ final class AddParticipantsViewController: UIViewController {
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests,
-                                                                  shouldIncludeServices: viewModel.context.includeServices,
                                                                   isFederationEnabled: isFederationEnabled)
 
         emptyResultView = EmptySearchResultsView(variant: self.variant,

@@ -65,7 +65,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         self.searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(),
                                                                        isAddingParticipants: false,
                                                                        shouldIncludeGuests: true,
-                                                                       shouldIncludeServices: true,
                                                                        isFederationEnabled: isFederationEnabled)
 
         super.init(nibName: nil, bundle: nil)
