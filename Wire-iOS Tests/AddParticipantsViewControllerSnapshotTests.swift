@@ -87,7 +87,7 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         // WHEN
         mockConversation.conversationType = .group
         mockConversation.teamType = MockTeam()
-        mockConversation.allowGuests = true
+        mockConversation.allowServices = true
 
         sut = AddParticipantsViewController(context: .add(mockConversation), variant: .light)
 
