@@ -38,15 +38,7 @@ extension ConversationLike where Self: SwiftConversationLike {
 
         return canAddGuest && guestCanBeAdded
     }
-
-    var canAddService: Bool {
-        // if not a team conversation: possible to add any contact.
-        guard teamType != nil else {
-            return true
-        }
-
-        return accessRoles.contains(.service)
-    }
+    
 }
 
 protocol AddParticipantsConversationCreationDelegate: AnyObject {
@@ -60,15 +52,6 @@ extension AddParticipantsViewController.Context {
             return conversation.canAddGuest
         case .create(let creationValues):
             return creationValues.allowGuests
-        }
-    }
-
-    var includeServices: Bool {
-        switch self {
-        case .add(let conversation):
-            return conversation.canAddService
-        case .create(let creationValues):
-            return creationValues.allowServices
         }
     }
 

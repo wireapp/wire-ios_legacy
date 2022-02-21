@@ -922,7 +922,7 @@ internal enum L10n {
           internal enum Invite {
             /// Invite people
             internal static let button = L10n.tr("Localizable", "content.system.conversation.invite.button")
-            /// Services and people outside your team can join this conversation.
+            /// People outside your team can join this conversation.
             internal static let title = L10n.tr("Localizable", "content.system.conversation.invite.title")
           }
           internal enum Other {

@@ -23,7 +23,7 @@ extension ConversationLike where Self: SwiftConversationLike {
     var botCanBeAdded: Bool {
         return conversationType != .oneOnOne &&
                teamType != nil &&
-               allowGuests
+               allowServices
     }
 }
 
