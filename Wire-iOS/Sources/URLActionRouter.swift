@@ -240,7 +240,7 @@ private extension URLActionRouter {
 
     enum URLActionError: LocalizedError {
 
-        private typealias Strings = L10n.Localizable.UrlAction.JoinConversation
+        private typealias AlertStrings = L10n.Localizable.UrlAction.JoinConversation.Error.Alert
 
         /// Could not join a conversation because it is full.
 
@@ -249,6 +249,10 @@ private extension URLActionRouter {
         /// Converation link may have been revoked or it is corrupted.
 
         case conversationLinkIsInvalid
+
+        /// The guest link feature is disabled and all guest links have been revoked
+
+        case conversationLinkIsDisabled
 
         /// A generic error case.
 
@@ -262,22 +266,25 @@ private extension URLActionRouter {
             case ConversationJoinError.tooManyMembers:
                 self = .conversationIsFull
 
+            case ConversationJoinError.guestLinksDisabled:
+                self = .conversationLinkIsDisabled
+
             default:
                 self = .unknown
             }
         }
 
         var errorDescription: String? {
-            return Strings.Error.title
+            return AlertStrings.title
         }
 
         var failureReason: String? {
             switch self {
             case .conversationIsFull:
-                return Strings.Error.converationIsFull
+                return AlertStrings.ConverationIsFull.message
 
-            case .conversationLinkIsInvalid:
-                return Strings.Error.linkIsInvalid
+            case .conversationLinkIsInvalid, .conversationLinkIsDisabled:
+                return AlertStrings.LinkIsInvalid.message
 
             case .unknown:
                 return L10n.Localizable.Error.User.unkownError
@@ -295,6 +302,20 @@ private extension URLActionRouter {
         let message = error.failureReason ?? L10n.Localizable.Error.User.unkownError
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(.ok(style: .cancel))
+
+        switch error {
+        case URLActionError.conversationLinkIsDisabled:
+            let topmostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
+            let guestLinksLearnMoreHandler: ((UIAlertAction) -> Swift.Void) = { _ in
+                let browserViewController = BrowserViewController(url: URL.wr_guestLinksLearnMore.appendingLocaleParameter)
+                topmostViewController?.present(browserViewController, animated: true)
+            }
+            alert.addAction(UIAlertAction(title: L10n.Localizable.UrlAction.JoinConversation.Error.Alert.LearnMore.action,
+                                          style: .default,
+                                          handler: guestLinksLearnMoreHandler))
+        default:
+            break
+        }
         presentAlert(alert)
     }
 
