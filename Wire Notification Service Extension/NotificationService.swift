@@ -85,6 +85,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
+        defer { tearDown() }
         // TODO: what to do in else?
         guard let (content, handler) = contentAndHandler else { return }
 
@@ -106,6 +107,14 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     // MARK: - Helpers
+
+    private func tearDown() {
+        // Content and handler should only be consumed once.
+        contentAndHandler = nil
+
+        // Let the session deinit so it can tear down.
+        session = nil
+    }
 
     private func createSession(accountID: UUID) throws -> NotificationSession {
         return try NotificationSession(
