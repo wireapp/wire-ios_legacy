@@ -69,8 +69,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
             if !isUserAuthenticated {
-                let emptyContent = UNNotificationContent()
-                contentHandler(emptyContent)
+                contentHandler(.empty)
             }
         }
 
@@ -80,30 +79,29 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     public override func serviceExtensionTimeWillExpire() {
         // TODO: discuss with product/design what should we display
-        let emptyContent = UNNotificationContent()
-        contentAndHandler?.handler(emptyContent)
+        guard let (_, handler) = contentAndHandler else { return }
+        handler(.empty)
+        tearDown()
     }
 
     public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
         defer { tearDown() }
-        // TODO: what to do in else?
         guard let (content, handler) = contentAndHandler else { return }
 
         switch messageCount {
         case 0:
-            content.title = "Oops"
-            content.body = "No content to show"
+            handler(.empty)
 
         case 1:
             content.title = alert.title
             content.body = alert.body
+            handler(content)
 
         default:
             content.title = alert.title
             content.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
+            handler(content)
         }
-
-        handler(content)
     }
 
     // MARK: - Helpers
@@ -134,6 +132,18 @@ extension UNNotificationRequest {
 
     var mutableContent: UNMutableNotificationContent? {
         return content.mutableCopy() as? UNMutableNotificationContent
+    }
+
+}
+
+extension UNNotificationContent {
+
+    // With the "filtering" entitlement, we can tell iOS to not display a user notification by
+    // passing empty content to the content handler.
+    // See https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_usernotifications_filtering
+
+    static var empty: Self {
+        return Self()
     }
 
 }
