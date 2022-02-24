@@ -39,24 +39,17 @@ protocol CBRSettingProvider {
 }
 
 extension CallStatusViewInputType {
-    var callingConfig: CallingConfiguration { .config }
 
     var overlayBackgroundColor: UIColor {
-        switch (isVideoCall, state, callingConfig.isAudioCallColorSchemable) {
-        case (true, .ringingOutgoing, _), (true, .ringingIncoming, _):
+        switch (isVideoCall, state) {
+        case (true, .ringingOutgoing), (true, .ringingIncoming):
             return UIColor.black.withAlphaComponent(0.4)
-        case (true, _, _), (false, _, false):
+        case (true, _), (false, _):
             return UIColor.black.withAlphaComponent(0.64)
-        case (false, _, true):
-            return variant == .light ? UIColor.from(scheme: .background, variant: .light) : .black
         }
     }
 
-    var effectiveColorVariant: ColorSchemeVariant {
-        guard callingConfig.isAudioCallColorSchemable else { return .dark }
-
-        return isVideoCall ? .dark : variant
-    }
+    var effectiveColorVariant: ColorSchemeVariant { .dark }
 
     var shouldShowBitrateLabel: Bool {
         isForcedCBR ? isConstantBitRate : userEnabledCBR

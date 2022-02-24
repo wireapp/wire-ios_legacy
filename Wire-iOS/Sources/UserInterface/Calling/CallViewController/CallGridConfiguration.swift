@@ -181,8 +181,6 @@ extension VoiceChannel {
 
     // MARK: - Helpers
 
-    private var callingConfig: CallingConfiguration { .config }
-
     private var isEstablished: Bool {
         return state == .established
     }
@@ -209,8 +207,6 @@ private extension VideoGridPresentationMode {
         case .activeSpeakers:
             return .smoothedActiveSpeakers
         case .allVideoStreams:
-            return .all
-        @unknown default:
             return .all
         }
     }

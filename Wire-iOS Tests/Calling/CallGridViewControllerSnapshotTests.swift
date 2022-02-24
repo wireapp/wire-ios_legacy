@@ -70,15 +70,12 @@ final class CallGridViewControllerSnapshotTests: XCTestCase {
             client: selfAVSClient,
             activeSpeakerState: .active(audioLevelNow: 100)
         )
-
-        CallingConfiguration.config = .largeConferenceCalls
     }
 
     override func tearDown() {
         sut = nil
         mediaManager = nil
         mockHintView = nil
-        CallingConfiguration.resetDefaultConfig()
 
         super.tearDown()
     }

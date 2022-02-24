@@ -36,14 +36,12 @@ final class CallInfoConfigurationTests: XCTestCase {
         mockSelfUser = MockUserType.createSelfUser(name: "Bob")
         mockUsers = SwiftMockLoader.mockUsers()
         mockOtherUser = mockUsers.first!
-        CallingConfiguration.config = .largeConferenceCalls
     }
 
     override func tearDown() {
         mockSelfUser = nil
         mockOtherUser = nil
         mockUsers = nil
-        CallingConfiguration.resetDefaultConfig()
 
         super.tearDown()
     }

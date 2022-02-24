@@ -31,13 +31,7 @@ final class CallGridViewController: SpinnerCapableViewController {
     // MARK: - Statics
 
     static let isCoveredKey = "isCovered"
-
-    static var maxItemsPerPage: Int {
-        switch CallingConfiguration.config.streamLimit {
-        case .limit(amount: let amount): return amount
-        case .noLimit: return 8
-        }
-    }
+    static var maxItemsPerPage: Int = 8
 
     // MARK: - Private Properties
 

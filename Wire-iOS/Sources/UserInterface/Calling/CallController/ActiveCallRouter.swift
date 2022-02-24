@@ -90,7 +90,7 @@ extension ActiveCallRouter: ActiveCallRouterProtocol {
         let activeCallViewController = ActiveCallViewController(voiceChannel: voiceChannel)
         activeCallViewController.delegate = callController
 
-        let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: !CallingConfiguration.config.paginationEnabled)
+        let modalVC = ModalPresentationViewController(viewController: activeCallViewController, enableDismissOnPan: false)
 
         rootViewController.isPresenting
             ? dismissPresentedAndPresentActiveCall(modalViewController: modalVC, animated: animated)
