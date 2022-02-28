@@ -129,15 +129,15 @@ extension URL {
     }
 
     static var wr_fingerprintLearnMore: URL {
-        return BackendEnvironment.websiteLink(path: "privacy/why")
+        return wr_support.appendingPathComponent("hc/articles/207859815-Why-should-I-verify-my-conversations")
     }
 
     static var wr_fingerprintHowToVerify: URL {
-        return BackendEnvironment.websiteLink(path: "privacy/how")
+        return wr_support.appendingPathComponent("hc/articles/207692235-How-can-I-compare-key-fingerprints-")
     }
 
     static var wr_privacyPolicy: URL {
-        return BackendEnvironment.websiteLink(path: "legal/privacy/embed")
+        return BackendEnvironment.websiteLink(path: "legal/terms-of-use-personal")
     }
 
     static var wr_licenseInformation: URL {
@@ -157,7 +157,7 @@ extension URL {
     }
 
     static var wr_reportAbuse: URL {
-        return BackendEnvironment.websiteLink(path: "support/misuse")
+        return wr_support.appendingPathComponent("hc/requests/new")
     }
 
     static var wr_cannotDecryptHelp: URL {
@@ -180,12 +180,8 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "support/username") // TODO jacob update URL when new support page for search exists
     }
 
-    static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
-        if isTeamAccount {
-            return BackendEnvironment.websiteLink(path: "legal/terms/teams")
-        } else {
-            return BackendEnvironment.websiteLink(path: "legal/terms/personal")
-        }
+    static var wr_termsOfServicesURL: URL {
+        return BackendEnvironment.websiteLink(path: "legal/terms-of-use-personal")
     }
 
     static var wr_legalHoldLearnMore: URL {
@@ -197,7 +193,7 @@ extension URL {
     }
 
     static var wr_wireEnterpriseLearnMore: URL {
-        return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
+        return BackendEnvironment.websiteLink(path: "pricing")
     }
 
     static var selfUserProfileLink: URL? {
