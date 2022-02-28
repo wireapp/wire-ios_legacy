@@ -101,6 +101,9 @@ public final class AutomationHelper: NSObject {
     /// Whether federation support should be enabled
     public let enableFederation: Bool
 
+    /// Whether the calling overlay should disappear automatically.
+    public let keepCallingOverlayVisible: Bool
+
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
@@ -112,6 +115,7 @@ public final class AutomationHelper: NSObject {
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
         enableFederation = arguments.hasFlag(AutomationKey.enableFederation)
+        keepCallingOverlayVisible = arguments.hasFlag(AutomationKey.keepCallingOverlayVisible)
         
         if let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
             useAppCenterLaunchOption = (value != "0")
@@ -153,6 +157,7 @@ public final class AutomationHelper: NSObject {
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
         case useAppCenter = "use-app-center"
         case enableFederation = "enable-federation"
+        case keepCallingOverlayVisible = "keep-calling-overlay-visible"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
