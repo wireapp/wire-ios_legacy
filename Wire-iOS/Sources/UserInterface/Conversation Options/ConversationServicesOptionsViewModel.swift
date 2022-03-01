@@ -23,6 +23,7 @@ protocol ConversationServicesOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowServices: Bool { get }
     var areServicePresent: Bool { get }
+    var allowServicesChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowServices(_ allowServices: Bool, completion: @escaping (VoidResult) -> Void)
 }
 
@@ -63,7 +64,16 @@ final class ConversationServicesOptionsViewModel {
         self.configuration = configuration
         state.title = configuration.title
         updateRows()
-}
+
+        configuration.allowServicesChangedHandler = { [weak self] allowServices in
+            guard let `self` = self else { return }
+            if allowServices {
+                self.updateRows()
+            } else {
+                self.updateRows()
+            }
+        }
+    }
     private func updateRows() {
         state.rows = [.allowServicesToggle(
             get: { [unowned self] in return self.configuration.allowServices},
