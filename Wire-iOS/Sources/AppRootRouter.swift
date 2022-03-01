@@ -191,7 +191,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         }
 
         switch appState {
-        case .blacklisted:
+        case .blacklisted(reason: let reason):
+            // TODO: [David] use the reason to show the appropriate alert
             showBlacklisted(completion: completionBlock)
         case .jailbroken:
             showJailbroken(completion: completionBlock)
