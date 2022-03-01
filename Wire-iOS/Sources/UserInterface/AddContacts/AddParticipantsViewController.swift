@@ -38,7 +38,7 @@ extension ConversationLike where Self: SwiftConversationLike {
 
         return canAddGuest && guestCanBeAdded
     }
-    
+
 }
 
 protocol AddParticipantsConversationCreationDelegate: AnyObject {

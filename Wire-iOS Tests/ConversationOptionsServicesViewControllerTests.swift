@@ -25,6 +25,7 @@ final class MockServicesOptionsViewModelConfiguration: ConversationServicesOptio
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var title: String
     var allowServices: Bool
+    var allowServicesChangedHandler: ((Bool) -> Void)?
     var areServicePresent = true
     var setAllowServices: SetHandler?
 
@@ -82,6 +83,27 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
 
         // THEN
         verify(matching: sut)
+    }
+
+    // MARK: Renders Services Screen when a change is occured
+
+    func testThatItUpdatesServicesScreenWhenItReceivesAChange() {
+        // GIVEN
+        let config = MockServicesOptionsViewModelConfiguration(allowServices: false)
+        let viewModel = ConversationServicesOptionsViewModel(configuration: config)
+        let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .light)
+
+        // Verify that the toggle should be off.
+        verify(matching: sut)
+
+        // WHEN
+        config.allowServices = true
+        // confusingly, the value passed here has no affect
+        config.allowServicesChangedHandler?(true)
+
+        // Then, verify the toggle is now on.
+        verify(matching: sut)
+
     }
 
     // MARK: Renders Group's Title in Services Screen
