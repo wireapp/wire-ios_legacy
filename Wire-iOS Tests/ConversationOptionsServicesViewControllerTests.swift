@@ -93,12 +93,17 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .light)
 
-        XCTAssertNotNil(config.allowServicesChangedHandler)
+        // Verify that the toggle should be off.
+        verify(matching: sut)
+
+        // When
         config.allowServices = true
+        // confusingly, the value passed here has no affect
         config.allowServicesChangedHandler?(true)
 
-        // THEN
+        // Then, verify the toggle is now on.
         verify(matching: sut)
+
     }
 
     // MARK: Renders Group's Title in Services Screen

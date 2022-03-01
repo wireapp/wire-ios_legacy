@@ -65,13 +65,8 @@ final class ConversationServicesOptionsViewModel {
         state.title = configuration.title
         updateRows()
 
-        configuration.allowServicesChangedHandler = { [weak self] allowServices in
-            guard let `self` = self else { return }
-            if allowServices {
-                self.updateRows()
-            } else {
-                self.updateRows()
-            }
+        configuration.allowServicesChangedHandler = { [weak self] _ in
+            self?.updateRows()
         }
     }
     private func updateRows() {
