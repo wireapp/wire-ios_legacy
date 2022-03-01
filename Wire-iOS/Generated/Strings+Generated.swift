@@ -4469,12 +4469,22 @@ internal enum L10n {
           }
         }
         internal enum Error {
-          /// The conversation is full.
-          internal static let converationIsFull = L10n.tr("Localizable", "url_action.join_conversation.error.converation_is_full")
-          /// The conversation link is invalid.
-          internal static let linkIsInvalid = L10n.tr("Localizable", "url_action.join_conversation.error.link_is_invalid")
-          /// You could not join the conversation
-          internal static let title = L10n.tr("Localizable", "url_action.join_conversation.error.title")
+          internal enum Alert {
+            /// You could not join the conversation
+            internal static let title = L10n.tr("Localizable", "url_action.join_conversation.error.alert.title")
+            internal enum ConverationIsFull {
+              /// The conversation is full.
+              internal static let message = L10n.tr("Localizable", "url_action.join_conversation.error.alert.converation_is_full.message")
+            }
+            internal enum LearnMore {
+              /// Learn more about guest links
+              internal static let action = L10n.tr("Localizable", "url_action.join_conversation.error.alert.learn_more.action")
+            }
+            internal enum LinkIsInvalid {
+              /// The conversation link is invalid.
+              internal static let message = L10n.tr("Localizable", "url_action.join_conversation.error.alert.link_is_invalid.message")
+            }
+          }
         }
       }
       internal enum SwitchBackend {
