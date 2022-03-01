@@ -96,7 +96,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         // Verify that the toggle should be off.
         verify(matching: sut)
 
-        // When
+        // WHEN
         config.allowServices = true
         // confusingly, the value passed here has no affect
         config.allowServicesChangedHandler?(true)
