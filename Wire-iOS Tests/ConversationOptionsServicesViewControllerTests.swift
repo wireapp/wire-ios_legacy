@@ -25,6 +25,7 @@ final class MockServicesOptionsViewModelConfiguration: ConversationServicesOptio
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var title: String
     var allowServices: Bool
+    var allowServicesChangedHandler: ((Bool) -> Void)?
     var areServicePresent = true
     var setAllowServices: SetHandler?
 
@@ -79,6 +80,22 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let config = MockServicesOptionsViewModelConfiguration(allowServices: true)
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .dark)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    // MARK: Renders Services Screen when a change is occured
+
+    func testThatItUpdatesServicesScreenWhenItReceivesAChange() {
+        // GIVEN
+        let config = MockServicesOptionsViewModelConfiguration(allowServices: false)
+        let viewModel = ConversationServicesOptionsViewModel(configuration: config)
+        let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .light)
+
+        XCTAssertNotNil(config.allowServicesChangedHandler)
+        config.allowServices = true
+        config.allowServicesChangedHandler?(true)
 
         // THEN
         verify(matching: sut)
