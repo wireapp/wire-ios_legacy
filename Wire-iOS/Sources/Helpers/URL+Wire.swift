@@ -137,7 +137,7 @@ extension URL {
     }
 
     static var wr_privacyPolicy: URL {
-        return BackendEnvironment.websiteLink(path: "legal/terms-of-use-personal")
+        return BackendEnvironment.websiteLink(path: "legal")
     }
 
     static var wr_licenseInformation: URL {
@@ -181,7 +181,7 @@ extension URL {
     }
 
     static var wr_termsOfServicesURL: URL {
-        return BackendEnvironment.websiteLink(path: "legal/terms-of-use-personal")
+        return BackendEnvironment.websiteLink(path: "legal")
     }
 
     static var wr_legalHoldLearnMore: URL {

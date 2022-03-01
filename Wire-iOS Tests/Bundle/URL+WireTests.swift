@@ -41,14 +41,13 @@ final class URL_WireTests: XCTestCase {
         let websiteURL = URL(string: "https://wire.com")!
         XCTAssertEqual(be.websiteURL, websiteURL)
         XCTAssertEqual(URL.wr_usernameLearnMore, websiteURL.appendingPathComponent("support/username"))
-        XCTAssertEqual(URL.wr_privacyPolicy, websiteURL.appendingPathComponent("legal/terms-of-use-personal"))
+        XCTAssertEqual(URL.wr_privacyPolicy, websiteURL.appendingPathComponent("legal"))
         XCTAssertEqual(URL.wr_licenseInformation, websiteURL.appendingPathComponent("legal/licenses/embed"))
         XCTAssertEqual(URL.wr_cannotDecryptHelp, websiteURL.appendingPathComponent("privacy/error-1"))
         XCTAssertEqual(URL.wr_cannotDecryptNewRemoteIDHelp, websiteURL.appendingPathComponent("privacy/error-2"))
         XCTAssertEqual(URL.wr_createTeamFeatures, websiteURL.appendingPathComponent("teams/learnmore"))
         XCTAssertEqual(URL.wr_emailInUseLearnMore, websiteURL.appendingPathComponent("support/email-in-use"))
-        XCTAssertEqual(URL.wr_termsOfServicesURL, websiteURL.appendingPathComponent("legal/terms-of-use-personal"))
-        XCTAssertEqual(URL.wr_termsOfServicesURL, websiteURL.appendingPathComponent("legal/terms-of-use-personal"))
+        XCTAssertEqual(URL.wr_termsOfServicesURL, websiteURL.appendingPathComponent("legal"))
     }
 
     func testThatSupportURLsAreLoadedCorrectly() {
