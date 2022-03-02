@@ -192,8 +192,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
 
         switch appState {
         case .blacklisted(reason: let reason):
-            // TODO: [David] use the reason to show the appropriate alert
-            showBlacklisted(completion: completionBlock)
+            showBlacklisted(reason: reason, completion: completionBlock)
         case .jailbroken:
             showJailbroken(completion: completionBlock)
         case .databaseFailure:
@@ -262,8 +261,8 @@ extension AppRootRouter {
         }
     }
 
-    private func showBlacklisted(completion: @escaping () -> Void) {
-        let blockerViewController = BlockerViewController(context: .blacklist)
+    private func showBlacklisted(reason: BlacklistReason, completion: @escaping () -> Void) {
+        let blockerViewController = BlockerViewController(context: reason.blockerViewControllerContext)
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }

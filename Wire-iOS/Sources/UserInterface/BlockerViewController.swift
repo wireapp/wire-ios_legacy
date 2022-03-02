@@ -24,6 +24,7 @@ enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
     case databaseFailure
+    case backendNotSupported
 }
 
 final class BlockerViewController: LaunchImageViewController {
@@ -54,7 +55,18 @@ final class BlockerViewController: LaunchImageViewController {
             showJailbrokenMessage()
         case .databaseFailure:
             showDatabaseFailureMessage()
+        case .backendNotSupported:
+            showBackendNotSupportedMessage()
         }
+    }
+
+    func showBackendNotSupportedMessage() {
+        typealias BackendNotSupported = L10n.Localizable.BackendNotSupported.Alert
+
+        presentAlertWithOKButton(
+            title: BackendNotSupported.title,
+            message: BackendNotSupported.message
+        )
     }
 
     func showBlacklistMessage() {
