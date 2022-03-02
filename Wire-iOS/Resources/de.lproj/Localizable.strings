@@ -720,8 +720,6 @@
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
 
-"call.toast.muted_on_join.message" = "Wenn Sie an einer Telefonkonferenz teilnehmen, sind Sie zunächst stumm geschaltet";
-
 "call.quality.indicator.message" = "Ihr Anrufrelais ist nicht erreichbar. Dies kann Ihr Gespräch beeinträchtigen.";
 "call.quality.indicator.more_info.button.text" = "Mehr erfahren";
 
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Sie wurden zu dieser Unterhaltung eingeladen:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Beitreten";
 
-"url_action.join_conversation.error.title" = "Sie konnten der Unterhaltung nicht beitreten";
-"url_action.join_conversation.error.converation_is_full" = "Die Unterhaltung ist voll.";
-"url_action.join_conversation.error.link_is_invalid" = "Der Link zu dieser Unterhaltung ist ungültig.";
+"url_action.join_conversation.error.alert.title" = "Sie konnten der Unterhaltung nicht beitreten";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Die Unterhaltung ist voll.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Der Link zu dieser Unterhaltung ist ungültig.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Erfahren Sie mehr über Gäste-Links.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";

@@ -720,8 +720,6 @@
 "call.alert.ongoing.start.button" = "Chame de qualquer maneira";
 "call.alert.ongoing.join.button" = "Junte-se de qualquer maneira";
 
-"call.toast.muted_on_join.message" = "Ao entrar em uma chamada de conferência, você é silenciado inicialmente";
-
 "call.quality.indicator.message" = "Sua retransmissão de chamada não está acessível. Isso pode afetar sua experiência de chamada.";
 "call.quality.indicator.more_info.button.text" = "Mais informações";
 
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Você foi convidado para uma conversa:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Participe";
 
-"url_action.join_conversation.error.title" = "Você não pôde entrar na conversa";
-"url_action.join_conversation.error.converation_is_full" = "A conversa está cheia.";
-"url_action.join_conversation.error.link_is_invalid" = "O link da conversa é inválido.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "O Wire não pode encontrar esta pessoa.";

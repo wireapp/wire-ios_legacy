@@ -720,8 +720,6 @@
 "call.alert.ongoing.start.button" = "Dzwoń mimo to";
 "call.alert.ongoing.join.button" = "Dołącz mimo to";
 
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
-
 "call.quality.indicator.message" = "Przekazywanie połączeń jest niedostępne. Może to mieć wpływ na Twoje wrażenia z połączenia.";
 "call.quality.indicator.more_info.button.text" = "Więcej informacji";
 
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Zostałeś zaproszony do rozmowy:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Dołącz";
 
-"url_action.join_conversation.error.title" = "Nie możesz dołączyć do rozmowy";
-"url_action.join_conversation.error.converation_is_full" = "Nie można dodać więcej uczestników.";
-"url_action.join_conversation.error.link_is_invalid" = "Link do rozmowy jest nieprawidłowy.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire nie może znaleźć tej osoby.";
