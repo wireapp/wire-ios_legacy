@@ -43,10 +43,10 @@ final class AppStateCalculatorTests: XCTestCase {
     func testThatAppStateChanges_OnDidBlacklistCurrentVersion() {
         // WHEN
         sut.applicationDidBecomeActive()
-        sut.sessionManagerDidBlacklistCurrentVersion()
+        sut.sessionManagerDidBlacklistCurrentVersion(reason: .appVersionBlacklisted)
 
         // THEN
-        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertEqual(sut.appState, .blacklisted(reason: .appVersionBlacklisted))
         XCTAssertTrue(delegate.wasNotified)
     }
 
@@ -144,14 +144,14 @@ final class AppStateCalculatorTests: XCTestCase {
     func testApplicationDontTransit_WhenAppStateDontChanges() {
         // GIVEN
         sut.applicationDidBecomeActive()
-        sut.testHelper_setAppState(.blacklisted)
+        sut.testHelper_setAppState(.blacklisted(reason: .appVersionBlacklisted))
         delegate.wasNotified = false
 
         // WHEN
-        sut.sessionManagerDidBlacklistCurrentVersion()
+        sut.sessionManagerDidBlacklistCurrentVersion(reason: .appVersionBlacklisted)
 
         // THEN
-        XCTAssertEqual(sut.appState, .blacklisted)
+        XCTAssertEqual(sut.appState, .blacklisted(reason: .appVersionBlacklisted))
         XCTAssertFalse(delegate.wasNotified)
     }
 
@@ -160,7 +160,7 @@ final class AppStateCalculatorTests: XCTestCase {
         let userSession = MockZMUserSession()
         userSession.lock = .database
         sut.applicationDidBecomeActive()
-        sut.testHelper_setAppState(.blacklisted)
+        sut.testHelper_setAppState(.blacklisted(reason: .appVersionBlacklisted))
         delegate.wasNotified = false
 
         // WHEN

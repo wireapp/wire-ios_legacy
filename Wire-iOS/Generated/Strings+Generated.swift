@@ -163,6 +163,14 @@ internal enum L10n {
         }
       }
     }
+    internal enum BackendNotSupported {
+      internal enum Alert {
+        /// The server version is not supported by this app. Please contact your system administrator.
+        internal static let message = L10n.tr("Localizable", "backend_not_supported.alert.message")
+        /// Server version not supported
+        internal static let title = L10n.tr("Localizable", "backend_not_supported.alert.title")
+      }
+    }
     internal enum ButtonMessageCell {
       /// Your answer can't be sent, please retry.
       internal static let genericError = L10n.tr("Localizable", "button_message_cell.generic_error")
@@ -1776,7 +1784,8 @@ internal enum L10n {
         internal static let accountSuspended = L10n.tr("Localizable", "error.user.account_suspended")
         /// You have been logged out from another device.
         internal static let deviceDeletedRemotely = L10n.tr("Localizable", "error.user.device_deleted_remotely")
-        /// You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.
+        /// You can't create this account as your email domain is intentionally blocked.
+        /// Please ask your team admin to invite you via email.
         internal static let domainBlocked = L10n.tr("Localizable", "error.user.domain_blocked")
         /// The email address you provided has already been registered. Please try again.
         internal static let emailIsTaken = L10n.tr("Localizable", "error.user.email_is_taken")
