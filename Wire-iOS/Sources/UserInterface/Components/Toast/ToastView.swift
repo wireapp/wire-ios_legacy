@@ -27,6 +27,7 @@ struct ToastConfiguration {
     let variant: ColorSchemeVariant
     let dismissable: Bool
     let moreInfoAction: MoreInfoAction?
+    let accessibilityIdentifier: String?
 }
 
 class ToastView: UIView {
@@ -58,6 +59,7 @@ class ToastView: UIView {
     private let closeButton: IconButton = {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
+        button.accessibilityIdentifier = "btn.close"
         return button
     }()
 
@@ -69,6 +71,7 @@ class ToastView: UIView {
             for: .normal
         )
         button.titleLabel?.font = FontSpec(.small, .semibold).font
+        button.accessibilityIdentifier = "btn.moreInfo"
         return button
     }()
 
@@ -97,6 +100,7 @@ class ToastView: UIView {
         messageLabel.textColor = textColor
         closeButton.setIconColor(textColor, for: .normal)
         closeButton.isHidden = !config.dismissable
+        accessibilityIdentifier = config.accessibilityIdentifier ?? "toast"
 
         guard config.moreInfoAction != nil else {
             bottomView.isHidden = true

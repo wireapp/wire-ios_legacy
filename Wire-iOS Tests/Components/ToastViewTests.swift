@@ -46,7 +46,8 @@ class ToastViewTests: XCTestCase {
             colorScheme: .utilityNeutral,
             variant: .light,
             dismissable: false,
-            moreInfoAction: nil)
+            moreInfoAction: nil,
+            accessibilityIdentifier: nil)
         )
 
         verify(matching: sut)
@@ -58,7 +59,8 @@ class ToastViewTests: XCTestCase {
             colorScheme: .utilitySuccess,
             variant: .light,
             dismissable: true,
-            moreInfoAction: nil)
+            moreInfoAction: nil,
+            accessibilityIdentifier: nil)
         )
 
         verify(matching: sut)
@@ -70,7 +72,8 @@ class ToastViewTests: XCTestCase {
             colorScheme: .utilityError,
             variant: .light,
             dismissable: true,
-            moreInfoAction: {})
+            moreInfoAction: {},
+            accessibilityIdentifier: nil)
         )
 
         verify(matching: sut)
@@ -82,7 +85,8 @@ class ToastViewTests: XCTestCase {
             colorScheme: .utilityError,
             variant: .dark,
             dismissable: true,
-            moreInfoAction: {})
+            moreInfoAction: {},
+            accessibilityIdentifier: nil)
         )
 
         verify(matching: sut)

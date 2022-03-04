@@ -95,7 +95,7 @@ extension VoiceChannel {
         }
         return sortedData
     }
-    
+
     private var streamArrangementForNonEstablishedCall: StreamArrangment {
         guard videoGridPresentationMode.needsSelfStream, let stream = createSelfStream() else {
             return (nil, [])
