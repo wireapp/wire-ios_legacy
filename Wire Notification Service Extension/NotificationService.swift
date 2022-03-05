@@ -18,6 +18,7 @@
 
 import Foundation
 import UserNotifications
+import WireRequestStrategy
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
@@ -25,13 +26,10 @@ import UIKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
-    private typealias Content = UNMutableNotificationContent
-    private typealias Handler = (UNNotificationContent) -> Void
-
     // MARK: - Properties
 
     private var session: NotificationSession?
-    private var contentAndHandler: (content: Content, handler: Handler)?
+    private var contentHandler: ((UNNotificationContent) -> Void)?
 
     private lazy var accountManager: AccountManager = {
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupID)
@@ -53,10 +51,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        // TODO: what to do when no content?
-        guard let content = request.mutableContent else { return }
-
-        contentAndHandler = (content, contentHandler)
+        self.contentHandler = contentHandler
 
         // TODO: Check if we have accountID in request.content.userInfo
         guard
@@ -79,36 +74,23 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     public override func serviceExtensionTimeWillExpire() {
         // TODO: discuss with product/design what should we display
-        guard let (_, handler) = contentAndHandler else { return }
-        handler(.empty)
+        guard let contentHandler = contentHandler else { return }
+        contentHandler(.empty)
         tearDown()
     }
 
-    public func modifyNotification(_ alert: ClientNotification, messageCount: Int) {
+    public func notificationSessionDidGenerateNotification(_ notification: ZMLocalNotification?) {
         defer { tearDown() }
-        guard let (content, handler) = contentAndHandler else { return }
-
-        switch messageCount {
-        case 0:
-            handler(.empty)
-
-        case 1:
-            content.title = alert.title
-            content.body = alert.body
-            handler(content)
-
-        default:
-            content.title = alert.title
-            content.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
-            handler(content)
-        }
+        guard let contentHandler = contentHandler else { return }
+        contentHandler(notification?.content ?? .empty)
     }
+
 
     // MARK: - Helpers
 
     private func tearDown() {
         // Content and handler should only be consumed once.
-        contentAndHandler = nil
+        contentHandler = nil
 
         // Let the session deinit so it can tear down.
         session = nil
