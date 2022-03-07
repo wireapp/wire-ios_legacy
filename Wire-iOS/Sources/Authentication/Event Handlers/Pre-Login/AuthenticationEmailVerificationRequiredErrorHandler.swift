@@ -30,8 +30,11 @@ class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
          let error = context
 
-        // Only handle e-mail login errors
-        guard case let .authenticateEmailCredentials(credentials) = currentStep else {
+        // Only handle errors that happen during email login
+        switch currentStep {
+        case .send2FALoginCode, .authenticateEmailCredentials:
+            break
+        default:
             return nil
         }
 
