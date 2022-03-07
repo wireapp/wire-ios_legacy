@@ -429,8 +429,8 @@ extension AuthenticationCoordinator {
         } else {
             guard let accountId = unauthenticatedSession.accountId,
                   let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
-                fatal("No unauthenticated account to log out from")
-            }
+                      fatal("No unauthenticated account to log out from")
+                  }
 
             sessionManager.delete(account: unauthenticatedAccount)
         }
@@ -658,12 +658,12 @@ extension AuthenticationCoordinator {
     }
 
     private func send2FALoginCode(email: String, isResend: Bool) {
-            let nextStep = AuthenticationFlowStep.send2FALoginCode(email: email, isResend: isResend)
-            stateController.transition(to: nextStep)
+        let nextStep = AuthenticationFlowStep.send2FALoginCode(email: email, isResend: isResend)
+        stateController.transition(to: nextStep)
         // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
         // when it's implemented in SE
-            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: email)
-     }
+        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: email)
+    }
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
@@ -706,7 +706,7 @@ extension AuthenticationCoordinator {
     // MARK: - Add Email And Password
 
     /// Sets th e-mail and password credentials for the current user.
-     private func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
+    private func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
         guard case .addEmailAndPassword = stateController.currentStep else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
