@@ -39,5 +39,12 @@ class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
         guard error.userSessionErrorCode == .accountIsPendingVerification else {
             return nil
         }
+
+        // Prepare and return the alert
+        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error,
+                                                             completionActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
+
+        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
+
     }
 }
