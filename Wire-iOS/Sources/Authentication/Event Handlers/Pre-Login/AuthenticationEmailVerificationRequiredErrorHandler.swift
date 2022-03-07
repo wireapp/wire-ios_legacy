@@ -20,15 +20,15 @@ import Foundation
 import WireSyncEngine
 
 /**
-   * Handle e-mail login errors that occur for accountIsPendingVerification errors.
-*/
+ * Handle e-mail login errors that occur for accountIsPendingVerification errors.
+ */
 
 class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
 
- weak var statusProvider: AuthenticationStatusProvider?
+    weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
-         let error = context
+        let error = context
 
         // Only handle errors that happen during email login
         switch currentStep {
