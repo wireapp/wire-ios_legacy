@@ -59,6 +59,8 @@ indirect enum AuthenticationFlowStep: Equatable {
     case provideCredentials(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
     case sendLoginCode(phoneNumber: String, isResend: Bool)
     case enterLoginCode(phoneNumber: String)
+    case send2FALoginCode(email: String, isResend: Bool)
+    case enter2FALoginCode(email: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
     case companyLogin
@@ -96,6 +98,8 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .provideCredentials: return true
         case .sendLoginCode: return false
         case .enterLoginCode: return true
+        case .send2FALoginCode: return false
+        case .enter2FALoginCode: return true
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
