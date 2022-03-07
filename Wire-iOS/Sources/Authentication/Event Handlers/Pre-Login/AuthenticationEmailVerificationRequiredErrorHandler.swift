@@ -20,8 +20,8 @@ import Foundation
 import WireSyncEngine
 
 /**
- * Handles the input of the email verification code after log in if the user doesn't have one.
- */
+   * Handle e-mail login errors that occur for accountIsPendingVerification errors.
+*/
 
 class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
 
