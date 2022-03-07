@@ -679,6 +679,8 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .enterLoginCode(let phoneNumber):
             sendLoginCode(phoneNumber: phoneNumber, isResend: true)
+        case .enter2FALoginCode(let email):
+            send2FALoginCode(email: email, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
