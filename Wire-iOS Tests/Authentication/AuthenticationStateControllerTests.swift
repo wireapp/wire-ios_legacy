@@ -150,4 +150,27 @@ class AuthenticationStateControllerTests: XCTestCase {
         XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials(.phone, nil)])
     }
 
+    func testThatItUnwindsFromNonUIToUIStateDuringEmailVerificationCodeFlow() {
+        // GIVEN
+        let emailAddress = "test@wire.com"
+
+        stateController.transition(to: .landingScreen, mode: .reset)
+        stateController.transition(to: .provideCredentials(.email, nil)) // user logs in with phone number
+        stateController.transition(to: .requestEmailVerificationCode(email: emailAddress, isResend: false))
+        stateController.transition(to: .enterEmailVerificationCode(email: emailAddress))
+
+        XCTAssertEqual(stateController.stack, [
+            .landingScreen,
+            .provideCredentials(.email, nil),
+            .requestEmailVerificationCode(email: emailAddress, isResend: false), // non-ui
+            .enterEmailVerificationCode(email: emailAddress)
+        ])
+
+        // WHEN
+        stateController.unwindState() // user taps back button on enter code screen
+
+        // THEN
+        XCTAssertEqual(stateController.currentStep, .provideCredentials(.email, nil)) // we should rewind to n-2, because n-1 is non-ui
+        XCTAssertEqual(stateController.stack, [.landingScreen, .provideCredentials(.email, nil)])
+    }
 }
