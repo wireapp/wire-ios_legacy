@@ -38,7 +38,7 @@ class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
             return nil
         }
 
-        // Only handle unknownError error
+        // Only handle accountIsPendingVerification error
         guard error.userSessionErrorCode == .accountIsPendingVerification else {
             return nil
         }
