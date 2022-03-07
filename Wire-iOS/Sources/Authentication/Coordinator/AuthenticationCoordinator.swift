@@ -286,6 +286,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 sendLoginCode(phoneNumber: phoneNumber, isResend: false)
 
+            case .perform2FAEmailLogin(let email):
+                send2FALoginCode(email: email, isResend: false)
+
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
 
@@ -653,6 +656,14 @@ extension AuthenticationCoordinator {
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
     }
+
+    private func send2FALoginCode(email: String, isResend: Bool) {
+            let nextStep = AuthenticationFlowStep.send2FALoginCode(email: email, isResend: isResend)
+            stateController.transition(to: nextStep)
+        // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
+        // when it's implemented in SE
+            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: email)
+     }
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
