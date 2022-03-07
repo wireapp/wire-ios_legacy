@@ -657,6 +657,7 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
     }
 
+    // Sends the login verification code to the email address
     private func requestEmailVerificationCode(email: String, isResend: Bool) {
         let nextStep = AuthenticationFlowStep.requestEmailVerificationCode(email: email, isResend: isResend)
         stateController.transition(to: nextStep)
