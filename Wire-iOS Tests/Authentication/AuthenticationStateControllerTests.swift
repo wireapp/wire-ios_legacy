@@ -155,7 +155,7 @@ class AuthenticationStateControllerTests: XCTestCase {
         let emailAddress = "test@wire.com"
 
         stateController.transition(to: .landingScreen, mode: .reset)
-        stateController.transition(to: .provideCredentials(.email, nil)) // user logs in with phone number
+        stateController.transition(to: .provideCredentials(.email, nil)) // user logs in with email address
         stateController.transition(to: .requestEmailVerificationCode(email: emailAddress, isResend: false))
         stateController.transition(to: .enterEmailVerificationCode(email: emailAddress))
 
