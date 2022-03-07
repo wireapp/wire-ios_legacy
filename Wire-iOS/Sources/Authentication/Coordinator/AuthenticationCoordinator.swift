@@ -287,7 +287,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 sendLoginCode(phoneNumber: phoneNumber, isResend: false)
 
             case .perform2FAEmailLogin(let email):
-                send2FALoginCode(email: email, isResend: false)
+                requestEmailVerificationCode(email: email, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -441,7 +441,7 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .teamCreation(.verifyEmail):
             resendTeamEmailCode()
-        case .enterLoginCode, .enterActivationCode:
+        case .enterPhoneVerificationCode, .enterActivationCode:
             resendVerificationCode()
         default:
             return
@@ -643,7 +643,7 @@ extension AuthenticationCoordinator {
 
         case .phoneNumber(let phoneNumber):
             presenter?.isLoadingViewVisible = true
-            let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+            let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
             stateController.transition(to: nextStep)
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         }
@@ -652,13 +652,13 @@ extension AuthenticationCoordinator {
     /// Sends the login verification code to the phone number.
     private func sendLoginCode(phoneNumber: String, isResend: Bool) {
         presenter?.isLoadingViewVisible = true
-        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
+        let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
     }
 
-    private func send2FALoginCode(email: String, isResend: Bool) {
-        let nextStep = AuthenticationFlowStep.send2FALoginCode(email: email, isResend: isResend)
+    private func requestEmailVerificationCode(email: String, isResend: Bool) {
+        let nextStep = AuthenticationFlowStep.requestEmailVerificationCode(email: email, isResend: isResend)
         stateController.transition(to: nextStep)
         // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
         // when it's implemented in SE
@@ -677,10 +677,10 @@ extension AuthenticationCoordinator {
     /// Resends the verification code to the user, if allowed by the current state.
     private func resendVerificationCode() {
         switch stateController.currentStep {
-        case .enterLoginCode(let phoneNumber):
+        case .enterPhoneVerificationCode(let phoneNumber):
             sendLoginCode(phoneNumber: phoneNumber, isResend: true)
-        case .enter2FALoginCode(let email):
-            send2FALoginCode(email: email, isResend: true)
+        case .enterEmailVerificationCode(let email):
+            requestEmailVerificationCode(email: email, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
@@ -695,7 +695,7 @@ extension AuthenticationCoordinator {
 
     private func continueFlow(withVerificationCode code: String) {
         switch stateController.currentStep {
-        case .enterLoginCode(let phoneNumber):
+        case .enterPhoneVerificationCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
         case .enterActivationCode(let unverifiedCredentials, let user):

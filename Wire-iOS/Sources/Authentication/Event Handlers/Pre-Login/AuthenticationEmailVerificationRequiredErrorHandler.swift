@@ -23,7 +23,7 @@ import WireSyncEngine
  * Handle e-mail login errors that occur for accountIsPendingVerification errors.
  */
 
-class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
+class AuthenticationEmailVerificationRequiredErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
@@ -32,7 +32,7 @@ class AuthenticationEmail2FAIsRequiredErrorHandler: AuthenticationEventHandler {
 
         // Only handle errors that happen during email login
         switch currentStep {
-        case .send2FALoginCode, .authenticateEmailCredentials:
+        case .requestEmailVerificationCode, .authenticateEmailCredentials:
             break
         default:
             return nil

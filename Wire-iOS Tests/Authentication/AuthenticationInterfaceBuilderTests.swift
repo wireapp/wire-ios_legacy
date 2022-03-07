@@ -131,7 +131,7 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
     }
 
     func testLoginScreen_PhoneNumberVerification() {
-        runSnapshotTest(for: .enterLoginCode(phoneNumber: "+0123456789"))
+        runSnapshotTest(for: .enterPhoneVerificationCode(phoneNumber: "+0123456789"))
     }
 
     func testBackupScreen_NewDevice() {
