@@ -441,7 +441,7 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .teamCreation(.verifyEmail):
             resendTeamEmailCode()
-        case .enterPhoneVerificationCode, .enterActivationCode:
+        case .enterPhoneVerificationCode, .enterActivationCode, .enterEmailVerificationCode:
             resendVerificationCode()
         default:
             return
