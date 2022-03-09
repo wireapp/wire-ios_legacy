@@ -62,8 +62,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         // TODO: Check if we have accountID in request.content.userInfo
         guard
-           // let accountId = content.userInfo.accountId(),
-            let accountID = accountManager.selectedAccount?.userIdentifier,
+            let accountID = content.userInfo.accountId(),
             let session = try? createSession(accountID: accountID)
         else {
             // TODO: what happens here?
@@ -167,22 +166,4 @@ extension UNNotificationContent {
         return Self()
     }
 
-}
-
-let PushChannelUserIDKey = "user"
-let PushChannelDataKey = "data"
-
-extension Dictionary {
-
-    public func accountId() -> UUID? {
-        guard let userInfoData = self[PushChannelDataKey as! Key] as? [String: Any] else {
-            return nil
-        }
-
-        guard let userIdString = userInfoData[PushChannelUserIDKey] as? String else {
-            return nil
-        }
-
-        return UUID(uuidString: userIdString)
-    }
 }
