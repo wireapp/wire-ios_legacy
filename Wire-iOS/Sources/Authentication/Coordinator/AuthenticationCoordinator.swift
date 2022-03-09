@@ -286,7 +286,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 sendLoginCode(phoneNumber: phoneNumber, isResend: false)
 
-            case .perform2FAEmailLogin(let email):
+            case .requestEmailVerificationCode(let email):
                 requestEmailVerificationCode(email: email, isResend: false)
 
             case .configureNotifications:
