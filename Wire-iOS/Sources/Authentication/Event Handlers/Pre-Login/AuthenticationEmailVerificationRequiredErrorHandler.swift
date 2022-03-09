@@ -30,24 +30,17 @@ class AuthenticationEmailVerificationRequiredErrorHandler: AuthenticationEventHa
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle errors that happen during email login
-        switch currentStep {
-        case .requestEmailVerificationCode, .authenticateEmailCredentials:
-            break
-        default:
+        // Only handle e-mail login errors
+        guard case let .authenticateEmailCredentials(credentials) = currentStep else {
             return nil
         }
-
         // Only handle accountIsPendingVerification error
         guard error.userSessionErrorCode == .accountIsPendingVerification else {
             return nil
         }
 
-        // Prepare and return the alert
-        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error,
-                                                             completionActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
+        guard let email  = credentials.email else { return nil }
 
-        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
-
+        return [.hideLoadingView, .requestEmailVerificationCode(email: email)]
     }
 }
