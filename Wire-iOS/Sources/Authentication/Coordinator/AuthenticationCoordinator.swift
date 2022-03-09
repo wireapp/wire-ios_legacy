@@ -284,7 +284,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 stateController.transition(to: nextStep, mode: mode)
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
-                sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+                requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
 
             case .requestEmailVerificationCode(let email):
                 requestEmailVerificationCode(email: email, isResend: false)
@@ -650,7 +650,7 @@ extension AuthenticationCoordinator {
     }
 
     /// Sends the login verification code to the phone number.
-    private func sendLoginCode(phoneNumber: String, isResend: Bool) {
+    private func requestPhoneVerificationCode(phoneNumber: String, isResend: Bool) {
         presenter?.isLoadingViewVisible = true
         let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: isResend)
         stateController.transition(to: nextStep)
@@ -679,7 +679,7 @@ extension AuthenticationCoordinator {
     private func resendVerificationCode() {
         switch stateController.currentStep {
         case .enterPhoneVerificationCode(let phoneNumber):
-            sendLoginCode(phoneNumber: phoneNumber, isResend: true)
+            requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
         case .enterEmailVerificationCode(let email):
             requestEmailVerificationCode(email: email, isResend: true)
         case .enterActivationCode(let credential, let user):
