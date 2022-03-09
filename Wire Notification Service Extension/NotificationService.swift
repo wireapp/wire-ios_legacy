@@ -21,7 +21,9 @@ import UserNotifications
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
+import WireSyncEngine
 import UIKit
+import CallKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
@@ -60,6 +62,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         // TODO: Check if we have accountID in request.content.userInfo
         guard
+           // let accountId = content.userInfo.accountId(),
             let accountID = accountManager.selectedAccount?.userIdentifier,
             let session = try? createSession(accountID: accountID)
         else {
@@ -101,6 +104,24 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             content.title = alert.title
             content.body = String(format: "push.notifications.bundled_message.title".localized, messageCount)
             handler(content)
+        }
+    }
+
+    public func processCallEvents(_ events: [ZMUpdateEvent]) {
+        if #available(iOSApplicationExtension 14.5, *) {
+            for event in events {
+                guard let pushPayload = PushFromNotificationExtension(event: event),
+                      let payloadData = try? JSONEncoder().encode(pushPayload),
+                      let json = try? JSONSerialization.jsonObject(with: payloadData, options: []),
+                      var payload = json as? [String : Any] else {
+                    return
+                }
+                payload[PushFromNotificationExtensionKeys.fromNotificationExtension.rawValue] = true
+                payload[PushFromNotificationExtensionKeys.accountId.rawValue] = session?.accountIdentifier.transportString()
+                CXProvider.reportNewIncomingVoIPPushPayload(payload, completion: {_ in })
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
 
@@ -146,4 +167,22 @@ extension UNNotificationContent {
         return Self()
     }
 
+}
+
+let PushChannelUserIDKey = "user"
+let PushChannelDataKey = "data"
+
+extension Dictionary {
+
+    public func accountId() -> UUID? {
+        guard let userInfoData = self[PushChannelDataKey as! Key] as? [String: Any] else {
+            return nil
+        }
+
+        guard let userIdString = userInfoData[PushChannelUserIDKey] as? String else {
+            return nil
+        }
+
+        return UUID(uuidString: userIdString)
+    }
 }
