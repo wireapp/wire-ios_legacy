@@ -287,7 +287,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
 
             case .requestEmailVerificationCode(let email):
-                requestEmailVerificationCode(email: email, isResend: false)
+                requestEmailVerificationCode(email: email)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -658,8 +658,8 @@ extension AuthenticationCoordinator {
     }
 
     // Sends the login verification code to the email address
-    private func requestEmailVerificationCode(email: String, isResend: Bool) {
-        let nextStep = AuthenticationFlowStep.requestEmailVerificationCode(email: email, isResend: isResend)
+    private func requestEmailVerificationCode(email: String) {
+        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email)
         stateController.transition(to: nextStep)
         // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
         // when it's implemented in SE
@@ -681,7 +681,7 @@ extension AuthenticationCoordinator {
         case .enterPhoneVerificationCode(let phoneNumber):
             requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
         case .enterEmailVerificationCode(let email):
-            requestEmailVerificationCode(email: email, isResend: true)
+            requestEmailVerificationCode(email: email)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:

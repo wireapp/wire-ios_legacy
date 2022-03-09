@@ -59,7 +59,6 @@ indirect enum AuthenticationFlowStep: Equatable {
     case provideCredentials(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
     case requestPhoneVerificationCode(phoneNumber: String, isResend: Bool)
     case enterPhoneVerificationCode(phoneNumber: String)
-    case requestEmailVerificationCode(email: String, isResend: Bool)
     case enterEmailVerificationCode(email: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
@@ -98,7 +97,6 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .provideCredentials: return true
         case .requestPhoneVerificationCode: return false
         case .enterPhoneVerificationCode: return true
-        case .requestEmailVerificationCode: return false
         case .enterEmailVerificationCode: return true
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
