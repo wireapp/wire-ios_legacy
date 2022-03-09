@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Không có kết quả.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Mọi người đã ở đây.";
 "peoplepicker.no_matching_results.message.services" = "Không có kết quả.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Các dịch vụ là công cụ có thể cải thiện năng suất làm việc của bạn.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Các dịch vụ là các công cụ có thể cải thiện năng suất làm việc của bạn. Để kích hoạt chúng, liên hệ quản trị viên của bạn.";
 
 "peoplepicker.send_invitation.dialog.title" = "Lời mời đã gửi";
 "peoplepicker.send_invitation.dialog.message" = "Nó có thể được dùng trong 2 tuần. Gửi một cái mới nếu đã quá hạn.";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Di động";
 "self.settings.account_section.handle.title" = "Tên người dùng";
 "self.settings.account_section.add_handle.title" = "Thêm tên người dùng";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Nhóm";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";

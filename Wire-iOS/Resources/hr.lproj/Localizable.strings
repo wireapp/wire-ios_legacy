@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "0 rezultata.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Svi su ovdje.";
 "peoplepicker.no_matching_results.message.services" = "0 rezultata.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Usluge su pomagači koji mogu poboljšati Vaš tijek rada.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Usluge su pomagači koji mogu poboljšati Vaš tijek rada. Da biste ih omogućili, obratite se administratoru.";
 
 "peoplepicker.send_invitation.dialog.title" = "Pozivnica poslana";
 "peoplepicker.send_invitation.dialog.message" = "Ovo se može upotrebljavati dva tjedna. Pošalji nov zahtjev ako ovaj istekne.";
@@ -626,7 +626,7 @@
 "inbox.connection_request.ignore_button_title" = "Ignoriraj";
 "error.connection.title" = "Pogreška";
 "error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
-"error.connection.generic_error" = "Nešto ne funkcionira dobro. Molimo, pokušajte ponovno";
+"error.connection.generic_error" = "Nešto je pošlo po zlu. Molimo pokušajte ponovno";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire treba pristup Vašim slikama";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Prihvati";
 "voice.decline_button.title" = "Odbij";
 "voice.hang_up_button.title" = "Poklopi";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Zvučnik";
 "voice.cancel_button.title" = "Odustani";

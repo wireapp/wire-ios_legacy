@@ -30,7 +30,7 @@
 "general.later" = "Później";
 "general.skip" = "Nie teraz";
 "general.accept" = "Odbierz";
-"general.decline" = "Nie, dzięki!";
+"general.decline" = "Nie, dziękuję";
 "general.failure" = "Coś poszło nie tak";
 "general.failure.try_again" = "Proszę spróbować ponownie.";
 "general.service" = "Usługa";
@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Zakończono";
 "peoplepicker.group.create" = "Utwórz";
 
-"peoplepicker.header.people" = "Osoby";
+"peoplepicker.header.people" = "Kontakty";
 "peoplepicker.header.services" = "Usługi";
 "peoplepicker.services.open_conversation.item" = "Otwórz konwersację";
 "peoplepicker.services.add_service.button" = "Dodaj usługę";
@@ -85,7 +85,7 @@
 
 "peoplepicker.no_matching_results.action.send_invite" = "Wyślij zaproszenie";
 "peoplepicker.no_matching_results.action.share_contacts" = "Udostępnij kontakty";
-"peoplepicker.no_matching_results.action.learn_more" = "Więcej informacji";
+"peoplepicker.no_matching_results.action.learn_more" = "Dowiedz się więcej";
 "peoplepicker.no_matching_results.action.manage_services" = "Zarządzaj usługami";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Brak wyników.";
@@ -524,7 +524,7 @@
 "content.system.message_legal_hold.enabled" = "Ta rozmowa jest pod legalnym przechowywaniem";
 "content.system.message_legal_hold.disabled" = "Legalne przechowywanie zostało wyłączone dla tej rozmowy";
 
-"content.system.message_legal_hold.learn_more" = "Więcej informacji";
+"content.system.message_legal_hold.learn_more" = "Dowiedz się więcej";
 
 //
 
@@ -750,7 +750,7 @@
 "participants.avatar.guest.title" = "Gość";
 
 "participants.title" = "Szczegóły";
-"participants.all.title" = "Osoby";
+"participants.all.title" = "Kontakty";
 "participants.section.participants" = "Ludzie (%d)";
 "participants.section.services" = "Usługi (%d)";
 "participants.section.settings" = "Opcje";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Numer telefonu";
 "self.settings.account_section.handle.title" = "Login";
 "self.settings.account_section.add_handle.title" = "Dodaj nazwę użytkownika";
-"self.settings.account_section.team.title" = "Zespół";
+"self.settings.account_section.team.title" = "Drużyna";
 "self.settings.account_section.domain.title" = "Domena";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1341,7 +1341,7 @@
 "team.invite.header.subtitle" = "Twój zespół Wire jest gotowy. Zaproś swoich kolegów jako członków.";
 "team.invite.textfield.placeholder" = "E-mail kolegów";
 "team.invite.textfield.accesibility" = "Wprowadź adres e-mail, aby zaprosić kolegę.";
-"team.invite.learn_more.title" = "Więcej informacji";
+"team.invite.learn_more.title" = "Dowiedz się więcej";
 "team.invite.top_bar.skip" = "Pomiń";
 "team.invite.top_bar.done" = "Zakończono";
 
@@ -1750,7 +1750,7 @@
 "availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Żaden";
-"availability.available" = "&Dostępny(a)";
+"availability.available" = "Dostępny";
 "availability.away" = "Nieobecny(a)";
 "availability.busy" = "Zajęty(a)";
 
@@ -1797,9 +1797,9 @@
 "url_action.join_conversation.confirmation.message" = "Zostałeś zaproszony do rozmowy:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Dołącz";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
-"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "Nie możesz dołączyć do rozmowy";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Nie można dodać więcej uczestników.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Link do rozmowy jest nieprawidłowy.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
@@ -1898,10 +1898,10 @@
 "create_passcode.validation.no_special_char" = "Znak specjalny";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Wprowadź kod dostępu";
-"unlock.title_label" = "Wprowadź kod dostępu, aby odblokować Wire";
+"unlock.textfield.placeholder" = "Wprowadź swoje hasło";
+"unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
 "unlock.wipe_button" = "Dostęp jako nowe urządzenie";
-"unlock.error_label" = "Nieprawidłowy kod dostępu";
+"unlock.error_label" = "Błędne hasło";
 "unlock.submit_button.title" = "odblokuj";
 
 // Custom app lock - warning screen
@@ -1944,4 +1944,4 @@
 "keyboardshortcut.scrollToBottom" = "Przewiń na dół";
 "keyboardshortcut.conversationDetail" = "Szczegóły konwersacji...";
 "keyboardshortcut.searchInConversation" = "Szukaj w rozmowie...";
-"keyboardshortcut.openPeople" = "Osoby";
+"keyboardshortcut.openPeople" = "Kontakty";

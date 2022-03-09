@@ -92,7 +92,7 @@
 "peoplepicker.no_matching_results.message.users" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen\n\nFinden Sie Personen einer anderen Domain mit @Benutzername@Domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Alle sind hier.";
-"peoplepicker.no_matching_results.message.services" = "Kein Ergebnis";
+"peoplepicker.no_matching_results.message.services" = "Keine Ergebnisse";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Dienste sind Helfer, die den Workflow verbessern können.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
 
@@ -626,7 +626,7 @@
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
 "error.connection.title" = "Fehler";
 "error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
-"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
+"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte nochmal versuchen";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -1944,4 +1944,4 @@
 "keyboardshortcut.scrollToBottom" = "Nach Unten Scrollen";
 "keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
 "keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
-"keyboardshortcut.openPeople" = "Kontakte";
+"keyboardshortcut.openPeople" = "Personen";

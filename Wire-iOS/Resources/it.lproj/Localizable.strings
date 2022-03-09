@@ -89,12 +89,12 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Gestisci servizi";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Nessun risultato.";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.users" = "Trova persone in Wire per nome o @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Sono tutti qui.";
 "peoplepicker.no_matching_results.message.services" = "Nessun risultato.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "I servizi aiutano a migliorare il tuo flusso di lavoro.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "I servizi aiutano a migliorare il tuo flusso di lavoro. Per attivarli, contatta il tuo amministratore.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invito spedito";
 "peoplepicker.send_invitation.dialog.message" = "Può essere usato per 2 settimane. Inviane un altro quando scade.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Accetta";
 "voice.decline_button.title" = "Rifiuta";
 "voice.hang_up_button.title" = "Riattacca";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Microfono";
+"voice.video_button.title" = "Fotocamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
@@ -685,18 +685,18 @@
 "call.status.constant_bitrate" = "Bit Rate costante";
 "call.status.variable_bitrate" = "Tasso Di Bit Rate";
 
-"call.participants.show_all" = "Participants (%d)";
+"call.participants.show_all" = "Partecipanti (%d)";
 "call.participants.list.title" = "Partecipanti";
 
 "call.overlay.switch_to.speakers" = "SPEAKER";
 "call.overlay.switch_to.all" = "TUTTI";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "Nessun altoparlante video attivo...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "Tocca due volte su un tile per schermo intero";
+"call.grid.hints.go_back_or_zoom" = "Doppio tocco per tornare indietro, pizzica per ingrandire";
 "call.grid.hints.go_back" = "Double tap to go back";
-"call.grid.hints.zoom" = "Pinch to zoom";
+"call.grid.hints.zoom" = "Pizzica per ingrandire";
 
 "call.video.paused" = "Video in pausa";
 "call.video.too_many.alert.title" = "Troppe persone per la videochiamata";
@@ -1797,9 +1797,9 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Entra";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
-"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "Impossibile partecipare alla conversazione";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "La conversazione è piena.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Il collegamento della conversazione non è valido.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
@@ -1901,11 +1901,11 @@
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "Codice di accesso errato";
 "unlock.submit_button.title" = "unlock";
 
 // Custom app lock - warning screen
-"warning_screen.title_label" = "There was a change in Wire";
+"warning_screen.title_label" = "C'è stato un cambiamento in Wire";
 "warning_screen.main_info.forced_applock" = "Your organization needs to lock your app when Wire is not in use to keep the team safe.";
 "warning_screen.info_label.forced_applock" = "Next time, unlock Wire the same way you unlock your phone.";
 "warning_screen.info_label.non_forced_applock" = "Your organization does not need app lock anymore. From now, you can access Wire without any obstacles.";

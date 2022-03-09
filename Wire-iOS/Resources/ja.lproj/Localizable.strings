@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "結果はありません";
 "peoplepicker.no_matching_results.message.users" = "Wireで名前または@usernameで人を見つけます";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "全員がいます。";
 "peoplepicker.no_matching_results.message.services" = "結果はありません";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "サービスはあなたのワークフローを改善に役立ちます。";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "あなたのワークフローを改善するサービスです。サービスを有効にするには、管理者に問い合わせてください。";
 
 "peoplepicker.send_invitation.dialog.title" = "招待状を送信しました";
 "peoplepicker.send_invitation.dialog.message" = "2週間使用できます。\n期限が切れた時は新しいものを送ります";
@@ -625,7 +625,7 @@
 "inbox.connection_request.connect_button_title" = "接続";
 "inbox.connection_request.ignore_button_title" = "無視";
 "error.connection.title" = "エラー";
-"error.connection.missing_legalhold_consent" = "You cannot connect to this user due to legal hold.";
+"error.connection.missing_legalhold_consent" = "法的保留のため、このユーザーに接続できません。";
 "error.connection.generic_error" = "問題が生じたようです。もう一度やり直してください。";
 
 // Save image errors
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "承諾";
 "voice.decline_button.title" = "辞退";
 "voice.hang_up_button.title" = "電話を切る";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "マイク";
+"voice.video_button.title" = "カメラ";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "スピーカー";
 "voice.cancel_button.title" = "キャンセル";
@@ -688,15 +688,15 @@
 "call.participants.show_all" = "Participants (%d)";
 "call.participants.list.title" = "参加者";
 
-"call.overlay.switch_to.speakers" = "SPEAKERS";
-"call.overlay.switch_to.all" = "ALL";
+"call.overlay.switch_to.speakers" = "スピーカー";
+"call.overlay.switch_to.all" = "全て";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "アクティブなビデオスピーカーがありません...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "タイルをダブルタップして全画面表示にする";
+"call.grid.hints.go_back_or_zoom" = "ダブルタップで戻り、ピンチでズームします";
 "call.grid.hints.go_back" = "Double tap to go back";
-"call.grid.hints.zoom" = "Pinch to zoom";
+"call.grid.hints.zoom" = "ピンチしてズーム";
 
 "call.video.paused" = "一時停止中";
 "call.video.too_many.alert.title" = "ビデオ通話相手が多すぎます";
@@ -923,7 +923,7 @@
 "group_details.guest_options_cell.title" = "ゲストとサービス";
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "メッセージの自己削除";
 "group_details.notification_options_cell.title" = "通知センター";
 "group_details.notification_options_cell.description" = "あなたは、すべて（オーディオとビデオ通話を含みます）または、メンションされた時のみに、通知をすることができます。";
 "group_details.receipt_options_cell.title" = "開封通知";
@@ -1013,8 +1013,8 @@
 "self.settings.account_section.phone.title" = "携帯電話";
 "self.settings.account_section.handle.title" = "ユーザーネーム";
 "self.settings.account_section.add_handle.title" = "ユーザーネームを追加する";
-"self.settings.account_section.team.title" = "Team";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.team.title" = "チーム";
+"self.settings.account_section.domain.title" = "ドメイン";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
 "self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
@@ -1064,7 +1064,7 @@
 
 // Crash
 "self.settings.privacy_crash.title" = "匿名のクラッシュ レポートを送信";
-"self.settings.privacy_crash_menu.description.title" = "Send anonymous crash reports and basic data like version number and operating system to help Wire identify and solve issues in the app.";
+"self.settings.privacy_crash_menu.description.title" = "匿名のクラッシュレポートとバージョン番号やオペレーティングシステムなどの基本的なデータを送信して、Wireがアプリ内の問題を特定して解決するのに役立てます。";
 
 // Analytics
 "self.settings.privacy_analytics.title" = "利用状況に関する匿名のデータを送信";
@@ -1137,7 +1137,7 @@
 "self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示します。もしiCloudが有効である場合、通話履歴はAppleに共有されます。";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
-"self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
+"self.settings.vbr.description" = "これによって、音声通話のデータ使用量が少なくなり、低速なネットワークでより良く動作します。オフにすると、コンスタントビットレートエンコーディング(CBR)が使用できます。この設定は1対1の通話にのみ影響し、会議通話では常にCBRエンコーディングが使われます。";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wireコール";
 "self.settings.sound_menu.sounds.wire_message" = "Wireメッセージ";
@@ -1654,9 +1654,9 @@
 "feature_config.alert.generic_title" = "Team settings changed";
 
 // Feature configs: file sharing
-"feature_config.update.file_sharing.alert.title" = "There has been a change in Wire";
-"feature_config.update.file_sharing.alert.message.disabled" = "Sharing and receiving files of any type is now disabled.";
-"feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
+"feature_config.update.file_sharing.alert.title" = "Wireに変更があります。";
+"feature_config.update.file_sharing.alert.message.disabled" = "任意の種類のファイル送受信が無効化されました。";
+"feature_config.update.file_sharing.alert.message.enabled" = "任意の種類のファイル送受信が有効化されました。";
 "feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
 "feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
 "feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
@@ -1667,7 +1667,7 @@
 "feature_config.update.conference_calling.alert.message" = "Your team was upgraded to the Enterprise plan. You now have access to features such as starting conference calls.";
 "feature_config.update.conference_calling.alert.message.learn_more" = "Learn more about the Enterprise plan";
 
-"feature_config.conference_calling_restrictions.admins.alert.title" = "Upgrade to Enterprise";
+"feature_config.conference_calling_restrictions.admins.alert.title" = "Enterprizeにアップグレード";
 "feature_config.conference_calling_restrictions.admins.alert.message" = "Your team is currently on the free Basic plan. Upgrade to Enterprise to access features such as starting conference calls.";
 "feature_config.conference_calling_restrictions.admins.alert.message.learn_more" = "Learn more about Wire’s pricing";
 "feature_config.conference_calling_restrictions.admins.alert.action.upgrade" = "Upgrade now";
@@ -1797,9 +1797,9 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "参加する";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
-"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "会話に参加できませんでした。";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "この会話は満員です。";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "会話へのリンクが無効です。";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link

@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Aceitar";
 "voice.decline_button.title" = "Rejeitar";
 "voice.hang_up_button.title" = "Desligar";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Microfone";
+"voice.video_button.title" = "Câmera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Cancelar";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Telefone";
 "self.settings.account_section.handle.title" = "Nome de utilizador";
 "self.settings.account_section.add_handle.title" = "Adicionar o nome de utilizador";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Equipa";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1300,7 +1300,7 @@
 "landing.login.button.title" = "Iniciar sessão";
 "landing.login.email.button.title" = "Log in with email";
 "landing.login.enterprise.button.title" = "Enterprise log in";
-"landing.login.sso.button.title" = "Log in with SSO";
+"landing.login.sso.button.title" = "Iniciar sessão com SSO";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
@@ -1312,7 +1312,7 @@
 "team.name.subheadline" = "Pode alterar mais tarde.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
+"team.name.whatiswireforteams" = "O que é o Wire Pro?";
 
 "team.email.headline" = "A sua conta";
 "team.email.subheadline" = "Introduza o seu endereço de email profissional.";
@@ -1437,7 +1437,7 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Esta cópia de segurança foi criada por uma versão mais nova ou desatualizada do Wire e não pode ser restaurada aqui.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.title" = "Iniciar sessão empresarial";
 "login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Iniciar sessão";
@@ -1532,7 +1532,7 @@
 
 "signin.use_email.label" = "Login with Email";
 "signin.use_phone.label" = "Login with Phone";
-"signin.forgot_password" = "Forgot password?";
+"signin.forgot_password" = "Esqueceu sua palavra-passe?";
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Iniciar sessão";
