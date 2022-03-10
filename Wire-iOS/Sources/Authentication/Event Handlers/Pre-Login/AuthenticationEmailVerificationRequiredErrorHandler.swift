@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 
 /**
- * Handle e-mail login errors that occur for accountIsPendingVerification errors.
+ * Handles the event that informs the app when the email login verification code is available.
  */
 
 class AuthenticationEmailVerificationRequiredErrorHandler: AuthenticationEventHandler {
