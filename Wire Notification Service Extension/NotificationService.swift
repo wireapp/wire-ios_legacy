@@ -54,8 +54,9 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     ) {
         self.contentHandler = contentHandler
 
-        guard let accountID = content.userInfo.accountId(),
-              let session = try? createSession(accountID: accountID)
+        guard
+            let accountID = request.content.userInfo.accountId(),
+            let session = try? createSession(accountID: accountID)
         else {
             // TODO: what happens here?
             return
