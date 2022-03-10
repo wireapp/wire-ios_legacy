@@ -21,6 +21,7 @@ import UserNotifications
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
+import WireSyncEngine
 import UIKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
@@ -58,10 +59,8 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         contentAndHandler = (content, contentHandler)
 
-        // TODO: Check if we have accountID in request.content.userInfo
-        guard
-            let accountID = accountManager.selectedAccount?.userIdentifier,
-            let session = try? createSession(accountID: accountID)
+        guard let accountID = content.userInfo.accountId(),
+              let session = try? createSession(accountID: accountID)
         else {
             // TODO: what happens here?
             return
