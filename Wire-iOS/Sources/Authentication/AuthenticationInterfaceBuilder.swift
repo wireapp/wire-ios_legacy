@@ -111,7 +111,7 @@ class AuthenticationInterfaceBuilder {
             let backupStep = BackupRestoreStepDescription(context: context)
             return makeViewController(for: backupStep)
 
-        case .enterLoginCode(let phoneNumber):
+        case .enterPhoneVerificationCode(let phoneNumber):
             let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             return makeViewController(for: verifyPhoneStep)
 
