@@ -1210,6 +1210,7 @@
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */; };
+		E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */; };
 		EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08025ADA3D5001DB205 /* AppLockModule.swift */; };
 		EE01D08625ADA3D5001DB205 /* AppLockModule.Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */; };
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
@@ -3056,6 +3057,7 @@
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
 		E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandler.swift; sourceTree = "<group>"; };
+		E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandlerTests.swift; sourceTree = "<group>"; };
 		EE00ACE225E44506005FEC14 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		EE01D08025ADA3D5001DB205 /* AppLockModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.swift; sourceTree = "<group>"; };
 		EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Presenter.swift; sourceTree = "<group>"; };
@@ -6548,6 +6550,7 @@
 				542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */,
 				63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */,
 				EEEB8B56260B685300554C39 /* UserRightTests.swift */,
+				E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -9287,6 +9290,7 @@
 				BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */,
 				873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */,
 				1658C19A20A1F00500148F6D /* CallInfoTestFixture.swift in Sources */,
+				E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */,
 				16C02A12204EE5EC00811912 /* GroupConversationCellTests.swift in Sources */,
 				A9EDC143252225B2009DB9E1 /* AnalyticsCallingTrackerTests.swift in Sources */,
 				EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */,
