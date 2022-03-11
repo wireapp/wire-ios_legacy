@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Sprejmi";
 "voice.decline_button.title" = "Zavrni";
 "voice.hang_up_button.title" = "Odloži";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Zvočnik";
 "voice.cancel_button.title" = "Prekliči";

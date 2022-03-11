@@ -85,7 +85,7 @@
 
 "peoplepicker.no_matching_results.action.send_invite" = "Envia una invitació";
 "peoplepicker.no_matching_results.action.share_contacts" = "Comparteix contactes";
-"peoplepicker.no_matching_results.action.learn_more" = "Learn more";
+"peoplepicker.no_matching_results.action.learn_more" = "Saber-ne més";
 "peoplepicker.no_matching_results.action.manage_services" = "Gestionar els serveis";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sense resultats.";
@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
 "peoplepicker.no_matching_results.message.services" = "Sense resultats.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Els serveis ajuden a millorar el teu flux de treball.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Els serveis poden millorar el teu flux de treball. Per a habilitar-los, fes una consulta al teu administrador.";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation sent";
 "peoplepicker.send_invitation.dialog.message" = "It can be used for 2 weeks. Send a new one if it expires.";
@@ -524,7 +524,7 @@
 "content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
 "content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
 
-"content.system.message_legal_hold.learn_more" = "Learn more";
+"content.system.message_legal_hold.learn_more" = "Saber-ne més";
 
 //
 
@@ -1341,7 +1341,7 @@
 "team.invite.header.subtitle" = "El vostre equip de Wire ja està llest. Convideu els companys a fer-se'n membres.";
 "team.invite.textfield.placeholder" = "Colleague's email";
 "team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "Learn more";
+"team.invite.learn_more.title" = "Saber-ne més";
 "team.invite.top_bar.skip" = "Omet";
 "team.invite.top_bar.done" = "Fet";
 
@@ -1583,7 +1583,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
 "registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
-"registration.select_handle.takeover.subtitle_link" = "Learn more";
+"registration.select_handle.takeover.subtitle_link" = "Saber-ne més";
 
 "registration.select_handle.takeover.choose_own" = "Choose yours";
 "registration.select_handle.takeover.keep_suggested" = "Conserva aquesta";
@@ -1901,7 +1901,7 @@
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "Contrasenya incorrecta";
 "unlock.submit_button.title" = "unlock";
 
 // Custom app lock - warning screen

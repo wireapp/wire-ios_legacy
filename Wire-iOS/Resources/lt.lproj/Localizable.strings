@@ -86,15 +86,15 @@
 "peoplepicker.no_matching_results.action.send_invite" = "Siųsti pakvietimą";
 "peoplepicker.no_matching_results.action.share_contacts" = "Dalintis kontaktais";
 "peoplepicker.no_matching_results.action.learn_more" = "Sužinoti daugiau";
-"peoplepicker.no_matching_results.action.manage_services" = "Valdyti paslaugas";
+"peoplepicker.no_matching_results.action.manage_services" = "Valdyti tarnybas";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Rezultatų nėra.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Visi jau čia.";
 "peoplepicker.no_matching_results.message.services" = "Rezultatų nėra.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Tarnybos yra pagalbininkai, kurie padeda pagerinti darbo eigą.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Tarnybos yra pagalbininkai, kurie padeda pagerinti darbo eigą. Norėdami jomis naudotis, prašykite savo administratoriaus.";
 
 "peoplepicker.send_invitation.dialog.title" = "Pakvietimas išsiųstas";
 "peoplepicker.send_invitation.dialog.message" = "Pakvietimą galima naudoti 2 savaites. Išsiųskite naują jei galiojimas baigėsi.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Priimti";
 "voice.decline_button.title" = "Atmesti";
 "voice.hang_up_button.title" = "Užbaigti";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofonas";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Garsiakalbis";
 "voice.cancel_button.title" = "Atsisakyti";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Telefonas";
 "self.settings.account_section.handle.title" = "Naudotojo vardas";
 "self.settings.account_section.add_handle.title" = "Pridėti naudotojo vardą";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Komanda";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1659,7 +1659,7 @@
 "feature_config.update.file_sharing.alert.message.enabled" = "Sharing and receiving files of any type is now enabled.";
 "feature_config.file_sharing_restrictions.file" = "Receiving files is prohibited";
 "feature_config.file_sharing_restrictions.picture" = "Receiving images is prohibited";
-"feature_config.file_sharing_restrictions.video" = "Receiving videos is prohibited";
+"feature_config.file_sharing_restrictions.video" = "Vaizdo įrašų gavimas yra uždraustas";
 "feature_config.file_sharing_restrictions.audio" = "Receiving audio files is prohibited";
 
 //Feature flag - Conference calling
@@ -1797,7 +1797,7 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Prisijungti";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.title" = "Jums nepavyko prisijungti prie pokalbio";
 "url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
 "url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
@@ -1901,7 +1901,7 @@
 "unlock.textfield.placeholder" = "Enter your passcode";
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Access as new device";
-"unlock.error_label" = "Wrong passcode";
+"unlock.error_label" = "Neteisingas slaptažodis";
 "unlock.submit_button.title" = "unlock";
 
 // Custom app lock - warning screen

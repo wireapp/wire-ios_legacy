@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Hyväksy";
 "voice.decline_button.title" = "Kieltäydy";
 "voice.hang_up_button.title" = "Katkaise puhelu";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofoni";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Kaiutin";
 "voice.cancel_button.title" = "Peruuta";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Puhelinnumero";
 "self.settings.account_section.handle.title" = "Käyttäjänimi";
 "self.settings.account_section.add_handle.title" = "Lisää käyttäjänimi";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Tiimi";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";

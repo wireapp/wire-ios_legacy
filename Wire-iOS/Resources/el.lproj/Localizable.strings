@@ -92,7 +92,7 @@
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
-"peoplepicker.no_matching_results.message.services" = "Χωρίς Αποτέλεσμα.";
+"peoplepicker.no_matching_results.message.services" = "Κανένα Αποτέλεσμα.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
 
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Αποδοχή";
 "voice.decline_button.title" = "Απόρριψη";
 "voice.hang_up_button.title" = "Τερματισμός κλήσης";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Μικρόφωνο";
+"voice.video_button.title" = "Κάμερα";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Aκύρωση";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Κινητό Τηλέφωνο";
 "self.settings.account_section.handle.title" = "Όνομα Χρήστη";
 "self.settings.account_section.add_handle.title" = "Προσθέστε όνομα χρήστη";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Ομάδα";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";

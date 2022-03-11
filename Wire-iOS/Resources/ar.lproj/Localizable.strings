@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "الجميع حاضرون.";
 "peoplepicker.no_matching_results.message.services" = "لا توجد نتائج.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "قبول";
 "voice.decline_button.title" = "رفض";
 "voice.hang_up_button.title" = "إنهاء الاتصال";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "الميكروفون";
+"voice.video_button.title" = "الكاميرا";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "مكبّر الصوت";
 "voice.cancel_button.title" = "إلغاء";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "الهاتف";
 "self.settings.account_section.handle.title" = "مُعرّف";
 "self.settings.account_section.add_handle.title" = "أضف مُعرّف";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "الفريق";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";

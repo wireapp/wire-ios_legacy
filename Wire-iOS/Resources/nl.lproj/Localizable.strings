@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
-"peoplepicker.no_matching_results.message.services" = "Geen resultaten";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Iedereen is hier.";
+"peoplepicker.no_matching_results.message.services" = "Geen resultaten.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
 
 "peoplepicker.send_invitation.dialog.title" = "Uitnodiging verstuurd";
 "peoplepicker.send_invitation.dialog.message" = "De uitnodiging kan 2 weken gebruikt worden. Stuur een nieuwe als hij verlopen is.";
@@ -651,7 +651,7 @@
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
-"voice.mute_button.title" = "Microphone";
+"voice.mute_button.title" = "Microfoon";
 "voice.video_button.title" = "Camera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Luidspreker";
@@ -1944,4 +1944,4 @@
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
-"keyboardshortcut.openPeople" = "Deelnemers";
+"keyboardshortcut.openPeople" = "Personen";
