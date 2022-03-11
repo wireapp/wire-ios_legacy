@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Kõik on siin.";
 "peoplepicker.no_matching_results.message.services" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Teenused on abistajad, mis võivad aidata sul töid teha.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Teenused on abistajad, mis võivad aidata sul töid teha. Nende lubamiseks pöördu oma administraatori poole.";
 
 "peoplepicker.send_invitation.dialog.title" = "Kutse saadetud";
 "peoplepicker.send_invitation.dialog.message" = "See kehtib 2 nädalat. Saada kehtivuse lõppedes uus.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Vasta";
 "voice.decline_button.title" = "Keeldu";
 "voice.hang_up_button.title" = "Lõpeta kõne";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kaamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Kõlar";
 "voice.cancel_button.title" = "Tühista";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Kasutajanimi";
 "self.settings.account_section.add_handle.title" = "Lisa kasutajanimi";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Meeskond";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";

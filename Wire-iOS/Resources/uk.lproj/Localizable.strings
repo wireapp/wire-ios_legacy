@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Знаходьте людей в Wire по імені або @ніку\n\nЗнаходьте  людей з іншого домену,\nвикористовуючи формат @нік@ім'я_домену";
 "peoplepicker.no_matching_results.message.users_all_added" = "Всі вже тут.";
 "peoplepicker.no_matching_results.message.services" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до IT-адміністратора вашої команди.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
 
 "peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
 "peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
@@ -1797,9 +1797,9 @@
 "url_action.join_conversation.confirmation.message" = "Вас запросили до розмови:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Приєднатись";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
-"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "Не вдалося приєднатися до розмови";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Розмова переповнена.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Посилання на розмову недійсне.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link

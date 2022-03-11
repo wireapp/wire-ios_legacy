@@ -652,7 +652,7 @@
 "voice.decline_button.title" = "অস্বীকার";
 "voice.hang_up_button.title" = "Hang Up";
 "voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.video_button.title" = "ক্যামেরা";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "বাতিল করুন";

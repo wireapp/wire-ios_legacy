@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
 "peoplepicker.no_matching_results.message.services" = "Нема резултата.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Услуге су помоћ која може побољшати ваш рад.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Услуге су помоћ која може побољшати вашу брзину рада. Да бисте их омогућили, питајте свог администратора.";
 
 "peoplepicker.send_invitation.dialog.title" = "Позивница је послата";
 "peoplepicker.send_invitation.dialog.message" = "Важи две недеље. Пошаљите нову ако ова истекне.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Прихвати";
 "voice.decline_button.title" = "Одбиј";
 "voice.hang_up_button.title" = "Прекини везу";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Микрофон";
+"voice.video_button.title" = "Камера";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Звучник";
 "voice.cancel_button.title" = "Откажи";

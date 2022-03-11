@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Herkes burada.";
 "peoplepicker.no_matching_results.message.services" = "Sonuç yok.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Hizmetler, iş akışınızı iyileştirebilecek yardımcılardır. Onları etkinleştirmek için yöneticinize sorun.";
 
 "peoplepicker.send_invitation.dialog.title" = "Davet gönderildi";
 "peoplepicker.send_invitation.dialog.message" = "2 hafta için kullanılabilir. Süresi dolduğunda yenisini gönderebilirsiniz.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Kabul et";
 "voice.decline_button.title" = "Reddet";
 "voice.hang_up_button.title" = "Aramayı sonlandır";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Hoparlör";
 "voice.cancel_button.title" = "İptal";
@@ -691,12 +691,12 @@
 "call.overlay.switch_to.speakers" = "KONUŞMACILAR";
 "call.overlay.switch_to.all" = "TÜMÜ";
 
-"call.grid.no_active_speakers" = "No active video speakers...";
+"call.grid.no_active_speakers" = "Aktif görüntülü arama katılımcısı yok...";
 
-"call.grid.hints.fullscreen" = "Double tap on a tile for fullscreen";
-"call.grid.hints.go_back_or_zoom" = "Double tap to go back, pinch to zoom";
+"call.grid.hints.fullscreen" = "Tam ekrana geçmek için bir kutucuğa çift dokunun";
+"call.grid.hints.go_back_or_zoom" = "Geri dönmek için çift dokunun, yakınlaştırmak için parmaklarınızı birbirine yaklaştırın";
 "call.grid.hints.go_back" = "Double tap to go back";
-"call.grid.hints.zoom" = "Pinch to zoom";
+"call.grid.hints.zoom" = "Büyütmek için parmaklarınızı birbirine yaklaştırın";
 
 "call.video.paused" = "Video duraklatıldı";
 "call.video.too_many.alert.title" = "Video için çok fazla kişi var";
@@ -884,7 +884,7 @@
 "profile.details.guest" = "Misafir";
 "profile.details.group_admin" = "Grup yöneticisi";
 "profile.details.partner" = "external";
-"profile.details.federated" = "Federated";
+"profile.details.federated" = "Federe";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
 "profile_view.accessibility.handle" = "Kullanıcı Adı";
@@ -923,7 +923,7 @@
 "group_details.guest_options_cell.title" = "Misafirler ve hizmetler";
 "group_details.guest_options_cell.enabled" = "Açık";
 "group_details.guest_options_cell.disabled" = "Kapalı";
-"group_details.timeout_options_cell.title" = "Self-deleting messages";
+"group_details.timeout_options_cell.title" = "Kendini yok eden iletiler";
 "group_details.notification_options_cell.title" = "Bildirimler";
 "group_details.notification_options_cell.description" = "Her şeyden (sesli ve görüntülü aramalar dahil) veya yalnızca biri sizden bahsettiğinde veya mesajlarınızdan birini yanıtladığında size bildirim gelebilir.";
 "group_details.receipt_options_cell.title" = "Okundu bilgisi";
@@ -1013,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Kullanıcı Adı";
 "self.settings.account_section.add_handle.title" = "Kullanıcı adı ekle";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Takım";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1900,7 +1900,7 @@
 // Custom app lock - unlock
 "unlock.textfield.placeholder" = "Parolanızı girin";
 "unlock.title_label" = "Enter passcode to unlock Wire";
-"unlock.wipe_button" = "Access as new device";
+"unlock.wipe_button" = "Yeni cihaza erişim ver";
 "unlock.error_label" = "Yanlış Şifre";
 "unlock.submit_button.title" = "kilidi aç";
 

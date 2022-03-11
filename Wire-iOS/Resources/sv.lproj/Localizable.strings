@@ -91,7 +91,7 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Inga resultat.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Alla är här.";
 "peoplepicker.no_matching_results.message.services" = "Inga resultat.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Acceptera";
 "voice.decline_button.title" = "Avböj";
 "voice.hang_up_button.title" = "Lägg på";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Högtalare";
 "voice.cancel_button.title" = "Avbryt";
@@ -1784,7 +1784,7 @@
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 
-"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.title" = "Anslut till server";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
 
 "url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";

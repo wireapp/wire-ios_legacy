@@ -94,7 +94,7 @@
 "peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "服务是可以为您的工作流程改善提供帮助。要启用服务，请联系您的管理员。";
 
 "peoplepicker.send_invitation.dialog.title" = "邀请已送出";
 "peoplepicker.send_invitation.dialog.message" = "邀请两周内有效。如果过期，请发送新的邀请。";
@@ -1798,7 +1798,7 @@
 "url_action.join_conversation.confirmation.confirm_button" = "加入";
 
 "url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "对话已满。";
 "url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 

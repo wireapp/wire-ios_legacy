@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Besvar";
 "voice.decline_button.title" = "Afvis";
 "voice.hang_up_button.title" = "Læg på";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Højtaler";
 "voice.cancel_button.title" = "Annuller";
