@@ -287,7 +287,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
 
             case .requestEmailVerificationCode(let email):
-                requestEmailVerificationCode(email: email)
+                requestEmailVerificationCode(email: email, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -658,8 +658,8 @@ extension AuthenticationCoordinator {
     }
 
     // Sends the login verification code to the email address
-    private func requestEmailVerificationCode(email: String) {
-        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email)
+    private func requestEmailVerificationCode(email: String, isResend: Bool) {
+        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestEmailVerificationCodeForLogin(email: email)
     }
@@ -678,8 +678,8 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .enterPhoneVerificationCode(let phoneNumber):
             requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
-        case .enterEmailVerificationCode(let email):
-            requestEmailVerificationCode(email: email)
+        case .enterEmailVerificationCode(let email, _):
+            requestEmailVerificationCode(email: email, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
