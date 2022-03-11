@@ -661,9 +661,7 @@ extension AuthenticationCoordinator {
     private func requestEmailVerificationCode(email: String) {
         let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email)
         stateController.transition(to: nextStep)
-        // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
-        // when it's implemented in SE
-        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: email)
+        unauthenticatedSession.requestEmailVerificationCodeForLogin(email: email)
     }
 
     /// Requests a phone login for the specified credentials.
