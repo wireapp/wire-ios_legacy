@@ -94,6 +94,7 @@ public class AppRootRouter: NSObject {
 
     public func start(launchOptions: LaunchOptions) {
         showInitial(launchOptions: launchOptions)
+        sessionManager.resolveAPIVersion()
     }
 
     public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
@@ -518,6 +519,7 @@ extension AppRootRouter: ApplicationStateObserving {
 
     func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
+        sessionManager.resolveAPIVersion()
     }
 
     func updateOverlayWindowFrame(size: CGSize? = nil) {
