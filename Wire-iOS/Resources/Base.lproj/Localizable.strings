@@ -1644,7 +1644,6 @@
 "push.notification.new_user" = "%@ joined Wire";
 "push.notification.new_message" = "New message";
 
-
 // Force Update
 "force.update.title" = "Update necessary";
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
