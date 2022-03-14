@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "결과가 없습니다.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "모든 사용자가 참가했습니다.";
 "peoplepicker.no_matching_results.message.services" = "결과가 없습니다.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "서비스는 작업 흐름을 쉽게 도와주는 기능을 합니다.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "서비스는 작업 흐름을 쉽게 도와주는 기능을 합니다. 해당 기능을 사용하려면, 관리자에게 문의하세요.";
 
 "peoplepicker.send_invitation.dialog.title" = "초대장을 보냈습니다";
 "peoplepicker.send_invitation.dialog.message" = "초대장은 2주동안 유효합니다. 기간이 지난 후에는 새로운 초대장을 보내세요.";
@@ -719,8 +719,6 @@
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Call anyway";
 "call.alert.ongoing.join.button" = "Join anyway";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "참여하기";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

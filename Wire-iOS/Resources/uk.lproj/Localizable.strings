@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Знаходьте людей в Wire по імені або @ніку\n\nЗнаходьте  людей з іншого домену,\nвикористовуючи формат @нік@ім'я_домену";
 "peoplepicker.no_matching_results.message.users_all_added" = "Всі вже тут.";
 "peoplepicker.no_matching_results.message.services" = "Нікого не знайдено.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси - це помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до IT-адміністратора вашої команди.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Сервіси та помічники, які можуть поліпшити ваш робочий процес. Щоб увімкнути їх, зверніться до адміністратора вашої команди.";
 
 "peoplepicker.send_invitation.dialog.title" = "Запрошення надіслано";
 "peoplepicker.send_invitation.dialog.message" = "Воно дійсне протягом 2 тижнів. Надішліть нове запрошення, якщо термін дії цього закінчиться.";
@@ -719,8 +719,6 @@
 "call.alert.ongoing.join.message" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
 "call.alert.ongoing.start.button" = "Подзвонити все одно";
 "call.alert.ongoing.join.button" = "Приєднатися все-одно";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Ретранслятори викликів недоступні. Це може вплинути на роботу ваших дзвінків.";
 "call.quality.indicator.more_info.button.text" = "Детальніше";
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Вас запросили до розмови:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Приєднатись";
 
-"url_action.join_conversation.error.title" = "Не вдалося приєднатися до розмови";
-"url_action.join_conversation.error.converation_is_full" = "Розмова переповнена.";
-"url_action.join_conversation.error.link_is_invalid" = "Посилання на розмову недійсне.";
+"url_action.join_conversation.error.alert.title" = "Не вдалося приєднатися до розмови";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Розмова переповнена.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Посилання на розмову недійсне.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";

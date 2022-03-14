@@ -92,7 +92,7 @@
 "peoplepicker.no_matching_results.message.users" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen\n\nFinden Sie Personen einer anderen Domain mit @Benutzername@Domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Alle sind hier.";
-"peoplepicker.no_matching_results.message.services" = "Kein Ergebnis";
+"peoplepicker.no_matching_results.message.services" = "Keine Ergebnisse";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Dienste sind Helfer, die den Workflow verbessern können.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
 
@@ -626,7 +626,7 @@
 "inbox.connection_request.ignore_button_title" = "Ignorieren";
 "error.connection.title" = "Fehler";
 "error.connection.missing_legalhold_consent" = "Sie können sich mit diesem Nutzer nicht verbinden, da die gesetzliche Aufbewahrung aktiviert ist.";
-"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut";
+"error.connection.generic_error" = "Ein Fehler ist aufgetreten, bitte nochmal versuchen";
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire benötigt Zugriff auf Ihre Fotos.";
@@ -719,8 +719,6 @@
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
-
-"call.toast.muted_on_join.message" = "Wenn Sie an einer Telefonkonferenz teilnehmen, sind Sie zunächst stumm geschaltet";
 
 "call.quality.indicator.message" = "Ihr Anrufrelais ist nicht erreichbar. Dies kann Ihr Gespräch beeinträchtigen.";
 "call.quality.indicator.more_info.button.text" = "Mehr erfahren";
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Sie wurden zu dieser Unterhaltung eingeladen:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Beitreten";
 
-"url_action.join_conversation.error.title" = "Sie konnten der Unterhaltung nicht beitreten";
-"url_action.join_conversation.error.converation_is_full" = "Die Unterhaltung ist voll.";
-"url_action.join_conversation.error.link_is_invalid" = "Der Link zu dieser Unterhaltung ist ungültig.";
+"url_action.join_conversation.error.alert.title" = "Sie konnten der Unterhaltung nicht beitreten";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Die Unterhaltung ist voll.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Der Link zu dieser Unterhaltung ist ungültig.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Erfahren Sie mehr über Gäste-Links.";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kann diese Person nicht finden.";
@@ -1945,4 +1944,4 @@
 "keyboardshortcut.scrollToBottom" = "Nach Unten Scrollen";
 "keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
 "keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
-"keyboardshortcut.openPeople" = "Kontakte";
+"keyboardshortcut.openPeople" = "Personen";

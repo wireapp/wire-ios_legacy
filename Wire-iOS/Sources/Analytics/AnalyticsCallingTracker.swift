@@ -193,7 +193,7 @@ private extension CallClosedReason {
             return "security_degraded"
         case .anweredElsewhere:
             return "answered_elsewhere"
-        case .timeout:
+        case .timeout, .timeoutECONN:
             return "timeout"
         case .unknown:
             return "unknown"
@@ -203,7 +203,12 @@ private extension CallClosedReason {
             return "rejected_elsewhere"
         case .outdatedClient:
             return "outdated_client"
-
+        case .datachannel:
+            return "datachannel"
+        case .noOneJoined:
+            return "no_one_joined"
+        case .everyoneLeft:
+            return "everyone_left"
         }
     }
 }

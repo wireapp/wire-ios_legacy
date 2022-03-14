@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Acceptă";
 "voice.decline_button.title" = "Refuză";
 "voice.hang_up_button.title" = "Închide";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Microfon";
+"voice.video_button.title" = "Cameră";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Renunță";
@@ -719,8 +719,6 @@
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Sună oricum";
 "call.alert.ongoing.join.button" = "Join anyway";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
@@ -1015,7 +1013,7 @@
 "self.settings.account_section.phone.title" = "Telefon";
 "self.settings.account_section.handle.title" = "Nume utilizator";
 "self.settings.account_section.add_handle.title" = "Add username";
-"self.settings.account_section.team.title" = "Team";
+"self.settings.account_section.team.title" = "Echipa";
 "self.settings.account_section.domain.title" = "Domain";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Alătură-te";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire can't find this person.";

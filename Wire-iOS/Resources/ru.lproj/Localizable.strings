@@ -720,8 +720,6 @@
 "call.alert.ongoing.start.button" = "Все равно позвонить";
 "call.alert.ongoing.join.button" = "Все равно присоединиться";
 
-"call.toast.muted_on_join.message" = "Когда вы присоединяетесь к конференц-звонку, ваш микрофон изначально отключен";
-
 "call.quality.indicator.message" = "Ретрансляторы вызовов недоступны. Это может повлиять на качество вызова.";
 "call.quality.indicator.more_info.button.text" = "Подробнее";
 
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "Вас пригласили в беседу:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Присоединиться";
 
-"url_action.join_conversation.error.title" = "Вы не смогли присоединиться к беседе";
-"url_action.join_conversation.error.converation_is_full" = "Беседа переполнена.";
-"url_action.join_conversation.error.link_is_invalid" = "Ссылка на беседу недействительна.";
+"url_action.join_conversation.error.alert.title" = "Вы не смогли присоединиться к беседе";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Беседа переполнена.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Ссылка на беседу недействительна.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Узнать больше о гостевых ссылках";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не может найти этого человека.";

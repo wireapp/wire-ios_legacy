@@ -19,6 +19,7 @@
 import UIKit
 import WireSyncEngine
 import avs
+import WireCommonComponents
 
 protocol CallViewControllerDelegate: AnyObject {
     func callViewControllerDidDisappear(_ callController: CallViewController,
@@ -467,20 +468,18 @@ extension CallViewController: CallGridViewControllerDelegate {
 
 extension CallViewController {
 
-    private var callingConfig: CallingConfiguration { .config }
-
     var isOverlayVisible: Bool {
         return callInfoRootViewController.view.alpha > 0
+    }
+
+    private var shouldOverlayStayVisibleForAutomation: Bool {
+        return AutomationHelper.sharedHelper.keepCallingOverlayVisible
     }
 
     fileprivate var canHideOverlay: Bool {
         guard case .established = callInfoConfiguration.state else { return false }
 
-        guard callingConfig.canAudioCallHideOverlay else {
-            return callInfoConfiguration.isVideoCall
-        }
-
-        return true
+        return !shouldOverlayStayVisibleForAutomation
     }
 
     fileprivate func toggleOverlayVisibility() {
@@ -518,6 +517,8 @@ extension CallViewController {
     }
 
     func startOverlayTimer() {
+        guard !shouldOverlayStayVisibleForAutomation else { return }
+
         stopOverlayTimer()
         overlayTimer = .scheduledTimer(withTimeInterval: 8, repeats: false) { [weak self] _ in
             self?.animateOverlay(show: false)

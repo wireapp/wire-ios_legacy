@@ -303,7 +303,7 @@ class SettingsCellDescriptorFactory {
             return BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
-            let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
+            let url = URL.wr_termsOfServicesURL.appendingLocaleParameter
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
 

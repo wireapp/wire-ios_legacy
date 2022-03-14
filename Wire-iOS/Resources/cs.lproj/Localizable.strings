@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Žádné výsledky.";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Všichni jsou zde.";
 "peoplepicker.no_matching_results.message.services" = "Žádné výsledky.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Služby jsou pomůcky, které mohou zlepšit vaši workflow.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Služby pomáhají zlepšit váš workflow. Pro jejich zprovoznění kontaktujte svého administrátora.";
 
 "peoplepicker.send_invitation.dialog.title" = "Pozvánka odeslána";
 "peoplepicker.send_invitation.dialog.message" = "Může být použito na 2 týdny. Zašlete novou, pokud její platnost vyprší.";
@@ -651,8 +651,8 @@
 "voice.accept_button.title" = "Přijmout";
 "voice.decline_button.title" = "Zamítnout";
 "voice.hang_up_button.title" = "Zavěsit";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Mikrofon";
+"voice.video_button.title" = "Kamera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Reproduktor";
 "voice.cancel_button.title" = "Zrušit";
@@ -719,8 +719,6 @@
 "call.alert.ongoing.join.message" = "Hovor je aktivní v jiné konverzaci.\nPřijmutím tohoto hovoru ukončíte ten první.";
 "call.alert.ongoing.start.button" = "Přesto zavolat";
 "call.alert.ongoing.join.button" = "Přesto se přidat";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
@@ -1799,9 +1797,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Vstoupit";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire nemůže nalézt tento kontakt.";

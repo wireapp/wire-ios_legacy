@@ -52,6 +52,9 @@ extension ZMConversation {
     }
 
     func joinCall() {
+        if conversationType == .group {
+            voiceChannel?.muted = true
+        }
         joinVoiceChannel(video: false)
     }
 
