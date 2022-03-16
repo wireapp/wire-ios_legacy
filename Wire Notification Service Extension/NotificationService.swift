@@ -22,7 +22,6 @@ import WireRequestStrategy
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
-import WireSyncEngine
 import UIKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
@@ -55,7 +54,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         self.contentHandler = contentHandler
 
         guard
-            let accountID = request.content.userInfo.accountId(),
+            let accountID = request.content.accountID,
             let session = try? createSession(accountID: accountID)
         else {
             // TODO: what happens here?
@@ -126,6 +125,18 @@ extension UNNotificationContent {
 
     static var empty: Self {
         return Self()
+    }
+
+    var accountID: UUID? {
+        guard
+            let data = userInfo["data"] as? [String: Any],
+            let userIDString = data["user"] as? String,
+            let userID = UUID(uuidString: userIDString)
+        else {
+            return nil
+        }
+
+        return userID
     }
 
 }
