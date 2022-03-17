@@ -92,7 +92,7 @@
 "peoplepicker.no_matching_results.message.users" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Finden Sie Personen in Wire anhand ihrer Namen oder @Benutzernamen\n\nFinden Sie Personen einer anderen Domain mit @Benutzername@Domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Alle sind hier.";
-"peoplepicker.no_matching_results.message.services" = "Keine Ergebnisse";
+"peoplepicker.no_matching_results.message.services" = "Keine Ergebnisse.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Dienste sind Helfer, die den Workflow verbessern können.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
 
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
 "conversation.create.guidance.toolong" = "Zu viele Zeichen";
 "conversation.create.options.title" = "Optionen";
-"conversation.create.options.subtitle" = "Gäste und Dienste: %@, Lesebestätigungen: %@";
-"conversation.create.guests.title" = "Gäste und Dienste zulassen";
-"conversation.create.guests.subtitle" = "Diese Unterhaltung für Dienste und Personen außerhalb des Teams öffnen.";
+"conversation.create.options.subtitle" = "Gäste: %@, Dienste: %@, Lesebestätigungen: %@";
+"conversation.create.guests.title" = "Gäste zulassen";
+"conversation.create.guests.subtitle" = "Öffnen Sie diese Unterhaltung für Personen außerhalb Ihres Teams.";
+"conversation.create.services.title" = "Dienste zulassen";
+"conversation.create.services.subtitle" = "Öffnen Sie diese Unterhaltung für Dienste.";
 "conversation.create.receipts.title" = "Lesebestätigungen";
 "conversation.create.receipts.subtitle" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
 "content.system.conversation.guest.you_joined" = "Sie sind beigetreten";
 
-"content.system.conversation.invite.title" = "Dienste und Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
+"content.system.conversation.invite.title" = "Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
 "content.system.conversation.invite.button" = "Personen einladen";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "Integration entfernen";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gäste und Dienste";
+"group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
+"group_details.services_options_cell.title" = "Dienste";
+"group_details.services_options_cell.enabled" = "An";
+"group_details.services_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
 "group_details.notification_options_cell.title" = "Benachrichtigungen";
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine Ihrer Nachrichten antwortet.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Gäste und Dienste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffnen Sie diese Unterhaltung für Dienste und Personen außerhalb des Teams.";
-"guest_room.remove_guests.message" = "Aktuelle Gäste und Dienste werden aus der Unterhaltung entfernt. Neue Gäste und Dienste sind nicht erlaubt.";
+"guest_room.allow_guests.title" = "Gäste zulassen";
+"guest_room.allow_guests.subtitle" = "Öffnen Sie diese Unterhaltung für Personen außerhalb Ihres Teams.";
+"guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
 "guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
 "guest_room.revoke_link.action" = "Link widerrufen";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h verbleibend";
 "guest_room.expiration.less_than_minutes_left" = "Weniger als %@m verbleibend";
+
+// Services Options
+
+"services_options.allow_services.title" = "Dienste zulassen";
+"services_options.allow_services.subtitle" = "Öffnen Sie diese Unterhaltung für Dienste.";
+"services_options.remove_services.message" = "Aktuelle Dienste werden aus der Unterhaltung entfernt. Neue Dienste können nicht hinzugefügt werden.";
+"services_options.remove_services.action" = "Entfernen";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ ist jetzt auch bei Wire";
 "push.notification.new_message" = "Neue Nachricht";
-
 
 // Force Update
 "force.update.title" = "Aktualisierung erforderlich";
@@ -1944,4 +1956,4 @@
 "keyboardshortcut.scrollToBottom" = "Nach Unten Scrollen";
 "keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
 "keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
-"keyboardshortcut.openPeople" = "Personen";
+"keyboardshortcut.openPeople" = "Kontakte";

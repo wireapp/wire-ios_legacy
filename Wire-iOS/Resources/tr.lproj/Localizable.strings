@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "En az 1 karakter";
 "conversation.create.guidance.toolong" = "Çok fazla karakter";
 "conversation.create.options.title" = "Sohbet seçenekleri";
-"conversation.create.options.subtitle" = "Misafir ve hizmetler: %@, Okundu bilgisi: %@";
-"conversation.create.guests.title" = "Misafirlere ve hizmetlere izin ver";
-"conversation.create.guests.subtitle" = "Bu konuşmayı ekibinizin dışındaki servislere ve insanlara da açın.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Okundu bilgisi";
 "conversation.create.receipts.subtitle" = "Bu açıkken, insanlar bu görüşmedeki mesajlarının ne zaman okunduğunu görebilir.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ katıldı";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "Ekibiniz dışındaki hizmetler ve kişiler bu sohbete katılabilir.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "İnsanları davet et";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "entegrasyonu kaldır";
 
 // Group details
-"group_details.guest_options_cell.title" = "Misafirler ve hizmetler";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Açık";
 "group_details.guest_options_cell.disabled" = "Kapalı";
+"group_details.services_options_cell.title" = "Servisler";
+"group_details.services_options_cell.enabled" = "Açık";
+"group_details.services_options_cell.disabled" = "Kapalı";
 "group_details.timeout_options_cell.title" = "Kendini yok eden iletiler";
 "group_details.notification_options_cell.title" = "Bildirimler";
 "group_details.notification_options_cell.description" = "Her şeyden (sesli ve görüntülü aramalar dahil) veya yalnızca biri sizden bahsettiğinde veya mesajlarınızdan birini yanıtladığında size bildirim gelebilir.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Misafirlere ve hizmetlere izin ver";
-"guest_room.allow_guests.subtitle" = "Bu konuşmayı ekibinizin dışındaki servislere ve insanlara da açın.";
-"guest_room.remove_guests.message" = "Mevcut misafirler ve hizmetler sohbetten kaldırılacak. Yeni misafir ve hizmetlere izin verilmeyecektir.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Kaldır";
 "guest_room.revoke_link.message" = "Yeni misafirler bu bağlantıya katılamayacaklar. Mevcut misafirler ise hala erişime sahip olacaktır.";
 "guest_room.revoke_link.action" = "Bağlantıyı Kaldır";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@ saat kaldı";
 "guest_room.expiration.less_than_minutes_left" = "%@ dakikadan az kaldı";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Kaldır";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ Wire'a katıldı";
 "push.notification.new_message" = "Yeni Mesaj";
-
 
 // Force Update
 "force.update.title" = "Güncelleme gerekli";

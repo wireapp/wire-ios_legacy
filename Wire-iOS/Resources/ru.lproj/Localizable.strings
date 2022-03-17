@@ -92,7 +92,7 @@
 "peoplepicker.no_matching_results.message.users" = "Найти пользователей в Wire, используя имя или @псевдоним";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Найти пользователей в Wire, используя имя или @псевдоним\n\nНайти пользователей в другом домене, используя @псевдоним@домен";
 "peoplepicker.no_matching_results.message.users_all_added" = "Все пользователи добавлены.";
-"peoplepicker.no_matching_results.message.services" = "Ничего не найдено.";
+"peoplepicker.no_matching_results.message.services" = "Нет результатов";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс.";
 "peoplepicker.no_matching_results.message.services_not_enabled" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс. Чтобы включить их, обратитесь к администратору.";
 
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
 "conversation.create.options.title" = "Настройки беседы";
-"conversation.create.options.subtitle" = "Гости и сервисы: %@, Отчеты о прочтении: %@";
-"conversation.create.guests.title" = "Разрешить гостей и сервисы";
-"conversation.create.guests.subtitle" = "Открыть эту беседу для сервисов и пользователей не из вашей команды.";
+"conversation.create.options.subtitle" = "Гости: %@, Сервисы: %@, Отчеты о прочтении: %@";
+"conversation.create.guests.title" = "Разрешить гостей";
+"conversation.create.guests.subtitle" = "Открыть эту беседу для пользователей не из вашей команды.";
+"conversation.create.services.title" = "Разрешить сервисы";
+"conversation.create.services.subtitle" = "Открыть эту беседу для сервисов.";
 "conversation.create.receipts.title" = "Отчеты о прочтении";
 "conversation.create.receipts.subtitle" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
 
@@ -451,13 +453,13 @@
 "content.system.conversation.you.started" = "%@ начал беседу с %@";
 "content.system.conversation.you.added" = "%@ добавили %@";
 "content.system.conversation.you.removed" = "%@ удалили %@";
-"content.system.conversation.you.removed.legalhold" = "%@ были удалены из этой беседы, поскольку были активированы юридические ограничения. _Подробнее_";
+"content.system.conversation.you.removed.legalhold" = "%@ были удалены из этой беседы, поскольку были активированы юридические ограничения.";
 "content.system.conversation.you.left" = "%@ покинули беседу";
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
 "content.system.conversation.guest.you_joined" = "Вы присоединились";
 
-"content.system.conversation.invite.title" = "Сервисы и пользователи не из вашей команды могут присоединиться к этой беседе.";
+"content.system.conversation.invite.title" = "Пользователи не из вашей команды могут присоединиться к этой беседе.";
 "content.system.conversation.invite.button" = "Пригласить пользователей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название беседы";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "удалить интеграцию";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гости и сервисы";
+"group_details.guest_options_cell.title" = "Гости";
 "group_details.guest_options_cell.enabled" = "Вкл.";
 "group_details.guest_options_cell.disabled" = "Выкл.";
+"group_details.services_options_cell.title" = "Сервисы";
+"group_details.services_options_cell.enabled" = "Вкл.";
+"group_details.services_options_cell.disabled" = "Откл.";
 "group_details.timeout_options_cell.title" = "Самоудаляющиеся сообщения";
 "group_details.notification_options_cell.title" = "Уведомления";
 "group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Разрешить гостей и сервисы";
-"guest_room.allow_guests.subtitle" = "Открыть эту беседу для сервисов и пользователей не из вашей команды.";
-"guest_room.remove_guests.message" = "Все гости и сервисы будут удалены из беседы. Новые гости и сервисы допущены не будут.";
+"guest_room.allow_guests.title" = "Разрешить гостей";
+"guest_room.allow_guests.subtitle" = "Открыть эту беседу для пользователей не из вашей команды.";
+"guest_room.remove_guests.message" = "Текущие гости будут удалены из беседы. Новые гости допущены не будут.";
 "guest_room.remove_guests.action" = "Удалить";
 "guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
 "guest_room.revoke_link.action" = "Отозвать ссылку";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "Осталось %@ час.";
 "guest_room.expiration.less_than_minutes_left" = "Осталось менее %@ мин.";
+
+// Services Options
+
+"services_options.allow_services.title" = "Разрешить сервисы";
+"services_options.allow_services.subtitle" = "Открыть эту беседу для сервисов.";
+"services_options.remove_services.message" = "Текущие сервисы будут удалены из беседы. Новые сервисы допущены не будут.";
+"services_options.remove_services.action" = "Удалить";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ присоединился к Wire";
 "push.notification.new_message" = "Новое сообщение";
-
 
 // Force Update
 "force.update.title" = "Необходимо обновление";

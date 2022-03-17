@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Almeno 1 carattere";
 "conversation.create.guidance.toolong" = "Troppi caratteri";
 "conversation.create.options.title" = "Opzioni conversazione";
-"conversation.create.options.subtitle" = "Ospiti e servizi: %@, Conferme di lettura: %@";
-"conversation.create.guests.title" = "Consenti ospiti e servizi";
-"conversation.create.guests.subtitle" = "Apri questa conversazione a servizi e persone esterne al tuo team.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Conferme di lettura";
 "conversation.create.receipts.subtitle" = "Quando è attivo, le persone potranno vedere quando i loro messaggi vengono letti in questa conversazione.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ è entrato";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "I servizi e le persone esterne al tuo team possono unirsi a questa conversazione.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Invita persone";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "rimuovi integrazione";
 
 // Group details
-"group_details.guest_options_cell.title" = "Ospiti e servizi";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Disattivo";
+"group_details.services_options_cell.title" = "Servizi";
+"group_details.services_options_cell.enabled" = "On";
+"group_details.services_options_cell.disabled" = "Disattivo";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notifiche";
 "group_details.notification_options_cell.description" = "È possibile ricevere notifiche su tutto (comprese le chiamate audio e video) o solo quando qualcuno parla di te o risponde a uno dei tuoi messaggi.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Consenti ospiti e servizi";
-"guest_room.allow_guests.subtitle" = "Apri questa conversazione a servizi e persone esterne al tuo team.";
-"guest_room.remove_guests.message" = "Gli ospiti e i servizi attuali saranno rimossi dalla conversazione. Non saranno accettati nuovi ospiti e servizi.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Rimuovi";
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h rimanenti";
 "guest_room.expiration.less_than_minutes_left" = "Meno di %@m rimanenti";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Rimuovi";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ è su Wire";
 "push.notification.new_message" = "Nuovo messaggio";
-
 
 // Force Update
 "force.update.title" = "Aggiornamento necessario";

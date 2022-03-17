@@ -60,7 +60,7 @@
 "peoplepicker.header.contacts" = "Danh bạ";
 "peoplepicker.header.contacts_personal" = "Danh bạ Cá nhân";
 "peoplepicker.header.directory" = "Kết nối";
-"peoplepicker.header.federation" = "Connect with other domain";
+"peoplepicker.header.federation" = "Kết nối bằng tên miền khác";
 
 "peoplepicker.group.title.singular" = "Thêm người tham gia";
 "peoplepicker.group.title.plural" = "Thêm người tham gia (%d)";
@@ -89,8 +89,8 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Quản lý Dịch vụ";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Không có kết quả.";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
-"peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
+"peoplepicker.no_matching_results.message.users" = "Tìm kiếm mọi người trong Wire bằng tên hoặc @tên người dùng";
+"peoplepicker.no_matching_results.message.usersAndFederation" = "Tìm kiếm mọi người trong Wire bằng tên hoặc @tên người dùng\n\nTìm kiếm mọi người bằng tên miền khác như @tên_người_dùng@tên_miền";
 "peoplepicker.no_matching_results.message.users_all_added" = "Mọi người đã ở đây.";
 "peoplepicker.no_matching_results.message.services" = "Không có kết quả.";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Các dịch vụ là công cụ có thể cải thiện năng suất làm việc của bạn.";
@@ -107,7 +107,7 @@
 "peoplepicker.quick-action.create-guest-room" = "Tạo phòng khách";
 "peoplepicker.quick-action.admin-services" = "Quản lý Dịch vụ";
 
-"peoplepicker.federation.domain_unvailable" = "The federated domain is currently not available. [Learn more](%@)";
+"peoplepicker.federation.domain_unvailable" = "Miền liên kết hiện không có sẵn. [Tìm hiểu thêm] (%@)";
 
 "add_participants.alert.title" = "Nhóm đã đầy";
 "add_participants.alert.message.new_conversation" = "Lên đến %d người có thể tham gia một cuộc hội thoại.";
@@ -286,7 +286,7 @@
 
 "conversation.input_bar.verified" = "Đã xác minh";
 "conversation.input_bar.placeholder" = "Nhập tin nhắn";
-"conversation.input_bar.placeholder_ephemeral" = "Self-deleting message";
+"conversation.input_bar.placeholder_ephemeral" = "Tự động xóa tin nhắn";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Vuốt lên để gửi";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Chạm để gửi";
@@ -307,11 +307,11 @@
 "conversation.connection_view.in_address_book" = "trong Danh bạ";
 
 "conversation.input_bar.shortcut.send" = "Gửi Tin nhắn";
-"conversation.input_bar.shortcut.newline" = "Insert Line Break";
+"conversation.input_bar.shortcut.newline" = "Chèn Dấu Ngắt Dòng";
 "conversation.input_bar.shortcut.edit_last_message" = "Chỉnh sửa Tin nhắn cuối cùng";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Huỷ";
-"conversation.input_bar.shortcut.choose_previous_mention" = "Choose previous mention";
-"conversation.input_bar.shortcut.choose_next_mention" = "Choose next mention";
+"conversation.input_bar.shortcut.choose_previous_mention" = "Chọn lời nhắc trước đó";
+"conversation.input_bar.shortcut.choose_next_mention" = "Chọn lời nhắc tiếp theo";
 
 "conversation.input_bar.message_too_long.title" = "Tin nhắn quá dài";
 "conversation.input_bar.message_too_long.message" = "Bạn có thể gửi tin nhắn dài tối đa %d kí tự.";
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Ít nhất 1 kí tự";
 "conversation.create.guidance.toolong" = "Quá nhiều kí tự";
 "conversation.create.options.title" = "Tuỳ chọn cuộc hội thoại";
-"conversation.create.options.subtitle" = "Khách vãn lai và dịch vụ: %@, Người đọc %@";
-"conversation.create.guests.title" = "Cho phép khách vãn lai và các dịch vụ";
-"conversation.create.guests.subtitle" = "Mở cuộc hội thoại này cho dịch vụ và mọi người ngoài nhóm của bạn.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Người đọc";
 "conversation.create.receipts.subtitle" = "Khi chức năng này được bật, mọi người có thể nhìn thấy khi tin nhắn của họ được đọc trong cuộc hội thoại này.";
 
@@ -335,13 +337,13 @@
 "conversation.alert.message_deleted" = "Tin nhắn này đã bị xoá.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
-"conversation.banner.are_present" = "%@ are present";
-"conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.guests" = "**Khách**";
+"conversation.banner.services" = "**Dịch vụ**";
+"conversation.banner.externals" = "**Bên ngoài**";
+"conversation.banner.remotes" = "**Người dùng đã liên kết**";
+"conversation.banner.are_present" = "%@ đang hiện hoạt";
+"conversation.banner.are_active" = "%@ đang hoạt động";
+"conversation.banner.separator" = " và ";
 
 "conversation.action.search" = "Tìm kiếm";
 
@@ -365,11 +367,11 @@
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Huỷ";
 "image.add_sketch" = "Thêm bản phát hoạ";
-"image.add_emoji" = "Add an emoji";
+"image.add_emoji" = "Thêm một biểu tượng cảm súc";
 "image.edit_image" = "Sửa ảnh";
 
 // Camera access
-"camera_access.denied" = "Wire needs access to the camera";
+"camera_access.denied" = "Wire cần truy cập vào máy ảnh";
 "video_call.camera_access.denied" = "Wire không truy cập vào camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Kích hoạt nó trong Thiết lập Wire";
@@ -434,30 +436,30 @@
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "Xem trước danh sách phát SOundCloud";
 
 // Digital signature
-"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
-"digital_signature.alert.error.no_consent_url" = "Unfortunately, the signature form did not open. Please try again.";
-"digital_signature.alert.error.no_signature" = "Unfortunately, your digital signature failed. Please try again.";
-"digital_signature.alert.download_necessary" = "Please save and read the document before signing it.";
+"digital_signature.alert.error" = "Không may thay, chữ ký số của bạn thất bại.";
+"digital_signature.alert.error.no_consent_url" = "Không may thay, biễu mẫu ký không được mở. Vui lòng thử lại.";
+"digital_signature.alert.error.no_signature" = "Không may thay, chữ ký số của bạn thất bại. Vui lòng thử lại sau.";
+"digital_signature.alert.download_necessary" = "Vui lòng lưu và đọc tài liệu trước khi ký nó.";
 
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.other.added" = "%@ đã thêm %@";
 "content.system.conversation.other.removed" = "%@ đã xóa bỏ %@";
-"content.system.conversation.other.removed.legalhold" = "%@ was removed from this conversation because legal hold has been activated.";
-"content.system.conversation.others.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
+"content.system.conversation.other.removed.legalhold" = "%@ đã được gỡ khỏi cuộc trò chuyện này bởi vì tạm giữ hợp pháp đã được kích hoạt.";
+"content.system.conversation.others.removed.legalhold" = "%@ đã được gỡ khỏi cuộc trò chuyện này bởi vì tạm giữ hợp pháp đã được kích hoạt.";
 "content.system.conversation.other.left" = "%@ còn lại";
 
 "content.system.conversation.you.started" = "%@ đã bắt đầu hội thoại với %@";
 "content.system.conversation.you.added" = "%@ đã thêm %@";
 "content.system.conversation.you.removed" = "%@ đã xóa bỏ %@";
-"content.system.conversation.you.removed.legalhold" = "%@ were removed from this conversation because legal hold has been activated.";
+"content.system.conversation.you.removed.legalhold" = "%@ đã được gỡ khỏi cuộc trò chuyện này bởi vì tạm giữ hợp pháp đã được kích hoạt.";
 "content.system.conversation.you.left" = "%@ còn lại";
 "content.system.conversation.team.member-leave" = "%@ đã bị xóa khỏi nhóm.";
 "content.system.conversation.guest.joined" = "%@ đã tham gia";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "Bạn đã tham gia";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Mời mọi người";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ đã xóa bỏ tên cuộc hội thoại";
@@ -465,7 +467,7 @@
 "content.system.pending_message_timestamp" = "Đang gửi…";
 "content.system.message_sent_timestamp" = "Gửi";
 "content.system.message_delivered_timestamp" = "Đã gửi";
-"content.system.message_read_timestamp" = "Seen";
+"content.system.message_read_timestamp" = "Đã xem";
 "content.system.failedtosend_message_timestamp" = "Gửi đã thất bại.";
 "content.system.failedtosend_message_timestamp_resend" = "Gửi lại";
 "content.system.failedtosend_message_timestamp_delete" = "Xóa";
@@ -478,8 +480,8 @@
 "content.system.you_wanted_to_talk" = "Bạn đã gọi";
 "content.system.ephemeral_time_remaining" = "%@ còn lại";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "**Bạn** đã bắt đầu sử dụng [một thiết bị mới](%@)";
+"content.system.self_user_new_self_client" = "**Bạn** đã bắt đầu sử dụng [thiết bị này](%@)";
 
 "content.system.you_started" = "Bạn";
 
@@ -491,7 +493,7 @@
 "content.system.call.missed-call-you" = "Cuộc gọi nhỡ";
 
 "content.system.call.missed-call.groups" = "Cuộc gọi nhỡ từ %@";
-"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups-you" = "Cuộc gọi nhỡ từ %2$@";
 "content.system.call.missed-call.groups.you" = "Bạn";
 
 "content.system.renamed_conv.title" = "%@ đã đổi tên cuộc hội thoại";
@@ -503,11 +505,11 @@
 
 "content.system.conversation.with_name.participants" = "với";
 
-"content.system.message_timer_changes" = "%@ set the message timer to %@";
-"content.system.message_timer_changes-you" = "%@ set the message timer to %@";
+"content.system.message_timer_changes" = "%@ đặt hẹn giờ cho tin nhắn này vào lúc %@";
+"content.system.message_timer_changes-you" = "%@ đặt hẹn giờ cho tin nhắn này vào lúc %@";
 
-"content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off-you" = "%@ turned off the message timer";
+"content.system.message_timer_off" = "%@ đã tắt hẹn giờ tin nhắn";
+"content.system.message_timer_off-you" = "%@ đã tắt hẹn giờ tin nhắn";
 
 // read receipt
 
@@ -668,7 +670,7 @@
 
 "voice.alert.microphone_warning.title" = "Wire needs access to the microphone";
 
-"voice.alert.camera_warning.title" = "Wire needs access to the camera";
+"voice.alert.camera_warning.title" = "Wire cần truy cập vào máy ảnh";
 
 "voice.top_overlay.tap_to_return" = "Chạm để trở lại cuộc gọi";
 "voice.top_overlay.accessibility_title" = "Đang thực hiện cuộc gọi";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Bật";
 "group_details.guest_options_cell.disabled" = "Tắt";
+"group_details.services_options_cell.title" = "Dịch vụ";
+"group_details.services_options_cell.enabled" = "Bật";
+"group_details.services_options_cell.disabled" = "Tắt";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Thông báo";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Cho phép khách vãn lai và các dịch vụ";
-"guest_room.allow_guests.subtitle" = "Mở cuộc hội thoại này cho dịch vụ và mọi người ngoài nhóm của bạn.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Xóa bỏ";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h left";
 "guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Xóa bỏ";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ đã tham gia Wire";
 "push.notification.new_message" = "Tin nhắn mới";
-
 
 // Force Update
 "force.update.title" = "Cập nhật cần thiết";

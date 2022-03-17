@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Co najmniej 1 znak";
 "conversation.create.guidance.toolong" = "Zbyt wiele znaków";
 "conversation.create.options.title" = "Opcje rozmów";
-"conversation.create.options.subtitle" = "Goście i usługi: %@, Potwierdzenia odczytu: %@";
-"conversation.create.guests.title" = "Zezwól gościom i usługom";
-"conversation.create.guests.subtitle" = "Otwórz tę rozmowę dla usług i osób spoza twojej drużyny.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Potwierdzenie odczytu";
 "conversation.create.receipts.subtitle" = "Gdy włączone, rozmówcy mogą zobaczyć, kiedy ich wiadomości zostały odczytane w tej rozmowie.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ dołączył";
 "content.system.conversation.guest.you_joined" = "Dołączyłeś";
 
-"content.system.conversation.invite.title" = "Usługi i osoby spoza twojego zespołu mogą dołączyć do tej rozmowy.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Zaproś osoby";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ usunął nazwę konwersacji";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "usuń integrację";
 
 // Group details
-"group_details.guest_options_cell.title" = "Goście i usługi";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Włączone";
 "group_details.guest_options_cell.disabled" = "Wyłączony";
+"group_details.services_options_cell.title" = "Usługi";
+"group_details.services_options_cell.enabled" = "Włączone";
+"group_details.services_options_cell.disabled" = "Wyłącz";
 "group_details.timeout_options_cell.title" = "Samoniszczące się wiadomości";
 "group_details.notification_options_cell.title" = "Powiadomienia";
 "group_details.notification_options_cell.description" = "Możesz być powiadamiany o wszystkich wiadomościach (w tym rozmowach audio i wideo) lub tylko wtedy, gdy ktoś wspomni o Tobie lub odpowie na jedną z Twoich wiadomości.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Zezwól gościom i usługom";
-"guest_room.allow_guests.subtitle" = "Otwórz tę rozmowę dla usług i osób spoza twojej drużyny.";
-"guest_room.remove_guests.message" = "Obecni goście i usługi zostaną usunięte z konwersacji. Nowi goście i usługi nie będą dozwolone.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Usuń";
 "guest_room.revoke_link.message" = "Nowi goście nie będą mogli dołączyć z tego linku. Obecni goście nadal będą mieli dostęp.";
 "guest_room.revoke_link.action" = "Odwołaj link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h pozostało";
 "guest_room.expiration.less_than_minutes_left" = "Pozostało mniej niż %@m";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Usuń";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ właśnie dołączył do Wire";
 "push.notification.new_message" = "nowa wiadomość";
-
 
 // Force Update
 "force.update.title" = "Aktualizacja wymagana";
