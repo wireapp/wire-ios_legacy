@@ -30,8 +30,8 @@ final class WireApplication: UIApplication {
     }
 }
 
-//extension WireApplication: NotificationSettingsRegistrable {
-//    var shouldRegisterUserNotificationSettings: Bool {
-//        return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
-//    }
-//}
+extension WireApplication: NotificationSettingsRegistrable {
+    var shouldRegisterUserNotificationSettings: Bool {
+        return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
+    }
+}
