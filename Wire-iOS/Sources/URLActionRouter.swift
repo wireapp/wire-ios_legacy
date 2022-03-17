@@ -266,7 +266,7 @@ private extension URLActionRouter {
             case ConversationJoinError.tooManyMembers:
                 self = .conversationIsFull
 
-            case ConversationJoinError.guestLinksDisabled:
+            case ConversationJoinError.guestLinksDisabled, ConversationFetchError.guestLinksDisabled:
                 self = .conversationLinkIsDisabled
 
             default:
