@@ -1198,9 +1198,9 @@
 		D58192022091E2C0003BA7EC /* IconLabelButton+CallActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */; };
 		D58192052091F34E003BA7EC /* CallActionsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58192042091F34E003BA7EC /* CallActionsViewTests.swift */; };
 		D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */; };
-		D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */; };
+		D594343A203DCB8F006AA0C0 /* ConversationGuestOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5943439203DCB8F006AA0C0 /* ConversationGuestOptionsViewModel.swift */; };
 		D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */; };
-		D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */; };
+		D5C34E8E203D75C5004A0986 /* ConversationGuestOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E8D203D75C5004A0986 /* ConversationGuestOptionsViewController.swift */; };
 		D5C34E93203D7B2E004A0986 /* CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */; };
 		D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */; };
 		D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */; };
@@ -1218,6 +1218,13 @@
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */; };
+		E91DCC36278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */; };
+		E94784E9278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */; };
+		E94784EB278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */; };
+		E94784ED278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784EC278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift */; };
+		E9559B4927B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */; };
+		E9B580CC27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */; };
 		EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08025ADA3D5001DB205 /* AppLockModule.swift */; };
 		EE01D08625ADA3D5001DB205 /* AppLockModule.Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */; };
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
@@ -3066,9 +3073,9 @@
 		D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IconLabelButton+CallActions.swift"; sourceTree = "<group>"; };
 		D58192042091F34E003BA7EC /* CallActionsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionsViewTests.swift; sourceTree = "<group>"; };
 		D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsFooterView.swift; sourceTree = "<group>"; };
-		D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewModel.swift; sourceTree = "<group>"; };
+		D5943439203DCB8F006AA0C0 /* ConversationGuestOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationGuestOptionsViewModel.swift; sourceTree = "<group>"; };
 		D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewControllerTests.swift; sourceTree = "<group>"; };
-		D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewController.swift; sourceTree = "<group>"; };
+		D5C34E8D203D75C5004A0986 /* ConversationGuestOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationGuestOptionsViewController.swift; sourceTree = "<group>"; };
 		D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfiguration.swift; sourceTree = "<group>"; };
 		D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+CloseButton.swift"; sourceTree = "<group>"; };
 		D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewModel.swift; sourceTree = "<group>"; };
@@ -3088,6 +3095,13 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsServicesCell.swift; sourceTree = "<group>"; };
+		E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesCell.swift; sourceTree = "<group>"; };
+		E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesSectionController.swift; sourceTree = "<group>"; };
+		E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServicesOptionsViewModel.swift; sourceTree = "<group>"; };
+		E94784EC278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServicesOptionsViewController.swift; sourceTree = "<group>"; };
+		E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConfirmRemovingServices.swift"; sourceTree = "<group>"; };
+		E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsServicesViewControllerTests.swift; sourceTree = "<group>"; };
 		EE00ACE225E44506005FEC14 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		EE01D08025ADA3D5001DB205 /* AppLockModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.swift; sourceTree = "<group>"; };
 		EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Presenter.swift; sourceTree = "<group>"; };
@@ -4480,6 +4494,7 @@
 				EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */,
 				5EA73D7D20D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift */,
 				5EA73D7E20D900A10001D106 /* GroupDetailsRenameCell.swift */,
+				E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6463,6 +6478,7 @@
 				BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */,
 				BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */,
 				D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */,
+				E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */,
 				BF808B501DE605DF00718076 /* ChangeHandleViewControllerTests.swift */,
 				BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */,
 				BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */,
@@ -6861,22 +6877,25 @@
 		D5C34E8F203D75CA004A0986 /* Conversation Options */ = {
 			isa = PBXGroup;
 			children = (
-				EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */,
-				5EA73D8B20D901E70001D106 /* ConversationTimeoutOptionsViewController.swift */,
-				D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */,
-				D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */,
+				D51894782050490E00C095C1 /* ActionCell.swift */,
 				D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */,
-				D550F57820445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift */,
-				D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */,
 				D54224C520513BFD00526A57 /* CellConfiguration+ConversationOptions.swift */,
 				D53DB9A4203EE03400655CB4 /* Conversation+OptionsConfiguration.swift */,
-				D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */,
+				D5C34E8D203D75C5004A0986 /* ConversationGuestOptionsViewController.swift */,
+				D5943439203DCB8F006AA0C0 /* ConversationGuestOptionsViewModel.swift */,
+				EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */,
+				E94784EC278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift */,
+				E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */,
+				5EA73D8B20D901E70001D106 /* ConversationTimeoutOptionsViewController.swift */,
+				06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */,
+				D54224C720513EC100526A57 /* IconActionCell.swift */,
 				D5189476205045A100C095C1 /* LinkHeaderCell.swift */,
 				D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */,
 				D54224C320513A9800526A57 /* TextCell.swift */,
-				06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */,
-				D51894782050490E00C095C1 /* ActionCell.swift */,
-				D54224C720513EC100526A57 /* IconActionCell.swift */,
+				D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */,
+				D550F57820445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift */,
+				D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */,
+				E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */,
 			);
 			path = "Conversation Options";
 			sourceTree = "<group>";
@@ -6989,6 +7008,7 @@
 				EEAC0A1521AD98BA00BE5F5D /* ConversationCreateOptionsSectionController.swift */,
 				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
 				EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */,
+				E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -7001,6 +7021,7 @@
 				EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */,
 				EEC6A08E21B7BF7900133BC7 /* ConversationCreateGuestsCell.swift */,
 				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
+				E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -8099,6 +8120,7 @@
 				54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */,
 				F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */,
 				87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */,
+				E9559B4927B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift in Sources */,
 				16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */,
 				5E90418921F230A900C3B413 /* AuthenticationCredentialsViewController.swift in Sources */,
 				F18993B822413C9800535A74 /* ConversationContentViewController+ScrollViewDelegate.swift in Sources */,
@@ -8127,7 +8149,7 @@
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
 				F15650D721DD0FC800210504 /* VerticalColumnCollectionViewController.swift in Sources */,
 				543DF6B225309E52001F6EA6 /* RootViewController.swift in Sources */,
-				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
+				D594343A203DCB8F006AA0C0 /* ConversationGuestOptionsViewModel.swift in Sources */,
 				63AFE23825B6E16B0054B067 /* RoundedSegmentedView.swift in Sources */,
 				A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */,
 				EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */,
@@ -8178,6 +8200,7 @@
 				EFEC7D9B2362011E0003CF33 /* MessageAction.swift in Sources */,
 				A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */,
 				5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */,
+				E91DCC36278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift in Sources */,
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				5EA73D8220D900A10001D106 /* GroupDetailsRenameCell.swift in Sources */,
 				BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */,
@@ -8261,6 +8284,7 @@
 				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
 				1661C71D21A71853003DCE1C /* ConversationVideoMessageCell.swift in Sources */,
 				A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */,
+				E94784E9278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				7C5B94FA22DCAF3700A6F8BB /* BlockerViewController.swift in Sources */,
 				546EEA8B2534942F00195097 /* SessionManagerLifeCycleObserver.swift in Sources */,
@@ -8273,6 +8297,7 @@
 				163FB98F20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift in Sources */,
 				EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */,
 				D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */,
+				E94784ED278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
 				068500C126B9A11C00721F80 /* SimpleImageMessageRestrictionView.swift in Sources */,
 				162AE74A219D854100581D98 /* ConversationImageMessageCell.swift in Sources */,
@@ -8379,6 +8404,7 @@
 				5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */,
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,
+				E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */,
 				166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */,
 				EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */,
 				8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */,
@@ -8474,7 +8500,7 @@
 				5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */,
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
-				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
+				D5C34E8E203D75C5004A0986 /* ConversationGuestOptionsViewController.swift in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
@@ -8637,6 +8663,7 @@
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
 				5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */,
 				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
+				E94784EB278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift in Sources */,
 				637387BD2644331F004FEF79 /* Stream+ActiveSpeaker.swift in Sources */,
 				EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
@@ -9080,6 +9107,7 @@
 				5502C6E522B7B800000684B7 /* LegalHoldAlertFactoryTests.swift in Sources */,
 				BF5127161CC9119400F23DEA /* ZMSnapshotTestCase.swift in Sources */,
 				EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */,
+				E9B580CC27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift in Sources */,
 				EF2E2F71223BC4A60038D7D9 /* VersionInfoViewControllerSnapshotTests.swift in Sources */,
 				638C88C62680F92D0074D512 /* MockCallGridHintNotificationLabel.swift in Sources */,
 				D525426820934629001C04C1 /* IconLabelButtonTests.swift in Sources */,

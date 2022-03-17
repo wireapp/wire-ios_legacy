@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Не менше 1 символу";
 "conversation.create.guidance.toolong" = "Занадто багато символів";
 "conversation.create.options.title" = "Налаштування розмови";
-"conversation.create.options.subtitle" = "Гості та сервіси: %@, Звіти про перегляд: %@";
-"conversation.create.guests.title" = "Дозволити гостей та сервіси";
-"conversation.create.guests.subtitle" = "Зробити цю розмову доступною для серівсів та людей поза межами вашої команди.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Звіти про перегляд";
 "conversation.create.receipts.subtitle" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були переглянуті.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 "content.system.conversation.guest.you_joined" = "Ви приєдналися";
 
-"content.system.conversation.invite.title" = "Сервіси та люди поза межами вашої команди можуть приєднатися до цієї розмови.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Запросити людей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гості та сервіси";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
+"group_details.services_options_cell.title" = "Сервіси";
+"group_details.services_options_cell.enabled" = "Увімк.";
+"group_details.services_options_cell.disabled" = "Вимкнений";
 "group_details.timeout_options_cell.title" = "Тимчасові повідомленяя";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Дозволити гостей та сервіси";
-"guest_room.allow_guests.subtitle" = "Зробити цю розмову лоступною для серівсів та людей поза межами вашої команди.";
-"guest_room.remove_guests.message" = "Поточні гості та сервіси будуть вилучені з розмови. Нові гості та сервіси будуть не змозі приєднатися до неї.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Видалити";
 "guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
 "guest_room.revoke_link.action" = "Відкликати лінк";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "Залишилось %@ год.";
 "guest_room.expiration.less_than_minutes_left" = "Залишилось менше %@ хв.";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Видалити";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ приєднався до Wire";
 "push.notification.new_message" = "Нове повідомлення";
-
 
 // Force Update
 "force.update.title" = "Необхідне оновлення";

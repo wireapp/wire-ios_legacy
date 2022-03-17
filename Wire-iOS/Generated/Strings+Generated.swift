@@ -916,7 +916,7 @@ internal enum L10n {
           internal enum Invite {
             /// Invite people
             internal static let button = L10n.tr("Localizable", "content.system.conversation.invite.button")
-            /// Services and people outside your team can join this conversation.
+            /// People outside your team can join this conversation.
             internal static let title = L10n.tr("Localizable", "content.system.conversation.invite.title")
           }
           internal enum Other {
@@ -1121,9 +1121,9 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "conversation.create.group_name.title")
         }
         internal enum Guests {
-          /// Open this conversation to services and people outside your team.
+          /// Open this conversation to people outside your team.
           internal static let subtitle = L10n.tr("Localizable", "conversation.create.guests.subtitle")
-          /// Allow guests and services
+          /// Allow guests
           internal static let title = L10n.tr("Localizable", "conversation.create.guests.title")
         }
         internal enum Guidance {
@@ -1133,9 +1133,9 @@ internal enum L10n {
           internal static let toolong = L10n.tr("Localizable", "conversation.create.guidance.toolong")
         }
         internal enum Options {
-          /// Guests and services: %@, Read receipts: %@
-          internal static func subtitle(_ p1: Any, _ p2: Any) -> String {
-            return L10n.tr("Localizable", "conversation.create.options.subtitle", String(describing: p1), String(describing: p2))
+          /// Guests: %@, Services: %@, Read receipts: %@
+          internal static func subtitle(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+            return L10n.tr("Localizable", "conversation.create.options.subtitle", String(describing: p1), String(describing: p2), String(describing: p3))
           }
           /// Conversation options
           internal static let title = L10n.tr("Localizable", "conversation.create.options.title")
@@ -1145,6 +1145,12 @@ internal enum L10n {
           internal static let subtitle = L10n.tr("Localizable", "conversation.create.receipts.subtitle")
           /// Read receipts
           internal static let title = L10n.tr("Localizable", "conversation.create.receipts.title")
+        }
+        internal enum Services {
+          /// Open this conversation to services.
+          internal static let subtitle = L10n.tr("Localizable", "conversation.create.services.subtitle")
+          /// Allow services
+          internal static let title = L10n.tr("Localizable", "conversation.create.services.title")
         }
       }
       internal enum DeleteRequestDialog {
@@ -1776,7 +1782,8 @@ internal enum L10n {
         internal static let accountSuspended = L10n.tr("Localizable", "error.user.account_suspended")
         /// You have been logged out from another device.
         internal static let deviceDeletedRemotely = L10n.tr("Localizable", "error.user.device_deleted_remotely")
-        /// You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.
+        /// You can't create this account as your email domain is intentionally blocked.
+        /// Please ask your team admin to invite you via email.
         internal static let domainBlocked = L10n.tr("Localizable", "error.user.domain_blocked")
         /// The email address you provided has already been registered. Please try again.
         internal static let emailIsTaken = L10n.tr("Localizable", "error.user.email_is_taken")
@@ -2019,7 +2026,7 @@ internal enum L10n {
         internal static let disabled = L10n.tr("Localizable", "group_details.guest_options_cell.disabled")
         /// On
         internal static let enabled = L10n.tr("Localizable", "group_details.guest_options_cell.enabled")
-        /// Guests and services
+        /// Guests
         internal static let title = L10n.tr("Localizable", "group_details.guest_options_cell.title")
       }
       internal enum NotificationOptionsCell {
@@ -2033,6 +2040,14 @@ internal enum L10n {
         internal static let description = L10n.tr("Localizable", "group_details.receipt_options_cell.description")
         /// Read receipts
         internal static let title = L10n.tr("Localizable", "group_details.receipt_options_cell.title")
+      }
+      internal enum ServicesOptionsCell {
+        /// Off
+        internal static let disabled = L10n.tr("Localizable", "group_details.services_options_cell.disabled")
+        /// On
+        internal static let enabled = L10n.tr("Localizable", "group_details.services_options_cell.enabled")
+        /// Services
+        internal static let title = L10n.tr("Localizable", "group_details.services_options_cell.title")
       }
       internal enum TimeoutOptionsCell {
         /// Self-deleting messages
@@ -2051,9 +2066,9 @@ internal enum L10n {
         internal static let shareLink = L10n.tr("Localizable", "guest_room.actions.share_link")
       }
       internal enum AllowGuests {
-        /// Open this conversation to services and people outside your team.
+        /// Open this conversation to people outside your team.
         internal static let subtitle = L10n.tr("Localizable", "guest_room.allow_guests.subtitle")
-        /// Allow guests and services
+        /// Allow guests
         internal static let title = L10n.tr("Localizable", "guest_room.allow_guests.title")
       }
       internal enum Error {
@@ -2093,7 +2108,7 @@ internal enum L10n {
       internal enum RemoveGuests {
         /// Remove
         internal static let action = L10n.tr("Localizable", "guest_room.remove_guests.action")
-        /// Current guests and services will be removed from the conversation. New guests and services will not be allowed.
+        /// Current guests will be removed from the conversation. New guests will not be allowed.
         internal static let message = L10n.tr("Localizable", "guest_room.remove_guests.message")
       }
       internal enum RevokeLink {
@@ -4204,6 +4219,20 @@ internal enum L10n {
     internal enum SendInvitationNoEmail {
       /// I’m on Wire. Visit get.wire.com to connect with me.
       internal static let text = L10n.tr("Localizable", "send_invitation_no_email.text")
+    }
+    internal enum ServicesOptions {
+      internal enum AllowServices {
+        /// Open this conversation to services.
+        internal static let subtitle = L10n.tr("Localizable", "services_options.allow_services.subtitle")
+        /// Allow services
+        internal static let title = L10n.tr("Localizable", "services_options.allow_services.title")
+      }
+      internal enum RemoveServices {
+        /// Remove
+        internal static let action = L10n.tr("Localizable", "services_options.remove_services.action")
+        /// Current services will be removed from the conversation. New services will not be allowed.
+        internal static let message = L10n.tr("Localizable", "services_options.remove_services.message")
+      }
     }
     internal enum ShareExtension {
       internal enum Voiceover {

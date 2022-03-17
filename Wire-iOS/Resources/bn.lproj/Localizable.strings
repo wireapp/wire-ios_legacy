@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
 "conversation.create.options.title" = "Conversation options";
-"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests and services";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Read receipts";
 "conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ joined";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Invite people";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "বন্ধ";
+"group_details.services_options_cell.title" = "Services";
+"group_details.services_options_cell.enabled" = "On";
+"group_details.services_options_cell.disabled" = "বন্ধ";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notifications";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "সরিয়ে ফেলুন";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h left";
 "guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "সরিয়ে ফেলুন";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ joined Wire";
 "push.notification.new_message" = "New message";
-
 
 // Force Update
 "force.update.title" = "Update necessary";

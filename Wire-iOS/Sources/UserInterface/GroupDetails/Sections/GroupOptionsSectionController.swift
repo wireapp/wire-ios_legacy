@@ -22,6 +22,7 @@ import WireDataModel
 protocol GroupOptionsSectionControllerDelegate: AnyObject {
     func presentTimeoutOptions(animated: Bool)
     func presentGuestOptions(animated: Bool)
+    func presentServicesOptions(animated: Bool)
     func presentNotificationsOptions(animated: Bool)
 }
 
@@ -31,13 +32,14 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
         fileprivate static let count = Option.allCases.count
 
-        case notifications = 0, guests, timeout
+        case notifications = 0, guests, services, timeout
 
         func accessible(in conversation: GroupDetailsConversationType,
                         by user: UserType) -> Bool {
             switch self {
             case .notifications: return user.canModifyNotificationSettings(in: conversation)
             case .guests:        return user.canModifyAccessControlSettings(in: conversation)
+            case .services:      return user.canModifyAccessControlSettings(in: conversation)
             case .timeout:       return user.canModifyEphemeralSettings(in: conversation)
             }
         }
@@ -45,6 +47,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         var cellReuseIdentifier: String {
             switch self {
             case .guests: return GroupDetailsGuestOptionsCell.zm_reuseIdentifier
+            case .services: return GroupDetailsServicesCell.zm_reuseIdentifier
             case .timeout: return GroupDetailsTimeoutOptionsCell.zm_reuseIdentifier
             case .notifications: return GroupDetailsNotificationOptionsCell.zm_reuseIdentifier
             }
@@ -79,6 +82,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
     override func prepareForUse(in collectionView: UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView.flatMap(GroupDetailsGuestOptionsCell.register)
+        collectionView.flatMap(GroupDetailsServicesCell.register)
         collectionView.flatMap(GroupDetailsTimeoutOptionsCell.register)
         collectionView.flatMap(GroupDetailsNotificationOptionsCell.register)
     }
@@ -108,6 +112,8 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         switch options[indexPath.row] {
         case .guests:
             delegate?.presentGuestOptions(animated: true)
+        case .services:
+            delegate?.presentServicesOptions(animated: true)
         case .timeout:
             delegate?.presentTimeoutOptions(animated: true)
         case .notifications:

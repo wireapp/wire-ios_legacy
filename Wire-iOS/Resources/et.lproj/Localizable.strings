@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
 "conversation.create.options.title" = "Vestluse valikud";
-"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Luba külalisi ja teenuseid";
-"conversation.create.guests.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Lugemiskinnitused";
 "conversation.create.receipts.subtitle" = "Kui see on sees, saavad inimesed näha, kas nende vestluse sõnumid on loetud.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ liitus";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "Teenused ja inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Jaga teistega";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "eemalda integratsioon";
 
 // Group details
-"group_details.guest_options_cell.title" = "Külalised ja teenused";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
+"group_details.services_options_cell.title" = "Teenused";
+"group_details.services_options_cell.enabled" = "Sees";
+"group_details.services_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Teavitused";
 "group_details.notification_options_cell.description" = "Sind teavitatakse kõigest (s.h. hääl- ja videokõned) või ainult siis, kui sind mainitakse või su sõnumitele vastatakse.";
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Luba külalisi ja teenuseid";
-"guest_room.allow_guests.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele.";
-"guest_room.remove_guests.message" = "Praegused külalised ja teenused eemaldatakse vestlusest. Uusi külalisi ja teenuseid ei lubata.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Eemalda";
 "guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
 "guest_room.revoke_link.action" = "Tühista link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h järel";
 "guest_room.expiration.less_than_minutes_left" = "Vähem kui %@min järel";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Eemalda";
+
 
 // Registration
 
@@ -1643,7 +1656,6 @@
 // Those are used by the backend to localize APNS
 "push.notification.new_user" = "%@ liitus Wire’ga";
 "push.notification.new_message" = "Uus sõnum";
-
 
 // Force Update
 "force.update.title" = "Uuendamine vajalik";
