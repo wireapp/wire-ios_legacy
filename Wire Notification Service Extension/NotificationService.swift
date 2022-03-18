@@ -22,6 +22,7 @@ import WireRequestStrategy
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
+import WireSyncEngine
 import UIKit
 import CallKit
 
@@ -85,7 +86,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         contentHandler(notification?.content ?? .empty)
     }
 
-    public func reportCallEvent(_ event: ZMUpdateEvent) {
+    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
         guard let pushPayload = PushFromNotificationExtension(event: event),
               let payloadData = try? JSONEncoder().encode(pushPayload),
               let json = try? JSONSerialization.jsonObject(with: payloadData, options: []),
