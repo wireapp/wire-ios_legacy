@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import AVFoundation
+import avs
 
 extension SessionManager {
     static var shared: SessionManager? {
@@ -58,6 +59,20 @@ extension SessionManager {
             self.callNotificationStyle = .callKit
         } else {
             self.callNotificationStyle = .pushNotifications
+        }
+    }
+
+    func updateMuteCallFromSettings() {
+        let isMuteCallEnabled: Bool = !(Settings.shared[.disableMuteCallKit] ?? false)
+        print(isMuteCallEnabled)
+        
+        let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
+        
+        if isMuteCallEnabled && hasAudioPermissions {
+            AVSMediaManager.sharedInstance().configureWithUnMuteFromSettings()
+        }
+        else {
+            AVSMediaManager.sharedInstance().configureWithActualSoundsFromSettings()
         }
     }
 }

@@ -75,6 +75,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
 
     // Debug
     case disableCallKit = "DisableCallKit"
+    case disableMuteCallKit = "DisableMuteCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
     case federationEnabled = "federationEnabled"

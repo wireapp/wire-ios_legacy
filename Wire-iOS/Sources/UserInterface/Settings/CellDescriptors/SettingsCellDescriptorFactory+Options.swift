@@ -33,6 +33,7 @@ extension SettingsCellDescriptorFactory {
             chatHeadsSection,
             soundAlertSection,
             callKitSection,
+            muteCallSection,
             SecurityFlags.forceConstantBitRateCalls.isEnabled ? nil : VBRSection,
             soundsSection,
             externalAppsSection,
@@ -123,6 +124,19 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors: [callKitToggle],
             header: "self.settings.callkit.title".localized,
             footer: "self.settings.callkit.description".localized,
+            visibilityAction: .none
+        )
+    }
+    
+    private var muteCallSection: SettingsSectionDescriptorType {
+        let muteCallToggle = SettingsPropertyToggleCellDescriptor(
+            settingsProperty: settingsPropertyFactory.property(.disableMuteCallKit),
+            inverse: true
+        )
+
+        return SettingsSectionDescriptor(
+            cellDescriptors: [muteCallToggle],
+            footer: "self.settings.mute_other_call.description".localized,
             visibilityAction: .none
         )
     }
