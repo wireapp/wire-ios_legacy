@@ -3984,7 +3984,7 @@ internal enum L10n {
         internal enum MuteOtherCall {
           /// Mute other calls
           internal static let caption = L10n.tr("Localizable", "self.settings.mute_other_call.caption")
-          /// set all incoming calls to not making a sound when you are already on a call.
+          /// Set all incoming calls to not making a sound when you are already on a call.
           internal static let description = L10n.tr("Localizable", "self.settings.mute_other_call.description")
         }
         internal enum Notifications {
