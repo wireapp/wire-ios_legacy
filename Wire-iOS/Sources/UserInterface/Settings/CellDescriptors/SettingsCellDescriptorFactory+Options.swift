@@ -127,7 +127,7 @@ extension SettingsCellDescriptorFactory {
             visibilityAction: .none
         )
     }
-    
+
     private var muteCallSection: SettingsSectionDescriptorType {
         let muteCallToggle = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.disableMuteCallKit),

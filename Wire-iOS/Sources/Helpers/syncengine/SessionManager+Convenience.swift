@@ -64,14 +64,10 @@ extension SessionManager {
 
     func updateMuteCallFromSettings() {
         let isMuteCallEnabled: Bool = !(Settings.shared[.disableMuteCallKit] ?? false)
-        print(isMuteCallEnabled)
-        
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
-        
         if isMuteCallEnabled && hasAudioPermissions {
             AVSMediaManager.sharedInstance().configureWithUnMuteFromSettings()
-        }
-        else {
+        } else {
             AVSMediaManager.sharedInstance().configureWithActualSoundsFromSettings()
         }
     }
