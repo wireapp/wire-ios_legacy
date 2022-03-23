@@ -136,22 +136,24 @@ final class EmptySearchResultsView: UIView {
     }
 
     private var text: String {
+        typealias Message = L10n.Localizable.Peoplepicker.NoMatchingResults.Message
+
         switch state {
         case .everyoneAdded:
-            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.usersAllAdded
+            return Message.usersAllAdded
         case .noUsers:
             if isFederationEnabled {
-                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.usersAndFederation
+                return Message.usersAndFederation
             } else {
-                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.users
+                return Message.users
             }
         case .noServices:
-            return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.services
+            return Message.services
         case .noServicesEnabled:
             if isSelfUserAdmin {
-                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.servicesNotEnabledAdmin
+                return Message.servicesNotEnabledAdmin
             } else {
-                return L10n.Localizable.Peoplepicker.NoMatchingResults.Message.servicesNotEnabled
+                return Message.servicesNotEnabled
             }
         }
     }

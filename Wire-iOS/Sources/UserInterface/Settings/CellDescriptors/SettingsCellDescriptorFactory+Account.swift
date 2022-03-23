@@ -68,7 +68,7 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
-        let federationEnabled = Settings.shared.federationEnabled
+        let federationEnabled = APIVersion.isFederationEnabled
         var cellDescriptors: [SettingsCellDescriptorType] = []
         cellDescriptors = [nameElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editName)),
                            handleElement(
