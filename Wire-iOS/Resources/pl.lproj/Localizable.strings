@@ -30,7 +30,7 @@
 "general.later" = "Później";
 "general.skip" = "Nie teraz";
 "general.accept" = "Odbierz";
-"general.decline" = "Nie, dzięki!";
+"general.decline" = "Nie, dziękuję";
 "general.failure" = "Coś poszło nie tak";
 "general.failure.try_again" = "Proszę spróbować ponownie.";
 "general.service" = "Usługa";
@@ -68,7 +68,7 @@
 "peoplepicker.group.done" = "Zakończono";
 "peoplepicker.group.create" = "Utwórz";
 
-"peoplepicker.header.people" = "Osoby";
+"peoplepicker.header.people" = "Kontakty";
 "peoplepicker.header.services" = "Usługi";
 "peoplepicker.services.open_conversation.item" = "Otwórz konwersację";
 "peoplepicker.services.add_service.button" = "Dodaj usługę";
@@ -85,7 +85,7 @@
 
 "peoplepicker.no_matching_results.action.send_invite" = "Wyślij zaproszenie";
 "peoplepicker.no_matching_results.action.share_contacts" = "Udostępnij kontakty";
-"peoplepicker.no_matching_results.action.learn_more" = "Więcej informacji";
+"peoplepicker.no_matching_results.action.learn_more" = "Dowiedz się więcej";
 "peoplepicker.no_matching_results.action.manage_services" = "Zarządzaj usługami";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Brak wyników.";
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Co najmniej 1 znak";
 "conversation.create.guidance.toolong" = "Zbyt wiele znaków";
 "conversation.create.options.title" = "Opcje rozmów";
-"conversation.create.options.subtitle" = "Goście i usługi: %@, Potwierdzenia odczytu: %@";
-"conversation.create.guests.title" = "Zezwól gościom i usługom";
-"conversation.create.guests.subtitle" = "Otwórz tę rozmowę dla usług i osób spoza twojej drużyny.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Potwierdzenie odczytu";
 "conversation.create.receipts.subtitle" = "Gdy włączone, rozmówcy mogą zobaczyć, kiedy ich wiadomości zostały odczytane w tej rozmowie.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ dołączył";
 "content.system.conversation.guest.you_joined" = "Dołączyłeś";
 
-"content.system.conversation.invite.title" = "Usługi i osoby spoza twojego zespołu mogą dołączyć do tej rozmowy.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Zaproś osoby";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ usunął nazwę konwersacji";
@@ -524,7 +526,7 @@
 "content.system.message_legal_hold.enabled" = "Ta rozmowa jest pod legalnym przechowywaniem";
 "content.system.message_legal_hold.disabled" = "Legalne przechowywanie zostało wyłączone dla tej rozmowy";
 
-"content.system.message_legal_hold.learn_more" = "Więcej informacji";
+"content.system.message_legal_hold.learn_more" = "Dowiedz się więcej";
 
 //
 
@@ -750,7 +752,7 @@
 "participants.avatar.guest.title" = "Gość";
 
 "participants.title" = "Szczegóły";
-"participants.all.title" = "Osoby";
+"participants.all.title" = "Kontakty";
 "participants.section.participants" = "Ludzie (%d)";
 "participants.section.services" = "Usługi (%d)";
 "participants.section.settings" = "Opcje";
@@ -920,9 +922,12 @@
 "participants.services.remove_integration.button" = "usuń integrację";
 
 // Group details
-"group_details.guest_options_cell.title" = "Goście i usługi";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Włączone";
 "group_details.guest_options_cell.disabled" = "Wyłączony";
+"group_details.services_options_cell.title" = "Usługi";
+"group_details.services_options_cell.enabled" = "Włączone";
+"group_details.services_options_cell.disabled" = "Wyłącz";
 "group_details.timeout_options_cell.title" = "Samoniszczące się wiadomości";
 "group_details.notification_options_cell.title" = "Powiadomienia";
 "group_details.notification_options_cell.description" = "Możesz być powiadamiany o wszystkich wiadomościach (w tym rozmowach audio i wideo) lub tylko wtedy, gdy ktoś wspomni o Tobie lub odpowie na jedną z Twoich wiadomości.";
@@ -1013,7 +1018,7 @@
 "self.settings.account_section.phone.title" = "Numer telefonu";
 "self.settings.account_section.handle.title" = "Login";
 "self.settings.account_section.add_handle.title" = "Dodaj nazwę użytkownika";
-"self.settings.account_section.team.title" = "Zespół";
+"self.settings.account_section.team.title" = "Drużyna";
 "self.settings.account_section.domain.title" = "Domena";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
@@ -1341,7 +1346,7 @@
 "team.invite.header.subtitle" = "Twój zespół Wire jest gotowy. Zaproś swoich kolegów jako członków.";
 "team.invite.textfield.placeholder" = "E-mail kolegów";
 "team.invite.textfield.accesibility" = "Wprowadź adres e-mail, aby zaprosić kolegę.";
-"team.invite.learn_more.title" = "Więcej informacji";
+"team.invite.learn_more.title" = "Dowiedz się więcej";
 "team.invite.top_bar.skip" = "Pomiń";
 "team.invite.top_bar.done" = "Zakończono";
 
@@ -1354,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Zezwól gościom i usługom";
-"guest_room.allow_guests.subtitle" = "Otwórz tę rozmowę dla usług i osób spoza twojej drużyny.";
-"guest_room.remove_guests.message" = "Obecni goście i usługi zostaną usunięte z konwersacji. Nowi goście i usługi nie będą dozwolone.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Usuń";
 "guest_room.revoke_link.message" = "Nowi goście nie będą mogli dołączyć z tego linku. Obecni goście nadal będą mieli dostęp.";
 "guest_room.revoke_link.action" = "Odwołaj link";
@@ -1379,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h pozostało";
 "guest_room.expiration.less_than_minutes_left" = "Pozostało mniej niż %@m";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Usuń";
+
 
 // Registration
 
@@ -1644,7 +1657,6 @@
 "push.notification.new_user" = "%@ właśnie dołączył do Wire";
 "push.notification.new_message" = "nowa wiadomość";
 
-
 // Force Update
 "force.update.title" = "Aktualizacja wymagana";
 "force.update.message" = "Nie możesz korzystać z nowych funkcji aplikacji. Pobierz nową wersję Wire w sklepie.";
@@ -1750,7 +1762,7 @@
 "availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Żaden";
-"availability.available" = "&Dostępny(a)";
+"availability.available" = "Dostępny";
 "availability.away" = "Nieobecny(a)";
 "availability.busy" = "Zajęty(a)";
 
@@ -1797,9 +1809,9 @@
 "url_action.join_conversation.confirmation.message" = "Zostałeś zaproszony do rozmowy:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Dołącz";
 
-"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
-"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
-"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "Nie możesz dołączyć do rozmowy";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "Nie można dodać więcej uczestników.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "Link do rozmowy jest nieprawidłowy.";
 "url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
@@ -1898,10 +1910,10 @@
 "create_passcode.validation.no_special_char" = "Znak specjalny";
 
 // Custom app lock - unlock
-"unlock.textfield.placeholder" = "Wprowadź kod dostępu";
-"unlock.title_label" = "Wprowadź kod dostępu, aby odblokować Wire";
+"unlock.textfield.placeholder" = "Wprowadź swoje hasło";
+"unlock.title_label" = "Wprowadź hasło, żeby odblokować Wire";
 "unlock.wipe_button" = "Dostęp jako nowe urządzenie";
-"unlock.error_label" = "Nieprawidłowy kod dostępu";
+"unlock.error_label" = "Błędne hasło";
 "unlock.submit_button.title" = "odblokuj";
 
 // Custom app lock - warning screen
@@ -1944,4 +1956,4 @@
 "keyboardshortcut.scrollToBottom" = "Przewiń na dół";
 "keyboardshortcut.conversationDetail" = "Szczegóły konwersacji...";
 "keyboardshortcut.searchInConversation" = "Szukaj w rozmowie...";
-"keyboardshortcut.openPeople" = "Osoby";
+"keyboardshortcut.openPeople" = "Kontakty";

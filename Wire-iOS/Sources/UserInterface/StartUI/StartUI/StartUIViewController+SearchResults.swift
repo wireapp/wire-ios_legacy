@@ -158,6 +158,7 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                         didSelectName name: String,
                                         participants: UserSet,
                                         allowGuests: Bool,
+                                        allowServices: Bool,
                                         enableReceipts: Bool) {
         dismiss(controller: controller) { [weak self] in
             guard let weakSelf = self else { return }
@@ -166,6 +167,7 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                        createConversationWith: participants,
                                        name: name,
                                        allowGuests: allowGuests,
+                                       allowServices: allowServices,
                                        enableReceipts: enableReceipts)
         }
     }

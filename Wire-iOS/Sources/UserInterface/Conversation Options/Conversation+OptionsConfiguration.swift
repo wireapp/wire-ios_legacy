@@ -19,13 +19,13 @@
 import WireSyncEngine
 
 extension ZMConversation {
-
-    class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
+    class OptionsConfigurationContainer: NSObject, ConversationGuestOptionsViewModelConfiguration, ConversationServicesOptionsViewModelConfiguration, ZMConversationObserver {
 
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
         private let userSession: ZMUserSession
         var allowGuestsChangedHandler: ((Bool) -> Void)?
+        var allowServicesChangedHandler: ((Bool) -> Void)?
 
         init(conversation: ZMConversation, userSession: ZMUserSession) {
             self.conversation = conversation
@@ -42,6 +42,10 @@ extension ZMConversation {
             return conversation.allowGuests
         }
 
+        var allowServices: Bool {
+            return conversation.allowServices
+        }
+
         var allowGuestLinks: Bool {
             return userSession.conversationGuestLinksFeature.status == .enabled
         }
@@ -50,8 +54,12 @@ extension ZMConversation {
             return conversation.accessMode?.contains(.code) ?? false
         }
 
-        var areGuestOrServicePresent: Bool {
-            return conversation.areGuestsPresent || conversation.areServicesPresent
+        var areGuestPresent: Bool {
+            return conversation.areGuestsPresent
+        }
+
+        var areServicePresent: Bool {
+            return conversation.areServicesPresent
         }
 
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
@@ -60,9 +68,21 @@ extension ZMConversation {
             }
         }
 
+        func setAllowServices(_ allowServices: Bool, completion: @escaping (VoidResult) -> Void) {
+            conversation.setAllowServices(allowServices, in: userSession) {
+                completion($0)
+            }
+        }
+
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-            guard changeInfo.allowGuestsChanged else { return }
-            allowGuestsChangedHandler?(allowGuests)
+
+            if changeInfo.allowGuestsChanged {
+               allowGuestsChangedHandler?(allowGuests)
+            }
+
+            if changeInfo.allowServicesChanged {
+              allowServicesChangedHandler?(allowServices)
+            }
         }
 
         func createConversationLink(completion: @escaping (Result<String>) -> Void) {

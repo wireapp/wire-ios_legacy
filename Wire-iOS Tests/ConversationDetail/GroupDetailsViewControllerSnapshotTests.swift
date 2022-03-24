@@ -114,6 +114,7 @@ final class GroupDetailsViewControllerSnapshotTests: XCTestCase {
         createGroupConversation()
         mockConversation.teamRemoteIdentifier = mockSelfUser.teamIdentifier
         mockConversation.allowGuests = true
+        mockConversation.allowServices = true
 
         sut = GroupDetailsViewController(conversation: mockConversation)
 
