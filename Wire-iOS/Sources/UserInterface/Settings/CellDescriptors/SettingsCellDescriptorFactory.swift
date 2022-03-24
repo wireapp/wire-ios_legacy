@@ -180,10 +180,6 @@ class SettingsCellDescriptorFactory {
         )
 
         developerCellDescriptors.append(
-            Toggle(settingsProperty: settingsPropertyFactory.property(.federationEnabled))
-        )
-
-        developerCellDescriptors.append(
             Button(title: "Send broken message",
                    isDestructive: true,
                    selectAction: DebugActions.sendBrokenMessage)

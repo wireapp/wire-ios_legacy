@@ -78,7 +78,6 @@ final class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy: .callingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections: .enableBatchCollections,
         SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate,
-        SettingsPropertyName.federationEnabled: .federationEnabled
     ]
 
     convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
@@ -144,7 +143,7 @@ final class SettingsPropertyFactory {
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: Settings.shared.federationEnabled))
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: APIVersion.isFederationEnabled))
 
         case .team:
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)
