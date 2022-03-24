@@ -94,8 +94,6 @@
 	<string>$(FORCE_ENCRYPTION_AT_REST_ENABLED)</string>
 	<key>GenerateLinkPreviewEnabled</key>
 	<string>${GENERATE_LINK_PREVIEW_ENABLED}</string>
-	<key>FederationEnabled</key>
-	<string>${FEDERATION_ENABLED}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
