@@ -29,16 +29,16 @@ extension ConversationLike where Self: SwiftConversationLike {
         }
 
         // Access mode and/or role is unknown: let's try to add and observe the result.
-        guard let accessMode = accessMode,
-              let accessRole = accessRole else {
-                  return true
-              }
+        guard let accessMode = accessMode else {
+            return true
+        }
 
         let canAddGuest = accessMode.contains(.invite)
-        let guestCanBeAdded = accessRole != .team
+        let guestCanBeAdded = accessRoles.contains(.nonTeamMember) && accessRoles.contains(.guest)
 
         return canAddGuest && guestCanBeAdded
     }
+
 }
 
 protocol AddParticipantsConversationCreationDelegate: AnyObject {
@@ -254,8 +254,8 @@ final class AddParticipantsViewController: UIViewController {
         guard let searchHeaderView = searchHeaderViewController.view,
               let searchResultsView = searchResultsViewController.view,
               let margin = (searchResultsView as? SearchResultsView)?.accessoryViewMargin else {
-            return
-        }
+                  return
+              }
 
         [searchHeaderView,
          searchResultsView,
@@ -306,6 +306,7 @@ final class AddParticipantsViewController: UIViewController {
             let updated = ConversationCreationValues(name: values.name,
                                                      participants: userSelection.users,
                                                      allowGuests: true,
+                                                     allowServices: true,
                                                      selfUser: ZMUser.selfUser())
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }

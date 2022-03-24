@@ -20,10 +20,10 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 
-final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationOptionsViewModelDelegate {
+final class ConversationGuestOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationGuestOptionsViewModelDelegate {
 
     private let tableView = UITableView()
-    private var viewModel: ConversationOptionsViewModel
+    private var viewModel: ConversationGuestOptionsViewModel
     private let variant: ColorSchemeVariant
 
     var dismissSpinner: SpinnerCompletion?
@@ -43,7 +43,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         )
     }
 
-    init(viewModel: ConversationOptionsViewModel, variant: ColorSchemeVariant) {
+    init(viewModel: ConversationGuestOptionsViewModel, variant: ColorSchemeVariant) {
         self.viewModel = viewModel
         self.variant = variant
         super.init(nibName: nil, bundle: nil)
@@ -87,15 +87,15 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
 
     // MARK: – ConversationOptionsViewModelDelegate
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel,
-                   didUpdateState state: ConversationOptionsViewModel.State) {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel,
+                   didUpdateState state: ConversationGuestOptionsViewModel.State) {
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
         title = state.title
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didReceiveError error: Error) {
         // We shouldn't display an error message if the guestLinks feature flag is disabled. There's a UI element that explains why the user cannot use/create links to join the conversation.
 
         if let error = error as? WirelessLinkError,
@@ -106,7 +106,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         }
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView? = nil, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, sourceView: UIView? = nil, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
         let alertController = UIAlertController.confirmRemovingGuests(completion)
         alertController.configPopover(pointToView: sourceView ?? view)
         present(alertController, animated: true)
@@ -114,14 +114,14 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         return alertController
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, sourceView: UIView? = nil, confirmRevokingLink completion: @escaping (Bool) -> Void) {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, sourceView: UIView? = nil, confirmRevokingLink completion: @escaping (Bool) -> Void) {
         let alertController = UIAlertController.confirmRevokingLink(completion)
         present(alertController, animated: true)
 
         alertController.configPopover(pointToView: sourceView ?? view)
     }
 
-    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView? = nil) {
+    func viewModel(_ viewModel: ConversationGuestOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView? = nil) {
         let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
         present(activityController, animated: true)
 

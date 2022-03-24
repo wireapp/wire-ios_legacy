@@ -53,8 +53,9 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
 extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable {
     func configure(with values: ConversationCreationValues) {
         let guests = values.allowGuests.localized.localizedUppercase
+        let services = values.allowServices.localized.localizedUppercase
         let receipts = values.enableReceipts.localized.localizedUppercase
-        status = "conversation.create.options.subtitle".localized(args: guests, receipts)
+        status = L10n.Localizable.Conversation.Create.Options.subtitle(guests, services, receipts)
     }
 }
 

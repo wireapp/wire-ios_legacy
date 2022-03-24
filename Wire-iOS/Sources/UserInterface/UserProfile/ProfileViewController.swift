@@ -460,6 +460,7 @@ extension ProfileViewController: ConversationCreationControllerDelegate {
                                         didSelectName name: String,
                                         participants: UserSet,
                                         allowGuests: Bool,
+                                        allowServices: Bool,
                                         enableReceipts: Bool) {
         controller.dismiss(animated: true) { [weak self] in
             self?.delegate?.profileViewController(self,
