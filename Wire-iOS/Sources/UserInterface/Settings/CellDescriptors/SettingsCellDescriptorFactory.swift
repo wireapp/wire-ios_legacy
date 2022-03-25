@@ -267,6 +267,12 @@ class SettingsCellDescriptorFactory {
                    selectAction: DebugActions.showAnalyticsIdentifier)
         )
 
+        developerCellDescriptors.append(
+            Button(title: "What's the api version?",
+                   isDestructive: false,
+                   selectAction: DebugActions.showAPIVersionInfo)
+        )
+
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],
                                            title: L10n.Localizable.`Self`.Settings.DeveloperOptions.title,
                                            icon: .robot)
