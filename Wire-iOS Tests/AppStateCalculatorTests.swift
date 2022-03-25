@@ -201,6 +201,21 @@ final class AppStateCalculatorTests: XCTestCase {
         // THEN
         XCTAssertTrue(delegate.wasNotified)
     }
+
+    func testThatItDoesntTransitionAwayFromBlacklisted_IfThereIsNoCurrentAPIVersion() {
+        // GIVEN
+        sut.applicationDidBecomeActive()
+        APIVersion.current = nil
+        
+        let blacklistState = AppState.blacklisted(reason: .clientAPIVersionObsolete)
+        sut.testHelper_setAppState(blacklistState)
+
+        // WHEN
+        sut.sessionManagerDidReportLockChange(forSession: MockZMUserSession())
+
+        // THEN
+        XCTAssertEqual(sut.appState, blacklistState)
+    }
 }
 
 class MockAppStateCalculatorDelegate: AppStateCalculatorDelegate {
