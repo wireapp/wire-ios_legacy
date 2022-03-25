@@ -286,8 +286,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
 
-            case .requestEmailVerificationCode(let email):
-                requestEmailVerificationCode(email: email, isResend: false)
+            case .requestEmailVerificationCode(let email, let password):
+                requestEmailVerificationCode(email: email, password: password, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -658,8 +658,8 @@ extension AuthenticationCoordinator {
     }
 
     // Sends the login verification code to the email address
-    private func requestEmailVerificationCode(email: String, isResend: Bool) {
-        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email, isResend: isResend)
+    private func requestEmailVerificationCode(email: String, password: String, isResend: Bool) {
+        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email, password: password, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestEmailVerificationCodeForLogin(email: email)
     }
@@ -671,6 +671,12 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
+    private func requestEmailLogin(with credentials: ZMEmailCredentials) {
+        presenter?.isLoadingViewVisible = true
+        stateController.transition(to: .authenticateEmailCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
     // MARK: - Generic Verification
 
     /// Resends the verification code to the user, if allowed by the current state.
@@ -678,8 +684,8 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .enterPhoneVerificationCode(let phoneNumber):
             requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
-        case .enterEmailVerificationCode(let email, _):
-            requestEmailVerificationCode(email: email, isResend: true)
+        case .enterEmailVerificationCode(let email, let password, _):
+            requestEmailVerificationCode(email: email, password: password, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
@@ -697,6 +703,9 @@ extension AuthenticationCoordinator {
         case .enterPhoneVerificationCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
+        case .enterEmailVerificationCode(let email, let password, _):
+            let credentials = ZMEmailCredentials(email: email, password: password, emailVerificationCode: code)
+            requestEmailLogin(with: credentials)
         case .enterActivationCode(let unverifiedCredentials, let user):
             activateCredentials(credentials: unverifiedCredentials, user: user, code: code)
         default:

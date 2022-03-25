@@ -40,7 +40,8 @@ class AuthenticationEmailVerificationRequiredErrorHandler: AuthenticationEventHa
         }
 
         guard let email  = credentials.email else { return nil }
+        guard let password = credentials.password else { return nil }
 
-        return [.hideLoadingView, .requestEmailVerificationCode(email: email)]
+        return [.hideLoadingView, .requestEmailVerificationCode(email: email, password: password)]
     }
 }
