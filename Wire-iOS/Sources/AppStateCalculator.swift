@@ -108,6 +108,11 @@ class AppStateCalculator {
             return
         }
 
+        if case .blacklisted = self.appState, APIVersion.current == nil {
+            completion?()
+            return
+        }
+
         self.appState = appState
         self.pendingAppState = nil
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
