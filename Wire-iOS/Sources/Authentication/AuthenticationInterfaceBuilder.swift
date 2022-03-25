@@ -116,7 +116,7 @@ class AuthenticationInterfaceBuilder {
             return makeViewController(for: verifyPhoneStep)
 
         case .enterEmailVerificationCode(let email, _, _):
-            let verifyEmailStep = VerifyEmailStepDescription(email: email)
+            let verifyEmailStep = VerifyEmailStepDescription(email: email, canChangeEmail: false)
             return makeViewController(for: verifyEmailStep)
 
         case .addEmailAndPassword:
