@@ -26,7 +26,8 @@ class AuthenticationEmailVerificationRequiredErrorHandlerTests: XCTestCase {
     func testThatItHandlesTheEventWhenErrorAndStepAreCorrect() throws {
         // GIVEN
         let email = "test@email.com"
-        let credentials = ZMEmailCredentials(email: email, password: "12345678")
+        let password = "12345678"
+        let credentials = ZMEmailCredentials(email: email, password: password)
         let step = AuthenticationFlowStep.authenticateEmailCredentials(credentials)
         let error = NSError.userSessionErrorWith(.accountIsPendingVerification, userInfo: nil)
 
@@ -41,7 +42,7 @@ class AuthenticationEmailVerificationRequiredErrorHandlerTests: XCTestCase {
             return
         }
 
-        guard case .requestEmailVerificationCode(email: email) = try XCTUnwrap(actions.last) else {
+        guard case .requestEmailVerificationCode(email: email, password: password) = try XCTUnwrap(actions.last) else {
             XCTFail("Unexpected value")
             return
         }
