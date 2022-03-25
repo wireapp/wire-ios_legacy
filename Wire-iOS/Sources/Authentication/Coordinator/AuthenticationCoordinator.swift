@@ -286,8 +286,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
 
-            case .requestEmailVerificationCode(let email):
-                requestEmailVerificationCode(email: email)
+            case .requestEmailVerificationCode(let email, let password):
+                requestEmailVerificationCode(email: email, password: password, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -658,18 +658,24 @@ extension AuthenticationCoordinator {
     }
 
     // Sends the login verification code to the email address
-    private func requestEmailVerificationCode(email: String) {
-        let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email)
-        stateController.transition(to: nextStep)
-        // TODO: [AGIS] change it to requestP2FAEmailVerificationCode
-        // when it's implemented in SE
-        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: email)
+    private func requestEmailVerificationCode(email: String, password: String, isResend: Bool) {
+        if !isResend {
+            let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email, password: password, isResend: isResend)
+            stateController.transition(to: nextStep)
+        }
+        unauthenticatedSession.requestEmailVerificationCodeForLogin(email: email)
     }
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
         presenter?.isLoadingViewVisible = true
         stateController.transition(to: .authenticatePhoneCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    private func requestEmailLogin(with credentials: ZMEmailCredentials) {
+        presenter?.isLoadingViewVisible = true
+        stateController.transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
 
@@ -680,8 +686,8 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .enterPhoneVerificationCode(let phoneNumber):
             requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
-        case .enterEmailVerificationCode(let email):
-            requestEmailVerificationCode(email: email)
+        case .enterEmailVerificationCode(let email, let password, _):
+            requestEmailVerificationCode(email: email, password: password, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
@@ -699,6 +705,9 @@ extension AuthenticationCoordinator {
         case .enterPhoneVerificationCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
+        case .enterEmailVerificationCode(let email, let password, _):
+            let credentials = ZMEmailCredentials(email: email, password: password, emailVerificationCode: code)
+            requestEmailLogin(with: credentials)
         case .enterActivationCode(let unverifiedCredentials, let user):
             activateCredentials(credentials: unverifiedCredentials, user: user, code: code)
         default:

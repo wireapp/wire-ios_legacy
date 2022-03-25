@@ -66,7 +66,7 @@ extension UIViewController {
                 message = "error.user.email_is_taken".localized
             case .phoneNumberIsAlreadyRegistered:
                 message = "error.user.phone_is_taken".localized
-            case .invalidPhoneNumberVerificationCode, .invalidActivationCode:
+            case .invalidPhoneNumberVerificationCode, .invalidEmailVerificationCode, .invalidActivationCode:
                 message = "error.user.phone_code_invalid".localized
             case .registrationDidFailWithUnknownError:
                 message = "error.user.registration_unknown_error".localized
