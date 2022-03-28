@@ -136,7 +136,7 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsSectionDescriptor(
             cellDescriptors: [muteCallToggle],
-            footer: "self.settings.mute_other_call.description".localized,
+            footer: L10n.Localizable.Self.Settings.MuteOtherCall.description,
             visibilityAction: .none
         )
     }
