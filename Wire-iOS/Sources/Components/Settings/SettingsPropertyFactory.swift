@@ -383,15 +383,15 @@ final class SettingsPropertyFactory {
                         Settings.shared[.disableCallKit] = disabled.boolValue
                     }
             })
-        case .disableMuteCallKit:
+        case .muteIncomingCallsWhileInACall:
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    let disableMuteCallKit: Bool = Settings.shared[.disableMuteCallKit] ?? false
-                    return SettingsPropertyValue(disableMuteCallKit) },
+                    let muteIncomingCallsWhileInACall: Bool = Settings.shared[.muteIncomingCallsWhileInACall] ?? false
+                    return SettingsPropertyValue(muteIncomingCallsWhileInACall) },
                 setAction: { _, value in
                     if case .number(let disabled) = value {
-                        Settings.shared[.disableMuteCallKit] = disabled.boolValue
+                        Settings.shared[.muteIncomingCallsWhileInACall] = disabled.boolValue
                     }
             })
         case .readReceiptsEnabled:

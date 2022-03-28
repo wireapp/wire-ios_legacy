@@ -130,7 +130,7 @@ extension SettingsCellDescriptorFactory {
 
     private var muteCallSection: SettingsSectionDescriptorType {
         let muteCallToggle = SettingsPropertyToggleCellDescriptor(
-            settingsProperty: settingsPropertyFactory.property(.disableMuteCallKit),
+            settingsProperty: settingsPropertyFactory.property(.muteIncomingCallsWhileInACall),
             inverse: true
         )
 

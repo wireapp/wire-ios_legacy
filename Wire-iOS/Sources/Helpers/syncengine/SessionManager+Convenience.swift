@@ -62,13 +62,13 @@ extension SessionManager {
         }
     }
 
-    func updateMuteCallFromSettings() {
-        let isMuteCallEnabled: Bool = !(Settings.shared[.disableMuteCallKit] ?? false)
+    func updateMuteOtherCallsFromSettings() {
+        let isMuteCallEnabled: Bool = !(Settings.shared[.muteIncomingCallsWhileInACall] ?? false)
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
         if isMuteCallEnabled && hasAudioPermissions {
             AVSMediaManager.sharedInstance().configureWithUnMuteFromSettings()
         } else {
-            AVSMediaManager.sharedInstance().configureWithActualSoundsFromSettings()
+            AVSMediaManager.sharedInstance().configureDefaultSounds()
         }
     }
 }

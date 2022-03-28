@@ -246,7 +246,7 @@ extension SettingsPropertyName {
             return Settings.PopularDemand.SendButton.title
         case .disableCallKit:
             return Settings.Callkit.caption
-        case .disableMuteCallKit:
+        case .muteIncomingCallsWhileInACall:
             return Settings.MuteOtherCall.caption
         case .tweetOpeningOption:
             return LinkOptions.Twitter.title

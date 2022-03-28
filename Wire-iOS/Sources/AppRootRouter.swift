@@ -132,7 +132,7 @@ public class AppRootRouter: NSObject {
 
     private func setCallingSettings() {
         sessionManager.updateCallNotificationStyleFromSettings()
-        sessionManager.updateMuteCallFromSettings()
+        sessionManager.updateMuteOtherCallsFromSettings()
         sessionManager.usePackagingFeatureConfig = true
         sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
             ? true
@@ -557,6 +557,6 @@ extension AppRootRouter: ContentSizeCategoryObserving {
 extension AppRootRouter: AudioPermissionsObserving {
     func userDidGrantAudioPermissions() {
         sessionManager.updateCallNotificationStyleFromSettings()
-        sessionManager.updateMuteCallFromSettings()
+        sessionManager.updateMuteOtherCallsFromSettings()
     }
 }
