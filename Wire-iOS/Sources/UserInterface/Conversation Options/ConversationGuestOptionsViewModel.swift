@@ -22,10 +22,11 @@ import WireUtilities
 protocol ConversationGuestOptionsViewModelConfiguration: AnyObject {
     var title: String { get }
     var allowGuests: Bool { get }
-    var allowGuestLinks: Bool { get }
+    var guestLinkFeatureStatus: GuestLinkFeatureStatus { get }
     var isCodeEnabled: Bool { get }
     var areGuestPresent: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
+    var guestLinkFeatureStatusChangedHandler: ((GuestLinkFeatureStatus) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
     func createConversationLink(completion: @escaping (Result<String>) -> Void)
     func fetchConversationLink(completion: @escaping (Result<String?>) -> Void)
@@ -92,6 +93,10 @@ final class ConversationGuestOptionsViewModel {
             fetchLink()
         }
 
+        configuration.guestLinkFeatureStatusChangedHandler = { [weak self] _ in
+            self?.updateRows()
+        }
+
     }
 
     private func updateRows() {
@@ -107,28 +112,33 @@ final class ConversationGuestOptionsViewModel {
             return rows
         }
 
-        rows.append(.linkHeader)
-        guard configuration.allowGuestLinks else {
+        switch configuration.guestLinkFeatureStatus {
+        case .enabled:
+            rows.append(.linkHeader)
+            if showLoadingCell {
+                rows.append(.loading)
+            } else {
+                // Check if we have a link already
+                if let link = link {
+                    rows.append(.text(link))
+                    rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] _ in self?.copyLink() })
+                    rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
+                    rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
+                } else {
+                    rows.append(.createLinkButton { [weak self] _ in
+                        self?.createLink() })
+                }
+            }
+            return rows
+        case .disabled:
+            rows.append(.linkHeader)
             rows.append(.info)
             return rows
+        case .unknown:
+            return rows
+
         }
 
-        if showLoadingCell {
-            rows.append(.loading)
-        } else {
-            // Check if we have a link already
-            if let link = link {
-                rows.append(.text(link))
-                rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] _ in self?.copyLink() })
-                rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
-                rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
-            } else {
-                rows.append(.createLinkButton { [weak self] _ in
-                    self?.createLink() })
-            }
-        }
-
-        return rows
     }
 
     /// revoke a conversation link
