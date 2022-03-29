@@ -40,7 +40,7 @@ extension ZMConversation {
             super.init()
             token = ConversationChangeInfo.add(observer: self, for: conversation)
 
-            conversation.canGenerateGuestLink(in: userSession){ [weak self] result in
+            conversation.canGenerateGuestLink(in: userSession) { [weak self] result in
                 switch result {
                 case .success(true):
                     self?.guestLinkFeatureStatus = .enabled
@@ -66,7 +66,6 @@ extension ZMConversation {
         var allowServices: Bool {
             return conversation.allowServices
         }
-
 
         var guestLinkFeatureStatus: GuestLinkFeatureStatus = .unknown {
           didSet {
