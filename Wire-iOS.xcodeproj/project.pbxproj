@@ -1259,6 +1259,7 @@
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
+		EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
 		EE7F464B25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */; };
 		EE7F465725B0F6FC001B3EE4 /* AppLockModuleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */; };
@@ -1739,6 +1740,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */,
 				065A5AE5279B07AC002D4D1E /* Wire Notification Service Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -2685,8 +2687,6 @@
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
 		A9561737271875E4009FF376 /* ConversationCellBurstTimestampViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellBurstTimestampViewSnapshotTests.swift; sourceTree = "<group>"; };
-		A956A42B2703B17900D7D3EA /* NSAttributedString+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Link.swift"; sourceTree = "<group>"; };
-		A956A4302703B38C00D7D3EA /* AttributedStringLinkDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringLinkDetectionTests.swift; sourceTree = "<group>"; };
 		A95B63EF24250DA8008A2974 /* FileManager+TempDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+TempDirectory.swift"; sourceTree = "<group>"; };
 		A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationButtonMessageCell.swift; sourceTree = "<group>"; };
 		A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeMessageCellTests.swift; sourceTree = "<group>"; };
