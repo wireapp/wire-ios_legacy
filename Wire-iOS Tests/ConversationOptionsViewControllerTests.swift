@@ -24,9 +24,10 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
 
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
-    var allowGuestLinks: Bool
+    var guestLinkFeatureStatus: GuestLinkFeatureStatus
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
+    var guestLinkFeatureStatusChangedHandler: ((GuestLinkFeatureStatus) -> Void)?
     var title: String
     var linkResult: Result<String?>?
     var deleteResult: VoidResult = .success
@@ -34,9 +35,9 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
     var isCodeEnabled = true
     var areGuestPresent = true
 
-    init(allowGuests: Bool, allowGuestLinks: Bool = true, title: String = "", setAllowGuests: SetHandler? = nil) {
+    init(allowGuests: Bool, guestLinkFeatureStatus: GuestLinkFeatureStatus = .enabled, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
-        self.allowGuestLinks = allowGuestLinks
+        self.guestLinkFeatureStatus = guestLinkFeatureStatus
         self.setAllowGuests = setAllowGuests
         self.title = title
     }
@@ -174,7 +175,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
 
     func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled() {
         // GIVEN
-        let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
         config.linkResult = .success(nil)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
@@ -185,8 +186,28 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
 
     func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_DarkTheme() {
         // GIVEN
-        let config = MockOptionsViewModelConfiguration(allowGuests: true, allowGuestLinks: false)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
         config.linkResult = .success(nil)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenGuestLinkFeatureStatusIsUnknown() {
+        // GIVEN
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .unknown)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenGuestLinkFeatureStatusIsUnknown_DarkTheme() {
+        // GIVEN
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .unknown)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
 

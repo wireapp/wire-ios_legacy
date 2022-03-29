@@ -18,6 +18,12 @@
 
 import WireSyncEngine
 
+enum GuestLinkFeatureStatus {
+    case enabled
+    case disabled
+    case unknown
+}
+
 extension ZMConversation {
     class OptionsConfigurationContainer: NSObject, ConversationGuestOptionsViewModelConfiguration, ConversationServicesOptionsViewModelConfiguration, ZMConversationObserver {
 
@@ -26,12 +32,27 @@ extension ZMConversation {
         private let userSession: ZMUserSession
         var allowGuestsChangedHandler: ((Bool) -> Void)?
         var allowServicesChangedHandler: ((Bool) -> Void)?
+        var guestLinkFeatureStatusChangedHandler: ((GuestLinkFeatureStatus) -> Void)?
 
         init(conversation: ZMConversation, userSession: ZMUserSession) {
             self.conversation = conversation
             self.userSession = userSession
             super.init()
             token = ConversationChangeInfo.add(observer: self, for: conversation)
+
+            conversation.canGenerateGuestLink(in: userSession) { [weak self] result in
+                switch result {
+                case .success(true):
+                    self?.guestLinkFeatureStatus = .enabled
+                case .success(false):
+                    self?.guestLinkFeatureStatus = .disabled
+                case .failure:
+                    self?.guestLinkFeatureStatus = .unknown
+                @unknown default:
+                    self?.guestLinkFeatureStatus = .unknown
+                }
+            }
+
         }
 
         var title: String {
@@ -46,8 +67,10 @@ extension ZMConversation {
             return conversation.allowServices
         }
 
-        var allowGuestLinks: Bool {
-            return userSession.conversationGuestLinksFeature.status == .enabled
+        var guestLinkFeatureStatus: GuestLinkFeatureStatus = .unknown {
+          didSet {
+            guestLinkFeatureStatusChangedHandler?(guestLinkFeatureStatus)
+          }
         }
 
         var isCodeEnabled: Bool {
