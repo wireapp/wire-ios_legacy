@@ -87,16 +87,19 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
-        guard let pushPayload = PushFromNotificationExtension(event: event),
-              let payloadData = try? JSONEncoder().encode(pushPayload),
-              let json = try? JSONSerialization.jsonObject(with: payloadData, options: []),
-              var payload = json as? [String : Any] else {
-                  return
-              }
-        payload[PushFromNotificationExtensionKeys.fromNotificationExtension.rawValue] = true
-        payload[PushFromNotificationExtensionKeys.accountId.rawValue] = session?.accountIdentifier.transportString()
-        if #available(iOSApplicationExtension 14.5, *) {
-            CXProvider.reportNewIncomingVoIPPushPayload(payload, completion: {_ in })
+        guard
+            #available(iOSApplicationExtension 14.5, *),
+            let accountID = session?.accountIdentifier,
+            let voipPayload = VOIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
+            let payload = voipPayload.asDictionary
+        else {
+            return
+        }
+
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            if let error = error {
+                // TODO: handle
+            }
         }
     }
 
