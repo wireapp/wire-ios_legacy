@@ -94,7 +94,7 @@ extension AVSMediaManager {
         self.configureDefaultSounds()
     }
 
-    func configureWithUnMuteFromSettings() {
+    func unregisterCallRingingSounds() {
         guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         let sounds: [MediaManagerSound] = [.ringingFromThemInCallSound, .ringingFromThemSound]
         sounds.forEach {

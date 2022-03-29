@@ -390,8 +390,8 @@ final class SettingsPropertyFactory {
                     let muteIncomingCallsWhileInACall: Bool = Settings.shared[.muteIncomingCallsWhileInACall] ?? false
                     return SettingsPropertyValue(muteIncomingCallsWhileInACall) },
                 setAction: { _, value in
-                    if case .number(let disabled) = value {
-                        Settings.shared[.muteIncomingCallsWhileInACall] = disabled.boolValue
+                    if case .number(let shouldMute) = value {
+                        Settings.shared[.muteIncomingCallsWhileInACall] = shouldMute.boolValue
                     }
             })
         case .readReceiptsEnabled:
