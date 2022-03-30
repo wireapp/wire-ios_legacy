@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,31 +17,31 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
- * Handles login errors that happens during the phone login flow.
+ * Handles the event that informs the app when the email login verification code is available.
  */
 
-class AuthenticationPhoneLoginErrorHandler: AuthenticationEventHandler {
+class AuthenticationEmailVerificationRequiredErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle errors that happen during phone login
-        switch currentStep {
-        case .requestPhoneVerificationCode, .authenticatePhoneCredentials:
-            break
-        default:
+        // Only handle e-mail login errors
+        guard case let .authenticateEmailCredentials(credentials) = currentStep else {
+            return nil
+        }
+        // Only handle accountIsPendingVerification error
+        guard error.userSessionErrorCode == .accountIsPendingVerification else {
             return nil
         }
 
-        // Prepare and return the alert
-        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error,
-                                                             completionActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
+        guard let email  = credentials.email else { return nil }
+        guard let password = credentials.password else { return nil }
 
-        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
+        return [.hideLoadingView, .requestEmailVerificationCode(email: email, password: password)]
     }
-
 }

@@ -37,6 +37,7 @@ enum AuthenticationCoordinatorAction {
     case startPostLoginFlow
     case transition(AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode)
     case performPhoneLoginFromRegistration(phoneNumber: String)
+    case requestEmailVerificationCode(email: String, password: String)
     case configureNotifications
     case startIncrementalUserCreation(UnregisteredUser)
     case setMarketingConsent(Bool)
