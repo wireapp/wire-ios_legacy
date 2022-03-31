@@ -284,7 +284,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 stateController.transition(to: nextStep, mode: mode)
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
-                sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+                requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
+
+            case .requestEmailVerificationCode(let email, let password):
+                requestEmailVerificationCode(email: email, password: password, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -426,8 +429,8 @@ extension AuthenticationCoordinator {
         } else {
             guard let accountId = unauthenticatedSession.accountId,
                   let unauthenticatedAccount = sessionManager.accountManager.account(with: accountId) else {
-                fatal("No unauthenticated account to log out from")
-            }
+                      fatal("No unauthenticated account to log out from")
+                  }
 
             sessionManager.delete(account: unauthenticatedAccount)
         }
@@ -438,7 +441,7 @@ extension AuthenticationCoordinator {
         switch stateController.currentStep {
         case .teamCreation(.verifyEmail):
             resendTeamEmailCode()
-        case .enterLoginCode, .enterActivationCode:
+        case .enterPhoneVerificationCode, .enterActivationCode, .enterEmailVerificationCode:
             resendVerificationCode()
         default:
             return
@@ -640,18 +643,27 @@ extension AuthenticationCoordinator {
 
         case .phoneNumber(let phoneNumber):
             presenter?.isLoadingViewVisible = true
-            let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+            let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
             stateController.transition(to: nextStep)
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         }
     }
 
     /// Sends the login verification code to the phone number.
-    private func sendLoginCode(phoneNumber: String, isResend: Bool) {
+    private func requestPhoneVerificationCode(phoneNumber: String, isResend: Bool) {
         presenter?.isLoadingViewVisible = true
-        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
+        let nextStep = AuthenticationFlowStep.requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+    }
+
+    // Sends the login verification code to the email address
+    private func requestEmailVerificationCode(email: String, password: String, isResend: Bool) {
+        if !isResend {
+            let nextStep = AuthenticationFlowStep.enterEmailVerificationCode(email: email, password: password, isResend: isResend)
+            stateController.transition(to: nextStep)
+        }
+        unauthenticatedSession.requestEmailVerificationCodeForLogin(email: email)
     }
 
     /// Requests a phone login for the specified credentials.
@@ -661,13 +673,21 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
+    private func requestEmailLogin(with credentials: ZMEmailCredentials) {
+        presenter?.isLoadingViewVisible = true
+        stateController.transition(to: .authenticateEmailCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
     // MARK: - Generic Verification
 
     /// Resends the verification code to the user, if allowed by the current state.
     private func resendVerificationCode() {
         switch stateController.currentStep {
-        case .enterLoginCode(let phoneNumber):
-            sendLoginCode(phoneNumber: phoneNumber, isResend: true)
+        case .enterPhoneVerificationCode(let phoneNumber):
+            requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: true)
+        case .enterEmailVerificationCode(let email, let password, _):
+            requestEmailVerificationCode(email: email, password: password, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
@@ -682,9 +702,12 @@ extension AuthenticationCoordinator {
 
     private func continueFlow(withVerificationCode code: String) {
         switch stateController.currentStep {
-        case .enterLoginCode(let phoneNumber):
+        case .enterPhoneVerificationCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
+        case .enterEmailVerificationCode(let email, let password, _):
+            let credentials = ZMEmailCredentials(email: email, password: password, emailVerificationCode: code)
+            requestEmailLogin(with: credentials)
         case .enterActivationCode(let unverifiedCredentials, let user):
             activateCredentials(credentials: unverifiedCredentials, user: user, code: code)
         default:
@@ -695,7 +718,7 @@ extension AuthenticationCoordinator {
     // MARK: - Add Email And Password
 
     /// Sets th e-mail and password credentials for the current user.
-     private func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
+    private func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
         guard case .addEmailAndPassword = stateController.currentStep else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return

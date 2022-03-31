@@ -1218,6 +1218,8 @@
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */; };
+		E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */; };
 		E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */; };
 		E91DCC36278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */; };
 		E94784E9278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */; };
@@ -1259,6 +1261,7 @@
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
+		EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
 		EE7F464B25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F464A25B072A9001B3EE4 /* AppLockChangeWarningViewControllerTests.swift */; };
 		EE7F465725B0F6FC001B3EE4 /* AppLockModuleInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F465525B0F6EB001B3EE4 /* AppLockModuleInteractorTests.swift */; };
@@ -1739,6 +1742,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */,
 				065A5AE5279B07AC002D4D1E /* Wire Notification Service Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -2685,8 +2689,6 @@
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
 		A9561737271875E4009FF376 /* ConversationCellBurstTimestampViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellBurstTimestampViewSnapshotTests.swift; sourceTree = "<group>"; };
-		A956A42B2703B17900D7D3EA /* NSAttributedString+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Link.swift"; sourceTree = "<group>"; };
-		A956A4302703B38C00D7D3EA /* AttributedStringLinkDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringLinkDetectionTests.swift; sourceTree = "<group>"; };
 		A95B63EF24250DA8008A2974 /* FileManager+TempDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+TempDirectory.swift"; sourceTree = "<group>"; };
 		A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationButtonMessageCell.swift; sourceTree = "<group>"; };
 		A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeMessageCellTests.swift; sourceTree = "<group>"; };
@@ -3095,6 +3097,8 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandler.swift; sourceTree = "<group>"; };
+		E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandlerTests.swift; sourceTree = "<group>"; };
 		E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsServicesCell.swift; sourceTree = "<group>"; };
 		E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesCell.swift; sourceTree = "<group>"; };
 		E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesSectionController.swift; sourceTree = "<group>"; };
@@ -4438,6 +4442,7 @@
 		5E8DA780211C3B7200360979 /* Pre-Login */ = {
 			isa = PBXGroup;
 			children = (
+				E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */,
 				5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift */,
 				5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */,
 				5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */,
@@ -6632,6 +6637,7 @@
 				542CDF3F24B32E2100DF0B39 /* HandleChangeStateTests.swift */,
 				63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */,
 				EEEB8B56260B685300554C39 /* UserRightTests.swift */,
+				E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -8372,6 +8378,7 @@
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
 				5EF7BA63221ADF5500815625 /* ProfileDetailsViewController.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
+				E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */,
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				A9DC33EB2506865B00AB09DF /* WipeDatabasePresenter.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
@@ -9421,6 +9428,7 @@
 				BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */,
 				873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */,
 				1658C19A20A1F00500148F6D /* CallInfoTestFixture.swift in Sources */,
+				E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */,
 				16C02A12204EE5EC00811912 /* GroupConversationCellTests.swift in Sources */,
 				A9EDC143252225B2009DB9E1 /* AnalyticsCallingTrackerTests.swift in Sources */,
 				EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */,
