@@ -93,17 +93,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         contentHandler(content)
     }
 
-    private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
-        guard let session = session else {
-            return nil
-        }
-        let account = self.accountManager.account(with: session.accountIdentifier)
-        account?.unreadConversationCount = unreadConversationCount
-        let totalUnreadCount = self.accountManager.totalUnreadCount
-
-        return NSNumber(value: totalUnreadCount)
-    }
-
     // MARK: - Helpers
 
     private func tearDown() {
@@ -124,6 +113,18 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             useLegacyPushNotifications: false
         )
     }
+
+    private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
+        guard let session = session else {
+            return nil
+        }
+        let account = self.accountManager.account(with: session.accountIdentifier)
+        account?.unreadConversationCount = unreadConversationCount
+        let totalUnreadCount = self.accountManager.totalUnreadCount
+
+        return NSNumber(value: totalUnreadCount)
+    }
+
 }
 
 // MARK: - Extensions
