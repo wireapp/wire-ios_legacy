@@ -28,7 +28,7 @@ class AuthenticationLoginCodeAvailableEventHandler: AuthenticationEventHandler {
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
         // Only handle the case where we are waiting for a phone number
-        guard case let .sendLoginCode(phoneNumber, isResend) = currentStep else {
+        guard case let .requestPhoneVerificationCode(phoneNumber, isResend) = currentStep else {
             return nil
         }
 
@@ -36,7 +36,7 @@ class AuthenticationLoginCodeAvailableEventHandler: AuthenticationEventHandler {
 
         // Do not transition to a new state if the user asked the code manually
         if !isResend {
-            let nextStep = AuthenticationFlowStep.enterLoginCode(phoneNumber: phoneNumber)
+            let nextStep = AuthenticationFlowStep.enterPhoneVerificationCode(phoneNumber: phoneNumber)
             actions.append(.transition(nextStep, mode: .normal))
         } else {
             actions.append(.unwindState(withInterface: false))

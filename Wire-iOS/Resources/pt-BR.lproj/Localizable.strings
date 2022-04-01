@@ -321,11 +321,11 @@
 "conversation.create.guidance.empty" = "Pelo menos 1 caractere";
 "conversation.create.guidance.toolong" = "Muitos caracteres";
 "conversation.create.options.title" = "Opções de conversa";
-"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
-"conversation.create.services.title" = "Allow services";
-"conversation.create.services.subtitle" = "Open this conversation to services.";
+"conversation.create.options.subtitle" = "Convidados: %@, Serviços: %@, Confirmação de leitura: %@";
+"conversation.create.guests.title" = "Permitir convidados";
+"conversation.create.guests.subtitle" = "Abra esta conversa para pessoas de fora da sua equipe.";
+"conversation.create.services.title" = "Permitir serviços";
+"conversation.create.services.subtitle" = "Abra esta conversa para serviços.";
 "conversation.create.receipts.title" = "Recibos de Leitura";
 "conversation.create.receipts.subtitle" = "Quando isso está ativado, as pessoas podem ver quando suas mensagens nessa conversa são lidas.";
 
@@ -459,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ juntou-se";
 "content.system.conversation.guest.you_joined" = "Você entrou";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Pessoas de fora da sua equipe podem participar desta conversa.";
 "content.system.conversation.invite.button" = "Convidar pessoas";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
@@ -922,7 +922,7 @@
 "participants.services.remove_integration.button" = "remover integração";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Convidados";
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
 "group_details.services_options_cell.title" = "Serviços";
@@ -1359,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Permitir convidados";
+"guest_room.allow_guests.subtitle" = "Abra esta conversa para pessoas de fora da sua equipe.";
+"guest_room.remove_guests.message" = "Os convidados atuais serão removidos da conversa. Novos convidados não serão permitidos.";
 "guest_room.remove_guests.action" = "Remover";
 "guest_room.revoke_link.message" = "Novos convidados não será capazes de juntar-se com este link. Os convidados atuais ainda terão acesso.";
 "guest_room.revoke_link.action" = "Desativar Link";
@@ -1387,9 +1387,9 @@
 
 // Services Options
 
-"services_options.allow_services.title" = "Allow services";
-"services_options.allow_services.subtitle" = "Open this conversation to services.";
-"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.allow_services.title" = "Permitir serviços";
+"services_options.allow_services.subtitle" = "Abra esta conversa para serviços.";
+"services_options.remove_services.message" = "Os serviços atuais serão removidos da conversa. Novos serviços não serão permitidos.";
 "services_options.remove_services.action" = "Remover";
 
 
