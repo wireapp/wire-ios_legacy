@@ -78,12 +78,20 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         tearDown()
     }
 
-    public func notificationSessionDidGenerateNotification(_ notification: ZMLocalNotification?) {
+    public func notificationSessionDidGenerateNotification(_ notification: ZMLocalNotification?, unreadConversationCount: Int) {
         defer { tearDown() }
         guard let contentHandler = contentHandler else { return }
-        contentHandler(notification?.content ?? .empty)
-    }
+        guard let content = notification?.content as? UNMutableNotificationContent else {
+            contentHandler(.empty)
+            return
+        }
 
+        let badgeCount = totalUnreadCount(unreadConversationCount)
+        content.badge = badgeCount
+        Logging.push.safePublic("Updated badge count to \(SanitizedString(stringLiteral: String(describing: badgeCount)))")
+
+        contentHandler(content)
+    }
 
     // MARK: - Helpers
 
@@ -105,6 +113,18 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             useLegacyPushNotifications: false
         )
     }
+
+    private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
+        guard let session = session else {
+            return nil
+        }
+        let account = self.accountManager.account(with: session.accountIdentifier)
+        account?.unreadConversationCount = unreadConversationCount
+        let totalUnreadCount = self.accountManager.totalUnreadCount
+
+        return NSNumber(value: totalUnreadCount)
+    }
+
 }
 
 // MARK: - Extensions
