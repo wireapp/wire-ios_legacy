@@ -58,7 +58,7 @@ extension AVSMediaManager {
         playSound(MediaManagerSound.alert.rawValue)
     }
 
-    internal func configureDefaultSounds() {
+    func configureDefaultSounds() {
         guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
 
         let audioDir = "audio-notifications"
