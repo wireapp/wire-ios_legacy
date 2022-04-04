@@ -64,7 +64,6 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            label.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
 
