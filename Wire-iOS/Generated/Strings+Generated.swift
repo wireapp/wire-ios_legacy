@@ -3981,6 +3981,12 @@ internal enum L10n {
           /// Manage Team
           internal static let title = L10n.tr("Localizable", "self.settings.manage_team.title")
         }
+        internal enum MuteOtherCall {
+          /// Silence other calls
+          internal static let caption = L10n.tr("Localizable", "self.settings.mute_other_call.caption")
+          /// Enable to silence incoming calls when you are already in an ongoing call.
+          internal static let description = L10n.tr("Localizable", "self.settings.mute_other_call.description")
+        }
         internal enum Notifications {
           internal enum ChatAlerts {
             /// New messages in other conversations.
