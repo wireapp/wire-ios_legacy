@@ -39,6 +39,8 @@ protocol ConversationContentViewControllerDelegate: AnyObject {
 
     func conversationContentViewController(_ controller: ConversationContentViewController, presentGuestOptionsFrom sourceView: UIView)
 
+    func conversationContentViewController(_ controller: ConversationContentViewController,
+                                           presentServicesOptionFrom sourceView: UIView)
     func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [UserType], from sourceView: UIView)
 
     func didTap(onUserAvatar user: UserType, view: UIView, frame: CGRect)

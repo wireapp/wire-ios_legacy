@@ -94,7 +94,7 @@
 "peoplepicker.no_matching_results.message.users_all_added" = "所有用户已加入群聊";
 "peoplepicker.no_matching_results.message.services" = "没有结果。";
 "peoplepicker.no_matching_results.message.services_not_enabled_admin" = "服务是可以改善您的工作流程。";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "服务是可以为您的工作流程改善提供帮助。要启用服务，请联系您的管理员。";
 
 "peoplepicker.send_invitation.dialog.title" = "邀请已送出";
 "peoplepicker.send_invitation.dialog.message" = "邀请两周内有效。如果过期，请发送新的邀请。";
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "至少1个字符";
 "conversation.create.guidance.toolong" = "超出字符限制";
 "conversation.create.options.title" = "对话选项";
-"conversation.create.options.subtitle" = "外部用户和服务: %@, 读取收据: %@";
-"conversation.create.guests.title" = "允许的访客与服务";
-"conversation.create.guests.subtitle" = "向团队外的服务和人员开放此对话";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "已读回执";
 "conversation.create.receipts.subtitle" = "当这启用时，参与者可以看到他们在此对话中的消息何时已阅读。";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@已加入";
 "content.system.conversation.guest.you_joined" = "您已加入";
 
-"content.system.conversation.invite.title" = "服务和团队外的人员可以加入此对话。";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "邀请联系人";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
@@ -720,8 +722,6 @@
 "call.alert.ongoing.start.button" = "仍然要通话";
 "call.alert.ongoing.join.button" = "仍要加入";
 
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
-
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "更多信息";
 
@@ -922,9 +922,12 @@
 "participants.services.remove_integration.button" = "移除服务";
 
 // Group details
-"group_details.guest_options_cell.title" = "访客选项";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "开启";
 "group_details.guest_options_cell.disabled" = "关闭";
+"group_details.services_options_cell.title" = "服务";
+"group_details.services_options_cell.enabled" = "开启";
+"group_details.services_options_cell.disabled" = "关闭";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "通知";
 "group_details.notification_options_cell.description" = "您可以收到所有的通知(包括音频和视频通话)，或者只有当有人提到您或回复您的消息时才收到通知。";
@@ -1356,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "允许的访客与服务";
-"guest_room.allow_guests.subtitle" = "向团队外的服务和人员开放此对话";
-"guest_room.remove_guests.message" = "当前对话中的访客与服务将会被清除，新的访客与服务也不能再加入。";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新访客将无法加入此连结。 目前访客仍可使用。";
 "guest_room.revoke_link.action" = "撤销连结";
@@ -1381,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "还余%@小时";
 "guest_room.expiration.less_than_minutes_left" = "余下少于%@分钟";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "移除";
+
 
 // Registration
 
@@ -1646,7 +1657,6 @@
 "push.notification.new_user" = "%@加入了Wire";
 "push.notification.new_message" = "新信息";
 
-
 // Force Update
 "force.update.title" = "必要更新";
 "force.update.message" = "您错过了些新功能。快到App Store中下载最新版本的Wire呀。";
@@ -1799,9 +1809,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "加入";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "对话已满。";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "对话已满。";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire无法找到此人。";

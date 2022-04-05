@@ -1,0 +1,39 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+// Custom
+NOTIFICATION_EXTENSION_BUNDLE_SUFFIX = extension-notification
+
+// Build Options
+APPLICATION_EXTENSION_API_ONLY = YES
+
+// Deployment
+SKIP_INSTALL = YES
+
+// Linking
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS ;
+
+// Packaging
+DEFINES_MODULE = NO
+INFOPLIST_FILE = Wire Notification Service Extension/Info.plist
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(NOTIFICATION_EXTENSION_BUNDLE_SUFFIX)
+
+// Signing
+CODE_SIGN_ENTITLEMENTS = Wire Notification Service Extension/Wire Notification Extension.entitlements
+PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_NOTIFICATION_EXT)

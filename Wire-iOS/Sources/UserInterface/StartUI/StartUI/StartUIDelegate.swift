@@ -26,5 +26,6 @@ protocol StartUIDelegate: AnyObject {
                  createConversationWith users: UserSet,
                  name: String,
                  allowGuests: Bool,
+                 allowServices: Bool,
                  enableReceipts: Bool)
 }

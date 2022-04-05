@@ -30,19 +30,24 @@ final class ConversationCreationValues {
     private let selfUser: UserType
 
     var allowGuests: Bool
+    var allowServices: Bool
     var enableReceipts: Bool
     var name: String
     var participants: UserSet {
         get {
-            if allowGuests {
-                return unfilteredParticipants
-            } else {
-                let filteredParticipants = unfilteredParticipants.filter {
-                    return $0.isOnSameTeam(otherUser: selfUser)
-                }
+            var result = unfilteredParticipants
 
-                return UserSet(filteredParticipants)
+            if !allowGuests {
+                let noGuests = result.filter { $0.isOnSameTeam(otherUser: selfUser) }
+                result = UserSet(noGuests)
             }
+
+            if !allowServices {
+                let noServices = result.filter { !$0.isServiceUser }
+                result = UserSet(noServices)
+            }
+
+            return result
         }
         set {
             unfilteredParticipants = newValue
@@ -52,11 +57,13 @@ final class ConversationCreationValues {
     init (name: String = "",
           participants: UserSet = UserSet(),
           allowGuests: Bool = true,
+          allowServices: Bool = true,
           enableReceipts: Bool = true,
           selfUser: UserType) {
         self.name = name
         self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
+        self.allowServices = allowServices
         self.enableReceipts = enableReceipts
         self.selfUser = selfUser
     }
@@ -68,6 +75,7 @@ protocol ConversationCreationControllerDelegate: AnyObject {
                                         didSelectName name: String,
                                         participants: UserSet,
                                         allowGuests: Bool,
+                                        allowServices: Bool,
                                         enableReceipts: Bool)
 
 }
@@ -104,6 +112,17 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
 
+    private lazy var servicesSection: ConversationCreateServicesSectionController = {
+        let section = ConversationCreateServicesSectionController(values: self.values)
+        section.isHidden = true
+
+        section.toggleAction = { [unowned self] allowServices in
+            self.values.allowServices = allowServices
+            self.updateOptions()
+        }
+        return section
+    }()
+
     private lazy var receiptsSection: ConversationCreateReceiptsSectionController = {
         let section = ConversationCreateReceiptsSectionController(values: self.values)
         section.isHidden = true
@@ -119,6 +138,7 @@ final class ConversationCreationController: UIViewController {
     var optionsExpanded: Bool = false {
         didSet {
             self.guestsSection.isHidden = !optionsExpanded
+            self.servicesSection.isHidden = !optionsExpanded
             self.receiptsSection.isHidden = !optionsExpanded
         }
     }
@@ -196,6 +216,7 @@ final class ConversationCreationController: UIViewController {
             collectionViewController.sections.append(contentsOf: [
                 optionsSection,
                 guestsSection,
+                servicesSection,
                 receiptsSection
             ])
         }
@@ -256,6 +277,7 @@ final class ConversationCreationController: UIViewController {
     private func updateOptions() {
         self.optionsSection.configure(with: values)
         self.guestsSection.configure(with: values)
+        self.servicesSection.configure(with: values)
         self.receiptsSection.configure(with: values)
     }
 }
@@ -278,6 +300,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
                 didSelectName: values.name,
                 participants: values.participants,
                 allowGuests: values.allowGuests,
+                allowServices: values.allowServices,
                 enableReceipts: values.enableReceipts
             )
         }
@@ -325,9 +348,9 @@ extension ConversationCreationController {
 
         if expanded {
             nameSection.resignFirstResponder()
-            changes = { collectionView.insertSections([3, 4]) }
+            changes = { collectionView.insertSections([3, 4, 5]) }
         } else {
-            changes = { collectionView.deleteSections([3, 4]) }
+            changes = { collectionView.deleteSections([3, 4, 5]) }
         }
 
         collectionView.performBatchUpdates(changes)

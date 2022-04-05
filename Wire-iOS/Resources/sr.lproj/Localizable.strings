@@ -93,8 +93,8 @@
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
 "peoplepicker.no_matching_results.message.services" = "Нема резултата.";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Услуге су помоћ која може побољшати ваш рад.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Услуге су помоћ која може побољшати вашу брзину рада. Да бисте их омогућили, питајте свог администратора.";
 
 "peoplepicker.send_invitation.dialog.title" = "Позивница је послата";
 "peoplepicker.send_invitation.dialog.message" = "Важи две недеље. Пошаљите нову ако ова истекне.";
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Барем 1 знак";
 "conversation.create.guidance.toolong" = "Предугачко";
 "conversation.create.options.title" = "Опције разговора";
-"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Дозволи госте и услуге";
-"conversation.create.guests.subtitle" = "Отворите овај разговор службама и људима ван ваше групе.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Потврде читања";
 "conversation.create.receipts.subtitle" = "Када је ово укључено, људи могу видети када се читају њихове поруке у овом разговору.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ joined";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Позови људе";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ уклони назив разговора";
@@ -651,8 +653,8 @@
 "voice.accept_button.title" = "Прихвати";
 "voice.decline_button.title" = "Одбиј";
 "voice.hang_up_button.title" = "Прекини везу";
-"voice.mute_button.title" = "Microphone";
-"voice.video_button.title" = "Camera";
+"voice.mute_button.title" = "Микрофон";
+"voice.video_button.title" = "Камера";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Звучник";
 "voice.cancel_button.title" = "Откажи";
@@ -719,8 +721,6 @@
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Свеједно позови";
 "call.alert.ongoing.join.button" = "Join anyway";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
@@ -922,9 +922,12 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гости и услуге";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "укључено";
 "group_details.guest_options_cell.disabled" = "искључено";
+"group_details.services_options_cell.title" = "Услуге";
+"group_details.services_options_cell.enabled" = "укључено";
+"group_details.services_options_cell.disabled" = "Искључено";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Обавештења";
 "group_details.notification_options_cell.description" = "Можете бити обавештени о свему (укључујући аудио и видео позиве) или само када вас неко спомене или одговори на једну од ваших порука.";
@@ -1356,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Дозволи госте и услуге";
-"guest_room.allow_guests.subtitle" = "Отворите овај разговор службама и људима ван ваше групе.";
-"guest_room.remove_guests.message" = "Тренутни гости и услуге биће уклоњени из разговора. Нови гости и услуге неће бити дозвољени.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Уклони";
 "guest_room.revoke_link.message" = "Нови гости се неће моћи придружити овом линку. Садашњи гости и даље ће имати приступ.";
 "guest_room.revoke_link.action" = "Поништи линк";
@@ -1381,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h left";
 "guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Уклони";
+
 
 // Registration
 
@@ -1646,7 +1657,6 @@
 "push.notification.new_user" = "%@ joined Wire";
 "push.notification.new_message" = "Нова порука";
 
-
 // Force Update
 "force.update.title" = "Update necessary";
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
@@ -1799,9 +1809,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Придружи се";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не може да нађе ову особу.";

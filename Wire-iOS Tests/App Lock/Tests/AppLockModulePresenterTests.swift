@@ -82,7 +82,6 @@ final class AppLockModulePresenterTests: XCTestCase {
         XCTAssertEqual(interactor.requests, [.evaluateAuthentication])
     }
 
-    // @SF.Locking @TSFI.FS-IOS @S0.1
     func test_CustomPasscodeNeeded() {
         // When
         sut.handleResult(.customPasscodeNeeded)
