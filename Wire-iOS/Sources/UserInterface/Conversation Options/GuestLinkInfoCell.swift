@@ -63,12 +63,12 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
             label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
     private func configureLabel() {
-        let infoText = L10n.Localizable.GuestRoom.Link.NotAllowed.explaination
+        let infoText = L10n.Localizable.GuestRoom.Link.NotAllowed.ForSelfTeam.explaination
         label.configMultipleLineLabel()
         label.attributedText = .markdown(from: infoText, style: .labelStyle)
     }
