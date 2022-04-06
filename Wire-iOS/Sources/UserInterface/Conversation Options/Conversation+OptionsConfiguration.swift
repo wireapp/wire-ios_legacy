@@ -57,14 +57,8 @@ extension ZMConversation {
 
         var isConversationFromSelfTeam: Bool {
             let selfUser = ZMUser.selfUser(inUserSession: userSession)
-            let selfUserTeamId = selfUser.teamIdentifier
 
-            if conversation.teamRemoteIdentifier == selfUserTeamId {
-                return true
-            } else {
-                return false
-            }
-
+            return conversation.teamRemoteIdentifier == selfUser.teamIdentifier
         }
 
         var title: String {
