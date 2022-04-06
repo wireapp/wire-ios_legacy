@@ -54,6 +54,19 @@ extension ZMConversation {
             }
 
         }
+        // The conversation should have a team identifier, which you can compare to the team id of the self user
+
+        var isConversationFromSelfTeam: Bool {
+            let selfUser = ZMUser.selfUser(inUserSession: userSession)
+            let selfUserTeamId = selfUser.teamIdentifier
+
+            if conversation.teamRemoteIdentifier == selfUserTeamId {
+                return true
+            } else {
+                return false
+            }
+
+        }
 
         var title: String {
             return conversation.displayName.localizedUppercase
