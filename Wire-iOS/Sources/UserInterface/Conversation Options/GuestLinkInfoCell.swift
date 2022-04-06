@@ -27,6 +27,8 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     private let iconImageView = UIImageView()
     private let label = UILabel()
 
+    typealias GuestRoomLinkStrings = L10n.Localizable.GuestRoom.Link.NotAllowed
+
     // MARK: - Life cycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -73,8 +75,8 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
 
-        let infoTextForSelfTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForSelfTeam.explaination
-        let infoTextForOtherTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForOtherTeam.explaination
+        let infoTextForSelfTeam = GuestRoomLinkStrings.ForSelfTeam.explaination
+        let infoTextForOtherTeam = GuestRoomLinkStrings.ForOtherTeam.explaination
 
         let infoText = isSelfTeam ? infoTextForSelfTeam : infoTextForOtherTeam
 
