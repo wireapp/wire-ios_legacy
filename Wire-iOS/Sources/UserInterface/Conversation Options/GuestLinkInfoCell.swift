@@ -32,7 +32,6 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        configureLabel()
         createConstraints()
     }
 
@@ -67,12 +66,6 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
         ])
     }
 
-    private func configureLabel() {
-        let infoText = L10n.Localizable.GuestRoom.Link.NotAllowed.ForSelfTeam.explaination
-        label.configMultipleLineLabel()
-        label.attributedText = .markdown(from: infoText, style: .labelStyle)
-    }
-
     // MARK: - Configuration
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
@@ -80,6 +73,11 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+
+        let infoTextForSelfTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForSelfTeam.explaination
+        let infoTextForOtherTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForOtherTeam.explaination
+        label.configMultipleLineLabel()
+        label.attributedText = .markdown(from: infoTextForSelfTeam, style: .labelStyle)
     }
 }
 
