@@ -132,7 +132,7 @@ final class ConversationGuestOptionsViewModel {
             return rows
         case .disabled:
             rows.append(.linkHeader)
-            rows.append(.info)
+            rows.append(.info(isSelfTeam: true))
             return rows
         case .unknown:
             return rows
