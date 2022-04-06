@@ -69,15 +69,18 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     // MARK: - Configuration
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case .info = configuration else { preconditionFailure() }
+        guard case let .info(isSelfTeam) = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
 
         let infoTextForSelfTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForSelfTeam.explaination
         let infoTextForOtherTeam = L10n.Localizable.GuestRoom.Link.NotAllowed.ForOtherTeam.explaination
+
+        let infoText = isSelfTeam ? infoTextForSelfTeam : infoTextForOtherTeam
+
         label.configMultipleLineLabel()
-        label.attributedText = .markdown(from: infoTextForSelfTeam, style: .labelStyle)
+        label.attributedText = .markdown(from: infoText, style: .labelStyle)
     }
 }
 
