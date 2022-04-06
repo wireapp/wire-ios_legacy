@@ -80,9 +80,9 @@ extension ZMConversation {
         }
 
         var guestLinkFeatureStatus: GuestLinkFeatureStatus = .unknown {
-          didSet {
-            guestLinkFeatureStatusChangedHandler?(guestLinkFeatureStatus)
-          }
+            didSet {
+                guestLinkFeatureStatusChangedHandler?(guestLinkFeatureStatus)
+            }
         }
 
         var isCodeEnabled: Bool {
@@ -112,11 +112,11 @@ extension ZMConversation {
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
 
             if changeInfo.allowGuestsChanged {
-               allowGuestsChangedHandler?(allowGuests)
+                allowGuestsChangedHandler?(allowGuests)
             }
 
             if changeInfo.allowServicesChanged {
-              allowServicesChangedHandler?(allowServices)
+                allowServicesChangedHandler?(allowServices)
             }
         }
 
