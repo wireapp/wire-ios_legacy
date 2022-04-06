@@ -54,7 +54,6 @@ extension ZMConversation {
             }
 
         }
-        // The conversation should have a team identifier, which you can compare to the team id of the self user
 
         var isConversationFromSelfTeam: Bool {
             let selfUser = ZMUser.selfUser(inUserSession: userSession)
