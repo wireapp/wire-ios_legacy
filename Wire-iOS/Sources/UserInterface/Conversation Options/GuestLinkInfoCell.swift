@@ -75,8 +75,8 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
 
-        let infoTextForSelfTeam = GuestRoomLinkStrings.ForSelfTeam.explaination
-        let infoTextForOtherTeam = GuestRoomLinkStrings.ForOtherTeam.explaination
+        let infoTextForSelfTeam = GuestRoomLinkStrings.ForSelfTeam.explanation
+        let infoTextForOtherTeam = GuestRoomLinkStrings.ForOtherTeam.explanation
 
         let infoText = isSelfTeam ? infoTextForSelfTeam : infoTextForOtherTeam
 

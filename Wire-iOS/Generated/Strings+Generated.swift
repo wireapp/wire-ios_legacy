@@ -2103,11 +2103,11 @@ internal enum L10n {
         internal enum NotAllowed {
           internal enum ForOtherTeam {
             /// You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.
-            internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.for_other_team.explaination")
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_other_team.explanation")
           }
           internal enum ForSelfTeam {
             /// Generating guest links is not allowed in your team.
-            internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.for_self_team.explaination")
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_self_team.explanation")
           }
         }
       }
