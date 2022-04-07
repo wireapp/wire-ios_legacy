@@ -27,12 +27,13 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     private let iconImageView = UIImageView()
     private let label = UILabel()
 
+    typealias GuestRoomLinkStrings = L10n.Localizable.GuestRoom.Link.NotAllowed
+
     // MARK: - Life cycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        configureLabel()
         createConstraints()
     }
 
@@ -63,23 +64,24 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
             label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            label.heightAnchor.constraint(equalToConstant: 56)
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-    }
-
-    private func configureLabel() {
-        let infoText = L10n.Localizable.GuestRoom.Link.NotAllowed.explaination
-        label.configMultipleLineLabel()
-        label.attributedText = .markdown(from: infoText, style: .labelStyle)
     }
 
     // MARK: - Configuration
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case .info = configuration else { preconditionFailure() }
+        guard case let .info(isSelfTeam) = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
+
+        let infoTextForSelfTeam = GuestRoomLinkStrings.ForSelfTeam.explanation
+        let infoTextForOtherTeam = GuestRoomLinkStrings.ForOtherTeam.explanation
+
+        let infoText = isSelfTeam ? infoTextForSelfTeam : infoTextForOtherTeam
+
+        label.configMultipleLineLabel()
+        label.attributedText = .markdown(from: infoText, style: .labelStyle)
         label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
     }
 }
