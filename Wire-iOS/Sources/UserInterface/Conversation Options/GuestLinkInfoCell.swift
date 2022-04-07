@@ -63,7 +63,7 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
 
             label.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
