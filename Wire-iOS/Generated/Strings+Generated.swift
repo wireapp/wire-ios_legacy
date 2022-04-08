@@ -2355,10 +2355,6 @@ internal enum L10n {
         }
       }
     }
-    internal enum Link {
-      /// legal
-      internal static let legal = L10n.tr("Localizable", "link.legal")
-    }
     internal enum List {
       /// ARCHIVE
       internal static let archivedConversations = L10n.tr("Localizable", "list.archived_conversations")
