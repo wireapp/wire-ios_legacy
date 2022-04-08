@@ -16,9 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-// Link Path strings
-"link.legal" = "legal";
-
 // General strings
 "general.ok" = "OK";
 "general.next" = "Next";
