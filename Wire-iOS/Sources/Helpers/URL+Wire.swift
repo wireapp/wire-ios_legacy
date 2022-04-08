@@ -23,6 +23,11 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "URL")
 
+enum WebsitePages {
+    case termsOfServices
+    case privacyPolicy
+}
+
 enum TeamSource: Int {
     case onboarding, settings
 
@@ -89,6 +94,17 @@ extension BackendEnvironment {
         return shared.websiteURL.appendingPathComponent(path)
     }
 
+    fileprivate static func localizedWebsiteLink(forPage: WebsitePages) -> URL {
+        switch forPage {
+        case .termsOfServices, .privacyPolicy:
+            if Locale.autoupdatingCurrent.languageCode == "de" {
+                return shared.websiteURL.appendingPathComponent("datenschutz")
+            } else {
+                return shared.websiteURL.appendingPathComponent("legal")
+            }
+        }
+    }
+
     fileprivate static func accountsLink(path: String) -> URL {
         return shared.accountsURL.appendingPathComponent(path)
     }
@@ -137,7 +153,7 @@ extension URL {
     }
 
     static var wr_privacyPolicy: URL {
-        return BackendEnvironment.websiteLink(path: L10n.Localizable.Link.legal)
+        return BackendEnvironment.localizedWebsiteLink(forPage: .privacyPolicy)
     }
 
     static var wr_licenseInformation: URL {
