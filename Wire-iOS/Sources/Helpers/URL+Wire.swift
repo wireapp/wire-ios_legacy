@@ -23,7 +23,7 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "URL")
 
-enum WebsitePages {
+private enum WebsitePages {
     case termsOfServices
     case privacyPolicy
 }
