@@ -197,7 +197,7 @@ extension URL {
     }
 
     static var wr_termsOfServicesURL: URL {
-        return BackendEnvironment.websiteLink(path: L10n.Localizable.Link.legal)
+        return BackendEnvironment.localizedWebsiteLink(forPage: .termsOfServices)
     }
 
     static var wr_legalHoldLearnMore: URL {
