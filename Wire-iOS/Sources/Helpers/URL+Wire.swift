@@ -94,8 +94,8 @@ extension BackendEnvironment {
         return shared.websiteURL.appendingPathComponent(path)
     }
 
-    fileprivate static func localizedWebsiteLink(forPage: WebsitePages) -> URL {
-        switch forPage {
+    fileprivate static func localizedWebsiteLink(forPage page: WebsitePages) -> URL {
+        switch page {
         case .termsOfServices, .privacyPolicy:
             if Locale.autoupdatingCurrent.languageCode == "de" {
                 return shared.websiteURL.appendingPathComponent("datenschutz")
