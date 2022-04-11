@@ -278,7 +278,7 @@ final class CallGridViewController: SpinnerCapableViewController {
         guard
             configuration.presentationMode == .activeSpeakers,
             configuration.streams.isEmpty,
-            subViewStackWithSpinner.count == 0
+            subViewStackWithSpinner.isEmpty
         else {
             dismissSpinner?()
             return
