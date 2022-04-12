@@ -55,6 +55,12 @@ extension ZMConversation {
 
         }
 
+        var isConversationFromSelfTeam: Bool {
+            let selfUser = ZMUser.selfUser(inUserSession: userSession)
+
+            return conversation.teamRemoteIdentifier == selfUser.teamIdentifier
+        }
+
         var title: String {
             return conversation.displayName.localizedUppercase
         }
@@ -68,9 +74,9 @@ extension ZMConversation {
         }
 
         var guestLinkFeatureStatus: GuestLinkFeatureStatus = .unknown {
-          didSet {
-            guestLinkFeatureStatusChangedHandler?(guestLinkFeatureStatus)
-          }
+            didSet {
+                guestLinkFeatureStatusChangedHandler?(guestLinkFeatureStatus)
+            }
         }
 
         var isCodeEnabled: Bool {
@@ -100,11 +106,11 @@ extension ZMConversation {
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
 
             if changeInfo.allowGuestsChanged {
-               allowGuestsChangedHandler?(allowGuests)
+                allowGuestsChangedHandler?(allowGuests)
             }
 
             if changeInfo.allowServicesChanged {
-              allowServicesChangedHandler?(allowServices)
+                allowServicesChangedHandler?(allowServices)
             }
         }
 

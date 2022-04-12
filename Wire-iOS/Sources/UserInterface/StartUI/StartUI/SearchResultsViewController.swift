@@ -381,10 +381,10 @@ final class SearchResultsViewController: UIViewController {
             teamMemberAndContactsSection.contacts = teamContacts
         }
 
-        directorySection.suggestions = searchResult.directory
+        directorySection.suggestions = searchResult.directory.filter { !$0.isFederated }
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services
-        federationSection.result = searchResult.federation
+        federationSection.users = searchResult.directory.filter { $0.isFederated }
 
         sectionController.collectionView?.reloadData()
     }
