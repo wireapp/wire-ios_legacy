@@ -40,6 +40,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var userEnabledCBR: Bool
     var variant: ColorSchemeVariant
     var isForcedCBR: Bool
+    var classification: SecurityClassification
 }
 
 extension MockCallInfoViewControllerInput: CustomDebugStringConvertible {}

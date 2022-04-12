@@ -1964,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "People";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";

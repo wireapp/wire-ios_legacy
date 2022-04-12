@@ -3550,6 +3550,16 @@ internal enum L10n {
         }
       }
     }
+    internal enum SecurityClassification {
+      /// SECURITY LEVEL:
+      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level")
+      internal enum Level {
+        /// VS-NfD
+        internal static let bund = L10n.tr("Localizable", "security_classification.level.bund")
+        /// UNCLASSIFIED
+        internal static let notClassified = L10n.tr("Localizable", "security_classification.level.not_classified")
+      }
+    }
     internal enum `Self` {
       /// About
       internal static let about = L10n.tr("Localizable", "self.about")
