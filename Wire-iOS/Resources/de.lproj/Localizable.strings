@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-
 // General strings
+
 "general.ok" = "OK";
 "general.next" = "Weiter";
 "general.cancel" = "Abbrechen";
@@ -1140,6 +1140,9 @@
 "self.settings.callkit.caption" = "Mit iOS teilen";
 "self.settings.callkit.description" = "Anrufe über Wire auf dem Sperrbildschirm und im iOS-Anrufverlauf anzeigen. Wenn iCloud aktiviert ist, wird der Anrufverlauf mit Apple geteilt.";
 
+"self.settings.mute_other_call.caption" = "Andere Anrufe stummschalten";
+"self.settings.mute_other_call.description" = "Aktivieren Sie diese Option, um eingehende Anrufe stumm zu schalten, wenn Sie sich bereits in einem Gespräch befinden.";
+
 "self.settings.vbr.title" = "Codierung mit variabler Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen hierbei weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Schalten Sie diese Option aus, um die Kodierung mit konstanter Bitrate (CBR) zu verwenden. Diese Einstellung wirkt sich nur auf Einzelgespräche aus; Telefonkonferenzen verwenden immer CBR-Kodierung.";
 
@@ -1370,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Gäste-Links";
 "guest_room.link.header.subtitle" = "Laden Sie andere mit einem Link zu dieser Unterhaltung ein. Jeder kann mit dem Link an der Unterhaltung teilnehmen –  auch ohne Wire.";
-"guest_room.link.not_allowed.explaination" = "Erstellen von Gäste-Links ist in Ihrem Team nicht erlaubt.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Erstellen von Gäste-Links ist in Ihrem Team nicht erlaubt.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Sie können in dieser Unterhaltung keinen Gäste-Link generieren, da sie von jemandem aus einem anderen Team erstellt wurde und dieses Team keine Gäste-Links verwenden darf.";
 
 "guest_room.link.button.title" = "Link erstellen";
 
@@ -1710,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "Durch das Löschen der Datenbank werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
 "databaseloadingfailure.alert.delete_database.continue" = "Weiter";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1956,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
 "keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
 "keyboardshortcut.openPeople" = "Kontakte";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SICHERHEITSNIVEAU:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "NICHT EINGESTUFT";

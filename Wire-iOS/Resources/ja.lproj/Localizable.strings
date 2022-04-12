@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "次へ";
 "general.cancel" = "キャンセル";
@@ -1141,6 +1140,9 @@
 "self.settings.callkit.caption" = "iOSで共有する";
 "self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示します。もしiCloudが有効である場合、通話履歴はAppleに共有されます。";
 
+"self.settings.mute_other_call.caption" = "Silence other calls";
+"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これによって、音声通話のデータ使用量が少なくなり、低速なネットワークでより良く動作します。オフにすると、コンスタントビットレートエンコーディング(CBR)が使用できます。この設定は1対1の通話にのみ影響し、会議通話では常にCBRエンコーディングが使われます。";
 
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Guest Links";
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
 
 "guest_room.link.button.title" = "リンクを作成";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "続行";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ giphy.comから";
 "giphy.conversation.random_message" = "giphy.comから";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "会話";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";

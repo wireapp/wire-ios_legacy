@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "Далі";
 "general.cancel" = "Скасувати";
@@ -321,11 +320,11 @@
 "conversation.create.guidance.empty" = "Не менше 1 символу";
 "conversation.create.guidance.toolong" = "Занадто багато символів";
 "conversation.create.options.title" = "Налаштування розмови";
-"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
-"conversation.create.services.title" = "Allow services";
-"conversation.create.services.subtitle" = "Open this conversation to services.";
+"conversation.create.options.subtitle" = "Гості: %@, Сервіси: %@, Звіти про перегляд: %@";
+"conversation.create.guests.title" = "Дозволити присутність гостей";
+"conversation.create.guests.subtitle" = "Зробити цю розмову доступною для людей поза межами вашої команди.";
+"conversation.create.services.title" = "Дозволити сервіси";
+"conversation.create.services.subtitle" = "Зробити цю розмову доступною для сервісів.";
 "conversation.create.receipts.title" = "Звіти про перегляд";
 "conversation.create.receipts.subtitle" = "Якщо ця опція увімкнена, учасники розмови можуть бачити, коли їхні повідомлення в цій розмові були переглянуті.";
 
@@ -459,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 "content.system.conversation.guest.you_joined" = "Ви приєдналися";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Люди за межами вашої команди можуть приєднатися до цієї розмови.";
 "content.system.conversation.invite.button" = "Запросити людей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
@@ -922,7 +921,7 @@
 "participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Гості";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
 "group_details.services_options_cell.title" = "Сервіси";
@@ -1020,9 +1019,9 @@
 "self.settings.account_section.add_handle.title" = "Додати нік";
 "self.settings.account_section.team.title" = "Команда";
 "self.settings.account_section.domain.title" = "Домен";
-"self.settings.account_section.profile_link.title" = "Profile link";
-"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
-"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
+"self.settings.account_section.profile_link.title" = "Посилання на профіль";
+"self.settings.account_section.profile_link.actions.copy_link" = "Скопіювати посилання на профіль";
+"self.settings.account_section.profile_link.actions.copied_link" = "Посилання на профіль скопійоване!";
 
 "self.settings.account_details_group.info.footer" = "Ці деталі допоможуть іншим людям знайти вас.";
 "self.settings.account_details_group.personal.footer" = "Ця інформація невидима для інших користувачів.";
@@ -1140,6 +1139,9 @@
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
+
+"self.settings.mute_other_call.caption" = "Заглушити інші дзвінки";
+"self.settings.mute_other_call.description" = "Активуйте, щоб вимкнути вхідні дзвінки, поки ви розмовляєте з кимось.";
 
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість в мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт (CBR). Це налаштування впливає тільки на персональні дзвінки; конференційні дзвінки завжди використовують CBR.";
@@ -1359,9 +1361,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Дозволити присутність гостей";
+"guest_room.allow_guests.subtitle" = "Зробити цю розмову доступною для людей поза межами вашої команди.";
+"guest_room.remove_guests.message" = "Поточні гості будуть вилучені з розмови. Нові гості не матимуть доступу до неї.";
 "guest_room.remove_guests.action" = "Видалити";
 "guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
 "guest_room.revoke_link.action" = "Відкликати лінк";
@@ -1369,9 +1371,10 @@
 "guest_room.error.generic.title" = "Щось пішло не так";
 "guest_room.error.generic.message" = "Перевірте з'єднання і спробуйте ще раз";
 
-"guest_room.link.header.title" = "Guest Links";
-"guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.header.title" = "Гостьові лінки";
+"guest_room.link.header.subtitle" = "Запрошуйте інших учасників до цієї розмови, використовуючи лінки. За допомогою цього лінку хто-небудь може приєднатися до розмови, навіть якщо вони не зареєстровані в Wire.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Генерація гостьових лінків не дозволена у вашій команді.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Ви не можете згенерувати гостьовий лінк у цій розмові, оскільки він був створений кимось із іншої команди, а у вашій команді не дозволене використання гостьових лінків.";
 
 "guest_room.link.button.title" = "Створити лінк";
 
@@ -1387,9 +1390,9 @@
 
 // Services Options
 
-"services_options.allow_services.title" = "Allow services";
-"services_options.allow_services.subtitle" = "Open this conversation to services.";
-"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.allow_services.title" = "Дозволити сервіси";
+"services_options.allow_services.subtitle" = "Зробити цю розмову доступною для сервісів.";
+"services_options.remove_services.message" = "Поточні сервіси будуть вилучені з розмови. Нові сервіси не матимуть доступу до неї.";
 "services_options.remove_services.action" = "Видалити";
 
 
@@ -1605,7 +1608,7 @@
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "Щось пішло не так. Будь ласка, спробуй ще раз";
 "error.user.needs_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
-"error.user.domain_blocked" = "You can't create this account as your email domain is intentionally blocked.\nPlease ask your team admin to invite you via email.";
+"error.user.domain_blocked" = "Ви не можете створити цей обліковий запис, оскільки ваш домен електронної пошти заблоковано.\nБудь ласка, попросіть адміністратора команди запросити вас через електронну пошту.";
 "error.user.invalid_credentials" = "Будь ласка, перевірте ваші дані та повторіть спробу.";
 "error.user.account_pending_activation" = "Акаунт, який ви намагаєтесь використовувати, очікує активації. Будь ласка, перевірте ваші дані.";
 "error.user.network_error" = "Спостерігаються тимчасові проблеми з вашою мережею. Будь ласка, спробуйте знову пізніше.";
@@ -1663,7 +1666,7 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 // Feature configs
-"feature_config.alert.generic_title" = "Team settings changed";
+"feature_config.alert.generic_title" = "Налаштування команди змінено";
 
 // Feature configs: file sharing
 "feature_config.update.file_sharing.alert.title" = "У Wire відбулися зміни";
@@ -1696,8 +1699,8 @@
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Тимчасові повідомлення тепер є обов'язковими. Нові повідомлення будуть видалятися автоматично після %@.";
 
 // Feature configs: conversation guest links
-"feature_config.alert.conversation_guest_links.message.disabled" = "Generating guest links is now disabled for all group admins.";
-"feature_config.alert.conversation_guest_links.message.enabled" = "Generating guest links is now enabled for all group admins.";
+"feature_config.alert.conversation_guest_links.message.disabled" = "Генерування гостьових лінків вимкнене для всіх адміністраторів групи.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Генерування гостьових лінків увімкнене для всіх адміністраторів групи.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";
@@ -1710,6 +1713,10 @@
 "databaseloadingfailure.alert.delete_database" = "Видалити базу даних";
 "databaseloadingfailure.alert.delete_database.message" = "З видаленням бази даних, всі локальні дані та повідомлення для цього акаунту також будуть остаточно видалені.";
 "databaseloadingfailure.alert.delete_database.continue" = "Продовжити";
+
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
@@ -1812,7 +1819,7 @@
 "url_action.join_conversation.error.alert.title" = "Не вдалося приєднатися до розмови";
 "url_action.join_conversation.error.alert.converation_is_full.message" = "Розмова переповнена.";
 "url_action.join_conversation.error.alert.link_is_invalid.message" = "Посилання на розмову недійсне.";
-"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
+"url_action.join_conversation.error.alert.learn_more.action" = "Дізнайтеся більше про гостьові лінки";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire не вдалося знайти такого користувача.";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Деталі розмови...";
 "keyboardshortcut.searchInConversation" = "Пошук в розмові..";
 "keyboardshortcut.openPeople" = "Люди";
+
+// MARK: - Security classification
+"security_classification.security_level" = "РІВЕНЬ БЕЗПЕКИ:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "НЕВІДОМИЙ";
