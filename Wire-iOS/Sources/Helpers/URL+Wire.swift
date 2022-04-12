@@ -23,6 +23,11 @@ import WireDataModel
 
 private let zmLog = ZMSLog(tag: "URL")
 
+private enum WebsitePages {
+    case termsOfServices
+    case privacyPolicy
+}
+
 enum TeamSource: Int {
     case onboarding, settings
 
@@ -89,6 +94,17 @@ extension BackendEnvironment {
         return shared.websiteURL.appendingPathComponent(path)
     }
 
+    fileprivate static func localizedWebsiteLink(forPage page: WebsitePages) -> URL {
+        switch page {
+        case .termsOfServices, .privacyPolicy:
+            if Locale.autoupdatingCurrent.languageCode == "de" {
+                return shared.websiteURL.appendingPathComponent("datenschutz")
+            } else {
+                return shared.websiteURL.appendingPathComponent("legal")
+            }
+        }
+    }
+
     fileprivate static func accountsLink(path: String) -> URL {
         return shared.accountsURL.appendingPathComponent(path)
     }
@@ -129,15 +145,15 @@ extension URL {
     }
 
     static var wr_fingerprintLearnMore: URL {
-        return BackendEnvironment.websiteLink(path: "privacy/why")
+        return wr_support.appendingPathComponent("hc/articles/207859815-Why-should-I-verify-my-conversations")
     }
 
     static var wr_fingerprintHowToVerify: URL {
-        return BackendEnvironment.websiteLink(path: "privacy/how")
+        return wr_support.appendingPathComponent("hc/articles/207692235-How-can-I-compare-key-fingerprints-")
     }
 
     static var wr_privacyPolicy: URL {
-        return BackendEnvironment.websiteLink(path: "legal/privacy/embed")
+        return BackendEnvironment.localizedWebsiteLink(forPage: .privacyPolicy)
     }
 
     static var wr_licenseInformation: URL {
@@ -157,7 +173,7 @@ extension URL {
     }
 
     static var wr_reportAbuse: URL {
-        return BackendEnvironment.websiteLink(path: "support/misuse")
+        return wr_support.appendingPathComponent("hc/requests/new")
     }
 
     static var wr_cannotDecryptHelp: URL {
@@ -180,12 +196,8 @@ extension URL {
         return BackendEnvironment.websiteLink(path: "support/username") // TODO jacob update URL when new support page for search exists
     }
 
-    static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
-        if isTeamAccount {
-            return BackendEnvironment.websiteLink(path: "legal/terms/teams")
-        } else {
-            return BackendEnvironment.websiteLink(path: "legal/terms/personal")
-        }
+    static var wr_termsOfServicesURL: URL {
+        return BackendEnvironment.localizedWebsiteLink(forPage: .termsOfServices)
     }
 
     static var wr_legalHoldLearnMore: URL {
@@ -197,7 +209,11 @@ extension URL {
     }
 
     static var wr_wireEnterpriseLearnMore: URL {
-        return BackendEnvironment.websiteLink(path: "products/enterprise-collaboration")
+        return BackendEnvironment.websiteLink(path: "pricing")
+    }
+
+    static var wr_guestLinksLearnMore: URL {
+        return wr_support.appendingPathComponent("hc/articles/360000574069-Share-a-link-with-a-person-without-a-Wire-account-to-join-a-guest-room-conversation-in-my-team")
     }
 
     static var selfUserProfileLink: URL? {

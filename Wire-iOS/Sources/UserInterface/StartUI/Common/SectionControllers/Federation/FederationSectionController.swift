@@ -22,17 +22,13 @@ import WireSyncEngine
 
 class FederationSectionController: SearchSectionController {
 
-    var result: Swift.Result<[ZMSearchUser], FederationError> = .success([])
+    var users = [ZMSearchUser]()
 
     weak var delegate: SearchSectionControllerDelegate?
     weak var collectionView: UICollectionView?
 
     override var isHidden: Bool {
-        if case .success(let searchUsers) = result {
-            return searchUsers.isEmpty
-        } else {
-            return false
-        }
+        return users.isEmpty
     }
 
     override var sectionTitle: String {
@@ -46,42 +42,25 @@ class FederationSectionController: SearchSectionController {
             return
         }
 
-        FederationDomainUnavailableCell.register(in: collectionView)
         UserCell.register(in: collectionView)
 
         self.collectionView = collectionView
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if case .success(let searchUsers) = result {
-            return searchUsers.count
-        } else {
-            return 1
-        }
+        return users.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell: UICollectionViewCell
-
-        switch result {
-        case .success(let searchUsers):
-            let user = searchUsers[indexPath.row]
-            let userCell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
-            userCell.configure(with: user, selfUser: ZMUser.selfUser())
-            userCell.accessoryIconView.isHidden = true
-            cell = userCell
-        case .failure:
-            cell = collectionView.dequeueReusableCell(ofType: FederationDomainUnavailableCell.self, for: indexPath)
-        }
-
+        let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
+        let user = users[indexPath.row]
+        cell.configure(with: user, selfUser: ZMUser.selfUser())
+        cell.accessoryIconView.isHidden = true
         return cell
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard case .success(let searchUsers) = result else { return }
-        let user = searchUsers[indexPath.row]
-
+        let user = users[indexPath.row]
         delegate?.searchSectionController(self, didSelectUser: user, at: indexPath)
     }
 

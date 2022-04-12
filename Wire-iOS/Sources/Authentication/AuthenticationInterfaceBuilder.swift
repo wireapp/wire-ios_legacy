@@ -111,9 +111,13 @@ class AuthenticationInterfaceBuilder {
             let backupStep = BackupRestoreStepDescription(context: context)
             return makeViewController(for: backupStep)
 
-        case .enterLoginCode(let phoneNumber):
+        case .enterPhoneVerificationCode(let phoneNumber):
             let verifyPhoneStep = VerifyPhoneStepDescription(phoneNumber: phoneNumber, allowChange: false)
             return makeViewController(for: verifyPhoneStep)
+
+        case .enterEmailVerificationCode(let email, _, _):
+            let verifyEmailStep = VerifyEmailStepDescription(email: email, canChangeEmail: false)
+            return makeViewController(for: verifyEmailStep)
 
         case .addEmailAndPassword:
             let addCredentialsStep = AddEmailPasswordStepDescription()

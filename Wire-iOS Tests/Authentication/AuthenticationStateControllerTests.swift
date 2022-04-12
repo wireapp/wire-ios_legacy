@@ -110,12 +110,12 @@ class AuthenticationStateControllerTests: XCTestCase {
 
         stateController.transition(to: .landingScreen, mode: .reset)
         stateController.transition(to: .provideCredentials(.email, nil))
-        stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
+        stateController.transition(to: .requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false))
 
         XCTAssertEqual(stateController.stack, [
             .landingScreen,
             .provideCredentials(.email, nil),
-            .sendLoginCode(phoneNumber: phoneNumber, isResend: false)
+            .requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false)
         ])
 
         // WHEN
@@ -132,14 +132,14 @@ class AuthenticationStateControllerTests: XCTestCase {
 
         stateController.transition(to: .landingScreen, mode: .reset)
         stateController.transition(to: .provideCredentials(.phone, nil)) // user logs in with phone number
-        stateController.transition(to: .sendLoginCode(phoneNumber: phoneNumber, isResend: false))
-        stateController.transition(to: .enterLoginCode(phoneNumber: phoneNumber))
+        stateController.transition(to: .requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false))
+        stateController.transition(to: .enterPhoneVerificationCode(phoneNumber: phoneNumber))
 
         XCTAssertEqual(stateController.stack, [
             .landingScreen,
             .provideCredentials(.phone, nil),
-            .sendLoginCode(phoneNumber: phoneNumber, isResend: false), // non-ui
-            .enterLoginCode(phoneNumber: phoneNumber)
+            .requestPhoneVerificationCode(phoneNumber: phoneNumber, isResend: false), // non-ui
+            .enterPhoneVerificationCode(phoneNumber: phoneNumber)
         ])
 
         // WHEN

@@ -91,10 +91,10 @@
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
 "peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
-"peoplepicker.no_matching_results.message.users_all_added" = "Everyone’s here.";
-"peoplepicker.no_matching_results.message.services" = "Geen resultaten";
-"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results.message.services_not_enabled" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results.message.users_all_added" = "Iedereen is hier.";
+"peoplepicker.no_matching_results.message.services" = "Geen resultaten.";
+"peoplepicker.no_matching_results.message.services_not_enabled_admin" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
+"peoplepicker.no_matching_results.message.services_not_enabled" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
 
 "peoplepicker.send_invitation.dialog.title" = "Uitnodiging verstuurd";
 "peoplepicker.send_invitation.dialog.message" = "De uitnodiging kan 2 weken gebruikt worden. Stuur een nieuwe als hij verlopen is.";
@@ -321,9 +321,11 @@
 "conversation.create.guidance.empty" = "Minimaal 1 teken";
 "conversation.create.guidance.toolong" = "Te veel tekens";
 "conversation.create.options.title" = "Gesprek opties";
-"conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Sta gasten en services toe";
-"conversation.create.guests.subtitle" = "Open dit gesprek voor mensen en services buiten jouw team.";
+"conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
+"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.services.title" = "Allow services";
+"conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Leesbevestigingen";
 "conversation.create.receipts.subtitle" = "Wanneer dit aanstaat, kunnen mensen zien wanneer je hun berichten gelezen hebt.";
 
@@ -457,7 +459,7 @@
 "content.system.conversation.guest.joined" = "%@ joined";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "Diensten en mensen buiten jou team kunnen deelnemen aan dit gesprek.";
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Nodig anderen uit";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
@@ -651,7 +653,7 @@
 "voice.accept_button.title" = "Neem op";
 "voice.decline_button.title" = "Leg op";
 "voice.hang_up_button.title" = "Ophangen";
-"voice.mute_button.title" = "Microphone";
+"voice.mute_button.title" = "Microfoon";
 "voice.video_button.title" = "Camera";
 "voice.flip_video_button.title" = "Switch camera";
 "voice.speaker_button.title" = "Luidspreker";
@@ -719,8 +721,6 @@
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Toch bellen";
 "call.alert.ongoing.join.button" = "Toch aanmelden";
-
-"call.toast.muted_on_join.message" = "When you join a conference call, you are initially muted";
 
 "call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
 "call.quality.indicator.more_info.button.text" = "More info";
@@ -922,9 +922,12 @@
 "participants.services.remove_integration.button" = "verwijder integratie";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gasten en services";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Aan";
 "group_details.guest_options_cell.disabled" = "Uit";
+"group_details.services_options_cell.title" = "Services";
+"group_details.services_options_cell.enabled" = "Aan";
+"group_details.services_options_cell.disabled" = "Uit";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Meldingen";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
@@ -1356,9 +1359,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Sta gasten en services toe";
-"guest_room.allow_guests.subtitle" = "Open dit gesprek voor mensen en services buiten jouw team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Verwijderen";
 "guest_room.revoke_link.message" = "Nieuwe gasten zullen niet kunnen deelnemen via deze link. Huidige gasten blijven toegang houden.";
 "guest_room.revoke_link.action" = "Link intrekken";
@@ -1381,6 +1384,14 @@
 
 "guest_room.expiration.hours_left" = "%@h over";
 "guest_room.expiration.less_than_minutes_left" = "Minder dan %@m over";
+
+// Services Options
+
+"services_options.allow_services.title" = "Allow services";
+"services_options.allow_services.subtitle" = "Open this conversation to services.";
+"services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
+"services_options.remove_services.action" = "Verwijderen";
+
 
 // Registration
 
@@ -1646,7 +1657,6 @@
 "push.notification.new_user" = "%@ heeft zich aangemeld bij Wire";
 "push.notification.new_message" = "Nieuw bericht";
 
-
 // Force Update
 "force.update.title" = "Update nodig";
 "force.update.message" = "Je mist nieuwe features. \nDownload de laatste versie van Wire in de App Store.";
@@ -1799,9 +1809,10 @@
 "url_action.join_conversation.confirmation.message" = "You have been invited to a conversation:\n%@";
 "url_action.join_conversation.confirmation.confirm_button" = "Deelnemen";
 
-"url_action.join_conversation.error.title" = "You could not join the conversation";
-"url_action.join_conversation.error.converation_is_full" = "The conversation is full.";
-"url_action.join_conversation.error.link_is_invalid" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.title" = "You could not join the conversation";
+"url_action.join_conversation.error.alert.converation_is_full.message" = "The conversation is full.";
+"url_action.join_conversation.error.alert.link_is_invalid.message" = "The conversation link is invalid.";
+"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire kan deze persoon niet vinden.";
@@ -1945,4 +1956,4 @@
 "keyboardshortcut.scrollToBottom" = "Scroll to Bottom";
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
-"keyboardshortcut.openPeople" = "Deelnemers";
+"keyboardshortcut.openPeople" = "Personen";
