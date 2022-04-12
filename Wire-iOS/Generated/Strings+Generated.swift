@@ -2101,8 +2101,14 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "guest_room.link.header.title")
         }
         internal enum NotAllowed {
-          /// Generating guest links is not allowed in your team.
-          internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.explaination")
+          internal enum ForOtherTeam {
+            /// You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_other_team.explanation")
+          }
+          internal enum ForSelfTeam {
+            /// Generating guest links is not allowed in your team.
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_self_team.explanation")
+          }
         }
       }
       internal enum RemoveGuests {

@@ -25,6 +25,7 @@ protocol ConversationGuestOptionsViewModelConfiguration: AnyObject {
     var guestLinkFeatureStatus: GuestLinkFeatureStatus { get }
     var isCodeEnabled: Bool { get }
     var areGuestPresent: Bool { get }
+    var isConversationFromSelfTeam: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     var guestLinkFeatureStatusChangedHandler: ((GuestLinkFeatureStatus) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
@@ -132,7 +133,7 @@ final class ConversationGuestOptionsViewModel {
             return rows
         case .disabled:
             rows.append(.linkHeader)
-            rows.append(.info)
+            rows.append(.info(isSelfTeam: configuration.isConversationFromSelfTeam))
             return rows
         case .unknown:
             return rows
