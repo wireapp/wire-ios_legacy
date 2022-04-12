@@ -24,7 +24,7 @@ enum AppState: Equatable {
     case locked
     case authenticated(completedRegistration: Bool)
     case unauthenticated(error: NSError?)
-    case blacklisted
+    case blacklisted(reason: BlacklistReason)
     case jailbroken
     case databaseFailure
     case migrating
@@ -40,8 +40,8 @@ enum AppState: Equatable {
             return true
         case let (.unauthenticated(error1), .unauthenticated(error2)):
             return error1 === error2
-        case (blacklisted, blacklisted):
-            return true
+        case let (.blacklisted(reason1), .blacklisted(reason2)):
+            return reason1 == reason2
         case (jailbroken, jailbroken):
             return true
         case (databaseFailure, databaseFailure):
@@ -108,6 +108,11 @@ class AppStateCalculator {
             return
         }
 
+        if case .blacklisted = self.appState, APIVersion.current == nil {
+            completion?()
+            return
+        }
+
         self.appState = appState
         self.pendingAppState = nil
         ZMSLog(tag: "AppState").debug("transitioning to app state: \(appState)")
@@ -163,8 +168,8 @@ extension AppStateCalculator: SessionManagerDelegate {
         transition(to: .unauthenticated(error: error as NSError?))
     }
 
-    func sessionManagerDidBlacklistCurrentVersion() {
-        transition(to: .blacklisted)
+    func sessionManagerDidBlacklistCurrentVersion(reason: BlacklistReason) {
+        transition(to: .blacklisted(reason: reason))
     }
 
     func sessionManagerDidBlacklistJailbrokenDevice() {

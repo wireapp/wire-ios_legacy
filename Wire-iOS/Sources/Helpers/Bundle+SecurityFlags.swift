@@ -25,7 +25,6 @@ enum SecurityFlags {
     case customBackend
     case cameraRoll
     case backup
-    case federation
     case maxNumberAccounts
     case fileSharing
 
@@ -51,8 +50,6 @@ enum SecurityFlags {
             return "BackupEnabled"
         case .forceEncryptionAtRest:
             return "ForceEncryptionAtRestEnabled"
-        case .federation:
-            return "FederationEnabled"
         case .fileSharing:
             return "FileSharingEnabled"
         }

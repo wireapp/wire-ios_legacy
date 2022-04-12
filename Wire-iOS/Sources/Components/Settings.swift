@@ -59,7 +59,7 @@ enum SettingKey: String, CaseIterable {
     case muteIncomingCallsWhileInACall = "MuteIncomingCallsWhileInACall"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
-    case federationEnabled = "FederationEnabled"
+
     // MARK: Link opening options
     case twitterOpeningRawValue = "TwitterOpeningRawValue"
     case mapsOpeningRawValue = "MapsOpeningRawValue"
@@ -124,12 +124,6 @@ class Settings {
         set {
             defaults.set(newValue?.toDictionary(), forKey: index.rawValue)
         }
-    }
-
-    var federationEnabled: Bool {
-        return SecurityFlags.federation.isEnabled ||
-               AutomationHelper.sharedHelper.enableFederation ||
-               defaults.bool(forKey: SettingKey.federationEnabled.rawValue)
     }
 
     var blacklistDownloadInterval: TimeInterval {

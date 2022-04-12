@@ -180,10 +180,6 @@ class SettingsCellDescriptorFactory {
         )
 
         developerCellDescriptors.append(
-            Toggle(settingsProperty: settingsPropertyFactory.property(.federationEnabled))
-        )
-
-        developerCellDescriptors.append(
             Button(title: "Send broken message",
                    isDestructive: true,
                    selectAction: DebugActions.sendBrokenMessage)
@@ -269,6 +265,12 @@ class SettingsCellDescriptorFactory {
             Button(title: "What's my analytics id?",
                    isDestructive: false,
                    selectAction: DebugActions.showAnalyticsIdentifier)
+        )
+
+        developerCellDescriptors.append(
+            Button(title: "What's the api version?",
+                   isDestructive: false,
+                   selectAction: DebugActions.showAPIVersionInfo)
         )
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],

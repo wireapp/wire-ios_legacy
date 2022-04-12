@@ -39,6 +39,8 @@ final class ConversationInputBarViewController: UIViewController,
     let conversation: InputBarConversationType
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
+    private let classificationProvider: ClassificationProviding?
+
     private(set) var inputController: UIViewController? {
         willSet {
             inputController?.view.removeFromSuperview()
@@ -159,6 +161,8 @@ final class ConversationInputBarViewController: UIViewController,
         view.setHidden(true, animated: false)
         return view
     }()
+
+    private let securityLevelView = SecurityLevelView()
 
     // MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
@@ -281,8 +285,12 @@ final class ConversationInputBarViewController: UIViewController,
 
     /// init with a InputBarConversationType objcet
     /// - Parameter conversation: provide nil only for tests
-    init(conversation: InputBarConversationType) {
+    init(
+        conversation: InputBarConversationType,
+        classificationProvider: ClassificationProviding? = ZMUserSession.shared()
+    ) {
         self.conversation = conversation
+        self.classificationProvider = classificationProvider
 
         super.init(nibName: nil, bundle: nil)
 
@@ -334,6 +342,7 @@ final class ConversationInputBarViewController: UIViewController,
         updateWritingState(animated: false)
         updateButtonIcons()
         updateAvailabilityPlaceholder()
+        updateClassificationBanner()
 
         setInputLanguage()
         setupStyle()
@@ -505,6 +514,12 @@ final class ConversationInputBarViewController: UIViewController,
             $0.setIconColor(.from(scheme: .iconNormal), for: .normal)
         }
         inputBar.buttonsView.setNeedsLayout()
+    }
+
+    // MARK: - Security Banner
+
+    private func updateClassificationBanner() {
+        securityLevelView.configure(with: conversation.participants, provider: classificationProvider)
     }
 
     // MARK: - Save draft message
@@ -806,8 +821,11 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 extension ConversationInputBarViewController: ZMConversationObserver {
     func conversationDidChange(_ change: ConversationChangeInfo) {
         if change.participantsChanged ||
-            change.connectionStateChanged {
+            change.connectionStateChanged ||
+            change.allowGuestsChanged {
+            // Sometime participantsChanged is not observed after allowGuestsChanged 
             updateInputBarVisibility()
+            updateClassificationBanner()
         }
 
         if change.destructionTimeoutChanged {
@@ -864,6 +882,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
         inputBar.addSubview(typingIndicatorView)
 
+        view.addSubview(securityLevelView)
+
         createConstraints()
     }
 
@@ -893,15 +913,22 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     }
 
     private func createConstraints() {
-        [inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
+        [securityLevelView, inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
 
         let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
         bottomConstraint.priority = .defaultLow
 
         let senderDiameter: CGFloat = 28
 
+        let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
+
         NSLayoutConstraint.activate([
-            inputBar.topAnchor.constraint(equalTo: inputBar.superview!.topAnchor),
+            securityLevelView.topAnchor.constraint(equalTo: view.topAnchor),
+            securityLevelView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            securityLevelView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            securityLevelView.heightAnchor.constraint(equalToConstant: securityBannerHeight),
+
+            inputBar.topAnchor.constraint(equalTo: securityLevelView.bottomAnchor),
             inputBar.leadingAnchor.constraint(equalTo: inputBar.superview!.leadingAnchor),
             inputBar.trailingAnchor.constraint(equalTo: inputBar.superview!.trailingAnchor),
             bottomConstraint,

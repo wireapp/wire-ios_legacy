@@ -27,7 +27,9 @@ final class CallStatusViewController: UIViewController {
         }
     }
 
+    private let stackView = UIStackView()
     private let statusView: CallStatusView
+    private let securityLevelView = SecurityLevelView()
     private weak var callDurationTimer: Timer?
 
     init(configuration: CallStatusViewInputType) {
@@ -57,22 +59,29 @@ final class CallStatusViewController: UIViewController {
     }
 
     private func setupViews() {
+        [stackView, statusView, securityLevelView].prepareForLayout()
+
+        stackView.axis = .vertical
+        stackView.spacing = 12
+        view.addSubview(stackView)
+
         statusView.accessibilityTraits = .header
-        statusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusView)
+
+        view.addSubview(securityLevelView)
+
+        stackView.addArrangedSubview(statusView)
+        stackView.addArrangedSubview(securityLevelView)
     }
 
     private func createConstraints() {
-        NSLayoutConstraint.activate([
-            statusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            statusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            statusView.topAnchor.constraint(equalTo: view.topAnchor),
-            statusView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        stackView.fitIn(view: view)
     }
 
     private func updateState() {
         statusView.configuration = configuration
+
+        securityLevelView.configure(with: configuration.classification)
 
         switch configuration.state {
         case .established: startCallDurationTimer()
