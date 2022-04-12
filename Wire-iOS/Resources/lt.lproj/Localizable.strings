@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "GERAI";
 "general.next" = "Kitas";
 "general.cancel" = "Atsisakyti";
@@ -1141,6 +1140,9 @@
 "self.settings.callkit.caption" = "Dalintis su „iOS“";
 "self.settings.callkit.description" = "Rodyti „Wire“ skambučius užrakto ekrane ir „iOS“ skambučių praeityje. Jei „iCloud“ aktyvuota, skambučių praeitis bus pasidalinta su „Apple“.";
 
+"self.settings.mute_other_call.caption" = "Silence other calls";
+"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+
 "self.settings.vbr.title" = "Kodavimas kintama sparta (bitais)";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
 
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Guest Links";
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
 
 "guest_room.link.button.title" = "Kurti nuorodą";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "Tęsti";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · iš giphy.com";
 "giphy.conversation.random_message" = "iš giphy.com";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "Žmonės";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";

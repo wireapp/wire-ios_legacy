@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "Dalej";
 "general.cancel" = "Anuluj";
@@ -1141,6 +1140,9 @@
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Pokaż połączenia Wire na ekranie blokady i w historii połączeń iOS. Jeśli iCloud jest aktywny, historia połączeń zostanie udostępniona Apple.";
 
+"self.settings.mute_other_call.caption" = "Silence other calls";
+"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "To sprawia, że połączenia audio używają mniej danych i działają lepiej w wolniejszych sieciach. Wyłącz aby używać kodowania stałej przepływności (CBR). To ustawienie dotyczy tylko połączeń 1:1; połączenia konferencyjne zawsze używają kodowania CBR.";
 
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Linki dla gości";
 "guest_room.link.header.subtitle" = "Zaproś innych linkiem do tej rozmowy. Każdy z linkiem może dołączyć do rozmowy, nawet jeśli nie ma Wire.";
-"guest_room.link.not_allowed.explaination" = "Generowanie linków do gości nie jest dozwolone w twoim zespole.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
 
 "guest_room.link.button.title" = "Utwórz link";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "Usuwając bazę danych, wszystkie lokalne dane i wiadomości dla tego konta zostaną trwale usunięte.";
 "databaseloadingfailure.alert.delete_database.continue" = "Kontynuuj";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · dzięki giphy.com";
 "giphy.conversation.random_message" = "dzięki giphy.com";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Szczegóły konwersacji...";
 "keyboardshortcut.searchInConversation" = "Szukaj w rozmowie...";
 "keyboardshortcut.openPeople" = "Kontakty";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";

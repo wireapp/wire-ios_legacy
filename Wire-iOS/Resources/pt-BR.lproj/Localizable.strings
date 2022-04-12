@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "Próximo";
 "general.cancel" = "Cancelar";
@@ -1141,6 +1140,9 @@
 "self.settings.callkit.caption" = "Compartilhar com o iOS";
 "self.settings.callkit.description" = "Mostrar as chamadas do Wire na tela de bloqueio e no histórico de chamadas do iOS. Se o Icloud estiver ativado, o histórico de chamadas é compartilhado com a Apple.";
 
+"self.settings.mute_other_call.caption" = "Silenciar outras chamadas";
+"self.settings.mute_other_call.description" = "Ative para silenciar as chamadas recebidas quando você já estiver em uma chamada em andamento.";
+
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
 "self.settings.vbr.description" = "Isso faz com que as chamadas de áudio usem menos dados e funcionem melhor em redes mais lentas. Desligue para usar a codificação de taxa de bits constante (CBR). Essa configuração afeta apenas chamadas 1:1; as chamadas em conferência sempre usam a codificação CBR.";
 
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Links de Convidados";
 "guest_room.link.header.subtitle" = "Convide outras pessoas com um link para esta conversa. Qualquer pessoa com o link pode participar da conversa, mesmo que não possuam o Wire.";
-"guest_room.link.not_allowed.explaination" = "A geração de links de convidados não é permitida em sua equipe.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "A geração de links de convidados não é permitida em sua equipe.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Você não pode gerar um link de convidado nesta conversa, pois ele foi criado por alguém de outra equipe e essa equipe não tem permissão para usar links de convidado.";
 
 "guest_room.link.button.title" = "Criar Link";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "Ao excluir o banco de dados, todos os dados e mensagens locais para esta conta serão excluídos permanentemente.";
 "databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Detalhes da Conversa...";
 "keyboardshortcut.searchInConversation" = "Buscar na conversa...";
 "keyboardshortcut.openPeople" = "Pessoas";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";
