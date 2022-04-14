@@ -194,3 +194,13 @@ extension AppCenterOperation: CrashesDelegate {
     }
 }
 #endif
+
+// MARK: - APIVersionOperation
+
+final class APIVersionOperation: LaunchSequenceOperation {
+
+    func execute() {
+        APIVersion.storage = .applicationGroup
+    }
+
+}
