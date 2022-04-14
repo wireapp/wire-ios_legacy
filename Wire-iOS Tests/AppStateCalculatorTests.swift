@@ -206,7 +206,7 @@ final class AppStateCalculatorTests: XCTestCase {
         // GIVEN
         sut.applicationDidBecomeActive()
         APIVersion.current = nil
-        
+
         let blacklistState = AppState.blacklisted(reason: .clientAPIVersionObsolete)
         sut.testHelper_setAppState(blacklistState)
 
