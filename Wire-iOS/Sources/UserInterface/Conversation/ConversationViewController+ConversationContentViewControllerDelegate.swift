@@ -105,7 +105,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
         }
 
         let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
-        let navigationController = groupDetailsViewController.wrapInNavigationController()
+        let navigationController = groupDetailsViewController.wrapInNavigationController(setBackgroundColor: true)
         groupDetailsViewController.presentGuestOptions(animated: false)
         presentParticipantsViewController(navigationController, from: sourceView)
     }
