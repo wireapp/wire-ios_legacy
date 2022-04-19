@@ -8,16 +8,6 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Enable federation support</string>
-			<key>Key</key>
-			<string>FederationEnabled</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
 			<string>Only register for VoIP notifications</string>
 			<key>Key</key>
 			<string>VoIPNotificationsOnly</string>

@@ -276,8 +276,6 @@ extension SettingsPropertyName {
             return Settings.EnableReadReceipts.title
         case .encryptMessagesAtRest:
             return Settings.EncryptMessagesAtRest.title
-        case .federationEnabled:
-            return "Federate with other domains"
         }
     }
 }

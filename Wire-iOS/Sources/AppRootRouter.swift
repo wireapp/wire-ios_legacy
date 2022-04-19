@@ -94,6 +94,7 @@ public class AppRootRouter: NSObject {
 
     public func start(launchOptions: LaunchOptions) {
         showInitial(launchOptions: launchOptions)
+        sessionManager.resolveAPIVersion()
     }
 
     public func openDeepLinkURL(_ deepLinkURL: URL) -> Bool {
@@ -192,8 +193,8 @@ extension AppRootRouter: AppStateCalculatorDelegate {
         }
 
         switch appState {
-        case .blacklisted:
-            showBlacklisted(completion: completionBlock)
+        case .blacklisted(reason: let reason):
+            showBlacklisted(reason: reason, completion: completionBlock)
         case .jailbroken:
             showJailbroken(completion: completionBlock)
         case .databaseFailure:
@@ -262,8 +263,8 @@ extension AppRootRouter {
         }
     }
 
-    private func showBlacklisted(completion: @escaping () -> Void) {
-        let blockerViewController = BlockerViewController(context: .blacklist)
+    private func showBlacklisted(reason: BlacklistReason, completion: @escaping () -> Void) {
+        let blockerViewController = BlockerViewController(context: reason.blockerViewControllerContext)
         rootViewController.set(childViewController: blockerViewController,
                                completion: completion)
     }
@@ -519,6 +520,7 @@ extension AppRootRouter: ApplicationStateObserving {
 
     func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
+        sessionManager.resolveAPIVersion()
     }
 
     func updateOverlayWindowFrame(size: CGSize? = nil) {

@@ -55,6 +55,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         selfUser = nil
         SelfUser.provider = nil
         Settings.shared.reset()
+        APIVersion.isFederationEnabled = false
         super.tearDown()
 	}
 
@@ -70,7 +71,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
                                      file: StaticString = #file,
                                      testName: String = #function,
                                      line: UInt = #line) {
-        Settings.shared[.federationEnabled] = federated
+        APIVersion.isFederationEnabled = federated
 
         MockUserRight.isPermitted = !disabledEditing
         let group = settingsCellDescriptorFactory.accountGroup(isTeamMember: true)

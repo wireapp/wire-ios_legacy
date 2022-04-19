@@ -128,7 +128,6 @@ final class LabelIndicator: UIView, Themeable {
             topAnchor.constraint(equalTo: containerView.topAnchor),
 
             // containerView
-            containerView.heightAnchor.constraint(equalToConstant: 6),
             containerView.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
@@ -138,6 +137,8 @@ final class LabelIndicator: UIView, Themeable {
             indicatorIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
 
             // titleLabel
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: indicatorIcon.trailingAnchor, constant: 6)

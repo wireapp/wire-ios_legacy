@@ -78,7 +78,6 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case muteIncomingCallsWhileInACall = "MuteIncomingCallsWhileInACall"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
-    case federationEnabled = "federationEnabled"
 
     case lockApp = "lockApp"
 
