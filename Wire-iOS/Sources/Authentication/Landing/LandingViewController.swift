@@ -40,28 +40,6 @@ final class LandingViewController: AuthenticationStepViewController {
         return authenticationCoordinator
     }
 
-    // MARK: - UI Styles
-
-    static let semiboldFont = FontSpec(.large, .semibold).font!
-
-    static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = .center
-
-        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
-    }()
-
-    static let buttonSubtitleAttribute: [NSAttributedString.Key: AnyObject] = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = .center
-        alignCenterStyle.paragraphSpacingBefore = 4
-        alignCenterStyle.lineSpacing = 4
-
-        let lightFont = FontSpec(.normal, .light).font!
-
-        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
-    }()
-
     // MARK: - UI Elements
 
     private let contentView = UIView()
