@@ -268,18 +268,9 @@ extension XCTestCase {
 
 extension XCTestCase {
 
-    private var osVersionString: String {
-        let os = ProcessInfo().operatingSystemVersion
-
-        return "\(os.majorVersion)_\(os.minorVersion)_\(os.patchVersion)"
-    }
-
     func snapshotDirectory(file: StaticString = #file) -> String {
         let fileName = "\(file)"
-        let path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" +
-        osVersionString + "/" +
-        URL(fileURLWithPath: fileName).deletingPathExtension().lastPathComponent
-
+        let path = ProcessInfo.processInfo.environment["SNAPSHOT_REFERENCE_DIR"]! + "/" + URL(fileURLWithPath: fileName).deletingPathExtension().lastPathComponent
         return path
     }
 
