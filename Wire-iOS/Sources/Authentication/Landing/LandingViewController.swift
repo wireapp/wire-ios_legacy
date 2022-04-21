@@ -64,8 +64,8 @@ final class LandingViewController: AuthenticationStepViewController {
         return imageView
     }()
 
-    private let messageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_message".localized,
+    private let messageLabel: Label = {
+        let label = Label(key: "landing.welcome_message".localized,
                             size: .normal,
                             weight: .bold,
                             color: .landingScreen,
@@ -77,8 +77,8 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
 
-    private let subMessageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_submessage".localized,
+    private let subMessageLabel: Label = {
+        let label = Label(key: "landing.welcome_submessage".localized,
                             size: .normal,
                             weight: .regular,
                             color: .landingScreen,
@@ -148,8 +148,8 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let createAccoutInfoLabel: UILabel = {
-        let label = UILabel(key: "landing.create_account.infotitle".localized,
+    private let createAccoutInfoLabel: Label = {
+        let label = Label(key: "landing.create_account.infotitle".localized,
                             size: .small,
                             weight: .regular,
                             color: .landingScreen,
@@ -169,6 +169,7 @@ final class LandingViewController: AuthenticationStepViewController {
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
+        button.titleLabel?.numberOfLines = 0
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)

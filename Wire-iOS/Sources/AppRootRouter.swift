@@ -541,6 +541,8 @@ extension AppRootRouter: ContentSizeCategoryObserving {
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         AppRootRouter.configureAppearance()
+        rootViewController.redrawAllfonts()
+        
     }
 
     public static func configureAppearance() {
@@ -561,4 +563,33 @@ extension AppRootRouter: AudioPermissionsObserving {
         sessionManager.updateCallNotificationStyleFromSettings()
         sessionManager.updateMuteOtherCallsFromSettings()
     }
+}
+
+extension UIViewController {
+
+  func redrawAllfonts() {
+    view.redrawAllfonts()
+  }
+
+}
+
+extension UIView {
+
+  func redrawAllfonts() {
+    visitSubviews { view in
+      guard let label = view as? Label else { return }
+      label.redrawFont()
+    }
+  }
+
+  func visitSubviews(executing block: @escaping (UIView) -> Void) {
+    for view in subviews {
+      // do something
+      block(view)
+
+      // go next layer down
+      view.visitSubviews(executing: block)
+    }
+  }
+
 }
