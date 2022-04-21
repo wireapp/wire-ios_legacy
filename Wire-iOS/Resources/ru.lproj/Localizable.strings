@@ -1715,8 +1715,8 @@
 "databaseloadingfailure.alert.delete_database.continue" = "Продолжить";
 
 // Backend not supported alert
-"backend_not_supported.alert.title" = "Server version not supported";
-"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+"backend_not_supported.alert.title" = "Версия сервера не поддерживается";
+"backend_not_supported.alert.message" = "Версия сервера не поддерживается этим приложением.  Пожалуйста, обратитесь к системному администратору.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
