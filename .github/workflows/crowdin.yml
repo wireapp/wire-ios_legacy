@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Crowdin action
-        uses: wireapp/github-action@1.1.0
+        uses: wireapp/github-action@1.4.8
         with:
           # For more info: https://github.com/crowdin/github-action/blob/master/action.yml
           project_id: ${{ secrets.CROWDIN_PROJECT_ID }}          
