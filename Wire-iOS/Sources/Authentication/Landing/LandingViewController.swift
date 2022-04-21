@@ -400,13 +400,6 @@ final class LandingViewController: AuthenticationStepViewController {
         ])
     }
 
-    private func configureRegularSizeClassFont() {
-        messageLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        subMessageLabel.font = FontSpec(.normal, .regular).font
-        createAccoutInfoLabel.font = UIFont.systemFont(ofSize: 14)
-        createAccountButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-    }
-
     // MARK: - Adaptivity Events
 
     private func updateLogoView() {
