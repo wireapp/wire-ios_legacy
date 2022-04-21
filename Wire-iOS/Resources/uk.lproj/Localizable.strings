@@ -926,7 +926,7 @@
 "group_details.guest_options_cell.disabled" = "Вимкнений";
 "group_details.services_options_cell.title" = "Сервіси";
 "group_details.services_options_cell.enabled" = "Увімк.";
-"group_details.services_options_cell.disabled" = "Вимкнений";
+"group_details.services_options_cell.disabled" = "Вимк.";
 "group_details.timeout_options_cell.title" = "Тимчасові повідомленяя";
 "group_details.notification_options_cell.title" = "Сповіщення";
 "group_details.notification_options_cell.description" = "Ви можете отримувати нотифікації про всі події (включаючи аудіо- і відеодзвінки), або тільки тоді, коли хтось згадує вас або відповідає на одне з ваших повідомлень.";
@@ -1141,7 +1141,7 @@
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
 
 "self.settings.mute_other_call.caption" = "Заглушити інші дзвінки";
-"self.settings.mute_other_call.description" = "Активуйте, щоб вимкнути вхідні дзвінки, поки ви розмовляєте з кимось.";
+"self.settings.mute_other_call.description" = "Активуйте приглушення вхідних дзвінків, поки ви розмовляєте з кимось.";
 
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість в мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт (CBR). Це налаштування впливає тільки на персональні дзвінки; конференційні дзвінки завжди використовують CBR.";
@@ -1699,8 +1699,8 @@
 "feature_config.alert.self_deleting_messages.message.forced_on" = "Тимчасові повідомлення тепер є обов'язковими. Нові повідомлення будуть видалятися автоматично після %@.";
 
 // Feature configs: conversation guest links
-"feature_config.alert.conversation_guest_links.message.disabled" = "Генерування гостьових лінків вимкнене для всіх адміністраторів групи.";
-"feature_config.alert.conversation_guest_links.message.enabled" = "Генерування гостьових лінків увімкнене для всіх адміністраторів групи.";
+"feature_config.alert.conversation_guest_links.message.disabled" = "Генерація гостьових лінків вимкнена для всіх адміністраторів групи.";
+"feature_config.alert.conversation_guest_links.message.enabled" = "Генерація гостьових лінків увімкнена для всіх адміністраторів групи.";
 
 // Jailbroken alert
 "jailbrokendevice.alert.title" = "Виявлено jailbreak";

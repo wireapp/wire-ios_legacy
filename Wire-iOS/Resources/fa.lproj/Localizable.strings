@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@ joined";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "افراد خارج از تیم شما می‌توانند وارد این گفتگو شوند.";
 "content.system.conversation.invite.button" = "دعوت دوستان";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";

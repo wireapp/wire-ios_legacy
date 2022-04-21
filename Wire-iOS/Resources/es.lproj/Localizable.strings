@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "Demasiados caracteres";
 "conversation.create.options.title" = "Opciones de conversación";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "Permitir invitados";
+"conversation.create.guests.subtitle" = "Abrir esta conversación a personas fuera de su equipo.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Confirmaciones de lectura";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@ se ha unido";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Personas ajenas a su equipo pueden unirse a esta conversación.";
 "content.system.conversation.invite.button" = "Invitar gente";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eliminó el nombre del chat";
@@ -921,7 +921,7 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Invitados";
 "group_details.guest_options_cell.enabled" = "En";
 "group_details.guest_options_cell.disabled" = "Desactivar";
 "group_details.services_options_cell.title" = "Servicios";
@@ -1361,9 +1361,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Permitir invitados";
+"guest_room.allow_guests.subtitle" = "Abrir esta conversación a personas fuera de su equipo.";
+"guest_room.remove_guests.message" = "Los invitados actuales serán eliminados de la conversación. No se permitirán nuevos invitados.";
 "guest_room.remove_guests.action" = "Eliminar";
 "guest_room.revoke_link.message" = "Los nuevos invitados no podrán unirse a este enlace. Los invitados actuales seguirán teniendo acceso.";
 "guest_room.revoke_link.action" = "Revocar enlace";
@@ -1393,7 +1393,7 @@
 "services_options.allow_services.title" = "Allow services";
 "services_options.allow_services.subtitle" = "Open this conversation to services.";
 "services_options.remove_services.message" = "Current services will be removed from the conversation. New services will not be allowed.";
-"services_options.remove_services.action" = "Eliminar";
+"services_options.remove_services.action" = "Quitar";
 
 
 // Registration

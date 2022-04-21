@@ -924,7 +924,7 @@
 "group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.services_options_cell.title" = "Dienste";
+"group_details.services_options_cell.title" = "Services";
 "group_details.services_options_cell.enabled" = "An";
 "group_details.services_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
@@ -1362,7 +1362,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Gäste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffnen Sie diese Unterhaltung für Personen außerhalb Ihres Teams.";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb des Teams.";
 "guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
 "guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
@@ -1715,8 +1715,8 @@
 "databaseloadingfailure.alert.delete_database.continue" = "Weiter";
 
 // Backend not supported alert
-"backend_not_supported.alert.title" = "Server version not supported";
-"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+"backend_not_supported.alert.title" = "Serverversion wird nicht unterstützt";
+"backend_not_supported.alert.message" = "Die Serverversion wird von dieser App nicht unterstützt. Bitte wenden Sie sich an Ihren Systemadministrator.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

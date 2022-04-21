@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "Per daug simbolių";
 "conversation.create.options.title" = "Susirašinėjimo parinktys";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "Leisti svečius";
+"conversation.create.guests.subtitle" = "Leiskite matyti šį susirašinėjimą žmonėms nesantiems komandoje.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Perskaitymo patvirtinimai";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@ prisijungė";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
 "content.system.conversation.invite.button" = "Pakviesti žmones";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ištrynė susirašinėjimo pavadinimą";
@@ -921,7 +921,7 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Svečių";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.services_options_cell.title" = "Paslaugos";
@@ -1361,9 +1361,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Leisti svečius";
+"guest_room.allow_guests.subtitle" = "Leiskite matyti šį susirašinėjimą žmonėms nesantiems komandoje.";
+"guest_room.remove_guests.message" = "Dabartiniai svečiai bus pašalinti iš susirašinėjimo. Nauji svečiai prisijungi negalės.";
 "guest_room.remove_guests.action" = "Šalinti";
 "guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai liks prisijungę.";
 "guest_room.revoke_link.action" = "Atšaukti nuorodą";

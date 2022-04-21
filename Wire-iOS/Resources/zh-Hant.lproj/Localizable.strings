@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "字數過多";
 "conversation.create.options.title" = "會話選項";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "允許訪客";
+"conversation.create.guests.subtitle" = "開放這個對話與團隊以外的訪客。";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "讀取回條";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@已加入";
 "content.system.conversation.guest.you_joined" = "您已經加入";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "你的團隊以外的訪客可以參加這個對話。";
 "content.system.conversation.invite.button" = "邀請朋友加入";
 
 "content.system.other_renamed_conv_to_nothing" = "%@刪除了聊天室名稱";
@@ -921,7 +921,7 @@
 "participants.services.remove_integration.button" = "移除服務";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "訪客";
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
 "group_details.services_options_cell.title" = "服務";
@@ -1361,9 +1361,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "允許訪客";
+"guest_room.allow_guests.subtitle" = "開放這個對話與團隊以外的訪客。";
+"guest_room.remove_guests.message" = "將移除對話中的訪客。 將不能加入新訪客。";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新訪客將無法加入此連結。 目前訪客仍可使用。";
 "guest_room.revoke_link.action" = "撤銷連結";

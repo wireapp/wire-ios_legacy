@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
 "conversation.create.options.title" = "خيارات المحادثة";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "اسمح بالضيوف";
+"conversation.create.guests.subtitle" = "إتاحة هذه المحادثة لأشخاص خارج فريقك.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "إشعار بالقراءة";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "انضم %@";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "الأشخاص خارج فريقك يمكنهم دخول هذه المحادثة.";
 "content.system.conversation.invite.button" = "دعوة أُناس";
 
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
@@ -1361,8 +1361,8 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.allow_guests.title" = "السماح بالضيوف";
+"guest_room.allow_guests.subtitle" = "إتاحة هذه المحادثة لأشخاص خارج فريقك.";
 "guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "إزالة";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";

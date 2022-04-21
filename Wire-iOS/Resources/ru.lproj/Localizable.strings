@@ -1028,7 +1028,7 @@
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
 "self.settings.account_details.key_fingerprint.title" = "Отпечаток ключа";
-"self.settings.account_details.remove_device.message" = "Для удаления устройства требуется пароль";
+"self.settings.account_details.remove_device.message" = "Для удаления устройства необходимо ввести пароль";
 "self.settings.account_details.remove_device.password" = "Пароль";
 "self.settings.account_details.remove_device.password.error" = "Неправильный пароль";
 
@@ -1254,7 +1254,7 @@
 
 "self.settings.conversations.title" = "История";
 "self.settings.history_backup.title" = "Резервная копия бесед";
-"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю бесед. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nВыберите надежный пароль для защиты резервной копии.";
+"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю бесед. Она пригодится для восстановления истории в случае потери или замены устройства.\n\nВыберите надежный пароль для защиты резервной копии.";
 "self.settings.history_backup.action" = "Создать резервную копию сейчас";
 "self.settings.history_backup.error.title" = "Ошибка";
 
@@ -1966,6 +1966,6 @@
 "keyboardshortcut.openPeople" = "Контакты";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "УРОВЕНЬ БЕЗОПАСНОСТИ:";
 "security_classification.level.bund" = "VS-NfD";
-"security_classification.level.not_classified" = "UNCLASSIFIED";
+"security_classification.level.not_classified" = "НЕКЛАССИФИЦИРОВАН";
