@@ -264,16 +264,18 @@ private extension AppDelegate {
         /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
-        return SessionManager(maxNumberAccounts: maxNumberAccounts,
-                              appVersion: appVersion,
-                              mediaManager: mediaManager,
-                              analytics: Analytics.shared,
-                              delegate: appStateCalculator,
-                              application: UIApplication.shared,
-                              environment: BackendEnvironment.shared,
-                              configuration: configuration,
-                              detector: jailbreakDetector)
-
+        return SessionManager(
+            maxNumberAccounts: maxNumberAccounts,
+            appVersion: appVersion,
+            mediaManager: mediaManager,
+            analytics: Analytics.shared,
+            delegate: appStateCalculator,
+            application: UIApplication.shared,
+            environment: BackendEnvironment.shared,
+            configuration: configuration,
+            detector: jailbreakDetector,
+            requiredPushTokenType: requiredPushTokenType
+        )
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
@@ -291,4 +293,16 @@ private extension AppDelegate {
     private func startAppRouter(launchOptions: LaunchOptions) {
         appRootRouter?.start(launchOptions: launchOptions)
     }
+
+    private var requiredPushTokenType: PushToken.TokenType {
+        // From iOS 15 our "unrestricted-voip" entitlement is no longer supported,
+        // so users should register for standard push tokens instead and use the
+        // notification service extension.
+        if #available(iOS 15.0, *) {
+            return .standard
+        } else {
+            return .voip
+        }
+    }
+
 }
