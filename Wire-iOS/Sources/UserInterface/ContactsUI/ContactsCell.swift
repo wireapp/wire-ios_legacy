@@ -96,7 +96,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    let actionButton: Button = Button(style: .full)
+    let actionButton: Button = Button(style: .full, size: .small, weight: .light)
 
     var actionButtonHandler: ContactsCellActionButtonHandler?
 

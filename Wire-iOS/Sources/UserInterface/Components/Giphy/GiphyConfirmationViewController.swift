@@ -30,8 +30,8 @@ protocol GiphyConfirmationViewControllerDelegate: AnyObject {
 final class GiphyConfirmationViewController: UIViewController {
 
     private let imagePreview = FLAnimatedImageView()
-    private let acceptButton = Button(style: .full)
-    private let cancelButton = Button(style: .empty)
+    private let acceptButton = Button(style: .full, size: .small, weight: .light)
+    private let cancelButton = Button(style: .empty, size: .small, weight: .light)
     private let buttonContainer = UIView()
     weak var delegate: GiphyConfirmationViewControllerDelegate?
     private let searchResultController: ZiphySearchResultsController?
