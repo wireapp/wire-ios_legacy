@@ -29,6 +29,7 @@ enum ButtonStyle: Int {
 
 class Button: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
+    private var fontSpec: FontSpec?
 
     var circular = false {
         didSet {
@@ -71,18 +72,23 @@ class Button: ButtonWithLargerHitArea {
     convenience init(style: ButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
-                     titleLabelFont: UIFont = .smallLightFont) {
+                     size: FontSize = .normal,
+                     weight: FontWeight = .regular) {
         self.init()
 
         self.style = style
         self.variant = variant
-
         textTransform = .upper
-        titleLabel?.font = titleLabelFont
+        fontSpec = FontSpec(size, weight)
+        titleLabel?.font = fontSpec?.font
         layer.cornerRadius = cornerRadius
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 
         updateStyle(variant: variant)
+    }
+
+    func redrawFont() {
+        self.titleLabel?.font = fontSpec?.font
     }
 
     private func updateStyle(variant: ColorSchemeVariant) {
