@@ -542,7 +542,6 @@ extension AppRootRouter: ContentSizeCategoryObserving {
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         AppRootRouter.configureAppearance()
         rootViewController.redrawAllfonts()
-        
     }
 
     public static func configureAppearance() {
@@ -565,6 +564,7 @@ extension AppRootRouter: AudioPermissionsObserving {
     }
 }
 
+// MARK: - Dynamic Type
 extension UIViewController {
 
   func redrawAllfonts() {
@@ -573,12 +573,17 @@ extension UIViewController {
 
 }
 
+protocol DynamicTypeCapable {
+    func redrawFont()
+
+}
+
 extension UIView {
 
   func redrawAllfonts() {
     visitSubviews { view in
-      guard let label = view as? Label else { return }
-      label.redrawFont()
+      guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }
+        dynamicTypeCapableView.redrawFont()
     }
   }
 

@@ -27,7 +27,7 @@ enum ButtonStyle: Int {
     case emptyMonochrome
 }
 
-class Button: ButtonWithLargerHitArea {
+class Button: ButtonWithLargerHitArea, DynamicTypeCapable {
     private var previousState: UIControl.State?
     private var fontSpec: FontSpec?
 
