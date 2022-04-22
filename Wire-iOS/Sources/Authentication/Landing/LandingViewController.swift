@@ -168,7 +168,7 @@ final class LandingViewController: AuthenticationStepViewController {
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
-        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)
@@ -388,14 +388,14 @@ final class LandingViewController: AuthenticationStepViewController {
 
             // create an label
             createAccoutInfoLabelTopConstraint, // iPad
-            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
 
             // create an button
-            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            createAccountButton.heightAnchor.constraint(equalToConstant: 44),
+            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            createAccountButton.heightAnchor.constraint(equalToConstant: 24),
             createAccoutButtomBottomConstraint // iPhone
         ])
     }
