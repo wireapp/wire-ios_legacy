@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "超出字符限制";
 "conversation.create.options.title" = "对话选项";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "允许访客";
+"conversation.create.guests.subtitle" = "开放这个对话与团队以外的访客。";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "已读回执";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@已加入";
 "content.system.conversation.guest.you_joined" = "您已加入";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "你的团队以外的访客可以参加这个对话。";
 "content.system.conversation.invite.button" = "邀请联系人";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
@@ -1361,9 +1361,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "允许访客";
+"guest_room.allow_guests.subtitle" = "开放这个对话与团队以外的访客。";
+"guest_room.remove_guests.message" = "将移除对话中的访客。 将不能加入新访客。";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新访客将无法加入此连结。 目前访客仍可使用。";
 "guest_room.revoke_link.action" = "撤销连结";

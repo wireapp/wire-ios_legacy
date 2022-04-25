@@ -925,8 +925,8 @@
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
 "group_details.services_options_cell.title" = "Serviços";
-"group_details.services_options_cell.enabled" = "Ligado";
-"group_details.services_options_cell.disabled" = "Desligar";
+"group_details.services_options_cell.enabled" = "Ativado";
+"group_details.services_options_cell.disabled" = "Desativado";
 "group_details.timeout_options_cell.title" = "Auto-exclusão de mensagens";
 "group_details.notification_options_cell.title" = "Notificações";
 "group_details.notification_options_cell.description" = "Você pode ser notificado sobre tudo (incluindo chamadas de áudio e vídeo), ou apenas quando você é mencionado.";
@@ -1715,8 +1715,8 @@
 "databaseloadingfailure.alert.delete_database.continue" = "Continuar";
 
 // Backend not supported alert
-"backend_not_supported.alert.title" = "Server version not supported";
-"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+"backend_not_supported.alert.title" = "Versão do servidor não suportada";
+"backend_not_supported.alert.message" = "A versão do servidor não é suportada por este aplicativo. Por favor, entre em contato com o administrador do sistema.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1966,6 +1966,6 @@
 "keyboardshortcut.openPeople" = "Pessoas";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "NÍVEL DE SEGURANÇA:";
 "security_classification.level.bund" = "VS-NfD";
-"security_classification.level.not_classified" = "UNCLASSIFIED";
+"security_classification.level.not_classified" = "NÃO CLASSIFICADO";

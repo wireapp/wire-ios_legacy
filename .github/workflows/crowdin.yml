@@ -32,5 +32,7 @@ jobs:
           commit_message: "chore: Update localization"
           pull_request_title: "chore: Update localization SQPIT-786"
           pull_request_body: "This PR pulls in the latest localization translations from Crowdin."
+          github_user_name: "zenkins"
+          github_user_email: "iosx@wire.com"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

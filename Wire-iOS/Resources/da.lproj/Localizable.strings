@@ -321,8 +321,8 @@
 "conversation.create.guidance.toolong" = "For mange tegn";
 "conversation.create.options.title" = "Conversation options";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "Tillad gæster";
+"conversation.create.guests.subtitle" = "Åbn denne samtale for personer uden for dit team.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Read receipts";
@@ -458,7 +458,7 @@
 "content.system.conversation.guest.joined" = "%@ joined";
 "content.system.conversation.guest.you_joined" = "You joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Folk uden for dit team kan deltage i denne samtale.";
 "content.system.conversation.invite.button" = "Invitér personer";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
@@ -926,7 +926,7 @@
 "group_details.guest_options_cell.disabled" = "Slået fra";
 "group_details.services_options_cell.title" = "Tjenester";
 "group_details.services_options_cell.enabled" = "Aktiv";
-"group_details.services_options_cell.disabled" = "Fra";
+"group_details.services_options_cell.disabled" = "Slået fra";
 "group_details.timeout_options_cell.title" = "Self-deleting messages";
 "group_details.notification_options_cell.title" = "Notifikationer";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
@@ -1361,8 +1361,8 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.allow_guests.title" = "Tillad gæster";
+"guest_room.allow_guests.subtitle" = "Åbn denne samtale for personer uden for dit team.";
 "guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Fjern";
 "guest_room.revoke_link.message" = "Nye gæster vil ikke kunne tilslutte med dette link. Aktuelle gæster vil stadig have adgang.";

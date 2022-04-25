@@ -1140,8 +1140,8 @@
 "self.settings.callkit.caption" = "Partager avec iOS";
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
 
-"self.settings.mute_other_call.caption" = "Silence other calls";
-"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+"self.settings.mute_other_call.caption" = "Mettre en sourdine les autres appels";
+"self.settings.mute_other_call.description" = "Activer pour couper le son des appels entrants lorsque vous avez déjà un appel en cours.";
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Cela permet aux appels audio d'utiliser moins de données et de mieux fonctionner sur les réseaux plus lents. Désactivez pour utiliser l'encodage en débit constant (CBR). Ce paramètre n'affecte que les appels 1:1; les appels de conférence utilisent toujours l'encodage CBR.";
@@ -1373,8 +1373,8 @@
 
 "guest_room.link.header.title" = "Liens d'invitation";
 "guest_room.link.header.subtitle" = "Invitez d'autres personnes avec un lien vers cette conversation. N'importe qui avec le lien peut rejoindre la conversation, même s'ils n'ont pas Wire.";
-"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
-"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "La génération de liens d'invitation n'est pas autorisée dans votre équipe.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Vous ne pouvez pas générer de lien d'invitation dans cette conversation, car elle a été créée par un membre d'une autre équipe et cette équipe n'est pas autorisée à utiliser des liens d'invitation.";
 
 "guest_room.link.button.title" = "Créer le lien";
 
@@ -1715,8 +1715,8 @@
 "databaseloadingfailure.alert.delete_database.continue" = "Continuer";
 
 // Backend not supported alert
-"backend_not_supported.alert.title" = "Server version not supported";
-"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+"backend_not_supported.alert.title" = "La version du serveur n'est pas supportée";
+"backend_not_supported.alert.message" = "La version du serveur n'est pas supportée par cette application. Veuillez contacter votre administrateur système.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1966,6 +1966,6 @@
 "keyboardshortcut.openPeople" = "Contacts";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "NIVEAU DE SÉCURITÉ :";
 "security_classification.level.bund" = "VS-NfD";
-"security_classification.level.not_classified" = "UNCLASSIFIED";
+"security_classification.level.not_classified" = "NON CLASSIFIÉ";

@@ -926,7 +926,7 @@
 "group_details.guest_options_cell.disabled" = "Wyłączony";
 "group_details.services_options_cell.title" = "Usługi";
 "group_details.services_options_cell.enabled" = "Włączone";
-"group_details.services_options_cell.disabled" = "Wyłącz";
+"group_details.services_options_cell.disabled" = "Wyłączony";
 "group_details.timeout_options_cell.title" = "Samoniszczące się wiadomości";
 "group_details.notification_options_cell.title" = "Powiadomienia";
 "group_details.notification_options_cell.description" = "Możesz być powiadamiany o wszystkich wiadomościach (w tym rozmowach audio i wideo) lub tylko wtedy, gdy ktoś wspomni o Tobie lub odpowie na jedną z Twoich wiadomości.";
@@ -1373,7 +1373,7 @@
 
 "guest_room.link.header.title" = "Linki dla gości";
 "guest_room.link.header.subtitle" = "Zaproś innych linkiem do tej rozmowy. Każdy z linkiem może dołączyć do rozmowy, nawet jeśli nie ma Wire.";
-"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Generowanie linków do gości nie jest dozwolone w twoim zespole.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
 
 "guest_room.link.button.title" = "Utwórz link";
