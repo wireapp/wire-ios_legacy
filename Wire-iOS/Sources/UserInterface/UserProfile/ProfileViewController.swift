@@ -138,7 +138,7 @@ final class ProfileViewController: UIViewController {
         let controller = ConversationCreationController(preSelectedParticipants: viewModel.userSet, selfUser: ZMUser.selfUser())
         controller.delegate = self
 
-        let wrappedController = controller.wrapInNavigationController()
+        let wrappedController = controller.wrapInNavigationController(setBackgroundColor: true)
         wrappedController.modalPresentationStyle = .formSheet
         present(wrappedController, animated: true)
     }
