@@ -563,38 +563,3 @@ extension AppRootRouter: AudioPermissionsObserving {
         sessionManager.updateMuteOtherCallsFromSettings()
     }
 }
-
-// MARK: - Dynamic Type
-extension UIViewController {
-
-    func redrawAllfonts() {
-        view.redrawAllfonts()
-    }
-
-}
-
-protocol DynamicTypeCapable {
-    func redrawFont()
-
-}
-
-extension UIView {
-
-    func redrawAllfonts() {
-        visitSubviews { view in
-            guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }
-            dynamicTypeCapableView.redrawFont()
-        }
-    }
-
-    func visitSubviews(executing block: @escaping (UIView) -> Void) {
-        for view in subviews {
-            
-            block(view)
-
-            // go next layer down
-            view.visitSubviews(executing: block)
-        }
-    }
-
-}
