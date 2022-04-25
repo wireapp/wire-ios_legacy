@@ -38,7 +38,6 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
         self.adjustsFontForContentSizeCategory = true
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(self)
         self.fitIn(view: self)
     }
 
