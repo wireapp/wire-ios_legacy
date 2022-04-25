@@ -18,68 +18,36 @@
 
 import UIKit
 
-class Label: UIView, DynamicTypeCapable {
+class Label: UILabel, DynamicTypeCapable {
 
-    private let label: UILabel
     private let fontSpec: FontSpec
 
     init(
-        key: String? = nil,
+        text: String? = nil,
         size: FontSize = .normal,
         weight: FontWeight = .regular,
         color: ColorSchemeColor,
         variant: ColorSchemeVariant = ColorScheme.default.variant
     ) {
         fontSpec = FontSpec(size, weight)
-        label = UILabel(frame: .zero)
-        label.text = key.map { $0.localized }
-        label.font = fontSpec.font
-        label.textColor = UIColor.from(scheme: color, variant: variant)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-
         super.init(frame: .zero)
 
-        addSubview(label)
-        label.fitIn(view: self)
+        self.text = text.map { $0.localized }
+        self.font = fontSpec.font
+        self.textColor = UIColor.from(scheme: color, variant: variant)
+        self.adjustsFontForContentSizeCategory = true
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(self)
+        self.fitIn(view: self)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var numberOfLines: Int {
-        get {
-            label.numberOfLines
-        }
-        set {
-            label.numberOfLines = newValue
-        }
-
-    }
-
-    var textAlignment: NSTextAlignment {
-        get {
-            label.textAlignment
-        }
-        set {
-            label.textAlignment = newValue
-        }
-
-    }
-
-    var text: String? {
-        get {
-            label.text
-        }
-        set {
-            label.text = newValue
-        }
-
-    }
-
     func redrawFont() {
-        label.font = fontSpec.font
+        self.font = fontSpec.font
     }
 
 }

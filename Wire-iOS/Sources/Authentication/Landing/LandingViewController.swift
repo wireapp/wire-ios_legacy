@@ -65,7 +65,8 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let messageLabel: Label = {
-        let label = Label(key: "landing.welcome_message".localized,
+        //"landing.welcome_message".localized
+        let label = Label(text: L10n.Localizable.Landing.welcomeMessage,
                             size: .normal,
                             weight: .bold,
                             color: .landingScreen,
@@ -78,7 +79,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let subMessageLabel: Label = {
-        let label = Label(key: "landing.welcome_submessage".localized,
+        let label = Label(text: L10n.Localizable.Landing.welcomeSubmessage,
                             size: .normal,
                             weight: .regular,
                             color: .landingScreen,
@@ -148,7 +149,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let createAccoutInfoLabel: Label = {
-        let label = Label(key: "landing.create_account.infotitle".localized,
+        let label = Label(text: L10n.Localizable.Landing.CreateAccount.infotitle,
                             size: .small,
                             weight: .regular,
                             color: .landingScreen,
