@@ -1226,6 +1226,7 @@
 		E94784EB278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */; };
 		E94784ED278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784EC278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift */; };
 		E9559B4927B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */; };
+		E96C8831281706640003245E /* UIViewController+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96C8830281706640003245E /* UIViewController+DynamicType.swift */; };
 		E9B580CC27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */; };
 		E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */; };
 		EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08025ADA3D5001DB205 /* AppLockModule.swift */; };
@@ -3107,6 +3108,7 @@
 		E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServicesOptionsViewModel.swift; sourceTree = "<group>"; };
 		E94784EC278EF1E100F9FE80 /* ConversationServicesOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServicesOptionsViewController.swift; sourceTree = "<group>"; };
 		E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConfirmRemovingServices.swift"; sourceTree = "<group>"; };
+		E96C8830281706640003245E /* UIViewController+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DynamicType.swift"; sourceTree = "<group>"; };
 		E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsServicesViewControllerTests.swift; sourceTree = "<group>"; };
 		E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandlerTests.swift; sourceTree = "<group>"; };
 		EE00ACE225E44506005FEC14 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -5112,6 +5114,7 @@
 				A9C80F8324A629C2004D248F /* UIView+Menu.swift */,
 				638332E9250282D200D18F42 /* OrientationDelta.swift */,
 				0661925626F889DC006969AA /* PerformClipboardAction.swift */,
+				E96C8830281706640003245E /* UIViewController+DynamicType.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8688,6 +8691,7 @@
 				5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */,
 				A965F89C23DB29D8005209E1 /* ConversationInputBarSendController.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
+				E96C8831281706640003245E /* UIViewController+DynamicType.swift in Sources */,
 				EFA06E4721FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.swift in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */,
