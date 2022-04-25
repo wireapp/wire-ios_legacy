@@ -65,12 +65,11 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let messageLabel: DynamicFontLabel = {
-        //"landing.welcome_message".localized
-        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
-                            size: .normal,
-                            weight: .bold,
-                            color: .landingScreen,
-                            variant: .light)
+=        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
+                                     size: .normal,
+                                     weight: .bold,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -80,10 +79,10 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let subMessageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeSubmessage,
-                            size: .normal,
-                            weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+                                     size: .normal,
+                                     weight: .regular,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -150,10 +149,10 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let createAccoutInfoLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: L10n.Localizable.Landing.CreateAccount.infotitle,
-                            size: .small,
-                            weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+                                     size: .small,
+                                     weight: .regular,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -233,8 +232,8 @@ final class LandingViewController: AuthenticationStepViewController {
         NotificationCenter.default.addObserver(forName: AccountManagerDidUpdateAccountsNotificationName,
                                                object: SessionManager.shared?.accountManager,
                                                queue: .main) { _ in
-                self.updateBarButtonItem()
-                self.disableTrackingIfNeeded()
+            self.updateBarButtonItem()
+            self.disableTrackingIfNeeded()
         }
 
         NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification,
@@ -299,8 +298,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
         [contentViewWidthConstraint,
          createAccoutInfoLabelTopConstraint].forEach {
-             $0.isActive = traitCollection.horizontalSizeClass != .compact
-         }
+            $0.isActive = traitCollection.horizontalSizeClass != .compact
+        }
     }
 
     private func setConstraintsConstants() {
@@ -320,7 +319,7 @@ final class LandingViewController: AuthenticationStepViewController {
             messageLabel,
             subMessageLabel,
             createAccoutInfoLabel
-            ].prepareForLayout()
+        ].prepareForLayout()
     }
 
     private func createAndAddConstraints() {

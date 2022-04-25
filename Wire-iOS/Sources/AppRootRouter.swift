@@ -104,7 +104,7 @@ public class AppRootRouter: NSObject {
     public func performQuickAction(for shortcutItem: UIApplicationShortcutItem,
                                    completionHandler: ((Bool) -> Void)?) {
         quickActionsManager.performAction(for: shortcutItem,
-                                          completionHandler: completionHandler)
+                                             completionHandler: completionHandler)
     }
 
     // MARK: - Private implementation
@@ -136,8 +136,8 @@ public class AppRootRouter: NSObject {
         sessionManager.updateMuteOtherCallsFromSettings()
         sessionManager.usePackagingFeatureConfig = true
         sessionManager.useConstantBitRateAudio = SecurityFlags.forceConstantBitRateCalls.isEnabled
-            ? true
-            : Settings.shared[.callingConstantBitRate] ?? false
+        ? true
+        : Settings.shared[.callingConstantBitRate] ?? false
     }
 
     // MARK: - Transition
@@ -285,8 +285,8 @@ extension AppRootRouter {
     private func showLaunchScreen(isLoading: Bool = false, completion: @escaping () -> Void) {
         let launchViewController = LaunchImageViewController()
         isLoading
-            ? launchViewController.showLoadingScreen()
-            : ()
+        ? launchViewController.showLoadingScreen()
+        : ()
         rootViewController.set(childViewController: launchViewController,
                                completion: completion)
     }
@@ -380,7 +380,7 @@ extension AppRootRouter {
     private func buildAuthenticatedRouter(account: Account, isComingFromRegistration: Bool) -> AuthenticatedRouter? {
 
         let needToShowDataUsagePermissionDialog = appStateCalculator.wasUnauthenticated
-                                                    && !SelfUser.current.isTeamMember
+        && !SelfUser.current.isTeamMember
 
         return AuthenticatedRouter(rootViewController: rootViewController,
                                    account: account,
@@ -567,9 +567,9 @@ extension AppRootRouter: AudioPermissionsObserving {
 // MARK: - Dynamic Type
 extension UIViewController {
 
-  func redrawAllfonts() {
-    view.redrawAllfonts()
-  }
+    func redrawAllfonts() {
+        view.redrawAllfonts()
+    }
 
 }
 
@@ -580,21 +580,21 @@ protocol DynamicTypeCapable {
 
 extension UIView {
 
-  func redrawAllfonts() {
-    visitSubviews { view in
-      guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }
-        dynamicTypeCapableView.redrawFont()
+    func redrawAllfonts() {
+        visitSubviews { view in
+            guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }
+            dynamicTypeCapableView.redrawFont()
+        }
     }
-  }
 
-  func visitSubviews(executing block: @escaping (UIView) -> Void) {
-    for view in subviews {
-      // do something
-      block(view)
+    func visitSubviews(executing block: @escaping (UIView) -> Void) {
+        for view in subviews {
+            
+            block(view)
 
-      // go next layer down
-      view.visitSubviews(executing: block)
+            // go next layer down
+            view.visitSubviews(executing: block)
+        }
     }
-  }
 
 }
