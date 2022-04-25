@@ -65,7 +65,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let messageLabel: DynamicFontLabel = {
-=        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
+        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
                                      size: .normal,
                                      weight: .bold,
                                      color: .landingScreen,
