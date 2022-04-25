@@ -64,9 +64,9 @@ final class LandingViewController: AuthenticationStepViewController {
         return imageView
     }()
 
-    private let messageLabel: Label = {
+    private let messageLabel: DynamicFontLabel = {
         //"landing.welcome_message".localized
-        let label = Label(text: L10n.Localizable.Landing.welcomeMessage,
+        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
                             size: .normal,
                             weight: .bold,
                             color: .landingScreen,
@@ -78,8 +78,8 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
 
-    private let subMessageLabel: Label = {
-        let label = Label(text: L10n.Localizable.Landing.welcomeSubmessage,
+    private let subMessageLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeSubmessage,
                             size: .normal,
                             weight: .regular,
                             color: .landingScreen,
@@ -148,8 +148,8 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let createAccoutInfoLabel: Label = {
-        let label = Label(text: L10n.Localizable.Landing.CreateAccount.infotitle,
+    private let createAccoutInfoLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: L10n.Localizable.Landing.CreateAccount.infotitle,
                             size: .small,
                             weight: .regular,
                             color: .landingScreen,

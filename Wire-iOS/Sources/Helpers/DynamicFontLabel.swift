@@ -18,7 +18,7 @@
 
 import UIKit
 
-class Label: UILabel, DynamicTypeCapable {
+class DynamicFontLabel: UILabel, DynamicTypeCapable {
 
     private let fontSpec: FontSpec
 
