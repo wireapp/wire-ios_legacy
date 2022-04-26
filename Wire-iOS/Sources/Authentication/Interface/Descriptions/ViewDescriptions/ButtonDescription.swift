@@ -33,8 +33,7 @@ final class ButtonDescription {
 
 extension ButtonDescription: ViewDescriptor {
     func create() -> UIView {
-        let button = UIButton()
-        button.titleLabel?.font = AuthenticationStepController.textButtonFont
+        let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
         let color = UIColor.Team.textColor
         button.setTitleColor(color, for: .normal)
         button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
