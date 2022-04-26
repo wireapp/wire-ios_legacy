@@ -79,10 +79,10 @@ final class WipeDatabaseViewController: UIViewController {
 
         switch ColorScheme.default.variant {
         case .light:
-            button = Button(style: .full, size: .small, weight: .semibold)
+            button = Button(style: .full, fontSpec: .smallSemiboldFont)
             button.setBackgroundImageColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         case .dark:
-            button = Button(style: .fullMonochrome, size: .small, weight: .semibold)
+            button = Button(style: .fullMonochrome, fontSpec: .smallSemiboldFont)
             button.setTitleColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         }
 

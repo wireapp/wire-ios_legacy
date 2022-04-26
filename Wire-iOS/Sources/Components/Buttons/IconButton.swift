@@ -85,7 +85,7 @@ class IconButton: ButtonWithLargerHitArea {
             contentHorizontalAlignment = .center
         case .navigation:
             titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
-            titleLabel?.font = UIFont.smallLightFont
+            titleLabel?.font = fontSpec.font
             adjustsImageWhenDisabled = false
             borderWidth = 0
             contentHorizontalAlignment = .left
