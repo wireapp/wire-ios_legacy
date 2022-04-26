@@ -59,15 +59,16 @@ class IconButton: ButtonWithLargerHitArea {
     private var iconDefinitionsByState: [UIControl.State: IconDefinition] = [:]
     private var priorState: UIControl.State?
 
-    init() {
-        super.init(frame: .zero)
+    override init(fontSpec: FontSpec = .normalRegularFont) {
+        super.init(fontSpec: fontSpec)
 
         hitAreaPadding = CGSize(width: 20, height: 20)
     }
 
     convenience init(style: IconButtonStyle,
-                     variant: ColorSchemeVariant = ColorScheme.default.variant) {
-        self.init()
+                     variant: ColorSchemeVariant = ColorScheme.default.variant,
+                     fontSpec: FontSpec = .normalRegularFont) {
+        self.init(fontSpec: fontSpec)
 
         setIconColor(UIColor.from(scheme: .iconNormal, variant: variant), for: .normal)
         setIconColor(UIColor.from(scheme: .iconSelected, variant: variant), for: .selected)

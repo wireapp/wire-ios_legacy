@@ -37,7 +37,6 @@ protocol DynamicTypeCapable {
 
 }
 
-
 // MARK: - UIView Extension
 
 extension UIView {

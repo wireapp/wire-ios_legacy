@@ -63,7 +63,7 @@ class Button: ButtonWithLargerHitArea {
 
     private var borderColorByState: [UIControl.State: UIColor] = [:]
 
-    init(fontSpec: FontSpec) {
+    override init(fontSpec: FontSpec) {
         self.fontSpec = fontSpec
         super.init()
 

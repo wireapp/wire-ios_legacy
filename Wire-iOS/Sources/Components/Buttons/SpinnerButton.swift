@@ -59,8 +59,8 @@ final class SpinnerButton: Button {
         }
     }
 
-    override init() {
-        super.init()
+    override init(fontSpec: FontSpec) {
+        super.init(fontSpec: fontSpec)
 
         configureTitleLabel()
     }

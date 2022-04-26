@@ -25,9 +25,8 @@ class ButtonWithLargerHitArea: DynamicFontButton {
 
     // MARK: - Init / Deinit
 
-    init() {
-        super.init(fontSpec: .normalRegularFont)
-
+    override init(fontSpec: FontSpec = .normalRegularFont) {
+        super.init(fontSpec: fontSpec)
         setUp()
     }
 

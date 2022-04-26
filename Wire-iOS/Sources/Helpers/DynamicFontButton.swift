@@ -22,7 +22,7 @@ class DynamicFontButton: UIButton, DynamicTypeCapable {
 
     private let fontSpec: FontSpec
 
-    init(fontSpec: FontSpec) {
+    init(fontSpec: FontSpec = .normalRegularFont) {
         self.fontSpec = fontSpec
         super.init(frame: .zero)
 
