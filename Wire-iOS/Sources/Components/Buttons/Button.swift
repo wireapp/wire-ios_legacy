@@ -27,9 +27,9 @@ enum ButtonStyle: Int {
     case emptyMonochrome
 }
 
-class Button: ButtonWithLargerHitArea, DynamicTypeCapable {
+class Button: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
-    private var fontSpec: FontSpec?
+    private var fontSpec: FontSpec
 
     var circular = false {
         didSet {
@@ -63,8 +63,9 @@ class Button: ButtonWithLargerHitArea, DynamicTypeCapable {
 
     private var borderColorByState: [UIControl.State: UIColor] = [:]
 
-    init() {
-        super.init(frame: .zero)
+    init(fontSpec: FontSpec) {
+        self.fontSpec = fontSpec
+        super.init()
 
         clipsToBounds = true
     }
@@ -74,21 +75,16 @@ class Button: ButtonWithLargerHitArea, DynamicTypeCapable {
                      cornerRadius: CGFloat = 4,
                      size: FontSize = .normal,
                      weight: FontWeight = .regular) {
-        self.init()
+        self.init(fontSpec: .normalRegularFont)
 
         self.style = style
         self.variant = variant
         textTransform = .upper
-        fontSpec = FontSpec(size, weight)
-        titleLabel?.font = fontSpec?.font
+        titleLabel?.font = fontSpec.font
         layer.cornerRadius = cornerRadius
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 
         updateStyle(variant: variant)
-    }
-
-    func redrawFont() {
-        self.titleLabel?.font = fontSpec?.font
     }
 
     private func updateStyle(variant: ColorSchemeVariant) {

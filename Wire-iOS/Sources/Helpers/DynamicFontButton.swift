@@ -27,7 +27,6 @@ class DynamicFontButton: UIButton, DynamicTypeCapable {
         super.init(frame: .zero)
 
         titleLabel?.font = fontSpec.font
-
     }
 
     required init?(coder: NSCoder) {
