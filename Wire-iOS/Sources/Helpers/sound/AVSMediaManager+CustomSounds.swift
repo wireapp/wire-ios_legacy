@@ -58,7 +58,7 @@ extension AVSMediaManager {
         playSound(MediaManagerSound.alert.rawValue)
     }
 
-    func configureDefaultSounds() {
+    private func configureDefaultSounds() {
         guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
 
         let audioDir = "audio-notifications"
@@ -88,18 +88,6 @@ extension AVSMediaManager {
         }
 
         mediaManager.registerMedia(fromConfiguration: AVSMediaManager.MediaManagerSoundConfig, inDirectory: audioDir)
-    }
-
-    func configureWithActualSoundsFromSettings() {
-        self.configureDefaultSounds()
-    }
-
-    func unregisterCallRingingSounds() {
-        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
-        let sounds: [MediaManagerSound] = [.ringingFromThemInCallSound, .ringingFromThemSound]
-        sounds.forEach {
-            mediaManager.unregisterMedia(byName: $0.rawValue)
-        }
     }
 
     func configureSounds() {

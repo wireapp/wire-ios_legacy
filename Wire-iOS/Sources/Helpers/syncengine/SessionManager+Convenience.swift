@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import AVFoundation
-import avs
 
 extension SessionManager {
     static var shared: SessionManager? {
@@ -59,15 +58,6 @@ extension SessionManager {
             self.callNotificationStyle = .callKit
         } else {
             self.callNotificationStyle = .pushNotifications
-        }
-    }
-
-    func updateMuteOtherCallsFromSettings() {
-        let isMuteCallEnabled: Bool = (Settings.shared[.muteIncomingCallsWhileInACall] ?? false)
-        if isMuteCallEnabled {
-            AVSMediaManager.sharedInstance().unregisterCallRingingSounds()
-        } else {
-            AVSMediaManager.sharedInstance().configureDefaultSounds()
         }
     }
 }

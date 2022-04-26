@@ -56,7 +56,6 @@ enum SettingKey: String, CaseIterable {
 
     // MARK: Features disable keys
     case disableCallKit = "UserDefaultDisableCallKit"
-    case muteIncomingCallsWhileInACall = "MuteIncomingCallsWhileInACall"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
 
@@ -90,8 +89,6 @@ class Settings {
                 AVSMediaManager.sharedInstance().configureSounds()
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
-            case .muteIncomingCallsWhileInACall:
-                SessionManager.shared?.updateMuteOtherCallsFromSettings()
             case .callingConstantBitRate where !SecurityFlags.forceConstantBitRateCalls.isEnabled:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
             default:
