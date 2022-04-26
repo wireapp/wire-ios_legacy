@@ -74,10 +74,9 @@ extension IconButton {
         iconColor: [UIControl.State: UIColor],
         width: CGFloat? = nil
     ) {
-        self.init()
+        self.init(fontSpec: .smallLightFont)
         circular = true
         setIcon(icon, size: size, for: .normal)
-        titleLabel?.font = FontSpec(.small, .light).font!
         accessibilityIdentifier = accessibilityId
         translatesAutoresizingMaskIntoConstraints = false
 

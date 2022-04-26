@@ -33,7 +33,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         }
     }
 
-    let errorButton = Button()
+    let errorButton = Button(fontSpec: .mediumSemiboldFont)
     private let textField: ValidatedTextField
     private let errorLabel = UILabel()
 
@@ -90,7 +90,6 @@ final class TeamInviteTextFieldFooterView: UIView {
         }
 
         errorButton.setTitle("team.invite.learn_more.title".localized(uppercased: true), for: .normal)
-        errorButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         errorButton.setTitleColor(.black, for: .normal)
         errorButton.setTitleColor(.darkGray, for: .highlighted)
         errorButton.accessibilityIdentifier = "LearnMoreButton"

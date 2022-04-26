@@ -33,8 +33,8 @@ protocol IncomingRequestFooterViewDelegate: AnyObject {
 class IncomingRequestFooterView: UIView, Themeable {
 
     let titleLabel = UILabel()
-    let acceptButton = Button()
-    let ignoreButton = Button()
+    let acceptButton = Button(fontSpec: .smallSemiboldFont)
+    let ignoreButton = Button(fontSpec: .smallSemiboldFont)
 
     let contentStack = UIStackView()
 
@@ -73,13 +73,11 @@ class IncomingRequestFooterView: UIView, Themeable {
         acceptButton.setTitle("inbox.connection_request.connect_button_title".localized(uppercased: true), for: .normal)
         acceptButton.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
         acceptButton.layer.cornerRadius = 8
-        acceptButton.titleLabel?.font = .smallSemiboldFont
 
         ignoreButton.accessibilityIdentifier = "ignore"
         ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized(uppercased: true), for: .normal)
         ignoreButton.addTarget(self, action: #selector(ignoreButtonTapped), for: .touchUpInside)
         ignoreButton.layer.cornerRadius = 8
-        ignoreButton.titleLabel?.font = .smallSemiboldFont
 
         let buttonsStack = UIStackView(arrangedSubviews: [ignoreButton, acceptButton])
         buttonsStack.axis = .horizontal
