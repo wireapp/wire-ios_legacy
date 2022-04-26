@@ -24,12 +24,11 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
 
     init(
         text: String? = nil,
-        size: FontSize = .normal,
-        weight: FontWeight = .regular,
+        fontSpec: FontSpec,
         color: ColorSchemeColor,
         variant: ColorSchemeVariant = ColorScheme.default.variant
     ) {
-        fontSpec = FontSpec(size, weight)
+        self.fontSpec = fontSpec
         super.init(frame: .zero)
 
         self.text = text.map { $0.localized }

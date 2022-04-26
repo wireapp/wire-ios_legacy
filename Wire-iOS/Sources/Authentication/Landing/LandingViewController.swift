@@ -66,8 +66,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let messageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
-                                     size: .normal,
-                                     weight: .bold,
+                                     fontSpec: .normalBoldFont,
                                      color: .landingScreen,
                                      variant: .light)
         label.textAlignment = .center
@@ -79,8 +78,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let subMessageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeSubmessage,
-                                     size: .normal,
-                                     weight: .regular,
+                                     fontSpec: .normalRegularFont,
                                      color: .landingScreen,
                                      variant: .light)
         label.textAlignment = .center
@@ -149,8 +147,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let createAccoutInfoLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: L10n.Localizable.Landing.CreateAccount.infotitle,
-                                     size: .small,
-                                     weight: .regular,
+                                     fontSpec: .smallRegularFont,
                                      color: .landingScreen,
                                      variant: .light)
         label.textAlignment = .center

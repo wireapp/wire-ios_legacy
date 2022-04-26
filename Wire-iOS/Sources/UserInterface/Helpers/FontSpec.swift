@@ -62,6 +62,10 @@ extension FontSpec {
         return self.init(.normal, .semibold)
     }
 
+    static var normalBoldFont: Self {
+        return self.init(.normal, .bold)
+    }
+
     // MARK: - Medium
 
     static var mediumFont: Self {
