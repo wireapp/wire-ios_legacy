@@ -77,8 +77,7 @@ final class SettingsPropertyFactory {
         SettingsPropertyName.tweetOpeningOption: .twitterOpeningRawValue,
         SettingsPropertyName.callingProtocolStrategy: .callingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections: .enableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate,
-        SettingsPropertyName.federationEnabled: .federationEnabled
+        SettingsPropertyName.callingConstantBitRate: .callingConstantBitRate
     ]
 
     convenience init(userSession: UserSessionInterface?, selfUser: SettingsSelfUser?) {
@@ -144,7 +143,7 @@ final class SettingsPropertyFactory {
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.phoneNumber)
 
         case .handle:
-            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: Settings.shared.federationEnabled))
+            return getOnlyProperty(propertyName: propertyName, value: selfUser?.handleDisplayString(withDomain: APIVersion.isFederationEnabled))
 
         case .team:
             return getOnlyProperty(propertyName: propertyName, value: selfUser?.teamName)
@@ -381,6 +380,17 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     if case .number(let disabled) = value {
                         Settings.shared[.disableCallKit] = disabled.boolValue
+                    }
+            })
+        case .muteIncomingCallsWhileInACall:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in
+                    let muteIncomingCallsWhileInACall: Bool = Settings.shared[.muteIncomingCallsWhileInACall] ?? false
+                    return SettingsPropertyValue(muteIncomingCallsWhileInACall) },
+                setAction: { _, value in
+                    if case .number(let shouldMute) = value {
+                        Settings.shared[.muteIncomingCallsWhileInACall] = shouldMute.boolValue
                     }
             })
         case .readReceiptsEnabled:

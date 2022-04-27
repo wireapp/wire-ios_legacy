@@ -274,9 +274,11 @@ final class CallGridViewController: SpinnerCapableViewController {
     }
 
     private func displaySpinnerIfNeeded() {
+        let subViewStackWithSpinner = self.view.subviews.filter { $0 is LoadingSpinnerView }
         guard
             configuration.presentationMode == .activeSpeakers,
-            configuration.streams.isEmpty
+            configuration.streams.isEmpty,
+            subViewStackWithSpinner.isEmpty
         else {
             dismissSpinner?()
             return

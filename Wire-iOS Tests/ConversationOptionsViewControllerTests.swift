@@ -34,6 +34,7 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
     var createResult: Result<String>?
     var isCodeEnabled = true
     var areGuestPresent = true
+    var isConversationFromSelfTeam = true
 
     init(allowGuests: Bool, guestLinkFeatureStatus: GuestLinkFeatureStatus = .enabled, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -173,9 +174,10 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled() {
+    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_IsSelfTeamConversation() {
         // GIVEN
         let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
+        config.isConversationFromSelfTeam = true
         config.linkResult = .success(nil)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
@@ -184,9 +186,34 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_DarkTheme() {
+    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_IsSelfTeamConversation_DarkTheme() {
         // GIVEN
         let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
+        config.isConversationFromSelfTeam = true
+        config.linkResult = .success(nil)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_IsOtherTeamConversation() {
+        // GIVEN
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
+        config.isConversationFromSelfTeam = false
+        config.linkResult = .success(nil)
+        let viewModel = ConversationGuestOptionsViewModel(configuration: config)
+        let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .light)
+
+        // THEN
+        verify(matching: sut)
+    }
+
+    func testThatItRendersAllowGuests_WhenGuestsLinksAreDisabled_IsOtherTeamConversation_DarkTheme() {
+        // GIVEN
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, guestLinkFeatureStatus: .disabled)
+        config.isConversationFromSelfTeam = false
         config.linkResult = .success(nil)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)

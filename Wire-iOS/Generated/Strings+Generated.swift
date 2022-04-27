@@ -163,6 +163,14 @@ internal enum L10n {
         }
       }
     }
+    internal enum BackendNotSupported {
+      internal enum Alert {
+        /// The server version is not supported by this app. Please contact your system administrator.
+        internal static let message = L10n.tr("Localizable", "backend_not_supported.alert.message")
+        /// Server version not supported
+        internal static let title = L10n.tr("Localizable", "backend_not_supported.alert.title")
+      }
+    }
     internal enum ButtonMessageCell {
       /// Your answer can't be sent, please retry.
       internal static let genericError = L10n.tr("Localizable", "button_message_cell.generic_error")
@@ -2101,8 +2109,14 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "guest_room.link.header.title")
         }
         internal enum NotAllowed {
-          /// Generating guest links is not allowed in your team.
-          internal static let explaination = L10n.tr("Localizable", "guest_room.link.not_allowed.explaination")
+          internal enum ForOtherTeam {
+            /// You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_other_team.explanation")
+          }
+          internal enum ForSelfTeam {
+            /// Generating guest links is not allowed in your team.
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.not_allowed.for_self_team.explanation")
+          }
         }
       }
       internal enum RemoveGuests {
@@ -3536,6 +3550,16 @@ internal enum L10n {
         }
       }
     }
+    internal enum SecurityClassification {
+      /// SECURITY LEVEL:
+      internal static let securityLevel = L10n.tr("Localizable", "security_classification.security_level")
+      internal enum Level {
+        /// VS-NfD
+        internal static let bund = L10n.tr("Localizable", "security_classification.level.bund")
+        /// UNCLASSIFIED
+        internal static let notClassified = L10n.tr("Localizable", "security_classification.level.not_classified")
+      }
+    }
     internal enum `Self` {
       /// About
       internal static let about = L10n.tr("Localizable", "self.about")
@@ -3980,6 +4004,12 @@ internal enum L10n {
         internal enum ManageTeam {
           /// Manage Team
           internal static let title = L10n.tr("Localizable", "self.settings.manage_team.title")
+        }
+        internal enum MuteOtherCall {
+          /// Silence other calls
+          internal static let caption = L10n.tr("Localizable", "self.settings.mute_other_call.caption")
+          /// Enable to silence incoming calls when you are already in an ongoing call.
+          internal static let description = L10n.tr("Localizable", "self.settings.mute_other_call.description")
         }
         internal enum Notifications {
           internal enum ChatAlerts {

@@ -170,6 +170,27 @@ enum DebugActions {
         controller.present(alert, animated: true)
     }
 
+    static func showAPIVersionInfo(_ type: SettingsCellDescriptorType) {
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else {
+            return
+        }
+
+        let message = """
+        Max supported version: \((APIVersion.allCases.max()?.rawValue).description(else: "None"))
+        Currently selected version: \((APIVersion.current?.rawValue).description(else: "None"))
+        Local domain: \(APIVersion.domain.description(else: "None"))
+        Is federation enabled: \(APIVersion.isFederationEnabled)
+        """
+
+        let alert = UIAlertController(
+            title: "API Version info",
+            message: message,
+            alertAction: .ok(style: .cancel)
+        )
+
+        controller.present(alert, animated: true)
+    }
+
     static func generateTestCrash(_ type: SettingsCellDescriptorType) {
         Crashes.generateTestCrash()
     }
@@ -303,4 +324,13 @@ enum DebugActions {
         }
         while (currentCount > 0)
     }
+}
+
+private extension Optional {
+
+    func description(else defaultDescription: String) -> String {
+        guard let value = self else { return defaultDescription }
+        return String(describing: value)
+    }
+
 }

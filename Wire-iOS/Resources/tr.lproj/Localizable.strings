@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "Tamam";
 "general.next" = "İleri";
 "general.cancel" = "İptal";
@@ -89,7 +88,7 @@
 "peoplepicker.no_matching_results.action.manage_services" = "Hizmetleri yönet";
 
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sonuç yok.";
-"peoplepicker.no_matching_results.message.users" = "Find people in Wire by name or @username";
+"peoplepicker.no_matching_results.message.users" = "Wire'daki insanları isim veya @kullanıcıadı'na göre bulun";
 "peoplepicker.no_matching_results.message.usersAndFederation" = "Find people in Wire by name or @username\n\nFind people on another domain by @username@domainname";
 "peoplepicker.no_matching_results.message.users_all_added" = "Herkes burada.";
 "peoplepicker.no_matching_results.message.services" = "Sonuç yok.";
@@ -322,7 +321,7 @@
 "conversation.create.guidance.toolong" = "Çok fazla karakter";
 "conversation.create.options.title" = "Sohbet seçenekleri";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
+"conversation.create.guests.title" = "Misafirlere izin ver";
 "conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
@@ -343,7 +342,7 @@
 "conversation.banner.remotes" = "**Federated users**";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
-"conversation.banner.separator" = " and ";
+"conversation.banner.separator" = " ve ";
 
 "conversation.action.search" = "Arama";
 
@@ -457,9 +456,9 @@
 "content.system.conversation.you.left" = "%@ ayrıldı";
 "content.system.conversation.team.member-leave" = "%@ takımdan çıkarıldı.";
 "content.system.conversation.guest.joined" = "%@ katıldı";
-"content.system.conversation.guest.you_joined" = "You joined";
+"content.system.conversation.guest.you_joined" = "Katıldınız";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Takımınız dışındaki kişiler bu sohbete katılabilir.";
 "content.system.conversation.invite.button" = "İnsanları davet et";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
@@ -1019,7 +1018,7 @@
 "self.settings.account_section.handle.title" = "Kullanıcı Adı";
 "self.settings.account_section.add_handle.title" = "Kullanıcı adı ekle";
 "self.settings.account_section.team.title" = "Takım";
-"self.settings.account_section.domain.title" = "Domain";
+"self.settings.account_section.domain.title" = "Alan Adı";
 "self.settings.account_section.profile_link.title" = "Profile link";
 "self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
 "self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
@@ -1140,6 +1139,9 @@
 "self.settings.callkit.title" = "Aramalar";
 "self.settings.callkit.caption" = "iOS ile Paylaş";
 "self.settings.callkit.description" = "Wire aramalarını, kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktifse, arama geçmişiniz Apple ile paylaşılır.";
+
+"self.settings.mute_other_call.caption" = "Silence other calls";
+"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
 
 "self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use constant bitrate encoding (CBR). This setting only affects 1:1 calls; conference calls always use CBR encoding.";
@@ -1359,7 +1361,7 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.title" = "Misafirlere izin ver";
 "guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
 "guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Kaldır";
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Guest Links";
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
-"guest_room.link.not_allowed.explaination" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
 
 "guest_room.link.button.title" = "Bağlantı Oluştur";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "By deleting the database, all local data and messages for this account will be permanently deleted.";
 "databaseloadingfailure.alert.delete_database.continue" = "Devam et";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Server version not supported";
+"backend_not_supported.alert.message" = "The server version is not supported by this app. Please contact your system administrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · giphy.com aracılığıyla";
 "giphy.conversation.random_message" = "giphy.com aracılığıyla";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Conversation Details...";
 "keyboardshortcut.searchInConversation" = "Search in Conversation...";
 "keyboardshortcut.openPeople" = "İnsanlar";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "UNCLASSIFIED";

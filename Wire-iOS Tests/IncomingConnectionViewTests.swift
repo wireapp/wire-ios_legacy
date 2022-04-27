@@ -42,6 +42,28 @@ final class IncomingConnectionViewTests: XCTestCase {
         verify(matching: sut.layoutForTest())
     }
 
+    func testThatItRendersWithSecurityClassification_whenClassified() {
+        let user = SwiftMockLoader.mockUsers().first!
+        let mockClassificationProvider = MockClassificationProvider()
+        mockClassificationProvider.returnClassification = .classified
+
+        let sut = IncomingConnectionView(user: user, classificationProvider: mockClassificationProvider)
+
+        sut.backgroundColor = .white
+        verify(matching: sut.layoutForTest())
+    }
+
+    func testThatItRendersWithSecurityClassification_whenNotClassified() {
+        let user = SwiftMockLoader.mockUsers().first!
+        let mockClassificationProvider = MockClassificationProvider()
+        mockClassificationProvider.returnClassification = .notClassified
+
+        let sut = IncomingConnectionView(user: user, classificationProvider: mockClassificationProvider)
+
+        sut.backgroundColor = .white
+        verify(matching: sut.layoutForTest())
+    }
+
 }
 
 fileprivate extension UIView {

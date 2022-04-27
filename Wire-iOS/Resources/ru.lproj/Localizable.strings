@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "Вперед";
 "general.cancel" = "Отмена";
@@ -152,7 +151,7 @@
 "conversation_list.voiceover.status.missed_call" = "пропущенный вызов";
 "conversation_list.voiceover.status.pause_media" = "поставить на паузу";
 "conversation_list.voiceover.status.play_media" = "воспроизвести медиа";
-"conversation_list.voiceover.status.silenced" = "тишина";
+"conversation_list.voiceover.status.silenced" = "беззвучно";
 "conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
 "conversation_list.voiceover.status.mention" = "вас упомянули";
@@ -1029,7 +1028,7 @@
 
 "self.settings.account_details.remove_device.title" = "Удалить устройство";
 "self.settings.account_details.key_fingerprint.title" = "Отпечаток ключа";
-"self.settings.account_details.remove_device.message" = "Для удаления устройства требуется пароль";
+"self.settings.account_details.remove_device.message" = "Для удаления устройства необходимо ввести пароль";
 "self.settings.account_details.remove_device.password" = "Пароль";
 "self.settings.account_details.remove_device.password.error" = "Неправильный пароль";
 
@@ -1140,6 +1139,9 @@
 "self.settings.callkit.title" = "Звонки";
 "self.settings.callkit.caption" = "Поделиться с iOS";
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если вы используете iCloud, история вызовов будет передана Apple.";
+
+"self.settings.mute_other_call.caption" = "Не уведомлять во время вызова";
+"self.settings.mute_other_call.description" = "Уведомление будет отключено, если вы в этот момент с кем-то разговариваете";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
 "self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом (CBR). Эта настройка влияет только на звонки 1:1; конференц-звонки всегда используют кодирование CBR.";
@@ -1252,7 +1254,7 @@
 
 "self.settings.conversations.title" = "История";
 "self.settings.history_backup.title" = "Резервная копия бесед";
-"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю бесед. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nВыберите надежный пароль для защиты резервной копии.";
+"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю бесед. Она пригодится для восстановления истории в случае потери или замены устройства.\n\nВыберите надежный пароль для защиты резервной копии.";
 "self.settings.history_backup.action" = "Создать резервную копию сейчас";
 "self.settings.history_backup.error.title" = "Ошибка";
 
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Гостевые ссылки";
 "guest_room.link.header.subtitle" = "Приглашайте ссылкой на эту беседу.  Любой, у кого есть ссылка, сможет присоединиться к беседе, даже если у него нет Wire.";
-"guest_room.link.not_allowed.explaination" = "Генерация гостевых ссылок запрещена в вашей команде.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Генерация гостевых ссылок запрещена в вашей команде.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Вы не можете создать гостевую ссылку в этой беседе, поскольку она была создана кем-то из другой команды, а этой команде не разрешено использовать гостевые ссылки.";
 
 "guest_room.link.button.title" = "Создать ссылку";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "При удалении базы данных все локальные данные и сообщения этого аккаунта будут удалены навсегда.";
 "databaseloadingfailure.alert.delete_database.continue" = "Продолжить";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Версия сервера не поддерживается";
+"backend_not_supported.alert.message" = "Версия сервера не поддерживается этим приложением.  Пожалуйста, обратитесь к системному администратору.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
 "giphy.conversation.random_message" = "через giphy.com";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Информация о беседе...";
 "keyboardshortcut.searchInConversation" = "Поиск в беседе...";
 "keyboardshortcut.openPeople" = "Контакты";
+
+// MARK: - Security classification
+"security_classification.security_level" = "УРОВЕНЬ БЕЗОПАСНОСТИ:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "НЕКЛАССИФИЦИРОВАН";

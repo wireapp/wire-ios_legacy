@@ -98,9 +98,6 @@ public final class AutomationHelper: NSObject {
     /// Whether the backend environment type should be persisted as a setting.
     public let shouldPersistBackendType: Bool
 
-    /// Whether federation support should be enabled
-    public let enableFederation: Bool
-
     /// Whether the calling overlay should disappear automatically.
     public let keepCallingOverlayVisible: Bool
 
@@ -114,9 +111,8 @@ public final class AutomationHelper: NSObject {
         disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
-        enableFederation = arguments.hasFlag(AutomationKey.enableFederation)
         keepCallingOverlayVisible = arguments.hasFlag(AutomationKey.keepCallingOverlayVisible)
-        
+
         if let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
             useAppCenterLaunchOption = (value != "0")
         }
@@ -156,7 +152,6 @@ public final class AutomationHelper: NSObject {
         case persistBackendType = "persist-backend-type"
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
         case useAppCenter = "use-app-center"
-        case enableFederation = "enable-federation"
         case keepCallingOverlayVisible = "keep-calling-overlay-visible"
     }
     

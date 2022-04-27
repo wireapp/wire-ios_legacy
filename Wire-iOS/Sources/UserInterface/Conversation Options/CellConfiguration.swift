@@ -30,7 +30,7 @@ enum CellConfiguration {
     case leadingButton(title: String, identifier: String, action: Action)
     case loading
     case text(String)
-    case info
+    case info(isSelfTeam: Bool)
     case iconAction(title: String,
                     icon: StyleKitIcon,
                     color: UIColor?,

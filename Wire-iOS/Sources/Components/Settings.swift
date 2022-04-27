@@ -56,9 +56,10 @@ enum SettingKey: String, CaseIterable {
 
     // MARK: Features disable keys
     case disableCallKit = "UserDefaultDisableCallKit"
+    case muteIncomingCallsWhileInACall = "MuteIncomingCallsWhileInACall"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
-    case federationEnabled = "FederationEnabled"
+
     // MARK: Link opening options
     case twitterOpeningRawValue = "TwitterOpeningRawValue"
     case mapsOpeningRawValue = "MapsOpeningRawValue"
@@ -89,6 +90,8 @@ class Settings {
                 AVSMediaManager.sharedInstance().configureSounds()
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
+            case .muteIncomingCallsWhileInACall:
+                SessionManager.shared?.updateMuteOtherCallsFromSettings()
             case .callingConstantBitRate where !SecurityFlags.forceConstantBitRateCalls.isEnabled:
                 SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
             default:
@@ -121,12 +124,6 @@ class Settings {
         set {
             defaults.set(newValue?.toDictionary(), forKey: index.rawValue)
         }
-    }
-
-    var federationEnabled: Bool {
-        return SecurityFlags.federation.isEnabled ||
-               AutomationHelper.sharedHelper.enableFederation ||
-               defaults.bool(forKey: SettingKey.federationEnabled.rawValue)
     }
 
     var blacklistDownloadInterval: TimeInterval {

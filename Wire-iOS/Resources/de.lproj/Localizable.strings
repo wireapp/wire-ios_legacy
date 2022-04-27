@@ -17,7 +17,6 @@
 //
 // General strings
 
-
 "general.ok" = "OK";
 "general.next" = "Weiter";
 "general.cancel" = "Abbrechen";
@@ -925,7 +924,7 @@
 "group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
-"group_details.services_options_cell.title" = "Dienste";
+"group_details.services_options_cell.title" = "Services";
 "group_details.services_options_cell.enabled" = "An";
 "group_details.services_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Selbstlöschende Nachrichten";
@@ -1140,6 +1139,9 @@
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
 "self.settings.callkit.description" = "Anrufe über Wire auf dem Sperrbildschirm und im iOS-Anrufverlauf anzeigen. Wenn iCloud aktiviert ist, wird der Anrufverlauf mit Apple geteilt.";
+
+"self.settings.mute_other_call.caption" = "Andere Anrufe stummschalten";
+"self.settings.mute_other_call.description" = "Aktivieren Sie diese Option, um eingehende Anrufe stumm zu schalten, wenn Sie sich bereits in einem Gespräch befinden.";
 
 "self.settings.vbr.title" = "Codierung mit variabler Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen hierbei weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Schalten Sie diese Option aus, um die Kodierung mit konstanter Bitrate (CBR) zu verwenden. Diese Einstellung wirkt sich nur auf Einzelgespräche aus; Telefonkonferenzen verwenden immer CBR-Kodierung.";
@@ -1360,7 +1362,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Gäste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffnen Sie diese Unterhaltung für Personen außerhalb Ihres Teams.";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb des Teams.";
 "guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
 "guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
@@ -1371,7 +1373,8 @@
 
 "guest_room.link.header.title" = "Gäste-Links";
 "guest_room.link.header.subtitle" = "Laden Sie andere mit einem Link zu dieser Unterhaltung ein. Jeder kann mit dem Link an der Unterhaltung teilnehmen –  auch ohne Wire.";
-"guest_room.link.not_allowed.explaination" = "Erstellen von Gäste-Links ist in Ihrem Team nicht erlaubt.";
+"guest_room.link.not_allowed.for_self_team.explanation" = "Erstellen von Gäste-Links ist in Ihrem Team nicht erlaubt.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Sie können in dieser Unterhaltung keinen Gäste-Link generieren, da sie von jemandem aus einem anderen Team erstellt wurde und dieses Team keine Gäste-Links verwenden darf.";
 
 "guest_room.link.button.title" = "Link erstellen";
 
@@ -1711,6 +1714,10 @@
 "databaseloadingfailure.alert.delete_database.message" = "Durch das Löschen der Datenbank werden alle lokalen Daten und Nachrichten für dieses Konto dauerhaft gelöscht.";
 "databaseloadingfailure.alert.delete_database.continue" = "Weiter";
 
+// Backend not supported alert
+"backend_not_supported.alert.title" = "Serverversion wird nicht unterstützt";
+"backend_not_supported.alert.message" = "Die Serverversion wird von dieser App nicht unterstützt. Bitte wenden Sie sich an Ihren Systemadministrator.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1957,3 +1964,8 @@
 "keyboardshortcut.conversationDetail" = "Unterhaltungsdetails";
 "keyboardshortcut.searchInConversation" = "In Unterhaltung Suchen";
 "keyboardshortcut.openPeople" = "Kontakte";
+
+// MARK: - Security classification
+"security_classification.security_level" = "SICHERHEITSNIVEAU:";
+"security_classification.level.bund" = "VS-NfD";
+"security_classification.level.not_classified" = "NICHT EINGESTUFT";
