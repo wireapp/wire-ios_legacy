@@ -23,7 +23,7 @@ import UIKit
 extension UIViewController {
 
     func redrawAllfonts() {
-        view.redrawAllfonts()
+        view.redrawAllFonts()
     }
 
 }
@@ -42,7 +42,7 @@ protocol DynamicTypeCapable {
 extension UIView {
     /// We're going through each view which is a DynamicTypeCapable
     /// and with we're calling the redrawFont method
-    func redrawAllfonts() {
+    func redrawAllFonts() {
         visitSubviews { view in
             guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }
             dynamicTypeCapableView.redrawFont()
