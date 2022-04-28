@@ -204,3 +204,10 @@ final class APIVersionOperation: LaunchSequenceOperation {
     }
 
 }
+
+final class FontSchemeOperation: LaunchSequenceOperation {
+
+    func execute() {
+        FontScheme.configure(with: UIApplication.shared.preferredContentSizeCategory)
+    }
+}

@@ -36,9 +36,6 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
-// TO DO: Move out this code from here
-var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Private Property
@@ -52,7 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelperOperation(),
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
-        APIVersionOperation()
+        APIVersionOperation(),
+        FontSchemeOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
 
