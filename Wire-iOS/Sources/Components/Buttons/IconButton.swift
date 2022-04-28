@@ -59,7 +59,7 @@ class IconButton: ButtonWithLargerHitArea {
     private var iconDefinitionsByState: [UIControl.State: IconDefinition] = [:]
     private var priorState: UIControl.State?
 
-    override init(fontSpec: FontSpec = .normalRegularFont) {
+    override init(fontSpec: FontSpec = .smallLightFont) {
         super.init(fontSpec: fontSpec)
 
         hitAreaPadding = CGSize(width: 20, height: 20)

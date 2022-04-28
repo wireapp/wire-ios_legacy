@@ -24,7 +24,7 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
 
     init(
         text: String? = nil,
-        fontSpec: FontSpec,
+        fontSpec: FontSpec = .normalRegularFont,
         color: ColorSchemeColor,
         variant: ColorSchemeVariant = ColorScheme.default.variant
     ) {
@@ -34,10 +34,8 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
         self.text = text.map { $0.localized }
         self.font = fontSpec.font
         self.textColor = UIColor.from(scheme: color, variant: variant)
-        self.adjustsFontForContentSizeCategory = true
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        self.fitIn(view: self)
     }
 
     required init?(coder: NSCoder) {

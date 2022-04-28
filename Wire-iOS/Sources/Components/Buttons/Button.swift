@@ -29,7 +29,6 @@ enum ButtonStyle: Int {
 
 class Button: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
-    private var fontSpec: FontSpec
 
     var circular = false {
         didSet {
@@ -64,7 +63,6 @@ class Button: ButtonWithLargerHitArea {
     private var borderColorByState: [UIControl.State: UIColor] = [:]
 
     override init(fontSpec: FontSpec = .normalRegularFont) {
-        self.fontSpec = fontSpec
         super.init(fontSpec: fontSpec)
 
         clipsToBounds = true
@@ -73,7 +71,7 @@ class Button: ButtonWithLargerHitArea {
     convenience init(style: ButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
-                     fontSpec: FontSpec = .normalRegularFont) {
+                     fontSpec: FontSpec = .smallLightFont) {
         self.init(fontSpec: fontSpec)
 
         self.style = style

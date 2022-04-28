@@ -18,7 +18,7 @@
 
 import UIKit
 
-// MARK: - UIViewController Extension
+// MARK: - Helpers
 
 extension UIViewController {
 
@@ -30,9 +30,10 @@ extension UIViewController {
 
 // MARK: - DynamicTypeCapable Protocol
 
-/// Every view which conforms to that protocol has to implement a redrawFont method
+/// Objects conforming to this protocol opt in to react to changes of the preferred content size category
 protocol DynamicTypeCapable {
-    /// In this method we set the font for our views
+    /// This method is called when the preferred content size category changes.
+    /// Your implementation should update all of its fonts that are appropriately sized for the current content size category."
     func redrawFont()
 
 }
@@ -40,8 +41,7 @@ protocol DynamicTypeCapable {
 // MARK: - UIView Extension
 
 extension UIView {
-    /// We're going through each view which is a DynamicTypeCapable
-    /// and with we're calling the redrawFont method
+
     func redrawAllFonts() {
         visitSubviews { view in
             guard let dynamicTypeCapableView = view as? DynamicTypeCapable else { return }

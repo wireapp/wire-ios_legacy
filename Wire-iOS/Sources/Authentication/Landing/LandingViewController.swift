@@ -112,8 +112,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var enterpriseLoginButton: Button = {
-        let button = Button(style: .empty,
-                            variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -158,9 +157,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .empty,
-                            variant: .light,
-                            fontSpec: .smallSemiboldFont)
+        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"
