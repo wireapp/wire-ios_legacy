@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 import Down
+@testable import WireCommonComponents
 
 final class MarkdownTextViewTests: XCTestCase {
 

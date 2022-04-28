@@ -115,9 +115,9 @@ extension PasscodeTextField {
 extension PasscodeTextField {
     
     static func createPasscodeTextField(delegate: PasscodeTextFieldDelegate?) -> PasscodeTextField {
-        let textFieldAttributes = AccessoryTextField.Attributes(textFont: UIFont.systemFont(ofSize: 12),
+        let textFieldAttributes = AccessoryTextField.Attributes(textFont: .normalMediumFont,
                                                                     textColor: UIColor.Team.textColor,
-                                                                    placeholderFont: UIFont.systemFont(ofSize: 12),
+                                                                placeholderFont: .normalMediumFont,
                                                                     placeholderColor: UIColor.Team.placeholderColor,
                                                                     backgroundColor: UIColor.Team.textfieldColor,
                                                                     cornerRadius: 4)
