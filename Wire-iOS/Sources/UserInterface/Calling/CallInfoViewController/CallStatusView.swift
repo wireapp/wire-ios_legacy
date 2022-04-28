@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 enum CallStatusViewState: Equatable {
     case none

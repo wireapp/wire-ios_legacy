@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 /**
  * A view that displays a solid button.

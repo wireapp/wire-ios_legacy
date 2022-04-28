@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class SpinnerSubtitleView: UIStackView {
 
@@ -47,7 +48,7 @@ final class SpinnerSubtitleView: UIStackView {
         spacing = 20
         distribution = .fillProportionally
         label.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        label.font = FontSpec(.small, .regular).fontWithoutDynamicType
+        label.font = FontSpec(.small, .regular).font
         [spinner, label].forEach(addArrangedSubview)
     }
 

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 

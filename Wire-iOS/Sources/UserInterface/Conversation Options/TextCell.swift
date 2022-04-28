@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class TextCell: UITableViewCell, CellConfigurationConfigurable {
 

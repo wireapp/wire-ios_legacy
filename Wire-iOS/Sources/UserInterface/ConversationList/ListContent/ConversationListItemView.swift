@@ -18,6 +18,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 typealias ConversationListItemViewConversation = ConversationAvatarViewConversation & ConversationStatusProvider & ConnectedUserProvider
 

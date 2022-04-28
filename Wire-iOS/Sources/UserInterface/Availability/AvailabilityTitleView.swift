@@ -19,6 +19,7 @@
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * A title view subclass that displays the availability of the user.

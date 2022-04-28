@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 protocol UserNameTakeOverViewControllerDelegate: AnyObject {
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction)

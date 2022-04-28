@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 class DynamicFontButton: UIButton, DynamicTypeCapable {
 

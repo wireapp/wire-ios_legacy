@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
     typealias Participants = L10n.Localizable.Call.Participants

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
 

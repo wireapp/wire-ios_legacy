@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol SimpleTextFieldDelegate: AnyObject {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
@@ -94,7 +95,7 @@ final class SimpleTextField: UITextField, Themeable {
         accessibilityIdentifier = "NameField"
         autocorrectionType = .no
         contentVerticalAlignment = .center
-        font = ValidatedTextField.enteredTextFont
+        font = ValidatedTextField.enteredTextFont.font
         delegate = textFieldValidator
         textFieldValidator.delegate = self
     }

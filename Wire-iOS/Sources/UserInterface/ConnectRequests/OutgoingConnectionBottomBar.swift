@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 enum OutgoingConnectionBottomBarAction: UInt {
     case cancel, archive

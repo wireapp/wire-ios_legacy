@@ -49,7 +49,7 @@ final class TokenField: UIView {
         }
     }
 
-    var font: UIFont = FontSpec(.normal, .regular).fontWithoutDynamicType! {
+    var font: UIFont = FontSpec(.normal, .regular).font! {
         didSet {
             guard oldValue != font else { return }
             updateTokenAttachments()
@@ -58,7 +58,7 @@ final class TokenField: UIView {
 
     // Dynamic Type is disabled for now until the separator dots
     // vertical alignment has been fixed for larger fonts.
-    let tokenTitleFont: UIFont = FontSpec(.small, .regular).fontWithoutDynamicType!
+    let tokenTitleFont: UIFont = FontSpec(.small, .regular).font!
 
     var tokenTitleColor: UIColor = UIColor.white {
         didSet {
