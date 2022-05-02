@@ -22,7 +22,7 @@ import UIKit
 
 extension UIViewController {
 
-    func redrawAllfonts() {
+    func redrawAllFonts() {
         view.redrawAllFonts()
     }
 
