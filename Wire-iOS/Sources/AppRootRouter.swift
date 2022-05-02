@@ -540,7 +540,7 @@ extension AppRootRouter: ContentSizeCategoryObserving {
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         AppRootRouter.configureAppearance()
-        rootViewController.redrawAllfonts()
+        rootViewController.redrawAllFonts()
     }
 
     public static func configureAppearance() {
