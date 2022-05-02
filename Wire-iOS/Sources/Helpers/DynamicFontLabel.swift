@@ -35,7 +35,7 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
         self.fontSpec = fontSpec
         super.init(frame: .zero)
 
-        self.text = text.map { $0.localized }
+        self.text = text
         self.font = fontSpec.font
         self.textColor = UIColor.from(scheme: color, variant: variant)
         self.translatesAutoresizingMaskIntoConstraints = false
