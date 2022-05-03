@@ -19,7 +19,6 @@
 import UIKit
 import WireCommonComponents
 
-
 // MARK: - Helpers
 
 extension UIViewController {
@@ -28,7 +27,6 @@ extension UIViewController {
     }
 
 }
-
 
 // MARK: - UIView Extension
 
