@@ -145,7 +145,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
-        headlineLabel.adjustsFontSizeToFitWidth = true
         headlineLabel.numberOfLines = 0
         headlineLabel.lineBreakMode = .byWordWrapping
         headlineLabel.accessibilityTraits.insert(.header)
