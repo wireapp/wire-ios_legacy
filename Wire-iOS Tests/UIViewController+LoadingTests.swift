@@ -24,7 +24,7 @@ final class MockLoadingViewController: SpinnerCapableViewController {
     var dismissSpinner: SpinnerCompletion?
 }
 
-final class LoadingViewControllerTests: XCTestCase {
+final class LoadingViewControllerTests: ZMSnapshotTestCase {
     var sut: MockLoadingViewController!
 
     override func setUp() {

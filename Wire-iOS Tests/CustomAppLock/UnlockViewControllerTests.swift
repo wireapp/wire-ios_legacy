@@ -19,7 +19,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class UnlockViewControllerTests: XCTestCase {
+final class UnlockViewControllerTests: ZMSnapshotTestCase {
     var sut: UnlockViewController!
 
     override func setUp() {
