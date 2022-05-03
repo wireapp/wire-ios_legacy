@@ -39,12 +39,11 @@ class SolidButtonDescription: ValueSubmission {
 
 extension SolidButtonDescription: ViewDescriptor {
     func create() -> UIView {
-        let button = IconButton()
+        let button = IconButton(fontSpec: .normalSemiboldFont)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(UIColor(white: 1, alpha: 0.6), for: .highlighted)
-        button.titleLabel?.font = FontSpec(.normal, .semibold).font
         button.setBackgroundImageColor(UIColor.Team.activeButton, for: .normal)
 
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
