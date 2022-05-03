@@ -36,6 +36,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
+    typealias Landing = L10n.Localizable.Landing
+
     var delegate: LandingViewControllerDelegate? {
         return authenticationCoordinator
     }
@@ -65,7 +67,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let messageLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeMessage,
+        let label = DynamicFontLabel(text: Landing.welcomeMessage,
                                      fontSpec: .normalBoldFont,
                                      color: .landingScreen,
                                      variant: .light)
@@ -77,7 +79,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let subMessageLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(text: L10n.Localizable.Landing.welcomeSubmessage,
+        let label = DynamicFontLabel(text: Landing.welcomeSubmessage,
                                      fontSpec: .normalRegularFont,
                                      color: .landingScreen,
                                      variant: .light)
@@ -145,7 +147,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private let createAccoutInfoLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(text: L10n.Localizable.Landing.CreateAccount.infotitle,
+        let label = DynamicFontLabel(text: Landing.CreateAccount.infotitle,
                                      fontSpec: .smallRegularFont,
                                      color: .landingScreen,
                                      variant: .light)

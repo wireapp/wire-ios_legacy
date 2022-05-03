@@ -19,10 +19,14 @@
 import UIKit
 import WireCommonComponents
 
+/// A helper class that provides the Button with Dynamic Type Support
+/// by conforming to the DynamicTypeCapable protocol
 class DynamicFontButton: UIButton, DynamicTypeCapable {
 
+    // MARK: - Properties
     private let fontSpec: FontSpec
 
+    // MARK: - Initilization
     init(fontSpec: FontSpec = .normalRegularFont) {
         self.fontSpec = fontSpec
         super.init(frame: .zero)
@@ -34,6 +38,7 @@ class DynamicFontButton: UIButton, DynamicTypeCapable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Methods
     func redrawFont() {
         self.titleLabel?.font = fontSpec.font
     }

@@ -19,10 +19,14 @@
 import UIKit
 import WireCommonComponents
 
+/// A helper class that provides the label with Dynamic Type Support
+/// by conforming to the DynamicTypeCapable Protocol.
 class DynamicFontLabel: UILabel, DynamicTypeCapable {
 
+    // MARK: - Properties
     private let fontSpec: FontSpec
 
+    // MARK: - initialization
     init(
         text: String? = nil,
         fontSpec: FontSpec = .normalRegularFont,
@@ -32,17 +36,17 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
         self.fontSpec = fontSpec
         super.init(frame: .zero)
 
-        self.text = text.map { $0.localized }
+        self.text = text
         self.font = fontSpec.font
         self.textColor = UIColor.from(scheme: color, variant: variant)
         self.translatesAutoresizingMaskIntoConstraints = false
-
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Methods
     func redrawFont() {
         self.font = fontSpec.font
     }

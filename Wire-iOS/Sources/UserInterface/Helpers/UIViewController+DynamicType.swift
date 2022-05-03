@@ -19,15 +19,16 @@
 import UIKit
 import WireCommonComponents
 
+
 // MARK: - Helpers
 
 extension UIViewController {
-
-    func redrawAllfonts() {
+    func redrawAllFonts() {
         view.redrawAllFonts()
     }
 
 }
+
 
 // MARK: - UIView Extension
 
