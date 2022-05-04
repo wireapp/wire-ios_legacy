@@ -61,8 +61,8 @@ final class SimpleTextField: UITextField, Themeable {
 
     // MARK: - UI constants
 
-    static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
-    static let placeholderFont = FontSpec(.small, .regular).font!
+    static let enteredTextFont = FontSpec(.normal, .regular, .inputText)
+    static let placeholderFont = FontSpec(.small, .regular)
 
     var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     var placeholderInsets: UIEdgeInsets
@@ -121,7 +121,7 @@ final class SimpleTextField: UITextField, Themeable {
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
-                                        .font: ValidatedTextField.placeholderFont]
+                                                        .font: ValidatedTextField.placeholderFont.font!]
         return placeholder && attribute
     }
 
