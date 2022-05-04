@@ -123,14 +123,15 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     private func createSession(accountID: UUID) throws -> NotificationSession {
-        return try NotificationSession(
+        let session = try NotificationSession(
             applicationGroupIdentifier: appGroupID,
             accountIdentifier: accountID,
             environment: BackendEnvironment.shared,
-            analytics: nil,
-            delegate: self,
-            useLegacyPushNotifications: false
+            analytics: nil
         )
+
+        session.delegate = self
+        return session
     }
 
     private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
