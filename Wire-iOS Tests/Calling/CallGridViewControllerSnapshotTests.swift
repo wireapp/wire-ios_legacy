@@ -37,7 +37,7 @@ struct MockCallGridViewControllerInput: CallGridViewControllerInput, Equatable {
     var callHasTwoParticipants: Bool = false
 }
 
-final class CallGridViewControllerSnapshotTests: XCTestCase {
+final class CallGridViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: CallGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
