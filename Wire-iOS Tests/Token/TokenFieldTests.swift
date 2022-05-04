@@ -32,6 +32,7 @@ final class TokenFieldTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         sut = nil
+        super.tearDown()
     }
 
     private func createTokens() {

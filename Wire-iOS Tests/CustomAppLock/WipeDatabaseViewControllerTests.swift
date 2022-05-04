@@ -22,8 +22,13 @@ import SnapshotTesting
 final class WipeDatabaseViewControllerTests: ZMSnapshotTestCase {
     var sut: WipeDatabaseViewController!
 
+    override func setUp() {
+        super.setUp()
+    }
+
     override func tearDown() {
         sut = nil
+        super.tearDown()
     }
 
     func testForAllScreenSizes() {

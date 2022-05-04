@@ -22,6 +22,10 @@ import WireLinkPreview
 
 final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
+    override func setUp() {
+        super.setUp()
+    }
+
     override func tearDown() {
         super.tearDown()
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()
