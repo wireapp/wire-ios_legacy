@@ -35,9 +35,8 @@ class Tab: Button {
 
     init(variant: ColorSchemeVariant) {
         colorSchemeVariant = variant
-        super.init()
+        super.init(fontSpec: .smallSemiboldFont)
 
-        titleLabel?.font = FontSpec(.small, .semibold).font
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
         isSelected = false
 

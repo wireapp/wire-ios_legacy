@@ -57,7 +57,7 @@ class ConversationDetailFooterView: UIView {
 
     init() {
         self.variant = ColorScheme.default.variant
-        self.leftButton = IconButton()
+        self.leftButton = IconButton(fontSpec: .smallRegularFont)
         super.init(frame: .zero)
         setupViews()
         createConstraints()

@@ -36,31 +36,11 @@ final class LandingViewController: AuthenticationStepViewController {
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
+    typealias Landing = L10n.Localizable.Landing
+
     var delegate: LandingViewControllerDelegate? {
         return authenticationCoordinator
     }
-
-    // MARK: - UI Styles
-
-    static let semiboldFont = FontSpec(.large, .semibold).font!
-
-    static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = .center
-
-        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
-    }()
-
-    static let buttonSubtitleAttribute: [NSAttributedString.Key: AnyObject] = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = .center
-        alignCenterStyle.paragraphSpacingBefore = 4
-        alignCenterStyle.lineSpacing = 4
-
-        let lightFont = FontSpec(.normal, .light).font!
-
-        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
-    }()
 
     // MARK: - UI Elements
 
@@ -86,12 +66,11 @@ final class LandingViewController: AuthenticationStepViewController {
         return imageView
     }()
 
-    private let messageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_message".localized,
-                            size: .normal,
-                            weight: .bold,
-                            color: .landingScreen,
-                            variant: .light)
+    private let messageLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: Landing.welcomeMessage,
+                                     fontSpec: .normalBoldFont,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -99,12 +78,11 @@ final class LandingViewController: AuthenticationStepViewController {
         return label
     }()
 
-    private let subMessageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_submessage".localized,
-                            size: .normal,
-                            weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+    private let subMessageLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: Landing.welcomeSubmessage,
+                                     fontSpec: .normalRegularFont,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -125,7 +103,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginButton: Button = {
-        let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .full, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -136,9 +114,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var enterpriseLoginButton: Button = {
-        let button = Button(style: .empty,
-                            variant: .light,
-                            titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -149,7 +125,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginWithEmailButton: Button = {
-        let button = Button(style: .full, variant: .light, titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .full, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -160,7 +136,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginWithSSOButton: Button = {
-        let button = Button(style: .empty, variant: .light, titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -170,12 +146,11 @@ final class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    private let createAccoutInfoLabel: UILabel = {
-        let label = UILabel(key: "landing.create_account.infotitle".localized,
-                            size: .small,
-                            weight: .regular,
-                            color: .landingScreen,
-                            variant: .light)
+    private let createAccoutInfoLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: Landing.CreateAccount.infotitle,
+                                     fontSpec: .smallRegularFont,
+                                     color: .landingScreen,
+                                     variant: .light)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -184,13 +159,12 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .empty,
-                            variant: .light,
-                            titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)
@@ -254,8 +228,8 @@ final class LandingViewController: AuthenticationStepViewController {
         NotificationCenter.default.addObserver(forName: AccountManagerDidUpdateAccountsNotificationName,
                                                object: SessionManager.shared?.accountManager,
                                                queue: .main) { _ in
-                self.updateBarButtonItem()
-                self.disableTrackingIfNeeded()
+            self.updateBarButtonItem()
+            self.disableTrackingIfNeeded()
         }
 
         NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification,
@@ -320,8 +294,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
         [contentViewWidthConstraint,
          createAccoutInfoLabelTopConstraint].forEach {
-             $0.isActive = traitCollection.horizontalSizeClass != .compact
-         }
+            $0.isActive = traitCollection.horizontalSizeClass != .compact
+        }
     }
 
     private func setConstraintsConstants() {
@@ -341,7 +315,7 @@ final class LandingViewController: AuthenticationStepViewController {
             messageLabel,
             subMessageLabel,
             createAccoutInfoLabel
-            ].prepareForLayout()
+        ].prepareForLayout()
     }
 
     private func createAndAddConstraints() {
@@ -410,23 +384,16 @@ final class LandingViewController: AuthenticationStepViewController {
 
             // create an label
             createAccoutInfoLabelTopConstraint, // iPad
-            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
 
             // create an button
-            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             createAccountButton.heightAnchor.constraint(equalToConstant: 24),
             createAccoutButtomBottomConstraint // iPhone
         ])
-    }
-
-    private func configureRegularSizeClassFont() {
-        messageLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        subMessageLabel.font = FontSpec(.normal, .regular).font
-        createAccoutInfoLabel.font = UIFont.systemFont(ofSize: 14)
-        createAccountButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
     }
 
     // MARK: - Adaptivity Events

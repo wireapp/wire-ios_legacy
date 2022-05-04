@@ -62,8 +62,8 @@ class Button: ButtonWithLargerHitArea {
 
     private var borderColorByState: [UIControl.State: UIColor] = [:]
 
-    init() {
-        super.init(frame: .zero)
+    override init(fontSpec: FontSpec = .normalRegularFont) {
+        super.init(fontSpec: fontSpec)
 
         clipsToBounds = true
     }
@@ -71,14 +71,12 @@ class Button: ButtonWithLargerHitArea {
     convenience init(style: ButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
-                     titleLabelFont: UIFont = .smallLightFont) {
-        self.init()
+                     fontSpec: FontSpec = .smallLightFont) {
+        self.init(fontSpec: fontSpec)
 
         self.style = style
         self.variant = variant
-
         textTransform = .upper
-        titleLabel?.font = titleLabelFont
         layer.cornerRadius = cornerRadius
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 

@@ -59,8 +59,8 @@ final class SpinnerButton: Button {
         }
     }
 
-    override init() {
-        super.init()
+    override init(fontSpec: FontSpec) {
+        super.init(fontSpec: fontSpec)
 
         configureTitleLabel()
     }
@@ -117,6 +117,6 @@ final class SpinnerButton: Button {
 
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
-        return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
+        return SpinnerButton(style: .empty, cornerRadius: 6, fontSpec: .smallSemiboldFont)
     }
 }

@@ -107,7 +107,7 @@ final class PermissionDeniedViewController: UIViewController {
     }
 
     private func createSettingsButton() {
-        settingsButton = Button(style: .full)
+        settingsButton = Button(style: .full, fontSpec: .smallLightFont)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
 
         view.addSubview(settingsButton)

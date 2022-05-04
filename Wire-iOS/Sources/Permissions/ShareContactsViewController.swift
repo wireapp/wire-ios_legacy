@@ -85,7 +85,7 @@ final class ShareContactsViewController: UIViewController {
     }()
 
     private let shareContactsButton: Button = {
-        let shareContactsButton = Button(style: .full)
+        let shareContactsButton = Button(style: .full, fontSpec: .smallLightFont)
         shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
 
         return shareContactsButton
