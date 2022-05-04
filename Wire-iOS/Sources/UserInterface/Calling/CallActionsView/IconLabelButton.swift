@@ -40,7 +40,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
     }
 
     init(input: IconLabelButtonInput) {
-        super.init(frame: .zero)
+        super.init()
         setupViews()
         createConstraints()
         iconButton.setIcon(input.icon(forState: .normal), size: .tiny, for: .normal)

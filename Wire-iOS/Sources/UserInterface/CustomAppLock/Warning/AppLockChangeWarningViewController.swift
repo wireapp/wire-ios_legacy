@@ -38,7 +38,7 @@ final class AppLockChangeWarningViewController: UIViewController {
     private let contentView: UIView = UIView()
 
     private lazy var confirmButton: Button = {
-        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .full, fontSpec: .smallSemiboldFont)
         button.setBackgroundImageColor(.strongBlue, for: .normal)
         button.accessibilityIdentifier = "warning_screen.button.confirm"
         button.setTitle("general.confirm".localized(uppercased: true), for: .normal)

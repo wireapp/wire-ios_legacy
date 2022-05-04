@@ -22,7 +22,7 @@ final class WipeCompletionViewController: UIViewController {
     let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)
 
     private lazy var loginButton: Button = {
-        let button = Button(style: .full, titleLabelFont: .smallSemiboldFont)
+        let button = Button(style: .full, fontSpec: .smallSemiboldFont)
 
         button.setBackgroundImageColor(.strongBlue, for: .normal)
 

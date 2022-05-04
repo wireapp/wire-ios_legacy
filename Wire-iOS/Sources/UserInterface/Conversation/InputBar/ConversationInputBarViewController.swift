@@ -89,7 +89,7 @@ final class ConversationInputBarViewController: UIViewController,
     }()
 
     lazy var ephemeralIndicatorButton: IconButton = {
-        let button = IconButton()
+        let button = IconButton(fontSpec: .smallSemiboldFont)
         button.layer.borderWidth = 0.5
 
         button.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
@@ -432,7 +432,6 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: - setup
     private func setupStyle() {
         ephemeralIndicatorButton.borderWidth = 0
-        ephemeralIndicatorButton.titleLabel?.font = UIFont.smallSemiboldFont
         hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         hourglassButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
         hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .selected)

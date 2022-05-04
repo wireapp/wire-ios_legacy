@@ -33,7 +33,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
     let contentView = RoundedView()
     let dimmingView = UIView()
-    let closeButton = IconButton()
+    let closeButton = IconButton(fontSpec: .smallSemiboldFont)
     let titleLabel = UILabel()
     let questionLabel = UILabel()
 
@@ -93,7 +93,6 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         closeButton.setTitle(closeButtonTitle, for: .normal)
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = closeButtonTitle
-        closeButton.titleLabel?.font = FontSpec(.small, .semibold).font!
         closeButton.setTitleColor(graphite, for: .normal)
         closeButton.setTitleColor(graphite.withAlphaComponent(0.6), for: .highlighted)
 
@@ -220,7 +219,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
 final class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
-    let scoreButton = Button()
+    let scoreButton = Button(fontSpec: .normalRegularFont)
     let callback: (Int) -> Void
     let labelText: String
     let buttonScore: Int

@@ -71,7 +71,7 @@ protocol InteractorInterface: InteractorPresenterInterface {
 /// and presenting it in the view, and 2) responding to ui by engaging with the
 /// interactor or router.
 
-protocol PresenterInterface: PresenterInteractorInterface & PresenterViewInterface {
+protocol PresenterInterface: PresenterInteractorInterface, PresenterViewInterface {
 
     associatedtype InteractorPresenter
     associatedtype ViewPresenter

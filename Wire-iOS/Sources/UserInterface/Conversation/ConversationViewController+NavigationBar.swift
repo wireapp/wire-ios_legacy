@@ -44,13 +44,12 @@ extension ConversationViewController {
     }
 
     var joinCallButton: UIBarButtonItem {
-        let button = IconButton()
+        let button = IconButton(fontSpec: .smallSemiboldFont)
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
         button.setTitle("conversation_list.right_accessory.join_button.title".localized(uppercased: true), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.accessibilityTraits.insert(.startsMediaSession)
-        button.titleLabel?.font = FontSpec(.small, .semibold).font
         button.backgroundColor = .strongLimeGreen
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
         button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)

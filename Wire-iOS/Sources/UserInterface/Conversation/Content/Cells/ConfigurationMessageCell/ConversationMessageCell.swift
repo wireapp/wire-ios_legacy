@@ -105,7 +105,7 @@ extension ConversationMessageCell {
 
 protocol ConversationMessageCellDescription: AnyObject {
     /// The view that will be displayed for the cell.
-    associatedtype View: ConversationMessageCell & UIView
+    associatedtype View: ConversationMessageCell, UIView
 
     /// The top margin is used to configure the spacing between cells. This property will
     /// get updated by the ConversationMessageSectionController if necessary so any

@@ -28,7 +28,7 @@ enum DeniedAuthorizationType {
 
 final class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
-    let settingsButton = Button()
+    let settingsButton = Button(fontSpec: .normalSemiboldFont)
     let cameraIcon = IconButton()
     let descriptionLabel = UILabel()
 
@@ -48,7 +48,6 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
         descriptionLabel.textAlignment = .center
 
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFont.Weight.semibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
         settingsButton.layer.cornerRadius = 4.0

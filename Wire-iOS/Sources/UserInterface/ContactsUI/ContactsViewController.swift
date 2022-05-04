@@ -29,7 +29,7 @@ final class ContactsViewController: UIViewController {
     let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
     let separatorView = UIView()
     let tableView = UITableView()
-    let inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
+    let inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant, fontSpec: .smallLightFont)
     let emptyResultsLabel = UILabel()
 
     var bottomEdgeConstraint: NSLayoutConstraint?

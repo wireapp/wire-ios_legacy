@@ -34,8 +34,8 @@ final class IncomingConnectionView: UIView {
     private let securityLevelView = SecurityLevelView()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
-    private let acceptButton = Button(style: .full)
-    private let ignoreButton = Button(style: .empty)
+    private let acceptButton = Button(style: .full, fontSpec: .smallLightFont)
+    private let ignoreButton = Button(style: .empty, fontSpec: .smallLightFont)
 
     private let classificationProvider: ClassificationProviding?
 
