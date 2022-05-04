@@ -99,7 +99,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         guard
             #available(iOSApplicationExtension 14.5, *),
             let accountID = session?.accountIdentifier,
-            let voipPayload = VOIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
+            let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
             let payload = voipPayload.asDictionary
         else {
             return
