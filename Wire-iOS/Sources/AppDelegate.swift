@@ -52,7 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelperOperation(),
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
-        APIVersionOperation()
+        APIVersionOperation(),
+        VoIPPushHelperOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
 

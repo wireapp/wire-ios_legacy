@@ -204,3 +204,13 @@ final class APIVersionOperation: LaunchSequenceOperation {
     }
 
 }
+
+// MARK: - VoIPPushHelperOperation
+
+final class VoIPPushHelperOperation: LaunchSequenceOperation {
+
+    func execute() {
+        VoIPPushHelper.storage = .applicationGroup
+    }
+
+}
