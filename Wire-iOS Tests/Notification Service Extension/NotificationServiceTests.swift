@@ -22,12 +22,15 @@ import XCTest
 final class NotificationServiceTests: XCTestCase {
 
     var sut: NotificationService!
-    var coreDataFixture: CoreDataFixture!
-    var mockConversation: ZMConversation!
-    var currentUserIdentifier: UUID!
     var request: UNNotificationRequest!
     var notificatioContent: UNNotificationContent!
     var contentResult: UNNotificationContent?
+
+    var coreDataFixture: CoreDataFixture!
+    var mockConversation: ZMConversation!
+    var currentUserIdentifier: UUID!
+
+    var reportIncomingVoIPCallCalled: Bool = false
 
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
@@ -37,28 +40,38 @@ final class NotificationServiceTests: XCTestCase {
         return coreDataFixture.selfUser
     }
 
+    var client: UserClient! {
+        coreDataFixture.mockUserClient()
+    }
+
     override func setUp() {
         super.setUp()
 
-        coreDataFixture = CoreDataFixture()
-        currentUserIdentifier = UUID.create()
-        createAccount(with: currentUserIdentifier)
         sut = NotificationService()
         notificatioContent = createNotificatioContent()
+        currentUserIdentifier = UUID.create()
         request = UNNotificationRequest(identifier: currentUserIdentifier.uuidString,
                                         content: notificatioContent,
                                         trigger: nil)
-        mockConversation = createTeamGroupConversation()
 
+        coreDataFixture = CoreDataFixture()
+        mockConversation = createTeamGroupConversation()
+        client.user = otherUser
+        createAccount(with: currentUserIdentifier)
+
+        sut.didReceive(request, withContentHandler: contentHandlerMock)
+        sut.callEventHandler = self
     }
 
     override func tearDown() {
-        coreDataFixture = nil
-        currentUserIdentifier = nil
+        reportIncomingVoIPCallCalled = false
         sut = nil
         notificatioContent = nil
         request = nil
         contentResult = nil
+
+        coreDataFixture = nil
+        currentUserIdentifier = nil
         mockConversation = nil
 
         super.tearDown()
@@ -67,8 +80,6 @@ final class NotificationServiceTests: XCTestCase {
     func testThatNotificationSessionGeneratesNotification() {
         // GIVEN
         let unreadConversationCount = 5
-        sut.didReceive(request, withContentHandler: contentHandlerTest)
-
         let note = textNotification(mockConversation, sender: otherUser)
 
         // WHEN
@@ -82,6 +93,18 @@ final class NotificationServiceTests: XCTestCase {
     }
 
     func testThatItReportsCallEvent() {
+        // GIVEN
+        let event = createEvent()
+
+        // WHEN
+        XCTAssertFalse(reportIncomingVoIPCallCalled)
+        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
+
+        // THEN
+        XCTAssertTrue(reportIncomingVoIPCallCalled)
+    }
+
+    func testThatItDoesNotReportCallEventIfPayloadIsWrong() {
         // GIVEN
         let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
                                             nonce: UUID.create())
@@ -97,20 +120,12 @@ final class NotificationServiceTests: XCTestCase {
         let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
 
         // WHEN
+        XCTAssertFalse(reportIncomingVoIPCallCalled)
         sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
+        XCTAssertFalse(reportIncomingVoIPCallCalled)
     }
-
-    func testThatItDoesNotReportCallEvent() {
-
-        // GIVEN
-
-        // WHEN
-
-        // THEN
-    }
-
 
 }
 
@@ -143,28 +158,41 @@ extension NotificationServiceTests {
     }
 
     private func textNotification(_ conversation: ZMConversation, sender: ZMUser) -> ZMLocalNotification? {
+        let event = createEvent()
+        return ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: coreDataFixture.uiMOC)
+    }
+
+    private func createEvent() -> ZMUpdateEvent {
         let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
                                             nonce: UUID.create())
         let payload: [String: Any] = [
             "id": UUID.create().transportString(),
-            "conversation": conversation.remoteIdentifier!.transportString(),
-            "from": sender.remoteIdentifier.transportString(),
+            "conversation": mockConversation.remoteIdentifier!.transportString(),
+            "from": otherUser.remoteIdentifier.transportString(),
             "time": Date().transportString(),
-            "data": ["text": try? genericMessage.serializedData().base64String()],
+            "data": ["text": try? genericMessage.serializedData().base64String(),
+                     "sender": otherUser.clients.first?.remoteIdentifier],
             "type": "conversation.otr-message-add"
         ]
 
-        let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
-
-        return ZMLocalNotification(event: event, conversation: conversation, managedObjectContext: coreDataFixture.uiMOC)
+        return ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
     }
 
-    func createTeamGroupConversation() -> ZMConversation {
+    private func createTeamGroupConversation() -> ZMConversation {
         return ZMConversation.createTeamGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
 
-    private func contentHandlerTest(_ content: UNNotificationContent) {
+    private func contentHandlerMock(_ content: UNNotificationContent) {
         contentResult = content
     }
 
 }
+
+extension NotificationServiceTests: CallEventHandlerInterface {
+
+    func reportIncomingVoIPCall(_ payload: [String : Any]) {
+        reportIncomingVoIPCallCalled = true
+    }
+
+}
+

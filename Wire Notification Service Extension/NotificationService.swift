@@ -34,9 +34,10 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     // MARK: - Properties
 
+    var callEventHandler: CallEventHandlerInterface?
+
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?
-    private var callEventHandler: CallEventHandlerInterface?
 
     private lazy var accountManager: AccountManager = {
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupID)
@@ -104,7 +105,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
         guard
-            #available(iOSApplicationExtension 14.5, *),
             let accountID = session?.accountIdentifier,
             let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
             let payload = voipPayload.asDictionary
@@ -187,6 +187,9 @@ extension UNNotificationContent {
 extension NotificationService: CallEventHandlerInterface {
 
     func reportIncomingVoIPCall(_ payload: [String : Any]) {
+        guard #available(iOSApplicationExtension 14.5, *) else {
+            return
+        }
         CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
             if let error = error {
                 // TODO: handle
