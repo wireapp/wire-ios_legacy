@@ -19,16 +19,18 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class UnlockViewControllerTests: XCTestCase {
+final class UnlockViewControllerTests: ZMSnapshotTestCase {
     var sut: UnlockViewController!
 
     override func setUp() {
+        super.setUp()
         let selfUser = MockUserType.createSelfUser(name: "Bobby McFerrin")
         sut = UnlockViewController(selfUser: selfUser)
     }
 
     override func tearDown() {
         sut = nil
+        super.tearDown()
     }
 
     private func fillPasscode() {

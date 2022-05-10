@@ -19,10 +19,11 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TokenSeparatorAttachmentTests: XCTestCase {
+final class TokenSeparatorAttachmentTests: ZMSnapshotTestCase {
     var sut: TokenSeparatorAttachment!
 
     override func setUp() {
+        super.setUp()
         let token: Token<NSObjectProtocol> = Token(title: "", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.dotColor = .black

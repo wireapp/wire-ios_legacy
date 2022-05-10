@@ -29,7 +29,7 @@ open class AccessoryTextField: UITextField, DynamicTypeCapable {
 
         var textFont: FontSpec
         let textColor: UIColor
-        var placeholderFont: FontSpec
+        let placeholderFont: FontSpec
         let placeholderColor: UIColor
         let backgroundColor: UIColor
         let cornerRadius: CGFloat

@@ -19,10 +19,11 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TokenTextAttachmentTests: XCTestCase {
+final class TokenTextAttachmentTests: ZMSnapshotTestCase {
     var sut: TokenTextAttachment!
 
     override func setUp() {
+        super.setUp()
         let token: Token<NSObjectProtocol> = Token(title: "Max Mustermann", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.tokenTitleColor = .black
