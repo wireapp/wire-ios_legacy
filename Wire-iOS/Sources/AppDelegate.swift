@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
         APIVersionOperation(),
-        FontSchemeOperation()
+        FontSchemeOperation(),
         VoIPPushHelperOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
