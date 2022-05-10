@@ -19,6 +19,7 @@
 		0630E4C42580469300C75BFB /* AppLockChangeWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */; };
 		0646CC7627A9703B00BC0FAA /* Bundle+SecurityFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */; };
 		064AD4C425DD31A600143D74 /* UIApplication+OpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */; };
+		0657C1BC2829B71D002F2D48 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065A5AE0279B07AC002D4D1E /* NotificationService.swift */; };
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		065A5AE1279B07AC002D4D1E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065A5AE0279B07AC002D4D1E /* NotificationService.swift */; };
@@ -38,6 +39,7 @@
 		068500C126B9A11C00721F80 /* SimpleImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500C026B9A11B00721F80 /* SimpleImageMessageRestrictionView.swift */; };
 		068500C726B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */; };
 		068500DF26BD4E4B00721F80 /* UIView+Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068500DE26BD4E4800721F80 /* UIView+Subviews.swift */; };
+		068F07292829BC41003E3249 /* NotificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F07282829BC41003E3249 /* NotificationServiceTests.swift */; };
 		068F558524321891000DC813 /* DigitalSignatureVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */; };
 		068F558724336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */; };
 		06A5CFB62632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */; };
@@ -1239,7 +1241,6 @@
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
-		EE12922827E47E6D00C9CC60 /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
@@ -1831,6 +1832,7 @@
 		068500C026B9A11B00721F80 /* SimpleImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageMessageRestrictionView.swift; sourceTree = "<group>"; };
 		068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoMessageRestrictionView.swift; sourceTree = "<group>"; };
 		068500DE26BD4E4800721F80 /* UIView+Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Subviews.swift"; sourceTree = "<group>"; };
+		068F07282829BC41003E3249 /* NotificationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceTests.swift; sourceTree = "<group>"; };
 		068F558424321891000DC813 /* DigitalSignatureVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewController.swift; sourceTree = "<group>"; };
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
@@ -3719,6 +3721,14 @@
 				068500C626B9A33000721F80 /* SimpleVideoMessageRestrictionView.swift */,
 			);
 			path = Restrictions;
+			sourceTree = "<group>";
+		};
+		068F07272829BC0F003E3249 /* Notification Service Extension */ = {
+			isa = PBXGroup;
+			children = (
+				068F07282829BC41003E3249 /* NotificationServiceTests.swift */,
+			);
+			path = "Notification Service Extension";
 			sourceTree = "<group>";
 		};
 		06B3091126AEDC830057AF9E /* UIAlertController */ = {
@@ -6435,6 +6445,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				068F07272829BC0F003E3249 /* Notification Service Extension */,
 				669105C227397E6900324115 /* NSAttributedString+DownTests.swift */,
 				A9712D5B2743C44E0008F380 /* Giphy */,
 				A961465E273C0B6600986596 /* SearchGroup */,
@@ -7289,7 +7300,6 @@
 				EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */,
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 				061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */,
-				70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */,
 			);
 			path = ConversationInputBarViewController;
 			sourceTree = "<group>";
@@ -9138,6 +9148,7 @@
 				EF2E2F71223BC4A60038D7D9 /* VersionInfoViewControllerSnapshotTests.swift in Sources */,
 				638C88C62680F92D0074D512 /* MockCallGridHintNotificationLabel.swift in Sources */,
 				D525426820934629001C04C1 /* IconLabelButtonTests.swift in Sources */,
+				0657C1BC2829B71D002F2D48 /* NotificationService.swift in Sources */,
 				BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */,
 				EF1CB6F722B3C430004CB458 /* CallInfoRootViewControllerSnapshotTests.swift in Sources */,
 				16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */,
@@ -9377,6 +9388,7 @@
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				061275D726F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift in Sources */,
 				EF1D80DD22275F8F00BCA8D3 /* MockUser+MockUserArray.swift in Sources */,
+				068F07292829BC41003E3249 /* NotificationServiceTests.swift in Sources */,
 				A92C443224EE9805006A4AB3 /* SearchResultsViewControllerTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF05948422DF07240079B8E1 /* XCTestCase+AccentColor.swift in Sources */,
