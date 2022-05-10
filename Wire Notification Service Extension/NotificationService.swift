@@ -22,7 +22,9 @@ import WireRequestStrategy
 import WireNotificationEngine
 import WireCommonComponents
 import WireDataModel
+import WireSyncEngine
 import UIKit
+import CallKit
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
@@ -93,6 +95,23 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         contentHandler(content)
     }
 
+    public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
+        guard
+            #available(iOSApplicationExtension 14.5, *),
+            let accountID = session?.accountIdentifier,
+            let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
+            let payload = voipPayload.asDictionary
+        else {
+            return
+        }
+
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            if let error = error {
+                // TODO: handle
+            }
+        }
+    }
+
     // MARK: - Helpers
 
     private func tearDown() {
@@ -104,14 +123,15 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     private func createSession(accountID: UUID) throws -> NotificationSession {
-        return try NotificationSession(
+        let session = try NotificationSession(
             applicationGroupIdentifier: appGroupID,
             accountIdentifier: accountID,
             environment: BackendEnvironment.shared,
-            analytics: nil,
-            delegate: self,
-            useLegacyPushNotifications: false
+            analytics: nil
         )
+
+        session.delegate = self
+        return session
     }
 
     private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {

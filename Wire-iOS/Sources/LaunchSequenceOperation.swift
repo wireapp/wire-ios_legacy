@@ -210,4 +210,11 @@ final class FontSchemeOperation: LaunchSequenceOperation {
     func execute() {
         FontScheme.configure(with: UIApplication.shared.preferredContentSizeCategory)
     }
+
+final class VoIPPushHelperOperation: LaunchSequenceOperation {
+
+    func execute() {
+        VoIPPushHelper.storage = .applicationGroup
+    }
+
 }
