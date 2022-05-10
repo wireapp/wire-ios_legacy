@@ -27,7 +27,7 @@ import UIKit
 import CallKit
 
 protocol CallEventHandlerInterface {
-    func reportIncomingVoIPCall(_ payload: [String : Any])
+    func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
@@ -186,7 +186,7 @@ extension UNNotificationContent {
 
 extension NotificationService: CallEventHandlerInterface {
 
-    func reportIncomingVoIPCall(_ payload: [String : Any]) {
+    func reportIncomingVoIPCall(_ payload: [String: Any]) {
         guard #available(iOSApplicationExtension 14.5, *) else {
             return
         }

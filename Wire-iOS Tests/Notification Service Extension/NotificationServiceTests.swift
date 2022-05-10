@@ -135,7 +135,7 @@ extension NotificationServiceTests {
 
     private func createAccount(with id: UUID) {
         guard let sharedContainer = Bundle.main.appGroupIdentifier.map(FileManager.sharedContainerDirectory) else {
-            XCTFail()
+            XCTFail("There's no sharedContainer")
             fatalError()
         }
 
@@ -144,7 +144,7 @@ extension NotificationServiceTests {
         manager.addOrUpdate(account)
     }
 
-    private func createNotificatioContent() -> UNMutableNotificationContent{
+    private func createNotificatioContent() -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.body = "body"
         content.title = "title"
@@ -190,9 +190,8 @@ extension NotificationServiceTests {
 
 extension NotificationServiceTests: CallEventHandlerInterface {
 
-    func reportIncomingVoIPCall(_ payload: [String : Any]) {
+    func reportIncomingVoIPCall(_ payload: [String: Any]) {
         reportIncomingVoIPCallCalled = true
     }
 
 }
-
