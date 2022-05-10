@@ -48,6 +48,7 @@ final class NotificationServiceTests: XCTestCase {
         request = UNNotificationRequest(identifier: currentUserIdentifier.uuidString,
                                         content: notificatioContent,
                                         trigger: nil)
+        mockConversation = createTeamGroupConversation()
 
     }
 
@@ -65,33 +66,50 @@ final class NotificationServiceTests: XCTestCase {
 
     func testThatNotificationSessionGeneratesNotification() {
         // GIVEN
+        let unreadConversationCount = 5
         sut.didReceive(request, withContentHandler: contentHandlerTest)
 
-        mockConversation = createTeamGroupConversation()
         let note = textNotification(mockConversation, sender: otherUser)
 
         // WHEN
-        sut.notificationSessionDidGenerateNotification(note, unreadConversationCount: 5)
+        XCTAssertNotEqual(note?.content, contentResult)
+        sut.notificationSessionDidGenerateNotification(note, unreadConversationCount: unreadConversationCount)
 
         // THEN
+        XCTAssertNotNil(note?.content)
         XCTAssertEqual(note?.content, contentResult)
+        XCTAssertEqual(note?.content.badge?.intValue, unreadConversationCount)
     }
 
-    func testThatNotificationSessionDoesNotGenerateNotification() {
+    func testThatItReportsCallEvent() {
         // GIVEN
-        sut.didReceive(request, withContentHandler: contentHandlerTest)
+        let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
+                                            nonce: UUID.create())
+        let payload: [String: Any] = [
+            "id": UUID.create().transportString(),
+            "conversation": mockConversation.remoteIdentifier!.transportString(),
+            "from": otherUser.remoteIdentifier.transportString(),
+            "time": Date().transportString(),
+            "data": ["text": try? genericMessage.serializedData().base64String()],
+            "type": "conversation.otr-message-add"
+        ]
 
-        mockConversation = createTeamGroupConversation()
-        let note = textNotification(mockConversation, sender: otherUser)
+        let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
 
         // WHEN
-        sut.notificationSessionDidGenerateNotification(note, unreadConversationCount: 5)
+        sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
-        XCTAssertNil(contentResult)
     }
 
+    func testThatItDoesNotReportCallEvent() {
 
+        // GIVEN
+
+        // WHEN
+
+        // THEN
+    }
 
 
 }

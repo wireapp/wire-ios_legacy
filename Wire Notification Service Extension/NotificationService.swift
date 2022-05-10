@@ -26,12 +26,17 @@ import WireSyncEngine
 import UIKit
 import CallKit
 
+protocol CallEventHandlerInterface {
+    func reportIncomingVoIPCall(_ payload: [String : Any])
+}
+
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
     // MARK: - Properties
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?
+    private var callEventHandler: CallEventHandlerInterface?
 
     private lazy var accountManager: AccountManager = {
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupID)
@@ -71,6 +76,8 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         // Retain the session otherwise it will tear down.
         self.session = session
+
+        self.callEventHandler = self
     }
 
     public override func serviceExtensionTimeWillExpire() {
@@ -105,11 +112,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             return
         }
 
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                // TODO: handle
-            }
-        }
+        callEventHandler?.reportIncomingVoIPCall(payload)
     }
 
     // MARK: - Helpers
@@ -177,6 +180,18 @@ extension UNNotificationContent {
         }
 
         return userID
+    }
+
+}
+
+extension NotificationService: CallEventHandlerInterface {
+
+    func reportIncomingVoIPCall(_ payload: [String : Any]) {
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            if let error = error {
+                // TODO: handle
+            }
+        }
     }
 
 }
