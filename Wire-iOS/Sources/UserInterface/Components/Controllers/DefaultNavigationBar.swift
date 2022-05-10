@@ -25,7 +25,11 @@ final class LightNavigationBar: DefaultNavigationBar {
     }
 }
 
-class DefaultNavigationBar: UINavigationBar {
+class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
+
+    func redrawFont() {
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,9 +47,7 @@ class DefaultNavigationBar: UINavigationBar {
 
     func configure() {
         tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
-
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
         backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).with(insets: backIndicatorInsets, backgroundColor: .clear)
         backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black).with(insets: backIndicatorInsets, backgroundColor: .clear)
@@ -59,7 +61,7 @@ class DefaultNavigationBar: UINavigationBar {
     }
 
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key: Any] {
-        return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
+        return [.font: FontSpec.smallSemiboldFont.font!,
                 .foregroundColor: UIColor.from(scheme: .textForeground, variant: variant),
                 .baselineOffset: 1.0]
     }
