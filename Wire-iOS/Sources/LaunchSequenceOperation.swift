@@ -151,7 +151,7 @@ extension AppCenterOperation: DistributeDelegate {
 
         let alertController = UIAlertController(title: "Update available \(details.shortVersion ?? "") (\(details.version ?? ""))",
                                                 message: "Release Note:\n\n\(details.releaseNotes ?? "")\n\nDo you want to update?",
-            preferredStyle: .actionSheet)
+                                                preferredStyle: .actionSheet)
         alertController.configPopover(pointToView: window)
 
         alertController.addAction(UIAlertAction(title: "Update", style: .cancel) {_ in
@@ -212,8 +212,6 @@ final class FontSchemeOperation: LaunchSequenceOperation {
     }
 
 }
-
-// MARK: - VoIPPushHelperOperation
 
 final class VoIPPushHelperOperation: LaunchSequenceOperation {
 

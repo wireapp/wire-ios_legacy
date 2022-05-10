@@ -19,11 +19,12 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class WipeDatabaseViewControllerTests: XCTestCase {
+final class WipeDatabaseViewControllerTests: ZMSnapshotTestCase {
     var sut: WipeDatabaseViewController!
 
     override func tearDown() {
         sut = nil
+        super.tearDown()
     }
 
     func testForAllScreenSizes() {
