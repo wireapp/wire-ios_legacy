@@ -137,7 +137,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     }
 
     private func createViews() {
-        let textPadding = UIEdgeInsets(top: 32, left: 32, bottom: 32, right: 32)
+        let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
 
         headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
@@ -223,13 +223,13 @@ class AuthenticationStepController: AuthenticationStepViewController {
         if stepDescription.subtext != nil {
             subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
             subtextLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64).isActive = true
-            contentStack.wr_addCustomSpacing(5, after: headlineLabelContainer)
+            contentStack.wr_addCustomSpacing(16, after: headlineLabelContainer)
             contentStack.wr_addCustomSpacing(44, after: subtextLabelContainer)
         } else {
             contentStack.wr_addCustomSpacing(44, after: headlineLabelContainer)
         }
 
-        contentStack.wr_addCustomSpacing(5, after: mainView)
+        contentStack.wr_addCustomSpacing(16, after: mainView)
         contentStack.wr_addCustomSpacing(16, after: errorLabelContainer)
 
         // Fixed Constraints
@@ -239,6 +239,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
             // contentStack
             contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentCenter,
+            contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 10),
+            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -10),
 
             // labels
             headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),
