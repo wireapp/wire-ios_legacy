@@ -187,13 +187,14 @@ extension UNNotificationContent {
 extension NotificationService: CallEventHandlerInterface {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        guard #available(iOSApplicationExtension 14.5, *) else {
-            return
-        }
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                // TODO: handle
+        if #available(iOS 14.5, *) {
+            CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+                if let error = error {
+                    // TODO: handle
+                }
             }
+        } else {
+
         }
     }
 
