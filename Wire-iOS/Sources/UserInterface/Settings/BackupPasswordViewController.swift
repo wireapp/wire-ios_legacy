@@ -18,6 +18,7 @@
 
 import UIKit
 import WireUtilities
+import WireCommonComponents
 
 struct Password {
     let value: String
@@ -52,19 +53,22 @@ final class BackupPasswordViewController: UIViewController {
     fileprivate var password: Password?
     private let passwordView = SimpleTextField()
 
-    private let subtitleLabel = UILabel(
-        key: "self.settings.history_backup.password.description",
-        size: .medium,
-        weight: .regular,
-        color: .textDimmed,
-        variant: .light
-    )
+    private let subtitleLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: "self.settings.history_backup.password.description".localized,
+                                     fontSpec: .mediumRegularFont,
+                                     color: .textDimmed,
+                                     variant: .light)
+        label.numberOfLines = 0
+        return label
+    }()
 
-    private let passwordRulesLabel = UILabel(key: nil,
-                                             size: .medium,
-                                             weight: .regular,
-                                             color: .textDimmed,
-                                             variant: .light)
+    private let passwordRulesLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                     color: .textDimmed,
+                                     variant: .light)
+        label.numberOfLines = 0
+        return label
+    }()
 
     init(completion: @escaping Completion) {
         self.completion = completion
@@ -94,9 +98,6 @@ final class BackupPasswordViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
-
-        subtitleLabel.numberOfLines = 0
-
         passwordRulesLabel.numberOfLines = 0
         passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
 
