@@ -22,7 +22,14 @@ import WireSyncEngine
 import WireCommonComponents
 
 final class BackupStatusCell: UITableViewCell {
-    let descriptionLabel = UILabel()
+    let descriptionLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .normalRegularFont,
+                                     color: .textForeground,
+                                     variant: .dark)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
     let iconView = UIImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -40,7 +47,6 @@ final class BackupStatusCell: UITableViewCell {
         contentView.addSubview(iconView)
 
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.numberOfLines = 0
         contentView.addSubview(descriptionLabel)
 
         NSLayoutConstraint.activate([
@@ -55,8 +61,6 @@ final class BackupStatusCell: UITableViewCell {
         ])
 
         descriptionLabel.attributedText = "self.settings.history_backup.description".localized && .paragraphSpacing(2)
-        descriptionLabel.font = .systemFont(ofSize: 14)
-        descriptionLabel.textColor = color
     }
 
     @available(*, unavailable)
@@ -66,7 +70,14 @@ final class BackupStatusCell: UITableViewCell {
 }
 
 final class BackupActionCell: UITableViewCell {
-    let actionTitleLabel = UILabel()
+    let actionTitleLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: "self.settings.history_backup.action".localized,
+                                     fontSpec: .normalRegularFont,
+                                     color: .textForeground,
+                                     variant: .dark)
+        label.textAlignment = .left
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,16 +86,10 @@ final class BackupActionCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        actionTitleLabel.textAlignment = .left
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(actionTitleLabel)
         actionTitleLabel.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
-
-        actionTitleLabel.text = "self.settings.history_backup.action".localized
-        actionTitleLabel.font = FontSpec(.normal, .regular).font
-        actionTitleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
 
     @available(*, unavailable)
