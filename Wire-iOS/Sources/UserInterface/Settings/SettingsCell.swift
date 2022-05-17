@@ -47,6 +47,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
+        label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
