@@ -60,7 +60,7 @@ final class BackupStatusCell: UITableViewCell {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
 
-        descriptionLabel.attributedText = "self.settings.history_backup.description".localized && .paragraphSpacing(2)
+        descriptionLabel.attributedText = L10n.Localizable.Self.Settings.HistoryBackup.description && .paragraphSpacing(2)
     }
 
     @available(*, unavailable)
@@ -71,7 +71,7 @@ final class BackupStatusCell: UITableViewCell {
 
 final class BackupActionCell: UITableViewCell {
     let actionTitleLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(text: "self.settings.history_backup.action".localized,
+        let label = DynamicFontLabel(text: L10n.Localizable.Self.Settings.HistoryBackup.action,
                                      fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
@@ -127,7 +127,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "self.settings.history_backup.title".localized(uppercased: true)
+        title = L10n.Localizable.Self.Settings.HistoryBackup.title.localizedUppercase
         setupViews()
         setupLayout()
     }
@@ -214,7 +214,7 @@ fileprivate extension BackupViewController {
 
     private func presentAlert(for error: Error) {
         let alert = UIAlertController(
-            title: "self.settings.history_backup.error.title".localized,
+            title: L10n.Localizable.Self.Settings.HistoryBackup.Error.title,
             message: error.localizedDescription,
             alertAction: .ok(style: .cancel))
         present(alert, animated: true)
