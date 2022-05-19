@@ -47,6 +47,7 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
 
     func configure() {
         tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
         backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).with(insets: backIndicatorInsets, backgroundColor: .clear)

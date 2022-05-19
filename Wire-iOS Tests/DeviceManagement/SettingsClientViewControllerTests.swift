@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SettingsClientViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+final class SettingsClientViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
 
     var sut: SettingsClientViewController!
