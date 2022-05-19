@@ -23,7 +23,7 @@ import WireCommonComponents
 class StartUIIconCell: UICollectionViewCell {
 
     fileprivate let iconView = UIImageView()
-    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .cellSeparator, variant: .dark)
+    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
     fileprivate let separator = UIView()
 
     fileprivate var icon: StyleKitIcon? {
