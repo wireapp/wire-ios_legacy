@@ -420,7 +420,6 @@
 		5EBF4A2B21B958F30021CFFC /* MessageToolboxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A2A21B958F30021CFFC /* MessageToolboxDataSource.swift */; };
 		5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */; };
 		5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870C20EF530D000366B7 /* MockURLSession.swift */; };
-		5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */; };
 		5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */; };
 		5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */; };
 		5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */; };
@@ -1176,7 +1175,6 @@
 		D54224C420513A9800526A57 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54224C320513A9800526A57 /* TextCell.swift */; };
 		D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54224C520513BFD00526A57 /* CellConfiguration+ConversationOptions.swift */; };
 		D54224C820513EC100526A57 /* IconActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54224C720513EC100526A57 /* IconActionCell.swift */; };
-		D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */; };
 		D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F56D204444EE009E09DD /* ConversationActionController+Leave.swift */; };
 		D550F57020444924009E09DD /* ConversationActionController+ClearContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F56F20444924009E09DD /* ConversationActionController+ClearContent.swift */; };
 		D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */; };
@@ -1203,11 +1201,6 @@
 		D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */; };
 		D5D89780201A12D300FAF69C /* Account+ShareExtensionDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */; };
 		D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D89781201A25E000FAF69C /* Analytics+Services.swift */; };
-		D5DBAAA720064D5600E9F65B /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */; };
-		D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA920064D8800E9F65B /* InviteResult.swift */; };
-		D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */; };
-		D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */; };
-		D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */; };
 		D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */; };
 		D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */; };
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
@@ -1235,7 +1228,6 @@
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
-		EE12922827E47E6D00C9CC60 /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
@@ -1661,8 +1653,6 @@
 		F15650F921DD20D900210504 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EF5441D953B3F003E3999 /* Date+Format.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */; };
-		F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */; };
-		F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */; };
 		F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */; };
 		F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */; };
 		F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */; };
@@ -2214,7 +2204,6 @@
 		5EBF4A3221BE71930021CFFC /* TransformLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformLabel.swift; sourceTree = "<group>"; };
 		5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformTextViewTests.swift; sourceTree = "<group>"; };
 		5EC0870C20EF530D000366B7 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
-		5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Teams.swift"; sourceTree = "<group>"; };
 		5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceThumbnailView.swift; sourceTree = "<group>"; };
 		5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellDescriptionTests.swift; sourceTree = "<group>"; };
 		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
@@ -3053,7 +3042,6 @@
 		D54224C320513A9800526A57 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		D54224C520513BFD00526A57 /* CellConfiguration+ConversationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellConfiguration+ConversationOptions.swift"; sourceTree = "<group>"; };
 		D54224C720513EC100526A57 /* IconActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconActionCell.swift; sourceTree = "<group>"; };
-		D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewController.swift; sourceTree = "<group>"; };
 		D550F56D204444EE009E09DD /* ConversationActionController+Leave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Leave.swift"; sourceTree = "<group>"; };
 		D550F56F20444924009E09DD /* ConversationActionController+ClearContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+ClearContent.swift"; sourceTree = "<group>"; };
 		D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertResultConfiguration.swift; sourceTree = "<group>"; };
@@ -3080,11 +3068,6 @@
 		D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPasswordViewController.swift; sourceTree = "<group>"; };
 		D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+ShareExtensionDisplayName.swift"; sourceTree = "<group>"; };
 		D5D89781201A25E000FAF69C /* Analytics+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Services.swift"; sourceTree = "<group>"; };
-		D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
-		D5DBAAA920064D8800E9F65B /* InviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteResult.swift; sourceTree = "<group>"; };
-		D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteHeaderView.swift; sourceTree = "<group>"; };
-		D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteTextFieldFooterView.swift; sourceTree = "<group>"; };
-		D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteTableViewCell.swift; sourceTree = "<group>"; };
 		D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+RemoveAction.swift"; sourceTree = "<group>"; };
 		D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+HistoryBackup.swift"; sourceTree = "<group>"; };
 		D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TableViewHeaderFooterSizing.swift"; sourceTree = "<group>"; };
@@ -3507,8 +3490,6 @@
 		F15650B121DD018700210504 /* Bundle+Identifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Identifiers.swift"; sourceTree = "<group>"; };
 		F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Additions.swift"; sourceTree = "<group>"; };
 		F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStepDescription.swift; sourceTree = "<group>"; };
-		F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTeamNameStepDescription.swift; sourceTree = "<group>"; };
-		F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFullNameStepDescription.swift; sourceTree = "<group>"; };
 		F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordStepDescription.swift; sourceTree = "<group>"; };
@@ -4113,17 +4094,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		5E22BA2021F72ED300BBE8FC /* Team */ = {
-			isa = PBXGroup;
-			children = (
-				F16426FF1FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift */,
-				F16427011FCC5B9E00D2ABFC /* SetEmailStepDescription.swift */,
-				F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */,
-				F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */,
-			);
-			path = Team;
-			sourceTree = "<group>";
-		};
 		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -4286,7 +4256,6 @@
 				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
 				5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */,
 				5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */,
-				5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */,
 				5E8FFC1521EF46600052DF03 /* AuthenticationCoordinator+Backup.swift */,
 				63F65EFC2469967600534A69 /* AuthenticationCoordinator+PreBackendSwitch.swift */,
 			);
@@ -4586,6 +4555,8 @@
 		5EFD913B21C8F87D00080599 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
+				F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */,
+				F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */,
 				5EFD914521C926A900080599 /* PersonalRegistrationStepDescription.swift */,
 				5EFD913E21C8F98500080599 /* VerifyPhoneStepDescription.swift */,
 				F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */,
@@ -6897,19 +6868,6 @@
 			path = "Conversation Options";
 			sourceTree = "<group>";
 		};
-		D5DBAAA820064D7D00E9F65B /* Team Invites */ = {
-			isa = PBXGroup;
-			children = (
-				D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */,
-				D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */,
-				D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */,
-				D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */,
-				D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */,
-				D5DBAAA920064D8800E9F65B /* InviteResult.swift */,
-			);
-			path = "Team Invites";
-			sourceTree = "<group>";
-		};
 		DBD990471B39927A000ACF94 /* InputBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -7080,7 +7038,6 @@
 				5E8FFC2921F08C5A0052DF03 /* Views */,
 				5E8FFC2721F08C1F0052DF03 /* ViewControllers */,
 				F1199D2B1FC8490A0070FAC3 /* Descriptions */,
-				D5DBAAA820064D7D00E9F65B /* Team Invites */,
 				5E8FFC2821F08C480052DF03 /* Helpers */,
 			);
 			path = Interface;
@@ -7265,7 +7222,6 @@
 				EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */,
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 				061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */,
-				70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */,
 			);
 			path = ConversationInputBarViewController;
 			sourceTree = "<group>";
@@ -7420,7 +7376,6 @@
 				F16426FD1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift */,
 				5E21344721E34F0600273D0D /* Login */,
 				5EFD913B21C8F87D00080599 /* Registration */,
-				5E22BA2021F72ED300BBE8FC /* Team */,
 			);
 			path = ScreenDescriptions;
 			sourceTree = "<group>";
@@ -8061,7 +8016,6 @@
 				7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */,
 				EF20B59221E3C3A800BE86F8 /* WebLinkTextView.swift in Sources */,
 				BFFA182820FDE22B00F64377 /* UIAlertController+CompanyLogin.swift in Sources */,
-				F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */,
 				5EFD914621C926A900080599 /* PersonalRegistrationStepDescription.swift in Sources */,
 				5E7E496A20F37DAA0005C602 /* Ziphy+Convenience.swift in Sources */,
 				63421E3726149D7500ADA723 /* PinchToZoomRule.swift in Sources */,
@@ -8185,7 +8139,6 @@
 				A9C33E0023D078B80069C8BB /* ConversationListItemView.swift in Sources */,
 				A9730DDA250274150061BF36 /* AnalyticsCountlyProvider.swift in Sources */,
 				5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */,
-				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
 				EE44D7EA259BD85F000C6345 /* Viper+Relationships.swift in Sources */,
@@ -8580,7 +8533,6 @@
 				D5189477205045A100C095C1 /* LinkHeaderCell.swift in Sources */,
 				A9681D8623884FF1004FE917 /* Message+DateFormatter.swift in Sources */,
 				BF69C6C31F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift in Sources */,
-				D5DBAAA720064D5600E9F65B /* ArrayDataSource.swift in Sources */,
 				5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
@@ -8650,7 +8602,6 @@
 				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
 				87B48EBE20A050AA00DBAD9D /* ViewControllerDismisser.swift in Sources */,
 				6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */,
-				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */,
 				EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */,
 				EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */,
@@ -8702,7 +8653,6 @@
 				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
 				06C412AC238FCAA80018866F /* Int+Const.swift in Sources */,
 				A9BBD8D026A5D51D00C768B1 /* LayoutDirection.swift in Sources */,
-				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
 				061EF88F2797F74900584C53 /* SettingsCopyButtonCellDescriptor.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
@@ -8711,7 +8661,6 @@
 				1633875B1F065A960015034C /* SessionManager+Convenience.swift in Sources */,
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */,
-				D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */,
 				A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */,
 				EEE81E9423E0467F00A1D035 /* TopPeopleLineCollectionViewController.swift in Sources */,
 				BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */,
@@ -9001,13 +8950,11 @@
 				7C440E89234CE72F00D91B5F /* ConversationActionController+Folders.swift in Sources */,
 				A9A687D9250B7AA900AEE878 /* WipeDatabaseWireframe.swift in Sources */,
 				EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */,
-				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,
 				63A5E6E424C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift in Sources */,
 				F15650EC21DD1B4100210504 /* ImageCache.swift in Sources */,
 				D550F57020444924009E09DD /* ConversationActionController+ClearContent.swift in Sources */,
 				8784D4551E817D13007A6867 /* ConversationListTopBarViewController.swift in Sources */,
-				5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */,
 				1682AEB920483CC5003A052A /* RenameGroupSectionController.swift in Sources */,
 				EF23740E230D37EE006F53F3 /* NetworkConditionHelper.swift in Sources */,
 				5E8FFC3121F098E00052DF03 /* ConfirmationCodeCell.swift in Sources */,
@@ -9029,7 +8976,6 @@
 				546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */,
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
-				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfCallParticipantView.swift in Sources */,
 				5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */,
