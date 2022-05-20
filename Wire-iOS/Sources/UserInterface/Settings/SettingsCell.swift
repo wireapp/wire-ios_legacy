@@ -44,19 +44,24 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return iconImageView
     }()
 
-    let cellNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .normalLightFont
+    let cellNameLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(
+            fontSpec: .largeLightFont,
+            color: .textForeground)
+        
+        label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         return label
     }()
 
-    let valueLabel: UILabel = {
-        let valueLabel = UILabel()
-
-        valueLabel.textColor = .lightGray
+    let valueLabel: DynamicFontLabel = {
+        let valueLabel = DynamicFontLabel(
+            fontSpec: .normalLightFont,
+            color: .textForeground)
+ 
+        valueLabel.numberOfLines = 0
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
 
