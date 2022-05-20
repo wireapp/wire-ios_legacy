@@ -46,8 +46,6 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
         switch currentStep {
         case let .sendActivationCode(userCredentials, _, _):
             credentials = userCredentials
-        case let .teamCreation(TeamCreationState.sendEmailCode(_, email, _)):
-            credentials = .email(email)
         default:
             return nil
         }
