@@ -109,9 +109,9 @@ enum MessageAction: CaseIterable {
         case .forward:
             return .export
         case .like:
-            return .like
-        case .unlike:
             return .liked
+        case .unlike:
+            return .like
         case .resend:
             return .redo
         case .showInConversation:
