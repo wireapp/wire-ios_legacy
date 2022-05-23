@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class UserConnectionView: UIView, Copyable {
 

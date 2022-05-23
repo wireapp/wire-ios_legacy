@@ -17,6 +17,7 @@
 //
 
 import WireDataModel
+import WireCommonComponents
 
 final class AvailabilityStringBuilder: NSObject {
 

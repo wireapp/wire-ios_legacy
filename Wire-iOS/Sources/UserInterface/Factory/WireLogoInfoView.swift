@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class WireLogoInfoView: UIView {
     let contentView = UIView()

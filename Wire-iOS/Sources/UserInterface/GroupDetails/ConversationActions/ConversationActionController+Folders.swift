@@ -26,7 +26,7 @@ extension ConversationActionController {
         guard let directory = ZMUserSession.shared()?.conversationDirectory else { return }
         let folderPicker = FolderPickerViewController(conversation: conversation, directory: directory)
         folderPicker.delegate = self
-        self.present(folderPicker.wrapInNavigationController(navigationBarClass: DefaultNavigationBar.self))
+        self.present(folderPicker.wrapInNavigationController(navigationBarClass: DefaultNavigationBar.self, setBackgroundColor: true))
     }
 }
 

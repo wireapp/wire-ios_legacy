@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 class CustomMessageView: UIView {
     public var isSelected: Bool = false

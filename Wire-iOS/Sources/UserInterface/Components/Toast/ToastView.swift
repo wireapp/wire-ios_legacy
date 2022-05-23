@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 struct ToastConfiguration {
     typealias MoreInfoAction = () -> Void

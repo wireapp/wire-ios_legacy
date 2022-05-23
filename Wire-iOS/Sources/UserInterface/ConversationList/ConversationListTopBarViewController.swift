@@ -19,6 +19,7 @@
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 typealias SelfUserType = UserType & SelfLegalHoldSubject
 

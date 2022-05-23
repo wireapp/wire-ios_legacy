@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ public enum FontTextStyle: String {
     case inputText
 }
 
-enum FontSize: String {
+public enum FontSize: String {
     case large
     case normal
     case medium
@@ -106,28 +106,16 @@ public struct FontSpec: Hashable {
     ///   - size: a FontSize enum
     ///   - weight: a FontWeight enum, if weight == nil, then apply the default value .light
     ///   - fontTextStyle: FontTextStyle enum value, if fontTextStyle == nil, then apply the default style.
-    init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
+    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
         self.size = size
         self.weight = weight
         self.fontTextStyle = fontTextStyle
     }
-}
 
-extension FontSpec {
-    var fontWithoutDynamicType: UIFont? {
-        return FontScheme(contentSizeCategory: .medium).font(for: self)
+    public var font: UIFont? {
+        return FontScheme.font(for: self)
     }
 }
-
-#if !swift(>=4.2)
-
-extension FontSpec {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(size.hashValue &* 1000 &+ (self.weight?.hashValue ?? 100))
-      }
-}
-
-#endif
 
 extension FontSpec: CustomStringConvertible {
     public var description: String {
@@ -145,16 +133,12 @@ extension FontSpec: CustomStringConvertible {
     }
 }
 
-public func==(left: FontSpec, right: FontSpec) -> Bool {
-    return left.size == right.size && left.weight == right.weight && left.fontTextStyle == right.fontTextStyle
-}
+public enum FontScheme {
 
-final class FontScheme {
-
-    public typealias FontMapping = [FontSpec: UIFont]
+    private typealias FontsByFontSpec = [FontSpec: UIFont]
     private typealias FontSizeAndPoint = (size: FontSize, point: CGFloat)
 
-    public var fontMapping = FontMapping()
+    private static var fontsByFontSpec = FontsByFontSpec()
 
     private static func mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples allFontSizes: [FontSizeAndPoint],
                                                             mapping: inout [FontSpec: UIFont],
@@ -177,9 +161,9 @@ final class FontScheme {
         }
     }
 
-    public static func defaultFontMapping(with contentSizeCategory: UIContentSizeCategory) -> FontMapping {
-        var mapping: FontMapping = [:]
-
+    public static func configure(with contentSizeCategory: UIContentSizeCategory) {
+        fontsByFontSpec = FontsByFontSpec()
+        
         // The ratio is following 11:12:16:24, same as default case
         let largeTitleFontSizeTuples: [FontSizeAndPoint] = [
             (size: .large, point: 40),
@@ -189,7 +173,7 @@ final class FontScheme {
         ]
 
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: largeTitleFontSizeTuples,
-                                            mapping: &mapping,
+                                            mapping: &fontsByFontSpec,
                                             fontTextStyle: .largeTitle,
                                             contentSizeCategory: contentSizeCategory)
 
@@ -201,52 +185,44 @@ final class FontScheme {
         ]
 
         mapFontTextStyleAndFontSizeAndPoint(fontSizeTuples: inputTextFontSizeTuples,
-                                            mapping: &mapping,
+                                            mapping: &fontsByFontSpec,
                                             fontTextStyle: .inputText,
                                             contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
 
-        mapping[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.large, .medium, .none)]    = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .medium)
-        mapping[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        mapping[FontSpec(.large, .regular, .none)]   = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .regular)
-        mapping[FontSpec(.large, .light, .none)]     = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.large, .thin, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .thin)
+        fontsByFontSpec[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.large, .medium, .none)]    = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .medium)
+        fontsByFontSpec[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.large, .regular, .none)]   = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.large, .light, .none)]     = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.large, .thin, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .thin)
 
-        mapping[FontSpec(.normal, .none, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.normal, .light, .none)]    = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.normal, .thin, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .thin)
-        mapping[FontSpec(.normal, .regular, .none)]  = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .regular)
-        mapping[FontSpec(.normal, .semibold, .none)] = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        mapping[FontSpec(.normal, .medium, .none)]   = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .medium)
-        mapping[FontSpec(.normal, .bold, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .bold)
+        fontsByFontSpec[FontSpec(.normal, .none, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.normal, .light, .none)]    = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.normal, .thin, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .thin)
+        fontsByFontSpec[FontSpec(.normal, .regular, .none)]  = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.normal, .semibold, .none)] = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.normal, .medium, .none)]   = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .medium)
+        fontsByFontSpec[FontSpec(.normal, .bold, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .bold)
 
-        mapping[FontSpec(.medium, .none, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.medium, .bold, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .bold)
-        mapping[FontSpec(.medium, .medium, .none)]   = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .medium)
-        mapping[FontSpec(.medium, .semibold, .none)] = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        mapping[FontSpec(.medium, .regular, .none)]  = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.medium, .none, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.medium, .bold, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .bold)
+        fontsByFontSpec[FontSpec(.medium, .medium, .none)]   = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .medium)
+        fontsByFontSpec[FontSpec(.medium, .semibold, .none)] = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.medium, .regular, .none)]  = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .regular)
 
-        mapping[FontSpec(.small, .none, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
-        mapping[FontSpec(.small, .bold, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .bold)
-        mapping[FontSpec(.small, .medium, .none)]    = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .medium)
-        mapping[FontSpec(.small, .semibold, .none)]  = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        mapping[FontSpec(.small, .regular, .none)]   = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .regular)
-        mapping[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.small, .none, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
+        fontsByFontSpec[FontSpec(.small, .bold, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .bold)
+        fontsByFontSpec[FontSpec(.small, .medium, .none)]    = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .medium)
+        fontsByFontSpec[FontSpec(.small, .semibold, .none)]  = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.small, .regular, .none)]   = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
 
-        return mapping
     }
 
-    convenience init(contentSizeCategory: UIContentSizeCategory) {
-        self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
-    }
-
-    public init(fontMapping: FontMapping) {
-        self.fontMapping = fontMapping
-    }
-
-    public func font(for fontType: FontSpec) -> UIFont? {
-        return self.fontMapping[fontType]
+    public static func font(for fontType: FontSpec) -> UIFont? {
+        return FontScheme.fontsByFontSpec[fontType]
     }
 }
+

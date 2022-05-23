@@ -50,8 +50,8 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
 
     // MARK: - UI constants
 
-    static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
-    static let placeholderFont = FontSpec(.small, .regular).font!
+    static let enteredTextFont = FontSpec(.normal, .regular, .inputText)
+    static let placeholderFont = FontSpec(.small, .regular)
     static let ConfirmButtonWidth: CGFloat = 32
     static let GuidanceDotWidth: CGFloat = 8
 

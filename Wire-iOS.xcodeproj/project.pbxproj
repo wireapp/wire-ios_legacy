@@ -196,7 +196,6 @@
 		16DD6EBA22844EC80090A74C /* SingleViewSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD6EB922844EC80090A74C /* SingleViewSectionController.swift */; };
 		16DF3B682289B92000D09365 /* LegalHoldDetailsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DF3B632289B89E00D09365 /* LegalHoldDetailsViewControllerSnapshotTests.swift */; };
 		16E0FBAA2331119F000E3235 /* SettingsSignOutCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E0FBA92331119E000E3235 /* SettingsSignOutCellDescriptor.swift */; };
-		16E256212108AF6E00919DB0 /* FontSpec+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */; };
 		16E2A09A1F6ADE75005F4DB1 /* ActiveCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0991F6ADE75005F4DB1 /* ActiveCallViewController.swift */; };
 		16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */; };
 		16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */; };
@@ -1222,7 +1221,6 @@
 		E90B7DB628117DED001831FB /* DynamicFontLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B7DB528117DED001831FB /* DynamicFontLabel.swift */; };
 		E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */; };
 		E91DCC36278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */; };
-		E92A079E2817DF3A006BA73B /* FontSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92A079D2817DF3A006BA73B /* FontSpec.swift */; };
 		E92A07A02817E553006BA73B /* DynamicFontButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92A079F2817E553006BA73B /* DynamicFontButton.swift */; };
 		E94784E9278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */; };
 		E94784EB278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */; };
@@ -1231,15 +1229,19 @@
 		E96C8831281706640003245E /* UIViewController+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96C8830281706640003245E /* UIViewController+DynamicType.swift */; };
 		E9B580CC27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */; };
 		E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */; };
+		E9EBE0D028194D7E0058C793 /* DynamicTypeCapable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0CF28194D7E0058C793 /* DynamicTypeCapable.swift */; };
+		E9EBE0D228194F2D0058C793 /* FontScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0D128194F2D0058C793 /* FontScheme.swift */; };
+		E9EBE0D428194F890058C793 /* FontScheme+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */; };
+		E9EBE0D9281958BE0058C793 /* FontSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0D8281958BE0058C793 /* FontSpec.swift */; };
 		EE01D08525ADA3D5001DB205 /* AppLockModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08025ADA3D5001DB205 /* AppLockModule.swift */; };
 		EE01D08625ADA3D5001DB205 /* AppLockModule.Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */; };
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
+		EE12922827E47E6D00C9CC60 /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
-		EE12922827E47E6D00C9CC60 /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
@@ -1658,7 +1660,6 @@
 		F15650E721DD14B600210504 /* String+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3021BE6E3D0021CFFC /* String+Transform.swift */; };
 		F15650EC21DD1B4100210504 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05321085F3900C517B5 /* ImageCache.swift */; };
 		F15650ED21DD1B4100210504 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC71E02E7BF00C69D9B /* Reusable.swift */; };
-		F15650F021DD1B4100210504 /* FontScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE4161E422E2300E1D13A /* FontScheme.swift */; };
 		F15650F121DD1B4100210504 /* UIFont+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */; };
 		F15650F221DD1B4100210504 /* UIFont+Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */; };
 		F15650F321DD1B6D00210504 /* UserType+ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* UserType+ProfileImage.swift */; };
@@ -1986,7 +1987,6 @@
 		16DD6EB922844EC80090A74C /* SingleViewSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleViewSectionController.swift; sourceTree = "<group>"; };
 		16DF3B632289B89E00D09365 /* LegalHoldDetailsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalHoldDetailsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		16E0FBA92331119E000E3235 /* SettingsSignOutCellDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSignOutCellDescriptor.swift; sourceTree = "<group>"; };
-		16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FontSpec+DynamicType.swift"; sourceTree = "<group>"; };
 		16E2A0991F6ADE75005F4DB1 /* ActiveCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewController.swift; sourceTree = "<group>"; };
 		16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitorManager.swift; sourceTree = "<group>"; };
 		16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventListener.swift; sourceTree = "<group>"; };
@@ -2555,7 +2555,6 @@
 		87A540A91E094BA3009028C5 /* CollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		87A752161E002F6C004317DB /* ConversationRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRootViewController.swift; sourceTree = "<group>"; };
 		87A773CE1DD0B48400ACAA73 /* ObfuscationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscationView.swift; sourceTree = "<group>"; };
-		87AAE4161E422E2300E1D13A /* FontScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontScheme.swift; sourceTree = "<group>"; };
 		87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+DynamicType.swift"; sourceTree = "<group>"; };
 		87AAE4201E42441B00E1D13A /* FontSchemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSchemeTests.swift; sourceTree = "<group>"; };
 		87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+ConversationImages.swift"; sourceTree = "<group>"; };
@@ -3106,7 +3105,6 @@
 		E90B7DB528117DED001831FB /* DynamicFontLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFontLabel.swift; sourceTree = "<group>"; };
 		E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsServicesCell.swift; sourceTree = "<group>"; };
 		E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesCell.swift; sourceTree = "<group>"; };
-		E92A079D2817DF3A006BA73B /* FontSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSpec.swift; sourceTree = "<group>"; };
 		E92A079F2817E553006BA73B /* DynamicFontButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFontButton.swift; sourceTree = "<group>"; };
 		E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateServicesSectionController.swift; sourceTree = "<group>"; };
 		E94784EA278EE5EB00F9FE80 /* ConversationServicesOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationServicesOptionsViewModel.swift; sourceTree = "<group>"; };
@@ -3115,6 +3113,10 @@
 		E96C8830281706640003245E /* UIViewController+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DynamicType.swift"; sourceTree = "<group>"; };
 		E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsServicesViewControllerTests.swift; sourceTree = "<group>"; };
 		E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandlerTests.swift; sourceTree = "<group>"; };
+		E9EBE0CF28194D7E0058C793 /* DynamicTypeCapable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeCapable.swift; sourceTree = "<group>"; };
+		E9EBE0D128194F2D0058C793 /* FontScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontScheme.swift; sourceTree = "<group>"; };
+		E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FontScheme+DynamicType.swift"; sourceTree = "<group>"; };
+		E9EBE0D8281958BE0058C793 /* FontSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSpec.swift; sourceTree = "<group>"; };
 		EE00ACE225E44506005FEC14 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		EE01D08025ADA3D5001DB205 /* AppLockModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.swift; sourceTree = "<group>"; };
 		EE01D08125ADA3D5001DB205 /* AppLockModule.Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Presenter.swift; sourceTree = "<group>"; };
@@ -5069,7 +5071,6 @@
 				EF20BE4222CB57B1004F8910 /* UIViewController+Present.swift */,
 				871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */,
 				EF2F6DA220ED11D2007B6D70 /* UIColor+Accent.swift */,
-				16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
 				164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */,
@@ -5119,7 +5120,6 @@
 				638332E9250282D200D18F42 /* OrientationDelta.swift */,
 				0661925626F889DC006969AA /* PerformClipboardAction.swift */,
 				E96C8830281706640003245E /* UIViewController+DynamicType.swift */,
-				E92A079D2817DF3A006BA73B /* FontSpec.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -5761,7 +5761,6 @@
 				EE88E00523FAC9EA00D24703 /* SelfUser.swift */,
 				87F18BC71E02E7BF00C69D9B /* Reusable.swift */,
 				5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */,
-				87AAE4161E422E2300E1D13A /* FontScheme.swift */,
 				A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */,
 				87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */,
 				16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */,
@@ -7525,6 +7524,10 @@
 				A98370BB2488101500515687 /* URL+FileSize.swift */,
 				A9730DDB250287360061BF36 /* Bundle+ThirdPartyKeys.swift */,
 				A945FAA32742BDA200DB8A4C /* Sequence+layout.swift */,
+				E9EBE0CF28194D7E0058C793 /* DynamicTypeCapable.swift */,
+				E9EBE0D128194F2D0058C793 /* FontScheme.swift */,
+				E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */,
+				E9EBE0D8281958BE0058C793 /* FontSpec.swift */,
 			);
 			path = WireCommonComponents;
 			sourceTree = "<group>";
@@ -8280,7 +8283,6 @@
 				BF989D081E896D210052BF8F /* ConversationCellBurstTimestampView.swift in Sources */,
 				A9A3B1FC24D9B1E2001AF38E /* WireLogoInfoView.swift in Sources */,
 				5E8DA76F211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift in Sources */,
-				F15650F021DD1B4100210504 /* FontScheme.swift in Sources */,
 				F15650F921DD20D900210504 /* Date+Format.swift in Sources */,
 				EEA1ED7325BF430B006D07D3 /* AppLockModule.View.LockView.swift in Sources */,
 				F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */,
@@ -8720,7 +8722,6 @@
 				F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */,
 				A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */,
 				EFBCC9132154FF18006AAB70 /* CGFloat+Const.swift in Sources */,
-				16E256212108AF6E00919DB0 /* FontSpec+DynamicType.swift in Sources */,
 				EEA9A76121B0244D001F7B5C /* ConversationCreateErrorSectionController.swift in Sources */,
 				160C311F1E4C78480012E4BC /* CustomMessageView.swift in Sources */,
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
@@ -9075,7 +9076,6 @@
 				A9CBBEC524CF81EE006543D4 /* UIView+ConstraintFactory.swift in Sources */,
 				166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */,
 				EF6DAD6A2150F2C400D9BA70 /* ContactsViewController+SearchHeaderViewControllerDelegate.swift in Sources */,
-				E92A079E2817DF3A006BA73B /* FontSpec.swift in Sources */,
 				16E2A0A41F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9492,15 +9492,19 @@
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
 				EF3B26DC2370585700245701 /* AppCenter.swift in Sources */,
 				A98370BC2488101500515687 /* URL+FileSize.swift in Sources */,
+				E9EBE0D228194F2D0058C793 /* FontScheme.swift in Sources */,
 				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
 				5E39FC6F2260BAEC00C682B8 /* UIImage+StyleKit.swift in Sources */,
+				E9EBE0D9281958BE0058C793 /* FontSpec.swift in Sources */,
 				A92E731E2407F587007C1FFE /* String+Localized.swift in Sources */,
+				E9EBE0D428194F890058C793 /* FontScheme+DynamicType.swift in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F15650B321DD025A00210504 /* URL+Backup.swift in Sources */,
 				A9BBD8CE26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift in Sources */,
 				A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */,
+				E9EBE0D028194D7E0058C793 /* DynamicTypeCapable.swift in Sources */,
 				7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */,
 				F15650AF21DCFE5200210504 /* CircularProgressView.swift in Sources */,
 				F156509E21DCF1DA00210504 /* Dummy.swift in Sources */,

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class UserSearchResultsViewControllerTests: XCTestCase {
+final class UserSearchResultsViewControllerTests: ZMSnapshotTestCase {
 
     var sut: UserSearchResultsViewController!
     var serviceUser: MockServiceUserType!

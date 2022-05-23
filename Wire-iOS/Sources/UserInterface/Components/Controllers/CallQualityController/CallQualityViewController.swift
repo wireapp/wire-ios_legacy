@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol CallQualityViewControllerDelegate: AnyObject {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)

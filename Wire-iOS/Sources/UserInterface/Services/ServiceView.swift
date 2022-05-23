@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class ServiceDetailView: UIView {
     private let serviceView: ServiceView

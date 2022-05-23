@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 extension UIColor {
     enum AlarmButton {

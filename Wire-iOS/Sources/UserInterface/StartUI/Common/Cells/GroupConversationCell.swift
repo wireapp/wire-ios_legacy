@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import UIKit
+import WireCommonComponents
 
 typealias GroupConversationCellConversation = Conversation & StableRandomParticipantsProvider
 

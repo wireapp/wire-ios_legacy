@@ -19,6 +19,7 @@
 import Foundation
 import Photos
 import UIKit
+import WireCommonComponents
 
 final class AssetCell: UICollectionViewCell {
 

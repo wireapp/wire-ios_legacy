@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 /// A helper class that provides the label with Dynamic Type Support
 /// by conforming to the DynamicTypeCapable Protocol.
