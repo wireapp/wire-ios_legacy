@@ -75,7 +75,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     case pendingInitialSync(next: AuthenticationFlowStep?)
 
     // Registration
-    case createCredentials(UnregisteredUser, AuthenticationCredentialsType)
+    case createCredentials(UnregisteredUser)
     case sendActivationCode(UnverifiedCredentials, user: UnregisteredUser, isResend: Bool)
     case enterActivationCode(UnverifiedCredentials, user: UnregisteredUser)
     case activateCredentials(UnverifiedCredentials, user: UnregisteredUser, code: String)
