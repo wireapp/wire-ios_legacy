@@ -54,12 +54,8 @@ final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFix
 
     // MARK: - User Registration
 
-    func testRegistrationScreen_Phone() {
-        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .phone))
-    }
-
-    func testRegistrationScreen_Email() {
-        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .email))
+    func testRegistrationScreen() {
+        runSnapshotTest(for: .createCredentials(UnregisteredUser()))
     }
 
     func testActivationScreen_Phone() {
