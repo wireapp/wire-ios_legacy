@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 #
 # Wire
@@ -20,7 +20,6 @@
 
 import os
 import os.path
-import Foundation
 import sys
 import subprocess
 import argparse
@@ -32,7 +31,7 @@ from subprocess import Popen, PIPE
 def update_and_merge_build_info(info, source_root, repositories):
 
     carthage_info_key = "CarthageBuildInfo"
-    carthage_info = Foundation.NSMutableDictionary.dictionary()
+    carthage_info = dict()
     merge_build_info_from_carthage(carthage_info, source_root)
     info[carthage_info_key] = carthage_info
 
@@ -56,25 +55,13 @@ def parse_dependency_version_numbers(source_root):
 
 def merge_build_info_from_carthage(build_info, source_root):
     dependencies = parse_dependency_version_numbers(source_root)
-    for name, version in dependencies.iteritems():
+    for name, version in dependencies.items():
         build_info[name] = version
 
-def write_property_list_to_path(plist, path, plist_format=Foundation.NSPropertyListBinaryFormat_v1_0):
-    (data, error) = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
-        plist,
-        plist_format,
-        0,
-        None
-    )
-    if not data:
-        sys.stderr.write("error: Unable to serialize proerty list: {0}\n".format(error))
-        sys.stderr.write("note: plist: {0}\n".format(plist))
-        sys.exit(-1)
-    (success, error) = data.writeToFile_options_error_(path, 0, None)
-    if not success:
-        sys.stderr.write("error: Unable to write to '{0}': {1}\n".format(path, error))
-        sys.exit(-1)
-
+def write_property_list_to_path(plist, path):
+    with open(path, 'wb') as fp:
+    	plistlib.dump(plist, fp)
+    
 def check_environment(names):
     for name in names:
       if not name in os.environ:
@@ -82,13 +69,11 @@ def check_environment(names):
           sys.exit(-1)
 
 def update_info_plist(repositories, output_path=None):
-
     check_environment(["SRCROOT"])
     source_root = os.environ["SRCROOT"]
     sys.stderr.write("note: Using SRCROOT = {0}\n".format(source_root))
 
-    info = Foundation.NSMutableDictionary.dictionary()
-
+    info = dict()
     update_and_merge_build_info(info, source_root, repositories)
     write_property_list_to_path(info, output_path)
     return info
@@ -99,8 +84,7 @@ def main():
     parser.add_argument('repositories', metavar='repository', type=str, nargs='*', help="Path to repository to recorded into the build info plist.")
     args = parser.parse_args()
 
-    print args
-
+    print(args)
 
     info = update_info_plist(repositories=args.repositories, output_path=args.output)
 
