@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTestHelper {
+final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
     var featureProvider: MockAuthenticationFeatureProvider!
     var builder: AuthenticationInterfaceBuilder!

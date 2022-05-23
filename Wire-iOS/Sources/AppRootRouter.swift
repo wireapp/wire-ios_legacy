@@ -19,6 +19,7 @@
 import UIKit
 import WireSyncEngine
 import avs
+import WireCommonComponents
 
 // MARK: - AppRootRouter
 public class AppRootRouter: NSObject {
@@ -538,7 +539,7 @@ extension AppRootRouter: ContentSizeCategoryObserving {
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
-        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        FontScheme.configure(with: UIApplication.shared.preferredContentSizeCategory)
         AppRootRouter.configureAppearance()
         rootViewController.redrawAllFonts()
     }

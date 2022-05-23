@@ -19,6 +19,7 @@
 import UIKit
 import MessageUI
 import WireSystem
+import WireCommonComponents
 
 typealias TechnicalReport = [String: String]
 

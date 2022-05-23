@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 /**
  * A view controller that can display the interface from an authentication step.
@@ -52,7 +53,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private var contentStack: CustomSpacingStackView!
 
-    private var headlineLabel: UILabel!
+    private var headlineLabel: DynamicFontLabel!
     private var headlineLabelContainer: ContentInsetView!
     private var subtextLabel: UILabel!
     private var subtextLabelContainer: ContentInsetView!
@@ -120,7 +121,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateConstraints(forRegularLayout: traitCollection.horizontalSizeClass == .regular)
-        updateHeadlineLabelFont()
     }
 
     // MARK: - View Creation
@@ -139,7 +139,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     private func createViews() {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
 
-        headlineLabel = UILabel()
+        headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
         headlineLabel.textAlignment = .center
         headlineLabel.textColor = UIColor.Team.textColor
@@ -148,10 +148,9 @@ class AuthenticationStepController: AuthenticationStepViewController {
         headlineLabel.numberOfLines = 0
         headlineLabel.lineBreakMode = .byWordWrapping
         headlineLabel.accessibilityTraits.insert(.header)
-        updateHeadlineLabelFont()
 
         if stepDescription.subtext != nil {
-            subtextLabel = UILabel()
+            subtextLabel = DynamicFontLabel(fontSpec: .normalRegularFont, color: .textForeground)
             subtextLabelContainer = ContentInsetView(subtextLabel, inset: textPadding)
             subtextLabel.textAlignment = .center
             subtextLabel.text = stepDescription.subtext
@@ -190,10 +189,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.alignment = .fill
 
         view.addSubview(contentStack)
-    }
-
-    private func updateHeadlineLabelFont() {
-        headlineLabel.font = self.view.frame.size.width > CGFloat.iPhone4Inch.width ? AuthenticationStepController.headlineFont : AuthenticationStepController.headlineSmallFont
     }
 
     func setSecondaryViewHidden(_ isHidden: Bool) {
@@ -244,6 +239,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
             // contentStack
             contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentCenter,
+            contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 10),
+            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -10),
 
             // labels
             headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),

@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension FontSpec {
+public extension FontSpec {
 
     // MARK: - Small
 
@@ -66,6 +66,10 @@ extension FontSpec {
         return self.init(.normal, .bold)
     }
 
+    static var normalRegularFontWithInputTextStyle: Self {
+        return self.init(.normal, .regular, .inputText)
+    }
+
     // MARK: - Medium
 
     static var mediumFont: Self {
@@ -100,6 +104,10 @@ extension FontSpec {
 
     static var largeSemiboldFont: Self {
         return self.init(.large, .semibold)
+    }
+
+    static var largeLightWithTextStyleFont: Self {
+        return self.init(.large, .light, .largeTitle)
     }
 
 }

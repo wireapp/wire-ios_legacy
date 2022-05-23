@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TeamMemberInviteViewControllerSnapshotTests: XCTestCase {
+final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: TeamMemberInviteViewController!
 

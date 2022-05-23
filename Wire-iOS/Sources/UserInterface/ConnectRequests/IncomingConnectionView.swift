@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 final class IncomingConnectionView: UIView {
 

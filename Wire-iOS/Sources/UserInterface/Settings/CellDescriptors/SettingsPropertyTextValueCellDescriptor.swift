@@ -42,7 +42,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         guard let textCell = cell as? SettingsTextCell else { return }
 
         if let stringValue = settingsProperty.rawValue() as? String {
-            textCell.textInput.text = stringValue
+            textCell.textInput.text = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         }
 
         if settingsProperty.enabled {

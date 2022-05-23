@@ -18,9 +18,10 @@
 
 import XCTest
 import SnapshotTesting
+import WireCommonComponents
 @testable import Wire
 
-final class AccentColorPickerSnapshotTests: XCTestCase {
+final class AccentColorPickerSnapshotTests: ZMSnapshotTestCase {
 
     func testItIsLaidOutCorrectly() {
         // Given

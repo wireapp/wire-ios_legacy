@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import WireCommonComponents
 
-final class ConversationInputBarViewControllerTests: XCTestCase {
+final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     private var mockConversation: MockInputBarConversationType!
     private var mockClassificationProvider: MockClassificationProvider!

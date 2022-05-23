@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class InviteButton: IconButton {
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {

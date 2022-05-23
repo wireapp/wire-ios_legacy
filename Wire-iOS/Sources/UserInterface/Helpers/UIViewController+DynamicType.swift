@@ -17,24 +17,14 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 // MARK: - Helpers
 
 extension UIViewController {
-
     func redrawAllFonts() {
         view.redrawAllFonts()
     }
-
-}
-
-// MARK: - DynamicTypeCapable Protocol
-
-/// Objects conforming to this protocol opt in to react to changes of the preferred content size category
-protocol DynamicTypeCapable {
-    /// This method is called when the preferred content size category changes.
-    /// Your implementation should update all of its fonts that are appropriately sized for the current content size category.
-    func redrawFont()
 
 }
 

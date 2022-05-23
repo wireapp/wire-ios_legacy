@@ -19,10 +19,11 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TokenFieldTests: XCTestCase {
+final class TokenFieldTests: ZMSnapshotTestCase {
     var sut: TokenField!
 
     override func setUp() {
+        super.setUp()
         sut = TokenField()
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         sut.backgroundColor = .black
@@ -31,6 +32,7 @@ final class TokenFieldTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        super.tearDown()
     }
 
     private func createTokens() {

@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class ProfileHeaderViewController: UIViewController, Themeable {
 

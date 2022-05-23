@@ -19,23 +19,28 @@
 import Foundation
 import UIKit
 
-open class AccessoryTextField: UITextField {
+open class AccessoryTextField: UITextField, DynamicTypeCapable {
     
+    public func redrawFont() {
+        self.font = textFieldAttributes.textFont.font
+    }
+
     public struct Attributes {
-        let textFont: UIFont
+
+        var textFont: FontSpec
         let textColor: UIColor
-        let placeholderFont: UIFont
+        let placeholderFont: FontSpec
         let placeholderColor: UIColor
         let backgroundColor: UIColor
         let cornerRadius: CGFloat
-        
-        public init(textFont: UIFont,
+
+        public init(textFont: FontSpec,
              textColor: UIColor,
-             placeholderFont: UIFont,
+             placeholderFont: FontSpec,
              placeholderColor: UIColor,
              backgroundColor: UIColor,
              cornerRadius: CGFloat = 0) {
-            
+
             self.textFont = textFont
             self.textColor = textColor
             self.placeholderFont = placeholderFont
@@ -138,7 +143,7 @@ extension AccessoryTextField {
         rightView = accessoryContainer
         rightViewMode = .always
 
-        font = textFieldAttributes.textFont
+        font = textFieldAttributes.textFont.font
         textColor = textFieldAttributes.textColor
         backgroundColor = textFieldAttributes.backgroundColor
 
@@ -175,7 +180,7 @@ extension AccessoryTextField {
 extension AccessoryTextField {
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: textFieldAttributes.placeholderColor,
-                                                        .font: textFieldAttributes.placeholderFont]
+                                                        .font: textFieldAttributes.placeholderFont.font!]
         return placeholder && attribute
     }
     
@@ -227,4 +232,3 @@ extension AccessoryTextField {
             : rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
     }
 }
-
