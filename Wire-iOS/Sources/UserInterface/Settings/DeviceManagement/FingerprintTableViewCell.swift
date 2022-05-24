@@ -21,7 +21,8 @@ import UIKit
 import WireCommonComponents
 
 final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
-    
+
+    // MARK: - Properties
     let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .textForeground)
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(style: .gray)
@@ -59,6 +60,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
         }
     }
 
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         titleLabel.text = "self.settings.account_details.key_fingerprint.title".localized
         titleLabel.accessibilityIdentifier = "fingerprint title"
@@ -102,6 +104,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Methods
     func setupStyle() {
         fingerprintLabelFont = .normalLightFont
         fingerprintLabelBoldFont = .normalSemiboldFont
