@@ -18,9 +18,11 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
-final class FingerprintTableViewCell: UITableViewCell {
-    let titleLabel = UILabel()
+final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
+    
+    let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .textForeground)
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(style: .gray)
 
@@ -40,12 +42,12 @@ final class FingerprintTableViewCell: UITableViewCell {
         }
     }
 
-    var fingerprintLabelFont: UIFont? {
+    var fingerprintLabelFont: FontSpec? {
         didSet {
             updateFingerprint()
         }
     }
-    var fingerprintLabelBoldFont: UIFont? {
+    var fingerprintLabelBoldFont: FontSpec? {
         didSet {
             updateFingerprint()
         }
@@ -103,14 +105,11 @@ final class FingerprintTableViewCell: UITableViewCell {
     func setupStyle() {
         fingerprintLabelFont = .normalLightFont
         fingerprintLabelBoldFont = .normalSemiboldFont
-
-        titleLabel.font = .smallSemiboldFont
     }
 
     func updateFingerprint() {
-
-        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.monospaced(),
-            let fingerprintLabelMonoFont = fingerprintLabelFont?.monospaced(),
+        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.font?.monospaced(),
+           let fingerprintLabelMonoFont = fingerprintLabelFont?.font?.monospaced(),
             let attributedFingerprint = fingerprint?.attributedFingerprint(
                 attributes: [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabel.textColor],
@@ -123,5 +122,9 @@ final class FingerprintTableViewCell: UITableViewCell {
             spinner.startAnimating()
         }
         layoutIfNeeded()
+    }
+
+    func redrawFont() {
+        updateFingerprint()
     }
 }
