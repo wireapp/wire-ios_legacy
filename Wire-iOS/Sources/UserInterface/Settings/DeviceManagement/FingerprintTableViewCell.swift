@@ -62,7 +62,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
 
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        titleLabel.text = "self.settings.account_details.key_fingerprint.title".localized
+        titleLabel.text = L10n.Localizable.Self.Settings.AccountDetails.KeyFingerprint.title
         titleLabel.accessibilityIdentifier = "fingerprint title"
         fingerprintLabel.numberOfLines = 0
         fingerprintLabel.accessibilityIdentifier = "fingerprint"

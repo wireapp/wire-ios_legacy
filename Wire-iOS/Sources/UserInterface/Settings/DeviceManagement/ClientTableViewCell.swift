@@ -68,14 +68,14 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
             if let userClientModel = userClient.model {
                 nameLabel.text = userClientModel
             } else if userClient.isLegalHoldDevice {
-                nameLabel.text = "device.class.legalhold".localized
+                nameLabel.text = L10n.Localizable.Device.Class.legalhold
             }
 
             updateLabel()
 
             activationLabel.text = ""
             if let date = userClient.activationDate?.formattedDate {
-                let text = "registration.devices.activated".localized(args: date)
+                let text = L10n.Localizable.Registration.Devices.activated(date)
                 var attrText = NSAttributedString(string: text) && activationLabelFont.font
                 attrText = attrText.adding(font: activationLabelDateFont.font!, to: date)
                 activationLabel.attributedText = attrText
@@ -181,9 +181,9 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
            showVerified {
 
             if userClient.verified {
-                verifiedLabel.text = NSLocalizedString("device.verified", comment: "")
+                verifiedLabel.text = L10n.Localizable.Device.verified
             } else {
-                verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "")
+                verifiedLabel.text = L10n.Localizable.Device.notVerified
             }
         } else {
             verifiedLabel.text = ""
