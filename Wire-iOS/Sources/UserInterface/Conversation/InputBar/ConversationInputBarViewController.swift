@@ -199,7 +199,7 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        switch MediaShareRestrictionManager().mediaShareRestrictionLevel {
+        switch MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).mediaShareRestrictionLevel {
             
         case .none:
             return [

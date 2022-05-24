@@ -36,10 +36,16 @@ enum MediaShareRestrictionLevel {
 }
 
 class MediaShareRestrictionManager {
+    private let sessionRestriction: SessionFileRestrictionsProtocol?
+    
+    init(sessionRestriction: SessionFileRestrictionsProtocol?) {
+        self.sessionRestriction = sessionRestriction
+    }
+    
     private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
     
     var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
-        if let session = ZMUserSession.shared(), session.fileSharingFeature.status == .disabled {
+        guard let sessionRestriction = sessionRestriction, sessionRestriction.sharingEnabled() == false else {
             return .APIFlag
         }
         if SecurityFlags.fileSharing.isEnabled {
