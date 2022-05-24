@@ -55,11 +55,10 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return label
     }()
 
-    let valueLabel: DynamicFontLabel = {
-        let valueLabel = DynamicFontLabel(
-            fontSpec: .normalLightFont,
-            color: .textForeground)
-        valueLabel.numberOfLines = 0
+    let valueLabel: UILabel = {
+        let valueLabel = UILabel()
+
+        valueLabel.textColor = .lightGray
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
 
