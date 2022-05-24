@@ -238,105 +238,105 @@ func pointSize(fontSize: FontSize, contentSizeCategory: UIContentSizeCategory) -
     switch (fontSize, contentSizeCategory) {
     // SMALLL
     case (.small, .extraSmall):
-        return 14
+        return 10
     case (.small, .small):
-        return 15
+        return 10
     case (.small, .medium):
-        return 16
+        return 11
     case (.small, .large):
-        return 17
+        return 11
     case (.small, .extraLarge):
-        return 19
+        return 13
     case (.small, .extraExtraLarge):
-        return 21
+        return 15
     case (.small, .extraExtraExtraLarge):
-        return 23
+        return 17
     case (.small, .accessibilityMedium):
-        return 27
+        return 20
     case (.small, .accessibilityLarge):
-        return 33
+        return 24
     case (.small, .accessibilityExtraLarge):
-        return 39
+        return 29
     case (.small, .accessibilityExtraExtraLarge):
-        return 46
+        return 34
     case (.small, .accessibilityExtraExtraExtraLarge):
-        return 53
+        return 40
         
     // Normal
     case (.normal, .extraSmall):
-        return 14
+        return 13
     case (.normal, .small):
-        return 15
+        return 14
     case (.normal, .medium):
-        return 16
+        return 15
     case (.normal, .large):
-        return 17
+        return 16
     case (.normal, .extraLarge):
-        return 19
+        return 18
     case (.normal, .extraExtraLarge):
-        return 21
+        return 20
     case (.normal, .extraExtraExtraLarge):
-        return 23
+        return 26
     case (.normal, .accessibilityMedium):
-        return 27
+        return 32
     case (.normal, .accessibilityLarge):
         return 33
     case (.normal, .accessibilityExtraLarge):
-        return 39
+        return 38
     case (.normal, .accessibilityExtraExtraLarge):
-        return 46
+        return 44
     case (.normal, .accessibilityExtraExtraExtraLarge):
-        return 53
+        return 51
         
     // Medium
     case (.medium, .extraSmall):
-        return 14
+        return 11
     case (.medium, .small):
-        return 15
+        return 11
     case (.medium, .medium):
-        return 16
+        return 11
     case (.medium, .large):
-        return 17
+        return 12
     case (.medium, .extraLarge):
-        return 19
+        return 14
     case (.medium, .extraExtraLarge):
-        return 21
+        return 16
     case (.medium, .extraExtraExtraLarge):
-        return 23
+        return 18
     case (.medium, .accessibilityMedium):
-        return 27
+        return 22
     case (.medium, .accessibilityLarge):
-        return 33
+        return 26
     case (.medium, .accessibilityExtraLarge):
-        return 39
+        return 32
     case (.medium, .accessibilityExtraExtraLarge):
-        return 46
+        return 37
     case (.medium, .accessibilityExtraExtraExtraLarge):
-        return 53
+        return 43
         
     // Large
     case (.large, .extraSmall):
-        return 14
-    case (.large, .small):
-        return 15
-    case (.large, .medium):
-        return 16
-    case (.large, .large):
-        return 17
-    case (.large, .extraLarge):
-        return 19
-    case (.large, .extraExtraLarge):
         return 21
-    case (.large, .extraExtraExtraLarge):
+    case (.large, .small):
+        return 22
+    case (.large, .medium):
         return 23
-    case (.large, .accessibilityMedium):
+    case (.large, .large):
+        return 24
+    case (.large, .extraLarge):
         return 27
+    case (.large, .extraExtraLarge):
+        return 29
+    case (.large, .extraExtraExtraLarge):
+        return 31
+    case (.large, .accessibilityMedium):
+        return 36
     case (.large, .accessibilityLarge):
-        return 33
+        return 41
     case (.large, .accessibilityExtraLarge):
-        return 39
-    case (.large, .accessibilityExtraExtraLarge):
         return 46
+    case (.large, .accessibilityExtraExtraLarge):
+        return 50
     case (.large, .accessibilityExtraExtraExtraLarge):
         return 53
         
