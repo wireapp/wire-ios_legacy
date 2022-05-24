@@ -46,9 +46,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let cellNameLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(
-            fontSpec: .largeLightFont,
+            fontSpec: .normalLightFont,
             color: .textForeground)
-        
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -60,7 +59,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         let valueLabel = DynamicFontLabel(
             fontSpec: .normalLightFont,
             color: .textForeground)
- 
         valueLabel.numberOfLines = 0
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
