@@ -22,7 +22,7 @@ import WireCommonComponents
 
 final class SectionHeaderView: UIView, Themeable {
 
-    let titleLabel = UILabel()
+    let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .sectionText)
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
@@ -44,7 +44,6 @@ final class SectionHeaderView: UIView, Themeable {
     }
 
     private func setupViews() {
-        titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.accessibilityTraits.insert(.header)
