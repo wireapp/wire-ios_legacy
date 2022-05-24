@@ -71,7 +71,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate, Perform
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return dropProposal(isText: session.hasText(),
                             isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
-                            canFilesBeShared: canFilesBeShared)
+                            canFilesBeShared: MediaShareRestrictionManager().canCopyFromClipboard())
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {

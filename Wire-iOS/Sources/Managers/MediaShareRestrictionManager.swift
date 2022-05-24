@@ -29,42 +29,41 @@ enum ShareableMediaSource: CaseIterable {
     case clipboard
 }
 
-//var canFilesBeShared: Bool {
-//    guard let session = ZMUserSession.shared() else { return true }
-//    return session.fileSharingFeature.status == .enabled && SecurityFlags.fileSharing.isEnabled
-//}
+enum MediaShareRestrictionLevel {
+    case none
+    case securityFlag
+    case APIFlag
+}
 
-extension ShareableMediaSource {
-    static var SecurityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
+class MediaShareRestrictionManager {
+    private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
     
-    var canBeUploaded: Bool {
-        guard let session = ZMUserSession.shared(), session.fileSharingFeature.status == .enabled else {
-            if SecurityFlags.fileSharing.isEnabled {
-                return ShareableMediaSource.allCases.contains(self)
-            }
-            return ShareableMediaSource.SecurityFlagRestrictedTypes.contains(self)
+    var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
+        if let session = ZMUserSession.shared(), session.fileSharingFeature.status == .disabled {
+            return .APIFlag
         }
-        return false
+        if SecurityFlags.fileSharing.isEnabled {
+            return .none
+        }
+        return .securityFlag
     }
     
-    var canBeDownloaded: Bool {
+    func canUploadMedia(from source: ShareableMediaSource) -> Bool {
+        switch mediaShareRestrictionLevel {
+        case .none:
+            return true
+        case .securityFlag:
+            return securityFlagRestrictedTypes.contains(source)
+        case .APIFlag:
+            return false
+        }
+    }
+    
+    func canDownloadMedia() -> Bool {
         return  SecurityFlags.fileSharing.isEnabled
     }
     
+    func canCopyFromClipboard() -> Bool {
+        return canUploadMedia(from: .clipboard)
+    }
 }
-
-//return canFilesBeShared ? [
-//    photoButton,
-//    mentionButton,
-//    sketchButton,
-//    gifButton,
-//    audioButton,
-//    pingButton,
-//    uploadFileButton,
-//    locationButton,
-//    videoButton
-//] : [
-//    mentionButton,
-//    pingButton,
-//    locationButton
-//]

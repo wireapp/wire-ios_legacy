@@ -1239,7 +1239,6 @@
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
-		EE12922827E47E6D00C9CC60 /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
@@ -7288,7 +7287,6 @@
 				EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */,
 				EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */,
 				061275D626F23535006E8D4C /* ConversationInputBarViewController+DropInteractionTests.swift */,
-				70C5560C27B2E6B100119A7D /* MockClassificationProvider.swift */,
 			);
 			path = ConversationInputBarViewController;
 			sourceTree = "<group>";
@@ -7889,7 +7887,7 @@
 		};
 		8795A5D21D34D1A50024101B /* EmbedBuildInfo */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (

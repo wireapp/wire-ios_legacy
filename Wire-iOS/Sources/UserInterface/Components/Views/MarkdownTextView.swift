@@ -630,6 +630,7 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 
 extension MarkdownTextView {
 
+    // TODO: SQSERVICES-1555 use MediaShareRestrictionManager
     /// Whether files can be shared and received
     private var canFilesBeShared: Bool {
         guard let session = ZMUserSession.shared() else { return true }
