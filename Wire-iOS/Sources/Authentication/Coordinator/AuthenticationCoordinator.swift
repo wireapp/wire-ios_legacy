@@ -495,8 +495,8 @@ extension AuthenticationCoordinator {
     /// Switches the type of credentials in the current step.
     private func switchCredentialsType(_ newType: AuthenticationCredentialsType) {
         switch stateController.currentStep {
-        case .createCredentials(let unregisteredUser, _):
-            let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser, newType)
+        case .createCredentials(let unregisteredUser):
+            let newStep = AuthenticationFlowStep.createCredentials(unregisteredUser)
             stateController.transition(to: newStep, mode: .replace)
         case .provideCredentials:
             let newStep = AuthenticationFlowStep.provideCredentials(newType, nil)
@@ -516,7 +516,7 @@ extension AuthenticationCoordinator {
      */
 
     private func startRegistration(_ credentials: UnverifiedCredentials) {
-        guard case let .createCredentials(unregisteredUser, _) = stateController.currentStep, let presenter = self.presenter else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep, let presenter = self.presenter else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
         }
