@@ -19,22 +19,24 @@
 import UIKit
 import WireCommonComponents
 
-class TitleView: UIView {
+class TitleView: UIView, DynamicTypeCapable {
 
+    // MARK: - Properties
     var titleColor, titleColorSelected: UIColor?
-    var titleFont: UIFont?
+    var titleFont: FontSpec?
     var tapHandler: ((UIButton) -> Void)?
 
     private let stackView = UIStackView(axis: .vertical)
     let titleButton = UIButton()
     private let subtitleLabel = UILabel()
 
-    init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
+    // MARK: - Initialization
+    init(color: UIColor? = nil, selectedColor: UIColor? = nil, fontSpec: FontSpec? = nil) {
         super.init(frame: CGRect.zero)
         isAccessibilityElement = true
         accessibilityIdentifier = "Name"
 
-        if let color = color, let selectedColor = selectedColor, let font = font {
+        if let color = color, let selectedColor = selectedColor, let font = fontSpec {
             titleColor = color
             titleColorSelected = selectedColor
             titleFont = font
@@ -43,6 +45,7 @@ class TitleView: UIView {
         createViews()
     }
 
+    // MARK: - Private methods
     private func createConstraints() {
         [titleButton, stackView, subtitleLabel].prepareForLayout()
 
@@ -57,6 +60,7 @@ class TitleView: UIView {
         [titleButton, subtitleLabel].forEach(stackView.addArrangedSubview)
     }
 
+    // MARK: - Methods
     @objc
     func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
@@ -77,7 +81,7 @@ class TitleView: UIView {
         let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
         let selectedLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
 
-        titleButton.titleLabel!.font = font
+        titleButton.titleLabel!.font = font.font
         titleButton.setAttributedTitle(normalLabel, for: [])
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.isEnabled = interactive
@@ -95,8 +99,13 @@ class TitleView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func redrawFont() {
+        titleButton.titleLabel!.font = titleFont?.font
+    }
 }
 
+// MARK: NSTextAttachment Extension
 extension NSTextAttachment {
     static func downArrow(color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
