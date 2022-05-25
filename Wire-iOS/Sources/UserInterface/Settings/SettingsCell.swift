@@ -73,10 +73,10 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }()
 
     private let badgeLabel: UILabel = {
-        let badgeLabel = UILabel()
-        badgeLabel.font = FontSpec(.small, .medium).font
+        let badgeLabel = DynamicFontLabel(
+            fontSpec: .smallMediumFont,
+            color: .textInBadge)
         badgeLabel.textAlignment = .center
-        badgeLabel.textColor = .black
 
         return badgeLabel
     }()
