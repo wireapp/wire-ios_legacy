@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTestHelper {
+final class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
     var featureProvider: MockAuthenticationFeatureProvider!
     var builder: AuthenticationInterfaceBuilder!
@@ -54,12 +54,8 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
 
     // MARK: - User Registration
 
-    func testRegistrationScreen_Phone() {
-        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .phone))
-    }
-
-    func testRegistrationScreen_Email() {
-        runSnapshotTest(for: .createCredentials(UnregisteredUser(), .email))
+    func testRegistrationScreen() {
+        runSnapshotTest(for: .createCredentials(UnregisteredUser()))
     }
 
     func testActivationScreen_Phone() {

@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 enum ButtonStyle: Int {
     // background color: accent, text color: white

@@ -47,7 +47,7 @@ final class MessageDetailsCellDescription: NSObject {
     init(user: UserType, subtitle: String?, accessibleSubtitleLabel: String?, accessibleSubtitleValue: String?) {
         self.user = user
         self.subtitle = subtitle
-        self.attributedSubtitle = subtitle.map { $0 && UserCell.boldFont }
+        self.attributedSubtitle = subtitle.map { $0 && UserCell.boldFont.font! }
         self.accessibleSubtitleLabel = accessibleSubtitleLabel
         self.accessibleSubtitleValue = accessibleSubtitleValue
     }

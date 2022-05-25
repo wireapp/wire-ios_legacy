@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class ProfileHeaderViewController: UIViewController, Themeable {
 
@@ -82,7 +83,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     var stackView: CustomSpacingStackView!
 
     let nameLabel: UILabel = {
-        let label = UILabel()
+        let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
         label.accessibilityLabel = "profile_view.accessibility.name".localized
         label.accessibilityIdentifier = "name"
 
@@ -92,17 +93,15 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        label.font = FontSpec(.large, .light).font!
         label.accessibilityTraits.insert(.header)
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 3
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
 
         return label
     }()
-    let handleLabel = UILabel()
-    let teamNameLabel = UILabel()
+    let handleLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .textForeground)
+    let teamNameLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .textForeground)
     let imageView =  UserImageView(size: .big)
     let availabilityTitleViewController: AvailabilityTitleViewController
 
@@ -162,7 +161,6 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        handleLabel.font = FontSpec(.small, .regular).font!
 
         let nameHandleStack = UIStackView(arrangedSubviews: [nameLabel, handleLabel])
         nameHandleStack.axis = .vertical
@@ -173,7 +171,6 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        teamNameLabel.font = FontSpec(.small, .regular).font!
 
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text

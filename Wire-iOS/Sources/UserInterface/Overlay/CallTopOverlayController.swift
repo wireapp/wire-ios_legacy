@@ -21,6 +21,7 @@ import UIKit
 import WireDataModel
 import WireSyncEngine
 import avs
+import WireCommonComponents
 
 protocol CallTopOverlayControllerDelegate: AnyObject {
     func voiceChannelTopOverlayWantsToRestoreCall(voiceChannel: VoiceChannel?)

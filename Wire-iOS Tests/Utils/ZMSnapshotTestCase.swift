@@ -18,6 +18,7 @@
 
 @testable import Wire
 import FBSnapshotTestCase
+import WireCommonComponents
 import UIKit
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
@@ -93,6 +94,8 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
             XCTFail("Snapshot tests need to be run on a device running at least iOS 13")
         }
         AppRootRouter.configureAppearance()
+        FontScheme.configure(with: .large)
+
         UIView.setAnimationsEnabled(false)
         accentColor = .vividRed
         snapshotBackgroundColor = UIColor.clear

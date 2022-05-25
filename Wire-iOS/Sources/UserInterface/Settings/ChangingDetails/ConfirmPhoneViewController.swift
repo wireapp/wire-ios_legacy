@@ -19,6 +19,7 @@
 import UIKit
 import WireSyncEngine
 import WireUtilities
+import WireCommonComponents
 
 private enum Section: Int {
     static var count: Int {

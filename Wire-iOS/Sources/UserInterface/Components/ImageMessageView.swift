@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import FLAnimatedImage
+import WireCommonComponents
 
 final class ImageMessageView: UIView {
 

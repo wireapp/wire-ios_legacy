@@ -19,6 +19,7 @@
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 /**
  * A title view subclass that displays the availability of the user.
@@ -129,9 +130,9 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
         if options.contains(.useLargeFont) {
-            titleFont = FontSpec(.normal, .semibold).font
+            titleFont = .normalSemiboldFont
         } else {
-            titleFont = FontSpec(.small, .semibold).font
+            titleFont = .smallSemiboldFont
         }
 
         titleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)

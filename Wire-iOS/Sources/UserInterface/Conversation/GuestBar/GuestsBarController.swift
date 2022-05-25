@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Down
+import WireCommonComponents
 
 final class GuestsBarController: UIViewController {
 

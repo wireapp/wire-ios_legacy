@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 final class GuestsAllowedCellDescription: ConversationMessageCellDescription {
 

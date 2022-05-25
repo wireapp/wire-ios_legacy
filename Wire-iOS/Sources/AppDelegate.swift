@@ -36,9 +36,6 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
-// TO DO: Move out this code from here
-var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Private Property
@@ -53,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
         APIVersionOperation(),
+        FontSchemeOperation(),
         VoIPPushHelperOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
@@ -296,10 +294,10 @@ private extension AppDelegate {
     }
 
     private var requiredPushTokenType: PushToken.TokenType {
-        // From iOS 15 our "unrestricted-voip" entitlement is no longer supported,
+        // From iOS 14 our "unrestricted-voip" entitlement is no longer supported,
         // so users should register for standard push tokens instead and use the
         // notification service extension.
-        if #available(iOS 15.0, *) {
+        if #available(iOS 14.0, *) {
             return .standard
         } else {
             return .voip
