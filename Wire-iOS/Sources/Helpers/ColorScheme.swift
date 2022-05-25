@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireUtilities
+import WireCommonComponents
 
 @objc
 enum ColorSchemeVariant: UInt {
@@ -76,6 +77,7 @@ enum ColorSchemeColor: Int {
     case textBackground
     case textDimmed
     case textPlaceholder
+    case textInBadge
 
     case iconNormal
     case iconSelected
@@ -150,6 +152,8 @@ enum ColorSchemeColor: Int {
             return ColorPair(both: .lightGraphite)
         case .textPlaceholder:
             return ColorPair(both: .lightGraphiteAlpha64)
+        case .textInBadge:
+            return ColorPair(both: .black)
         case .separator:
             return ColorPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
         case .barBackground:
@@ -318,14 +322,11 @@ extension UIColor {
 
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     class func nameColor(for accentColor: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-
-        assert(accentColor.rawValue <= ZMAccentColor.max.rawValue)
-
+        let accentColor = AccentColor(ZMAccentColor: accentColor) ?? .strongBlue
         let coefficientsArray = variant == .dark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight
         let coefficient = coefficientsArray[Int(accentColor.rawValue)]
-
         let background: UIColor = variant == .dark ? .black : .white
-        return background.mix(UIColor(fromZMAccentColor: accentColor), amount: coefficient)
+        return background.mix(UIColor(for: accentColor), amount: coefficient)
     }
 }
 

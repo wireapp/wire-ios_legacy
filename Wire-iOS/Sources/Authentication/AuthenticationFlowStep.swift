@@ -76,7 +76,7 @@ indirect enum AuthenticationFlowStep: Equatable {
 
     // Registration
     case teamCreation(TeamCreationState)
-    case createCredentials(UnregisteredUser, AuthenticationCredentialsType)
+    case createCredentials(UnregisteredUser)
     case sendActivationCode(UnverifiedCredentials, user: UnregisteredUser, isResend: Bool)
     case enterActivationCode(UnverifiedCredentials, user: UnregisteredUser)
     case activateCredentials(UnverifiedCredentials, user: UnregisteredUser, code: String)

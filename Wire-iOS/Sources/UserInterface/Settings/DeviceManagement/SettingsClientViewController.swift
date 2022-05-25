@@ -407,7 +407,7 @@ extension UserClient {
         if let remoteIdentifier = remoteIdentifier {
             lines.append("ID: \(remoteIdentifier)")
         }
-        if let pushToken = pushToken {
+        if let pushToken = PushTokenStorage.pushToken {
             lines.append("Push Token: \(pushToken.deviceTokenString)")
         }
         return lines.joined(separator: "\n")

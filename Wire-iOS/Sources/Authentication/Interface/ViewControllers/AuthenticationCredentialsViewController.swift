@@ -36,7 +36,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     /// Types of flow provided by the view controller.
     enum FlowType {
         case login(AuthenticationCredentialsType, AuthenticationPrefilledCredentials?)
-        case registration(AuthenticationCredentialsType)
+        case registration
         case reauthentication(AuthenticationPrefilledCredentials?)
     }
 
@@ -88,10 +88,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             self.init(description: description)
             self.credentialsType = credentials?.primaryCredentialsType ?? .email
             self.prefilledCredentials = credentials
-        case .registration(let credentialsType):
+        case .registration:
             let description = PersonalRegistrationStepDescription()
             self.init(description: description)
-            self.credentialsType = credentialsType
+            self.credentialsType = .email
         }
 
         self.flowType = flowType
@@ -165,7 +165,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     }
 
     func configure(with featureProvider: AuthenticationFeatureProvider) {
-        if case .reauthentication? = flowType {
+        if isRegistering {
+            // Only email registration is allowed.
+            tabBar.isHidden = true
+        } else if case .reauthentication? = flowType {
             tabBar.isHidden = prefilledCredentials != nil
         } else if case .custom = BackendEnvironment.shared.environmentType.value {
             tabBar.isHidden = true
@@ -182,10 +185,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             case .email: return emailPasswordInputField
             }
         case .registration?:
-            switch credentialsType {
-            case .phone: return phoneInputView
-            case .email: return emailInputField
-            }
+            return emailInputField
         case .reauthentication?:
             switch credentialsType {
             case .phone: return phoneInputView

@@ -239,6 +239,8 @@ class AuthenticationStepController: AuthenticationStepViewController {
             // contentStack
             contentStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentCenter,
+            contentStack.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 10),
+            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -10),
 
             // labels
             headlineLabel.widthAnchor.constraint(equalTo: contentStack.widthAnchor, constant: -64),

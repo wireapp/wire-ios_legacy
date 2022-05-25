@@ -28,7 +28,7 @@ final class LightNavigationBar: DefaultNavigationBar {
 class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
 
     func redrawFont() {
-        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        titleTextAttributes?[.font] = FontSpec.smallSemiboldFont.font!
     }
 
     override init(frame: CGRect) {
