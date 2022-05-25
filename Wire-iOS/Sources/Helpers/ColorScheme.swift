@@ -77,6 +77,7 @@ enum ColorSchemeColor: Int {
     case textBackground
     case textDimmed
     case textPlaceholder
+    case textInBadge
 
     case iconNormal
     case iconSelected
@@ -151,6 +152,8 @@ enum ColorSchemeColor: Int {
             return ColorPair(both: .lightGraphite)
         case .textPlaceholder:
             return ColorPair(both: .lightGraphiteAlpha64)
+        case .textInBadge:
+            return ColorPair(both: .black)
         case .separator:
             return ColorPair(light: .lightGraphiteAlpha48, dark: .lightGraphiteAlpha24)
         case .barBackground:
