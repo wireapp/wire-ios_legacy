@@ -45,8 +45,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }()
 
     let cellNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .normalLightFont
+    let label = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -73,9 +72,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }()
 
     private let badgeLabel: UILabel = {
-        let badgeLabel = DynamicFontLabel(
-            fontSpec: .smallMediumFont,
-            color: .textInBadge)
+        let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
         badgeLabel.textAlignment = .center
 
         return badgeLabel
