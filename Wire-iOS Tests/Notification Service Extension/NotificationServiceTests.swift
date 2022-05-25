@@ -30,7 +30,7 @@ final class NotificationServiceTests: XCTestCase {
     var mockConversation: ZMConversation!
     var currentUserIdentifier: UUID!
 
-    var reportIncomingVoIPCallCalled: Bool = false
+    var callEventProviderMock: CallEventProviderMock!
 
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
@@ -48,8 +48,9 @@ final class NotificationServiceTests: XCTestCase {
         super.setUp()
 
         sut = NotificationService()
-        notificatioContent = createNotificatioContent()
+        callEventProviderMock = CallEventProviderMock()
         currentUserIdentifier = UUID.create()
+        notificatioContent = createNotificatioContent()
         request = UNNotificationRequest(identifier: currentUserIdentifier.uuidString,
                                         content: notificatioContent,
                                         trigger: nil)
@@ -60,11 +61,11 @@ final class NotificationServiceTests: XCTestCase {
         createAccount(with: currentUserIdentifier)
 
         sut.didReceive(request, withContentHandler: contentHandlerMock)
-        sut.callEventHandler = self
+        sut.callEventHandler = callEventProviderMock
     }
 
     override func tearDown() {
-        reportIncomingVoIPCallCalled = false
+        callEventProviderMock = nil
         sut = nil
         notificatioContent = nil
         request = nil
@@ -97,11 +98,11 @@ final class NotificationServiceTests: XCTestCase {
         let event = createEvent()
 
         // WHEN
-        XCTAssertFalse(reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
         sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
-        XCTAssertTrue(reportIncomingVoIPCallCalled)
+        XCTAssertTrue(callEventProviderMock.reportIncomingVoIPCallCalled)
     }
 
     func testThatItDoesNotReportCallEventIfPayloadIsWrong() {
@@ -120,11 +121,11 @@ final class NotificationServiceTests: XCTestCase {
         let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
 
         // WHEN
-        XCTAssertFalse(reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
         sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
-        XCTAssertFalse(reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
     }
 
 }
@@ -188,10 +189,11 @@ extension NotificationServiceTests {
 
 }
 
-extension NotificationServiceTests: CallEventHandlerInterface {
+class CallEventProviderMock: CallEventHandlerProtocol {
+
+    var reportIncomingVoIPCallCalled: Bool = false
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
         reportIncomingVoIPCallCalled = true
     }
-
 }

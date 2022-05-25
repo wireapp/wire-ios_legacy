@@ -30,11 +30,27 @@ protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
+class CallEventProvider: CallEventHandlerProtocol {
+
+    func reportIncomingVoIPCall(_ payload: [String: Any]) {
+        if #available(iOS 14.5, *) {
+            CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+                if let error = error {
+                    // TODO: handle
+                }
+            }
+        } else {
+
+        }
+    }
+
+}
+
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
     // MARK: - Properties
 
-    var callEventHandler: CallEventHandlerInterface?
+    var callEventHandler: CallEventHandlerProtocol = CallEventProvider()
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -77,8 +93,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         // Retain the session otherwise it will tear down.
         self.session = session
-
-        self.callEventHandler = self
     }
 
     public override func serviceExtensionTimeWillExpire() {
@@ -112,7 +126,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             return
         }
 
-        callEventHandler?.reportIncomingVoIPCall(payload)
+        callEventHandler.reportIncomingVoIPCall(payload)
     }
 
     // MARK: - Helpers
@@ -180,22 +194,6 @@ extension UNNotificationContent {
         }
 
         return userID
-    }
-
-}
-
-extension NotificationService: CallEventHandlerInterface {
-
-    func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        if #available(iOS 14.5, *) {
-            CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-                if let error = error {
-                    // TODO: handle
-                }
-            }
-        } else {
-
-        }
     }
 
 }
