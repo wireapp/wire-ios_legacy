@@ -18,14 +18,15 @@
 
 import Foundation
 import WireDataModel
+import WireCommonComponents
 
 protocol UserCellSubtitleProtocol: AnyObject {
     func subtitle(forRegularUser user: UserType?) -> NSAttributedString?
 
     static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] { get set }
 
-    static var boldFont: UIFont { get }
-    static var lightFont: UIFont { get }
+    static var boldFont: FontSpec { get }
+    static var lightFont: FontSpec { get }
 }
 
 extension UserCellSubtitleProtocol where Self: UIView & Themeable {
@@ -35,11 +36,11 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
         var components: [NSAttributedString?] = []
 
         if let handle = user.handleDisplayString(withDomain: user.isFederated), !handle.isEmpty {
-            components.append(handle && UserCell.boldFont)
+            components.append(handle && UserCell.boldFont.font!)
         }
 
         WirelessExpirationTimeFormatter.shared.string(for: user).apply {
-            components.append($0 && UserCell.boldFont)
+            components.append($0 && UserCell.boldFont.font!)
         }
 
         if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
@@ -47,7 +48,7 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
         }
 
-        return components.compactMap({ $0 }).joined(separator: " " + String.MessageToolbox.middleDot + " " && UserCell.lightFont)
+        return components.compactMap({ $0 }).joined(separator: " " + String.MessageToolbox.middleDot + " " && UserCell.lightFont.font!)
     }
 
     private static func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {
@@ -56,7 +57,7 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
         }
 
         let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
+        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont.font!, boldFont: boldFont.font!, color: color)
 
         correlationFormatters[colorSchemeVariant] = formatter
 

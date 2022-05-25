@@ -95,8 +95,8 @@ class AuthenticationInterfaceBuilder {
         case .provideCredentials(let credentialsFlowType, let prefill):
             return makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
 
-        case .createCredentials(_, let credentialsFlowType):
-            return makeCredentialsViewController(for: .registration(credentialsFlowType))
+        case .createCredentials:
+            return makeCredentialsViewController(for: .registration)
 
         case .clientManagement:
             let manageClientsInvitation = ClientUnregisterInvitationStepDescription()
