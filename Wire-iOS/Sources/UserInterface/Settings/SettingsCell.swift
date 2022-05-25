@@ -44,10 +44,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return iconImageView
     }()
 
-    let cellNameLabel: DynamicFontLabel = {
-        let label = DynamicFontLabel(
-            fontSpec: .normalLightFont,
-            color: .textForeground)
+    let cellNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalLightFont
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
