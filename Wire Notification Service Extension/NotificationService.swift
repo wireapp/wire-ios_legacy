@@ -26,7 +26,7 @@ import WireSyncEngine
 import UIKit
 import CallKit
 
-protocol CallEventHandlerInterface {
+protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
