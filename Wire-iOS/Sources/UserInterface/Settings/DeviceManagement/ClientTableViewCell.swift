@@ -20,17 +20,19 @@ import UIKit
 import CoreLocation
 import Contacts
 import WireDataModel
+import WireCommonComponents
 
-class ClientTableViewCell: UITableViewCell {
+class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
 
-    let nameLabel = UILabel(frame: CGRect.zero)
-    let labelLabel = UILabel(frame: CGRect.zero)
+    // MARK: - Properties
+    let nameLabel = DynamicFontLabel(fontSpec: .normalSemiboldFont, color: .textForeground)
+    let labelLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .textForeground)
     let activationLabel = UILabel(frame: CGRect.zero)
     let fingerprintLabel = UILabel(frame: CGRect.zero)
-    let verifiedLabel = UILabel(frame: CGRect.zero)
+    let verifiedLabel = DynamicFontLabel(fontSpec: .smallFont, color: .textForeground)
 
-    private let activationLabelFont = UIFont.smallLightFont
-    private let activationLabelDateFont = UIFont.smallSemiboldFont
+    private let activationLabelFont = FontSpec.smallLightFont
+    private let activationLabelDateFont = FontSpec.smallSemiboldFont
 
     var showVerified: Bool = false {
         didSet {
@@ -44,12 +46,12 @@ class ClientTableViewCell: UITableViewCell {
         }
     }
 
-    var fingerprintLabelFont: UIFont? {
+    var fingerprintLabelFont: FontSpec? {
         didSet {
             updateFingerprint()
         }
     }
-    var fingerprintLabelBoldFont: UIFont? {
+    var fingerprintLabelBoldFont: FontSpec? {
         didSet {
             updateFingerprint()
         }
@@ -66,16 +68,16 @@ class ClientTableViewCell: UITableViewCell {
             if let userClientModel = userClient.model {
                 nameLabel.text = userClientModel
             } else if userClient.isLegalHoldDevice {
-                nameLabel.text = "device.class.legalhold".localized
+                nameLabel.text = L10n.Localizable.Device.Class.legalhold
             }
 
             updateLabel()
 
             activationLabel.text = ""
             if let date = userClient.activationDate?.formattedDate {
-                let text = "registration.devices.activated".localized(args: date)
-                var attrText = NSAttributedString(string: text) && activationLabelFont
-                attrText = attrText.adding(font: activationLabelDateFont, to: date)
+                let text = L10n.Localizable.Registration.Devices.activated(date)
+                var attrText = NSAttributedString(string: text) && activationLabelFont.font
+                attrText = attrText.adding(font: activationLabelDateFont.font!, to: date)
                 activationLabel.attributedText = attrText
             }
 
@@ -106,6 +108,7 @@ class ClientTableViewCell: UITableViewCell {
         }
     }
 
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         wr_editable = true
 
@@ -116,33 +119,36 @@ class ClientTableViewCell: UITableViewCell {
         verifiedLabel.accessibilityIdentifier = "device verification status"
         verifiedLabel.isAccessibilityElement = true
 
+        activationLabel.numberOfLines = 0
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].forEach(contentView.addSubview)
 
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].prepareForLayout()
+
+        // Setting the constraints for the view
         NSLayoutConstraint.activate([
-          nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-          nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          nameLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            nameLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-          labelLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
-          labelLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          labelLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+            labelLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
+            labelLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            labelLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-          fingerprintLabel.topAnchor.constraint(equalTo: labelLabel.bottomAnchor, constant: 4),
-          fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          fingerprintLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
-          fingerprintLabel.heightAnchor.constraint(equalToConstant: 16),
+            fingerprintLabel.topAnchor.constraint(equalTo: labelLabel.bottomAnchor, constant: 4),
+            fingerprintLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            fingerprintLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+            fingerprintLabel.heightAnchor.constraint(equalToConstant: 16),
 
-          activationLabel.topAnchor.constraint(equalTo: fingerprintLabel.bottomAnchor, constant: 8),
-          activationLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          activationLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+            activationLabel.topAnchor.constraint(equalTo: fingerprintLabel.bottomAnchor, constant: 8),
+            activationLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            activationLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
 
-          verifiedLabel.topAnchor.constraint(equalTo: activationLabel.bottomAnchor, constant: 4),
-          verifiedLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-          verifiedLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
-          verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            verifiedLabel.topAnchor.constraint(equalTo: activationLabel.bottomAnchor, constant: 4),
+            verifiedLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            verifiedLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
+            verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
 
         backgroundColor = UIColor.clear
@@ -157,28 +163,27 @@ class ClientTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Override method
     override func setEditing(_ editing: Bool, animated: Bool) {
         if wr_editable {
             super.setEditing(editing, animated: animated)
         }
     }
 
+    // MARK: - Methods
     func setupStyle() {
-        nameLabel.font = .normalSemiboldFont
-        labelLabel.font = .smallSemiboldFont
-        verifiedLabel.font = .smallFont
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
     }
 
     func updateVerifiedLabel() {
         if let userClient = userClient,
-            showVerified {
+           showVerified {
 
             if userClient.verified {
-                verifiedLabel.text = NSLocalizedString("device.verified", comment: "")
+                verifiedLabel.text = L10n.Localizable.Device.verified
             } else {
-                verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "")
+                verifiedLabel.text = L10n.Localizable.Device.notVerified
             }
         } else {
             verifiedLabel.text = ""
@@ -186,16 +191,16 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     func updateFingerprint() {
-        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.monospaced(),
-            let fingerprintLabelMonoFont = fingerprintLabelFont?.monospaced(),
-            let fingerprintLabelTextColor = fingerprintTextColor,
-            let userClient = userClient, userClient.remoteIdentifier != nil {
+        if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.font?.monospaced(),
+           let fingerprintLabelMonoFont = fingerprintLabelFont?.font?.monospaced(),
+           let fingerprintLabelTextColor = fingerprintTextColor,
+           let userClient = userClient, userClient.remoteIdentifier != nil {
 
-                fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabelTextColor],
-                    boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabelTextColor],
-                    uppercase: true
-                )
+            fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
+                [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabelTextColor],
+                boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabelTextColor],
+                uppercase: true
+            )
         }
     }
 
@@ -205,5 +210,10 @@ class ClientTableViewCell: UITableViewCell {
         } else {
             labelLabel.text = ""
         }
+    }
+
+    func redrawFont() {
+        updateFingerprint()
+        updateLabel()
     }
 }
