@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
-"self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
 
 "self.accessibility.profile_photo_image" = "Profile picture";

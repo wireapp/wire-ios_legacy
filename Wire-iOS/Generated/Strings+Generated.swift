@@ -3567,8 +3567,6 @@ internal enum L10n {
       internal static let account = L10n.tr("Localizable", "self.account")
       /// Add email address and password
       internal static let addEmailPassword = L10n.tr("Localizable", "self.add_email_password")
-      /// Add phone number
-      internal static let addPhoneNumber = L10n.tr("Localizable", "self.add_phone_number")
       /// Support
       internal static let helpCenter = L10n.tr("Localizable", "self.help_center")
       /// Profile
