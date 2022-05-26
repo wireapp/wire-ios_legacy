@@ -274,7 +274,7 @@ extension ConversationInputBarViewController {
         } else {
             UIApplication.wr_requestVideoAccess({ _ in
                 if SecurityFlags.cameraRoll.isEnabled,
-                   MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll(){
+                   MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll() {
                     self.executeWithCameraRollPermission { _ in
                         self.mode = .camera
                         self.inputBar.textView.becomeFirstResponder()

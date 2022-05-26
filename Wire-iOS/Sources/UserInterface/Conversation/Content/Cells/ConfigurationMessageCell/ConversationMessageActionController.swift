@@ -84,7 +84,7 @@ final class ConversationMessageActionController {
     func canPerformAction(action: MessageAction) -> Bool {
         switch action {
         case .copy:
-            return message.canBeCopied  && mediaShareRestrictionManager.canDownloadMedia() 
+            return message.canBeCopied  && mediaShareRestrictionManager.canDownloadMedia()
         case .digitallySign:
             return message.canBeDigitallySigned
         case .reply:
@@ -100,7 +100,7 @@ final class ConversationMessageActionController {
         case .cancel:
             return message.canCancelDownload
         case .download:
-            return  message.canBeDownloaded && mediaShareRestrictionManager.canDownloadMedia() 
+            return  message.canBeDownloaded && mediaShareRestrictionManager.canDownloadMedia()
         case .forward:
             return message.canBeForwarded
         case .like:
