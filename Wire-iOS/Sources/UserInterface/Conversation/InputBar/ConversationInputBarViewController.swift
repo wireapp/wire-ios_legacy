@@ -200,7 +200,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     private var inputBarButtons: [IconButton] {
         switch MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).mediaShareRestrictionLevel {
-            
+
         case .none:
             return [
                 photoButton,

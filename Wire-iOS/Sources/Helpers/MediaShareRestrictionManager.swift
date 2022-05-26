@@ -42,9 +42,9 @@ class MediaShareRestrictionManager {
     init(sessionRestriction: SessionFileRestrictionsProtocol?) {
         self.sessionRestriction = sessionRestriction
     }
-    
+
     var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
-        if let sessionRestriction = sessionRestriction, sessionRestriction.sharingEnabled() == false  {
+        if let sessionRestriction = sessionRestriction, sessionRestriction.sharingEnabled() == false {
             return .APIFlag
         }
         return SecurityFlags.fileSharing.isEnabled ? .none : .securityFlag
