@@ -68,4 +68,8 @@ class MediaShareRestrictionManager {
     func canCopyFromClipboard() -> Bool {
         return canUploadMedia(from: .clipboard)
     }
+
+    func hasAccessToCameraRoll() -> Bool {
+        return mediaShareRestrictionLevel == .none
+    }
 }
