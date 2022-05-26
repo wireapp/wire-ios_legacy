@@ -19,6 +19,7 @@
 import UIKit
 import WireDataModel
 import WireCommonComponents
+import WireSyncEngine
 
 final class ConversationMessageActionController {
 
@@ -30,6 +31,7 @@ final class ConversationMessageActionController {
     let context: Context
     weak var responder: MessageActionResponder?
     weak var view: UIView!
+    private let mediaShareRestrictionManager = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
 
     init(responder: MessageActionResponder?,
          message: ZMConversationMessage,
@@ -82,7 +84,7 @@ final class ConversationMessageActionController {
     func canPerformAction(action: MessageAction) -> Bool {
         switch action {
         case .copy:
-            return message.canBeCopied
+            return message.canBeCopied  && mediaShareRestrictionManager.canDownloadMedia() 
         case .digitallySign:
             return message.canBeDigitallySigned
         case .reply:
@@ -94,11 +96,11 @@ final class ConversationMessageActionController {
         case .delete:
             return message.canBeDeleted
         case .save:
-            return message.canBeSaved
+            return message.canBeSaved && mediaShareRestrictionManager.canDownloadMedia()
         case .cancel:
             return message.canCancelDownload
         case .download:
-            return message.canBeDownloaded
+            return  message.canBeDownloaded && mediaShareRestrictionManager.canDownloadMedia() 
         case .forward:
             return message.canBeForwarded
         case .like:
