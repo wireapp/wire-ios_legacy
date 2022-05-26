@@ -37,12 +37,11 @@ enum MediaShareRestrictionLevel {
 
 class MediaShareRestrictionManager {
     private let sessionRestriction: SessionFileRestrictionsProtocol?
-    
+    private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
+
     init(sessionRestriction: SessionFileRestrictionsProtocol?) {
         self.sessionRestriction = sessionRestriction
     }
-    
-    private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
     
     var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
         if let sessionRestriction = sessionRestriction, sessionRestriction.sharingEnabled() == false  {
@@ -50,7 +49,7 @@ class MediaShareRestrictionManager {
         }
         return SecurityFlags.fileSharing.isEnabled ? .none : .securityFlag
     }
-    
+
     func canUploadMedia(from source: ShareableMediaSource) -> Bool {
         switch mediaShareRestrictionLevel {
         case .none:
@@ -61,11 +60,11 @@ class MediaShareRestrictionManager {
             return false
         }
     }
-    
+
     func canDownloadMedia() -> Bool {
         return  SecurityFlags.fileSharing.isEnabled
     }
-    
+
     func canCopyFromClipboard() -> Bool {
         return canUploadMedia(from: .clipboard)
     }
