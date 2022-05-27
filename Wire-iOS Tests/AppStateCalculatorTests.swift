@@ -139,6 +139,27 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertTrue(delegate.wasNotified)
     }
 
+    func testThatAppStateChanges_OnDidPerformFederationMigration() {
+        testThatAppStateChanges_OnDidPerformFederationMigration(authenticated: false)
+        testThatAppStateChanges_OnDidPerformFederationMigration(authenticated: true)
+    }
+
+    func testThatAppStateChanges_OnDidPerformFederationMigration(authenticated: Bool) {
+        // GIVEN
+        sut.applicationDidBecomeActive()
+
+        // WHEN
+        sut.sessionManagerDidPerformFederationMigration(authenticated: authenticated)
+
+        // THEN
+        let expectedAppState: AppState = authenticated ?
+            .authenticated(completedRegistration: false) :
+            .unauthenticated(error: NSError(code: .needsAuthenticationAfterMigration, userInfo: nil))
+
+        XCTAssertEqual(sut.appState, expectedAppState)
+        XCTAssertTrue(delegate.wasNotified)
+    }
+
     // MARK: - Tests AppState Changes
 
     func testApplicationDontTransit_WhenAppStateDontChanges() {
