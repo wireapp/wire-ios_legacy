@@ -134,20 +134,20 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             cell.preview = preview
         }
         cell.icon = self.icon
-//        if let groupCell = cell as? SettingsGroupCell {
-//            switch accessoryViewMode {
-//            case .default:
-//                if self.presentationStyle == .modal {
-//                    groupCell.accessoryType = .none
-//                } else {
-//                    groupCell.accessoryType = .disclosureIndicator
-//                }
-//            case .alwaysHide:
-//                groupCell.accessoryType = .none
-//            case .alwaysShow:
-//                groupCell.accessoryType = .disclosureIndicator
-//            }
-//        }
+        if let groupCell = cell as? SettingsTableCell {
+            switch accessoryViewMode {
+            case .default:
+                if self.presentationStyle == .modal {
+                    groupCell.hideDisclosureIndicator()
+                } else {
+                    groupCell.showDisclosureIndicator()
+                }
+            case .alwaysHide:
+                groupCell.hideDisclosureIndicator()
+            case .alwaysShow:
+                groupCell.showDisclosureIndicator()
+            }
+        }
     }
 
     func generateViewController() -> UIViewController? {
