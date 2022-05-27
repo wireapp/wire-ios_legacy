@@ -325,13 +325,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 }
 
-final class SettingsGroupCell: SettingsTableCell {
-    override func setup() {
-        super.setup()
-        accessoryType = .disclosureIndicator
-    }
-}
-
 final class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
