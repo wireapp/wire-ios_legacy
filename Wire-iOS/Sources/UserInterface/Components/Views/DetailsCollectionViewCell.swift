@@ -19,7 +19,16 @@
 import UIKit
 import WireCommonComponents
 
-class DetailsCollectionViewCell: SeparatorCollectionViewCell {
+class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable {
+    func redrawFont() {
+        statusLabel.font = FontSpec.smallRegularFont.font
+
+        if titleBolded == true {
+            titleLabel.font = FontSpec.normalSemiboldFont.font
+        } else {
+            titleLabel.font = FontSpec.normalLightFont.font
+        }
+    }
 
     private let leftIconView = UIImageView()
     private let titleLabel = UILabel()
@@ -37,11 +46,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     var titleBolded: Bool {
         get {
-            return titleLabel.font == FontSpec.init(.normal, .semibold).font
+            return titleLabel.font == FontSpec.normalSemiboldFont.font
         }
 
         set {
-            titleLabel.font = newValue ? FontSpec.init(.normal, .semibold).font! : FontSpec.init(.normal, .light).font!
+            titleLabel.font = newValue ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
         }
     }
 
@@ -76,10 +85,10 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.font = FontSpec.normalLightFont.font
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.init(.small, .regular).font!
+        statusLabel.font = FontSpec.smallRegularFont.font
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
