@@ -21,17 +21,17 @@ import WireSyncEngine
 import WireShareEngine
 
 protocol SessionFileRestrictionsProtocol {
-    func sharingEnabled() -> Bool
+    var isFileSharingEnabled: Bool { get }
 }
 
 extension ZMUserSession: SessionFileRestrictionsProtocol {
-    func sharingEnabled() -> Bool {
+    var isFileSharingEnabled: Bool {
         return fileSharingFeature.status == .enabled
     }
 }
 
 extension SharingSession: SessionFileRestrictionsProtocol {
-    func sharingEnabled() -> Bool {
+    var isFileSharingEnabled: Bool {
         return fileSharingFeature.status == .enabled
     }
 }
