@@ -66,7 +66,7 @@ class MediaShareRestrictionManager {
     }
 
     func canCopyToClipboard() -> Bool {
-        return  SecurityFlags.fileSharing.isEnabled
+        return SecurityFlags.fileSharing.isEnabled
     }
 
     func canCopyFromClipboard() -> Bool {
