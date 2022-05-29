@@ -114,7 +114,7 @@ final class ConversationCreationController: UIViewController {
         guestsSection,
         servicesSection,
         receiptsSection,
-        selfUser.canCreateMLSGroups ? mlsSection : nil
+        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? mlsSection : nil
     ].compactMap(\.self)
 
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {

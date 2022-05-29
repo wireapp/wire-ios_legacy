@@ -1268,6 +1268,8 @@
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
 		EE6C2125284118B00031EFB9 /* ConversationCreateMLSSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2124284118B00031EFB9 /* ConversationCreateMLSSectionController.swift */; };
 		EE6C2127284118D80031EFB9 /* ConversationCreateMLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2126284118D80031EFB9 /* ConversationCreateMLSCell.swift */; };
+		EE6C212928438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */; };
+		EE6C212D284390FB0031EFB9 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
@@ -3154,6 +3156,8 @@
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
 		EE6C2124284118B00031EFB9 /* ConversationCreateMLSSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateMLSSectionController.swift; sourceTree = "<group>"; };
 		EE6C2126284118D80031EFB9 /* ConversationCreateMLSCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateMLSCell.swift; sourceTree = "<group>"; };
+		EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Developer.swift"; sourceTree = "<group>"; };
+		EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlagsView.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE7C919727B40EBD00595977 /* Wire Notification Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire Notification Extension.entitlements"; sourceTree = "<group>"; };
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
@@ -4850,6 +4854,7 @@
 				63A5E6E324C1ACFC00F7D401 /* SettingsCellDescriptorFactory+Advanced.swift */,
 				BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */,
 				BF808B4C1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift */,
+				EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */,
 				EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */,
 				63A5E6F524C87DFF00F7D401 /* SettingsCellDescriptorFactory+SoundAlert.swift */,
 				871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */,
@@ -5745,6 +5750,7 @@
 			isa = PBXGroup;
 			children = (
 				54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */,
+				EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */,
 				54FF9E271E813BA500323D2E /* DebugAlert.swift */,
 			);
 			path = Developer;
@@ -8621,6 +8627,7 @@
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
+				EE6C212928438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift in Sources */,
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
 				EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */,
@@ -8826,6 +8833,7 @@
 				637387C726443C31004FEF79 /* VideoKind.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
+				EE6C212D284390FB0031EFB9 /* DeveloperFlagsView.swift in Sources */,
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
 				A96E803224CB2AB60010CD80 /* PasscodeSetupViewController.swift in Sources */,
