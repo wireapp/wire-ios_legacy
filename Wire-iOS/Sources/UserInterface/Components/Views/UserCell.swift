@@ -35,8 +35,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
-    let titleLabel = UILabel()
-    let subtitleLabel = UILabel()
+    let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
+    let subtitleLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .sectionText)
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
     let userTypeIconView = IconImageView()
@@ -52,8 +52,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     weak var user: UserType?
 
-    static let boldFont: UIFont = .smallRegularFont
-    static let lightFont: UIFont = .smallLightFont
+    static let boldFont: FontSpec = .smallRegularFont
+    static let lightFont: FontSpec = .smallLightFont
     static let defaultAvatarSpacing: CGFloat = 64
 
     /// Specify a custom avatar spacing
@@ -119,11 +119,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         accessoryIconView.setUpIconImageView()
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = .normalLightFont
         titleLabel.accessibilityIdentifier = "user_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = .smallRegularFont
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
 
         avatar.userSession = ZMUserSession.shared()
@@ -262,7 +260,7 @@ extension UserCell {
     private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {
         guard let summary = service.summary else { return nil }
 
-        return summary && UserCell.boldFont
+        return summary && UserCell.boldFont.font!
     }
 
     static var correlationFormatters: [ColorSchemeVariant: AddressBookCorrelationFormatter] = [:]

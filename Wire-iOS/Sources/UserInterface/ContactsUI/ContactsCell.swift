@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> Void
 
@@ -56,8 +57,8 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
-    static let boldFont: UIFont = .smallRegularFont
-    static let lightFont: UIFont = .smallLightFont
+    static let boldFont: FontSpec = .smallRegularFont
+    static let lightFont: FontSpec = .smallLightFont
 
     let avatar: BadgeUserImageView = {
         let badgeUserImageView = BadgeUserImageView()

@@ -23,7 +23,7 @@ import WireCommonComponents
 class StartUIIconCell: UICollectionViewCell {
 
     fileprivate let iconView = UIImageView()
-    fileprivate let titleLabel = UILabel()
+    fileprivate let titleLabel = DynamicFontLabel(fontSpec: .normalLightFont, color: .textForeground)
     fileprivate let separator = UIView()
 
     fileprivate var icon: StyleKitIcon? {
@@ -57,7 +57,6 @@ class StartUIIconCell: UICollectionViewCell {
 
     fileprivate func setupViews() {
         iconView.contentMode = .center
-        titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.textColor = .white
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: .dark)
