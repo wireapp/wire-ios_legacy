@@ -35,16 +35,23 @@ enum MediaShareRestrictionLevel {
     case APIFlag
 }
 
-class MediaShareRestrictionManager {
+final class MediaShareRestrictionManager {
+
+    // MARK: - Private Properties
+
     private let sessionRestriction: SessionFileRestrictionsProtocol?
     private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
+
+    // MARK: - Life cycle
 
     init(sessionRestriction: SessionFileRestrictionsProtocol?) {
         self.sessionRestriction = sessionRestriction
     }
 
+    // MARK: - Public Properties
+
     var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
-        if let sessionRestriction = sessionRestriction, sessionRestriction.sharingEnabled() == false {
+        if let sessionRestriction = sessionRestriction, !sessionRestriction.isFileSharingEnabled {
             return .APIFlag
         }
         return SecurityFlags.fileSharing.isEnabled ? .none : .securityFlag
@@ -55,25 +62,26 @@ class MediaShareRestrictionManager {
         case .none:
             return true
         case .securityFlag:
-            return securityFlagRestrictedTypes.contains(source)
+            return !securityFlagRestrictedTypes.contains(source)
         case .APIFlag:
             return false
         }
     }
 
-    func canDownloadMedia() -> Bool {
-        return  SecurityFlags.fileSharing.isEnabled
-    }
-
-    func canCopyToClipboard() -> Bool {
+    var canDownloadMedia: Bool {
         return SecurityFlags.fileSharing.isEnabled
     }
 
-    func canCopyFromClipboard() -> Bool {
+    var canCopyToClipboard: Bool {
+        return SecurityFlags.fileSharing.isEnabled
+    }
+
+    var canCopyFromClipboard: Bool {
         return canUploadMedia(from: .clipboard)
     }
 
-    func hasAccessToCameraRoll() -> Bool {
+    var hasAccessToCameraRoll: Bool {
         return mediaShareRestrictionLevel == .none
     }
+
 }

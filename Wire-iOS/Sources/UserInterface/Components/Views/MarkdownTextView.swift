@@ -68,7 +68,7 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
              #selector(UIResponderStandardEditActions.copy(_:)):
 
             let pasteboard = UIPasteboard.general
-            let canFilesBeShared = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard()
+            let canFilesBeShared = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
             guard shouldAllowPerformAction(isText: pasteboard.hasText,
                                          isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
                                          canFilesBeShared: canFilesBeShared) else { return false }

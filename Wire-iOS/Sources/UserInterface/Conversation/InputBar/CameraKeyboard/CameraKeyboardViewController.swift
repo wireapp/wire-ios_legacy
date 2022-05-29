@@ -344,7 +344,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         }
 
         if permissions.isPhotoLibraryAuthorized,
-           mediaSharingRestrictionsMananger.hasAccessToCameraRoll() {
+           mediaSharingRestrictionsMananger.hasAccessToCameraRoll {
             self.collectionViewLayout.minimumLineSpacing = 1
             self.collectionViewLayout.minimumInteritemSpacing = 0.5
             self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 1)
@@ -365,7 +365,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             setupPhotoKeyboardAppearance()
         }
         guard permissions.areCameraOrPhotoLibraryAuthorized,
-              mediaSharingRestrictionsMananger.hasAccessToCameraRoll() else {
+              mediaSharingRestrictionsMananger.hasAccessToCameraRoll else {
             return 1
         }
         return 2

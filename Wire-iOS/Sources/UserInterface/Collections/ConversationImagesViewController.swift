@@ -263,7 +263,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             .sketchEmoji)
 
             let revealButton = iconButton(messageAction: .showInConversation)
-            if MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia() == false {
+            if !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia {
                 buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, revealButton]
             } else {
                 buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
