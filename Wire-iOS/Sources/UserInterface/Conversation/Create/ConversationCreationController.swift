@@ -29,10 +29,12 @@ final class ConversationCreationValues {
     private var unfilteredParticipants: UserSet
     private let selfUser: UserType
 
+    var name: String
     var allowGuests: Bool
     var allowServices: Bool
     var enableReceipts: Bool
-    var name: String
+    var useMLS: Bool
+
     var participants: UserSet {
         get {
             var result = unfilteredParticipants
@@ -54,17 +56,21 @@ final class ConversationCreationValues {
         }
     }
 
-    init (name: String = "",
-          participants: UserSet = UserSet(),
-          allowGuests: Bool = true,
-          allowServices: Bool = true,
-          enableReceipts: Bool = true,
-          selfUser: UserType) {
+    init(
+        name: String = "",
+        participants: UserSet = UserSet(),
+        allowGuests: Bool = true,
+        allowServices: Bool = true,
+        enableReceipts: Bool = true,
+        useMLS: Bool = false,
+        selfUser: UserType
+    ) {
         self.name = name
         self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
         self.allowServices = allowServices
         self.enableReceipts = enableReceipts
+        self.useMLS = useMLS
         self.selfUser = selfUser
     }
 }
@@ -94,11 +100,18 @@ final class ConversationCreationController: UIViewController {
         return ConversationCreateErrorSectionController()
     }()
 
-    private lazy var optionsSection: ConversationCreateOptionsSectionController = {
+    private lazy var optionsToggle: ConversationCreateOptionsSectionController = {
         let section = ConversationCreateOptionsSectionController(values: self.values)
         section.tapHandler = self.optionsTapped
         return section
     }()
+
+    private lazy var optionsSections = [
+        guestsSection,
+        servicesSection,
+        receiptsSection,
+        selfUser.canCreateMLSGroups ? mlsSection : nil
+    ].compactMap(\.self)
 
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
         let section = ConversationCreateGuestsSectionController(values: self.values)
@@ -135,13 +148,17 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
 
-    var optionsExpanded: Bool = false {
-        didSet {
-            self.guestsSection.isHidden = !optionsExpanded
-            self.servicesSection.isHidden = !optionsExpanded
-            self.receiptsSection.isHidden = !optionsExpanded
+    private lazy var mlsSection: ConversationCreateMLSSectionController = {
+        let section = ConversationCreateMLSSectionController(values: self.values)
+        section.isHidden = true
+
+        section.toggleAction = { [unowned self] useMLS in
+            self.values.useMLS = useMLS
+            self.updateOptions()
         }
-    }
+
+        return section
+    }()
 
     fileprivate var navBarBackgroundView = UIView()
 
@@ -213,12 +230,7 @@ final class ConversationCreationController: UIViewController {
         collectionViewController.sections = [nameSection, errorSection]
 
         if selfUser.isTeamMember {
-            collectionViewController.sections.append(contentsOf: [
-                optionsSection,
-                guestsSection,
-                servicesSection,
-                receiptsSection
-            ])
+            collectionViewController.sections.append(contentsOf: [optionsToggle] + optionsSections)
         }
 
         navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
@@ -275,7 +287,7 @@ final class ConversationCreationController: UIViewController {
     }
 
     private func updateOptions() {
-        self.optionsSection.configure(with: values)
+        self.optionsToggle.configure(with: values)
         self.guestsSection.configure(with: values)
         self.servicesSection.configure(with: values)
         self.receiptsSection.configure(with: values)
@@ -342,15 +354,18 @@ extension ConversationCreationController {
             return
         }
 
-        optionsExpanded = expanded
+        optionsSections.forEach {
+            $0.isHidden = !expanded
+        }
 
         let changes: () -> Void
+        let indexSet = IndexSet(integersIn: 3..<(3+optionsSections.count))
 
         if expanded {
             nameSection.resignFirstResponder()
-            changes = { collectionView.insertSections([3, 4, 5]) }
+            changes = { collectionView.insertSections(indexSet) }
         } else {
-            changes = { collectionView.deleteSections([3, 4, 5]) }
+            changes = { collectionView.deleteSections(indexSet) }
         }
 
         collectionView.performBatchUpdates(changes)

@@ -1140,6 +1140,12 @@ internal enum L10n {
           /// Too many characters
           internal static let toolong = L10n.tr("Localizable", "conversation.create.guidance.toolong")
         }
+        internal enum Mls {
+          /// Use the MLS protocol for this conversation.
+          internal static let subtitle = L10n.tr("Localizable", "conversation.create.mls.subtitle")
+          /// Use MLS
+          internal static let title = L10n.tr("Localizable", "conversation.create.mls.title")
+        }
         internal enum Options {
           /// Guests: %@, Services: %@, Read receipts: %@
           internal static func subtitle(_ p1: Any, _ p2: Any, _ p3: Any) -> String {

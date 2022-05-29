@@ -256,6 +256,8 @@ class MockUserType: NSObject, UserType, Decodable {
         return isGroupAdminInConversation
     }
 
+    var canCreateMLSGroups: Bool = false
+
     // MARK: - Methods
 
     func connect(completion: @escaping (Error?) -> Void) {
