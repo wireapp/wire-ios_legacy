@@ -23,11 +23,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
     func redrawFont() {
         statusLabel.font = FontSpec.smallRegularFont.font
 
-        if titleBolded == true {
-            titleLabel.font = FontSpec.normalSemiboldFont.font
-        } else {
-            titleLabel.font = FontSpec.normalLightFont.font
-        }
+        titleLabel.font = titleBolded ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
     }
 
     private let leftIconView = UIImageView()
