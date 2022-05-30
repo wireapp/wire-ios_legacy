@@ -42,7 +42,7 @@ extension ZMConversationMessage {
                   return false
               }
 
-        if (isText || isLocation) {
+        if isText || isLocation {
             return SecurityFlags.clipboard.isEnabled
         } else {
             return MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
