@@ -34,7 +34,8 @@ class StartUIIconCell: UICollectionViewCell {
 
     fileprivate var title: String? {
         didSet {
-            titleLabel.text = title
+            
+          .text = title
         }
     }
 
