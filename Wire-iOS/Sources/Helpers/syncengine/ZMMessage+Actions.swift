@@ -37,12 +37,16 @@ extension ZMConversationMessage {
 
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        guard canBeShared else {
-            return false
+        guard canBeShared,
+              !isEphemeral else {
+                  return false
+              }
+
+        if (isText || isLocation) {
+            return SecurityFlags.clipboard.isEnabled
+        } else {
+            return MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
         }
-        return SecurityFlags.clipboard.isEnabled
-            && !isEphemeral
-            && (isText || isImage || isLocation)
     }
 
     /// Whether the message can be edited.
@@ -110,7 +114,8 @@ extension ZMConversationMessage {
     /// Whether it is possible to download the message content.
     var canBeDownloaded: Bool {
         guard let fileMessageData = self.fileMessageData,
-              canBeShared else {
+              canBeShared,
+              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
             return false
         }
         return isFile
@@ -128,9 +133,11 @@ extension ZMConversationMessage {
 
     /// Whether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !canBeShared {
-            return false
-        }
+        guard canBeShared,
+              !isEphemeral,
+              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
+                  return false
+              }
 
         if isImage {
             return true
@@ -175,4 +182,5 @@ extension ZMConversationMessage {
     var canBeShared: Bool {
         return !isRestricted
     }
+
 }
