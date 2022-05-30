@@ -65,8 +65,7 @@ final class ConversationCreationControllerSnapshotTests: XCTestCase {
 
     func testTeamGroupOptionsExpanded() {
         createSut(isTeamMember: true)
-
-        sut.optionsExpanded = true
+        sut.expandOptions()
 
         verify(matching: sut)
     }

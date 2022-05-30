@@ -369,20 +369,31 @@ extension ConversationCreationController {
             return
         }
 
-        optionsSections.forEach {
-            $0.isHidden = !expanded
-        }
-
         let changes: () -> Void
         let indexSet = IndexSet(integersIn: 3..<(3+optionsSections.count))
 
         if expanded {
             nameSection.resignFirstResponder()
+            expandOptions()
             changes = { collectionView.insertSections(indexSet) }
         } else {
+            collapseOptions()
             changes = { collectionView.deleteSections(indexSet) }
         }
 
         collectionView.performBatchUpdates(changes)
     }
+
+    func expandOptions() {
+        optionsSections.forEach {
+            $0.isHidden = false
+        }
+    }
+
+    func collapseOptions() {
+        optionsSections.forEach {
+            $0.isHidden = true
+        }
+    }
+
 }
