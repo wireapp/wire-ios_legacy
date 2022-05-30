@@ -154,7 +154,6 @@ final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
     }
 }
 
-
 // MARK: SimpleTextField Extension
 extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     func textFieldValueChanged(_ value: String?) {
