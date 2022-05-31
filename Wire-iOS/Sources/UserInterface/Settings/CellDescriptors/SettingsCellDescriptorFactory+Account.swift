@@ -80,7 +80,7 @@ extension SettingsCellDescriptorFactory {
 
         if !user.usesCompanyLogin {
             if !user.hasTeam || user.phoneNumber?.isEmpty == false,
-               let phoneElement = phoneElement(enabled: userRightInterfaceType.selfUserIsPermitted(to: .editPhone)) {
+               let phoneElement = phoneElement() {
                 cellDescriptors.append(phoneElement)
             }
 
@@ -199,30 +199,11 @@ extension SettingsCellDescriptorFactory {
         }
     }
 
-    func phoneElement(enabled: Bool = true) -> SettingsCellDescriptorType? {
-        if enabled {
-            return SettingsExternalScreenCellDescriptor(
-                title: "self.settings.account_section.phone.title".localized,
-                isDestructive: false,
-                presentationStyle: .navigation,
-                presentationAction: {
-                    return ChangePhoneViewController()
-                },
-                previewGenerator: { _ in
-                    if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-                        return SettingsCellPreview.text(phoneNumber)
-                    } else {
-                        return SettingsCellPreview.text("self.add_phone_number".localized)
-                    }
-            },
-                accessoryViewMode: .alwaysHide
-            )
+    func phoneElement() -> SettingsCellDescriptorType? {
+        if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
+            return textValueCellDescriptor(propertyName: .phone, enabled: false)
         } else {
-            if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-                return textValueCellDescriptor(propertyName: .phone, enabled: enabled)
-            } else {
-                return nil
-            }
+            return nil
         }
     }
 

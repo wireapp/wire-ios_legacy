@@ -311,9 +311,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .repeatAction:
                 repeatAction()
 
-            case .advanceTeamCreation(let newValue):
-                advanceTeamCreation(value: newValue)
-
             case .displayInlineError(let error):
                 currentViewController?.displayError(error)
 
@@ -439,8 +436,6 @@ extension AuthenticationCoordinator {
     /// Repeats the current action.
     func repeatAction() {
         switch stateController.currentStep {
-        case .teamCreation(.verifyEmail):
-            resendTeamEmailCode()
         case .enterPhoneVerificationCode, .enterActivationCode, .enterEmailVerificationCode:
             resendVerificationCode()
         default:
@@ -552,9 +547,6 @@ extension AuthenticationCoordinator {
         case .incrementalUserCreation:
             updateUnregisteredUser(\.marketingConsent, consentValue)
 
-        case .teamCreation(TeamCreationState.provideMarketingConsent(let teamName, let email, let activationCode)):
-            let nextState: TeamCreationState = .setFullName(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: consentValue)
-            stateController.transition(to: .teamCreation(nextState), mode: .reset)
         default:
             log.error("Cannot set marketing consent in current state \(stateController.currentStep)")
             return
@@ -592,9 +584,6 @@ extension AuthenticationCoordinator {
                 return nil
             }
 
-            return AuthenticationPostRegistrationFields(marketingConsent: marketingConsent)
-
-        case let .teamCreation(.createTeam(_, _, _, marketingConsent, _, _)):
             return AuthenticationPostRegistrationFields(marketingConsent: marketingConsent)
 
         default:
@@ -794,79 +783,6 @@ extension AuthenticationCoordinator {
         }
 
         stateController.unwindState()
-    }
-
-    // MARK: - User Input
-
-    /**
-     * Advances the team creation state with the user input.
-     * - parameter value: The value provided by the user.
-     */
-
-    private func advanceTeamCreation(value: String) {
-        guard case .teamCreation(let state) = stateController.currentStep else {
-            log.error("Cannot advance team creation outside of the dedicated flow.")
-            return
-        }
-
-        guard let nextState = state.nextState(with: value) else {
-            log.error("The state \(state) cannot be advanced.")
-            return
-        }
-
-        stateController.transition(to: .teamCreation(nextState))
-
-        switch nextState {
-        case let .sendEmailCode(_, emailAddress, _):
-            guard let presenter = self.presenter else {
-                break
-            }
-
-            UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: true) { approved in
-                if approved {
-                    presenter.isLoadingViewVisible = true
-                    self.registrationStatus.sendActivationCode(to: .email(emailAddress))
-                } else {
-                    presenter.isLoadingViewVisible = false
-                    self.stateController.unwindState()
-                }
-            }
-
-        case let .verifyActivationCode(_, emailAddress, activationCode):
-            presenter?.isLoadingViewVisible = true
-            registrationStatus.checkActivationCode(credentials: .email(emailAddress), code: activationCode)
-
-        case .provideMarketingConsent:
-            presenter?.isLoadingViewVisible = false
-            let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
-            presentAlert(for: marketingConsentAlertModel)
-
-        case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            presenter?.isLoadingViewVisible = true
-            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
-            registrationStatus.create(team: unregisteredTeam)
-
-        default:
-            break
-        }
-
-    }
-
-    /// Resend the team activation code.
-    private func resendTeamEmailCode() {
-        guard case let .teamCreation(teamState) = stateController.currentStep else {
-            return
-        }
-
-        guard case let .verifyEmail(teamName, emailAddress) = teamState else {
-            return
-        }
-
-        presenter?.isLoadingViewVisible = true
-        let nextTeamState: TeamCreationState = .sendEmailCode(teamName: teamName, email: emailAddress, isResend: true)
-        stateController.transition(to: .teamCreation(nextTeamState))
-
-        registrationStatus.sendActivationCode(to: .email(emailAddress))
     }
 
 }
