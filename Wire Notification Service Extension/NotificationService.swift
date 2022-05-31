@@ -30,7 +30,7 @@ protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
-class CallEventProvider: CallEventHandlerProtocol {
+class CallEventHandler: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
         guard #available(iOS 14.5, *) else { return }
@@ -47,7 +47,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     // MARK: - Properties
 
-    var callEventHandler: CallEventHandlerProtocol = CallEventProvider()
+    var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?

@@ -23,14 +23,14 @@ final class NotificationServiceTests: XCTestCase {
 
     var sut: NotificationService!
     var request: UNNotificationRequest!
-    var notificatioContent: UNNotificationContent!
+    var notificationContent: UNNotificationContent!
     var contentResult: UNNotificationContent?
 
     var coreDataFixture: CoreDataFixture!
     var mockConversation: ZMConversation!
     var currentUserIdentifier: UUID!
 
-    var callEventProviderMock: CallEventProviderMock!
+    var callEventHandlerMock: CallEventHandlerMock!
 
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
@@ -48,11 +48,11 @@ final class NotificationServiceTests: XCTestCase {
         super.setUp()
 
         sut = NotificationService()
-        callEventProviderMock = CallEventProviderMock()
+        callEventHandlerMock = CallEventHandlerMock()
         currentUserIdentifier = UUID.create()
-        notificatioContent = createNotificatioContent()
+        notificationContent = createNotificationContent()
         request = UNNotificationRequest(identifier: currentUserIdentifier.uuidString,
-                                        content: notificatioContent,
+                                        content: notificationContent,
                                         trigger: nil)
 
         coreDataFixture = CoreDataFixture()
@@ -61,13 +61,13 @@ final class NotificationServiceTests: XCTestCase {
         createAccount(with: currentUserIdentifier)
 
         sut.didReceive(request, withContentHandler: contentHandlerMock)
-        sut.callEventHandler = callEventProviderMock
+        sut.callEventHandler = callEventHandlerMock
     }
 
     override func tearDown() {
-        callEventProviderMock = nil
+        callEventHandlerMock = nil
         sut = nil
-        notificatioContent = nil
+        notificationContent = nil
         request = nil
         contentResult = nil
 
@@ -78,7 +78,7 @@ final class NotificationServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatNotificationSessionGeneratesNotification() {
+    func testThatItHandlesGeneratedNotification() {
         // GIVEN
         let unreadConversationCount = 5
         let note = textNotification(mockConversation, sender: otherUser)
@@ -98,14 +98,14 @@ final class NotificationServiceTests: XCTestCase {
         let event = createEvent()
 
         // WHEN
-        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
         sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
-        XCTAssertTrue(callEventProviderMock.reportIncomingVoIPCallCalled)
+        XCTAssertTrue(callEventHandlerMock.reportIncomingVoIPCallCalled)
     }
 
-    func testThatItDoesNotReportCallEventIfPayloadIsWrong() {
+    func testThatItDoesNotReportCallEventForNonCallEvent() {
         // GIVEN
         let genericMessage = GenericMessage(content: Text(content: "Hello Hello!", linkPreviews: []),
                                             nonce: UUID.create())
@@ -121,11 +121,11 @@ final class NotificationServiceTests: XCTestCase {
         let event = ZMUpdateEvent(fromEventStreamPayload: payload as ZMTransportData, uuid: UUID.create())!
 
         // WHEN
-        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
         sut.reportCallEvent(event, currentTimestamp: Date().timeIntervalSince1970)
 
         // THEN
-        XCTAssertFalse(callEventProviderMock.reportIncomingVoIPCallCalled)
+        XCTAssertFalse(callEventHandlerMock.reportIncomingVoIPCallCalled)
     }
 
 }
@@ -145,7 +145,7 @@ extension NotificationServiceTests {
         manager.addOrUpdate(account)
     }
 
-    private func createNotificatioContent() -> UNMutableNotificationContent {
+    private func createNotificationContent() -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.body = "body"
         content.title = "title"
@@ -189,7 +189,7 @@ extension NotificationServiceTests {
 
 }
 
-class CallEventProviderMock: CallEventHandlerProtocol {
+class CallEventHandlerMock: CallEventHandlerProtocol {
 
     var reportIncomingVoIPCallCalled: Bool = false
 
