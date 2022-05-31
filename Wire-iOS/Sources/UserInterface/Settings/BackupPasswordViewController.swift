@@ -18,6 +18,7 @@
 
 import UIKit
 import WireUtilities
+import WireCommonComponents
 
 struct Password {
     let value: String
@@ -52,19 +53,22 @@ final class BackupPasswordViewController: UIViewController {
     fileprivate var password: Password?
     private let passwordView = SimpleTextField()
 
-    private let subtitleLabel = UILabel(
-        key: "self.settings.history_backup.password.description",
-        size: .medium,
-        weight: .regular,
-        color: .textDimmed,
-        variant: .light
-    )
+    private let subtitleLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(text: L10n.Localizable.Self.Settings.HistoryBackup.Password.description,
+                                     fontSpec: .mediumRegularFont,
+                                     color: .textDimmed,
+                                     variant: .light)
+        label.numberOfLines = 0
+        return label
+    }()
 
-    private let passwordRulesLabel = UILabel(key: nil,
-                                             size: .medium,
-                                             weight: .regular,
-                                             color: .textDimmed,
-                                             variant: .light)
+    private let passwordRulesLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                     color: .textDimmed,
+                                     variant: .light)
+        label.numberOfLines = 0
+        return label
+    }()
 
     init(completion: @escaping Completion) {
         self.completion = completion
@@ -94,10 +98,6 @@ final class BackupPasswordViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
-
-        subtitleLabel.numberOfLines = 0
-
-        passwordRulesLabel.numberOfLines = 0
         passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
 
         [passwordView, subtitleLabel, passwordRulesLabel].forEach {
@@ -106,7 +106,7 @@ final class BackupPasswordViewController: UIViewController {
         }
 
         passwordView.colorSchemeVariant = .light
-        passwordView.placeholder = "self.settings.history_backup.password.placeholder".localized.localizedUppercase
+        passwordView.placeholder = L10n.Localizable.Self.Settings.HistoryBackup.Password.placeholder.localizedUppercase
         passwordView.accessibilityIdentifier = "password input"
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
@@ -135,7 +135,7 @@ final class BackupPasswordViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.from(scheme: .textForeground, variant: .light)
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
 
-        title = "self.settings.history_backup.password.title".localized(uppercased: true)
+        title = L10n.Localizable.Self.Settings.HistoryBackup.Password.title.localizedUppercase
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "self.settings.history_backup.password.cancel".localized(uppercased: true),
             style: .plain,
@@ -143,7 +143,7 @@ final class BackupPasswordViewController: UIViewController {
             action: #selector(cancel)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.next".localized(uppercased: true),
+            title: L10n.Localizable.Self.Settings.HistoryBackup.Password.next.localizedUppercase,
             style: .done,
             target: self,
             action: #selector(completeWithCurrentResult)

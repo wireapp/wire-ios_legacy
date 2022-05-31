@@ -26,12 +26,12 @@ final class ArchivedNavigationBar: UIView {
 
         return view
     }()
-
     let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .from(scheme: .textForeground, variant: .dark)
-        label.font = .mediumSemiboldFont
-
+        let label = DynamicFontLabel(
+            fontSpec: .mediumSemiboldFont,
+            color: .textBackground,
+            variant: .dark
+        )
         return label
     }()
     let dismissButton = IconButton()
