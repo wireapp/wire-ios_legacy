@@ -59,6 +59,9 @@
                   Identifier = "ArticleViewTests/testArticleViewWithPicture()">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests/testArticleViewWithoutPicture()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
