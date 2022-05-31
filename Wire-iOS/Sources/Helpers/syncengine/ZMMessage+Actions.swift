@@ -37,16 +37,13 @@ extension ZMConversationMessage {
 
     /// Whether the message can be copied.
     var canBeCopied: Bool {
-        guard canBeShared,
-              !isEphemeral else {
-                  return false
-              }
-
-        if isText || isLocation {
-            return SecurityFlags.clipboard.isEnabled
-        } else {
-            return MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
+        guard canBeShared else {
+            return false
         }
+        return SecurityFlags.clipboard.isEnabled &&
+               MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard &&
+               !isEphemeral &&
+               (isText || isImage || isLocation)
     }
 
     /// Whether the message can be edited.
