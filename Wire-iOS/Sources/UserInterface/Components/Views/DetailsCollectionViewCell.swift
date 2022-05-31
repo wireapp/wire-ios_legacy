@@ -20,11 +20,8 @@ import UIKit
 import WireCommonComponents
 
 class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable {
-    func redrawFont() {
-        statusLabel.font = FontSpec.smallRegularFont.font
 
-        titleLabel.font = titleBolded ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
-    }
+    // MARK: - Properties
 
     private let leftIconView = UIImageView()
     private let titleLabel = UILabel()
@@ -37,8 +34,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     /// The leading offset of the content when `icon` is nil.
     var contentLeadingOffset: CGFloat = 24
-
-    // MARK: - Properties
 
     var titleBolded: Bool {
         get {
@@ -71,7 +66,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         }
     }
 
-    // MARK: - Configuration
+    // MARK: - Configuration - Override Methods
 
     override func setUp() {
         super.setUp()
@@ -166,6 +161,12 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     private func updateDisabledState() {
         titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
+    }
+
+    func redrawFont() {
+        statusLabel.font = FontSpec.smallRegularFont.font
+
+        titleLabel.font = titleBolded ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
     }
 
 }
