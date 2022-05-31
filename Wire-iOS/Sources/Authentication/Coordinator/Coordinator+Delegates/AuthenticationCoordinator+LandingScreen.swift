@@ -36,10 +36,6 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
         stateController.transition(to: .createCredentials(unregisteredUser))
     }
 
-    func landingViewControllerDidChooseCreateTeam() {
-        stateController.transition(to: .teamCreation(.setTeamName))
-    }
-
     func landingViewControllerDidChooseEnterpriseLogin() {
         executeActions([.startCompanyLogin(code: nil)])
     }
