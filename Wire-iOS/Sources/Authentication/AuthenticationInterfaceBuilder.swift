@@ -147,9 +147,6 @@ class AuthenticationInterfaceBuilder {
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)
 
-        case .teamCreation(let state):
-            return makeTeamCreationStepViewController(for: state)
-
         case .switchBackend(let url):
             let viewController = PreBackendSwitchViewController()
             viewController.backendURL = url
@@ -180,37 +177,6 @@ class AuthenticationInterfaceBuilder {
         default:
             return nil
         }
-    }
-
-    /**
-     * Returns the view controller that displays the interface for the given team creation step.
-     *
-     * - parameter state: The team creation step to create an interface for.
-     * - returns: The view controller to use for this state, or `nil` if the interface builder
-     * does not support this state.
-     */
-
-    private func makeTeamCreationStepViewController(for state: TeamCreationState) -> AuthenticationStepViewController? {
-        var stepDescription: AuthenticationStepDescription
-
-        switch state {
-        case .setTeamName:
-            stepDescription = SetTeamNameStepDescription()
-        case .setEmail:
-            stepDescription = SetEmailStepDescription()
-        case let .verifyEmail(teamName: _, email: email):
-            stepDescription = VerifyEmailStepDescription(email: email)
-        case .setFullName:
-            stepDescription = SetFullNameStepDescription()
-        case .setPassword:
-            stepDescription = SetPasswordStepDescription()
-        case .inviteMembers:
-            return TeamMemberInviteViewController()
-        default:
-            return nil
-        }
-
-        return makeViewController(for: stepDescription)
     }
 
     /**

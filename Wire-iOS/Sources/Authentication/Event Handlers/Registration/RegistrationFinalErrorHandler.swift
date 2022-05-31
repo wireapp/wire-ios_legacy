@@ -31,7 +31,7 @@ class RegistrationFinalErrorHandler: AuthenticationEventHandler {
 
         // Only handle user and team creation errors
         switch currentStep {
-        case .createUser, .teamCreation(TeamCreationState.createTeam):
+        case .createUser:
             break
         default:
             return nil

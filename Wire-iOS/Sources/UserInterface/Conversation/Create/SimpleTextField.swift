@@ -37,7 +37,11 @@ extension Optional where Wrapped == String {
     }
 }
 
-final class SimpleTextField: UITextField, Themeable {
+final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
+
+    // MARK: - Properties
+    var attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+                                                    .font: FontSpec.smallRegularFont.font!]
 
     var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
@@ -67,6 +71,7 @@ final class SimpleTextField: UITextField, Themeable {
     var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     var placeholderInsets: UIEdgeInsets
 
+    // MARK: Initialization
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
     /// - Parameter kind: the type of text field
@@ -89,6 +94,7 @@ final class SimpleTextField: UITextField, Themeable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private methods
     private func setupTextFieldProperties() {
         returnKeyType = .next
         autocapitalizationType = .words
@@ -100,12 +106,19 @@ final class SimpleTextField: UITextField, Themeable {
         textFieldValidator.delegate = self
     }
 
+    // MARK: - Methods
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
+    func redrawFont() {
+        font = ValidatedTextField.enteredTextFont.font
+        attribute[.font] = FontSpec.smallRegularFont.font
+    }
+
+    // MARK: - Override methods
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
@@ -120,8 +133,7 @@ final class SimpleTextField: UITextField, Themeable {
     // MARK: - Placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
-                                                        .font: ValidatedTextField.placeholderFont.font!]
+
         return placeholder && attribute
     }
 
@@ -142,6 +154,7 @@ final class SimpleTextField: UITextField, Themeable {
     }
 }
 
+// MARK: SimpleTextField Extension
 extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     func textFieldValueChanged(_ value: String?) {
         textFieldDelegate?.textField(self, valueChanged: value.value ?? .error(.empty))
