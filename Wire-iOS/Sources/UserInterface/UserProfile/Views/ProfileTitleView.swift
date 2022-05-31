@@ -23,7 +23,7 @@ import WireDataModel
 final class ProfileTitleView: UIView {
 
     let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified)
-    private let titleLabel = UILabel()
+    private let titleLabel = DynamicFontLabel(fontSpec: .normalMediumFont, color: .textForeground)
 
     var showVerifiedShield = false {
         didSet {
@@ -70,7 +70,6 @@ final class ProfileTitleView: UIView {
     func configure(with user: UserType, variant: ColorSchemeVariant) {
         let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant), selfUser: ZMUser.selfUser())
         titleLabel.attributedText = attributedTitle
-        titleLabel.font = FontSpec(.normal, .medium).font!
     }
 
     private func updateVerifiedShield() {

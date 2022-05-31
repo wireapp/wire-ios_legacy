@@ -26,6 +26,7 @@ import WireSystem
 
 class ConversationDetailFooterView: UIView {
 
+    // MARK: - Properties
     private let variant: ColorSchemeVariant
     let rightButton = IconButton()
     var leftButton: IconButton
@@ -55,6 +56,7 @@ class ConversationDetailFooterView: UIView {
         }
     }
 
+    // MARK: - Initialization
     init() {
         self.variant = ColorScheme.default.variant
         self.leftButton = IconButton(fontSpec: .smallRegularFont)
@@ -68,6 +70,7 @@ class ConversationDetailFooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Layout
     private func setupViews() {
         let configureButton = { (button: IconButton) in
             self.containerView.addSubview(button)
@@ -83,9 +86,8 @@ class ConversationDetailFooterView: UIView {
         configureButton(rightButton)
 
         leftButton.setTitleImageSpacing(16)
-        leftButton.titleLabel?.font = FontSpec(.small, .regular).font
-        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
 
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
 
         backgroundColor = UIColor.from(scheme: .barBackground)
