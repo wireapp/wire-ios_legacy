@@ -44,7 +44,6 @@ enum AuthenticationCoordinatorAction {
     case completeUserRegistration
     case openURL(URL)
     case repeatAction
-    case advanceTeamCreation(String)
     case displayInlineError(NSError)
     case assignRandomProfileImage
     case continueFlowWithLoginCode(String)

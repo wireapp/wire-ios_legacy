@@ -1314,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
-"team.name.textfield.placeholder" = "team name";
-"team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
-
-"team.email.headline" = "Your account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "Your company email";
-"team.email.button.learn_more" = "Learn More";
-
 "team.activation_code.headline" = "You’ve got mail";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
@@ -1341,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "Learn more";
-"team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Something went wrong, please try again";
-"team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "No Internet Connection";
 
 // Guest Room

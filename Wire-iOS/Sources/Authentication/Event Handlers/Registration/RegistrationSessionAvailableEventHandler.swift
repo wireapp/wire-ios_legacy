@@ -33,8 +33,6 @@ class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
         switch currentStep {
         case .createUser:
             nextStep = nil
-        case .teamCreation(.createTeam):
-            nextStep = .teamCreation(.inviteMembers)
         default:
             return nil
         }

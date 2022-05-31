@@ -4369,20 +4369,6 @@ internal enum L10n {
           internal static let resend = L10n.tr("Localizable", "team.activation_code.button.resend")
         }
       }
-      internal enum Email {
-        /// Your account
-        internal static let headline = L10n.tr("Localizable", "team.email.headline")
-        /// Enter your work email address.
-        internal static let subheadline = L10n.tr("Localizable", "team.email.subheadline")
-        internal enum Button {
-          /// Learn More
-          internal static let learnMore = L10n.tr("Localizable", "team.email.button.learn_more")
-        }
-        internal enum Textfield {
-          /// Your company email
-          internal static let placeholder = L10n.tr("Localizable", "team.email.textfield.placeholder")
-        }
-      }
       internal enum FullName {
         /// Your name
         internal static let headline = L10n.tr("Localizable", "team.full_name.headline")
@@ -4395,52 +4381,8 @@ internal enum L10n {
       }
       internal enum Invite {
         internal enum Error {
-          /// This email has already been invited
-          internal static let alreadyInvited = L10n.tr("Localizable", "team.invite.error.already_invited")
-          /// This email address is already in use
-          internal static let alreadyRegistered = L10n.tr("Localizable", "team.invite.error.already_registered")
-          /// Something went wrong, please try again
-          internal static let generic = L10n.tr("Localizable", "team.invite.error.generic")
           /// No Internet Connection
           internal static let noInternet = L10n.tr("Localizable", "team.invite.error.no_internet")
-          /// The maximum number of invitations has been sent
-          internal static let tooManyInvitations = L10n.tr("Localizable", "team.invite.error.too_many_invitations")
-        }
-        internal enum Header {
-          /// Your Wire team is ready to go. Invite your colleagues as members.
-          internal static let subtitle = L10n.tr("Localizable", "team.invite.header.subtitle")
-          /// Build your team
-          internal static let title = L10n.tr("Localizable", "team.invite.header.title")
-        }
-        internal enum LearnMore {
-          /// Learn more
-          internal static let title = L10n.tr("Localizable", "team.invite.learn_more.title")
-        }
-        internal enum Textfield {
-          /// Enter email address for colleague to invite.
-          internal static let accesibility = L10n.tr("Localizable", "team.invite.textfield.accesibility")
-          /// Colleague's email
-          internal static let placeholder = L10n.tr("Localizable", "team.invite.textfield.placeholder")
-        }
-        internal enum TopBar {
-          /// Done
-          internal static let done = L10n.tr("Localizable", "team.invite.top_bar.done")
-          /// Skip
-          internal static let skip = L10n.tr("Localizable", "team.invite.top_bar.skip")
-        }
-      }
-      internal enum Name {
-        /// Name your team
-        internal static let headline = L10n.tr("Localizable", "team.name.headline")
-        /// You can always change it later.
-        internal static let subheadline = L10n.tr("Localizable", "team.name.subheadline")
-        /// What is Wire Pro?
-        internal static let whatiswireforteams = L10n.tr("Localizable", "team.name.whatiswireforteams")
-        internal enum Textfield {
-          /// Set team name
-          internal static let accessibility = L10n.tr("Localizable", "team.name.textfield.accessibility")
-          /// team name
-          internal static let placeholder = L10n.tr("Localizable", "team.name.textfield.placeholder")
         }
       }
       internal enum Password {
