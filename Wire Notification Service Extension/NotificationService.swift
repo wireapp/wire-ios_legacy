@@ -33,14 +33,11 @@ protocol CallEventHandlerProtocol {
 class CallEventProvider: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        if #available(iOS 14.5, *) {
-            CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-                if let error = error {
-                    // TODO: handle
-                }
+        guard #available(iOS 14.5, *) else { return }
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            if let error = error {
+                // TODO: handle
             }
-        } else {
-
         }
     }
 
