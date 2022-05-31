@@ -283,7 +283,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - Input views handling
 
-    /// init with a InputBarConversationType objcet
+    /// init with a InputBarConversationType object
     /// - Parameter conversation: provide nil only for tests
     init(
         conversation: InputBarConversationType,

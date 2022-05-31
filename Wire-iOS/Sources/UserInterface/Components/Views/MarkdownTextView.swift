@@ -678,7 +678,7 @@ extension DownStyle {
     /// The style used within the input bar.
     static var compact: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .light).font!
+        style.baseFont = FontSpec.normalLightFont.font!
         style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default

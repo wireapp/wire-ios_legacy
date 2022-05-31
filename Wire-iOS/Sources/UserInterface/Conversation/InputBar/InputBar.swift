@@ -19,6 +19,7 @@
 import UIKit
 import Down
 import WireDataModel
+import WireCommonComponents
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -101,7 +102,15 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-final class InputBar: UIView {
+final class InputBar: UIView, DynamicTypeCapable {
+
+    private var textViewFont: FontSpec = .normalLightFont
+    private var textViewPlaceholderFont: FontSpec = .smallSemiboldFont
+
+    func redrawFont() {
+        textView.font = textViewFont.font!
+        textView.placeholderFont = textViewPlaceholderFont.font!
+    }
 
     private let inputBarVerticalInset: CGFloat = 34
     static let rightIconSize: CGFloat = 32
@@ -250,8 +259,8 @@ final class InputBar: UIView {
         textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
-        textView.font = .normalLightFont
-        textView.placeholderFont = .smallSemiboldFont
+        textView.font = textViewFont.font!
+        textView.placeholderFont = textViewPlaceholderFont.font!
         textView.backgroundColor = .clear
 
         markdownView.delegate = textView
@@ -354,9 +363,9 @@ final class InputBar: UIView {
         textView.setNeedsLayout()
     }
 
-    func placeholderText(for state: InputBarState) -> NSAttributedString? {
+    func placeholderText(for state: InputBarState) -> NSAttributedString? { //"conversation.input_bar.placeholder".localized
 
-        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        var placeholder = NSAttributedString(string: L10n.Localizable.Conversation.InputBar.placeholder)
 
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
@@ -511,6 +520,7 @@ final class InputBar: UIView {
     }
 }
 
+// MARK: Input Bar Extension
 extension InputBar {
 
     @objc func textViewTextDidChange(_ notification: Notification) {
