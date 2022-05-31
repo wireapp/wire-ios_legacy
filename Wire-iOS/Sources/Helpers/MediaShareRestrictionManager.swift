@@ -40,7 +40,10 @@ final class MediaShareRestrictionManager {
     // MARK: - Private Properties
 
     private let sessionRestriction: SessionFileRestrictionsProtocol?
-    private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary, .shareExtension, .clipboard]
+    private let securityFlagRestrictedTypes: [ShareableMediaSource] = [.photoLibrary,
+                                                                        .gif,
+                                                                        .shareExtension,
+                                                                        .clipboard]
 
     // MARK: - Life cycle
 
@@ -69,11 +72,25 @@ final class MediaShareRestrictionManager {
     }
 
     var canDownloadMedia: Bool {
-        return SecurityFlags.fileSharing.isEnabled
+        switch mediaShareRestrictionLevel {
+        case .none:
+            return true
+        case .APIFlag, .securityFlag:
+            return false
+        }
     }
 
     var canCopyFromClipboard: Bool {
         return canUploadMedia(from: .clipboard)
+    }
+
+    var hasAccessToCameraRoll: Bool {
+        switch mediaShareRestrictionLevel {
+        case .none:
+            return true
+        case .APIFlag, .securityFlag:
+            return false
+        }
     }
 
 }
