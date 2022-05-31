@@ -88,9 +88,9 @@ final class NotificationServiceTests: XCTestCase {
         sut.notificationSessionDidGenerateNotification(note, unreadConversationCount: unreadConversationCount)
 
         // THEN
-        XCTAssertNotNil(note?.content)
-        XCTAssertEqual(note?.content, contentResult)
-        XCTAssertEqual(note?.content.badge?.intValue, unreadConversationCount)
+        let content = try XCTUnwrap(note?.content)
+        XCTAssertEqual(content, contentResult)
+        XCTAssertEqual(content.badge?.intValue, unreadConversationCount)
     }
 
     func testThatItReportsCallEvent() {
