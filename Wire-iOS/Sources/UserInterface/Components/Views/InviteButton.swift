@@ -28,7 +28,7 @@ final class InviteButton: IconButton {
         adjustsTitleWhenHighlighted = true
         setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
         clipsToBounds = true
-        titleLabel?.font = FontSpec(.normal, .semibold).font
+        titleLabel?.font = FontSpec.normalSemiboldFont.font!
 
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         layer.cornerRadius = 4

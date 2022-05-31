@@ -61,7 +61,7 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
     weak var message: ZMConversationMessage?
 
     private let stackView = UIStackView()
-    private let titleLabel = UILabel()
+    private let titleLabel = DynamicFontLabel(fontSpec: .mediumFont, color: .textForeground)
     let inviteButton = InviteButton()
     var isSelected: Bool = false
 
@@ -85,7 +85,6 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
         titleLabel.numberOfLines = 0
         titleLabel.text = L10n.Localizable.Content.System.Conversation.Invite.title
         titleLabel.textColor = UIColor.from(scheme: .textForeground)
-        titleLabel.font = FontSpec(.medium, .none).font
 
         inviteButton.setTitle(L10n.Localizable.Content.System.Conversation.Invite.button, for: .normal)
         inviteButton.addTarget(self, action: #selector(inviteButtonTapped), for: .touchUpInside)
