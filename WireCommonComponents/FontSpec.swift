@@ -83,6 +83,14 @@ public extension FontSpec {
     static var mediumLightLargeTitleFont: Self {
         return self.init(.medium, .light, .largeTitle)
     }
+    
+    static var mediumRegularFont: Self {
+        return self.init(.medium, .regular)
+    }
+
+    static var mediumSemiboldInputText: Self {
+        return self.init(.medium, .semibold, .inputText)
+    }
 
     // MARK: - Large
 
