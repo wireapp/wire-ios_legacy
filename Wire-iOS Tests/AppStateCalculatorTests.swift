@@ -152,11 +152,15 @@ final class AppStateCalculatorTests: XCTestCase {
         sut.sessionManagerDidPerformFederationMigration(authenticated: authenticated)
 
         // THEN
-        let expectedAppState: AppState = authenticated ?
-            .authenticated(completedRegistration: false) :
-            .unauthenticated(error: NSError(code: .needsAuthenticationAfterMigration, userInfo: nil))
+        if authenticated {
+            XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false))
+        } else {
+            guard case let .unauthenticated(error: error) = sut.appState else {
+                return XCTFail()
+            }
 
-        XCTAssertEqual(sut.appState, expectedAppState)
+            XCTAssertEqual(error?.userSessionErrorCode, .needsAuthenticationAfterMigration)
+        }
         XCTAssertTrue(delegate.wasNotified)
     }
 
