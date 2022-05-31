@@ -57,7 +57,7 @@ extension UserCellSubtitleProtocol where Self: UIView & Themeable {
         }
 
         let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont.font!, boldFont: boldFont.font!, color: color)
+        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
 
         correlationFormatters[colorSchemeVariant] = formatter
 

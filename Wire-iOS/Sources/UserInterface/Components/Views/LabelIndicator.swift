@@ -57,7 +57,7 @@ enum LabelIndicatorContext {
 final class LabelIndicator: UIView, Themeable {
 
     private let indicatorIcon = UIImageView()
-    private let titleLabel = UILabel()
+    private let titleLabel = DynamicFontLabel(fontSpec: .mediumSemiboldInputText, color: .textForeground)
     private let containerView = UIView()
     private let context: LabelIndicatorContext
 
@@ -105,7 +105,6 @@ final class LabelIndicator: UIView, Themeable {
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
-        titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         titleLabel.text = context.title.localized(uppercased: true)
 

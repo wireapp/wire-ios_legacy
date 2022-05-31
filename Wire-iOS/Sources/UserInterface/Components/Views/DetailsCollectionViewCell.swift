@@ -19,7 +19,9 @@
 import UIKit
 import WireCommonComponents
 
-class DetailsCollectionViewCell: SeparatorCollectionViewCell {
+class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable {
+
+    // MARK: - Properties
 
     private let leftIconView = UIImageView()
     private let titleLabel = UILabel()
@@ -33,15 +35,13 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
     /// The leading offset of the content when `icon` is nil.
     var contentLeadingOffset: CGFloat = 24
 
-    // MARK: - Properties
-
     var titleBolded: Bool {
         get {
-            return titleLabel.font == FontSpec.init(.normal, .semibold).font
+            return titleLabel.font == FontSpec.normalSemiboldFont.font
         }
 
         set {
-            titleLabel.font = newValue ? FontSpec.init(.normal, .semibold).font! : FontSpec.init(.normal, .light).font!
+            titleLabel.font = newValue ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
         }
     }
 
@@ -66,7 +66,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         }
     }
 
-    // MARK: - Configuration
+    // MARK: - Configuration - Override Methods
 
     override func setUp() {
         super.setUp()
@@ -76,10 +76,10 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.font = FontSpec.normalLightFont.font
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.init(.small, .regular).font!
+        statusLabel.font = FontSpec.smallRegularFont.font
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -161,6 +161,12 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     private func updateDisabledState() {
         titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
+    }
+
+    func redrawFont() {
+        statusLabel.font = FontSpec.smallRegularFont.font
+
+        titleLabel.font = titleBolded ? FontSpec.normalSemiboldFont.font : FontSpec.normalLightFont.font
     }
 
 }

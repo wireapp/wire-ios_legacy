@@ -150,21 +150,17 @@ class AuthenticationEventResponderChain {
         // registrationErrorHandlers
         registerHandler(RegistrationActivationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
         registerHandler(RegistrationActivationErrorHandler(), to: &registrationErrorHandlers)
-        registerHandler(TeamEmailVerificationErrorHandler(), to: &registrationErrorHandlers)
         registerHandler(RegistrationFinalErrorHandler(), to: &registrationErrorHandlers)
 
         // registrationSuccessHandlers
         registerHandler(RegistrationActivationCodeSentEventHandler(), to: &registrationSuccessHandlers)
-        registerHandler(TeamEmailVerificationCodeAvailableEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
-        registerHandler(TeamCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
 
         // userProfileChangeObservers
         registerHandler(UserEmailChangeEventHandler(), to: &userProfileChangeObservers)
 
         // userInputObservers
-        registerHandler(AuthenticationTeamCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationCodeVerificationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationCredentialsCreationInputHandler(), to: &userInputObservers)
         registerHandler(AuthenticationIncrementalUserCreationInputHandler(), to: &userInputObservers)
