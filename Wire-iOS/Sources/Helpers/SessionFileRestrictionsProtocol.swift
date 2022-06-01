@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,25 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
-import SnapshotTesting
+import Foundation
+import WireSyncEngine
+import WireShareEngine
 
-final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
+protocol SessionFileRestrictionsProtocol {
+    var isFileSharingEnabled: Bool { get }
+}
 
-    var sut: TeamMemberInviteViewController!
-
-    override func setUp() {
-        super.setUp()
-        sut = TeamMemberInviteViewController()
+extension ZMUserSession: SessionFileRestrictionsProtocol {
+    var isFileSharingEnabled: Bool {
+        return fileSharingFeature.status == .enabled
     }
+}
 
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState() {
-        verify(matching: sut)
+extension SharingSession: SessionFileRestrictionsProtocol {
+    var isFileSharingEnabled: Bool {
+        return fileSharingFeature.status == .enabled
     }
 }

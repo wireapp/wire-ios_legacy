@@ -204,6 +204,13 @@ extension AppStateCalculator: SessionManagerDelegate {
             transition(to: .authenticated(completedRegistration: false))
         }
     }
+
+    func sessionManagerDidPerformFederationMigration(authenticated: Bool) {
+        let state: AppState = authenticated ?
+            .authenticated(completedRegistration: false) :
+            .unauthenticated(error: NSError(code: .needsAuthenticationAfterMigration, userInfo: nil))
+        transition(to: state)
+    }
 }
 
 // MARK: - AuthenticationCoordinatorDelegate

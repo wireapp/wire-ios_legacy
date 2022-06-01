@@ -23,7 +23,6 @@ import WireSyncEngine
 
 protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
-    func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
     func landingViewControllerDidChooseEnterpriseLogin()
     func landingViewControllerDidChooseSSOLogin()
@@ -496,11 +495,6 @@ final class LandingViewController: AuthenticationStepViewController {
     @objc
     private func createAccountButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseCreateAccount()
-    }
-
-    @objc
-    private func createTeamButtonTapped(_ sender: AnyObject!) {
-        delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc
