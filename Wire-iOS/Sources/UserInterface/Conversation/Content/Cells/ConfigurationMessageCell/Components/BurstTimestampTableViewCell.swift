@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 struct BurstTimestampSenderMessageCellConfiguration {
     let date: Date
@@ -55,7 +56,7 @@ final class BurstTimestampSenderMessageCellDescription: ConversationMessageCellD
 
 }
 
-final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
+final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell, DynamicTypeCapable {
 
     private let timestampView = ConversationCellBurstTimestampView()
     private var configuration: BurstTimestampSenderMessageCellConfiguration?
@@ -132,6 +133,13 @@ final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
     func configure(with object: BurstTimestampSenderMessageCellConfiguration, animated: Bool) {
         configuration = object
         timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
+    }
+
+    func redrawFont() {
+        guard let configuration = self.configuration else {
+            return
+        }
+        configure(with: configuration, animated: false)
     }
 
 }

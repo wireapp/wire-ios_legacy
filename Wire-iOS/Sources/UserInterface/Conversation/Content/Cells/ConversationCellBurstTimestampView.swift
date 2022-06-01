@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class ConversationCellBurstTimestampView: UIView {
 
@@ -34,8 +35,8 @@ final class ConversationCellBurstTimestampView: UIView {
     private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
     private var accentColorObserver: AccentColorChangeHandler?
-    private let burstNormalFont = UIFont.smallLightFont
-    private let burstBoldFont = UIFont.smallSemiboldFont
+    private let burstNormalFont = FontSpec.smallLightFont
+    private let burstBoldFont = FontSpec.smallSemiboldFont
 
     private var isShowingUnreadDot: Bool = true {
         didSet {
@@ -145,12 +146,12 @@ final class ConversationCellBurstTimestampView: UIView {
         if includeDayOfWeek {
             isSeparatorExpanded = true
             isSeparatorHidden = false
-            label.font = burstBoldFont
+            label.font = burstBoldFont.font
             label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).localizedUppercase
         } else {
             isSeparatorExpanded = false
             isSeparatorHidden = false
-            label.font = burstNormalFont
+            label.font = burstNormalFont.font
             label.text = timestamp.formattedDate.localizedUppercase
         }
 
