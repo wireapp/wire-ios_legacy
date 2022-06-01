@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Buka profil dan pengaturan";
 "self.new-device.voiceover.label" = "Profil, perangkat baru ditambahkan";
 
-"self.add_phone_number" = "Tambah nomor telepon";
 "self.add_email_password" = "Tambahkan alamat email dan sandi";
 
 "self.accessibility.profile_photo_image" = "Profile picture";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Namai tim Anda";
-"team.name.subheadline" = "Anda selalu bisa mengubahnya nanti.";
-"team.name.textfield.placeholder" = "nama tim";
-"team.name.textfield.accessibility" = "Tetapkan nama tim";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
-
-"team.email.headline" = "Akun Anda";
-"team.email.subheadline" = "Masukkan alamat email kantor Anda.";
-"team.email.textfield.placeholder" = "Email perusahaan anda";
-"team.email.button.learn_more" = "Belajarlah lagi";
-
 "team.activation_code.headline" = "Anda punya surat";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Masukkan kode verifikasi yang kami kirim ke %@ .";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Bangun tim Anda";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "Pelajari lebih lanjut";
-"team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Selesai";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Ada yang tidak beres, coba lagi";
-"team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "Alamat e-mail ini telah diundang";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "Tidak Ada Koneksi Internet";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Create Link";
 

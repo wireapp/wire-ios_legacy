@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "打開用戶檔案和設定";
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
-"self.add_phone_number" = "加入手機號碼";
 "self.add_email_password" = "新增電子郵件信箱和密碼";
 
 "self.accessibility.profile_photo_image" = "個人頭像";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "為您的團隊命名";
-"team.name.subheadline" = "之後您可隨時更改。";
-"team.name.textfield.placeholder" = "團隊名稱";
-"team.name.textfield.accessibility" = "設定團隊名稱";
-"team.name.whatiswireforteams" = "什麼是Wire Pro？";
-
-"team.email.headline" = "您的帳戶";
-"team.email.subheadline" = "請輸入您的工作電子郵件地址。";
-"team.email.textfield.placeholder" = "您的公司電子郵件地址";
-"team.email.button.learn_more" = "瞭解更多";
-
 "team.activation_code.headline" = "您收到了郵件";
 "team.phone_activation_code.headline" = "驗證";
 "team.activation_code.subheadline" = "輸入我們發送到%@的驗證碼。";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "六位數的代碼。文字欄位。";
 "verification.code_hint" = "按兩下以輸入代碼。";
 
-// Invite Team Members
-
-"team.invite.header.title" = "建立您的團隊";
-"team.invite.header.subtitle" = "你的Wire團隊已經準備好了。請邀請您的同事作為成員。";
-"team.invite.textfield.placeholder" = "同事的電子郵件";
-"team.invite.textfield.accesibility" = "輸入同事的電子郵件地址以邀請。";
-"team.invite.learn_more.title" = "瞭解詳情";
-"team.invite.top_bar.skip" = "略過";
-"team.invite.top_bar.done" = "完成";
-
-// Team Invite Errors
-"team.invite.error.generic" = "出了點問題，請再試一次";
-"team.invite.error.already_registered" = "此電子郵件已註冊";
-"team.invite.error.already_invited" = "已發出邀請到此電子郵件";
-"team.invite.error.too_many_invitations" = "已達到邀請上限。";
 "team.invite.error.no_internet" = "沒有網路連線";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "建立連結";
 

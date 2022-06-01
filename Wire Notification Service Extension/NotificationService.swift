@@ -26,9 +26,28 @@ import WireSyncEngine
 import UIKit
 import CallKit
 
+protocol CallEventHandlerProtocol {
+    func reportIncomingVoIPCall(_ payload: [String: Any])
+}
+
+class CallEventHandler: CallEventHandlerProtocol {
+
+    func reportIncomingVoIPCall(_ payload: [String: Any]) {
+        guard #available(iOS 14.5, *) else { return }
+        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            if let error = error {
+                // TODO: handle
+            }
+        }
+    }
+
+}
+
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
     // MARK: - Properties
+
+    var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -80,12 +99,21 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         tearDown()
     }
 
-    public func notificationSessionDidGenerateNotification(_ notification: ZMLocalNotification?, unreadConversationCount: Int) {
+    public func notificationSessionDidGenerateNotification(
+        _ notification: ZMLocalNotification?,
+        unreadConversationCount: Int
+    ) {
         defer { tearDown() }
+
         guard let contentHandler = contentHandler else { return }
+
         guard let content = notification?.content as? UNMutableNotificationContent else {
             contentHandler(.empty)
             return
+        }
+
+        if #available(iOS 15, *) {
+            content.interruptionLevel = .timeSensitive
         }
 
         let badgeCount = totalUnreadCount(unreadConversationCount)
@@ -97,7 +125,6 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
         guard
-            #available(iOSApplicationExtension 14.5, *),
             let accountID = session?.accountIdentifier,
             let voipPayload = VoIPPushPayload(from: event, accountID: accountID, serverTimeDelta: currentTimestamp),
             let payload = voipPayload.asDictionary
@@ -105,11 +132,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             return
         }
 
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                // TODO: handle
-            }
-        }
+        callEventHandler.reportIncomingVoIPCall(payload)
     }
 
     // MARK: - Helpers

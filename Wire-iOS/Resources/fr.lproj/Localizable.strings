@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Ouvrir le profil et les paramètres";
 "self.new-device.voiceover.label" = "Profil, de nouveaux appareils ont été ajoutés";
 
-"self.add_phone_number" = "Ajouter un numéro de téléphone";
 "self.add_email_password" = "Ajouter une adresse e-mail et un mot de passe";
 
 "self.accessibility.profile_photo_image" = "Photo de profil";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Nommez votre équipe";
-"team.name.subheadline" = "Vous pourrez toujours le modifier plus tard.";
-"team.name.textfield.placeholder" = "nom de l'équipe";
-"team.name.textfield.accessibility" = "Définir le nom de l'équipe";
-"team.name.whatiswireforteams" = "Qu'est-ce que Wire Pro ?";
-
-"team.email.headline" = "Votre compte";
-"team.email.subheadline" = "Saisissez votre adresse e-mail professionnelle.";
-"team.email.textfield.placeholder" = "Votre adresse e-mail pro";
-"team.email.button.learn_more" = "En savoir plus";
-
 "team.activation_code.headline" = "Vous avez du courrier";
 "team.phone_activation_code.headline" = "Vérification";
 "team.activation_code.subheadline" = "Saisir le code de vérification que nous avons envoyé à %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Code à six chiffres. Champ de texte.";
 "verification.code_hint" = "Appuyez deux fois pour entrer le code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Créez votre équipe";
-"team.invite.header.subtitle" = "Votre équipe Wire est prête. Invitez vos collègues à devenir membres.";
-"team.invite.textfield.placeholder" = "E-mail d'un collègue";
-"team.invite.textfield.accesibility" = "Entrez l'adresse email de la personne à inviter.";
-"team.invite.learn_more.title" = "En savoir plus";
-"team.invite.top_bar.skip" = "Passer";
-"team.invite.top_bar.done" = "Terminé";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Une erreur s'est produite, veuillez réessayer";
-"team.invite.error.already_registered" = "Cette adresse email est déjà associée à un utilisateur";
-"team.invite.error.already_invited" = "Une invitation a déjà été envoyée à cette adresse";
-"team.invite.error.too_many_invitations" = "Le nombre maximal d'invitations possibles a été atteint";
 "team.invite.error.no_internet" = "Pas de connexion internet";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invitez d'autres personnes avec un lien vers cette conversation. N'importe qui avec le lien peut rejoindre la conversation, même s'ils n'ont pas Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "La génération de liens d'invitation n'est pas autorisée dans votre équipe.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "Vous ne pouvez pas générer de lien d'invitation dans cette conversation, car elle a été créée par un membre d'une autre équipe et cette équipe n'est pas autorisée à utiliser des liens d'invitation.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Créer le lien";
 
