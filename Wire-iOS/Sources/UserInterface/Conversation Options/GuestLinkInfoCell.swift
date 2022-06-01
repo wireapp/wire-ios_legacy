@@ -27,8 +27,6 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     private let iconImageView = UIImageView()
     private let label = UILabel()
 
-    typealias GuestRoomLinkStrings = L10n.Localizable.GuestRoom.Link.NotAllowed
-
     // MARK: - Life cycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -71,14 +69,9 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     // MARK: - Configuration
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .info(isSelfTeam) = configuration else { preconditionFailure() }
+        guard case let .info(infoText) = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
         iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
-
-        let infoTextForSelfTeam = GuestRoomLinkStrings.ForSelfTeam.explanation
-        let infoTextForOtherTeam = GuestRoomLinkStrings.ForOtherTeam.explanation
-
-        let infoText = isSelfTeam ? infoTextForSelfTeam : infoTextForOtherTeam
 
         label.configMultipleLineLabel()
         label.attributedText = .markdown(from: infoText, style: .labelStyle)

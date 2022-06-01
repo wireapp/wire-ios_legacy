@@ -30,12 +30,13 @@ extension CellConfiguration {
             titleIdentifier: "label.groupAdminOptions.description",
             icon: .groupAdmin,
             color: nil,
+            isEnabled: true,
             get: get,
             set: set
         )
     }
 
-    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void) -> CellConfiguration {
+    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void, isDisabled: Bool) -> CellConfiguration {
         return .iconToggle(
             title: "guest_room.allow_guests.title".localized,
             subtitle: "guest_room.allow_guests.subtitle".localized,
@@ -43,6 +44,7 @@ extension CellConfiguration {
             titleIdentifier: "label.guestoptions.description",
             icon: nil,
             color: nil,
+            isEnabled: !isDisabled,
             get: get,
             set: set
         )
@@ -56,6 +58,7 @@ extension CellConfiguration {
             titleIdentifier: "label.guestoptions.services.description",
             icon: nil,
             color: nil,
+            isEnabled: true,
             get: get,
             set: set
         )
