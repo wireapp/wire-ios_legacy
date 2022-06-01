@@ -29,7 +29,10 @@ enum UserNameTakeOverViewControllerAction {
 
 final class UserNameTakeOverViewController: UIViewController {
 
-    public let displayNameLabel = UILabel()
+    public let displayNameLabel = DynamicFontLabel(
+        fontSpec: FontSpec.largeThinFont,
+        color: .textDimmed,
+        variant: .light)
     public let suggestedHandleLabel = UILabel()
     public let subtitleTextView = WebLinkTextView()
 
@@ -68,8 +71,6 @@ final class UserNameTakeOverViewController: UIViewController {
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
 
-        displayNameLabel.font = FontSpec(.large, .thin).font!
-        displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
 
@@ -92,19 +93,22 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.textAlignment = .natural
         subtitleTextView.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
 
-        let font = FontSpec(.large, .thin).font!
-        let linkFont = FontSpec(.large, .none).font!
+//        let font = FontSpec(.large, .thin).font!
+//        let linkFont = FontSpec(.large, .none).font!
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
-        let linkAttributes: [NSAttributedString.Key: Any] = [
-            .font: linkFont,
-            .link: learnMoreURL
-        ]
+//        let linkAttributes: [NSAttributedString.Key: Any] = [
+//            .font: FontSpec.largeRegularFont,
+//            .link: learnMoreURL
+//        ]
+        
+        let attribute = [ NSAttributedString.Key.foregroundColor: color ]
+        let attributedString = NSAttributedString(string: subtitle, attributes: attribute)
 
-        let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
-        subtitleTextView.attributedText = text
-        subtitleTextView.accessibilityLabel = text.string
+//        let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
+        subtitleTextView.attributedText = attributedString
+        subtitleTextView.accessibilityLabel = attributedString.string
         subtitleTextView.delegate = self
     }
 
