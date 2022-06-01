@@ -18,9 +18,11 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
-class ConversationIconBasedCell: UIView {
+class ConversationIconBasedCell: UIView, DynamicTypeCapable {
 
+    // MARK: - Properties
     let imageContainer = UIView()
     let imageView = UIImageView()
     let textLabel = WebLinkTextView()
@@ -28,7 +30,7 @@ class ConversationIconBasedCell: UIView {
 
     let topContentView = UIView()
     let bottomContentView = UIView()
-    let labelFont: UIFont = .mediumFont
+    let labelFont: FontSpec = FontSpec.mediumFont
 
     private var containerWidthConstraint: NSLayoutConstraint!
     private var textLabelTrailingConstraint: NSLayoutConstraint!
@@ -66,6 +68,7 @@ class ConversationIconBasedCell: UIView {
         return -conversationHorizontalMargins.right * 2
     }
 
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
@@ -76,6 +79,7 @@ class ConversationIconBasedCell: UIView {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
+    // MARK: - Layout
     func configureSubviews() {
         imageView.contentMode = .center
         imageView.isAccessibilityElement = true
@@ -83,7 +87,7 @@ class ConversationIconBasedCell: UIView {
 
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
-        textLabel.font = labelFont
+        textLabel.font = labelFont.font!
         textLabel.delegate = self
 
         textLabel.linkTextAttributes = [
@@ -164,8 +168,13 @@ class ConversationIconBasedCell: UIView {
         topContentViewTrailingConstraint.constant = trailingTextMargin
     }
 
+    func redrawFont() {
+        textLabel.font = labelFont.font
+    }
+
 }
 
+// MARK: - ConversationIconBasedCell Extension
 extension ConversationIconBasedCell: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         // Fixes Swift 5.0 release build child class overridden method not called bug
