@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol ShareContactsViewControllerDelegate: AnyObject {
     func shareDidSkip(_ viewController: UIViewController)
@@ -110,7 +111,7 @@ final class ShareContactsViewController: UIViewController {
 
         attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
-            NSAttributedString.Key.font: UIFont.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont
             ], range: (text as NSString).range(of: paragraph))
 
         return attributedText

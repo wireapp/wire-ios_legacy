@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol PermissionDeniedViewControllerDelegate: AnyObject {
     func continueWithoutPermission(_ viewController: PermissionDeniedViewController)
@@ -73,10 +74,10 @@ final class PermissionDeniedViewController: UIViewController {
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont
             ], range: (text as NSString).range(of: paragraph1))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeSemiboldFont
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
