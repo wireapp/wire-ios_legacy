@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Atverti profilį ir nustatymus";
 "self.new-device.voiceover.label" = "Profilis, pridėtas naujas įrenginys";
 
-"self.add_phone_number" = "Pridėti telefono numerį";
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
 
 "self.accessibility.profile_photo_image" = "Profilio nuotrauka";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Pavadinkite komandą";
-"team.name.subheadline" = "Bet kada vėliau galėsite pakeisti.";
-"team.name.textfield.placeholder" = "komandos pavadinimas";
-"team.name.textfield.accessibility" = "Suteikite komandai pavadinimą";
-"team.name.whatiswireforteams" = "Kas yra „Wire Pro“?";
-
-"team.email.headline" = "Jūsų paskyra";
-"team.email.subheadline" = "Įrašykite darbo el. pašto adresą.";
-"team.email.textfield.placeholder" = "Jūsų įmonės el. paštas";
-"team.email.button.learn_more" = "Sužinokite daugiau";
-
 "team.activation_code.headline" = "Gavote el. laišką";
 "team.phone_activation_code.headline" = "Patvirtinimas";
 "team.activation_code.subheadline" = "Įrašykite patvirtinimo kodą, kuris buvo išsiųstas į %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Šešių skaitmenų kodas. Teksto laukas.";
 "verification.code_hint" = "Du kart paspauskite kad įvesti kodą.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Sukurkite savo komandą";
-"team.invite.header.subtitle" = "Jūsų „Wire“ komanda paruošta. Pakvieskite savo kolegas prisijungti.";
-"team.invite.textfield.placeholder" = "Kolegos el. paštas";
-"team.invite.textfield.accesibility" = "Įrašykite kolegos el. pašto adresą pakvietimui išsiųsti.";
-"team.invite.learn_more.title" = "Sužinoti daugiau";
-"team.invite.top_bar.skip" = "Praleisti";
-"team.invite.top_bar.done" = "Baigta";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Įvyko klaida, bandykite dar kartą";
-"team.invite.error.already_registered" = "Šis el. pašto adresas jau naudojamas";
-"team.invite.error.already_invited" = "Šis el. pašto adresas jau buvo kviestas";
-"team.invite.error.too_many_invitations" = "Didžiausias galimas kvietimų skaičius išsiųstas";
 "team.invite.error.no_internet" = "Nėra interneto ryšio";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Kurti nuorodą";
 

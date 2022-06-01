@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Відкрити профіль та налаштування";
 "self.new-device.voiceover.label" = "Профіль, нещодавно додані пристрої";
 
-"self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
 
 "self.accessibility.profile_photo_image" = "Картинка для профілю";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Назвіть свою команду";
-"team.name.subheadline" = "Команду завжди можна перейменувати пізніше.";
-"team.name.textfield.placeholder" = "назва команди";
-"team.name.textfield.accessibility" = "Задайте ім'я команди";
-"team.name.whatiswireforteams" = "Що таке Wire Pro?";
-
-"team.email.headline" = "Ваш акаунт";
-"team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
-"team.email.textfield.placeholder" = "Електронна пошта вашої компанії";
-"team.email.button.learn_more" = "Дізнатися більше";
-
 "team.activation_code.headline" = "Ви отримали нового листа";
 "team.phone_activation_code.headline" = "Верифікація";
 "team.activation_code.subheadline" = "Введіть код, який ми вислали на %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Шестизначний код. Текстове поле.";
 "verification.code_hint" = "Торкніться двічі, щоб ввести код.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Створіть свою власну команду";
-"team.invite.header.subtitle" = "Ваша команда в Wire готова до використання. Запросіть ваших колег стати її учасниками.";
-"team.invite.textfield.placeholder" = "Email колеги";
-"team.invite.textfield.accesibility" = "Введіть адресу електронної пошти колеги, щоб надіслати запрошення.";
-"team.invite.learn_more.title" = "Дізнатися більше";
-"team.invite.top_bar.skip" = "Пропустити";
-"team.invite.top_bar.done" = "Готово";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Щось пішло не так. Будь ласка, спробуйте ще раз";
-"team.invite.error.already_registered" = "Ця адреса електронної пошти вже використовується";
-"team.invite.error.already_invited" = "Ця адреса вже зареєстрована";
-"team.invite.error.too_many_invitations" = "Вже було надіслано максимальну кількість запрошень";
 "team.invite.error.no_internet" = "Немає з'єднання з Інтернетом";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Запрошуйте інших учасників до цієї розмови, використовуючи лінки. За допомогою цього лінку хто-небудь може приєднатися до розмови, навіть якщо вони не зареєстровані в Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Генерація гостьових лінків не дозволена у вашій команді.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "Ви не можете згенерувати гостьовий лінк у цій розмові, оскільки він був створений кимось із іншої команди, а у вашій команді не дозволене використання гостьових лінків.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Створити лінк";
 

@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "فتح الملف والإعدادات";
 "self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
-"self.add_phone_number" = "أضف رقم الهاتف";
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
 
 "self.accessibility.profile_photo_image" = "Profile picture";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "اسم فريقك";
-"team.name.subheadline" = "بإمكانك تغييره لاحقًا.";
-"team.name.textfield.placeholder" = "اسم الفريق";
-"team.name.textfield.accessibility" = "ضع اسم للفريق";
-"team.name.whatiswireforteams" = "ما هو Wire Pro؟";
-
-"team.email.headline" = "حسابك";
-"team.email.subheadline" = "أدخل عنوان بريدك الإلكتروني المهني.";
-"team.email.textfield.placeholder" = "ايميل الشركه";
-"team.email.button.learn_more" = "معرفة المزيد";
-
 "team.activation_code.headline" = "وصلك بريد";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "أنشئ فريقك";
-"team.invite.header.subtitle" = "فريق Wire الخاص بك جاهز. ادعوا زملائك للانضمام كأعضاء.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "معرفة المزيد";
-"team.invite.top_bar.skip" = "تخطِ";
-"team.invite.top_bar.done" = "تـم";
-
-// Team Invite Errors
-"team.invite.error.generic" = "حدث خطأ ما، برجاء إعادة المحاولة";
-"team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "البريد الإلكتروني هذا قد دُعي بالفعل";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "لا يوجد اتصال بالإنترنت";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "إنشاء رابط";
 
