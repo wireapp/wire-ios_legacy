@@ -19,6 +19,7 @@
 import UIKit
 import WireCanvas
 import WireCommonComponents
+import WireSyncEngine
 
 protocol CanvasViewControllerDelegate: AnyObject {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage)
@@ -136,7 +137,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         photoButton.addTarget(self, action: #selector(pickImage), for: .touchUpInside)
         photoButton.hitAreaPadding = hitAreaPadding
         photoButton.accessibilityIdentifier = "photoButton"
-        photoButton.isHidden = !SecurityFlags.cameraRoll.isEnabled
+        photoButton.isHidden = !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll
 
         emojiButton.setIcon(.emoji, size: .tiny, for: .normal)
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)

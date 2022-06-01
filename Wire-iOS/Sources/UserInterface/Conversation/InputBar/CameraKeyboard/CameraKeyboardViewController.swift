@@ -56,6 +56,7 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     fileprivate enum CameraKeyboardSection: UInt {
         case camera = 0, photos = 1
     }
+    private let mediaSharingRestrictionsMananger = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
 
     let assetLibrary: AssetLibrary?
     let imageManagerType: ImageManagerProtocol.Type
@@ -342,7 +343,8 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             self.collectionView.delaysContentTouches = false
         }
 
-        if permissions.isPhotoLibraryAuthorized {
+        if permissions.isPhotoLibraryAuthorized,
+           mediaSharingRestrictionsMananger.hasAccessToCameraRoll {
             self.collectionViewLayout.minimumLineSpacing = 1
             self.collectionViewLayout.minimumInteritemSpacing = 0.5
             self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 1)
@@ -362,7 +364,8 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         defer {
             setupPhotoKeyboardAppearance()
         }
-        guard permissions.areCameraOrPhotoLibraryAuthorized else {
+        guard permissions.areCameraOrPhotoLibraryAuthorized,
+              mediaSharingRestrictionsMananger.hasAccessToCameraRoll else {
             return 1
         }
         return 2

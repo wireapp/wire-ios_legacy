@@ -80,12 +80,21 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         tearDown()
     }
 
-    public func notificationSessionDidGenerateNotification(_ notification: ZMLocalNotification?, unreadConversationCount: Int) {
+    public func notificationSessionDidGenerateNotification(
+        _ notification: ZMLocalNotification?,
+        unreadConversationCount: Int
+    ) {
         defer { tearDown() }
+
         guard let contentHandler = contentHandler else { return }
+
         guard let content = notification?.content as? UNMutableNotificationContent else {
             contentHandler(.empty)
             return
+        }
+
+        if #available(iOS 15, *) {
+            content.interruptionLevel = .timeSensitive
         }
 
         let badgeCount = totalUnreadCount(unreadConversationCount)

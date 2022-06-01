@@ -2102,6 +2102,12 @@ internal enum L10n {
           /// Create Link
           internal static let title = L10n.tr("Localizable", "guest_room.link.button.title")
         }
+        internal enum Disabled {
+          internal enum ForOtherTeam {
+            /// You can't disable the guest option in this conversation, as it has been created by someone from another team.
+            internal static let explanation = L10n.tr("Localizable", "guest_room.link.disabled.for_other_team.explanation")
+          }
+        }
         internal enum Header {
           /// Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.
           internal static let subtitle = L10n.tr("Localizable", "guest_room.link.header.subtitle")

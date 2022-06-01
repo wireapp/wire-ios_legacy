@@ -107,7 +107,8 @@ final class ConversationGuestOptionsViewModel {
     private func computeVisibleRows() -> [CellConfiguration] {/// TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
             get: { [unowned self] in return self.configuration.allowGuests },
-            set: { [unowned self] in self.setAllowGuests($0, view: $1) }
+            set: { [unowned self] in self.setAllowGuests($0, view: $1) },
+            isDisabled: (configuration.guestLinkFeatureStatus == .enabled && !configuration.isConversationFromSelfTeam)
         )]
         guard configuration.allowGuests else {
             return rows
@@ -116,7 +117,9 @@ final class ConversationGuestOptionsViewModel {
         switch configuration.guestLinkFeatureStatus {
         case .enabled:
             rows.append(.linkHeader)
-            if showLoadingCell {
+            if !configuration.isConversationFromSelfTeam {
+                rows.append(.info(infoText(isSelfTeam: configuration.isConversationFromSelfTeam, isDisabled: true)))
+            } else if showLoadingCell {
                 rows.append(.loading)
             } else {
                 // Check if we have a link already
@@ -133,13 +136,25 @@ final class ConversationGuestOptionsViewModel {
             return rows
         case .disabled:
             rows.append(.linkHeader)
-            rows.append(.info(isSelfTeam: configuration.isConversationFromSelfTeam))
+            rows.append(.info(infoText(isSelfTeam: configuration.isConversationFromSelfTeam, isDisabled: false)))
             return rows
         case .unknown:
             return rows
 
         }
+    }
 
+    private func infoText(isSelfTeam: Bool, isDisabled: Bool) -> String {
+        typealias GuestRoomLinkStrings = L10n.Localizable.GuestRoom.Link
+
+        let guestLinkIsNotAllowedForSelfTeam = GuestRoomLinkStrings.NotAllowed.ForSelfTeam.explanation
+        let guestLinkIsNotAllowedForOtherTeam = GuestRoomLinkStrings.NotAllowed.ForOtherTeam.explanation
+        let guestLinkIsDisabledForOtherTeam = GuestRoomLinkStrings.Disabled.ForOtherTeam.explanation
+
+        guard isSelfTeam else {
+            return isDisabled ? guestLinkIsDisabledForOtherTeam : guestLinkIsNotAllowedForOtherTeam
+        }
+        return guestLinkIsNotAllowedForSelfTeam
     }
 
     /// revoke a conversation link
