@@ -166,7 +166,7 @@ final class MessagePresenter: NSObject {
             openLocationMessage(message)
         } else if Message.isVideo(message), message.canBeShared {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isFileTransfer(message), message.canBeShared {
+        } else if Message.isFileTransfer(message), message.canBeDownloaded {
             openFileMessage(message, targetView: targetView)
         } else if Message.isImage(message), message.canBeShared {
             openImageMessage(message, actionResponder: delegate)

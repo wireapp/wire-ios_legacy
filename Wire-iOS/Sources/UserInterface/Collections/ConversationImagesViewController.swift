@@ -262,10 +262,12 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             let emojiSketchButton = iconButton(messageAction:
             .sketchEmoji)
 
-            let revealButton = iconButton(messageAction:
-            .showInConversation)
-
-            buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
+            let revealButton = iconButton(messageAction: .showInConversation)
+            if !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia {
+                buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, revealButton]
+            } else {
+                buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
+            }
         }
 
         buttons.append(deleteButton)
