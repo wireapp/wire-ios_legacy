@@ -40,9 +40,10 @@ extension ZMConversationMessage {
         guard canBeShared else {
             return false
         }
-        return SecurityFlags.clipboard.isEnabled
-            && !isEphemeral
-            && (isText || isImage || isLocation)
+        return SecurityFlags.clipboard.isEnabled &&
+               MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard &&
+               !isEphemeral &&
+               (isText || isImage || isLocation)
     }
 
     /// Whether the message can be edited.
@@ -110,12 +111,14 @@ extension ZMConversationMessage {
     /// Whether it is possible to download the message content.
     var canBeDownloaded: Bool {
         guard let fileMessageData = self.fileMessageData,
-              canBeShared else {
+              canBeShared,
+              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
             return false
         }
         return isFile
             && fileMessageData.transferState == .uploaded
             && fileMessageData.downloadState == .remote
+        && MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia
     }
 
     var canCancelDownload: Bool {
@@ -127,9 +130,11 @@ extension ZMConversationMessage {
 
     /// Whether the content of the message can be saved to the disk.
     var canBeSaved: Bool {
-        if isEphemeral || !canBeShared {
-            return false
-        }
+        guard canBeShared,
+              !isEphemeral,
+              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
+                  return false
+              }
 
         if isImage {
             return true
@@ -172,6 +177,7 @@ extension ZMConversationMessage {
 
     /// Whether the message can be sent or received.
     var canBeShared: Bool {
-        return !isRestricted && SecurityFlags.fileSharing.isEnabled
+        return !isRestricted
     }
+
 }

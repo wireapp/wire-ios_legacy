@@ -199,21 +199,37 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        return canFilesBeShared ? [
-            photoButton,
-            mentionButton,
-            sketchButton,
-            gifButton,
-            audioButton,
-            pingButton,
-            uploadFileButton,
-            locationButton,
-            videoButton
-        ] : [
-            mentionButton,
-            pingButton,
-            locationButton
-        ]
+        switch MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).mediaShareRestrictionLevel {
+
+        case .none:
+            return [
+                photoButton,
+                mentionButton,
+                sketchButton,
+                gifButton,
+                audioButton,
+                pingButton,
+                uploadFileButton,
+                locationButton,
+                videoButton
+            ]
+        case .securityFlag:
+            return [
+                photoButton,
+                mentionButton,
+                sketchButton,
+                audioButton,
+                pingButton,
+                locationButton,
+                videoButton
+            ]
+        case .APIFlag:
+            return [
+                mentionButton,
+                pingButton,
+                locationButton
+            ]
+        }
     }
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
@@ -744,7 +760,9 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             if let image = image,
                let jpegData = image.jpegData(compressionQuality: 0.9) {
                 if picker.sourceType == UIImagePickerController.SourceType.camera {
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+                    if MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll {
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+                    }
                     // In case of picking from the camera, the iOS controller is showing it's own confirmation screen.
                     parent?.dismiss(animated: true) {
                         self.sendController.sendMessage(withImageData: jpegData, completion: nil)
@@ -860,12 +878,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return otherGestureRecognizer is UIPanGestureRecognizer
-    }
-
-    /// Whether files can be shared and received
-    var canFilesBeShared: Bool {
-        guard let session = ZMUserSession.shared() else { return true }
-        return session.fileSharingFeature.status == .enabled && SecurityFlags.fileSharing.isEnabled
     }
 
     // MARK: setup views

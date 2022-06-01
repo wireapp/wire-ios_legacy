@@ -29,8 +29,8 @@ final class UserConnectionView: UIView, Copyable {
 
     static private var correlationFormatter: AddressBookCorrelationFormatter = {
         return AddressBookCorrelationFormatter(
-            lightFont: FontSpec(.small, .light).font!,
-            boldFont: FontSpec(.small, .medium).font!,
+            lightFont: FontSpec(.small, .light),
+            boldFont: FontSpec(.small, .medium),
             color: UIColor.from(scheme: .textDimmed)
         )
     }()

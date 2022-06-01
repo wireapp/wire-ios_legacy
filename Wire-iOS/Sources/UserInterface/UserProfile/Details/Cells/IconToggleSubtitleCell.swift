@@ -113,6 +113,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
                                    titleIdentifier,
                                    icon,
                                    color,
+                                   isEnabled,
                                    get,
                                    set) = configuration else { preconditionFailure() }
 
@@ -147,6 +148,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         toggle.accessibilityIdentifier = identifier
         titleLabel.accessibilityIdentifier = titleIdentifier
         toggle.isOn = get()
+        toggle.isEnabled = isEnabled
         self.variant = variant
     }
 }

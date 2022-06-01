@@ -75,7 +75,6 @@ indirect enum AuthenticationFlowStep: Equatable {
     case pendingInitialSync(next: AuthenticationFlowStep?)
 
     // Registration
-    case teamCreation(TeamCreationState)
     case createCredentials(UnregisteredUser)
     case sendActivationCode(UnverifiedCredentials, user: UnregisteredUser, isResend: Bool)
     case enterActivationCode(UnverifiedCredentials, user: UnregisteredUser)
@@ -113,7 +112,6 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .pendingEmailLinkVerification: return true
 
         // Registration
-        case .teamCreation(let teamState): return teamState.needsInterface
         case .createCredentials: return true
         case .sendActivationCode: return false
         case .enterActivationCode: return true

@@ -296,8 +296,9 @@ extension AppRootRouter {
         // Only execute handle events if there is no current flow
         guard
             self.authenticationCoordinator == nil ||
-                error?.userSessionErrorCode == .addAccountRequested ||
-                error?.userSessionErrorCode == .accountDeleted,
+            error?.userSessionErrorCode == .addAccountRequested ||
+            error?.userSessionErrorCode == .accountDeleted ||
+            error?.userSessionErrorCode == .needsAuthenticationAfterMigration,
             let sessionManager = SessionManager.shared
         else {
             completion()
