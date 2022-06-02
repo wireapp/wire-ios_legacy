@@ -1,0 +1,99 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+
+
+#include "warnings.xcconfig"
+#include "../version.xcconfig"
+
+SDKROOT = iphoneos
+
+// Swift
+//
+SWIFT_VERSION = 5.1
+DEFINES_MODULE = YES
+
+// Packaging
+//
+INFOPLIST_PREPROCESS = YES
+
+// Linking
+//
+DYLIB_COMPATIBILITY_VERSION = $(MAJOR_VERSION).0
+DYLIB_CURRENT_VERSION = $(CURRENT_PROJECT_VERSION)
+
+
+// Search Paths
+//
+ALWAYS_SEARCH_USER_PATHS = NO
+
+
+
+// Deployment
+//
+COMBINE_HIDPI_IMAGES = YES
+ENABLE_BITCODE = NO
+
+
+// Versioning
+//
+VERSIONING_SYSTEM = apple-generic
+
+// Linking
+//
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks
+
+// LLVM - Code Generation
+//
+GCC_DYNAMIC_NO_PIC = NO
+
+
+// LLVM - Language
+//
+GCC_C_LANGUAGE_STANDARD = gnu99
+
+
+
+// LLVM - Language - C++
+//
+CLANG_CXX_LANGUAGE_STANDARD = gnu++0x
+CLANG_CXX_LIBRARY = libc++
+GCC_ENABLE_CPP_EXCEPTIONS = NO
+
+
+
+// LLVM - Language - Modules
+//
+CLANG_ENABLE_MODULES = YES
+CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+
+
+
+// LLVM - Language - Objective C
+//
+GCC_ENABLE_OBJC_EXCEPTIONS = YES
+CLANG_ENABLE_OBJC_ARC = YES
+ENABLE_STRICT_OBJC_MSGSEND = YES
+
+
+// LLVM - Preprocessing
+//
+ENABLE_NS_ASSERTIONS = YES
+
+
+

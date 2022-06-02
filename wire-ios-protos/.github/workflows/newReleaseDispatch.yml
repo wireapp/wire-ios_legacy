@@ -1,0 +1,28 @@
+name: Dispatch new release v0.2
+
+on:
+  workflow_dispatch:
+  release:
+    types: [ published ]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: gh auth
+        run: |
+          # auth with user PAT, them the user creates the PR instead of bot
+          echo ${{ secrets.ZENKINS_WORKFLOW_PAT }} > .githubtoken
+          gh auth login --with-token < .githubtoken
+          rm .githubtoken
+          
+      - name: tell downstream(s) repo this repo published a new release
+        run: |
+          gh api repos/wireapp/wire-ios-data-model/dispatches \
+          -X POST \
+          -F event_type='newRelease'
+
+          gh api repos/wireapp/wire-ios-mocktransport/dispatches \
+          -X POST \
+          -F event_type='newRelease'

@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0908380A1B872DBF00629095 /* WireProtos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090837FE1B872DBF00629095 /* WireProtos.framework */; };
+		09BCDB6E1BCBE08D0020DCC7 /* medium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09BCDB6D1BCBE08D0020DCC7 /* medium.jpg */; };
+		5E13807D21A30A9D004A646C /* messages.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13807B21A30A9D004A646C /* messages.pb.swift */; };
+		5E13807E21A30A9D004A646C /* otr.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13807C21A30A9D004A646C /* otr.pb.swift */; };
+		5E13808021A30AB7004A646C /* ProtosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13807F21A30AB7004A646C /* ProtosTests.swift */; };
+		5EAC172E21A30C390014E671 /* WireProtos.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 090837FE1B872DBF00629095 /* WireProtos.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9E869CD265FD26E00880C48 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E869CC265FD26E00880C48 /* SwiftProtobuf.xcframework */; };
+		F1FDF2E021B043F400E037A1 /* WireProtos.h in Headers */ = {isa = PBXBuildFile; fileRef = F1FDF2DF21B043F400E037A1 /* WireProtos.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0908380B1B872DBF00629095 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 090837F51B872DBF00629095 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 090837FD1B872DBF00629095;
+			remoteInfo = Protos;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		097A22971B8B1AD900D02243 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5EAC172E21A30C390014E671 /* WireProtos.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		090837FE1B872DBF00629095 /* WireProtos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireProtos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		090838021B872DBF00629095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		090838091B872DBF00629095 /* WireProtosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WireProtosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0908380F1B872DC000629095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		090838241B87347900629095 /* messages.proto */ = {isa = PBXFileReference; lastKnownFileType = text; name = messages.proto; path = "Carthage/Checkouts/generic-message-proto/proto/messages.proto"; sourceTree = SOURCE_ROOT; };
+		099223A01BECF63800668091 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		099223A11BECF65A00668091 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		099223A61BED06E400668091 /* otr.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; name = otr.proto; path = "Carthage/Checkouts/generic-message-proto/proto/otr.proto"; sourceTree = SOURCE_ROOT; };
+		09B70B4D1B874390002667A6 /* version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = version.xcconfig; sourceTree = "<group>"; };
+		09B70B601B874390002667A6 /* WireProtos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WireProtos.xcconfig; sourceTree = "<group>"; };
+		09BCDB6D1BCBE08D0020DCC7 /* medium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = medium.jpg; sourceTree = "<group>"; };
+		54B5E1F11F0A6B77001F43A6 /* project-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "project-common.xcconfig"; sourceTree = "<group>"; };
+		54B5E1F21F0A6B77001F43A6 /* project-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "project-debug.xcconfig"; sourceTree = "<group>"; };
+		54B5E1F31F0A6B77001F43A6 /* project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
+		54B5E1F41F0A6B77001F43A6 /* simulator.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = simulator.xcconfig; sourceTree = "<group>"; };
+		54B5E1F51F0A6B77001F43A6 /* test-host-ios.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "test-host-ios.xcconfig"; sourceTree = "<group>"; };
+		54B5E1F61F0A6B77001F43A6 /* test-target.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "test-target.xcconfig"; sourceTree = "<group>"; };
+		54B5E1F71F0A6B77001F43A6 /* warnings-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "warnings-debug.xcconfig"; sourceTree = "<group>"; };
+		54B5E1F81F0A6B77001F43A6 /* warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = warnings.xcconfig; sourceTree = "<group>"; };
+		5E13807B21A30A9D004A646C /* messages.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = messages.pb.swift; sourceTree = "<group>"; };
+		5E13807C21A30A9D004A646C /* otr.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = otr.pb.swift; sourceTree = "<group>"; };
+		5E13807F21A30AB7004A646C /* ProtosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtosTests.swift; sourceTree = "<group>"; };
+		A9E869CC265FD26E00880C48 /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
+		A9EF6A7323D76AC8002904B4 /* ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ios.xcconfig; sourceTree = "<group>"; };
+		F184BE851E65CADA0020EBB7 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		F1FDF2DF21B043F400E037A1 /* WireProtos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireProtos.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		090837FA1B872DBF00629095 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E869CD265FD26E00880C48 /* SwiftProtobuf.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		090838061B872DBF00629095 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0908380A1B872DBF00629095 /* WireProtos.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		090837F41B872DBF00629095 = {
+			isa = PBXGroup;
+			children = (
+				099223A01BECF63800668091 /* Cartfile */,
+				F184BE851E65CADA0020EBB7 /* Cartfile.resolved */,
+				099223A11BECF65A00668091 /* Cartfile.private */,
+				09B70B4B1B874390002667A6 /* Resources */,
+				090838001B872DBF00629095 /* Protos */,
+				0908380D1B872DBF00629095 /* ProtosTests */,
+				090837FF1B872DBF00629095 /* Products */,
+				67FFDFDA66F3EEA3F9461130 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		090837FF1B872DBF00629095 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				090837FE1B872DBF00629095 /* WireProtos.framework */,
+				090838091B872DBF00629095 /* WireProtosTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		090838001B872DBF00629095 /* Protos */ = {
+			isa = PBXGroup;
+			children = (
+				090838241B87347900629095 /* messages.proto */,
+				099223A61BED06E400668091 /* otr.proto */,
+				5E13807B21A30A9D004A646C /* messages.pb.swift */,
+				5E13807C21A30A9D004A646C /* otr.pb.swift */,
+				F1FDF2DF21B043F400E037A1 /* WireProtos.h */,
+				090838011B872DBF00629095 /* Supporting Files */,
+			);
+			path = Protos;
+			sourceTree = "<group>";
+		};
+		090838011B872DBF00629095 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				090838021B872DBF00629095 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0908380D1B872DBF00629095 /* ProtosTests */ = {
+			isa = PBXGroup;
+			children = (
+				09BCDB6D1BCBE08D0020DCC7 /* medium.jpg */,
+				0908380E1B872DBF00629095 /* Supporting Files */,
+				5E13807F21A30AB7004A646C /* ProtosTests.swift */,
+			);
+			path = ProtosTests;
+			sourceTree = "<group>";
+		};
+		0908380E1B872DBF00629095 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0908380F1B872DC000629095 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		09B70B4B1B874390002667A6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				09B70B4C1B874390002667A6 /* Configurations */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		09B70B4C1B874390002667A6 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				09B70B4E1B874390002667A6 /* zmc-config */,
+				09B70B601B874390002667A6 /* WireProtos.xcconfig */,
+				09B70B4D1B874390002667A6 /* version.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		09B70B4E1B874390002667A6 /* zmc-config */ = {
+			isa = PBXGroup;
+			children = (
+				A9EF6A7323D76AC8002904B4 /* ios.xcconfig */,
+				54B5E1F11F0A6B77001F43A6 /* project-common.xcconfig */,
+				54B5E1F21F0A6B77001F43A6 /* project-debug.xcconfig */,
+				54B5E1F31F0A6B77001F43A6 /* project.xcconfig */,
+				54B5E1F41F0A6B77001F43A6 /* simulator.xcconfig */,
+				54B5E1F51F0A6B77001F43A6 /* test-host-ios.xcconfig */,
+				54B5E1F61F0A6B77001F43A6 /* test-target.xcconfig */,
+				54B5E1F71F0A6B77001F43A6 /* warnings-debug.xcconfig */,
+				54B5E1F81F0A6B77001F43A6 /* warnings.xcconfig */,
+			);
+			path = "zmc-config";
+			sourceTree = "<group>";
+		};
+		67FFDFDA66F3EEA3F9461130 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9E869CC265FD26E00880C48 /* SwiftProtobuf.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		090837FB1B872DBF00629095 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1FDF2E021B043F400E037A1 /* WireProtos.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		090837FD1B872DBF00629095 /* WireProtos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 090838141B872DC000629095 /* Build configuration list for PBXNativeTarget "WireProtos" */;
+			buildPhases = (
+				090837F91B872DBF00629095 /* Sources */,
+				090837FA1B872DBF00629095 /* Frameworks */,
+				090837FB1B872DBF00629095 /* Headers */,
+				090837FC1B872DBF00629095 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WireProtos;
+			productName = Protos;
+			productReference = 090837FE1B872DBF00629095 /* WireProtos.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		090838081B872DBF00629095 /* WireProtosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 090838171B872DC000629095 /* Build configuration list for PBXNativeTarget "WireProtosTests" */;
+			buildPhases = (
+				090838051B872DBF00629095 /* Sources */,
+				090838061B872DBF00629095 /* Frameworks */,
+				090838071B872DBF00629095 /* Resources */,
+				097A22971B8B1AD900D02243 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0908380C1B872DBF00629095 /* PBXTargetDependency */,
+			);
+			name = WireProtosTests;
+			productName = ProtosTests;
+			productReference = 090838091B872DBF00629095 /* WireProtosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		090837F51B872DBF00629095 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = Wire;
+				TargetAttributes = {
+					090837FD1B872DBF00629095 = {
+						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1130;
+					};
+					090838081B872DBF00629095 = {
+						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1130;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 090837F81B872DBF00629095 /* Build configuration list for PBXProject "WireProtos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 090837F41B872DBF00629095;
+			productRefGroup = 090837FF1B872DBF00629095 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				090837FD1B872DBF00629095 /* WireProtos */,
+				090838081B872DBF00629095 /* WireProtosTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		090837FC1B872DBF00629095 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		090838071B872DBF00629095 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09BCDB6E1BCBE08D0020DCC7 /* medium.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		090837F91B872DBF00629095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E13807E21A30A9D004A646C /* otr.pb.swift in Sources */,
+				5E13807D21A30A9D004A646C /* messages.pb.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		090838051B872DBF00629095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E13808021A30AB7004A646C /* ProtosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0908380C1B872DBF00629095 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 090837FD1B872DBF00629095 /* WireProtos */;
+			targetProxy = 0908380B1B872DBF00629095 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		090838121B872DC000629095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54B5E1F21F0A6B77001F43A6 /* project-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+			};
+			name = Debug;
+		};
+		090838131B872DC000629095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54B5E1F31F0A6B77001F43A6 /* project.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		090838151B872DC000629095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09B70B601B874390002667A6 /* WireProtos.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = Protos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		090838161B872DC000629095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09B70B601B874390002667A6 /* WireProtos.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				INFOPLIST_FILE = Protos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+			};
+			name = Release;
+		};
+		090838181B872DC000629095 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54B5E1F61F0A6B77001F43A6 /* test-target.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = ProtosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = WireProtosTests;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Debug;
+		};
+		090838191B872DC000629095 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54B5E1F61F0A6B77001F43A6 /* test-target.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = ProtosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = WireProtosTests;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		090837F81B872DBF00629095 /* Build configuration list for PBXProject "WireProtos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				090838121B872DC000629095 /* Debug */,
+				090838131B872DC000629095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		090838141B872DC000629095 /* Build configuration list for PBXNativeTarget "WireProtos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				090838151B872DC000629095 /* Debug */,
+				090838161B872DC000629095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		090838171B872DC000629095 /* Build configuration list for PBXNativeTarget "WireProtosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				090838181B872DC000629095 /* Debug */,
+				090838191B872DC000629095 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 090837F51B872DBF00629095 /* Project object */;
+}

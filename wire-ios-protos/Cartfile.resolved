@@ -1,0 +1,2 @@
+github "wireapp/generic-message-proto" "v1.36.0"
+github "wireapp/swift-protobuf" "1.15.0_xcframework"
