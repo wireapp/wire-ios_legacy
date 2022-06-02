@@ -1,4 +1,3 @@
 github "wireapp/wire-ios-images" ~> 41.0.0
 github "wireapp/PINCache" "2.3-xcode13.1"
-github "wireapp/wire-ios-transport" ~> 86.0.0
 github "wireapp/wire-ios-link-preview" ~> 35.0.0
