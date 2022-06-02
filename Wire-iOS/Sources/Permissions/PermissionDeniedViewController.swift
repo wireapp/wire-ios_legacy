@@ -50,10 +50,10 @@ final class PermissionDeniedViewController: UIViewController {
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: FontSpec.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
             ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: FontSpec.largeSemiboldFont
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
@@ -74,10 +74,10 @@ final class PermissionDeniedViewController: UIViewController {
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: FontSpec.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
             ], range: (text as NSString).range(of: paragraph1))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: FontSpec.largeSemiboldFont
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 

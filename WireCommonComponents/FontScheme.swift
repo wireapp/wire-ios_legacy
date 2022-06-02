@@ -199,6 +199,7 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: largePointSize, weight: .semibold)
         fontsByFontSpec[FontSpec(.large, .regular, .none)]   = .systemFont(ofSize: largePointSize, weight: .regular)
         fontsByFontSpec[FontSpec(.large, .light, .none)]     = .systemFont(ofSize: largePointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.large, .thin, .none)]      = .systemFont(ofSize: largePointSize, weight: .thin)
 
         let normalPointSize = pointSize(fontSize: .normal, contentSizeCategory: contentSizeCategory)
         
