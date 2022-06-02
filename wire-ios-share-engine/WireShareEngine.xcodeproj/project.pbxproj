@@ -13,6 +13,8 @@
 		BFA18BD41D806050005C281B /* BaseSharingSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA18BD31D806050005C281B /* BaseSharingSessionTests.swift */; };
 		CE7FBFC41E015C5900E1C4C9 /* RequestGeneratorStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FBFC31E015C5900E1C4C9 /* RequestGeneratorStoreTests.swift */; };
 		CEB50AEC1DF9BADF00211B30 /* OperationLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB50AEB1DF9BADF00211B30 /* OperationLoopTests.swift */; };
+		EEA923CB2849743A0099C395 /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA923CA2849743A0099C395 /* WireRequestStrategy.framework */; };
+		EEA923CC2849743A0099C395 /* WireRequestStrategy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EEA923CA2849743A0099C395 /* WireRequestStrategy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F125E9B51E28DB06006583A2 /* SharingSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F125E9B41E28DB06006583A2 /* SharingSessionTests.swift */; };
 		F154EE0B1F44826400CB8184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F154EE0A1F44826400CB8184 /* AppDelegate.swift */; };
 		F1DABFA21E9B8B6100AD2324 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DABF971E9B8B6100AD2324 /* AuthenticationStatusProvider.swift */; };
@@ -55,6 +57,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EEA923CD2849743A0099C395 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EEA923CC2849743A0099C395 /* WireRequestStrategy.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +92,7 @@
 		BFA18BD31D806050005C281B /* BaseSharingSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSharingSessionTests.swift; sourceTree = "<group>"; };
 		CE7FBFC31E015C5900E1C4C9 /* RequestGeneratorStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestGeneratorStoreTests.swift; sourceTree = "<group>"; };
 		CEB50AEB1DF9BADF00211B30 /* OperationLoopTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationLoopTests.swift; sourceTree = "<group>"; };
+		EEA923CA2849743A0099C395 /* WireRequestStrategy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireRequestStrategy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10C8E4E1E9647AF00020408 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F125E9B41E28DB06006583A2 /* SharingSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingSessionTests.swift; sourceTree = "<group>"; };
 		F154EE081F44826400CB8184 /* WireShareEngineTestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireShareEngineTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEA923CB2849743A0099C395 /* WireRequestStrategy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +219,7 @@
 		5470D4331D77165E00FDE440 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EEA923CA2849743A0099C395 /* WireRequestStrategy.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -259,6 +275,7 @@
 				5470D3E51D76E1B000FDE440 /* Headers */,
 				663C9D9E275A2B8F00D5B0BC /* Run SwiftLint */,
 				5470D3E61D76E1B000FDE440 /* Resources */,
+				EEA923CD2849743A0099C395 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

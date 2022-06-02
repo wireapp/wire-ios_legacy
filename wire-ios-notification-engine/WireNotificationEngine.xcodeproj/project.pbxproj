@@ -21,6 +21,8 @@
 		EE3245FE28229E8600F2A84A /* ApplicationStatusDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FD28229E8600F2A84A /* ApplicationStatusDirectory.swift */; };
 		EE32460028229F6B00F2A84A /* ClientRegistrationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */; };
 		EE32460228229FDF00F2A84A /* AuthenticationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */; };
+		EEA923CF284974480099C395 /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA923CE284974480099C395 /* WireRequestStrategy.framework */; };
+		EEA923D0284974480099C395 /* WireRequestStrategy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EEA923CE284974480099C395 /* WireRequestStrategy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,20 @@
 			remoteInfo = WireNotificationEngineHost;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EEA923D1284974480099C395 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EEA923D0284974480099C395 /* WireRequestStrategy.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06394AA12497B24600380494 /* OperationLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationLoop.swift; sourceTree = "<group>"; };
@@ -73,6 +89,7 @@
 		EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationStatus.swift; sourceTree = "<group>"; };
 		EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatus.swift; sourceTree = "<group>"; };
 		EE62A9F127B65C04004F7ADC /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ios-arm64Simulator.xcconfig"; sourceTree = "<group>"; };
+		EEA923CE284974480099C395 /* WireRequestStrategy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireRequestStrategy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEA923CF284974480099C395 /* WireRequestStrategy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +123,7 @@
 		060256312489322000E060E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EEA923CE284974480099C395 /* WireRequestStrategy.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,6 +280,7 @@
 				067ECB362487A93D00701956 /* Sources */,
 				067ECB372487A93D00701956 /* Frameworks */,
 				067ECB382487A93D00701956 /* Resources */,
+				EEA923D1284974480099C395 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
