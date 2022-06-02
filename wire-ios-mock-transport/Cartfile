@@ -1,2 +1,1 @@
 github "wireapp/wire-ios-transport" ~> 86.0.0
-github "wireapp/wire-ios-cryptobox" ~> 32.0.0
