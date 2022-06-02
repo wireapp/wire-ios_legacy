@@ -25,4 +25,7 @@
    <FileRef
       location = "group:wire-ios-protos/WireProtos.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:wire-ios-cryptobox/WireCryptobox.xcodeproj">
+   </FileRef>
 </Workspace>
