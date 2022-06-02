@@ -1,0 +1,256 @@
+// 
+// Wire
+// Copyright (C) 2021 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Nouveau message";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ dans %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Quelqu’un";
+"push.notification.ephemeral" = "A envoyé un message";
+"push.notification.ephemeral.mention" = "Vous a mentionné";
+"push.notification.ephemeral.reply" = "Vous a répondu";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@ : %2$@";
+"push.notification.add.message.group.nousername" = "Nouveau message : %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Nouveau message : %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ dans une conversation : %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Nouveau message : %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Mention de %1$@ : %2$@";
+"push.notification.add.message.group.nousername.mention" = "Nouvelle mention : %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "Nouvelle mention : %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ vous a mentionné dans une conversation : %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Mention : %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "Nouvelle mention : %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Réponse de %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "Nouvelle réponse : %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "Nouvelle réponse : %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ vous a répondu dans une conversation : %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Réponse : %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "Nouvelle réponse : %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ a partagé une image";
+"push.notification.add.image.group.nousername" = "Nouvelle image";
+"push.notification.add.image.group.nousername.noconversationname" = "Nouvelle image dans une conversation";
+"push.notification.add.image.group.noconversationname" = "%1$@ a partagé une image dans une conversation";
+
+"push.notification.add.image.oneonone" = "A partagé une image";
+"push.notification.add.image.oneonone.nousername" = "Nouvelle image dans une conversation";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ a partagé une vidéo";
+"push.notification.add.video.group.nousername" = "Nouvelle vidéo";
+"push.notification.add.video.group.nousername.noconversationname" = "Nouvelle vidéo dans une conversation";
+"push.notification.add.video.group.noconversationname" = "%1$@ a partagé une vidéo dans une conversation";
+
+"push.notification.add.video.oneonone" = "A partagé une vidéo";
+"push.notification.add.video.oneonone.nousername" = "Nouvelle vidéo dans une conversation";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ a partagé un message vocal";
+"push.notification.add.audio.group.nousername" = "Nouveau message vocal";
+"push.notification.add.audio.group.nousername.noconversationname" = "Nouveau message vocal dans une conversation";
+"push.notification.add.audio.group.noconversationname" = "%1$@ a partagé un message vocal dans une conversation";
+
+"push.notification.add.audio.oneonone" = "A partagé un message vocal";
+"push.notification.add.audio.oneonone.nousername" = "Nouveau message vocal dans une conversation";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ a partagé un fichier";
+"push.notification.add.file.group.nousername" = "Nouveau fichier";
+"push.notification.add.file.group.nousername.noconversationname" = "Nouveau fichier dans une conversation";
+"push.notification.add.file.group.noconversationname" = "%1$@ a partagé un fichier dans une conversation";
+
+"push.notification.add.file.oneonone" = "A partagé un fichier";
+"push.notification.add.file.oneonone.nousername" = "Nouveau fichier dans une conversation";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ a partagé une position";
+"push.notification.add.location.group.nousername" = "Nouvelle position";
+"push.notification.add.location.group.nousername.noconversationname" = "Nouvelle position dans une conversation";
+"push.notification.add.location.group.noconversationname" = "%1$@ a partagé une position dans une conversation";
+
+"push.notification.add.location.oneonone" = "A partagé une position";
+"push.notification.add.location.oneonone.nousername" = "Nouvelle position dans une conversation";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ vous a ajouté";
+"push.notification.member.join.self.noconversationname" = "%1$@ vous a ajouté à une conversation";
+"push.notification.member.join.self.nousername.noconversationname" = "Vous avez été ajouté à une conversation";
+"push.notification.member.join.self.nousername" = "Vous avez été ajouté";
+
+"push.notification.member.leave.self" = "%1$@ vous a exclu";
+"push.notification.member.leave.self.noconversationname" = "%1$@ vous a exclu d’une conversation";
+"push.notification.member.leave.self.nousername.noconversationname" = "Vous avez été exclu d’une conversation";
+"push.notification.member.leave.self.nousername" = "Vous avez été exclu";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ a réglé la minuterie sur %@";
+"push.notification.message-timer.update.nousername" = "Quelqu'un a réglé la minuterie sur %@";
+"push.notification.message-timer.update.noconversationname" = "%@ a réglé la minuterie sur %@ dans une conversation";
+"push.notification.message-timer.update.nousername.noconversationname" = "Quelqu'un a réglé la minuterie sur %@ dans une conversation";
+
+"push.notification.message-timer.off" = "%@ a désactivé les messages éphémères";
+"push.notification.message-timer.off.nousername" = "Quelqu'un a désactivé les messages éphémères";
+"push.notification.message-timer.off.noconversationname" = "%@ a désactivé les messages éphémères dans une conversation";
+"push.notification.message-timer.off.nousername.noconversationname" = "Quelqu'un a désactivé les messages éphémères dans une conversation";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "a commencé un appel vidéo";
+"push.notification.call.started.video.oneonone.nousername" = "Quelqu'un a commencé un appel vidéo";
+
+"push.notification.call.started.video.group" = "%1$@ a commencé un appel vidéo";
+"push.notification.call.started.video.group.nousername" = "Quelqu'un a commencé un appel vidéo";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ a commencé un appel vidéo dans une conversation";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Quelqu'un a commencé un appel vidéo dans une conversation";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "appelle";
+"push.notification.call.started.oneonone.nousername" = "Quelqu'un appelle";
+
+"push.notification.call.started.group" = "%1$@ appelle";
+"push.notification.call.started.group.nousername" = "Quelqu'un appelle";
+"push.notification.call.started.group.noconversationname" = "%1$@ appelle dans une conversation";
+"push.notification.call.started.group.nousername.noconversationname" = "Quelqu'un appelle dans une conversation";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ a appelé";
+"push.notification.call.missed.group.nousername" = "Quelqu'un a appelé";
+"push.notification.call.missed.group.nousername.noconversationname" = "Quelqu'un a appelé dans une conversation";
+"push.notification.call.missed.group.noconversationname" = "%1$@ a appelé dans une conversation";
+
+"push.notification.call.missed.oneonone" = "vous a appelé";
+"push.notification.call.missed.oneonone.nousername" = "Quelqu'un a appelé";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ dans %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Quelqu'un appelle dans une conversation";
+"push.notification.callkit.call.started.group.nousername" = "Quelqu'un appelle dans %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ appelle dans une conversation";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ a créé une conversation";
+"push.notification.conversation.create.nousername" = "Quelqu'un a créé une conversation";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ a supprimé le groupe";
+"push.notification.conversation.delete.nousername" = "Quelqu'un a supprimé ce groupe";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ souhaite se connecter";
+"push.notification.connection.request.nousername" = "Quelqu'un souhaite se connecter";
+
+"push.notification.connection.accepted" = "Vous et %@ êtes maintenant connectés";
+"push.notification.connection.accepted.nousername" = "Vous avez une nouvelle connexion";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Impossible d’envoyer un message";
+"push.notification.failed.message.oneonone.nousername" = "Impossible d’envoyer un message";
+
+"push.notification.failed.message.group" = "Impossible d’envoyer un message";
+"push.notification.failed.message.group.noconversationname" = "Impossible d’envoyer un message";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Les notifications sont désactivées dans %@";
+"push.notification.alert.availability.away.title" = "Les notifications sont désactivées";
+"push.notification.alert.availability.busy.title.team" = "Les notifications ont changé dans %@";
+"push.notification.alert.availability.busy.title" = "Les notifications ont changé";
+
+"push.notification.alert.availability.away.message" = "Le statut affecte maintenant les notifications. Vous êtes en statut « Absent » et ne recevrez aucune notification.";
+"push.notification.alert.availability.busy.message" = "Le statut affecte maintenant les notifications. Vous êtes en statut « Occupé » et ne recevrez des notifications que lorsque quelqu’un vous mentionne ou répond à l’un de vos messages.";
+
+// BUNDLED MESSAGES
+"push.notification.bundled-messages" = "%d nouveaux messages";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ votre message";
+"push.notification.reaction.group.nousername.noconversationname" = "Quelqu'un %@ votre message dans une conversation";
+"push.notification.reaction.group.nousername" = "Quelqu'un %@ votre message";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ votre message dans une conversation";
+
+"push.notification.reaction.oneonone" = "%1$@ votre message";
+"push.notification.reaction.oneonone.nousername" = "Quelqu'un %@ votre message";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ vient de rejoindre Wire";
+
+// OTHER
+"push.notification.action.message.open" = "Ouvrir";
+"push.notification.action.message.reply" = "Répondre";
+"push.notification.action.message.reply.button.title" = "Envoyer";
+"push.notification.action.message.reply.placeholder" = "Message";
+"push.notification.action.conversation.mute" = "Mettre en sourdine";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Accepter";
+"push.notification.action.call.ignore" = "Refuser";
+"push.notification.action.call.message" = "Message";
+"push.notification.action.call.callback" = "Rappeler";
+"push.notification.action.connection.accept" = "Accepter";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

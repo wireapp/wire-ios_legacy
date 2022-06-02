@@ -1,0 +1,12 @@
+name: Create bump PR
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [newRelease]
+
+jobs:
+  call-workflow:
+    uses: wireapp/wire-ios-shared-resources/.github/workflows/createBumpPR.yml@master
+    secrets:
+      envPAT: ${{ secrets.ZENKINS_SECRET }}

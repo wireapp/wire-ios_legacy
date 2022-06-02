@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>push.notification.add.message.many.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@ u %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Nova poruka</string>
+        <key>few</key>
+        <string>%2$@ poruke</string>
+        <key>other</key>
+        <string>%2$@ poruka</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ u razgovoru</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Nova poruka</string>
+        <key>few</key>
+        <string>%1$@ poruke</string>
+        <key>other</key>
+        <string>%1$@ poruka</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@ iz %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Nova poruka</string>
+        <key>few</key>
+        <string>%2$@ poruke</string>
+        <key>other</key>
+        <string>%2$@ poruka</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ u razgovoru</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Nova poruka</string>
+        <key>few</key>
+        <string>%1$@ poruke</string>
+        <key>other</key>
+        <string>%1$@ poruka</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Vi imate %2$#@new_calls@ u %1@</string>
+      <key>new_calls</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>jedan propušten poziv</string>
+        <key>few</key>
+        <string>%2@ propuštena poziva</string>
+        <key>other</key>
+        <string>%2@ propuštenih poziva</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Vi imate %1$#@new_calls@ u razgovoru</string>
+      <key>new_calls</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>jedan propušten poziv</string>
+        <key>few</key>
+        <string>%1$@ propuštena poziva</string>
+        <key>other</key>
+        <string>%1$@ propuštenih poziva</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ pingalo%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ pingalo%2$#@new_knocks@u razgovoru</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>few</key>
+        <string>%1$@ pinga</string>
+        <key>other</key>
+        <string>%1$@ pingova</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@ u razgovoru</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>few</key>
+        <string>%1$@ pinga</string>
+        <key>other</key>
+        <string>%1$@ pingova</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>pingan%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %1$@ times</string>
+        <key>other</key>
+        <string> %1$@ times</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>few</key>
+        <string>%2$@ pinga</string>
+        <key>other</key>
+        <string>%2$@ pingova</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

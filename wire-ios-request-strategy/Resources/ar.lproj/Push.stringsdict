@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>push.notification.add.message.many.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@ في %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>zero</key>
+        <string>%2$@ messages</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>New message</string>
+        <key>two</key>
+        <string>%2$@ messages</string>
+        <key>few</key>
+        <string>%2$@ messages</string>
+        <key>many</key>
+        <string>%2$@ messages</string>
+        <key>other</key>
+        <string>%2$@ messages</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ في مُحادثة</string>
+      <key>new_messages</key>
+      <dict>
+        <key>zero</key>
+        <string>%1$@ messages</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>New message</string>
+        <key>two</key>
+        <string>%1$@ messages</string>
+        <key>few</key>
+        <string>%1$@ messages</string>
+        <key>many</key>
+        <string>%1$@ messages</string>
+        <key>other</key>
+        <string>%1$@ messages</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@ من %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>zero</key>
+        <string>%2$@ messages</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>New message</string>
+        <key>two</key>
+        <string>%2$@ messages</string>
+        <key>few</key>
+        <string>%2$@ messages</string>
+        <key>many</key>
+        <string>%2$@ messages</string>
+        <key>other</key>
+        <string>%2$@ رسالة جديدة</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ في مُحادثة</string>
+      <key>new_messages</key>
+      <dict>
+        <key>zero</key>
+        <string>%1$@ messages</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>رسالة جديدة</string>
+        <key>two</key>
+        <string>رسالتان جديدتان</string>
+        <key>few</key>
+        <string>%1$@ messages</string>
+        <key>many</key>
+        <string>%1$@ messages</string>
+        <key>other</key>
+        <string>%1$@ رسالة جديدة</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>لديك %2$#@new_calls@ في %1@</string>
+      <key>new_calls</key>
+      <dict>
+        <key>zero</key>
+        <string>%2@ missed calls</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>مكالمة فائتة</string>
+        <key>two</key>
+        <string>%2@ missed calls</string>
+        <key>few</key>
+        <string>%2@ مكالمات فائتة</string>
+        <key>many</key>
+        <string>%2@ missed calls</string>
+        <key>other</key>
+        <string>%2@ مكالمة فائتة</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>لديك %1$#@new_calls@ في محادثة</string>
+      <key>new_calls</key>
+      <dict>
+        <key>zero</key>
+        <string>%1$@ missed calls</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>مكالمة فائتة</string>
+        <key>two</key>
+        <string>مكالمتان فائتتان</string>
+        <key>few</key>
+        <string>%1$@ مكالمات فائتة</string>
+        <key>many</key>
+        <string>%1$@ missed calls</string>
+        <key>other</key>
+        <string>%1$@ مكالمات فائتة</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ pinged%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string> %2$@ times </string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>two</key>
+        <string> %2$@ times </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>many</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ pinged%2$#@new_knocks@in a conversation</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string> %2$@ times </string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>two</key>
+        <string> %2$@ times </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>many</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string>%1$@ pings</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>two</key>
+        <string>%1$@ pings</string>
+        <key>few</key>
+        <string>%1$@ pings</string>
+        <key>many</key>
+        <string>%1$@ pings</string>
+        <key>other</key>
+        <string>%1$@ pings</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@ في محادثة</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string>%1$@ pings</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>two</key>
+        <string>%1$@ pings</string>
+        <key>few</key>
+        <string>%1$@ pings</string>
+        <key>many</key>
+        <string>%1$@ pings</string>
+        <key>other</key>
+        <string>%1$@ pings</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>pinged%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string> %1$@ times</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>two</key>
+        <string> %1$@ times</string>
+        <key>few</key>
+        <string> %1$@ times</string>
+        <key>many</key>
+        <string> %1$@ times</string>
+        <key>other</key>
+        <string> %1$@ times</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>zero</key>
+        <string>%2$@ pings</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Ping</string>
+        <key>two</key>
+        <string>%2$@ pings</string>
+        <key>few</key>
+        <string>%2$@ pings</string>
+        <key>many</key>
+        <string>%2$@ pings</string>
+        <key>other</key>
+        <string>%2$@ pings</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

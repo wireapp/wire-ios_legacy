@@ -1,0 +1,256 @@
+// 
+// Wire
+// Copyright (C) 2021 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Nauja žinutė";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ grupėje %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Kažkas";
+"push.notification.ephemeral" = "Atsiuntė jums žinutę";
+"push.notification.ephemeral.mention" = "Jus paminėjo";
+"push.notification.ephemeral.reply" = "Atsakyta jums";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "Nauja žinutė: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Nauja žinutė: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ susirašinėjime: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Nauja žinutė: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Jus paminėjo %1$@: %2$@";
+"push.notification.add.message.group.nousername.mention" = "Naujas paminėjimas: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "Naujas paminėjimas: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ jus paminėjo pokalbyje: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Paminėjimas: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "Naujas paminėjimas: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Atsakymas iš %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "Naujas atsakymas: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "Naujas atsakymas: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ atsakė jums susirašinėjime: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Atsakymas: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "Naujas atsakymas: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ pasidalino paveikslėliu";
+"push.notification.add.image.group.nousername" = "Nauja nuotrauka";
+"push.notification.add.image.group.nousername.noconversationname" = "Naujas paveikslėlis susirašinėjime";
+"push.notification.add.image.group.noconversationname" = "%1$@ pasidalino paveikslėliu susirašinėjime";
+
+"push.notification.add.image.oneonone" = "Pasidalino paveikslu";
+"push.notification.add.image.oneonone.nousername" = "Naujas paveikslėlis susirašinėjime";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ pasidalino vaizdo įrašu";
+"push.notification.add.video.group.nousername" = "Naujas vaizdo įrašas";
+"push.notification.add.video.group.nousername.noconversationname" = "Naujas vaizdo įrašas susirašinėjime";
+"push.notification.add.video.group.noconversationname" = "%1$@ pasidalino vaizdo įrašu susirašinėjime";
+
+"push.notification.add.video.oneonone" = "Pasidalino vaizdo įrašu";
+"push.notification.add.video.oneonone.nousername" = "Naujas vaizdo įrašas susirašinėjime";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ pasidalino garso įrašu";
+"push.notification.add.audio.group.nousername" = "Naujas garso įrašas";
+"push.notification.add.audio.group.nousername.noconversationname" = "Naujas garso įrašas susirašinėjime";
+"push.notification.add.audio.group.noconversationname" = "%1$@ pasidalino garso įrašu susirašinėjime";
+
+"push.notification.add.audio.oneonone" = "Pasidalino garso žinute";
+"push.notification.add.audio.oneonone.nousername" = "Naujas garso įrašas susirašinėjime";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ atsiuntė failą";
+"push.notification.add.file.group.nousername" = "Naujas failas";
+"push.notification.add.file.group.nousername.noconversationname" = "Naujas failas susirašinėjime";
+"push.notification.add.file.group.noconversationname" = "%1$@ išsiuntė failą susirašinėjime";
+
+"push.notification.add.file.oneonone" = "Pasidalino failu";
+"push.notification.add.file.oneonone.nousername" = "Naujas failas susirašinėjime";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ pasidalino vieta";
+"push.notification.add.location.group.nousername" = "Nauja vieta";
+"push.notification.add.location.group.nousername.noconversationname" = "Nauja vieta susirašinėjime";
+"push.notification.add.location.group.noconversationname" = "%1$@ pasidalino vieta susirašinėjime";
+
+"push.notification.add.location.oneonone" = "Pasidalino vieta";
+"push.notification.add.location.oneonone.nousername" = "Nauja vieta susirašinėjime";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ jus pridėjo";
+"push.notification.member.join.self.noconversationname" = "%1$@ pridėjo jus prie susirašinėjimo";
+"push.notification.member.join.self.nousername.noconversationname" = "Jūs buvote pridėtas prie susirašinėjimo";
+"push.notification.member.join.self.nousername" = "Jus pridėjo";
+
+"push.notification.member.leave.self" = "%1$@ jus pašalino";
+"push.notification.member.leave.self.noconversationname" = "%1$@ pašalino jus iš susirašinėjimo";
+"push.notification.member.leave.self.nousername.noconversationname" = "Jus pašalino iš susirašinėjimo";
+"push.notification.member.leave.self.nousername" = "Jūs buvote pašalinti";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ nustatė žinutės laikmatį į %@";
+"push.notification.message-timer.update.nousername" = "Kažkas nustatė žinutės laikmatį į %@";
+"push.notification.message-timer.update.noconversationname" = "%@ nustatė žinutės laikmatį į %@ susirašinėjime";
+"push.notification.message-timer.update.nousername.noconversationname" = "Kažkas nustatė žinutės laikmatį į %@ susirašinėjime";
+
+"push.notification.message-timer.off" = "%@ išjungė žinutės laikmatį";
+"push.notification.message-timer.off.nousername" = "Kažkas išjungė žinutės laikmatį";
+"push.notification.message-timer.off.noconversationname" = "%@ išjungė žinutės laikmatį susirašinėjime";
+"push.notification.message-timer.off.nousername.noconversationname" = "Kažkas išjungė žinutės laikmatį susirašinėjime";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "skambina su vaizdu";
+"push.notification.call.started.video.oneonone.nousername" = "Kažkas skambina su vaizdu";
+
+"push.notification.call.started.video.group" = "%1$@ skambina su vaizdu";
+"push.notification.call.started.video.group.nousername" = "Kažkas skambina su vaizdu";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ skambina su vaizdu susirašinėjime";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Kažkas skambina su vaizdu susirašinėjime";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "skambina";
+"push.notification.call.started.oneonone.nousername" = "Kažkas skambina";
+
+"push.notification.call.started.group" = "%1$@ skambina";
+"push.notification.call.started.group.nousername" = "Kažkas skambina";
+"push.notification.call.started.group.noconversationname" = "%1$@ skambina susirašinėjime";
+"push.notification.call.started.group.nousername.noconversationname" = "Kažkas skambina susirašinėjime";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ skambino";
+"push.notification.call.missed.group.nousername" = "Kažkas skambino";
+"push.notification.call.missed.group.nousername.noconversationname" = "Kažkas skambino susirašinėjime";
+"push.notification.call.missed.group.noconversationname" = "%1$@ skambino susirašinėjime";
+
+"push.notification.call.missed.oneonone" = "skambino";
+"push.notification.call.missed.oneonone.nousername" = "Kažkas skambino";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ grupėje %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Kažkas skambina susirašinėjime";
+"push.notification.callkit.call.started.group.nousername" = "Kažkas skambina grupėje %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ skambina susirašnėjime";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ created a conversation";
+"push.notification.conversation.create.nousername" = "Someone created a conversation";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ ištrynė grupę";
+"push.notification.conversation.delete.nousername" = "Kažkas ištrynė grupę";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ nori užmegzti kontaktą";
+"push.notification.connection.request.nousername" = "Kažkas nori užmegzti kontaktą";
+
+"push.notification.connection.accepted" = "Jūs ir %@ nuo šiol galite bendrauti";
+"push.notification.connection.accepted.nousername" = "Turite naują kontaktą";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Nepavyko išsiųsti žinutės";
+"push.notification.failed.message.oneonone.nousername" = "Nepavyko išsiųsti žinutės";
+
+"push.notification.failed.message.group" = "Nepavyko išsiųsti žinutės";
+"push.notification.failed.message.group.noconversationname" = "Nepavyko išsiųsti žinutės";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Pranešimai pokalbjye %@ išjungti";
+"push.notification.alert.availability.away.title" = "Pranešimai išjungti";
+"push.notification.alert.availability.busy.title.team" = "Pranešimai pokalbyje %@ buvo pakeisti";
+"push.notification.alert.availability.busy.title" = "Pranešimai pakeisti";
+
+"push.notification.alert.availability.away.message" = "Būsena pakeičia pranešimų rodymą. Pasirinkite „Pasišalinęs“ ir negausite pranešimų.";
+"push.notification.alert.availability.busy.message" = "Būsena pakeičia pranešimų rodymą. Pakeitėte į „Užsiėmęs“ ir gausite pranešimus jei kas nors jus paminės ar kas nors atsakys į jūsų žinutę.";
+
+// BUNDLED MESSAGES
+"push.notification.bundled-messages" = "%d new messages";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ ant jūsų žinutės";
+"push.notification.reaction.group.nousername.noconversationname" = "Kažkas %@ ant jūsų žinutės susirašinėjime";
+"push.notification.reaction.group.nousername" = "Kažkas %@ ant jūsų žinutės";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ ant jūsų žinutės susirašinėjime";
+
+"push.notification.reaction.oneonone" = "%1$@ ant jūsų žinutės";
+"push.notification.reaction.oneonone.nousername" = "Kažkas %@ ant jūsų žinutės";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ ką tik prisijungė prie Wire";
+
+// OTHER
+"push.notification.action.message.open" = "Atverti";
+"push.notification.action.message.reply" = "Atsakyti";
+"push.notification.action.message.reply.button.title" = "Siųsti";
+"push.notification.action.message.reply.placeholder" = "Rašykite žinutę";
+"push.notification.action.conversation.mute" = "Išjungti pranešimus";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Priimti";
+"push.notification.action.call.ignore" = "Atmesti";
+"push.notification.action.call.message" = "Žinutė";
+"push.notification.action.call.callback" = "Perskambnti";
+"push.notification.action.connection.accept" = "Priimti";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

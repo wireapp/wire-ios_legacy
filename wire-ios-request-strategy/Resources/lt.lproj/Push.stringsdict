@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>push.notification.add.message.many.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@ grupėje %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%2$@ žinutė</string>
+        <key>few</key>
+        <string>%2$@ žinutės</string>
+        <key>many</key>
+        <string>%2$@ žinutės</string>
+        <key>other</key>
+        <string>%2$@ žinučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ susirašinėjime</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%1$@ žinutė</string>
+        <key>few</key>
+        <string>%1$@ žinutės</string>
+        <key>many</key>
+        <string>%1$@ žinutės</string>
+        <key>other</key>
+        <string>%1$@ žinučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_messages@, kurias parašė %1$@</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%2$@ žinutė</string>
+        <key>few</key>
+        <string>%2$@ žinutės</string>
+        <key>many</key>
+        <string>%2$@ žinutės</string>
+        <key>other</key>
+        <string>%2$@ žinučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.add.message.many.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_messages@ susirašinėjime</string>
+      <key>new_messages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%1$@ žinutė</string>
+        <key>few</key>
+        <string>%1$@ žinutės</string>
+        <key>many</key>
+        <string>%1$@ žinutės</string>
+        <key>other</key>
+        <string>%1$@ žinučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Turite %2$#@new_calls@ susirašinėjime %1@</string>
+      <key>new_calls</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%2@ praleistas skambutis</string>
+        <key>few</key>
+        <string>%2@ praleisti skambučiai</string>
+        <key>many</key>
+        <string>%2@ praleisti skambučiai</string>
+        <key>other</key>
+        <string>%2@ praleistų skambučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.call.missed.many.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Turite %1$#@new_calls@ susirašinėjime</string>
+      <key>new_calls</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%1$@ praleistas skambutis</string>
+        <key>few</key>
+        <string>%1$@ praleisti skambučiai</string>
+        <key>many</key>
+        <string>%1$@ praleisti skambučiai</string>
+        <key>other</key>
+        <string>%1$@ praleistų skambučių</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ skambtelėjo%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>many</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$@ skambtelėjo%2$#@new_knocks@susirašinėjime</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %2$@ times </string>
+        <key>many</key>
+        <string> %2$@ times </string>
+        <key>other</key>
+        <string> %2$@ times </string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%1$@ skambtelėjimas</string>
+        <key>few</key>
+        <string>%1$@ skambtelėjimai</string>
+        <key>many</key>
+        <string>%1$@ skambtelėjimai</string>
+        <key>other</key>
+        <string>%1$@ skambtelėjimų</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.group.nousername.noconversationname</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%1$#@new_knocks@ susirašinėjime</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>%1$@ skambtelėjimas</string>
+        <key>few</key>
+        <string>%1$@ skambtelėjimai</string>
+        <key>many</key>
+        <string>%1$@ skambtelėjimai</string>
+        <key>other</key>
+        <string>%1$@ skambtelėjimų</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>skambtelėjo%1$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string> </string>
+        <key>few</key>
+        <string> %1$@ times</string>
+        <key>many</key>
+        <string> %1$@ times</string>
+        <key>other</key>
+        <string> %1$@ times</string>
+      </dict>
+    </dict>
+    <key>push.notification.knock.oneonone.nousername</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%2$#@new_knocks@</string>
+      <key>new_knocks</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>@</string>
+        <key>one</key>
+        <string>Skambtelėjimas</string>
+        <key>few</key>
+        <string>%2$@ skambtelėjimai</string>
+        <key>many</key>
+        <string>%2$@ skambtelėjimai</string>
+        <key>other</key>
+        <string>%2$@ skambtelėjimų</string>
+      </dict>
+    </dict>
+  </dict>
+</plist>

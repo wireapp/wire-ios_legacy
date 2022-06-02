@@ -1,0 +1,256 @@
+// 
+// Wire
+// Copyright (C) 2021 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Nieuw bericht";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ in %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Iemand";
+"push.notification.ephemeral" = "Stuur een bericht";
+"push.notification.ephemeral.mention" = "Vermeldde jou";
+"push.notification.ephemeral.reply" = "Replied to you";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "Nieuw bericht: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Nieuw bericht: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ in een gesprek: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Nieuw bericht: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Mention from %1$@: %2$@";
+"push.notification.add.message.group.nousername.mention" = "New mention: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "New mention: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ mentioned you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Mention: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "New mention: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Antwoord van %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "Nieuw antwoord: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "Nieuw antwoord: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ replied to you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Beantwoord: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "Nieuw antwoord: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ deelde een afbeelding";
+"push.notification.add.image.group.nousername" = "Nieuwe afbeelding";
+"push.notification.add.image.group.nousername.noconversationname" = "Een nieuwe afbeelding in een gesprek";
+"push.notification.add.image.group.noconversationname" = "%1$@ heeft een foto in een gesprek gedeeld";
+
+"push.notification.add.image.oneonone" = "Deelde een foto";
+"push.notification.add.image.oneonone.nousername" = "Een nieuwe afbeelding in een gesprek";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ deelde een afbeelding";
+"push.notification.add.video.group.nousername" = "Nieuwe video";
+"push.notification.add.video.group.nousername.noconversationname" = "Nieuwe video in een gesprek";
+"push.notification.add.video.group.noconversationname" = "%1$@ heeft een video in een gesprek gedeeld";
+
+"push.notification.add.video.oneonone" = "Deelde een video";
+"push.notification.add.video.oneonone.nousername" = "Nieuwe video in een gesprek";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ deelde een audio bericht";
+"push.notification.add.audio.group.nousername" = "Nieuw audio bericht";
+"push.notification.add.audio.group.nousername.noconversationname" = "Nieuw audio-bericht in een gesprek";
+"push.notification.add.audio.group.noconversationname" = "%1$@ heeft een audio-bericht in een conversatie gedeeld";
+
+"push.notification.add.audio.oneonone" = "Deelde een audio bericht";
+"push.notification.add.audio.oneonone.nousername" = "Nieuw audio-bericht in een gesprek";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ deelde een bestand";
+"push.notification.add.file.group.nousername" = "Nieuw bestand";
+"push.notification.add.file.group.nousername.noconversationname" = "Nieuw bestand in een gesprek";
+"push.notification.add.file.group.noconversationname" = "%1$@ deelde een bestand in een gesprek";
+
+"push.notification.add.file.oneonone" = "Deelde een bestand";
+"push.notification.add.file.oneonone.nousername" = "Nieuw bestand in een gesprek";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ deelde een locatie";
+"push.notification.add.location.group.nousername" = "Nieuwe locatie";
+"push.notification.add.location.group.nousername.noconversationname" = "Nieuwe locatie in een gesprek";
+"push.notification.add.location.group.noconversationname" = "%1$@ deelde een locatie in een gesprek";
+
+"push.notification.add.location.oneonone" = "Deel een locatie";
+"push.notification.add.location.oneonone.nousername" = "Nieuwe locatie in een gesprek";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ heeft jou toegevoegd";
+"push.notification.member.join.self.noconversationname" = "%1$@ heeft je toegevoegd aan een gesprek";
+"push.notification.member.join.self.nousername.noconversationname" = "Je werd toegevoegd aan een gesprek";
+"push.notification.member.join.self.nousername" = "Je bent toegevoegd";
+
+"push.notification.member.leave.self" = "%1$@ verwijderde jou";
+"push.notification.member.leave.self.noconversationname" = "%1$@ verwijderde u uit een gesprek";
+"push.notification.member.leave.self.nousername.noconversationname" = "Je bent verwijderd uit een gesprek";
+"push.notification.member.leave.self.nousername" = "Je bent verwijderd";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ heeft een bericht timer gezet in %@";
+"push.notification.message-timer.update.nousername" = "Someone set the message timer to %@";
+"push.notification.message-timer.update.noconversationname" = "%@ set the message timer to %@ in a conversation";
+"push.notification.message-timer.update.nousername.noconversationname" = "Someone set the message timer to %@ in a conversation";
+
+"push.notification.message-timer.off" = "%@ turned off the message timer";
+"push.notification.message-timer.off.nousername" = "Someone turned off the message timer";
+"push.notification.message-timer.off.noconversationname" = "%@ turned off the message timer in a conversation";
+"push.notification.message-timer.off.nousername.noconversationname" = "Someone turned off the message timer in a conversation";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "videobelt jou";
+"push.notification.call.started.video.oneonone.nousername" = "Someone is calling with video";
+
+"push.notification.call.started.video.group" = "%1$@ is calling with video";
+"push.notification.call.started.video.group.nousername" = "Someone is calling with video";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ is calling with video in a conversation";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Iemand video belt in een gesprek";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "belt";
+"push.notification.call.started.oneonone.nousername" = "Iemand belt je";
+
+"push.notification.call.started.group" = "%1$@ belt";
+"push.notification.call.started.group.nousername" = "Iemand belt je";
+"push.notification.call.started.group.noconversationname" = "%1$@ belt in een groep";
+"push.notification.call.started.group.nousername.noconversationname" = "Iemand belt in een groep";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ belde";
+"push.notification.call.missed.group.nousername" = "Iemand heeft gebeld";
+"push.notification.call.missed.group.nousername.noconversationname" = "Iemand heeft in een groep gebeld";
+"push.notification.call.missed.group.noconversationname" = "%1$@ heeft in een groep gebeld";
+
+"push.notification.call.missed.oneonone" = "belde";
+"push.notification.call.missed.oneonone.nousername" = "Iemand heeft gebeld";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ in %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Iemand belt in een groepsgesprek";
+"push.notification.callkit.call.started.group.nousername" = "Iemand belt in %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ belt in een groepsgesprek";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ created a conversation";
+"push.notification.conversation.create.nousername" = "Someone created a conversation";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ deleted the group";
+"push.notification.conversation.delete.nousername" = "Someone deleted the group";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ wil met jou verbinden";
+"push.notification.connection.request.nousername" = "Iemand wil met je verbinden";
+
+"push.notification.connection.accepted" = "Jij en %@ zijn nu verbonden";
+"push.notification.connection.accepted.nousername" = "Je hebt een nieuw contact";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Kan bericht niet versturen";
+"push.notification.failed.message.oneonone.nousername" = "Kan bericht niet versturen";
+
+"push.notification.failed.message.group" = "Kan bericht niet versturen";
+"push.notification.failed.message.group.noconversationname" = "Het bericht kan niet worden verzonden";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Notifications are disabled in %@";
+"push.notification.alert.availability.away.title" = "Notifications are disabled";
+"push.notification.alert.availability.busy.title.team" = "Notifications have changed in %@";
+"push.notification.alert.availability.busy.title" = "Notifications have changed";
+
+"push.notification.alert.availability.away.message" = "Status affects notifications now. You’re set to “Away” and won’t receive any notifications.";
+"push.notification.alert.availability.busy.message" = "Status affects notifications now. You’re set to “Busy” and will only receive notifications when someone mentions you or replies to one of your messages.";
+
+// BUNDLED MESSAGES
+"push.notification.bundled-messages" = "%d new messages";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ je bericht";
+"push.notification.reaction.group.nousername.noconversationname" = "Iemand %@ jouw bericht in een gesprek";
+"push.notification.reaction.group.nousername" = "Iemand %@ je bericht";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ jou bericht in een gesprek";
+
+"push.notification.reaction.oneonone" = "%1$@ jou bericht";
+"push.notification.reaction.oneonone.nousername" = "Iemand %@ je bericht";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ heeft zich aangemeld bij Wire";
+
+// OTHER
+"push.notification.action.message.open" = "Openen";
+"push.notification.action.message.reply" = "Reageer";
+"push.notification.action.message.reply.button.title" = "Stuur";
+"push.notification.action.message.reply.placeholder" = "Typ een bericht";
+"push.notification.action.conversation.mute" = "Dempen";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Neem op";
+"push.notification.action.call.ignore" = "Afwijzen";
+"push.notification.action.call.message" = "Stuur bericht";
+"push.notification.action.call.callback" = "Bel terug";
+"push.notification.action.connection.accept" = "Neem op";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

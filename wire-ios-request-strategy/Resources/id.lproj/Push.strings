@@ -1,0 +1,256 @@
+// 
+// Wire
+// Copyright (C) 2021 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Pesan baru";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ di %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Someone";
+"push.notification.ephemeral" = "Mengirimkan pesan untuk Anda";
+"push.notification.ephemeral.mention" = "Mentioned you";
+"push.notification.ephemeral.reply" = "Replied to you";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "Pesan baru: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Pesan baru: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ dalam percakapan : %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Pesan baru: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Mention from %1$@: %2$@";
+"push.notification.add.message.group.nousername.mention" = "New mention: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "New mention: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ mentioned you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Mention: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "New mention: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Reply from %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "New reply: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "New reply: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ replied to you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Reply: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "New reply: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ berbagi gambar";
+"push.notification.add.image.group.nousername" = "Gambar baru";
+"push.notification.add.image.group.nousername.noconversationname" = "Gambar baru dalam percakapan";
+"push.notification.add.image.group.noconversationname" = "%1$@ berbagi foto dalam percakapan";
+
+"push.notification.add.image.oneonone" = "Membagikan gambar";
+"push.notification.add.image.oneonone.nousername" = "Gambar baru dalam percakapan";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ berbagi video";
+"push.notification.add.video.group.nousername" = "Video baru";
+"push.notification.add.video.group.nousername.noconversationname" = "Video baru dalam percakapan";
+"push.notification.add.video.group.noconversationname" = "%1$@ berbagi video dalam percakapan";
+
+"push.notification.add.video.oneonone" = "Membagikan video";
+"push.notification.add.video.oneonone.nousername" = "Video baru dalam percakapan";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ berbagi pesan audio";
+"push.notification.add.audio.group.nousername" = "Pesan audio baru";
+"push.notification.add.audio.group.nousername.noconversationname" = "Pesan audio baru dalam percakapan";
+"push.notification.add.audio.group.noconversationname" = "%1$@ berbagi pesan audio dalam percakapan";
+
+"push.notification.add.audio.oneonone" = "Membagikan pesan suara";
+"push.notification.add.audio.oneonone.nousername" = "Pesan audio baru dalam percakapan";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ berbagi file";
+"push.notification.add.file.group.nousername" = "File baru";
+"push.notification.add.file.group.nousername.noconversationname" = "File baru dalam percakapan";
+"push.notification.add.file.group.noconversationname" = "%1$@ berbagi file dalam percakapan";
+
+"push.notification.add.file.oneonone" = "Membagikan berkas";
+"push.notification.add.file.oneonone.nousername" = "File baru dalam percakapan";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ berbagi lokasi";
+"push.notification.add.location.group.nousername" = "Lokasi baru";
+"push.notification.add.location.group.nousername.noconversationname" = "Lokasi baru dalam percakapan";
+"push.notification.add.location.group.noconversationname" = "%1$@ berbagi lokasi dalam percakapan";
+
+"push.notification.add.location.oneonone" = "Membagikan lokasi";
+"push.notification.add.location.oneonone.nousername" = "Lokasi baru dalam percakapan";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ menambahkan Anda";
+"push.notification.member.join.self.noconversationname" = "%1$@ menambahkan Anda ke percakapan";
+"push.notification.member.join.self.nousername.noconversationname" = "Anda ditambahkan ke percakapan";
+"push.notification.member.join.self.nousername" = "Kamu telah ditambahkan";
+
+"push.notification.member.leave.self" = "%1$@ menghapusmu";
+"push.notification.member.leave.self.noconversationname" = "%1$@ menghapus Anda dari percakapan";
+"push.notification.member.leave.self.nousername.noconversationname" = "Anda telah dihapus dari percakapan";
+"push.notification.member.leave.self.nousername" = "Kamu telah dihapus";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ set the message timer to %@";
+"push.notification.message-timer.update.nousername" = "Someone set the message timer to %@";
+"push.notification.message-timer.update.noconversationname" = "%@ set the message timer to %@ in a conversation";
+"push.notification.message-timer.update.nousername.noconversationname" = "Someone set the message timer to %@ in a conversation";
+
+"push.notification.message-timer.off" = "%@ turned off the message timer";
+"push.notification.message-timer.off.nousername" = "Someone turned off the message timer";
+"push.notification.message-timer.off.noconversationname" = "%@ turned off the message timer in a conversation";
+"push.notification.message-timer.off.nousername.noconversationname" = "Someone turned off the message timer in a conversation";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "is calling with video";
+"push.notification.call.started.video.oneonone.nousername" = "Someone is calling with video";
+
+"push.notification.call.started.video.group" = "%1$@ is calling with video";
+"push.notification.call.started.video.group.nousername" = "Someone is calling with video";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ is calling with video in a conversation";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Someone is calling with video in a conversation";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "sedang memanggil";
+"push.notification.call.started.oneonone.nousername" = "Seseorang memanggil";
+
+"push.notification.call.started.group" = "%1$@ sedang menelepon";
+"push.notification.call.started.group.nousername" = "Seseorang memanggil";
+"push.notification.call.started.group.noconversationname" = "%1$@ memanggil dalam percakapan";
+"push.notification.call.started.group.nousername.noconversationname" = "Seseorang memanggil dalam percakapan";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ dipanggil";
+"push.notification.call.missed.group.nousername" = "Seseorang memanggil";
+"push.notification.call.missed.group.nousername.noconversationname" = "Seseorang memanggil dalam percakapan";
+"push.notification.call.missed.group.noconversationname" = "%1$@ dipanggil dalam percakapan";
+
+"push.notification.call.missed.oneonone" = "bernama";
+"push.notification.call.missed.oneonone.nousername" = "Seseorang memanggil";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ in %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Seseorang memanggil dalam percakapan";
+"push.notification.callkit.call.started.group.nousername" = "Seseorang memanggil %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ memanggil dalam percakapan";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ created a conversation";
+"push.notification.conversation.create.nousername" = "Someone created a conversation";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ deleted the group";
+"push.notification.conversation.delete.nousername" = "Someone deleted the group";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ ingin terhubung";
+"push.notification.connection.request.nousername" = "Seseorang ingin terhubung";
+
+"push.notification.connection.accepted" = "Anda dan %@ sekarang terhubung";
+"push.notification.connection.accepted.nousername" = "Anda memiliki koneksi baru";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Tidak dapat mengirim pesan";
+"push.notification.failed.message.oneonone.nousername" = "Tidak dapat mengirim pesan";
+
+"push.notification.failed.message.group" = "Tidak dapat mengirim pesan";
+"push.notification.failed.message.group.noconversationname" = "Tidak dapat mengirim pesan";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Notifications are disabled in %@";
+"push.notification.alert.availability.away.title" = "Notifications are disabled";
+"push.notification.alert.availability.busy.title.team" = "Notifications have changed in %@";
+"push.notification.alert.availability.busy.title" = "Notifications have changed";
+
+"push.notification.alert.availability.away.message" = "Status affects notifications now. You’re set to “Away” and won’t receive any notifications.";
+"push.notification.alert.availability.busy.message" = "Status affects notifications now. You’re set to “Busy” and will only receive notifications when someone mentions you or replies to one of your messages.";
+
+// BUNDLED MESSAGES
+"push.notification.bundled-messages" = "%d new messages";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@  %2$@ pesan Anda";
+"push.notification.reaction.group.nousername.noconversationname" = "Seseorang %@ pesan Anda dalam percakapan";
+"push.notification.reaction.group.nousername" = "Seseorang %@ pesan anda";
+"push.notification.reaction.group.noconversationname" = "%1$@  %2$@ pesan Anda dalam percakapan";
+
+"push.notification.reaction.oneonone" = "%1$@ pesan Anda";
+"push.notification.reaction.oneonone.nousername" = "Seseorang %@ pesan anda";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ baru saja bergabung dengan Wire";
+
+// OTHER
+"push.notification.action.message.open" = "Buka";
+"push.notification.action.message.reply" = "Balasan";
+"push.notification.action.message.reply.button.title" = "Kirim";
+"push.notification.action.message.reply.placeholder" = "Type a Message";
+"push.notification.action.conversation.mute" = "Diamkan";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Terima";
+"push.notification.action.call.ignore" = "Tolak";
+"push.notification.action.call.message" = "Pesan";
+"push.notification.action.call.callback" = "Menelepon kembali";
+"push.notification.action.connection.accept" = "Terima";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

@@ -1,0 +1,4 @@
+framework=WireRequestStrategy
+organization=wireapp
+repository=wire-ios-request-strategy
+release-name-format=A giant {ADJECTIVE} {ANIMAL} was spotted near {GERMAN_TOWN}

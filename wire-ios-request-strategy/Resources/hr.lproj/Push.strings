@@ -1,0 +1,256 @@
+// 
+// Wire
+// Copyright (C) 2021 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Nova poruka";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ u %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Netko";
+"push.notification.ephemeral" = "Poslao poruku";
+"push.notification.ephemeral.mention" = "Spomenio te";
+"push.notification.ephemeral.reply" = "Odgovorio ti";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "Nova poruka: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Nova poruka: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ razgovara: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Nova poruka: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Spominjanje od %1$@: %2$@";
+"push.notification.add.message.group.nousername.mention" = "Novo spominjanje: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "Novo spominjanje: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ je spomenuo tebe u razgovoru: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Spominjanje: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "Novo spominjanje: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Odgovor od %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "Novi odgovor: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "Novi odgovor: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ je odgovorio tebi u razgovoru: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Odgovor: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "Novi odgovor: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ je podijelio/la sliku";
+"push.notification.add.image.group.nousername" = "Nova slika";
+"push.notification.add.image.group.nousername.noconversationname" = "Nova slika u razgovoru";
+"push.notification.add.image.group.noconversationname" = "%1$@ je podijelio/podijelila sliku u razgovoru";
+
+"push.notification.add.image.oneonone" = "je podijelio/la sliku";
+"push.notification.add.image.oneonone.nousername" = "Nova slika u razgovoru";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ je podijelio/la video";
+"push.notification.add.video.group.nousername" = "Novi video";
+"push.notification.add.video.group.nousername.noconversationname" = "Novi video u razgovoru";
+"push.notification.add.video.group.noconversationname" = "%1$@ je podijelio / podijelila video u razgovoru";
+
+"push.notification.add.video.oneonone" = "je podijelio/la video";
+"push.notification.add.video.oneonone.nousername" = "Novi video u razgovoru";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ je podijelio/la audio poruku";
+"push.notification.add.audio.group.nousername" = "Nova audio poruka";
+"push.notification.add.audio.group.nousername.noconversationname" = "Nova govorna poruka u razgovoru";
+"push.notification.add.audio.group.noconversationname" = "%1$@ je podijelio / podijelila govornu poruku u razgovoru";
+
+"push.notification.add.audio.oneonone" = "je podijelio/la audio poruku";
+"push.notification.add.audio.oneonone.nousername" = "Nova govorna poruka u razgovoru";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ je podijelio/la datoteku";
+"push.notification.add.file.group.nousername" = "Nova datoteka";
+"push.notification.add.file.group.nousername.noconversationname" = "Novi dokument u razgovoru";
+"push.notification.add.file.group.noconversationname" = "%1$@ je podijelio / podijelila dokument u razgovoru";
+
+"push.notification.add.file.oneonone" = "je podijelio/la datoteku";
+"push.notification.add.file.oneonone.nousername" = "Novi dokument u razgovoru";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ je podijelio/la lokaciju";
+"push.notification.add.location.group.nousername" = "Nova lokacija";
+"push.notification.add.location.group.nousername.noconversationname" = "Nova lokacija u razgovoru";
+"push.notification.add.location.group.noconversationname" = "%1$@ je podijelio / podijelila lokaciju u razgovoru";
+
+"push.notification.add.location.oneonone" = "je podijelio/la lokaciju";
+"push.notification.add.location.oneonone.nousername" = "Nova lokacija u razgovoru";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ te dodao";
+"push.notification.member.join.self.noconversationname" = "%1$@ te uključio / uključila u razgovor";
+"push.notification.member.join.self.nousername.noconversationname" = "Uključeni ste u razgovor";
+"push.notification.member.join.self.nousername" = "Dodani ste";
+
+"push.notification.member.leave.self" = "%1$@ Vas je uklonio";
+"push.notification.member.leave.self.noconversationname" = "%1$@ Vas je izbrisao / izbrisala iz razgovora";
+"push.notification.member.leave.self.nousername.noconversationname" = "Izbrisani ste iz razgovora";
+"push.notification.member.leave.self.nousername" = "Uklonjeni ste";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ je postavio tajmer poruke na %@";
+"push.notification.message-timer.update.nousername" = "Netko je postavio tajmer poruke na %@";
+"push.notification.message-timer.update.noconversationname" = "%@ je postavio tajmer poruke na %@ u razgovoru";
+"push.notification.message-timer.update.nousername.noconversationname" = "Netko je postavio tajmer poruke na %@ u razgovoru";
+
+"push.notification.message-timer.off" = "%@ je isključio tajmer poruke";
+"push.notification.message-timer.off.nousername" = "Netko je isključio tajmer poruke";
+"push.notification.message-timer.off.noconversationname" = "%@ je isključio tajmer poruke u razgovoru";
+"push.notification.message-timer.off.nousername.noconversationname" = "Netko je isključio tajmer poruke u razgovoru";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "poziva s video pozivom";
+"push.notification.call.started.video.oneonone.nousername" = "Netko poziva s video pozivom";
+
+"push.notification.call.started.video.group" = "%1$@ poziva s video pozivom";
+"push.notification.call.started.video.group.nousername" = "Netko poziva s video pozivom";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ poziva s video pozivom u razgovoru";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Netko poziva s video pozivom u razgovoru";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "zove";
+"push.notification.call.started.oneonone.nousername" = "Netko zove";
+
+"push.notification.call.started.group" = "%1$@ zove";
+"push.notification.call.started.group.nousername" = "Netko zove";
+"push.notification.call.started.group.noconversationname" = "%1$@ je inicirao poziv u razgovoru";
+"push.notification.call.started.group.nousername.noconversationname" = "Netko je inicirao poziv u razgovoru";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ zvao";
+"push.notification.call.missed.group.nousername" = "Netko je zvao";
+"push.notification.call.missed.group.nousername.noconversationname" = "Netko je zvao u razgovoru";
+"push.notification.call.missed.group.noconversationname" = "%1$@ je zvao u razgovoru";
+
+"push.notification.call.missed.oneonone" = "zvao";
+"push.notification.call.missed.oneonone.nousername" = "Netko je zvao";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ u %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Netko Vas poziva na razgovor";
+"push.notification.callkit.call.started.group.nousername" = "Netko poziva u %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ poziva na razgovor";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ created a conversation";
+"push.notification.conversation.create.nousername" = "Someone created a conversation";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ deleted the group";
+"push.notification.conversation.delete.nousername" = "Someone deleted the group";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ se želi povezati";
+"push.notification.connection.request.nousername" = "Netko se želi povezati";
+
+"push.notification.connection.accepted" = "Povezati ste sada s %@";
+"push.notification.connection.accepted.nousername" = "Imate novi kontakt";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Nije moguće poslati poruku";
+"push.notification.failed.message.oneonone.nousername" = "Nije moguće poslati poruku";
+
+"push.notification.failed.message.group" = "Nije moguće poslati poruku";
+"push.notification.failed.message.group.noconversationname" = "Nije moguće poslati poruku";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Notifications are disabled in %@";
+"push.notification.alert.availability.away.title" = "Notifications are disabled";
+"push.notification.alert.availability.busy.title.team" = "Notifications have changed in %@";
+"push.notification.alert.availability.busy.title" = "Notifications have changed";
+
+"push.notification.alert.availability.away.message" = "Status affects notifications now. You’re set to “Away” and won’t receive any notifications.";
+"push.notification.alert.availability.busy.message" = "Status affects notifications now. You’re set to “Busy” and will only receive notifications when someone mentions you or replies to one of your messages.";
+
+// BUNDLED MESSAGES
+"push.notification.bundled-messages" = "%d new messages";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ Vaša poruka";
+"push.notification.reaction.group.nousername.noconversationname" = "Nekome %@ Vaša poruka u razgovoru";
+"push.notification.reaction.group.nousername" = "Nekome se %@ Vaša poruka";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ Vašu poruku u razgovoru";
+
+"push.notification.reaction.oneonone" = "%1$@ Vaša poruka";
+"push.notification.reaction.oneonone.nousername" = "Nekome se %@ Vaša poruka";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ upravo postaje članom Wirea";
+
+// OTHER
+"push.notification.action.message.open" = "Otvori";
+"push.notification.action.message.reply" = "Odgovor";
+"push.notification.action.message.reply.button.title" = "Pošalji";
+"push.notification.action.message.reply.placeholder" = "Napiši poruku";
+"push.notification.action.conversation.mute" = "Isključi zvuk";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Prihvati";
+"push.notification.action.call.ignore" = "Odbij";
+"push.notification.action.call.message" = "Poruka";
+"push.notification.action.call.callback" = "Uzvratite poziv";
+"push.notification.action.connection.accept" = "Prihvati";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

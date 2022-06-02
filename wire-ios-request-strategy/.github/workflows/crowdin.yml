@@ -1,0 +1,38 @@
+name: Crowdin Action
+
+on:
+  push:
+    branches: [ develop ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  synchronize-with-crowdin:
+    runs-on: ubuntu-latest
+
+    steps:      
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Crowdin action
+        uses: wireapp/github-action@1.4.8
+        with:
+          # For more info: https://github.com/crowdin/github-action/blob/master/action.yml
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}          
+          token: ${{ secrets.CROWDIN_API_TOKEN }}
+          config: crowdin.yml
+          
+          upload_sources: true
+          download_translations: true
+          upload_translations: false
+
+          create_pull_request: true
+          localization_branch_name: chore/update-localization
+          commit_message: "chore: Update localization"
+          pull_request_title: "chore: Update localization SQPIT-786"
+          pull_request_body: "This PR pulls in the latest localization translations from Crowdin."
+          github_user_name: "zenkins"
+          github_user_email: "iosx@wire.com"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
