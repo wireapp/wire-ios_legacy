@@ -1,0 +1,4 @@
+framework=WireDataModel
+repository=wire-ios-data-model
+organization=wireapp
+release-name-format=What would {WOMAN_IN_CS} do?

@@ -1,0 +1,16 @@
+name: Link and Lint PR with Jira Ticket Number
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+jobs:
+  add-jira-description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cakeinpanic/jira-description-action@v0.3.2
+        name: jira-description-action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          jira-token: ${{ secrets.JIRA_TOKEN }}
+          jira-base-url: https://wearezeta.atlassian.net
+          skip-branches: '^(production-release|main|master|release\/v\d+)$' #optional
+          fail-when-jira-issue-not-found: false

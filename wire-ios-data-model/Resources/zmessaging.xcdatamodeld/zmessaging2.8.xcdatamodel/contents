@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="2.8" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 4.3">
+    <entity name="AssetClientMessage" representedClassName="ZMAssetClientMessage" parentEntity="Message" syncable="YES">
+        <attribute name="assetId" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="assetId_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="associatedTaskIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="associatedTaskIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="delivered" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="preprocessedSize" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="preprocessedSize_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="progress" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="transferState" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uploadState" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <relationship name="dataSet" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="GenericMessageData" inverseName="asset" inverseEntity="GenericMessageData" syncable="YES"/>
+    </entity>
+    <entity name="ClientMessage" representedClassName="ZMClientMessage" parentEntity="Message" syncable="YES">
+        <attribute name="delivered" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="linkPreviewState" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="dataSet" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="GenericMessageData" inverseName="message" inverseEntity="GenericMessageData" syncable="YES"/>
+    </entity>
+    <entity name="Connection" representedClassName="ZMConnection" syncable="YES">
+        <attribute name="existsOnBackend" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdateDateInGMT" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDataFields" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="needsToBeUpdatedFromBackend" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="connection" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="to" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="connection" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Conversation" representedClassName="ZMConversation" syncable="YES">
+        <attribute name="archivedChangedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="archivedEventID" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="archivedEventID_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="callStateNeedsToBeUpdatedFromBackend" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="clearedEventID" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="clearedEventID_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="clearedTimeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="conversationType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="downloadedMessageIDs" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="downloadedMessageIDs_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="draftMessageText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasUnreadUnsentMessage" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="internalEstimatedUnreadCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="internalIsArchived" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isSelfAnActiveMember" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="isSilenced" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastEventID" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="lastEventID_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastModifiedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastReadEventID" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="lastReadEventID_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastReadServerTimeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastServerTimeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastUnreadKnockDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastUnreadMissedCallDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="modifiedDataFields" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="needsToBeUpdatedFromBackend" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="normalizedUserDefinedName" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="remoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="remoteIdentifier_data" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="securityLevel" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="silencedChangedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="userDefinedName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voiceChannel" optional="YES" transient="YES" syncable="YES"/>
+        <relationship name="callParticipants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="activeCallConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="connection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Connection" inverseName="conversation" inverseEntity="Connection" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="conversationsCreated" inverseEntity="User" syncable="YES"/>
+        <relationship name="hiddenMessages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="hiddenInConversation" inverseEntity="Message" syncable="YES"/>
+        <relationship name="lastServerSyncedActiveParticipants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="lastServerSyncedActiveConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="visibleInConversation" inverseEntity="Message" syncable="YES"/>
+        <relationship name="otherActiveParticipants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="activeConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="otherInactiveParticipants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inactiveConversations" inverseEntity="User" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="internalIsArchived"/>
+                <index value="lastModifiedDate"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <entity name="GenericMessageData" representedClassName="ZMGenericMessageData" syncable="YES">
+        <attribute name="data" attributeType="Binary" syncable="YES"/>
+        <relationship name="asset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AssetClientMessage" inverseName="dataSet" inverseEntity="AssetClientMessage" syncable="YES"/>
+        <relationship name="message" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClientMessage" inverseName="dataSet" inverseEntity="ClientMessage" syncable="YES"/>
+    </entity>
+    <entity name="ImageMessage" representedClassName="ZMImageMessage" parentEntity="Message" syncable="YES">
+        <attribute name="imageType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAnimatedGIF" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="mediumDataLoaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="mediumRemoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="mediumRemoteIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="originalDataProcessed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="originalSize" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="originalSize_data" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="KnockMessage" representedClassName="ZMKnockMessage" parentEntity="Message" syncable="YES"/>
+    <entity name="Message" representedClassName="ZMMessage" isAbstract="YES" syncable="YES">
+        <attribute name="eventID" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="eventID_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="expirationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isEncrypted" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isExpired" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isPlainText" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="modifiedDataFields" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="needsToBeUpdatedFromBackend" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="nonce" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="nonce_data" optional="YES" attributeType="Binary" indexed="YES" versionHashModifier="add_index1" syncable="YES"/>
+        <attribute name="senderClientID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="hiddenInConversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="hiddenMessages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="missingRecipients" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="messagesMissingRecipient" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
+        <relationship name="visibleInConversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+    </entity>
+    <entity name="Session" representedClassName="ZMSession" syncable="YES">
+        <relationship name="selfUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="SystemMessage" representedClassName="ZMSystemMessage" parentEntity="Message" syncable="YES">
+        <attribute name="needsUpdatingUsers" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="systemMessageType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addedUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="showingUserAdded" inverseEntity="User" syncable="YES"/>
+        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="addedOrRemovedInSystemMessages" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="removedUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="showingUserRemoved" inverseEntity="User" syncable="YES"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="systemMessages" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="TextMessage" representedClassName="ZMTextMessage" parentEntity="Message" syncable="YES">
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="ZMUser" syncable="YES">
+        <attribute name="accentColorValue" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="emailAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageCorrelationIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="imageCorrelationIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imageMediumData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageSmallProfileData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="localMediumRemoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="localMediumRemoteIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="localSmallProfileRemoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="localSmallProfileRemoteIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="mediumRemoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="mediumRemoteIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="modifiedDataFields" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="needsToBeUpdatedFromBackend" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="normalizedEmailAddress" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="normalizedName" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="originalProfileImageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="remoteIdentifier_data" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="smallProfileRemoteIdentifier" optional="YES" transient="YES" syncable="YES"/>
+        <attribute name="smallProfileRemoteIdentifier_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="activeCallConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="callParticipants" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="activeConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="otherActiveParticipants" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="user" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="connection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Connection" inverseName="to" inverseEntity="Connection" syncable="YES"/>
+        <relationship name="conversationsCreated" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="creator" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="inactiveConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="otherInactiveParticipants" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="lastServerSyncedActiveConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="lastServerSyncedActiveParticipants" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="showingUserAdded" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SystemMessage" inverseName="addedUsers" inverseEntity="SystemMessage" syncable="YES"/>
+        <relationship name="showingUserRemoved" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SystemMessage" inverseName="removedUsers" inverseEntity="SystemMessage" syncable="YES"/>
+        <relationship name="systemMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SystemMessage" inverseName="users" inverseEntity="SystemMessage" syncable="YES"/>
+    </entity>
+    <entity name="UserClient" representedClassName="UserClient" syncable="YES">
+        <attribute name="activationAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="activationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="activationLocationLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="activationLocationLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="apsDecryptionKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="apsVerificationKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="deviceClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fingerprint" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="markedToDelete" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDataFields" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="needsToNotifyUser" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="needsToUploadSignalingKeys" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="numberOfKeysRemaining" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="preKeysRangeMax" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="remoteIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" defaultValueString="permanent" syncable="YES"/>
+        <relationship name="addedOrRemovedInSystemMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SystemMessage" inverseName="clients" inverseEntity="SystemMessage" syncable="YES"/>
+        <relationship name="ignoredByClients" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="ignoredClients" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="ignoredClients" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="ignoredByClients" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="messagesMissingRecipient" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="missingRecipients" inverseEntity="Message" syncable="YES"/>
+        <relationship name="missedByClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserClient" inverseName="missingClients" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="missingClients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="missedByClient" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="trustedByClients" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="trustedClients" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="trustedClients" toMany="YES" deletionRule="Nullify" destinationEntity="UserClient" inverseName="trustedByClients" inverseEntity="UserClient" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="clients" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AssetClientMessage" positionX="9" positionY="153" width="128" height="210"/>
+        <element name="ClientMessage" positionX="9" positionY="153" width="128" height="105"/>
+        <element name="Connection" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Conversation" positionX="0" positionY="0" width="128" height="675"/>
+        <element name="GenericMessageData" positionX="18" positionY="162" width="128" height="90"/>
+        <element name="ImageMessage" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="KnockMessage" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="270"/>
+        <element name="Session" positionX="9" positionY="153" width="128" height="60"/>
+        <element name="SystemMessage" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="TextMessage" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="540"/>
+        <element name="UserClient" positionX="9" positionY="153" width="128" height="450"/>
+    </elements>
+</model>
