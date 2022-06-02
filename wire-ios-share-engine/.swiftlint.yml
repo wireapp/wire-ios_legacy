@@ -1,0 +1,18 @@
+disabled_rules:
+    - function_body_length
+    - force_cast
+    - force_try
+    - todo
+
+included:
+    - Sources
+    - WireShareEngineTests
+
+
+# In order to deal with the huge number of violations, first set
+# very high limits then iteratively reduce the limits and resolve
+# the few violations. Repeat this until we find suitable limits.
+
+line_length:
+    warning: 250
+    error: 250
