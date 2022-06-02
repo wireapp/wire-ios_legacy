@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,27 +13,11 @@
 		067ECB522487AB6000701956 /* WireNotificationEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067ECB512487AB6000701956 /* WireNotificationEngineTests.swift */; };
 		067ECB5D2487ABA100701956 /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */; };
 		067ECB602487ABF700701956 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06604297247FE76A00A5F161 /* AppDelegate.swift */; };
-		06894D5D276B274200DA4E33 /* HTMLString.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3B276B26D500DA4E33 /* HTMLString.xcframework */; };
-		06894D63276B274200DA4E33 /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D42276B26D600DA4E33 /* PINCache.xcframework */; };
-		06894D65276B274200DA4E33 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D44276B26D600DA4E33 /* Starscream.xcframework */; };
-		06894D67276B274200DA4E33 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */; };
-		06894D69276B274200DA4E33 /* WireCryptobox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */; };
-		06894D6B276B274200DA4E33 /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */; };
-		06894D6D276B274200DA4E33 /* WireImages.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3F276B26D600DA4E33 /* WireImages.xcframework */; };
-		06894D6F276B274200DA4E33 /* WireLinkPreview.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */; };
-		06894D73276B274300DA4E33 /* WireProtos.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D48276B26D600DA4E33 /* WireProtos.xcframework */; };
-		06894D77276B274300DA4E33 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D46276B26D600DA4E33 /* WireSystem.xcframework */; };
-		06894D7B276B274300DA4E33 /* WireTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3C276B26D500DA4E33 /* WireTransport.xcframework */; };
-		06894D7D276B274300DA4E33 /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D47276B26D600DA4E33 /* WireUtilities.xcframework */; };
-		06894D82276B27DD00DA4E33 /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D45276B26D600DA4E33 /* WireTesting.xcframework */; };
 		06894D85276B27E100DA4E33 /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */; };
-		06894D89276B282B00DA4E33 /* WireMockTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */; };
-		06894D8C276B282F00DA4E33 /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D4A276B26D600DA4E33 /* OCMock.xcframework */; };
 		069712912497B96E00C32169 /* OperationLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06394AA12497B24600380494 /* OperationLoop.swift */; };
 		069712972497C1BF00C32169 /* NotificationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069712952497C1BC00C32169 /* NotificationSession.swift */; };
 		069712992497C2B900C32169 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069712982497C2B900C32169 /* AuthenticationStatusProvider.swift */; };
 		0697129D2497CAC200C32169 /* PushNotificationStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0697129C2497CAC200C32169 /* PushNotificationStrategy.swift */; };
-		06E6F44327B54EB1001624D4 /* WireRequestStrategy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */; };
 		EE3245FE28229E8600F2A84A /* ApplicationStatusDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FD28229E8600F2A84A /* ApplicationStatusDirectory.swift */; };
 		EE32460028229F6B00F2A84A /* ClientRegistrationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */; };
 		EE32460228229FDF00F2A84A /* AuthenticationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */; };
@@ -71,22 +55,6 @@
 		067ECB4F2487AB6000701956 /* WireNotificationEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WireNotificationEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		067ECB512487AB6000701956 /* WireNotificationEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireNotificationEngineTests.swift; sourceTree = "<group>"; };
 		067ECB532487AB6000701956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireCryptobox.xcframework; path = Carthage/Build/WireCryptobox.xcframework; sourceTree = "<group>"; };
-		06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireMockTransport.xcframework; path = Carthage/Build/WireMockTransport.xcframework; sourceTree = "<group>"; };
-		06894D3B276B26D500DA4E33 /* HTMLString.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HTMLString.xcframework; path = Carthage/Build/HTMLString.xcframework; sourceTree = "<group>"; };
-		06894D3C276B26D500DA4E33 /* WireTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTransport.xcframework; path = Carthage/Build/WireTransport.xcframework; sourceTree = "<group>"; };
-		06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireDataModel.xcframework; path = Carthage/Build/WireDataModel.xcframework; sourceTree = "<group>"; };
-		06894D3F276B26D600DA4E33 /* WireImages.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireImages.xcframework; path = Carthage/Build/WireImages.xcframework; sourceTree = "<group>"; };
-		06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireRequestStrategy.xcframework; path = Carthage/Build/WireRequestStrategy.xcframework; sourceTree = "<group>"; };
-		06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireLinkPreview.xcframework; path = Carthage/Build/WireLinkPreview.xcframework; sourceTree = "<group>"; };
-		06894D42276B26D600DA4E33 /* PINCache.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PINCache.xcframework; path = Carthage/Build/PINCache.xcframework; sourceTree = "<group>"; };
-		06894D44276B26D600DA4E33 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
-		06894D45276B26D600DA4E33 /* WireTesting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTesting.xcframework; path = Carthage/Build/WireTesting.xcframework; sourceTree = "<group>"; };
-		06894D46276B26D600DA4E33 /* WireSystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireSystem.xcframework; path = Carthage/Build/WireSystem.xcframework; sourceTree = "<group>"; };
-		06894D47276B26D600DA4E33 /* WireUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireUtilities.xcframework; path = Carthage/Build/WireUtilities.xcframework; sourceTree = "<group>"; };
-		06894D48276B26D600DA4E33 /* WireProtos.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireProtos.xcframework; path = Carthage/Build/WireProtos.xcframework; sourceTree = "<group>"; };
-		06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
-		06894D4A276B26D600DA4E33 /* OCMock.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OCMock.xcframework; path = Carthage/Build/OCMock.xcframework; sourceTree = "<group>"; };
 		069712952497C1BC00C32169 /* NotificationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSession.swift; sourceTree = "<group>"; };
 		069712982497C2B900C32169 /* AuthenticationStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatusProvider.swift; sourceTree = "<group>"; };
 		0697129C2497CAC200C32169 /* PushNotificationStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationStrategy.swift; sourceTree = "<group>"; };
@@ -112,10 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06894D89276B282B00DA4E33 /* WireMockTransport.xcframework in Frameworks */,
-				06894D8C276B282F00DA4E33 /* OCMock.xcframework in Frameworks */,
 				06894D85276B27E100DA4E33 /* WireNotificationEngine.framework in Frameworks */,
-				06894D82276B27DD00DA4E33 /* WireTesting.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,19 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06894D5D276B274200DA4E33 /* HTMLString.xcframework in Frameworks */,
-				06894D6B276B274200DA4E33 /* WireDataModel.xcframework in Frameworks */,
-				06894D7B276B274300DA4E33 /* WireTransport.xcframework in Frameworks */,
-				06894D67276B274200DA4E33 /* SwiftProtobuf.xcframework in Frameworks */,
-				06894D63276B274200DA4E33 /* PINCache.xcframework in Frameworks */,
-				06894D69276B274200DA4E33 /* WireCryptobox.xcframework in Frameworks */,
-				06894D77276B274300DA4E33 /* WireSystem.xcframework in Frameworks */,
-				06894D6F276B274200DA4E33 /* WireLinkPreview.xcframework in Frameworks */,
-				06894D7D276B274300DA4E33 /* WireUtilities.xcframework in Frameworks */,
-				06E6F44327B54EB1001624D4 /* WireRequestStrategy.xcframework in Frameworks */,
-				06894D6D276B274200DA4E33 /* WireImages.xcframework in Frameworks */,
-				06894D65276B274200DA4E33 /* Starscream.xcframework in Frameworks */,
-				06894D73276B274300DA4E33 /* WireProtos.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,22 +105,6 @@
 		060256312489322000E060E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				06894D3B276B26D500DA4E33 /* HTMLString.xcframework */,
-				06894D4A276B26D600DA4E33 /* OCMock.xcframework */,
-				06894D42276B26D600DA4E33 /* PINCache.xcframework */,
-				06894D44276B26D600DA4E33 /* Starscream.xcframework */,
-				06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */,
-				06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */,
-				06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */,
-				06894D3F276B26D600DA4E33 /* WireImages.xcframework */,
-				06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */,
-				06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */,
-				06894D48276B26D600DA4E33 /* WireProtos.xcframework */,
-				06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */,
-				06894D46276B26D600DA4E33 /* WireSystem.xcframework */,
-				06894D45276B26D600DA4E33 /* WireTesting.xcframework */,
-				06894D3C276B26D500DA4E33 /* WireTransport.xcframework */,
-				06894D47276B26D600DA4E33 /* WireUtilities.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -659,6 +595,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.wire-ios-notification-engine";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

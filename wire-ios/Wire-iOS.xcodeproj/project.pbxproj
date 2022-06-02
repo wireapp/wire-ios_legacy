@@ -25,7 +25,6 @@
 		065A5AE1279B07AC002D4D1E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065A5AE0279B07AC002D4D1E /* NotificationService.swift */; };
 		065A5AE5279B07AC002D4D1E /* Wire Notification Service Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 065A5ADE279B07AC002D4D1E /* Wire Notification Service Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		065A5AEA279B0821002D4D1E /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
-		065A5AF1279B0834002D4D1E /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
 		0661925726F889DC006969AA /* PerformClipboardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661925626F889DC006969AA /* PerformClipboardAction.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
@@ -46,8 +45,6 @@
 		06C1074825B99D1400C099D3 /* PasswordRuleSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */; };
 		06C412AC238FCAA80018866F /* Int+Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AB238FCAA80018866F /* Int+Const.swift */; };
 		06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C412AF239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift */; };
-		06D5C1DB2773527F00DFCD08 /* WireNotificationEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; };
-		06D5C1DC2773527F00DFCD08 /* WireNotificationEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF42D02757DA55009C8A99 /* GuestLinkInfoCell.swift */; };
 		06E69AB425C8301D00B678BF /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		06E69AB825C9A37700B678BF /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
@@ -1186,6 +1183,8 @@
 		EE252AD3284966C2008ED57C /* WireSyncEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD1284966C2008ED57C /* WireSyncEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE252AD828496BE2008ED57C /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD728496BE2008ED57C /* WireShareEngine.framework */; };
 		EE252AD928496BE2008ED57C /* WireShareEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD728496BE2008ED57C /* WireShareEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EE252ADC2849702E008ED57C /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE252ADB2849702E008ED57C /* WireNotificationEngine.framework */; };
+		EE252ADD2849702E008ED57C /* WireNotificationEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252ADB2849702E008ED57C /* WireNotificationEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
@@ -1706,7 +1705,6 @@
 				A96867F526A5E9C500679D95 /* Countly.xcframework in Embed Frameworks */,
 				A96867F726A5EAE600679D95 /* libcmark.xcframework in Embed Frameworks */,
 				A96867FB26A5EB8400679D95 /* WireCommonComponents.framework in Embed Frameworks */,
-				06D5C1DC2773527F00DFCD08 /* WireNotificationEngine.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1729,6 +1727,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				EE252AD928496BE2008ED57C /* WireShareEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE252ADE2849702E008ED57C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE252ADD2849702E008ED57C /* WireNotificationEngine.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1765,7 +1774,6 @@
 		068F558624336CAE000DC813 /* DigitalSignatureVerificationViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalSignatureVerificationViewControllerTest.swift; sourceTree = "<group>"; };
 		06A5CFB52632A4D4006D2891 /* ConversationMessageSenderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderSnapshotTests.swift; sourceTree = "<group>"; };
 		06B3091226AEDC990057AF9E /* UIAlertController+FeatureConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+FeatureConfig.swift"; sourceTree = "<group>"; };
-		06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireNotificationEngine.xcframework; path = Carthage/Build/WireNotificationEngine.xcframework; sourceTree = "<group>"; };
 		06C1074325B9973E00C099D3 /* PasswordCharacterClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCharacterClass.swift; sourceTree = "<group>"; };
 		06C1074525B99C4A00C099D3 /* PasswordRuleSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSet.swift; sourceTree = "<group>"; };
 		06C1074725B99D1400C099D3 /* PasswordRuleSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleSetTests.swift; sourceTree = "<group>"; };
@@ -3030,6 +3038,7 @@
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE252AD1284966C2008ED57C /* WireSyncEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireSyncEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE252AD728496BE2008ED57C /* WireShareEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireShareEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE252ADB2849702E008ED57C /* WireNotificationEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireNotificationEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3461,8 +3470,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE252ADC2849702E008ED57C /* WireNotificationEngine.framework in Frameworks */,
 				065A5AEA279B0821002D4D1E /* WireCommonComponents.framework in Frameworks */,
-				065A5AF1279B0834002D4D1E /* WireNotificationEngine.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3487,7 +3496,6 @@
 				A96867CA26A5E68400679D95 /* FLAnimatedImage.xcframework in Frameworks */,
 				A96867C726A5E68100679D95 /* FormatterKit.xcframework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
-				06D5C1DB2773527F00DFCD08 /* WireNotificationEngine.xcframework in Frameworks */,
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
@@ -4634,9 +4642,9 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE252ADB2849702E008ED57C /* WireNotificationEngine.framework */,
 				EE252AD728496BE2008ED57C /* WireShareEngine.framework */,
 				EE252AD1284966C2008ED57C /* WireSyncEngine.framework */,
-				06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */,
 				A9C4B410266A550700C88BEB /* ios-arm64_x86_64-simulator */,
 				A9C4B3FB266A51D300C88BEB /* SnapshotTesting.xcframework */,
 				A98682862666E64E0064581B /* Countly.xcframework */,
@@ -7378,6 +7386,7 @@
 				065A5ADA279B07AC002D4D1E /* Sources */,
 				065A5ADB279B07AC002D4D1E /* Frameworks */,
 				065A5ADC279B07AC002D4D1E /* Resources */,
+				EE252ADE2849702E008ED57C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
