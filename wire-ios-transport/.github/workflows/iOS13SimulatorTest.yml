@@ -1,0 +1,32 @@
+name: iOS 13 Simulator Test
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  Run_Tests_Xcode_12_4_iOS_13_7:
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v1
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_12.4.app && /usr/bin/xcodebuild -version
+
+    - name: Carthage
+      env:
+        GITHUB_TOKEN: ${{ secrets.DISPATCH_SECRET }}
+      run: carthage bootstrap --platform ios --use-xcframeworks
+
+    - name: Link to 13.7 Simulators
+      run: |
+        echo "Creating Runtimes folder if needed..."
+        sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+        echo "Creating symlink of the iOS 13.7 runtime..."
+        sudo ln -s /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 13.7.simruntime
+
+    - name: Run tests
+      run: xcodebuild test -scheme WireTransport -project WireTransport.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=13.7' | xcpretty && exit ${PIPESTATUS[0]}

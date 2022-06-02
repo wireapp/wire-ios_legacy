@@ -1,0 +1,11 @@
+name: Merge PR
+
+on: 
+  issue_comment:
+    types: [created]
+
+jobs:
+  call-workflow:
+    uses: wireapp/wire-ios-shared-resources/.github/workflows/mergePR.yml@master
+    secrets:
+      commitPAT: ${{ secrets.ZENKINS_SECRET }}

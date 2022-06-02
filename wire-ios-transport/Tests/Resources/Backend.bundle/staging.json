@@ -1,0 +1,14 @@
+{
+    "endpoints" : {
+        "backendURL" : "https://staging-nginz-https.zinfra.io",
+        "backendWSURL" : "https://staging-nginz-ssl.zinfra.io",
+        "blackListURL" : "https://clientblacklist.wire.com/staging",
+        "teamsURL" : "https://wire-teams-staging.zinfra.io",
+        "accountsURL" : "https://wire-account-staging.zinfra.io",
+        "websiteURL" : "https://wire.com",
+        "countlyURL" : "https://countly.wire.com"
+    },
+    "title" : "Staging",
+    "pinned_keys" : [
+    ]
+}

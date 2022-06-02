@@ -1,0 +1,40 @@
+
+{
+    "endpoints" : {
+        "backendURL" : "https://prod-nginz-https.wire.com",
+        "backendWSURL" : "https://prod-nginz-ssl.wire.com",
+        "blackListURL" : "https://clientblacklist.wire.com/prod",
+        "teamsURL" : "https://teams.wire.com",
+        "accountsURL" : "https://accounts.wire.com",
+        "websiteURL" : "https://wire.com",
+        "countlyURL" : "https://countly.wire.com"
+    },
+    "title" : "Production",
+    "pinned_keys" : [
+        {
+            "certificate_key" : "MIIFDDCCA/SgAwIBAgIQC7HK4y3OxqQjbYqDk1wVrDANBgkqhkiG9w0BAQsFADBNMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMScwJQYDVQQDEx5EaWdpQ2VydCBTSEEyIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTYxMTAzMDAwMDAwWhcNMTgwMTA0MTIwMDAwWjBYMQswCQYDVQQGEwJDSDEMMAoGA1UECBMDWnVnMQwwCgYDVQQHEwNadWcxGDAWBgNVBAoTD1dpcmUgU3dpc3MgR21iSDETMBEGA1UEAwwKKi53aXJlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK3mMwVrr51SmH4DTV93VY1J6iFbZeF6kJwnGOpv7FjNeU0ytG6PRSpzMTQD7Q8welYkb6WbChHn1/KYteSXLOLmYrmfNSEldW6sbabIyeemI3pnvfQ3GuXJN+aU4WLiuo2fLxuqSYmPZkWPZxmnYneKli+7sAHqCJ8dpjjOx3qQgodjTl3fhI0OLAbH4G/pFq3FUJgc7yxz1A6MpJv5vgby9nidZ4zzYjPxqHl25iFtVjN4n7nGCaA/YPleTXx3wDa1btsOGHCw2ndAvOTW/FNbIBTZK4Dqs4Xf9cR6JNbjso6Hi0yBx2JK8r2wRJnZer/n9idRDNPhY/b7HiNk2K0CAwEAAaOCAdswggHXMB8GA1UdIwQYMBaAFA+AYRyCMWHVLyjnjUY4tCzhxtniMB0GA1UdDgQWBBT/SIDwnMHi0O3A0H/c3Jh8K19NnDAfBgNVHREEGDAWggoqLndpcmUuY29tggh3aXJlLmNvbTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMGsGA1UdHwRkMGIwL6AtoCuGKWh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9zc2NhLXNoYTItZzUuY3JsMC+gLaArhilodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vc3NjYS1zaGEyLWc1LmNybDBMBgNVHSAERTBDMDcGCWCGSAGG/WwBATAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BTMAgGBmeBDAECAjB8BggrBgEFBQcBAQRwMG4wJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBGBggrBgEFBQcwAoY6aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0U0hBMlNlY3VyZVNlcnZlckNBLmNydDAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQAYQUuP8OknxlnqihIOPMcyRpg25val6hmnrIfm1H66kOFpnjwv/66MhikCbJBAKlbnmuxNd1zK30CT4tbcmy1uYzGxN8D5Am+pcmHg8vgmnyRt3QftHVVyu9ayoR0dGG2+00iTcY8Un0+c30ktaDE1vSKxp0VQvyhW/FHxOzFWpub11MzuJ3wf3MkdpBQL604LKY+viYKt3eXDJUZPhDOKe9VCYGZLsAEGTRYMq3iIey76hbVojWYD0Hw4xHKMmM+AOiksN6WW22uxXXwRuYM+uLl9qx1HBNoeCitFfYMh+pe7UUQFs1DVNaFwAbTlOwrU1Xif8xmbvZoMm4BJUYEj",
+            "hosts" : [
+                {
+                    "value" : "prod-nginz-https.wire.com",
+                    "rule" : "ends_with"
+                },
+                {
+                    "value" : "prod-nginz-ssl.wire.com",
+                    "rule" : "ends_with"
+                },
+                {
+                    "value" : "prod-assets.wire.com",
+                    "rule" : "ends_with"
+                },
+                {
+                    "value" : "www.wire.com",
+                    "rule" : "ends_with"
+                },
+                {
+                    "value" : "wire.com",
+                    "rule" : "equals"
+                }
+            ]
+        }
+    ]
+}
