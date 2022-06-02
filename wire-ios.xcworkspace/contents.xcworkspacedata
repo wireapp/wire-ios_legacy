@@ -13,4 +13,7 @@
    <FileRef
       location = "group:wire-ios-sync-engine/WireSyncEngine.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:wire-ios-request-strategy/WireRequestStrategy.xcodeproj">
+   </FileRef>
 </Workspace>
