@@ -1,2 +1,1 @@
 github "wireapp/wire-ios-testing" ~> 27.1.3
-github "wireapp/wire-ios-mocktransport" ~> 140.1.0

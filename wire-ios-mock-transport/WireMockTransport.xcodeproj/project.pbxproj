@@ -19,7 +19,6 @@
 		09E393F81BB0339200F3EA1B /* MockPreKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E393F71BB0339200F3EA1B /* MockPreKey.m */; };
 		163EB0CE1FD1A658005B8D8D /* MockTransportSession+Broadcast.h in Headers */ = {isa = PBXBuildFile; fileRef = 163EB0CC1FD1A658005B8D8D /* MockTransportSession+Broadcast.h */; };
 		163EB0CF1FD1A658005B8D8D /* MockTransportSession+Broadcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 163EB0CD1FD1A658005B8D8D /* MockTransportSession+Broadcast.m */; };
-		1658E90F26C5294E003D0090 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1658E90E26C5294E003D0090 /* Starscream.xcframework */; };
 		5406F3D01E1D4A3900541E7F /* ZMTransportRequest+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406F3CF1E1D4A3900541E7F /* ZMTransportRequest+Utils.swift */; };
 		541797651CE1F86500C7646D /* MockTransportSessionCancelationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541797641CE1F86500C7646D /* MockTransportSessionCancelationTests.swift */; };
 		541797671CE1FC0C00C7646D /* CustomResponseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541797661CE1FC0C00C7646D /* CustomResponseGenerator.swift */; };
@@ -72,12 +71,6 @@
 		7C52BFF82033225500297DDA /* MockReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C52BFF62033225500297DDA /* MockReachability.m */; };
 		872A2EE01FFE761B00900B22 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A2EDF1FFE761B00900B22 /* MockService.swift */; };
 		872A2EE21FFE7EE700900B22 /* MockTransportSession+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A2EE11FFE7EE700900B22 /* MockTransportSession+Services.swift */; };
-		A9DABBB52661208900D07588 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBAF2661208900D07588 /* WireSystem.xcframework */; };
-		A9DABBB72661208900D07588 /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBB02661208900D07588 /* WireUtilities.xcframework */; };
-		A9DABBB92661208900D07588 /* WireTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBB12661208900D07588 /* WireTransport.xcframework */; };
-		A9DABBBB2661208900D07588 /* WireProtos.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBB22661208900D07588 /* WireProtos.xcframework */; };
-		A9DABBBD2661208900D07588 /* WireCryptobox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBB32661208900D07588 /* WireCryptobox.xcframework */; };
-		A9DABBBF2661208900D07588 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBB42661208900D07588 /* SwiftProtobuf.xcframework */; };
 		A9DABBCD2661211C00D07588 /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBC3266120E500D07588 /* WireTesting.xcframework */; };
 		A9DABBD12661212400D07588 /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBC4266120E500D07588 /* OCMock.xcframework */; };
 		EE797454283D235700A0BB0C /* MockTransportSession+FeatureConfigs.h in Headers */ = {isa = PBXBuildFile; fileRef = EE797452283D234000A0BB0C /* MockTransportSession+FeatureConfigs.h */; };
@@ -294,15 +287,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1658E90F26C5294E003D0090 /* Starscream.xcframework in Frameworks */,
-				A9DABBB52661208900D07588 /* WireSystem.xcframework in Frameworks */,
-				A9DABBBD2661208900D07588 /* WireCryptobox.xcframework in Frameworks */,
-				A9DABBBF2661208900D07588 /* SwiftProtobuf.xcframework in Frameworks */,
 				A9DABBCD2661211C00D07588 /* WireTesting.xcframework in Frameworks */,
-				A9DABBB92661208900D07588 /* WireTransport.xcframework in Frameworks */,
 				A9DABBD12661212400D07588 /* OCMock.xcframework in Frameworks */,
-				A9DABBB72661208900D07588 /* WireUtilities.xcframework in Frameworks */,
-				A9DABBBB2661208900D07588 /* WireProtos.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
