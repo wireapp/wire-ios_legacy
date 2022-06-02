@@ -5,6 +5,9 @@
       location = "group:wire-ios/Wire-iOS.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:wire-ios-notification-engine/WireNotificationEngine.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:wire-ios-share-engine/WireShareEngine.xcodeproj">
    </FileRef>
    <FileRef
