@@ -1,0 +1,84 @@
+{
+  "configurations" : [
+    {
+      "id" : "88F2BE54-0BED-4112-93BA-C9059F7CD7F9",
+      "name" : "Address Sanitizer",
+      "options" : {
+        "addressSanitizer" : {
+          "enabled" : true
+        },
+        "threadSanitizerEnabled" : false
+      }
+    },
+    {
+      "id" : "09EB119B-627A-473C-8B09-E23268F9B9C1",
+      "name" : "Thread Sanitizer",
+      "options" : {
+        "threadSanitizerEnabled" : true
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-XCTestObserverClass InfiniteLoopAfterRunningTests",
+        "enabled" : false
+      },
+      {
+        "argument" : "-com.apple.CoreData.ConcurrencyDebug 1",
+        "enabled" : false
+      },
+      {
+        "argument" : "OPTIN_STDERR YES",
+        "enabled" : false
+      }
+    ],
+    "environmentVariableEntries" : [
+      {
+        "enabled" : false,
+        "key" : "DEBUG_TESTS",
+        "value" : "1"
+      },
+      {
+        "key" : "ZM_TESTING",
+        "value" : "1"
+      },
+      {
+        "enabled" : false,
+        "key" : "ZMLOG_TAGS",
+        "value" : "MockTransportRequests"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:WireSyncEngine.xcodeproj",
+      "identifier" : "549815921A43232400A7CE2E",
+      "name" : "WireSyncEngine-ios"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "skippedTests" : [
+        "AvailabilityTests",
+        "EventProcessingPerformanceTests",
+        "SessionManagerTests\/testThatSessionManagerSetsUpAPNSEnvironmentOnLaunch()"
+      ],
+      "target" : {
+        "containerPath" : "container:WireSyncEngine.xcodeproj",
+        "identifier" : "3E1860C2191A649D000FE027",
+        "name" : "UnitTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "AvailabilityTests"
+      ],
+      "target" : {
+        "containerPath" : "container:WireSyncEngine.xcodeproj",
+        "identifier" : "169BA1D125ECDBA300374343",
+        "name" : "IntegrationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,4 @@
+framework=WireSyncEngine
+organization=wireapp
+repository=wire-ios-sync-engine
+release-name-format={GERMAN_TOWN}

@@ -1,0 +1,29 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+
+
+"conversation.username.groupingSeparator" = ", ";
+
+"user_session.error.blacklisted-email" = "このメールアドレスは許可されていません";
+"user_session.error.domain-blocked" = "このメールはチームの招待が必要です。招待を受けるには組織の IT 管理者にお問い合わせください。";
+"user_session.error.email-exists" = "このメールアドレスは既に登録されています";
+"user_session.error.invalid-email" = "このメールアドレスは無効です";
+"user_session.error.invalid-code" = "有効なコードを入力してください。";
+"user_session.error.unauthorized-email" = "問題が生じたようです。もう一度やり直してください。";
+"user_session.error.unknown" = "問題が生じたようです。もう一度やり直してください。";

@@ -1,0 +1,253 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "Uus sõnum";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ vestluses %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Keegi";
+"push.notification.ephemeral" = "Saatis sõnumi";
+"push.notification.ephemeral.mention" = "Mainis sind";
+"push.notification.ephemeral.reply" = "Replied to you";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "Uus sõnum: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "Uus sõnum: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ vestluses: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "Uus sõnum: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "%1$@ mainis: %2$@";
+"push.notification.add.message.group.nousername.mention" = "Uus mainimine: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "Uus mainimine: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ mainis sind vestluses: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Mainimine: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "Uus mainimine: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Reply from %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "New reply: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "New reply: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ replied to you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Reply: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "New reply: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "%1$@ jagas pildi";
+"push.notification.add.image.group.nousername" = "Uus pilt";
+"push.notification.add.image.group.nousername.noconversationname" = "Uus pilt vestluses";
+"push.notification.add.image.group.noconversationname" = "%1$@ jagas vestluses ühe pildi";
+
+"push.notification.add.image.oneonone" = "Jagas pilti";
+"push.notification.add.image.oneonone.nousername" = "Uus pilt vestluses";
+
+// VIDEO
+"push.notification.add.video.group" = "%1$@ jagas video";
+"push.notification.add.video.group.nousername" = "Uus video";
+"push.notification.add.video.group.nousername.noconversationname" = "Uus videoklipp vestluses";
+"push.notification.add.video.group.noconversationname" = "%1$@ jagas vestluses ühe videoklipi";
+
+"push.notification.add.video.oneonone" = "Jagas videot";
+"push.notification.add.video.oneonone.nousername" = "Uus videoklipp vestluses";
+
+// AUDIO
+"push.notification.add.audio.group" = "%1$@ jagas häälsõnumi";
+"push.notification.add.audio.group.nousername" = "Uus häälsõnum";
+"push.notification.add.audio.group.nousername.noconversationname" = "Vestluses uus häälsõnum";
+"push.notification.add.audio.group.noconversationname" = "%1$@ saatis vestlusesse häälsõnumi";
+
+"push.notification.add.audio.oneonone" = "Jagas häälsõnumit";
+"push.notification.add.audio.oneonone.nousername" = "Vestluses uus häälsõnum";
+
+// FILE
+"push.notification.add.file.group" = "%1$@ jagas faili";
+"push.notification.add.file.group.nousername" = "Uus fail";
+"push.notification.add.file.group.nousername.noconversationname" = "Vestluses uus fail";
+"push.notification.add.file.group.noconversationname" = "%1$@ saatis vestlusesse faili";
+
+"push.notification.add.file.oneonone" = "Jagas faili";
+"push.notification.add.file.oneonone.nousername" = "Vestluses uus fail";
+
+// LOCATION
+"push.notification.add.location.group" = "%1$@ jagas asukohta";
+"push.notification.add.location.group.nousername" = "Uus asukoht";
+"push.notification.add.location.group.nousername.noconversationname" = "Uus asukoht vestluses";
+"push.notification.add.location.group.noconversationname" = "%1$@ jagas vestluses oma asukohta";
+
+"push.notification.add.location.oneonone" = "Jagas asukohta";
+"push.notification.add.location.oneonone.nousername" = "Uus asukoht vestluses";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "%1$@ lisas sind";
+"push.notification.member.join.self.noconversationname" = "%1$@ lisas sind vestlusse";
+"push.notification.member.join.self.nousername.noconversationname" = "Sind lisati vestlusse";
+"push.notification.member.join.self.nousername" = "Sind lisati";
+
+"push.notification.member.leave.self" = "%1$@ eemaldas sind";
+"push.notification.member.leave.self.noconversationname" = "%1$@ eemaldas sind vestlusest";
+"push.notification.member.leave.self.nousername.noconversationname" = "Sind eemaldati vestlusest";
+"push.notification.member.leave.self.nousername" = "Sind eemaldati vestlusest";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ määras sõnumi taimeriks: %@";
+"push.notification.message-timer.update.nousername" = "Keegi määras sõnumi taimeriks %@";
+"push.notification.message-timer.update.noconversationname" = "%@ määras vestluses sõnumi taimeriks %@";
+"push.notification.message-timer.update.nousername.noconversationname" = "Keegi määras vestluses sõnumi taimeriks %@";
+
+"push.notification.message-timer.off" = "%@ lülitas sõnumi taimeri välja";
+"push.notification.message-timer.off.nousername" = "Keegi lülitas sõnumi taimeri välja";
+"push.notification.message-timer.off.noconversationname" = "%@ lülitas vestluses sõnumi taimeri välja";
+"push.notification.message-timer.off.nousername.noconversationname" = "Keegi lülitas vestluses sõnumi taimeri välja";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "helistab videoga";
+"push.notification.call.started.video.oneonone.nousername" = "Keegi helistab videoga";
+
+"push.notification.call.started.video.group" = "%1$@ helistab videoga";
+"push.notification.call.started.video.group.nousername" = "Keegi helistab videoga";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ helistab videoga vestluses";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Keegi helistab videoga vestluses";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "helistab";
+"push.notification.call.started.oneonone.nousername" = "Keegi helistab";
+
+"push.notification.call.started.group" = "%1$@ helistab";
+"push.notification.call.started.group.nousername" = "Keegi helistab";
+"push.notification.call.started.group.noconversationname" = "%1$@ helistab vestluses";
+"push.notification.call.started.group.nousername.noconversationname" = "Keegi helistab vestluses";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "%1$@ helistas";
+"push.notification.call.missed.group.nousername" = "Keegi helistas";
+"push.notification.call.missed.group.nousername.noconversationname" = "Keegi helistas vestluses";
+"push.notification.call.missed.group.noconversationname" = "%1$@ helistas vestluses";
+
+"push.notification.call.missed.oneonone" = "helistas";
+"push.notification.call.missed.oneonone.nousername" = "Keegi helistas";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ vestluses %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "Keegi helistab vestluses";
+"push.notification.callkit.call.started.group.nousername" = "Keegi helistab vestluses %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ helistab vestluses";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "%1$@ lõi grupi";
+"push.notification.conversation.create.nousername" = "Keegi lõi grupi";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ deleted the group";
+"push.notification.conversation.delete.nousername" = "Someone deleted the group";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "%@ soovib sind kontaktiks lisada";
+"push.notification.connection.request.nousername" = "Keegi soovib sinuga ühenduda";
+
+"push.notification.connection.accepted" = "%@ on nüüd sinu kontakt.";
+"push.notification.connection.accepted.nousername" = "Sul on uus kontakt";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "Sõnumi saatmine ebaõnnestus";
+"push.notification.failed.message.oneonone.nousername" = "Sõnumi saatmine ebaõnnestus";
+
+"push.notification.failed.message.group" = "Sõnumi saatmine ebaõnnestus";
+"push.notification.failed.message.group.noconversationname" = "Sõnumi saatmine ebaõnnestus";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Notifications are disabled in %@";
+"push.notification.alert.availability.away.title" = "Notifications are disabled";
+"push.notification.alert.availability.busy.title.team" = "Notifications have changed in %@";
+"push.notification.alert.availability.busy.title" = "Notifications have changed";
+
+"push.notification.alert.availability.away.message" = "Status affects notifications now. You’re set to “Away” and won’t receive any notifications.";
+"push.notification.alert.availability.busy.message" = "Status affects notifications now. You’re set to “Busy” and will only receive notifications when someone mentions you or replies to one of your messages.";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ sinu sõnumit";
+"push.notification.reaction.group.nousername.noconversationname" = "Keegi %@ sinu sõnumit vestluses";
+"push.notification.reaction.group.nousername" = "Keegi %@ sinu sõnumit";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ sinu sõnumit";
+
+"push.notification.reaction.oneonone" = "%1$@ sinu sõnumit";
+"push.notification.reaction.oneonone.nousername" = "Keegi %@ sinu sõnumit";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "%@ liitus just Wire’ga";
+
+// OTHER
+"push.notification.action.message.open" = "Ava";
+"push.notification.action.message.reply" = "Vasta";
+"push.notification.action.message.reply.button.title" = "Saada";
+"push.notification.action.message.reply.placeholder" = "Kirjuta sõnum";
+"push.notification.action.conversation.mute" = "Hääletu";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "Vasta";
+"push.notification.action.call.ignore" = "Keeldu";
+"push.notification.action.call.message" = "Sõnum";
+"push.notification.action.call.callback" = "Helist tagasi";
+"push.notification.action.connection.accept" = "Vasta";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

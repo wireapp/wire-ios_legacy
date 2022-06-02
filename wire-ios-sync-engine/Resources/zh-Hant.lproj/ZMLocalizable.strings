@@ -1,0 +1,29 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+
+
+"conversation.username.groupingSeparator" = "、";
+
+"user_session.error.blacklisted-email" = "不能使用此電子郵件地址";
+"user_session.error.domain-blocked" = "這封電子郵件需要團隊邀請。 請與您組織的IT管理員聯繫，以接收邀請。";
+"user_session.error.email-exists" = "這個電郵地址已經註冊";
+"user_session.error.invalid-email" = "這個電子郵件地址無效 ";
+"user_session.error.invalid-code" = "請輸入一個有效的代碼";
+"user_session.error.unauthorized-email" = "出了點問題，請再試一次";
+"user_session.error.unknown" = "出了點問題，請再試一次";

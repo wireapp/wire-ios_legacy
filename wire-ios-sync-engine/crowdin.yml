@@ -1,0 +1,31 @@
+# Credentials.
+
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env" : "CROWDIN_API_TOKEN"
+"base_path" : "."
+"base_url" : "https://api.crowdin.com"
+
+# Preserve file structure on Crowdin.
+
+"preserve_hierarchy": true
+
+# Specify which source files to upload and where to store their
+# downloaded translation.
+
+files: [
+ {
+  "source" : "/Resources/Base.lproj/ZMLocalizable.strings",
+  "dest" : "/SE/Resources/ZMLocalizable.strings",
+  "translation" : "/Resources/%osx_code%/%original_file_name%",
+ },
+ {
+  "source" : "/Resources/Base.lproj/Push.strings",
+  "dest" : "/SE/Resources/Push.strings",
+  "translation" : "/Resources/%osx_code%/%original_file_name%",
+ },
+ {
+  "source" : "/Resources/Base.lproj/Push.stringsdict",
+  "dest" : "/SE/Resources/Push.stringsdict",
+  "translation" : "/Resources/%osx_code%/%original_file_name%",
+ }
+]

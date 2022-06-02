@@ -1,0 +1,29 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+
+
+"conversation.username.groupingSeparator" = ", ";
+
+"user_session.error.blacklisted-email" = "Дана Email-адреса неприпустима";
+"user_session.error.domain-blocked" = "Цей емейл потребує запрошення в команду. Зверніться до ІТ-адміністраторів вашої організації для отримання запрошення.";
+"user_session.error.email-exists" = "Дана Email-адреса вже зареєстрована";
+"user_session.error.invalid-email" = "Невалідна Email-адреса";
+"user_session.error.invalid-code" = "Будь ласка, введіть правильний код";
+"user_session.error.unauthorized-email" = "Щось пішло не так. Будь ласка, спробуй ще раз";
+"user_session.error.unknown" = "Щось пішло не так. Будь ласка, спробуй ще раз";

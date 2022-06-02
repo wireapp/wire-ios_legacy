@@ -1,0 +1,253 @@
+// 
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+// 
+// These strings form the alert body of a local notification. The alert title
+// be in the form "[Group Name]" or "[Sender Name]". If there is a team name available
+// then " in [Team Name]" will be appended to the title. If there is no information
+// available to construct the title (no conversation name, no team) then there will be
+// no title and the notification will only show the alert body.
+// Group Names are a shown in the title for group conversations with the sender name
+// and message content in the alert body.
+// Sender names are shown in the title for one to one conversations, with the message
+// content in the alert body.
+
+
+
+
+"push.notification.default" = "رسالة جديدة";
+
+// Push Title: [Conversation Name] in [Team Name]
+"push.notification.title" = "%1$@ في %2$@";
+
+// Ephemeral
+"push.notification.ephemeral.title" = "Someone";
+"push.notification.ephemeral" = "أرسل لك رسالة";
+"push.notification.ephemeral.mention" = "أشار إليك";
+"push.notification.ephemeral.reply" = "Replied to you";
+
+// 2 Components: Sender, Message
+"push.notification.add.message.group" = "%1$@: %2$@";
+"push.notification.add.message.group.nousername" = "رسالة جديدة: %1$@";
+"push.notification.add.message.group.nousername.noconversationname" = "رسالة جديدة: %1$@";
+"push.notification.add.message.group.noconversationname" = "%1$@ في مُحادثة: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone" = "%1$@";
+"push.notification.add.message.oneonone.nousername" = "رسالة جديدة: %1$@";
+
+// Message with mention
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.mention" = "Mention from %1$@: %2$@";
+"push.notification.add.message.group.nousername.mention" = "New mention: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.mention" = "New mention: %1$@";
+"push.notification.add.message.group.noconversationname.mention" = "%1$@ mentioned you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.mention" = "Mention: %1$@";
+"push.notification.add.message.oneonone.nousername.mention" = "New mention: %1$@";
+
+// Message with quote
+// 2 Components: Sender, Message
+
+"push.notification.add.message.group.reply" = "Reply from %1$@: %2$@";
+"push.notification.add.message.group.nousername.reply" = "New reply: %1$@";
+"push.notification.add.message.group.nousername.noconversationname.reply" = "New reply: %1$@";
+"push.notification.add.message.group.noconversationname.reply" = "%1$@ replied to you in a conversation: %2$@";
+
+// 1 Component: Message
+"push.notification.add.message.oneonone.reply" = "Reply: %1$@";
+"push.notification.add.message.oneonone.nousername.reply" = "New reply: %1$@";
+
+// IMAGE
+"push.notification.add.image.group" = "شارك %1$@ صورة";
+"push.notification.add.image.group.nousername" = "صورة جديدة";
+"push.notification.add.image.group.nousername.noconversationname" = "صورة جديدة في مُحادثة";
+"push.notification.add.image.group.noconversationname" = "شارك %1$@ صورة جديدة في مُحادثة";
+
+"push.notification.add.image.oneonone" = "شارك صورة";
+"push.notification.add.image.oneonone.nousername" = "صورة جديدة في المُحادثة";
+
+// VIDEO
+"push.notification.add.video.group" = "شارك %1$@ فيديو";
+"push.notification.add.video.group.nousername" = "فيديو جديد";
+"push.notification.add.video.group.nousername.noconversationname" = "فيديو جديد في مُحادثة";
+"push.notification.add.video.group.noconversationname" = "شارك %1$@ فيديو في مُحادثة";
+
+"push.notification.add.video.oneonone" = "شارك فيديو";
+"push.notification.add.video.oneonone.nousername" = "فيديو جديد في مُحادثة";
+
+// AUDIO
+"push.notification.add.audio.group" = "شارك %1$@ رسالة صوتية";
+"push.notification.add.audio.group.nousername" = "رسالة صوتية جديدة";
+"push.notification.add.audio.group.nousername.noconversationname" = "رسالة صوتية جديدة في مُحادثة";
+"push.notification.add.audio.group.noconversationname" = "شارك %1$@ رسالة صوتية في مُحادثة";
+
+"push.notification.add.audio.oneonone" = "شارك رسالة صوتية";
+"push.notification.add.audio.oneonone.nousername" = "رسالة صوتية جديدة في مُحادثة";
+
+// FILE
+"push.notification.add.file.group" = "شارك %1$@ ملف";
+"push.notification.add.file.group.nousername" = "ملف جديد";
+"push.notification.add.file.group.nousername.noconversationname" = "ملف جديد في مُحادثة";
+"push.notification.add.file.group.noconversationname" = "شارك %1$@ ملف في مُحادثة";
+
+"push.notification.add.file.oneonone" = "شارك ملف";
+"push.notification.add.file.oneonone.nousername" = "ملف جديد في مُحادثة";
+
+// LOCATION
+"push.notification.add.location.group" = "شارك %1$@ موقع";
+"push.notification.add.location.group.nousername" = "موقع جديد";
+"push.notification.add.location.group.nousername.noconversationname" = "موقع جديد في مُحادثة";
+"push.notification.add.location.group.noconversationname" = "شارك %1$@ موقع في مُحادثة";
+
+"push.notification.add.location.oneonone" = "شارك موقع";
+"push.notification.add.location.oneonone.nousername" = "موقع جديد في مُحادثة";
+
+// SELF ADDED/REMOVED TO GROUP
+"push.notification.member.join.self" = "أضافك %1$@";
+"push.notification.member.join.self.noconversationname" = "أضافك %1$@ لمُحادثة";
+"push.notification.member.join.self.nousername.noconversationname" = "تم إضافتك لمُحادثة";
+"push.notification.member.join.self.nousername" = "تمت إضافتك";
+
+"push.notification.member.leave.self" = "أزالك %1$@";
+"push.notification.member.leave.self.noconversationname" = "أزالك %1$@ من مُحادثة";
+"push.notification.member.leave.self.nousername.noconversationname" = "تم حذفك من مُحادثة";
+"push.notification.member.leave.self.nousername" = "تمت إزالتك";
+
+// EPHEMERAL MESSAGE TIMER UPDATE
+"push.notification.message-timer.update" = "%@ set the message timer to %@";
+"push.notification.message-timer.update.nousername" = "Someone set the message timer to %@";
+"push.notification.message-timer.update.noconversationname" = "%@ set the message timer to %@ in a conversation";
+"push.notification.message-timer.update.nousername.noconversationname" = "Someone set the message timer to %@ in a conversation";
+
+"push.notification.message-timer.off" = "%@ turned off the message timer";
+"push.notification.message-timer.off.nousername" = "Someone turned off the message timer";
+"push.notification.message-timer.off.noconversationname" = "%@ turned off the message timer in a conversation";
+"push.notification.message-timer.off.nousername.noconversationname" = "Someone turned off the message timer in a conversation";
+
+// VIDEO CALLS
+"push.notification.call.started.video.oneonone" = "is calling with video";
+"push.notification.call.started.video.oneonone.nousername" = "Someone is calling with video";
+
+"push.notification.call.started.video.group" = "%1$@ is calling with video";
+"push.notification.call.started.video.group.nousername" = "Someone is calling with video";
+"push.notification.call.started.video.group.noconversationname" = "%1$@ is calling with video in a conversation";
+"push.notification.call.started.video.group.nousername.noconversationname" = "Someone is calling with video in a conversation";
+
+// VOICE CALLS
+"push.notification.call.started.oneonone" = "يتصل بك";
+"push.notification.call.started.oneonone.nousername" = "شخص يتصل";
+
+"push.notification.call.started.group" = "%1$@ يتصل";
+"push.notification.call.started.group.nousername" = "شخص يتصل";
+"push.notification.call.started.group.noconversationname" = "%1$@ يتصل في مُحادثة";
+"push.notification.call.started.group.nousername.noconversationname" = "شخص يتصل في مُحادثة";
+
+// MISSED CALLS
+"push.notification.call.missed.group" = "اتصل %1$@";
+"push.notification.call.missed.group.nousername" = "اتّصل شخص ما";
+"push.notification.call.missed.group.nousername.noconversationname" = "اتصل شخص ما في محادثة";
+"push.notification.call.missed.group.noconversationname" = "اتصل %1$@ في محادثة";
+
+"push.notification.call.missed.oneonone" = "اتّصل بك";
+"push.notification.call.missed.oneonone.nousername" = "اتّصل شخص ما";
+
+// CALLKIT
+"push.notification.callkit.call.started.group" = "%1$@ في %2$@";
+"push.notification.callkit.call.started.group.nousername.noconversationname" = "شخص يتصل في مُحادثة";
+"push.notification.callkit.call.started.group.nousername" = "شخص يتصل في %1$@";
+"push.notification.callkit.call.started.group.noconversationname" = "%@ يتصل في مُحادثة";
+
+// CONVERSATION CREATE
+"push.notification.conversation.create" = "أنشأ %1$@ مجموعة";
+"push.notification.conversation.create.nousername" = "أنشأ أحدهم مجموعة";
+
+// CONVERSATION DELETE
+"push.notification.conversation.delete" = "%1$@ deleted the group";
+"push.notification.conversation.delete.nousername" = "Someone deleted the group";
+
+// CONNECTIONS (there should be no alert titles for these)
+"push.notification.connection.request" = "يريد %@ التواصل معك";
+"push.notification.connection.request.nousername" = "شخص يريد التواصل معك";
+
+"push.notification.connection.accepted" = "أنت و%@ متصلين الآن";
+"push.notification.connection.accepted.nousername" = "لديك تواصل جديد";
+
+// FAILED MESSAGE
+"push.notification.failed.message.oneonone" = "تعذَّر إرسال رسالة";
+"push.notification.failed.message.oneonone.nousername" = "تعذَّر إرسال رسالة";
+
+"push.notification.failed.message.group" = "تعذَّر إرسال رسالة";
+"push.notification.failed.message.group.noconversationname" = "تعذَّر إرسال الرسالة";
+
+// AVAILABILITY ALERT
+
+"push.notification.alert.availability.away.title.team" = "Notifications are disabled in %@";
+"push.notification.alert.availability.away.title" = "Notifications are disabled";
+"push.notification.alert.availability.busy.title.team" = "Notifications have changed in %@";
+"push.notification.alert.availability.busy.title" = "Notifications have changed";
+
+"push.notification.alert.availability.away.message" = "Status affects notifications now. You’re set to “Away” and won’t receive any notifications.";
+"push.notification.alert.availability.busy.message" = "Status affects notifications now. You’re set to “Busy” and will only receive notifications when someone mentions you or replies to one of your messages.";
+
+// REACTIONS
+"push.notification.reaction.group" = "%1$@ %2$@ رسالتك";
+"push.notification.reaction.group.nousername.noconversationname" = "شخص %@ برسالتك في مُحادثة";
+"push.notification.reaction.group.nousername" = "شخص %@ رسالتك";
+"push.notification.reaction.group.noconversationname" = "%1$@ %2$@ رسالتك في محادثة";
+
+"push.notification.reaction.oneonone" = "%1$@ رسالتك";
+"push.notification.reaction.oneonone.nousername" = "شخص %@ رسالتك";
+
+// NEW USER (no alert title for this)
+"push.notification.new_user" = "انضمّ %@ لـWire";
+
+// OTHER
+"push.notification.action.message.open" = "افتح";
+"push.notification.action.message.reply" = "رد";
+"push.notification.action.message.reply.button.title" = "إرسال";
+"push.notification.action.message.reply.placeholder" = "Type a Message";
+"push.notification.action.conversation.mute" = "كتم الصوت";
+"push.notification.action.message.like" = "♥";
+
+"push.notification.action.call.accept" = "قبول";
+"push.notification.action.call.ignore" = "رفض";
+"push.notification.action.call.message" = "رسالة";
+"push.notification.action.call.callback" = "معاودة الاتصال";
+"push.notification.action.connection.accept" = "قبول";
+
+
+
+//////////////
+// The following keys are handled in the Push.stringsdict file. Please make the according changes there.
+/////////////
+//"push.notification.knock.group" = "%1$@ pinged %2$@ times";
+//"push.notification.knock.group.nousername" = "%1$@ pings";
+//"push.notification.knock.group.nousername.noconversationname" = "%1$@ pings in a conversation";
+//"push.notification.knock.group.noconversationname" = "%1$@ pinged %2$@ times in a conversation";
+//"push.notification.knock.oneonone" = "pinged you %1$@ times";
+//"push.notification.knock.oneonone.nousername" = "You were pinged %1$@ times";
+// NOTE: At the moment we are not bundling any messages, however we may re-implement it. The following
+// push strings will not be used:
+//"push.notification.add.message.many.group" = "%2$@ new messages in %1$@";
+//"push.notification.add.message.many.group.noconversationname" = "%2$@ new messages in a conversation";
+//
+//"push.notification.add.message.many.oneonone" = "%2$@ new messages from %1$@";
+//"push.notification.add.message.many.oneonone.nousername" = "%1$@ new messages in a conversation";
+//"push.notification.call.missed.many" = "You have %1$@ missed calls in %2$@";
+//"push.notification.call.missed.many.noconversationname" = "You have %1$@ missed calls in a conversation";

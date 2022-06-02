@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Asset" representedClassName="MockAsset" syncable="YES">
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="conversation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Connection" representedClassName="MockConnection" syncable="YES">
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="connection" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="connectionsFrom" inverseEntity="User" syncable="YES"/>
+        <relationship name="to" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="connectionsTo" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Conversation" representedClassName="MockConversation" syncable="YES">
+        <attribute name="archived" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callWasDropped" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="clearedEventID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastEvent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastEventTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastRead" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="muted" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mutedTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="otherCallQuality" optional="YES" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="selfCallQuality" optional="YES" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="selfIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="statusRef" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="activeUsers" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="activeConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="callParticipants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="activeCallConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="connection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Connection" inverseName="conversation" inverseEntity="Connection" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="createdConversations" inverseEntity="User" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Event" inverseName="conversation" inverseEntity="Event" syncable="YES"/>
+        <relationship name="inactiveUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="inactiveConversations" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="MockEvent" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="events" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="createdEvents" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Picture" representedClassName="MockPicture" syncable="YES">
+        <attribute name="contentLength" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="contentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="info" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="pictures" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="MockUser" syncable="YES">
+        <attribute name="accentID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isEmailValidated" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trackingIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="activeCallConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="callParticipants" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="activeConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="activeUsers" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="connectionsFrom" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Connection" inverseName="from" inverseEntity="Connection" syncable="YES"/>
+        <relationship name="connectionsTo" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Connection" inverseName="to" inverseEntity="Connection" syncable="YES"/>
+        <relationship name="createdConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="creator" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="createdEvents" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Event" inverseName="from" inverseEntity="Event" syncable="YES"/>
+        <relationship name="inactiveConversations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Conversation" inverseName="inactiveUsers" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="pictures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Picture" inverseName="user" inverseEntity="Picture" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Asset" positionX="-45" positionY="135" width="128" height="105"/>
+        <element name="Connection" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Conversation" positionX="-45" positionY="81" width="128" height="390"/>
+        <element name="Event" positionX="-45" positionY="144" width="128" height="133"/>
+        <element name="Picture" positionX="-36" positionY="72" width="128" height="120"/>
+        <element name="User" positionX="-54" positionY="36" width="128" height="285"/>
+    </elements>
+</model>

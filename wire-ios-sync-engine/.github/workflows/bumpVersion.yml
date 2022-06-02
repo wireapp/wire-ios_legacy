@@ -1,0 +1,52 @@
+name: Bump version
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: guard for wire bot commit
+      if: ${{ github.event.head_commit.author.email == 'iosx+bot@wire.com' || contains(github.event.head_commit.message, '[skip release]')}}
+      run: |
+          echo "exit for wire bot commit or skip release"
+          exit 1
+
+    - name: Bump version and push tag, dry run to get the next tag
+      uses: wireapp/github-tag-action@1.26.0
+      id: dry_run
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_BRANCHES: develop
+        DEFAULT_BUMP: patch
+        DRY_RUN: true
+        VERBOSE: true
+        
+    - name: update version.xcconfig
+      run: |
+        echo "new tag: '${{steps.dry_run.outputs.new_tag}}'"
+        echo "tag: '${{steps.dry_run.outputs.tag}}'"
+        # process version.xcconfig
+        curl --silent https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Scripts/updateVersionXcconfig.swift --output updateVersionXcconfig.swift
+        chmod +x updateVersionXcconfig.swift
+        swift updateVersionXcconfig.swift ./Resources/Configurations/version.xcconfig ${{steps.dry_run.outputs.new_tag}}
+        rm updateVersionXcconfig.swift
+        
+        git config --global user.email "iosx@wire.com"
+        git config --global user.name "Github action - Bump version"
+        git add .
+        git commit -m"update version.xcconfig for '${{steps.dry_run.outputs.new_tag}}'" || true
+        git push || true
+
+    - name: Bump version and push tag, after version.xcconfig is updated
+      uses: wireapp/github-tag-action@1.26.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_BRANCHES: develop
+        DEFAULT_BUMP: patch

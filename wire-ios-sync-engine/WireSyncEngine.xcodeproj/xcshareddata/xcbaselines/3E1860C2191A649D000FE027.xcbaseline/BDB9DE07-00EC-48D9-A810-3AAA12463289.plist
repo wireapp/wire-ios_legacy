@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>classNames</key>
+	<dict>
+		<key>NSOrderedSetAdditionTests</key>
+		<dict>
+			<key>testPerformanceOfSortedInsertions</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.015875</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>ZMConversationTests</key>
+		<dict>
+			<key>testPerformanceOfLastReadMessage_IsOneOfFirst</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.0023342</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+			<key>testPerformanceOfLastReadMessage_IsOneOfLast</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.0012183</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+			<key>testPerformanceOfLastReadMessage_Middle</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.022324</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>ZMManagedObjectTests</key>
+		<dict>
+			<key>testPerformanceOfFetchingObjectByRemoteIDWhenTheObjectIsRegisteredWithTheContext</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.20098</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>ZMNotificationDispatcherTests</key>
+		<dict>
+			<key>testPerformanceOfCalculatingNotificationsWhenANewMessageArrives</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.00049049</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>ZMUserTests</key>
+		<dict>
+			<key>testPerformanceOfRetrievingSelfUser</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.079307</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>ZMVoiceChannelTests</key>
+		<dict>
+			<key>testPerformanceOfGettingTheActiveVoiceChannel</key>
+			<dict>
+				<key>com.apple.XCTPerformanceMetric_WallClockTime</key>
+				<dict>
+					<key>baselineAverage</key>
+					<real>0.10773</real>
+					<key>baselineIntegrationDisplayName</key>
+					<string>11 Dec 2014 15:22:01</string>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>
