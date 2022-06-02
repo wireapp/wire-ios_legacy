@@ -22,4 +22,7 @@
    <FileRef
       location = "group:wire-ios-mock-transport/WireMockTransport.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:wire-ios-protos/WireProtos.xcodeproj">
+   </FileRef>
 </Workspace>
