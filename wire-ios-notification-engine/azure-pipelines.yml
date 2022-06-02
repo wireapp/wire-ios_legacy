@@ -1,0 +1,23 @@
+resources:
+  repositories:
+  - repository: wire-ios-shared-resources
+    type: github
+    name: wireapp/wire-ios-shared-resources
+    ref: refs/heads/master # Branch to fetch the jobs template from
+    endpoint: wireapp
+
+trigger:
+  branches:
+    include:
+      - develop
+      - refs/tags/*
+
+pr:
+  branches:
+    include:
+      - '*'
+
+jobs:
+  - template: Azure/framework-pipelines.yml@wire-ios-shared-resources
+    parameters:
+        xcodeAppName: Xcode_12.4

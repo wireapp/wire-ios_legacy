@@ -1,0 +1,808 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0602566024893CEC00E060E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06604297247FE76A00A5F161 /* AppDelegate.swift */; };
+		066042A1247FE76C00A5F161 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 066042A0247FE76C00A5F161 /* Assets.xcassets */; };
+		067ECB3E2487A93D00701956 /* WireNotificationEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 067ECB3C2487A93D00701956 /* WireNotificationEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		067ECB522487AB6000701956 /* WireNotificationEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067ECB512487AB6000701956 /* WireNotificationEngineTests.swift */; };
+		067ECB5D2487ABA100701956 /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */; };
+		067ECB602487ABF700701956 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06604297247FE76A00A5F161 /* AppDelegate.swift */; };
+		06894D5D276B274200DA4E33 /* HTMLString.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3B276B26D500DA4E33 /* HTMLString.xcframework */; };
+		06894D63276B274200DA4E33 /* PINCache.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D42276B26D600DA4E33 /* PINCache.xcframework */; };
+		06894D65276B274200DA4E33 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D44276B26D600DA4E33 /* Starscream.xcframework */; };
+		06894D67276B274200DA4E33 /* SwiftProtobuf.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */; };
+		06894D69276B274200DA4E33 /* WireCryptobox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */; };
+		06894D6B276B274200DA4E33 /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */; };
+		06894D6D276B274200DA4E33 /* WireImages.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3F276B26D600DA4E33 /* WireImages.xcframework */; };
+		06894D6F276B274200DA4E33 /* WireLinkPreview.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */; };
+		06894D73276B274300DA4E33 /* WireProtos.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D48276B26D600DA4E33 /* WireProtos.xcframework */; };
+		06894D77276B274300DA4E33 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D46276B26D600DA4E33 /* WireSystem.xcframework */; };
+		06894D7B276B274300DA4E33 /* WireTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3C276B26D500DA4E33 /* WireTransport.xcframework */; };
+		06894D7D276B274300DA4E33 /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D47276B26D600DA4E33 /* WireUtilities.xcframework */; };
+		06894D82276B27DD00DA4E33 /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D45276B26D600DA4E33 /* WireTesting.xcframework */; };
+		06894D85276B27E100DA4E33 /* WireNotificationEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */; };
+		06894D89276B282B00DA4E33 /* WireMockTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */; };
+		06894D8C276B282F00DA4E33 /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D4A276B26D600DA4E33 /* OCMock.xcframework */; };
+		069712912497B96E00C32169 /* OperationLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06394AA12497B24600380494 /* OperationLoop.swift */; };
+		069712972497C1BF00C32169 /* NotificationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069712952497C1BC00C32169 /* NotificationSession.swift */; };
+		069712992497C2B900C32169 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069712982497C2B900C32169 /* AuthenticationStatusProvider.swift */; };
+		0697129D2497CAC200C32169 /* PushNotificationStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0697129C2497CAC200C32169 /* PushNotificationStrategy.swift */; };
+		06E6F44327B54EB1001624D4 /* WireRequestStrategy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */; };
+		EE3245FE28229E8600F2A84A /* ApplicationStatusDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FD28229E8600F2A84A /* ApplicationStatusDirectory.swift */; };
+		EE32460028229F6B00F2A84A /* ClientRegistrationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */; };
+		EE32460228229FDF00F2A84A /* AuthenticationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0605DB94251190B900443219 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0660428C247FE76A00A5F161 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 067ECB392487A93D00701956;
+			remoteInfo = WireNotificationEngine;
+		};
+		067ECB542487AB6000701956 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0660428C247FE76A00A5F161 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06604293247FE76A00A5F161;
+			remoteInfo = WireNotificationEngineHost;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06394AA12497B24600380494 /* OperationLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationLoop.swift; sourceTree = "<group>"; };
+		064496892487BFB200576799 /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		0644968A2487BFB200576799 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		0644968B2487BFB200576799 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		06604294247FE76A00A5F161 /* WireNotificationEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WireNotificationEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		06604297247FE76A00A5F161 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		066042A0247FE76C00A5F161 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		066042A5247FE76C00A5F161 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireNotificationEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		067ECB3C2487A93D00701956 /* WireNotificationEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireNotificationEngine.h; sourceTree = "<group>"; };
+		067ECB3D2487A93D00701956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		067ECB4F2487AB6000701956 /* WireNotificationEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WireNotificationEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		067ECB512487AB6000701956 /* WireNotificationEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireNotificationEngineTests.swift; sourceTree = "<group>"; };
+		067ECB532487AB6000701956 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireCryptobox.xcframework; path = Carthage/Build/WireCryptobox.xcframework; sourceTree = "<group>"; };
+		06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireMockTransport.xcframework; path = Carthage/Build/WireMockTransport.xcframework; sourceTree = "<group>"; };
+		06894D3B276B26D500DA4E33 /* HTMLString.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HTMLString.xcframework; path = Carthage/Build/HTMLString.xcframework; sourceTree = "<group>"; };
+		06894D3C276B26D500DA4E33 /* WireTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTransport.xcframework; path = Carthage/Build/WireTransport.xcframework; sourceTree = "<group>"; };
+		06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireDataModel.xcframework; path = Carthage/Build/WireDataModel.xcframework; sourceTree = "<group>"; };
+		06894D3F276B26D600DA4E33 /* WireImages.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireImages.xcframework; path = Carthage/Build/WireImages.xcframework; sourceTree = "<group>"; };
+		06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireRequestStrategy.xcframework; path = Carthage/Build/WireRequestStrategy.xcframework; sourceTree = "<group>"; };
+		06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireLinkPreview.xcframework; path = Carthage/Build/WireLinkPreview.xcframework; sourceTree = "<group>"; };
+		06894D42276B26D600DA4E33 /* PINCache.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PINCache.xcframework; path = Carthage/Build/PINCache.xcframework; sourceTree = "<group>"; };
+		06894D44276B26D600DA4E33 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
+		06894D45276B26D600DA4E33 /* WireTesting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTesting.xcframework; path = Carthage/Build/WireTesting.xcframework; sourceTree = "<group>"; };
+		06894D46276B26D600DA4E33 /* WireSystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireSystem.xcframework; path = Carthage/Build/WireSystem.xcframework; sourceTree = "<group>"; };
+		06894D47276B26D600DA4E33 /* WireUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireUtilities.xcframework; path = Carthage/Build/WireUtilities.xcframework; sourceTree = "<group>"; };
+		06894D48276B26D600DA4E33 /* WireProtos.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireProtos.xcframework; path = Carthage/Build/WireProtos.xcframework; sourceTree = "<group>"; };
+		06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftProtobuf.xcframework; path = Carthage/Build/SwiftProtobuf.xcframework; sourceTree = "<group>"; };
+		06894D4A276B26D600DA4E33 /* OCMock.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OCMock.xcframework; path = Carthage/Build/OCMock.xcframework; sourceTree = "<group>"; };
+		069712952497C1BC00C32169 /* NotificationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSession.swift; sourceTree = "<group>"; };
+		069712982497C2B900C32169 /* AuthenticationStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatusProvider.swift; sourceTree = "<group>"; };
+		0697129C2497CAC200C32169 /* PushNotificationStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationStrategy.swift; sourceTree = "<group>"; };
+		06BD1D2F2487B01C002F82A6 /* wire-ios-notification-engine.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "wire-ios-notification-engine.xcconfig"; sourceTree = "<group>"; };
+		06BD1D302487B01C002F82A6 /* version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = version.xcconfig; sourceTree = "<group>"; };
+		06BD1D322487B01C002F82A6 /* ios-test-target.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ios-test-target.xcconfig"; sourceTree = "<group>"; };
+		06BD1D332487B01C002F82A6 /* ios-test-host.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ios-test-host.xcconfig"; sourceTree = "<group>"; };
+		06BD1D342487B01C002F82A6 /* project-common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "project-common.xcconfig"; sourceTree = "<group>"; };
+		06BD1D352487B01C002F82A6 /* warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = warnings.xcconfig; sourceTree = "<group>"; };
+		06BD1D362487B01C002F82A6 /* project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
+		06BD1D382487B01C002F82A6 /* tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = tests.xcconfig; sourceTree = "<group>"; };
+		06BD1D392487B01C002F82A6 /* project-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "project-debug.xcconfig"; sourceTree = "<group>"; };
+		06BD1D3A2487B01C002F82A6 /* warnings-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "warnings-debug.xcconfig"; sourceTree = "<group>"; };
+		06BD1D3B2487B01C002F82A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE3245FD28229E8600F2A84A /* ApplicationStatusDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStatusDirectory.swift; sourceTree = "<group>"; };
+		EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationStatus.swift; sourceTree = "<group>"; };
+		EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatus.swift; sourceTree = "<group>"; };
+		EE62A9F127B65C04004F7ADC /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ios-arm64Simulator.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		06604291247FE76A00A5F161 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06894D89276B282B00DA4E33 /* WireMockTransport.xcframework in Frameworks */,
+				06894D8C276B282F00DA4E33 /* OCMock.xcframework in Frameworks */,
+				06894D85276B27E100DA4E33 /* WireNotificationEngine.framework in Frameworks */,
+				06894D82276B27DD00DA4E33 /* WireTesting.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB372487A93D00701956 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06894D5D276B274200DA4E33 /* HTMLString.xcframework in Frameworks */,
+				06894D6B276B274200DA4E33 /* WireDataModel.xcframework in Frameworks */,
+				06894D7B276B274300DA4E33 /* WireTransport.xcframework in Frameworks */,
+				06894D67276B274200DA4E33 /* SwiftProtobuf.xcframework in Frameworks */,
+				06894D63276B274200DA4E33 /* PINCache.xcframework in Frameworks */,
+				06894D69276B274200DA4E33 /* WireCryptobox.xcframework in Frameworks */,
+				06894D77276B274300DA4E33 /* WireSystem.xcframework in Frameworks */,
+				06894D6F276B274200DA4E33 /* WireLinkPreview.xcframework in Frameworks */,
+				06894D7D276B274300DA4E33 /* WireUtilities.xcframework in Frameworks */,
+				06E6F44327B54EB1001624D4 /* WireRequestStrategy.xcframework in Frameworks */,
+				06894D6D276B274200DA4E33 /* WireImages.xcframework in Frameworks */,
+				06894D65276B274200DA4E33 /* Starscream.xcframework in Frameworks */,
+				06894D73276B274300DA4E33 /* WireProtos.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB4C2487AB6000701956 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				067ECB5D2487ABA100701956 /* WireNotificationEngine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		060256312489322000E060E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06894D3B276B26D500DA4E33 /* HTMLString.xcframework */,
+				06894D4A276B26D600DA4E33 /* OCMock.xcframework */,
+				06894D42276B26D600DA4E33 /* PINCache.xcframework */,
+				06894D44276B26D600DA4E33 /* Starscream.xcframework */,
+				06894D49276B26D600DA4E33 /* SwiftProtobuf.xcframework */,
+				06894D39276B26D500DA4E33 /* WireCryptobox.xcframework */,
+				06894D3D276B26D600DA4E33 /* WireDataModel.xcframework */,
+				06894D3F276B26D600DA4E33 /* WireImages.xcframework */,
+				06894D41276B26D600DA4E33 /* WireLinkPreview.xcframework */,
+				06894D3A276B26D500DA4E33 /* WireMockTransport.xcframework */,
+				06894D48276B26D600DA4E33 /* WireProtos.xcframework */,
+				06894D40276B26D600DA4E33 /* WireRequestStrategy.xcframework */,
+				06894D46276B26D600DA4E33 /* WireSystem.xcframework */,
+				06894D45276B26D600DA4E33 /* WireTesting.xcframework */,
+				06894D3C276B26D500DA4E33 /* WireTransport.xcframework */,
+				06894D47276B26D600DA4E33 /* WireUtilities.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0660428B247FE76A00A5F161 = {
+			isa = PBXGroup;
+			children = (
+				0644968A2487BFB200576799 /* Cartfile */,
+				0644968B2487BFB200576799 /* Cartfile.private */,
+				064496892487BFB200576799 /* Cartfile.resolved */,
+				06BD1D2D2487B01C002F82A6 /* Resources */,
+				06604296247FE76A00A5F161 /* Sources */,
+				067ECB3B2487A93D00701956 /* WireNotificationEngine */,
+				067ECB502487AB6000701956 /* WireNotificationEngineTests */,
+				06604295247FE76A00A5F161 /* Products */,
+				060256312489322000E060E1 /* Frameworks */,
+			);
+			indentWidth = 4;
+			sourceTree = "<group>";
+			tabWidth = 4;
+		};
+		06604295247FE76A00A5F161 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06604294247FE76A00A5F161 /* WireNotificationEngine.app */,
+				067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */,
+				067ECB4F2487AB6000701956 /* WireNotificationEngineTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06604296247FE76A00A5F161 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0697129A2497CA8F00C32169 /* Synchronization */,
+				06604297247FE76A00A5F161 /* AppDelegate.swift */,
+				EE3245FD28229E8600F2A84A /* ApplicationStatusDirectory.swift */,
+				069712982497C2B900C32169 /* AuthenticationStatusProvider.swift */,
+				EE32460128229FDF00F2A84A /* AuthenticationStatus.swift */,
+				EE3245FF28229F6B00F2A84A /* ClientRegistrationStatus.swift */,
+				069712952497C1BC00C32169 /* NotificationSession.swift */,
+				066042A0247FE76C00A5F161 /* Assets.xcassets */,
+				066042A5247FE76C00A5F161 /* Info.plist */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		067ECB3B2487A93D00701956 /* WireNotificationEngine */ = {
+			isa = PBXGroup;
+			children = (
+				067ECB3C2487A93D00701956 /* WireNotificationEngine.h */,
+				067ECB3D2487A93D00701956 /* Info.plist */,
+			);
+			path = WireNotificationEngine;
+			sourceTree = "<group>";
+		};
+		067ECB502487AB6000701956 /* WireNotificationEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				067ECB512487AB6000701956 /* WireNotificationEngineTests.swift */,
+				067ECB532487AB6000701956 /* Info.plist */,
+			);
+			path = WireNotificationEngineTests;
+			sourceTree = "<group>";
+		};
+		0697129A2497CA8F00C32169 /* Synchronization */ = {
+			isa = PBXGroup;
+			children = (
+				06394AA12497B24600380494 /* OperationLoop.swift */,
+				0697129B2497CA9A00C32169 /* Strategies */,
+			);
+			path = Synchronization;
+			sourceTree = "<group>";
+		};
+		0697129B2497CA9A00C32169 /* Strategies */ = {
+			isa = PBXGroup;
+			children = (
+				0697129C2497CAC200C32169 /* PushNotificationStrategy.swift */,
+			);
+			path = Strategies;
+			sourceTree = "<group>";
+		};
+		06BD1D2D2487B01C002F82A6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				06BD1D2E2487B01C002F82A6 /* Configurations */,
+				06BD1D3B2487B01C002F82A6 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		06BD1D2E2487B01C002F82A6 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				06BD1D302487B01C002F82A6 /* version.xcconfig */,
+				06BD1D2F2487B01C002F82A6 /* wire-ios-notification-engine.xcconfig */,
+				06BD1D312487B01C002F82A6 /* zmc-config */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		06BD1D312487B01C002F82A6 /* zmc-config */ = {
+			isa = PBXGroup;
+			children = (
+				06BD1D332487B01C002F82A6 /* ios-test-host.xcconfig */,
+				06BD1D322487B01C002F82A6 /* ios-test-target.xcconfig */,
+				EE62A9F127B65C04004F7ADC /* ios-arm64Simulator.xcconfig */,
+				06BD1D342487B01C002F82A6 /* project-common.xcconfig */,
+				06BD1D392487B01C002F82A6 /* project-debug.xcconfig */,
+				06BD1D362487B01C002F82A6 /* project.xcconfig */,
+				06BD1D382487B01C002F82A6 /* tests.xcconfig */,
+				06BD1D3A2487B01C002F82A6 /* warnings-debug.xcconfig */,
+				06BD1D352487B01C002F82A6 /* warnings.xcconfig */,
+			);
+			path = "zmc-config";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		067ECB352487A93D00701956 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				067ECB3E2487A93D00701956 /* WireNotificationEngine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		06604293247FE76A00A5F161 /* WireNotificationEngineHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 066042A8247FE76C00A5F161 /* Build configuration list for PBXNativeTarget "WireNotificationEngineHost" */;
+			buildPhases = (
+				06604290247FE76A00A5F161 /* Sources */,
+				06604291247FE76A00A5F161 /* Frameworks */,
+				06604292247FE76A00A5F161 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WireNotificationEngineHost;
+			productName = "wire-ios-notification-engine";
+			productReference = 06604294247FE76A00A5F161 /* WireNotificationEngine.app */;
+			productType = "com.apple.product-type.application";
+		};
+		067ECB392487A93D00701956 /* WireNotificationEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 067ECB432487A93E00701956 /* Build configuration list for PBXNativeTarget "WireNotificationEngine" */;
+			buildPhases = (
+				067ECB352487A93D00701956 /* Headers */,
+				067ECB362487A93D00701956 /* Sources */,
+				067ECB372487A93D00701956 /* Frameworks */,
+				067ECB382487A93D00701956 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WireNotificationEngine;
+			productName = WireNotificationEngine;
+			productReference = 067ECB3A2487A93D00701956 /* WireNotificationEngine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		067ECB4E2487AB6000701956 /* WireNotificationEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 067ECB562487AB6000701956 /* Build configuration list for PBXNativeTarget "WireNotificationEngineTests" */;
+			buildPhases = (
+				067ECB4B2487AB6000701956 /* Sources */,
+				067ECB4C2487AB6000701956 /* Frameworks */,
+				067ECB4D2487AB6000701956 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0605DB95251190B900443219 /* PBXTargetDependency */,
+				067ECB552487AB6000701956 /* PBXTargetDependency */,
+			);
+			name = WireNotificationEngineTests;
+			productName = WireNotificationEngineTests;
+			productReference = 067ECB4F2487AB6000701956 /* WireNotificationEngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0660428C247FE76A00A5F161 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = Wire;
+				TargetAttributes = {
+					06604293247FE76A00A5F161 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					067ECB392487A93D00701956 = {
+						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1140;
+					};
+					067ECB4E2487AB6000701956 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 06604293247FE76A00A5F161;
+					};
+				};
+			};
+			buildConfigurationList = 0660428F247FE76A00A5F161 /* Build configuration list for PBXProject "WireNotificationEngine" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0660428B247FE76A00A5F161;
+			productRefGroup = 06604295247FE76A00A5F161 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				067ECB392487A93D00701956 /* WireNotificationEngine */,
+				067ECB4E2487AB6000701956 /* WireNotificationEngineTests */,
+				06604293247FE76A00A5F161 /* WireNotificationEngineHost */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		06604292247FE76A00A5F161 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				066042A1247FE76C00A5F161 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB382487A93D00701956 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB4D2487AB6000701956 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06604290247FE76A00A5F161 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0602566024893CEC00E060E1 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB362487A93D00701956 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				067ECB602487ABF700701956 /* AppDelegate.swift in Sources */,
+				EE32460228229FDF00F2A84A /* AuthenticationStatus.swift in Sources */,
+				EE32460028229F6B00F2A84A /* ClientRegistrationStatus.swift in Sources */,
+				069712912497B96E00C32169 /* OperationLoop.swift in Sources */,
+				0697129D2497CAC200C32169 /* PushNotificationStrategy.swift in Sources */,
+				069712992497C2B900C32169 /* AuthenticationStatusProvider.swift in Sources */,
+				069712972497C1BF00C32169 /* NotificationSession.swift in Sources */,
+				EE3245FE28229E8600F2A84A /* ApplicationStatusDirectory.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		067ECB4B2487AB6000701956 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				067ECB522487AB6000701956 /* WireNotificationEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0605DB95251190B900443219 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 067ECB392487A93D00701956 /* WireNotificationEngine */;
+			targetProxy = 0605DB94251190B900443219 /* PBXContainerItemProxy */;
+		};
+		067ECB552487AB6000701956 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06604293247FE76A00A5F161 /* WireNotificationEngineHost */;
+			targetProxy = 067ECB542487AB6000701956 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		066042A6247FE76C00A5F161 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D392487B01C002F82A6 /* project-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		066042A7247FE76C00A5F161 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D362487B01C002F82A6 /* project.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		066042A9247FE76C00A5F161 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D332487B01C002F82A6 /* ios-test-host.xcconfig */;
+			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.wire-ios-notification-engine";
+				PRODUCT_NAME = WireNotificationEngine;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		066042AA247FE76C00A5F161 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D332487B01C002F82A6 /* ios-test-host.xcconfig */;
+			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.wire-ios-notification-engine";
+				PRODUCT_NAME = WireNotificationEngine;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		067ECB442487A93E00701956 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D2F2487B01C002F82A6 /* wire-ios-notification-engine.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = WireNotificationEngine/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.wire-ios-notification-engine";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		067ECB452487A93E00701956 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D2F2487B01C002F82A6 /* wire-ios-notification-engine.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = WireNotificationEngine/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.wire-ios-notification-engine";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		067ECB572487AB6000701956 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D322487B01C002F82A6 /* ios-test-target.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = WireNotificationEngineTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.WireNotificationEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WireNotificationEngine.app/WireNotificationEngine";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Debug;
+		};
+		067ECB582487AB6000701956 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06BD1D322487B01C002F82A6 /* ios-test-target.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = WireNotificationEngineTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wire.WireNotificationEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WireNotificationEngine.app/WireNotificationEngine";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0660428F247FE76A00A5F161 /* Build configuration list for PBXProject "WireNotificationEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				066042A6247FE76C00A5F161 /* Debug */,
+				066042A7247FE76C00A5F161 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		066042A8247FE76C00A5F161 /* Build configuration list for PBXNativeTarget "WireNotificationEngineHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				066042A9247FE76C00A5F161 /* Debug */,
+				066042AA247FE76C00A5F161 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		067ECB432487A93E00701956 /* Build configuration list for PBXNativeTarget "WireNotificationEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				067ECB442487A93E00701956 /* Debug */,
+				067ECB452487A93E00701956 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		067ECB562487AB6000701956 /* Build configuration list for PBXNativeTarget "WireNotificationEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				067ECB572487AB6000701956 /* Debug */,
+				067ECB582487AB6000701956 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0660428C247FE76A00A5F161 /* Project object */;
+}
