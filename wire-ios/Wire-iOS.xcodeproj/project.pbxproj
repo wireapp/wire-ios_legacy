@@ -849,8 +849,6 @@
 		A9681D8623884FF1004FE917 /* Message+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681D8523884FF1004FE917 /* Message+DateFormatter.swift */; };
 		A96867A626A5E52F00679D95 /* WireCanvas.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19E266657AF00E713FC /* WireCanvas.xcframework */; };
 		A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19E266657AF00E713FC /* WireCanvas.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A96867B626A5E5A000679D95 /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
-		A96867B726A5E5A000679D95 /* WireShareEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867C426A5E65000679D95 /* Ziphy.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19C266657AF00E713FC /* Ziphy.xcframework */; };
 		A96867C526A5E65000679D95 /* Ziphy.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19C266657AF00E713FC /* Ziphy.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867C726A5E68100679D95 /* FormatterKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22126666A9600E713FC /* FormatterKit.xcframework */; };
@@ -860,7 +858,6 @@
 		A96867CD26A5E68600679D95 /* Down.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; };
 		A96867CE26A5E68600679D95 /* Down.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE22626666FC700E713FC /* Down.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ADCE4D1DA68FA400CC06DC /* CallKit.framework */; };
-		A96867F226A5E94C00679D95 /* WireShareEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */; };
 		A96867F426A5E9C500679D95 /* Countly.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98682862666E64E0064581B /* Countly.xcframework */; };
 		A96867F526A5E9C500679D95 /* Countly.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A98682862666E64E0064581B /* Countly.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE237266680FE00E713FC /* libcmark.xcframework */; };
@@ -1187,6 +1184,8 @@
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE252AD2284966C2008ED57C /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD1284966C2008ED57C /* WireSyncEngine.framework */; };
 		EE252AD3284966C2008ED57C /* WireSyncEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD1284966C2008ED57C /* WireSyncEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EE252AD828496BE2008ED57C /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD728496BE2008ED57C /* WireShareEngine.framework */; };
+		EE252AD928496BE2008ED57C /* WireShareEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD728496BE2008ED57C /* WireShareEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
@@ -1701,7 +1700,6 @@
 				A96867A726A5E52F00679D95 /* WireCanvas.xcframework in Embed Frameworks */,
 				A96867C826A5E68100679D95 /* FormatterKit.xcframework in Embed Frameworks */,
 				A96867FF26A5ED1B00679D95 /* DifferenceKit.xcframework in Embed Frameworks */,
-				A96867B726A5E5A000679D95 /* WireShareEngine.xcframework in Embed Frameworks */,
 				A96867C526A5E65000679D95 /* Ziphy.xcframework in Embed Frameworks */,
 				EE252AD3284966C2008ED57C /* WireSyncEngine.framework in Embed Frameworks */,
 				A96867CB26A5E68400679D95 /* FLAnimatedImage.xcframework in Embed Frameworks */,
@@ -1722,6 +1720,17 @@
 				A9C4B427266A565800C88BEB /* FBSnapshotTestCase.xcframework in CopyFiles */,
 				A9C4B41C266A55B500C88BEB /* SnapshotTesting.xcframework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE252ADA28496BE2008ED57C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE252AD928496BE2008ED57C /* WireShareEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2658,7 +2667,6 @@
 		A99E3E8E2519F2B800E4FD3E /* AnalyticsCountlyProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCountlyProviderTests.swift; sourceTree = "<group>"; };
 		A99EE19C266657AF00E713FC /* Ziphy.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Ziphy.xcframework; path = Carthage/Build/Ziphy.xcframework; sourceTree = "<group>"; };
 		A99EE19E266657AF00E713FC /* WireCanvas.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireCanvas.xcframework; path = Carthage/Build/WireCanvas.xcframework; sourceTree = "<group>"; };
-		A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireShareEngine.xcframework; path = Carthage/Build/WireShareEngine.xcframework; sourceTree = "<group>"; };
 		A99EE202266660D200E713FC /* AppCenter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenter.xcframework; path = Carthage/Build/AppCenter.xcframework; sourceTree = "<group>"; };
 		A99EE203266660D300E713FC /* AppCenterAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenterAnalytics.xcframework; path = Carthage/Build/AppCenterAnalytics.xcframework; sourceTree = "<group>"; };
 		A99EE204266660D300E713FC /* AppCenterCrashes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppCenterCrashes.xcframework; path = Carthage/Build/AppCenterCrashes.xcframework; sourceTree = "<group>"; };
@@ -3021,6 +3029,7 @@
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE252AD1284966C2008ED57C /* WireSyncEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireSyncEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE252AD728496BE2008ED57C /* WireShareEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireShareEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3462,7 +3471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A968680426A5F73400679D95 /* WireCommonComponents.framework in Frameworks */,
-				A96867F226A5E94C00679D95 /* WireShareEngine.xcframework in Frameworks */,
+				EE252AD828496BE2008ED57C /* WireShareEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3481,7 +3490,6 @@
 				06D5C1DB2773527F00DFCD08 /* WireNotificationEngine.xcframework in Frameworks */,
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
-				A96867B626A5E5A000679D95 /* WireShareEngine.xcframework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				A96867F426A5E9C500679D95 /* Countly.xcframework in Frameworks */,
@@ -4626,6 +4634,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE252AD728496BE2008ED57C /* WireShareEngine.framework */,
 				EE252AD1284966C2008ED57C /* WireSyncEngine.framework */,
 				06B5A7D02772B01E00DB4541 /* WireNotificationEngine.xcframework */,
 				A9C4B410266A550700C88BEB /* ios-arm64_x86_64-simulator */,
@@ -4642,7 +4651,6 @@
 				A99EE203266660D300E713FC /* AppCenterAnalytics.xcframework */,
 				A99EE204266660D300E713FC /* AppCenterCrashes.xcframework */,
 				A99EE19E266657AF00E713FC /* WireCanvas.xcframework */,
-				A99EE1A4266657AF00E713FC /* WireShareEngine.xcframework */,
 				A99EE19C266657AF00E713FC /* Ziphy.xcframework */,
 				87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */,
 				CE8E4FAF1DF0668A0009F437 /* ImageIO.framework */,
@@ -7388,6 +7396,7 @@
 				168A16A51D9597C2005CFA6C /* Sources */,
 				168A16A61D9597C2005CFA6C /* Frameworks */,
 				168A16A71D9597C2005CFA6C /* Resources */,
+				EE252ADA28496BE2008ED57C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -9634,6 +9643,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
