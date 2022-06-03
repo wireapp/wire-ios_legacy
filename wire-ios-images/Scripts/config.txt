@@ -1,0 +1,4 @@
+framework=WireImages
+organization=wireapp
+repository=wire-ios-images
+release-name-format={FRIENDS_EPISODE}
