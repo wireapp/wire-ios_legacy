@@ -32,7 +32,7 @@ enum AccessoryViewMode: Int {
 }
 
 class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
+    static let cellType = SettingsTableCell.self
     var visible: Bool = true
     let title: String
     let destructive: Bool
@@ -134,20 +134,19 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             cell.preview = preview
         }
         cell.icon = self.icon
-        if let groupCell = cell as? SettingsGroupCell {
+        if let groupCell = cell as? SettingsTableCell {
             switch accessoryViewMode {
             case .default:
                 if self.presentationStyle == .modal {
-                    groupCell.accessoryType = .none
+                    groupCell.hideDisclosureIndicator()
                 } else {
-                    groupCell.accessoryType = .disclosureIndicator
+                    groupCell.showDisclosureIndicator()
                 }
             case .alwaysHide:
-                groupCell.accessoryType = .none
+                groupCell.hideDisclosureIndicator()
             case .alwaysShow:
-                groupCell.accessoryType = .disclosureIndicator
+                groupCell.showDisclosureIndicator()
             }
-
         }
     }
 

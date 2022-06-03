@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Otvori profil i postavke";
 "self.new-device.voiceover.label" = "Profil, novi uređaji su dodani";
 
-"self.add_phone_number" = "Dodavanje telefonskog broja";
 "self.add_email_password" = "Dodajte adresu e-pošte i lozinku";
 
 "self.accessibility.profile_photo_image" = "Profile picture";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Dodijelite naziv Vašem timu";
-"team.name.subheadline" = "Uvijek možete promijeniti kasnije.";
-"team.name.textfield.placeholder" = "naziv tima";
-"team.name.textfield.accessibility" = "Postavite naziv tima";
-"team.name.whatiswireforteams" = "Što je Wire Pro?";
-
-"team.email.headline" = "Vaš račun";
-"team.email.subheadline" = "Unesite vašu poslovnu e-mail adresu.";
-"team.email.textfield.placeholder" = "Adresa e-pošte vaše tvrtke";
-"team.email.button.learn_more" = "Saznajte više";
-
 "team.activation_code.headline" = "Imate poštu";
 "team.phone_activation_code.headline" = "Verifikacija";
 "team.activation_code.subheadline" = "Unesite kontrolni kod koji smo Vam poslali na %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "6-znamenkasti kôd. Tekstualno polje.";
 "verification.code_hint" = "Dotaknite dvaput za unos kôda.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Izgradite svoj tim";
-"team.invite.header.subtitle" = "Vaš Wire tim je spreman. Pozovite svoje kolege kao članove tima.";
-"team.invite.textfield.placeholder" = "Adresa e-pošte kolege";
-"team.invite.textfield.accesibility" = "Unesite adresu e-pošte kolege za pozivnicu.";
-"team.invite.learn_more.title" = "Saznaj više";
-"team.invite.top_bar.skip" = "Preskoči";
-"team.invite.top_bar.done" = "Gotovo";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Nešto je pošlo po zlu. Molimo pokušajte ponovno";
-"team.invite.error.already_registered" = "Ova adresa e-pošte se već koristi";
-"team.invite.error.already_invited" = "Ovaj adresa e-pošte je već pozvana";
-"team.invite.error.too_many_invitations" = "Maksimalni broj pozivnica je poslan";
 "team.invite.error.no_internet" = "Bez internetske veze";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Stvorite poveznicu";
 

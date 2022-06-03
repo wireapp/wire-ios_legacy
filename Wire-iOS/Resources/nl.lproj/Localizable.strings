@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Open profile en instellingen";
 "self.new-device.voiceover.label" = "Profiel, nieuwe apparaten toegevoegd";
 
-"self.add_phone_number" = "Voeg telefoonnummer toe";
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
 
 "self.accessibility.profile_photo_image" = "Profielfoto";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Geef je team ddn naam";
-"team.name.subheadline" = "Dit kun je later altijd nog aanpassen.";
-"team.name.textfield.placeholder" = "team naam";
-"team.name.textfield.accessibility" = "Stel je team naam in";
-"team.name.whatiswireforteams" = "What is Wire Pro?";
-
-"team.email.headline" = "Je account";
-"team.email.subheadline" = "Voer je werk-e-mailadres in.";
-"team.email.textfield.placeholder" = "Je bedrijfs email";
-"team.email.button.learn_more" = "Leer meer";
-
 "team.activation_code.headline" = "Je hebt een e-mail ontvangen";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Maak je team aan";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "E-mail van collega";
-"team.invite.textfield.accesibility" = "Voer e-mailadres in van de collega die u uitnodigt.";
-"team.invite.learn_more.title" = "Leer meer";
-"team.invite.top_bar.skip" = "Sla over";
-"team.invite.top_bar.done" = "Klaar";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Er is een fout opgetreden, probeer het nogmaals";
-"team.invite.error.already_registered" = "Dit e-mailadres is al gebruikt";
-"team.invite.error.already_invited" = "Deze e-mail is reeds uitgenodigd";
-"team.invite.error.too_many_invitations" = "Het maximale aantal uitnodigingen is bereikt";
 "team.invite.error.no_internet" = "Geen verbinding met internet";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Maak link aan";
 

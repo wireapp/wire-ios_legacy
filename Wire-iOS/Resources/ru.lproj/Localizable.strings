@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Открыть профиль и настройки";
 "self.new-device.voiceover.label" = "Профиль, добавлены новые устройства";
 
-"self.add_phone_number" = "Добавить номер телефона";
 "self.add_email_password" = "Добавить email и пароль";
 
 "self.accessibility.profile_photo_image" = "Изображение профиля";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Назовите команду";
-"team.name.subheadline" = "Вы всегда сможете изменить название позже.";
-"team.name.textfield.placeholder" = "название команды";
-"team.name.textfield.accessibility" = "Укажите название команды";
-"team.name.whatiswireforteams" = "Что такое Wire Pro?";
-
-"team.email.headline" = "Ваш аккаунт";
-"team.email.subheadline" = "Введите свой рабочий адрес email.";
-"team.email.textfield.placeholder" = "Email вашей компании";
-"team.email.button.learn_more" = "Подробнее";
-
 "team.activation_code.headline" = "Вам письмо";
 "team.phone_activation_code.headline" = "Верификация";
 "team.activation_code.subheadline" = "Введите код подтверждения, который мы отправили на %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Шестизначный код. Текстовое поле.";
 "verification.code_hint" = "Нажмите дважды, чтобы ввести код.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Создайте свою команду";
-"team.invite.header.subtitle" = "Ваша команда Wire готова к работе. Пригласите своих коллег в качестве членов.";
-"team.invite.textfield.placeholder" = "Email коллеги";
-"team.invite.textfield.accesibility" = "Введите адрес электронной почты для приглашения коллеги.";
-"team.invite.learn_more.title" = "Подробнее";
-"team.invite.top_bar.skip" = "Пропустить";
-"team.invite.top_bar.done" = "Готово";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз";
-"team.invite.error.already_registered" = "Этот адрес электронной почты уже используется";
-"team.invite.error.already_invited" = "Этот email уже был приглашен ранее";
-"team.invite.error.too_many_invitations" = "Было отправлено максимальное количество приглашений";
 "team.invite.error.no_internet" = "Отсутствует подключение к интернету";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Приглашайте ссылкой на эту беседу.  Любой, у кого есть ссылка, сможет присоединиться к беседе, даже если у него нет Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Генерация гостевых ссылок запрещена в вашей команде.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "Вы не можете создать гостевую ссылку в этой беседе, поскольку она была создана кем-то из другой команды, а этой команде не разрешено использовать гостевые ссылки.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Создать ссылку";
 

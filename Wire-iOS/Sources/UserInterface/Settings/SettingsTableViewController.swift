@@ -200,7 +200,6 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     func setupTableView() {
         let allCellTypes: [SettingsTableCell.Type] = [
             SettingsTableCell.self,
-            SettingsGroupCell.self,
             SettingsButtonCell.self,
             SettingsToggleCell.self,
             SettingsValueCell.self,

@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "プロファイルと設定を開く";
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
-"self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
 
 "self.accessibility.profile_photo_image" = "プロフィール画像";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "チーム名";
-"team.name.subheadline" = "後でいつでも変更することができます。";
-"team.name.textfield.placeholder" = "チーム名";
-"team.name.textfield.accessibility" = "設定するチーム名";
-"team.name.whatiswireforteams" = "Wire Pro とはなんですか？";
-
-"team.email.headline" = "アカウント";
-"team.email.subheadline" = "業務用メールアドレスを入力してください。";
-"team.email.textfield.placeholder" = "あなたの会社のメール アドレス";
-"team.email.button.learn_more" = "もっと知る";
-
 "team.activation_code.headline" = "メール受信しました。";
 "team.phone_activation_code.headline" = "認証";
 "team.activation_code.subheadline" = "%@ に送信した認証コードを入力してください";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "6 桁のコードです。テキスト フィールドです。";
 "verification.code_hint" = "ダブルタップすると、コードを入力します。";
 
-// Invite Team Members
-
-"team.invite.header.title" = "チームを作成します";
-"team.invite.header.subtitle" = "あなたのWireチームの準備ができました。メンバーとしてあなたの同僚を招待します。";
-"team.invite.textfield.placeholder" = "同僚のメール";
-"team.invite.textfield.accesibility" = "同僚を招待するための電子メール アドレスを入力します。";
-"team.invite.learn_more.title" = "もっと知る";
-"team.invite.top_bar.skip" = "省略";
-"team.invite.top_bar.done" = "完了";
-
-// Team Invite Errors
-"team.invite.error.generic" = "問題が生じたようです。もう一度やり直してください。";
-"team.invite.error.already_registered" = "このメール アドレスは既に使用されています。";
-"team.invite.error.already_invited" = "このメールアドレスは招待済みです";
-"team.invite.error.too_many_invitations" = "招待数の上限に達しました。";
 "team.invite.error.no_internet" = "インターネット接続がありません";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "リンクを作成";
 

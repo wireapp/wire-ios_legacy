@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Profili ve ayarları aç";
 "self.new-device.voiceover.label" = "Profil, yeni cihazlar eklendi";
 
-"self.add_phone_number" = "Telefon numarası ekleyin";
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
 
 "self.accessibility.profile_photo_image" = "Profil resmi";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Takımınızı adlandırın";
-"team.name.subheadline" = "Bunu istediğiniz zaman değiştirebilirsiniz.";
-"team.name.textfield.placeholder" = "takım adı";
-"team.name.textfield.accessibility" = "Takım adınızı ayarlayın";
-"team.name.whatiswireforteams" = "Wire Pro Nedir?";
-
-"team.email.headline" = "Sizin heabınız";
-"team.email.subheadline" = "İş e-postanızı girin.";
-"team.email.textfield.placeholder" = "İşletmenizin e-postası";
-"team.email.button.learn_more" = "Daha Fazla";
-
 "team.activation_code.headline" = "Posta geldi";
 "team.phone_activation_code.headline" = "Doğrulama";
 "team.activation_code.subheadline" = "%@'a gönderdiğimiz doğrulama kodunu girin.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Altı haneli kod. Metin alanı.";
 "verification.code_hint" = "Kodu girmek için iki kez hafifçe vurun.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Takımını kur";
-"team.invite.header.subtitle" = "Wire takımınız erişime hazır. Meslektaşlarınızı üye olarak davet edin.";
-"team.invite.textfield.placeholder" = "İş arkadaşınızın e-postası";
-"team.invite.textfield.accesibility" = "Meslektaşınızın davet edeceği e-posta adresini girin.";
-"team.invite.learn_more.title" = "Daha fazla bilgi";
-"team.invite.top_bar.skip" = "Geç";
-"team.invite.top_bar.done" = "Yapıldı";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Bir şeyler ters gitti, lütfen tekrar deneyin";
-"team.invite.error.already_registered" = "Bu e-posta adresi zaten kullanılıyor";
-"team.invite.error.already_invited" = "Bu e-posta zaten davet edildi";
-"team.invite.error.too_many_invitations" = "En yüksek sayıda davetiye gönderildi";
 "team.invite.error.no_internet" = "Internet bağlantısı yok";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Bağlantı Oluştur";
 

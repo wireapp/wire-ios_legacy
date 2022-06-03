@@ -145,7 +145,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
 }
 
 final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
+    static let cellType = SettingsTableCell.self
     var visible: Bool = true
     let title: String
     let style: InternalScreenStyle
@@ -181,6 +181,9 @@ final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType
             cell.preview = preview
         }
         cell.icon = self.icon
+        if let cell = cell as? SettingsTableCell {
+            cell.showDisclosureIndicator()
+        }
     }
 
     func select(_ value: SettingsPropertyValue?) {

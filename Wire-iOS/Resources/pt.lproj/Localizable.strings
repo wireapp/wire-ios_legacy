@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
-"self.add_phone_number" = "Adicionar um número de telefone";
 "self.add_email_password" = "Adicionar o endereço de e-mail e palavra-passe";
 
 "self.accessibility.profile_photo_image" = "Profile picture";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Dê um nome à sua equipa";
-"team.name.subheadline" = "Pode alterar mais tarde.";
-"team.name.textfield.placeholder" = "team name";
-"team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "O que é o Wire Pro?";
-
-"team.email.headline" = "A sua conta";
-"team.email.subheadline" = "Introduza o seu endereço de email profissional.";
-"team.email.textfield.placeholder" = "Your company email";
-"team.email.button.learn_more" = "Learn More";
-
 "team.activation_code.headline" = "Recebeu email";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Construa a sua equipa";
-"team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "Saber mais";
-"team.invite.top_bar.skip" = "Saltar";
-"team.invite.top_bar.done" = "Pronto";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Algo correu mal. Por favor, tente de novo";
-"team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
-"team.invite.error.too_many_invitations" = "O número máximo de convites foi enviado";
 "team.invite.error.no_internet" = "Sem ligação à Internet";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Criar Ligação";
 

@@ -963,7 +963,6 @@
 "self.voiceover.hint" = "Ava profiil ja seaded";
 "self.new-device.voiceover.label" = "Profiil, lisatud uus seade";
 
-"self.add_phone_number" = "Lisa mobiilinumber";
 "self.add_email_password" = "Lisa meiliaadress ja parool";
 
 "self.accessibility.profile_photo_image" = "Profile picture";
@@ -1315,17 +1314,6 @@
 
 // Create team
 
-"team.name.headline" = "Lisa tiimi nimi";
-"team.name.subheadline" = "Saad seda hiljem muuta.";
-"team.name.textfield.placeholder" = "tiimi nimi";
-"team.name.textfield.accessibility" = "Määra tiimi nimi";
-"team.name.whatiswireforteams" = "Mis on Wire Pro?";
-
-"team.email.headline" = "Sinu konto";
-"team.email.subheadline" = "Sinu töö meiliaadress.";
-"team.email.textfield.placeholder" = "Sinu töö meiliaadress";
-"team.email.button.learn_more" = "Loe lähemalt";
-
 "team.activation_code.headline" = "Sulle tuli kiri";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Sisesta kinnituskood, mille saatsime aadressile %@";
@@ -1342,21 +1330,6 @@
 "verification.code_label" = "Six-digit code. Text field.";
 "verification.code_hint" = "Double tap to enter the code.";
 
-// Invite Team Members
-
-"team.invite.header.title" = "Ehita oma meeskond";
-"team.invite.header.subtitle" = "Sinu Wire'i meeskond on valmis. Kutsu oma kolleege liikmeteks.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
-"team.invite.learn_more.title" = "Loe lähemalt";
-"team.invite.top_bar.skip" = "Jäta vahele";
-"team.invite.top_bar.done" = "Valmis";
-
-// Team Invite Errors
-"team.invite.error.generic" = "Midagi läks valesti, palun proovi uuesti";
-"team.invite.error.already_registered" = "See eposti aadress on juba kasutusel";
-"team.invite.error.already_invited" = "See eposti aadress on juba kutsutud";
-"team.invite.error.too_many_invitations" = "Maksimaalne kutsete arv on saadetud";
 "team.invite.error.no_internet" = "Ühendus puudub";
 
 // Guest Room
@@ -1375,6 +1348,7 @@
 "guest_room.link.header.subtitle" = "Invite others with a link to this conversation. Anyone with the link can join the conversation, even if they don’t have Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generating guest links is not allowed in your team.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Loo link";
 
