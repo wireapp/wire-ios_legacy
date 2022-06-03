@@ -34,4 +34,7 @@
    <FileRef
       location = "group:wire-ios-link-preview/WireLinkPreview.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:wire-ios-images/WireImages.xcodeproj">
+   </FileRef>
 </Workspace>
