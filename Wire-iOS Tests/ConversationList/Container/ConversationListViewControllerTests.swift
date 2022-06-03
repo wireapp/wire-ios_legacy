@@ -30,15 +30,13 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
+        accentColor = .strongBlue
         MockConversationList.hasArchivedConversations = false
         let selfUser = MockUserType.createSelfUser(name: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", inTeam: UUID())
         let account = Account.mockAccount(imageData: mockImageData)
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser, conversationListType: MockConversationList.self)
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
-        accentColor = .strongBlue
-
         sut.view.backgroundColor = .black
     }
 
