@@ -32,8 +32,6 @@
 		870121FD20F4D2FE001E6342 /* GenericHashBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870121FB20F4D2F6001E6342 /* GenericHashBuilderTests.swift */; };
 		87B43C2F20F3973F0031DE41 /* EncryptionContextCachingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B43C2D20F396F60031DE41 /* EncryptionContextCachingTests.swift */; };
 		87B43C5920F4AAA00031DE41 /* GenericHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B43C5820F4AAA00031DE41 /* GenericHash.swift */; };
-		A96E0115265FFA800034A057 /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96E0113265FFA800034A057 /* WireUtilities.xcframework */; };
-		A96E0117265FFA800034A057 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96E0114265FFA800034A057 /* WireSystem.xcframework */; };
 		A9C97AEB27973F9500C3B9D3 /* Clibsodium.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C97AE927973F9500C3B9D3 /* Clibsodium.xcframework */; };
 		A9F4996F279A8A9600969F4B /* cryptobox.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4996E279A8A9600969F4B /* cryptobox.xcframework */; };
 		A9F499AC279A8ABD00969F4B /* crypto_stream_salsa2012.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F49971279A8ABD00969F4B /* crypto_stream_salsa2012.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -169,8 +167,6 @@
 		870121FB20F4D2F6001E6342 /* GenericHashBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHashBuilderTests.swift; sourceTree = "<group>"; };
 		87B43C2D20F396F60031DE41 /* EncryptionContextCachingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionContextCachingTests.swift; sourceTree = "<group>"; };
 		87B43C5820F4AAA00031DE41 /* GenericHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHash.swift; sourceTree = "<group>"; };
-		A96E0113265FFA800034A057 /* WireUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireUtilities.xcframework; path = Carthage/Build/WireUtilities.xcframework; sourceTree = "<group>"; };
-		A96E0114265FFA800034A057 /* WireSystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireSystem.xcframework; path = Carthage/Build/WireSystem.xcframework; sourceTree = "<group>"; };
 		A9C97AE927973F9500C3B9D3 /* Clibsodium.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Clibsodium.xcframework; path = Carthage/Build/Clibsodium.xcframework; sourceTree = "<group>"; };
 		A9F4996E279A8A9600969F4B /* cryptobox.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = cryptobox.xcframework; path = Carthage/Build/cryptobox.xcframework; sourceTree = "<group>"; };
 		A9F49971279A8ABD00969F4B /* crypto_stream_salsa2012.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto_stream_salsa2012.h; sourceTree = "<group>"; };
@@ -251,8 +247,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A96E0117265FFA800034A057 /* WireSystem.xcframework in Frameworks */,
-				A96E0115265FFA800034A057 /* WireUtilities.xcframework in Frameworks */,
 				A9F4996F279A8A9600969F4B /* cryptobox.xcframework in Frameworks */,
 				A9C97AEB27973F9500C3B9D3 /* Clibsodium.xcframework in Frameworks */,
 			);
@@ -495,8 +489,6 @@
 			children = (
 				A9F4996E279A8A9600969F4B /* cryptobox.xcframework */,
 				A9C97AE927973F9500C3B9D3 /* Clibsodium.xcframework */,
-				A96E0114265FFA800034A057 /* WireSystem.xcframework */,
-				A96E0113265FFA800034A057 /* WireUtilities.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
