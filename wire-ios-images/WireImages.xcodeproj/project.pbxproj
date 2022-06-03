@@ -25,12 +25,10 @@
 		09BCDB5D1BC68F720020DCC7 /* ZMImageOwner.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BCDB5C1BC68F410020DCC7 /* ZMImageOwner.m */; };
 		304C01E74556BFF56EB372D2 /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D599521BDA7B163A187C42C4 /* WireTesting.xcframework */; };
 		41FFE97A7A1BE7CA6D4FB591 /* WireTesting.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D599521BDA7B163A187C42C4 /* WireTesting.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4E531B50FB39CECCC2E21105 /* WireUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A911E8D5612F418FB865E4 /* WireUtilities.xcframework */; };
 		5405B0091BCEBDBF00C0C3BD /* ZMIImageProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 5405B0071BCEBDBF00C0C3BD /* ZMIImageProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5405B00A1BCEBDBF00C0C3BD /* ZMIImageProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5405B0081BCEBDBF00C0C3BD /* ZMIImageProperties.m */; };
 		54A5A6141E929FC400D56F2E /* WireImages.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0969600C1B663E7B006DF53B /* WireImages.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		54A5A6161E92A01100D56F2E /* WireImages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969600C1B663E7B006DF53B /* WireImages.framework */; };
-		71BC271B1B3C0759721FAFF1 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFE318EA7BB6A318C6CF551E /* WireSystem.xcframework */; };
 		870253E41DAB7AA00095D272 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 870253E31DAB7AA00095D272 /* main.m */; };
 		870253E71DAB7AA00095D272 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870253E61DAB7AA00095D272 /* AppDelegate.m */; };
 		870253EA1DAB7AA00095D272 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870253E91DAB7AA00095D272 /* ViewController.m */; };
@@ -195,12 +193,10 @@
 		A831A9FCA505EEF5AE570F4E /* OCMock.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OCMock.xcframework; path = Carthage/Build/OCMock.xcframework; sourceTree = "<group>"; };
 		A9226279279ECDA500D4CF72 /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "ios-arm64Simulator.xcconfig"; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A9626B4A26932BE90043CC31 /* ZMImageDownsampleOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMImageDownsampleOperation.swift; sourceTree = "<group>"; };
-		CFE318EA7BB6A318C6CF551E /* WireSystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireSystem.xcframework; path = Carthage/Build/WireSystem.xcframework; sourceTree = "<group>"; };
 		D599521BDA7B163A187C42C4 /* WireTesting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTesting.xcframework; path = Carthage/Build/WireTesting.xcframework; sourceTree = "<group>"; };
 		EFF7A46F2271E47400F1AC33 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		EFF7A4702271E47400F1AC33 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		EFF7A4712271E47500F1AC33 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		F8A911E8D5612F418FB865E4 /* WireUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireUtilities.xcframework; path = Carthage/Build/WireUtilities.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,8 +204,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71BC271B1B3C0759721FAFF1 /* WireSystem.xcframework in Frameworks */,
-				4E531B50FB39CECCC2E21105 /* WireUtilities.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,8 +243,6 @@
 			children = (
 				A831A9FCA505EEF5AE570F4E /* OCMock.xcframework */,
 				D599521BDA7B163A187C42C4 /* WireTesting.xcframework */,
-				CFE318EA7BB6A318C6CF551E /* WireSystem.xcframework */,
-				F8A911E8D5612F418FB865E4 /* WireUtilities.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -679,6 +671,7 @@
 			baseConfigurationReference = 0927584A1B70C23B00AD5A78 /* WireImages.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
 				VALIDATE_WORKSPACE = YES;
 			};
