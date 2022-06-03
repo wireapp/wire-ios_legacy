@@ -108,6 +108,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         return unauthenticatedSession.registrationStatus
     }
 
+    private var isTornDown = false
+
     var pendingModal: UIViewController?
 
     /// Whether an account was added.
@@ -142,6 +144,20 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
         presenter.delegate = self
         stateController.delegate = self
         eventResponderChain.configure(delegate: self)
+    }
+
+    deinit {
+        if !isTornDown {
+            assertionFailure("AuthenticationCoordinator was not torn down.")
+        }
+    }
+
+    func tearDown() {
+        loginObservers.removeAll()
+        unauthenticatedSessionObserver = nil
+        postLoginObservers.removeAll()
+        initialSyncObserver = nil
+        isTornDown = true
     }
 
 }
