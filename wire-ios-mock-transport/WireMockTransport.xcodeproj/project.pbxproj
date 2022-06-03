@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,8 +71,12 @@
 		7C52BFF82033225500297DDA /* MockReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C52BFF62033225500297DDA /* MockReachability.m */; };
 		872A2EE01FFE761B00900B22 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A2EDF1FFE761B00900B22 /* MockService.swift */; };
 		872A2EE21FFE7EE700900B22 /* MockTransportSession+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A2EE11FFE7EE700900B22 /* MockTransportSession+Services.swift */; };
-		A9DABBCD2661211C00D07588 /* WireTesting.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBC3266120E500D07588 /* WireTesting.xcframework */; };
-		A9DABBD12661212400D07588 /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DABBC4266120E500D07588 /* OCMock.xcframework */; };
+		EE2B45E2284AA725003D2A7A /* WireProtos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E1284AA725003D2A7A /* WireProtos.framework */; };
+		EE2B45E3284AA725003D2A7A /* WireProtos.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E1284AA725003D2A7A /* WireProtos.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EE2B45E6284AA72C003D2A7A /* WireCryptobox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E5284AA72C003D2A7A /* WireCryptobox.framework */; };
+		EE2B45E7284AA72C003D2A7A /* WireCryptobox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E5284AA72C003D2A7A /* WireCryptobox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EE2B45E9284AA733003D2A7A /* WireTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E8284AA733003D2A7A /* WireTransport.framework */; };
+		EE2B45EA284AA733003D2A7A /* WireTransport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE2B45E8284AA733003D2A7A /* WireTransport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE797454283D235700A0BB0C /* MockTransportSession+FeatureConfigs.h in Headers */ = {isa = PBXBuildFile; fileRef = EE797452283D234000A0BB0C /* MockTransportSession+FeatureConfigs.h */; };
 		EE797455283D235700A0BB0C /* MockTransportSession+FeatureConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = EE797453283D234700A0BB0C /* MockTransportSession+FeatureConfigs.m */; };
 		EE797457283D23F900A0BB0C /* MockTransportSession+FeatureConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE797456283D23F900A0BB0C /* MockTransportSession+FeatureConfigs.swift */; };
@@ -138,6 +142,19 @@
 			dstSubfolderSpec = 10;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE2B45E4284AA725003D2A7A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE2B45E7284AA72C003D2A7A /* WireCryptobox.framework in Embed Frameworks */,
+				EE2B45E3284AA725003D2A7A /* WireProtos.framework in Embed Frameworks */,
+				EE2B45EA284AA733003D2A7A /* WireTransport.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -246,6 +263,9 @@
 		A9DABBC3266120E500D07588 /* WireTesting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTesting.xcframework; path = Carthage/Build/WireTesting.xcframework; sourceTree = "<group>"; };
 		A9DABBC4266120E500D07588 /* OCMock.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OCMock.xcframework; path = Carthage/Build/OCMock.xcframework; sourceTree = "<group>"; };
 		A9FF19B527A014930067DC26 /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "ios-arm64Simulator.xcconfig"; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"; sourceTree = SOURCE_ROOT; };
+		EE2B45E1284AA725003D2A7A /* WireProtos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireProtos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE2B45E5284AA72C003D2A7A /* WireCryptobox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireCryptobox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE2B45E8284AA733003D2A7A /* WireTransport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireTransport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE797452283D234000A0BB0C /* MockTransportSession+FeatureConfigs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MockTransportSession+FeatureConfigs.h"; sourceTree = "<group>"; };
 		EE797453283D234700A0BB0C /* MockTransportSession+FeatureConfigs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MockTransportSession+FeatureConfigs.m"; sourceTree = "<group>"; };
 		EE797456283D23F900A0BB0C /* MockTransportSession+FeatureConfigs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockTransportSession+FeatureConfigs.swift"; sourceTree = "<group>"; };
@@ -287,8 +307,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9DABBCD2661211C00D07588 /* WireTesting.xcframework in Frameworks */,
-				A9DABBD12661212400D07588 /* OCMock.xcframework in Frameworks */,
+				EE2B45E6284AA72C003D2A7A /* WireCryptobox.framework in Frameworks */,
+				EE2B45E2284AA725003D2A7A /* WireProtos.framework in Frameworks */,
+				EE2B45E9284AA733003D2A7A /* WireTransport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +604,9 @@
 		54C902651B753419007162A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE2B45E8284AA733003D2A7A /* WireTransport.framework */,
+				EE2B45E5284AA72C003D2A7A /* WireCryptobox.framework */,
+				EE2B45E1284AA725003D2A7A /* WireProtos.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -827,6 +851,7 @@
 				54C9022F1B7532DD007162A8 /* Frameworks */,
 				54C902301B7532DD007162A8 /* Headers */,
 				54C902311B7532DD007162A8 /* Resources */,
+				EE2B45E4284AA725003D2A7A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1048,6 +1073,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
 			};
 			name = Debug;
