@@ -38,6 +38,9 @@
       location = "group:wire-ios-images/WireImages.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:wire-ios-utilities/WireUtilities.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:wire-ios-testing/WireTesting.xcodeproj">
    </FileRef>
 </Workspace>
