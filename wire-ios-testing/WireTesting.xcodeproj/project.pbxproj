@@ -1,0 +1,592 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		091799581B7DFBD100E60DD9 /* NSUUID+WireTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 091799561B7DFBD100E60DD9 /* NSUUID+WireTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		091799591B7DFBD100E60DD9 /* NSUUID+WireTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 091799571B7DFBD100E60DD9 /* NSUUID+WireTesting.m */; };
+		096AD7EA1B68D6D300E007A8 /* WireTestingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 096AD7E51B68D6BD00E007A8 /* WireTestingTests.m */; };
+		098CFBC11B7BA68C000B02B1 /* NSObject+WireTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098CFBC01B7BA68C000B02B1 /* NSObject+WireTesting.swift */; };
+		098CFBC41B7BAA2D000B02B1 /* XCTestCase+Helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 098CFBC21B7BAA2D000B02B1 /* XCTestCase+Helpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		098CFBC51B7BAA2D000B02B1 /* XCTestCase+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 098CFBC31B7BAA2D000B02B1 /* XCTestCase+Helpers.m */; };
+		09A217F41B78DFAF0076547A /* ZMTExpectation.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217E41B78DFAF0076547A /* ZMTExpectation.h */; };
+		09A217F51B78DFAF0076547A /* ZMTExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217E51B78DFAF0076547A /* ZMTExpectation.m */; };
+		09A217F61B78DFAF0076547A /* ZMTImageComparator.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217E71B78DFAF0076547A /* ZMTImageComparator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A217F71B78DFAF0076547A /* ZMTImageComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217E81B78DFAF0076547A /* ZMTImageComparator.m */; };
+		09A217F81B78DFAF0076547A /* NSData+WireTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217E91B78DFAF0076547A /* NSData+WireTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A217F91B78DFAF0076547A /* NSData+WireTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217EA1B78DFAF0076547A /* NSData+WireTesting.m */; };
+		09A217FA1B78DFAF0076547A /* NSOperationQueue+WireTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217EB1B78DFAF0076547A /* NSOperationQueue+WireTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A217FB1B78DFAF0076547A /* NSOperationQueue+WireTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217EC1B78DFAF0076547A /* NSOperationQueue+WireTesting.m */; };
+		09A217FC1B78DFAF0076547A /* ZMTAsserts.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217ED1B78DFAF0076547A /* ZMTAsserts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A217FD1B78DFAF0076547A /* ZMTBaseTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217EE1B78DFAF0076547A /* ZMTBaseTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A217FE1B78DFAF0076547A /* ZMTBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217EF1B78DFAF0076547A /* ZMTBaseTest.m */; };
+		09A217FF1B78DFAF0076547A /* WireTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217F01B78DFAF0076547A /* WireTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A218001B78DFAF0076547A /* ZMTFailureRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 09A217F11B78DFAF0076547A /* ZMTFailureRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		09A218011B78DFAF0076547A /* ZMTFailureRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A217F21B78DFAF0076547A /* ZMTFailureRecorder.m */; };
+		09A218021B78DFAF0076547A /* ZMTSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A217F31B78DFAF0076547A /* ZMTSwiftHelpers.swift */; };
+		09A218041B78E01A0076547A /* FakeGroupContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A218031B78E01A0076547A /* FakeGroupContext.swift */; };
+		166264A7216BB64100300F45 /* large.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 166264A6216BB64000300F45 /* large.jpg */; };
+		16E2561F21089DAE00919DB0 /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2561E21089DAE00919DB0 /* XCTestCase+Helpers.swift */; };
+		5454E14A1B73A09100F131F8 /* ZMTExpectationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5454E1491B73A09100F131F8 /* ZMTExpectationTests.swift */; };
+		54AFD7E11CB6986A0090E33A /* 1900x1500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7DB1CB698690090E33A /* 1900x1500.jpg */; };
+		54AFD7E21CB6986A0090E33A /* animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7DC1CB698690090E33A /* animated.gif */; };
+		54AFD7E31CB6986A0090E33A /* Lorem Ipsum.txt in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7DD1CB698690090E33A /* Lorem Ipsum.txt */; };
+		54AFD7E41CB6986A0090E33A /* medium.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7DE1CB698690090E33A /* medium.jpg */; };
+		54AFD7E51CB6986A0090E33A /* not_animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7DF1CB698690090E33A /* not_animated.gif */; };
+		54AFD7E61CB6986A0090E33A /* tiny.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54AFD7E01CB698690090E33A /* tiny.jpg */; };
+		54AFD7E81CB699710090E33A /* ZMTTestBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AFD7E71CB699710090E33A /* ZMTTestBaseTests.swift */; };
+		87B0EF5C2139687500CE1931 /* ManagedObjectContextChangesMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B0EF5B2139687500CE1931 /* ManagedObjectContextChangesMerger.swift */; };
+		A9473798265D1D9100BC0089 /* WireSystem.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9473797265D1D9100BC0089 /* WireSystem.xcframework */; };
+		A94A9A23265D40280049F3F6 /* OCMock.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94A9A22265D40280049F3F6 /* OCMock.xcframework */; };
+		A94B2335266F9C1200D89927 /* WireTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 096AD7BB1B68D41D00E007A8 /* WireTesting.framework */; };
+		A971FAE123D7477200AB25B4 /* ZMTBaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A971FAE023D7477200AB25B4 /* ZMTBaseTest.swift */; };
+		CE6B7B301C11ED5F00FC4C2E /* ZMMockEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B7B2C1C11ED5F00FC4C2E /* ZMMockEntity.m */; };
+		CE6B7B321C11ED5F00FC4C2E /* ZMMockEntity2.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6B7B2E1C11ED5F00FC4C2E /* ZMMockEntity2.m */; };
+		CEB8FD6A1C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB8FD681C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.m */; };
+		CEF709D81C1599D600AF3718 /* ZMMockManagedObjectContextFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB8FD671C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEF709D91C1599E700AF3718 /* ZMMockEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6B7B2B1C11ED5F00FC4C2E /* ZMMockEntity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEF709DA1C1599ED00AF3718 /* ZMMockEntity2.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6B7B2D1C11ED5F00FC4C2E /* ZMMockEntity2.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F97E28BE1D8AACEA00A77567 /* UUID+WireTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97E28BD1D8AACEA00A77567 /* UUID+WireTesting.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		096AD7C81B68D41D00E007A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 096AD7B21B68D41D00E007A8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 096AD7BA1B68D41D00E007A8;
+			remoteInfo = ZMTesting;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		096AD7F11B68D99A00E007A8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		091799561B7DFBD100E60DD9 /* NSUUID+WireTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUUID+WireTesting.h"; sourceTree = "<group>"; };
+		091799571B7DFBD100E60DD9 /* NSUUID+WireTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUUID+WireTesting.m"; sourceTree = "<group>"; };
+		096AD7BB1B68D41D00E007A8 /* WireTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		096AD7C61B68D41D00E007A8 /* WireTesting-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WireTesting-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		096AD7DC1B68D6BD00E007A8 /* WireTesting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WireTesting.plist; sourceTree = "<group>"; };
+		096AD7E51B68D6BD00E007A8 /* WireTestingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WireTestingTests.m; sourceTree = "<group>"; };
+		096AD7EB1B68D6E700E007A8 /* WireTesting-test-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WireTesting-test-iOS.plist"; sourceTree = "<group>"; };
+		098CFBC01B7BA68C000B02B1 /* NSObject+WireTesting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+WireTesting.swift"; sourceTree = "<group>"; };
+		098CFBC21B7BAA2D000B02B1 /* XCTestCase+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Helpers.h"; sourceTree = "<group>"; };
+		098CFBC31B7BAA2D000B02B1 /* XCTestCase+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Helpers.m"; sourceTree = "<group>"; };
+		09A217E41B78DFAF0076547A /* ZMTExpectation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMTExpectation.h; sourceTree = "<group>"; };
+		09A217E51B78DFAF0076547A /* ZMTExpectation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMTExpectation.m; sourceTree = "<group>"; };
+		09A217E71B78DFAF0076547A /* ZMTImageComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMTImageComparator.h; sourceTree = "<group>"; };
+		09A217E81B78DFAF0076547A /* ZMTImageComparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMTImageComparator.m; sourceTree = "<group>"; };
+		09A217E91B78DFAF0076547A /* NSData+WireTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+WireTesting.h"; sourceTree = "<group>"; };
+		09A217EA1B78DFAF0076547A /* NSData+WireTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+WireTesting.m"; sourceTree = "<group>"; };
+		09A217EB1B78DFAF0076547A /* NSOperationQueue+WireTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOperationQueue+WireTesting.h"; sourceTree = "<group>"; };
+		09A217EC1B78DFAF0076547A /* NSOperationQueue+WireTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOperationQueue+WireTesting.m"; sourceTree = "<group>"; };
+		09A217ED1B78DFAF0076547A /* ZMTAsserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMTAsserts.h; sourceTree = "<group>"; };
+		09A217EE1B78DFAF0076547A /* ZMTBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMTBaseTest.h; sourceTree = "<group>"; };
+		09A217EF1B78DFAF0076547A /* ZMTBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMTBaseTest.m; sourceTree = "<group>"; };
+		09A217F01B78DFAF0076547A /* WireTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireTesting.h; sourceTree = "<group>"; };
+		09A217F11B78DFAF0076547A /* ZMTFailureRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMTFailureRecorder.h; sourceTree = "<group>"; };
+		09A217F21B78DFAF0076547A /* ZMTFailureRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMTFailureRecorder.m; sourceTree = "<group>"; };
+		09A217F31B78DFAF0076547A /* ZMTSwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZMTSwiftHelpers.swift; sourceTree = "<group>"; };
+		09A218031B78E01A0076547A /* FakeGroupContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeGroupContext.swift; sourceTree = "<group>"; };
+		09F1863A1B6903A4007A3DA6 /* version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = version.xcconfig; sourceTree = "<group>"; };
+		09F1863F1B6903A4007A3DA6 /* WireTesting.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = WireTesting.xcconfig; sourceTree = "<group>"; };
+		166264A6216BB64000300F45 /* large.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = large.jpg; sourceTree = "<group>"; };
+		16E2561E21089DAE00919DB0 /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
+		5454E1471B73A09100F131F8 /* WireTesting-iosTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireTesting-iosTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		5454E1491B73A09100F131F8 /* ZMTExpectationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZMTExpectationTests.swift; sourceTree = "<group>"; };
+		54AD5CFA1EEFEEC00072FC97 /* project-common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "project-common.xcconfig"; sourceTree = "<group>"; };
+		54AD5CFB1EEFEEC00072FC97 /* project-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "project-debug.xcconfig"; sourceTree = "<group>"; };
+		54AD5CFC1EEFEEC00072FC97 /* project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
+		54AD5D001EEFEEC00072FC97 /* test-target.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "test-target.xcconfig"; sourceTree = "<group>"; };
+		54AD5D021EEFEEC00072FC97 /* warnings-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "warnings-debug.xcconfig"; sourceTree = "<group>"; };
+		54AD5D031EEFEEC00072FC97 /* warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = warnings.xcconfig; sourceTree = "<group>"; };
+		54AFD7DB1CB698690090E33A /* 1900x1500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1900x1500.jpg; sourceTree = "<group>"; };
+		54AFD7DC1CB698690090E33A /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
+		54AFD7DD1CB698690090E33A /* Lorem Ipsum.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lorem Ipsum.txt"; sourceTree = "<group>"; };
+		54AFD7DE1CB698690090E33A /* medium.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = medium.jpg; sourceTree = "<group>"; };
+		54AFD7DF1CB698690090E33A /* not_animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = not_animated.gif; sourceTree = "<group>"; };
+		54AFD7E01CB698690090E33A /* tiny.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tiny.jpg; sourceTree = "<group>"; };
+		54AFD7E71CB699710090E33A /* ZMTTestBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZMTTestBaseTests.swift; sourceTree = "<group>"; };
+		54BD49EF1D41FA56006E29D1 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		54BD49F01D41FA56006E29D1 /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		54BD49F11D41FA56006E29D1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		87B0EF5B2139687500CE1931 /* ManagedObjectContextChangesMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextChangesMerger.swift; sourceTree = "<group>"; };
+		A9473797265D1D9100BC0089 /* WireSystem.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireSystem.xcframework; path = Carthage/Build/WireSystem.xcframework; sourceTree = "<group>"; };
+		A94A9A22265D40280049F3F6 /* OCMock.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OCMock.xcframework; path = Carthage/Build/OCMock.xcframework; sourceTree = "<group>"; };
+		A971FAE023D7477200AB25B4 /* ZMTBaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMTBaseTest.swift; sourceTree = "<group>"; };
+		A9948D1E2796D862003F4AAC /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "ios-arm64Simulator.xcconfig"; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"; sourceTree = SOURCE_ROOT; };
+		CE6B7B2B1C11ED5F00FC4C2E /* ZMMockEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMMockEntity.h; sourceTree = "<group>"; };
+		CE6B7B2C1C11ED5F00FC4C2E /* ZMMockEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMMockEntity.m; sourceTree = "<group>"; };
+		CE6B7B2D1C11ED5F00FC4C2E /* ZMMockEntity2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMMockEntity2.h; sourceTree = "<group>"; };
+		CE6B7B2E1C11ED5F00FC4C2E /* ZMMockEntity2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMMockEntity2.m; sourceTree = "<group>"; };
+		CEB8FD671C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMMockManagedObjectContextFactory.h; sourceTree = "<group>"; };
+		CEB8FD681C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMMockManagedObjectContextFactory.m; sourceTree = "<group>"; };
+		F97E28BD1D8AACEA00A77567 /* UUID+WireTesting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UUID+WireTesting.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		096AD7B71B68D41D00E007A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9473798265D1D9100BC0089 /* WireSystem.xcframework in Frameworks */,
+				A94A9A23265D40280049F3F6 /* OCMock.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		096AD7C31B68D41D00E007A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94B2335266F9C1200D89927 /* WireTesting.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		096AD7B11B68D41D00E007A8 = {
+			isa = PBXGroup;
+			children = (
+				54BD49EF1D41FA56006E29D1 /* Cartfile */,
+				54BD49F01D41FA56006E29D1 /* Cartfile.resolved */,
+				54BD49F11D41FA56006E29D1 /* README.md */,
+				096AD7DD1B68D6BD00E007A8 /* Source */,
+				096AD7E21B68D6BD00E007A8 /* Tests */,
+				096AD7DB1B68D6BD00E007A8 /* Resources */,
+				096AD7EC1B68D8DF00E007A8 /* Frameworks */,
+				096AD7BC1B68D41D00E007A8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		096AD7BC1B68D41D00E007A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				096AD7BB1B68D41D00E007A8 /* WireTesting.framework */,
+				096AD7C61B68D41D00E007A8 /* WireTesting-Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		096AD7DB1B68D6BD00E007A8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				166264A6216BB64000300F45 /* large.jpg */,
+				54AFD7DB1CB698690090E33A /* 1900x1500.jpg */,
+				54AFD7DC1CB698690090E33A /* animated.gif */,
+				54AFD7DD1CB698690090E33A /* Lorem Ipsum.txt */,
+				54AFD7DE1CB698690090E33A /* medium.jpg */,
+				54AFD7DF1CB698690090E33A /* not_animated.gif */,
+				54AFD7E01CB698690090E33A /* tiny.jpg */,
+				09F1862E1B6903A4007A3DA6 /* Configurations */,
+				096AD7DC1B68D6BD00E007A8 /* WireTesting.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		096AD7DD1B68D6BD00E007A8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				09A217E31B78DFAF0076547A /* Private */,
+				09A217E61B78DFAF0076547A /* Public */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		096AD7E21B68D6BD00E007A8 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				096AD7E31B68D6BD00E007A8 /* Resources */,
+				096AD7E51B68D6BD00E007A8 /* WireTestingTests.m */,
+				5454E1491B73A09100F131F8 /* ZMTExpectationTests.swift */,
+				5454E1471B73A09100F131F8 /* WireTesting-iosTests-Bridging-Header.h */,
+				54AFD7E71CB699710090E33A /* ZMTTestBaseTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		096AD7E31B68D6BD00E007A8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				096AD7EB1B68D6E700E007A8 /* WireTesting-test-iOS.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		096AD7EC1B68D8DF00E007A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A94A9A22265D40280049F3F6 /* OCMock.xcframework */,
+				A9473797265D1D9100BC0089 /* WireSystem.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		09A217E31B78DFAF0076547A /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				09A217E41B78DFAF0076547A /* ZMTExpectation.h */,
+				09A217E51B78DFAF0076547A /* ZMTExpectation.m */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		09A217E61B78DFAF0076547A /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B7B2A1C11ECC000FC4C2E /* Mock Data Model */,
+				09A217F01B78DFAF0076547A /* WireTesting.h */,
+				09A217E71B78DFAF0076547A /* ZMTImageComparator.h */,
+				09A217E81B78DFAF0076547A /* ZMTImageComparator.m */,
+				09A217E91B78DFAF0076547A /* NSData+WireTesting.h */,
+				09A217EA1B78DFAF0076547A /* NSData+WireTesting.m */,
+				09A217EB1B78DFAF0076547A /* NSOperationQueue+WireTesting.h */,
+				09A217EC1B78DFAF0076547A /* NSOperationQueue+WireTesting.m */,
+				09A217ED1B78DFAF0076547A /* ZMTAsserts.h */,
+				09A217EE1B78DFAF0076547A /* ZMTBaseTest.h */,
+				09A217EF1B78DFAF0076547A /* ZMTBaseTest.m */,
+				A971FAE023D7477200AB25B4 /* ZMTBaseTest.swift */,
+				098CFBC21B7BAA2D000B02B1 /* XCTestCase+Helpers.h */,
+				098CFBC31B7BAA2D000B02B1 /* XCTestCase+Helpers.m */,
+				16E2561E21089DAE00919DB0 /* XCTestCase+Helpers.swift */,
+				09A217F11B78DFAF0076547A /* ZMTFailureRecorder.h */,
+				09A217F21B78DFAF0076547A /* ZMTFailureRecorder.m */,
+				091799561B7DFBD100E60DD9 /* NSUUID+WireTesting.h */,
+				091799571B7DFBD100E60DD9 /* NSUUID+WireTesting.m */,
+				F97E28BD1D8AACEA00A77567 /* UUID+WireTesting.swift */,
+				09A217F31B78DFAF0076547A /* ZMTSwiftHelpers.swift */,
+				09A218031B78E01A0076547A /* FakeGroupContext.swift */,
+				098CFBC01B7BA68C000B02B1 /* NSObject+WireTesting.swift */,
+				CEB8FD671C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.h */,
+				CEB8FD681C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.m */,
+				87B0EF5B2139687500CE1931 /* ManagedObjectContextChangesMerger.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		09F1862E1B6903A4007A3DA6 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				54AD5CF71EEFEEC00072FC97 /* zmc-config */,
+				09F1863A1B6903A4007A3DA6 /* version.xcconfig */,
+				09F1863F1B6903A4007A3DA6 /* WireTesting.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		54AD5CF71EEFEEC00072FC97 /* zmc-config */ = {
+			isa = PBXGroup;
+			children = (
+				A9948D1E2796D862003F4AAC /* ios-arm64Simulator.xcconfig */,
+				54AD5CFA1EEFEEC00072FC97 /* project-common.xcconfig */,
+				54AD5CFB1EEFEEC00072FC97 /* project-debug.xcconfig */,
+				54AD5CFC1EEFEEC00072FC97 /* project.xcconfig */,
+				54AD5D001EEFEEC00072FC97 /* test-target.xcconfig */,
+				54AD5D021EEFEEC00072FC97 /* warnings-debug.xcconfig */,
+				54AD5D031EEFEEC00072FC97 /* warnings.xcconfig */,
+			);
+			path = "zmc-config";
+			sourceTree = "<group>";
+		};
+		CE6B7B2A1C11ECC000FC4C2E /* Mock Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B7B2B1C11ED5F00FC4C2E /* ZMMockEntity.h */,
+				CE6B7B2C1C11ED5F00FC4C2E /* ZMMockEntity.m */,
+				CE6B7B2D1C11ED5F00FC4C2E /* ZMMockEntity2.h */,
+				CE6B7B2E1C11ED5F00FC4C2E /* ZMMockEntity2.m */,
+			);
+			name = "Mock Data Model";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		096AD7B81B68D41D00E007A8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				091799581B7DFBD100E60DD9 /* NSUUID+WireTesting.h in Headers */,
+				09A217FC1B78DFAF0076547A /* ZMTAsserts.h in Headers */,
+				09A217F61B78DFAF0076547A /* ZMTImageComparator.h in Headers */,
+				098CFBC41B7BAA2D000B02B1 /* XCTestCase+Helpers.h in Headers */,
+				CEF709D81C1599D600AF3718 /* ZMMockManagedObjectContextFactory.h in Headers */,
+				CEF709D91C1599E700AF3718 /* ZMMockEntity.h in Headers */,
+				09A217FA1B78DFAF0076547A /* NSOperationQueue+WireTesting.h in Headers */,
+				09A218001B78DFAF0076547A /* ZMTFailureRecorder.h in Headers */,
+				09A217F81B78DFAF0076547A /* NSData+WireTesting.h in Headers */,
+				CEF709DA1C1599ED00AF3718 /* ZMMockEntity2.h in Headers */,
+				09A217F41B78DFAF0076547A /* ZMTExpectation.h in Headers */,
+				09A217FF1B78DFAF0076547A /* WireTesting.h in Headers */,
+				09A217FD1B78DFAF0076547A /* ZMTBaseTest.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		096AD7BA1B68D41D00E007A8 /* WireTesting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 096AD7D11B68D41D00E007A8 /* Build configuration list for PBXNativeTarget "WireTesting" */;
+			buildPhases = (
+				096AD7B61B68D41D00E007A8 /* Sources */,
+				096AD7B71B68D41D00E007A8 /* Frameworks */,
+				096AD7B81B68D41D00E007A8 /* Headers */,
+				096AD7B91B68D41D00E007A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WireTesting;
+			productName = ZMTesting;
+			productReference = 096AD7BB1B68D41D00E007A8 /* WireTesting.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		096AD7C51B68D41D00E007A8 /* WireTesting-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 096AD7D41B68D41D00E007A8 /* Build configuration list for PBXNativeTarget "WireTesting-Tests" */;
+			buildPhases = (
+				096AD7C21B68D41D00E007A8 /* Sources */,
+				096AD7C31B68D41D00E007A8 /* Frameworks */,
+				096AD7C41B68D41D00E007A8 /* Resources */,
+				096AD7F11B68D99A00E007A8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				096AD7C91B68D41D00E007A8 /* PBXTargetDependency */,
+			);
+			name = "WireTesting-Tests";
+			productName = ZMTestingTests;
+			productReference = 096AD7C61B68D41D00E007A8 /* WireTesting-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		096AD7B21B68D41D00E007A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 1240;
+				ORGANIZATIONNAME = Wire;
+				TargetAttributes = {
+					096AD7BA1B68D41D00E007A8 = {
+						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1000;
+					};
+					096AD7C51B68D41D00E007A8 = {
+						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1000;
+					};
+				};
+			};
+			buildConfigurationList = 096AD7B51B68D41D00E007A8 /* Build configuration list for PBXProject "WireTesting" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 096AD7B11B68D41D00E007A8;
+			productRefGroup = 096AD7BC1B68D41D00E007A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				096AD7BA1B68D41D00E007A8 /* WireTesting */,
+				096AD7C51B68D41D00E007A8 /* WireTesting-Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		096AD7B91B68D41D00E007A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54AFD7E11CB6986A0090E33A /* 1900x1500.jpg in Resources */,
+				54AFD7E61CB6986A0090E33A /* tiny.jpg in Resources */,
+				54AFD7E31CB6986A0090E33A /* Lorem Ipsum.txt in Resources */,
+				54AFD7E41CB6986A0090E33A /* medium.jpg in Resources */,
+				166264A7216BB64100300F45 /* large.jpg in Resources */,
+				54AFD7E51CB6986A0090E33A /* not_animated.gif in Resources */,
+				54AFD7E21CB6986A0090E33A /* animated.gif in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		096AD7C41B68D41D00E007A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		096AD7B61B68D41D00E007A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87B0EF5C2139687500CE1931 /* ManagedObjectContextChangesMerger.swift in Sources */,
+				09A218021B78DFAF0076547A /* ZMTSwiftHelpers.swift in Sources */,
+				09A217FE1B78DFAF0076547A /* ZMTBaseTest.m in Sources */,
+				09A218041B78E01A0076547A /* FakeGroupContext.swift in Sources */,
+				091799591B7DFBD100E60DD9 /* NSUUID+WireTesting.m in Sources */,
+				09A217F51B78DFAF0076547A /* ZMTExpectation.m in Sources */,
+				CE6B7B321C11ED5F00FC4C2E /* ZMMockEntity2.m in Sources */,
+				09A217F71B78DFAF0076547A /* ZMTImageComparator.m in Sources */,
+				09A217FB1B78DFAF0076547A /* NSOperationQueue+WireTesting.m in Sources */,
+				098CFBC51B7BAA2D000B02B1 /* XCTestCase+Helpers.m in Sources */,
+				CEB8FD6A1C11E50700ED0BE5 /* ZMMockManagedObjectContextFactory.m in Sources */,
+				09A218011B78DFAF0076547A /* ZMTFailureRecorder.m in Sources */,
+				A971FAE123D7477200AB25B4 /* ZMTBaseTest.swift in Sources */,
+				09A217F91B78DFAF0076547A /* NSData+WireTesting.m in Sources */,
+				CE6B7B301C11ED5F00FC4C2E /* ZMMockEntity.m in Sources */,
+				F97E28BE1D8AACEA00A77567 /* UUID+WireTesting.swift in Sources */,
+				16E2561F21089DAE00919DB0 /* XCTestCase+Helpers.swift in Sources */,
+				098CFBC11B7BA68C000B02B1 /* NSObject+WireTesting.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		096AD7C21B68D41D00E007A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54AFD7E81CB699710090E33A /* ZMTTestBaseTests.swift in Sources */,
+				5454E14A1B73A09100F131F8 /* ZMTExpectationTests.swift in Sources */,
+				096AD7EA1B68D6D300E007A8 /* WireTestingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		096AD7C91B68D41D00E007A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 096AD7BA1B68D41D00E007A8 /* WireTesting */;
+			targetProxy = 096AD7C81B68D41D00E007A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		096AD7CF1B68D41D00E007A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54AD5CFB1EEFEEC00072FC97 /* project-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+			};
+			name = Debug;
+		};
+		096AD7D01B68D41D00E007A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54AD5CFC1EEFEEC00072FC97 /* project.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+			};
+			name = Release;
+		};
+		096AD7D21B68D41D00E007A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09F1863F1B6903A4007A3DA6 /* WireTesting.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/WireTesting.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+			};
+			name = Debug;
+		};
+		096AD7D31B68D41D00E007A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09F1863F1B6903A4007A3DA6 /* WireTesting.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/WireTesting.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+			};
+			name = Release;
+		};
+		096AD7D51B68D41D00E007A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54AD5D001EEFEEC00072FC97 /* test-target.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Tests/Resources/WireTesting-test-iOS.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WireTesting-iosTests-Bridging-Header.h";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Debug;
+		};
+		096AD7D61B68D41D00E007A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54AD5D001EEFEEC00072FC97 /* test-target.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = "Tests/Resources/WireTesting-test-iOS.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wire.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/WireTesting-iosTests-Bridging-Header.h";
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		096AD7B51B68D41D00E007A8 /* Build configuration list for PBXProject "WireTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				096AD7CF1B68D41D00E007A8 /* Debug */,
+				096AD7D01B68D41D00E007A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		096AD7D11B68D41D00E007A8 /* Build configuration list for PBXNativeTarget "WireTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				096AD7D21B68D41D00E007A8 /* Debug */,
+				096AD7D31B68D41D00E007A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		096AD7D41B68D41D00E007A8 /* Build configuration list for PBXNativeTarget "WireTesting-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				096AD7D51B68D41D00E007A8 /* Debug */,
+				096AD7D61B68D41D00E007A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 096AD7B21B68D41D00E007A8 /* Project object */;
+}

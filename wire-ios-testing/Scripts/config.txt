@@ -1,0 +1,6 @@
+framework=WireTesting
+repository=wire-ios-testing
+organization=wireapp
+release-name-format=That time when the compiler said {CPP_ERROR}
+platforms=ios,osx
+dont_test_platforms=osx
