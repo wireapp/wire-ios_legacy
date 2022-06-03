@@ -1,0 +1,19 @@
+disabled_rules:
+    - function_body_length
+    - type_body_length
+    - file_length
+    - force_try
+    - todo
+    - inclusive_language
+
+included:
+    - WireLinkPreview
+    - WireLinkPreviewTests
+
+# In order to deal with the huge number of violations, first set
+# very high limits then iteratively reduce the limits and resolve
+# the few violations. Repeat this until we find suitable limits.
+
+line_length:
+    warning: 450
+    error: 450

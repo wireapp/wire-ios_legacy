@@ -1,0 +1,102 @@
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="dns-prefetch" href="//style.sndcdn.com">
+<link rel="dns-prefetch" href="//a-v2.sndcdn.com">
+<link rel="dns-prefetch" href="//api-v2.soundcloud.com">
+<link rel="dns-prefetch" href="//sb.scorecardresearch.com">
+<link rel="dns-prefetch" href="//secure.quantserve.com">
+<link rel="dns-prefetch" href="//eventlogger.soundcloud.com">
+<link rel="dns-prefetch" href="//api.soundcloud.com">
+<link rel="dns-prefetch" href="//ssl.google-analytics.com">
+<link rel="dns-prefetch" href="//i1.sndcdn.com">
+<link rel="dns-prefetch" href="//i2.sndcdn.com">
+<link rel="dns-prefetch" href="//i3.sndcdn.com">
+<link rel="dns-prefetch" href="//i4.sndcdn.com">
+<link rel="dns-prefetch" href="//wis.sndcdn.com">
+<link rel="dns-prefetch" href="//va.sndcdn.com">
+<link rel="dns-prefetch" href="//pixel.quantserve.com">
+<title>Bridgit Mendler - Atlantis feat. Kaiydo by Bridgit Mendler | Free Listening on SoundCloud</title>
+<meta content="record, sounds, share, sound, audio, tracks, music, soundcloud" name="keywords">
+<meta name="referrer" content="origin">
+<meta name="google-site-verification" content="dY0CigqM8Inubs_hgrYMwk-zGchKwrvJLcvI_G8631Q">
+<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<!--[if IE]><meta content="true" name="MSSmartTagsPreventParsing">
+<meta content="false" http-equiv="imagetoolbar"><![endif]--><meta content="19507961798" property="fb:app_id">
+<meta content="SoundCloud" property="og:site_name">
+<meta content="SoundCloud" property="twitter:site">
+<meta content="SoundCloud" property="twitter:app:name:iphone">
+<meta content="336353151" property="twitter:app:id:iphone">
+<meta content="SoundCloud" property="twitter:app:name:ipad">
+<meta content="336353151" property="twitter:app:id:ipad">
+<meta content="SoundCloud" property="twitter:app:name:googleplay">
+<meta content="com.soundcloud.android" property="twitter:app:id:googleplay">
+<link href="/sc-opensearch.xml" rel="search" title="SoundCloud search" type="application/opensearchdescription+xml">
+<meta name="description" content="Stream Bridgit Mendler - Atlantis feat. Kaiydo by Bridgit Mendler from desktop or your mobile device">
+<meta property="twitter:app:name:iphone" content="SoundCloud">
+<meta property="twitter:app:id:iphone" content="336353151">
+<meta property="twitter:app:name:ipad" content="SoundCloud">
+<meta property="twitter:app:id:ipad" content="336353151">
+<meta property="twitter:app:name:googleplay" content="SoundCloud">
+<meta property="twitter:app:id:googleplay" content="com.soundcloud.android">
+<meta property="twitter:title" content="Bridgit Mendler - Atlantis feat. Kaiydo">
+<meta property="twitter:description" content='"Atlantis" by Bridgit Mendler feat. @Kaiydo
+
+The official music video for "Atlantis" is out now! Watch here: http://smarturl.it/AtlantisMusicVideo'>
+<meta property="twitter:player" content="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F279721318&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter">
+<meta property="twitter:player:height" content="400">
+<meta property="twitter:player:width" content="435">
+<meta property="twitter:image" content="https://i1.sndcdn.com/artworks-000178472656-9nxuid-t500x500.jpg">
+<meta property="twitter:card" content="player">
+<meta property="twitter:app:url:googleplay" content="soundcloud://sounds:279721318">
+<meta property="twitter:app:url:iphone" content="soundcloud://sounds:279721318">
+<meta property="twitter:app:url:ipad" content="soundcloud://sounds:279721318">
+<meta property="al:ios:app_name" content="SoundCloud">
+<meta property="al:ios:app_store_id" content="336353151">
+<meta property="al:android:app_name" content="SoundCloud">
+<meta property="al:android:package" content="com.soundcloud.android">
+<meta property="og:type" content="music.song">
+<meta property="og:url" content="https://soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo">
+<meta property="og:title" content="Bridgit Mendler - Atlantis feat. Kaiydo">
+<meta property="og:image" content="https://i1.sndcdn.com/artworks-000178472656-9nxuid-t500x500.jpg">
+<meta property="og:image:width" content="500">
+<meta property="og:image:height" content="500">
+<meta property="og:description" content='"Atlantis" by Bridgit Mendler feat. @Kaiydo
+
+The official music video for "Atlantis" is out now! Watch here: http://smarturl.it/AtlantisMusicVideo'>
+<meta property="al:web:should_fallback" content="false">
+<meta property="music:duration" content="230">
+<meta property="music:preview_url:secure_url" content="https://api-partners.soundcloud.com/tracks/soundcloud:tracks:279721318/play?client_id=a7309b9a9a85963579f7e8bcffd36d2a">
+<meta property="music:preview_url:type" content="application/vnd.soundcloud-com.play+json; version=1.0">
+<meta property="music:musician" content="https://soundcloud.com/bridgitmendler">
+<meta property="og:restrictions:country:allowed" content="FR">
+<meta property="og:restrictions:country:allowed" content="GB">
+<meta property="og:restrictions:country:allowed" content="IE">
+<meta property="og:restrictions:country:allowed" content="US">
+<meta property="og:restrictions:country:allowed" content="NL">
+<meta property="al:ios:url" content="soundcloud://sounds:279721318">
+<meta property="al:android:url" content="soundcloud://sounds:279721318">
+<meta property="soundcloud:user" content="https://soundcloud.com/bridgitmendler">
+<meta property="soundcloud:play_count" content="679563">
+<meta property="soundcloud:download_count" content="0">
+<meta property="soundcloud:comments_count" content="191">
+<meta property="soundcloud:like_count" content="10883">
+<link rel="canonical" href="https://soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.soundcloud.com/bridgitmendler/bridgit-mendler-atlantis-feat-kaiydo">
+<link rel="alternate" type="text/xml+oembed" href="https://soundcloud.com/oembed?url=https%3A%2F%2Fsoundcloud.com%2Fbridgitmendler%2Fbridgit-mendler-atlantis-feat-kaiydo&amp;format=xml">
+<link rel="alternate" type="text/json+oembed" href="https://soundcloud.com/oembed?url=https%3A%2F%2Fsoundcloud.com%2Fbridgitmendler%2Fbridgit-mendler-atlantis-feat-kaiydo&amp;format=json">
+<link rel="author" href="/bridgitmendler">
+<link rel="alternate" href="android-app://com.soundcloud.android/soundcloud/sounds:279721318">
+<link rel="alternate" href="ios-app://336353151/soundcloud/sounds:279721318">
+<meta name="application-name" content="SoundCloud">
+<meta name="msapplication-tooltip" content="Launch SoundCloud">
+<meta name="msapplication-TileImage" content="https://a-v2.sndcdn.com/assets/images/sc-icons/win8-2dc974a1.png">
+<meta name="msapplication-TileColor" content="#ff5500">
+<meta name="msapplication-starturl" content="https://soundcloud.com">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/favicon-2cadd14b.ico" rel="icon">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/ios-a62dfc8f.png" rel="apple-touch-icon">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/fluid-b4e7a64b.png" rel="fluid-icon">
+<script type="text/javascript">!function(){function o(o){return o.test(a)}function e(){var o,e=a.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);return e&&(o=a.match(/version\/([.\d]+)/i))?parseInt(o[1],10):e?parseInt(e[2],10):null}var a,r,n;a=window.navigator.userAgent.toLowerCase();var i,t="undefined"!=typeof window.opera&&"[object Opera]"===window.opera.toString(),s=a.match(/\sopr\/([0-9]+)\./),p=o(/chrome/),d=o(/webkit/),c=!p&&o(/safari/),f=!t&&o(/msie/),m=!d&&o(/gecko/);i=s?parseInt(s[1],10):e();var w=o(/mobile|android|iphone|ipod|symbianos|nokia|s60|playbook|playstation/);m&&(r=a.match(/(firefox)\/?\s*(\.?\d+(\.\d+)*)/i),n=r&&r.length>1&&parseInt(r[2],10)>=41),i&&!w&&(p&&!s&&i<40||m&&!s&&n===!1||c&&i<8||f&&i<11||t&&i<13||s&&i<27)&&(window.__sc_abortApp=!0)}();</script><link rel="stylesheet" href="https://style.sndcdn.com/css/interstate-0ab59479718c8235122cad6b16a66953d725c43a.css">
+<link rel="stylesheet" href="https://a-v2.sndcdn.com/assets/css/app-d8c1a1b8.css">
+</head>

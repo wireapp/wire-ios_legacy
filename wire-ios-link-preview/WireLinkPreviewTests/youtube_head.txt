@@ -1,0 +1,98 @@
+<head><style name="www-roboto">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</style><script name="www-roboto">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script><script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script><script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script><script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>    <script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+
+
+
+
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<script src="//s.ytimg.com/yts/jsbin/scheduler-vflAG6jg9/scheduler.js" type="text/javascript" name="scheduler/scheduler"></script>
+
+
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+
+<script src="//s.ytimg.com/yts/jsbin/player-en_US-vflAbrXV8/base.js" name="player/base"></script>
+
+
+
+<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-core-2x-vflXm2lhU.css" name="www-core">
+<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-player-2x-vflmOic42.css" name="www-player">
+
+<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-pageframe-2x-vfld7je55.css" name="www-pageframe">
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+
+<title>Last Week Tonight with John Oliver: Brexit (HBO) - YouTube</title><link rel="canonical" href="https://www.youtube.com/watch?v=iAgKHSNqxa8"><link rel="alternate" media="handheld" href="http://m.youtube.com/watch?v=iAgKHSNqxa8"><link rel="alternate" media="only screen and (max-width: 640px)" href="http://m.youtube.com/watch?v=iAgKHSNqxa8"><link rel="shortlink" href="https://youtu.be/iAgKHSNqxa8">      <meta name="title" content="Last Week Tonight with John Oliver: Brexit (HBO)">
+
+<meta name="description" content="Britain could soon vote to leave the European Union. John Oliver enlists a barbershop quartet to propose a smarter option. Connect with Last Week Tonight onl...">
+
+<meta name="keywords" content="last week tonight with john oliver, last week tonight, john oliver, brexit, john oliver brexit">
+
+<link rel="search" type="application/opensearchdescription+xml" href="https://www.youtube.com/opensearch?locale=en_US" title="YouTube Video Search"><link rel="shortcut icon" href="https://s.ytimg.com/yts/img/favicon-vflz7uhzw.ico" type="image/x-icon">     <link rel="icon" href="//s.ytimg.com/yts/img/favicon_32-vfl8NGn4k.png" sizes="32x32"><link rel="icon" href="//s.ytimg.com/yts/img/favicon_48-vfl1s0rGh.png" sizes="48x48"><link rel="icon" href="//s.ytimg.com/yts/img/favicon_96-vfldSA3ca.png" sizes="96x96"><link rel="icon" href="//s.ytimg.com/yts/img/favicon_144-vflWmzoXw.png" sizes="144x144"><meta name="theme-color" content="#e62117">        <link rel="alternate" href="android-app://com.google.android.youtube/http/www.youtube.com/watch?v=iAgKHSNqxa8">
+<link rel="alternate" href="ios-app://544007664/vnd.youtube/www.youtube.com/watch?v=iAgKHSNqxa8">
+
+<link rel="alternate" type="application/json+oembed" href="http://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DiAgKHSNqxa8&amp;format=json" title="Last Week Tonight with John Oliver: Brexit (HBO)">
+<link rel="alternate" type="text/xml+oembed" href="http://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DiAgKHSNqxa8&amp;format=xml" title="Last Week Tonight with John Oliver: Brexit (HBO)">
+
+<meta property="og:site_name" content="YouTube">
+<meta property="og:url" content="https://www.youtube.com/watch?v=iAgKHSNqxa8">
+<meta property="og:title" content="Last Week Tonight with John Oliver: Brexit (HBO)">
+<meta property="og:image" content="https://i.ytimg.com/vi/iAgKHSNqxa8/maxresdefault.jpg">
+
+<meta property="og:description" content="Britain could soon vote to leave the European Union. John Oliver enlists a barbershop quartet to propose a smarter option. Connect with Last Week Tonight onl...">
+
+<meta property="al:ios:app_store_id" content="544007664">
+<meta property="al:ios:app_name" content="YouTube">
+<meta property="al:ios:url" content="vnd.youtube://www.youtube.com/watch?v=iAgKHSNqxa8&amp;feature=applinks">
+
+<meta property="al:android:url" content="vnd.youtube://www.youtube.com/watch?v=iAgKHSNqxa8&amp;feature=applinks">
+<meta property="al:android:app_name" content="YouTube">
+<meta property="al:android:package" content="com.google.android.youtube">
+<meta property="al:web:url" content="https://www.youtube.com/watch?v=iAgKHSNqxa8&amp;feature=applinks">
+
+<meta property="og:type" content="video">
+<meta property="og:video:url" content="https://www.youtube.com/embed/iAgKHSNqxa8">
+<meta property="og:video:secure_url" content="https://www.youtube.com/embed/iAgKHSNqxa8">
+<meta property="og:video:type" content="text/html">
+<meta property="og:video:width" content="1280">
+<meta property="og:video:height" content="720">
+<meta property="og:video:url" content="http://www.youtube.com/v/iAgKHSNqxa8?version=3&amp;autohide=1">
+<meta property="og:video:secure_url" content="https://www.youtube.com/v/iAgKHSNqxa8?version=3&amp;autohide=1">
+<meta property="og:video:type" content="application/x-shockwave-flash">
+<meta property="og:video:width" content="1280">
+<meta property="og:video:height" content="720">
+
+<meta property="og:video:tag" content="last week tonight with john oliver">
+<meta property="og:video:tag" content="last week tonight">
+<meta property="og:video:tag" content="john oliver">
+<meta property="og:video:tag" content="brexit">
+<meta property="og:video:tag" content="john oliver brexit">
+
+<meta property="fb:app_id" content="87741124305">
+
+<meta name="twitter:card" content="player">
+<meta name="twitter:site" content="@youtube">
+<meta name="twitter:url" content="https://www.youtube.com/watch?v=iAgKHSNqxa8">
+<meta name="twitter:title" content="Last Week Tonight with John Oliver: Brexit (HBO)">
+<meta name="twitter:description" content="Britain could soon vote to leave the European Union. John Oliver enlists a barbershop quartet to propose a smarter option. Connect with Last Week Tonight onl...">
+<meta name="twitter:image" content="https://i.ytimg.com/vi/iAgKHSNqxa8/maxresdefault.jpg">
+<meta name="twitter:app:name:iphone" content="YouTube">
+<meta name="twitter:app:id:iphone" content="544007664">
+<meta name="twitter:app:name:ipad" content="YouTube">
+<meta name="twitter:app:id:ipad" content="544007664">
+<meta name="twitter:app:url:iphone" content="vnd.youtube://www.youtube.com/watch?v=iAgKHSNqxa8&amp;feature=applinks">
+<meta name="twitter:app:url:ipad" content="vnd.youtube://www.youtube.com/watch?v=iAgKHSNqxa8&amp;feature=applinks">
+<meta name="twitter:app:name:googleplay" content="YouTube">
+<meta name="twitter:app:id:googleplay" content="com.google.android.youtube">
+<meta name="twitter:app:url:googleplay" content="https://www.youtube.com/watch?v=iAgKHSNqxa8">
+<meta name="twitter:player" content="https://www.youtube.com/embed/iAgKHSNqxa8">
+<meta name="twitter:player:width" content="1280">
+<meta name="twitter:player:height" content="720">
+
+<meta name=attribution content=HBO/>
+<link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-watch-transcript-2x-vflp9_n_i.css" name="www-watch-transcript">
+
+<style>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</style></head>
+

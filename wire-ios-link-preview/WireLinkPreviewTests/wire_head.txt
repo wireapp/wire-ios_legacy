@@ -1,0 +1,25 @@
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="msapplication-TileColor" content="#fff">
+<meta name="msapplication-TileImage" content="https://lh3.ggpht.com/1NvXpgCWdOwTrR36LArF1ScvBozs3eJMcD-KQ3yAGaqv-TIlRsoSzxeKn7ElFCbqqGJ2oOd98N_Xr0yA_W9lXnKU=s144">
+<link rel="shortcut icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://lh3.ggpht.com/1NvXpgCWdOwTrR36LArF1ScvBozs3eJMcD-KQ3yAGaqv-TIlRsoSzxeKn7ElFCbqqGJ2oOd98N_Xr0yA_W9lXnKU=s256" sizes="256x256" type="image/png">
+<link rel="icon" href="https://lh3.ggpht.com/1NvXpgCWdOwTrR36LArF1ScvBozs3eJMcD-KQ3yAGaqv-TIlRsoSzxeKn7ElFCbqqGJ2oOd98N_Xr0yA_W9lXnKU=s128" sizes="128x128" type="image/png">
+<link rel="icon" href="https://lh3.ggpht.com/1NvXpgCWdOwTrR36LArF1ScvBozs3eJMcD-KQ3yAGaqv-TIlRsoSzxeKn7ElFCbqqGJ2oOd98N_Xr0yA_W9lXnKU=s64" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon-precomposed icon" href="https://lh3.ggpht.com/1NvXpgCWdOwTrR36LArF1ScvBozs3eJMcD-KQ3yAGaqv-TIlRsoSzxeKn7ElFCbqqGJ2oOd98N_Xr0yA_W9lXnKU=s152" sizes="152x152" type="image/png">
+<link rel="mask-icon" href="/p/img/brand/w-pinned.svg" color="#000"><title>
+Wire — modern, private communication. For iOS, Android, OS X, Windows and web.
+</title><meta name="twitter:site" content="@wire">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Wire — modern, private communication. For iOS, Android, OS X, Windows and web.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wire.com/">
+<meta property="og:image" content="https://lh3.ggpht.com/gbxDT30ZwpwYMCF7ilrSaIpRQP3Z1Xdx2WUcyW5x_e8FDN8kA4CJGQQ0fFpVhKiGnPkAIOEf7S1_9cNi684Be-OY=s1024">  <link rel="stylesheet" href="/p/min/style/style.css?shield.394148734163553078">
+<link rel="alternate" hreflang="en" href="https://wire.com/?hl=en">
+<link rel="alternate" hreflang="de" href="https://wire.com/?hl=de">
+<link rel="alternate" hreflang="x-default" href="https://wire.com/">  <meta property="og:description" name="description" content="HD quality calls, private and group chats with inline photos, music and video. Secure and perfectly synced across your devices.">
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+</head>

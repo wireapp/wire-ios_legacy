@@ -1,0 +1,4 @@
+framework=WireLinkPreview
+repository=wire-ios-link-preview
+release-name-format=The {BUZZWORD} {BUZZWORD} {ANIMAL}
+organization=wireapp

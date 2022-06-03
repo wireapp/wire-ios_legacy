@@ -1,0 +1,85 @@
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="dns-prefetch" href="//style.sndcdn.com">
+<link rel="dns-prefetch" href="//a-v2.sndcdn.com">
+<link rel="dns-prefetch" href="//api-v2.soundcloud.com">
+<link rel="dns-prefetch" href="//sb.scorecardresearch.com">
+<link rel="dns-prefetch" href="//secure.quantserve.com">
+<link rel="dns-prefetch" href="//eventlogger.soundcloud.com">
+<link rel="dns-prefetch" href="//api.soundcloud.com">
+<link rel="dns-prefetch" href="//ssl.google-analytics.com">
+<link rel="dns-prefetch" href="//i1.sndcdn.com">
+<link rel="dns-prefetch" href="//i2.sndcdn.com">
+<link rel="dns-prefetch" href="//i3.sndcdn.com">
+<link rel="dns-prefetch" href="//i4.sndcdn.com">
+<link rel="dns-prefetch" href="//wis.sndcdn.com">
+<link rel="dns-prefetch" href="//va.sndcdn.com">
+<link rel="dns-prefetch" href="//pixel.quantserve.com">
+<title>Artists To Watch 2019 by Playback | Free Listening on SoundCloud</title>
+<meta content="record, sounds, share, sound, audio, tracks, music, soundcloud" name="keywords">
+<meta name="referrer" content="origin">
+<meta name="google-site-verification" content="dY0CigqM8Inubs_hgrYMwk-zGchKwrvJLcvI_G8631Q">
+<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<!--[if IE]><meta content="true" name="MSSmartTagsPreventParsing">
+<meta content="false" http-equiv="imagetoolbar"><![endif]--><meta content="19507961798" property="fb:app_id">
+<meta content="SoundCloud" property="og:site_name">
+<meta content="SoundCloud" property="twitter:site">
+<meta content="SoundCloud" property="twitter:app:name:iphone">
+<meta content="336353151" property="twitter:app:id:iphone">
+<meta content="SoundCloud" property="twitter:app:name:ipad">
+<meta content="336353151" property="twitter:app:id:ipad">
+<meta content="SoundCloud" property="twitter:app:name:googleplay">
+<meta content="com.soundcloud.android" property="twitter:app:id:googleplay">
+<link href="/sc-opensearch.xml" rel="search" title="SoundCloud search" type="application/opensearchdescription+xml">
+<meta name="description" content="Stream Artists To Watch 2019, a playlist by Playback from desktop or your mobile device">
+<meta property="twitter:app:name:iphone" content="SoundCloud">
+<meta property="twitter:app:id:iphone" content="336353151">
+<meta property="twitter:app:name:ipad" content="SoundCloud">
+<meta property="twitter:app:id:ipad" content="336353151">
+<meta property="twitter:app:name:googleplay" content="SoundCloud">
+<meta property="twitter:app:id:googleplay" content="com.soundcloud.android">
+<meta property="twitter:title" content="Artists To Watch 2019">
+<meta property="twitter:description" content="Listen to Artists To Watch 2019 by Playback #np on #SoundCloud">
+<meta property="twitter:player" content="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F658534032&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter">
+<meta property="twitter:player:height" content="450">
+<meta property="twitter:player:width" content="435">
+<meta property="twitter:image" content="https://i1.sndcdn.com/artworks-000454250598-idv5gc-t500x500.jpg">
+<meta property="twitter:card" content="player">
+<meta property="twitter:app:url:googleplay" content="soundcloud://playlists:658534032">
+<meta property="twitter:app:url:iphone" content="soundcloud://playlists:658534032">
+<meta property="twitter:app:url:ipad" content="soundcloud://playlists:658534032">
+<meta property="al:ios:app_name" content="SoundCloud">
+<meta property="al:ios:app_store_id" content="336353151">
+<meta property="al:android:app_name" content="SoundCloud">
+<meta property="al:android:package" content="com.soundcloud.android">
+<meta property="og:type" content="music.playlist">
+<meta property="og:url" content="https://soundcloud.com/playback/sets/2019-artists-to-watch">
+<meta property="og:title" content="Artists To Watch 2019">
+<meta property="og:image" content="https://i1.sndcdn.com/artworks-000454250598-idv5gc-t500x500.jpg">
+<meta property="og:image:width" content="500">
+<meta property="og:image:height" content="500">
+<meta property="og:description" content="Listen to Artists To Watch 2019 by Playback #np on #SoundCloud">
+<meta property="al:web:should_fallback" content="false">
+<meta property="al:ios:url" content="soundcloud://playlists:658534032">
+<meta property="al:android:url" content="soundcloud://playlists:658534032">
+<meta property="soundcloud:user" content="https://soundcloud.com/playback">
+<link rel="canonical" href="https://soundcloud.com/playback/sets/2019-artists-to-watch">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.soundcloud.com/playback/sets/2019-artists-to-watch">
+<link rel="alternate" type="text/xml+oembed" href="https://soundcloud.com/oembed?url=https%3A%2F%2Fsoundcloud.com%2Fplayback%2Fsets%2F2019-artists-to-watch&amp;format=xml">
+<link rel="alternate" type="text/json+oembed" href="https://soundcloud.com/oembed?url=https%3A%2F%2Fsoundcloud.com%2Fplayback%2Fsets%2F2019-artists-to-watch&amp;format=json">
+<link rel="author" href="/playback">
+<link rel="alternate" href="android-app://com.soundcloud.android/soundcloud/playlists:658534032">
+<link rel="alternate" href="ios-app://336353151/soundcloud/playlists:658534032">
+<meta name="application-name" content="SoundCloud">
+<meta name="msapplication-tooltip" content="Launch SoundCloud">
+<meta name="msapplication-TileImage" content="https://a-v2.sndcdn.com/assets/images/sc-icons/win8-2dc974a1.png">
+<meta name="msapplication-TileColor" content="#ff5500">
+<meta name="msapplication-starturl" content="https://soundcloud.com">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/favicon-2cadd14b.ico" rel="icon">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/ios-a62dfc8f.png" rel="apple-touch-icon">
+<link href="https://a-v2.sndcdn.com/assets/images/sc-icons/fluid-b4e7a64b.png" rel="fluid-icon">
+<script type="text/javascript">!function(){function o(o){return o.test(a)}function e(){var o,e=a.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);return e&&(o=a.match(/version\/([.\d]+)/i))?parseInt(o[1],10):e?parseInt(e[2],10):null}var a,r,n;a=window.navigator.userAgent.toLowerCase();var i,t="undefined"!=typeof window.opera&&"[object Opera]"===window.opera.toString(),s=a.match(/\sopr\/([0-9]+)\./),p=o(/chrome/),d=o(/webkit/),c=!p&&o(/safari/),f=!t&&o(/msie/),m=!d&&o(/gecko/);i=s?parseInt(s[1],10):e();var w=o(/mobile|android|iphone|ipod|symbianos|nokia|s60|playbook|playstation/);m&&(r=a.match(/(firefox)\/?\s*(\.?\d+(\.\d+)*)/i),n=r&&r.length>1&&parseInt(r[2],10)>=41),i&&!w&&(p&&!s&&i<40||m&&!s&&n===!1||c&&i<8||f&&i<11||t&&i<13||s&&i<27)&&(window.__sc_abortApp=!0)}();</script><link rel="stylesheet" href="https://style.sndcdn.com/css/interstate-0ab59479718c8235122cad6b16a66953d725c43a.css">
+<link rel="stylesheet" href="https://a-v2.sndcdn.com/assets/css/app-d8c1a1b8.css">
+</head>

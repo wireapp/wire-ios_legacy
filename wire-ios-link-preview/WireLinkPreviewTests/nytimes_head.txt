@@ -1,0 +1,151 @@
+<head>
+<title>Brazil’s Olympic Catastrophe - The New York Times</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><script type="text/javascript">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="shortcut icon" href="https://static01.nyt.com/favicon.ico" />
+<link rel="apple-touch-icon-precomposed" sizes="144×144" href="https://static01.nyt.com/images/icons/ios-ipad-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114×114" href="https://static01.nyt.com/images/icons/ios-iphone-114x144.png" />
+<link rel="apple-touch-icon-precomposed" href="https://static01.nyt.com/images/icons/ios-default-homescreen-57x57.png" />
+<meta name="sourceApp" content="nyt-v5" />
+<meta id="applicationName" name="applicationName" content="article" />
+<meta id="foundation-build-id" name="foundation-build-id" content="" />
+<link rel="canonical" href="http://www.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<link rel="alternate" media="only screen and (max-width: 640px)" href="http://mobile.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<link rel="alternate" media="handheld" href="http://mobile.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<link rel="amphtml" href="http://mobile.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.amp.html" />
+<meta property="al:android:url" content="nytimes://reader/id/100000004501826" />
+<meta property="al:android:package" content="com.nytimes.android" />
+<meta property="al:android:app_name" content="NYTimes" />
+<meta name="twitter:app:name:googleplay" content="NYTimes" />
+<meta name="twitter:app:id:googleplay" content="com.nytimes.android" />
+<meta name="twitter:app:url:googleplay" content="nytimes://reader/id/100000004501826" />
+<link rel="alternate" href="android-app://com.nytimes.android/nytimes/reader/id/100000004501826" />
+<meta property="al:iphone:url" content="nytimes://www.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<meta property="al:iphone:app_store_id" content="284862083" />
+<meta property="al:iphone:app_name" content="NYTimes" />
+<meta property="al:ipad:url" content="nytimes://www.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<meta property="al:ipad:app_store_id" content="357066198" />
+<meta property="al:ipad:app_name" content="NYTimes" />
+<meta name="robots" content="noarchive" />
+<meta itemprop="alternativeHeadline" name="hdl_p" content="An Olympic Catastrophe" />
+<meta name="channels" content="" />
+<meta itemprop="description" name="description" content="Can Rio pull off the Games with only weeks to go?" />
+<meta name="genre" itemprop="genre" content="Op-Ed" />
+<meta itemprop="identifier" name="articleid" content="100000004501826" />
+<meta itemprop="usageTerms" name="usageTerms" content="http://www.nytimes.com/content/help/rights/sale/terms-of-sale.html" />
+<meta itemprop="inLanguage" content="en-US" />
+<meta name="hdl" content="Brazil’s Olympic Catastrophe" />
+<meta name="col" content="Contributing Op-Ed Writer" id="column-name" />
+<meta name="pdate" content="20160701" />
+<meta name="utime" content="20160701080024" />
+<meta name="ptime" content="20160701080024" />
+<meta name="DISPLAYDATE" content="July 1, 2016" />
+<meta name="dat" content="July 1, 2016" />
+<meta name="lp" content="Can Rio pull off the Games with only weeks to go?" />
+<meta name="msapplication-starturl" content="http://www.nytimes.com" />
+<meta name="cre" content="The New York Times" />
+<meta name="slug" content="03barbara" />
+<meta property="article:collection" content="https://static01.nyt.com/services/json/sectionfronts/opinion/index.jsonp" />
+<meta name="sectionfront_jsonp" content="https://static01.nyt.com/services/json/sectionfronts/opinion/index.jsonp" />
+<meta property="og:url" content="http://www.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Brazil’s Olympic Catastrophe" />
+<meta property="og:description" content="Can Rio pull off the Games with only weeks to go?" />
+<meta property="article:published" itemprop="datePublished" content="2016-07-01" />
+<meta property="article:section" itemprop="articleSection" content="Opinion" />
+<meta property="article:section-taxonomy-id" itemprop="articleSection" content="AD8090D7-4137-4D71-84C8-70DA3BD89778" />
+<meta property="article:section_url" content="http://www.nytimes.com/pages/opinion/index.html" />
+<meta property="fb:app_id" content="9869919170" />
+<meta name="twitter:card" value="summary" />
+<meta name="twitter:site" value="@nytimes" />
+<meta property="twitter:url" content="http://www.nytimes.com/2016/07/03/opinion/sunday/brazils-olympic-catastrophe.html" />
+<meta property="twitter:title" content="Brazil’s Olympic Catastrophe" />
+<meta property="twitter:description" content="Can Rio pull off the Games with only weeks to go?" />
+<meta name="author" content="Vanessa Barbara" />
+<meta name="tone" content="opinion" id="article-tone" />
+<meta name="byl" content="By VANESSA BARBARA" />
+<meta name="PT" content="article" />
+<meta name="CG" content="opinion" />
+<meta name="SCG" content="sunday" />
+<meta name="PST" content="Op-Ed" />
+<meta name="tom" content="Op-Ed" />
+<meta name="edt" content="The New York Times on the Web" />
+<meta property="og:image" content="https://static01.nyt.com/images/2016/07/03/opinion/sunday/03barbara/03barbara-facebookJumbo.jpg" />
+<meta property="article:author" content="http://topics.nytimes.com/top/reference/timestopics/people/b/vanessa_barbara/index.html" />
+<meta property="article:tag" content="Olympic Games (2016)" />
+<meta name="des" content="Olympic Games (2016)" />
+<meta property="article:tag" content="Brazil" />
+<meta name="geo" content="Brazil" />
+<meta property="article:tag" content="Zika Virus" />
+<meta name="des" content="Zika Virus" />
+<meta property="article:tag" content="Police Brutality, Misconduct and Shootings" />
+<meta name="des" content="Police Brutality, Misconduct and Shootings" />
+<meta property="article:tag" content="Budgets and Budgeting" />
+<meta name="des" content="Budgets and Budgeting" />
+<meta property="article:tag" content="Crime and Criminals" />
+<meta name="des" content="Crime and Criminals" />
+<meta property="article:tag" content="Building (Construction)" />
+<meta name="des" content="Building (Construction)" />
+<meta property="article:tag" content="Rousseff, Dilma" />
+<meta name="per" content="Rousseff, Dilma" />
+<meta name="keywords" content="Olympic Games (2016),Brazil,Zika Virus,Police Brutality  Misconduct and Shootings,Budgets and Budgeting,Crime and Criminals,Building (Construction),Rousseff  Dilma" />
+<meta name="news_keywords" content="2016 Summer Olympics,Brazil,Zika Virus,Police Brutality;Police Misconduct;Police Shootings,Budget,Crime,Construction,Dilma Rousseff" />
+<meta property="article:modified" itemprop="dateModified" content="2016-07-01" />
+<meta name="thumbnail_150" content="https://static01.nyt.com/images/2016/07/03/opinion/sunday/03barbara/03barbara-thumbLarge.gif" />
+<meta name="thumbnail_150_height" content="150" />
+<meta name="thumbnail_150_width" content="150" />
+<meta property="twitter:image" content="https://static01.nyt.com/images/2016/07/03/opinion/sunday/03barbara/03barbara-thumbLarge.gif" />
+<meta itemprop="thumbnailUrl" name="thumbnail" content="https://static01.nyt.com/images/2016/07/03/opinion/sunday/03barbara/03barbara-thumbStandard.gif" />
+<meta name="thumbnail_height" content="75" />
+<meta name="thumbnail_width" content="75" />
+<meta name="nyt-collection:display-name" content="Vanessa Barbara" />
+<meta name="nyt-collection:identifier" content="vanessa-barbara" />
+<meta name="nyt-collection:url" content="http://www.nytimes.com/column/vanessa-barbara" />
+<meta name="nyt-collection:uri" content="/column/vanessa-barbara" />
+<meta name="nyt-collection:tone" content="opinion" />
+<meta name="nyt-collection:tagline" content="Brazilian politics and culture." />
+<meta name="nyt-collection:type" content="column" />
+<meta name="CN" content="vanessa-barbara" />
+<meta name="CT" content="column" />
+<meta name="dfp-ad-unit-path" content="opinion/sunday" />
+<meta name="dfp-amazon-enabled" content="false" />
+<link rel="alternate" type="application/json+oembed" href="https://www.nytimes.com/svc/oembed/json/?url=http%3A%2F%2Fwww.nytimes.com%2F2016%2F07%2F03%2Fopinion%2Fsunday%2Fbrazils-olympic-catastrophe.html" title="Brazil’s Olympic Catastrophe" />
+
+<!--[if (gt IE 9)|!(IE)]> <!-->
+<link rel="stylesheet" type="text/css" media="screen" href="https://a1.nyt.com/assets/article/20160630-145302/css/article/story/styles.css" />
+<!--<![endif]-->
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" media="screen" href="https://a1.nyt.com/assets/article/20160630-145302/css/article/story/styles-ie.css" />
+<![endif]-->
+<link rel="stylesheet" type="text/css" media="print" href="https://a1.nyt.com/assets/article/20160630-145302/css/article/story/styles-print.css" />
+<script id="page-config-data" type="text/json">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<script id="display_overrides">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<!-- Media.net Initialization Script -->
+<!--NY times Desktop-->
+<script type="text/javascript">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<script type="text/json" id="trending-link-json">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<script id="abtestconfig" type="application/json">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<!--  begin abra  -->
+
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<!--  end abra  -->
+
+<script id="user-info-data" type="application/json">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<!--[if (gte IE 9)|!(IE)]> <!-->
+<script data-main="foundation/main" src="https://a1.nyt.com/assets/article/20160630-145302/js/foundation/lib/framework.js"></script>
+<!--<![endif]-->
+<!--[if lt IE 9]>
+<script>
+require.map['*']['foundation/main'] = 'foundation/legacy_main';
+</script>
+<script data-main="foundation/legacy_main" src="https://a1.nyt.com/assets/article/20160630-145302/js/foundation/lib/framework.js"></script>
+<![endif]-->
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<script>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</script>
+<script src="https://a1.nyt.com/assets/article/20160630-145302/js/article/common/layout.js"></script></head>
