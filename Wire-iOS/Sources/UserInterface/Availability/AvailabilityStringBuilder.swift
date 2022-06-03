@@ -72,7 +72,7 @@ final class AvailabilityStringBuilder: NSObject {
         switch size {
         case .small:
             verticalCorrection = -1
-        case .medium, .large, .normal:
+        case .medium, .large, .normal, .navBar:
             verticalCorrection = 0
         }
 

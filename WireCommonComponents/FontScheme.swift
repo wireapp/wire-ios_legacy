@@ -29,6 +29,7 @@ public enum FontSize: String {
     case normal
     case medium
     case small
+    case navBar
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -190,7 +191,16 @@ public enum FontScheme {
                                             contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
-
+        let navBarPointSize = pointSize(fontSize: .navBar, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.navBar, .none, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.navBar, .bold, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.navBar, .medium, .none)]    = .systemFont(ofSize: navBarPointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.navBar, .semibold, .none)]  = .systemFont(ofSize: navBarPointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.navBar, .regular, .none)]   = .systemFont(ofSize: navBarPointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.navBar, .light, .none)]     = .systemFont(ofSize: navBarPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.navBar, .thin, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .thin)
+        
         let largePointSize = pointSize(fontSize: .large, contentSizeCategory: contentSizeCategory)
         
         fontsByFontSpec[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: largePointSize, weight: .light)
@@ -340,6 +350,32 @@ func pointSize(fontSize: FontSize, contentSizeCategory: UIContentSizeCategory) -
         return 50
     case (.large, .accessibilityExtraExtraExtraLarge):
         return 53
+        
+    // navBar
+    case (.navBar, .extraSmall):
+        return 13
+    case (.navBar, .small):
+        return 14
+    case (.navBar, .medium):
+        return 15
+    case (.navBar, .large):
+        return 16
+    case (.navBar, .extraLarge):
+        return 17
+    case (.navBar, .extraExtraLarge):
+        return 18
+    case (.navBar, .extraExtraExtraLarge):
+        return 20
+    case (.navBar, .accessibilityMedium):
+        return 22
+    case (.navBar, .accessibilityLarge):
+        return 24
+    case (.navBar, .accessibilityExtraLarge):
+        return 28
+    case (.navBar, .accessibilityExtraExtraLarge):
+        return 29
+    case (.navBar, .accessibilityExtraExtraExtraLarge):
+        return 30
         
     default:
         return 10
