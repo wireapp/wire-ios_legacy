@@ -94,6 +94,8 @@
 		A9F499E5279A8ABD00969F4B /* crypto_generichash_blake2b.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F499AA279A8ABD00969F4B /* crypto_generichash_blake2b.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9F499E6279A8ABD00969F4B /* crypto_sign_edwards25519sha512batch.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F499AB279A8ABD00969F4B /* crypto_sign_edwards25519sha512batch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9F499E8279AC5EC00969F4B /* ios-arm64Simulator.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A9F499E7279AC5EC00969F4B /* ios-arm64Simulator.xcconfig */; };
+		EE462BFC284A9DFE00CA2111 /* WireUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */; };
+		EE462BFD284A9DFE00CA2111 /* WireUtilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EEA2B85D24DAD1E700C6659E /* AEADEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2B85C24DAD1E700C6659E /* AEADEncryption.swift */; };
 		EEA2B85F24DC26BD00C6659E /* ChaCha20AEADEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2B85E24DC26BD00C6659E /* ChaCha20AEADEncryptionTests.swift */; };
 		EEA2B86124DC3F1600C6659E /* Byte.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2B86024DC3F1600C6659E /* Byte.swift */; };
@@ -125,6 +127,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE462BFE284A9DFF00CA2111 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE462BFD284A9DFE00CA2111 /* WireUtilities.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -231,6 +244,7 @@
 		A9F499E7279AC5EC00969F4B /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ios-arm64Simulator.xcconfig"; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"; sourceTree = SOURCE_ROOT; };
 		BA7EF9691B7109B600204A8E /* WireCryptoboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WireCryptoboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA7EF96F1B7109B600204A8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEA2B85C24DAD1E700C6659E /* AEADEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEADEncryption.swift; sourceTree = "<group>"; };
 		EEA2B85E24DC26BD00C6659E /* ChaCha20AEADEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaCha20AEADEncryptionTests.swift; sourceTree = "<group>"; };
 		EEA2B86024DC3F1600C6659E /* Byte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Byte.swift; sourceTree = "<group>"; };
@@ -248,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F4996F279A8A9600969F4B /* cryptobox.xcframework in Frameworks */,
+				EE462BFC284A9DFE00CA2111 /* WireUtilities.framework in Frameworks */,
 				A9C97AEB27973F9500C3B9D3 /* Clibsodium.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +502,7 @@
 		F10C8E221E9296BA00020408 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */,
 				A9F4996E279A8A9600969F4B /* cryptobox.xcframework */,
 				A9C97AE927973F9500C3B9D3 /* Clibsodium.xcframework */,
 			);
@@ -576,6 +592,7 @@
 				0928E2301BA0777A0057232E /* Frameworks */,
 				0928E2311BA0777A0057232E /* Headers */,
 				0928E2321BA0777A0057232E /* Resources */,
+				EE462BFE284A9DFF00CA2111 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

@@ -72,6 +72,8 @@
 		87B91C4D1E5C7E5D00A5EC11 /* unsplash_preview_small_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87B91C2A1E5C7E5D00A5EC11 /* unsplash_preview_small_profile.jpg */; };
 		87B91C4E1E5C7E5D00A5EC11 /* unsplash_small_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87B91C2B1E5C7E5D00A5EC11 /* unsplash_small_profile.jpg */; };
 		A9626B4B26932BEA0043CC31 /* ZMImageDownsampleOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9626B4A26932BE90043CC31 /* ZMImageDownsampleOperation.swift */; };
+		EE462C08284A9E5500CA2111 /* WireUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE462C07284A9E5500CA2111 /* WireUtilities.framework */; };
+		EE462C09284A9E5500CA2111 /* WireUtilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE462C07284A9E5500CA2111 /* WireUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EFF7A4722271E47500F1AC33 /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = EFF7A46F2271E47400F1AC33 /* Cartfile.resolved */; };
 		EFF7A4732271E47500F1AC33 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = EFF7A4702271E47400F1AC33 /* Cartfile.private */; };
 		EFF7A4742271E47500F1AC33 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = EFF7A4712271E47500F1AC33 /* Cartfile */; };
@@ -108,6 +110,17 @@
 				41FFE97A7A1BE7CA6D4FB591 /* WireTesting.xcframework in CopyFiles */,
 				FB1057E02A25A171F05761DF /* OCMock.xcframework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE462C0A284A9E5500CA2111 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EE462C09284A9E5500CA2111 /* WireUtilities.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -194,6 +207,7 @@
 		A9226279279ECDA500D4CF72 /* ios-arm64Simulator.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "ios-arm64Simulator.xcconfig"; path = "Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A9626B4A26932BE90043CC31 /* ZMImageDownsampleOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMImageDownsampleOperation.swift; sourceTree = "<group>"; };
 		D599521BDA7B163A187C42C4 /* WireTesting.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireTesting.xcframework; path = Carthage/Build/WireTesting.xcframework; sourceTree = "<group>"; };
+		EE462C07284A9E5500CA2111 /* WireUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFF7A46F2271E47400F1AC33 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		EFF7A4702271E47400F1AC33 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		EFF7A4712271E47500F1AC33 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -204,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE462C08284A9E5500CA2111 /* WireUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +256,7 @@
 		098CB1191B5FA6E100712DF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE462C07284A9E5500CA2111 /* WireUtilities.framework */,
 				A831A9FCA505EEF5AE570F4E /* OCMock.xcframework */,
 				D599521BDA7B163A187C42C4 /* WireTesting.xcframework */,
 			);
@@ -434,6 +450,7 @@
 				096960081B663E7B006DF53B /* Frameworks */,
 				096960091B663E7B006DF53B /* Headers */,
 				0969600A1B663E7B006DF53B /* Resources */,
+				EE462C0A284A9E5500CA2111 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

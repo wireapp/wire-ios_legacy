@@ -1,2 +1,1 @@
-github "wireapp/wire-ios-utilities" ~> 45.0.0
 github "wireapp/Starscream" "4.0.4_Xcode12.4_module_stability"

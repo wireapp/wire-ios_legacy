@@ -1,2 +1,1 @@
 github "wireapp/HTMLString" "6.0.1_xcframework"
-github "wireapp/wire-ios-utilities" ~> 45.0.0
