@@ -93,22 +93,19 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.textAlignment = .natural
         subtitleTextView.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
 
-//        let font = FontSpec(.large, .thin).font!
-//        let linkFont = FontSpec(.large, .none).font!
+        let font = FontSpec(.large, .thin).font!
+        let linkFont = FontSpec(.large, .none).font!
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
-//        let linkAttributes: [NSAttributedString.Key: Any] = [
-//            .font: FontSpec.largeRegularFont,
-//            .link: learnMoreURL
-//        ]
-        
-        let attribute = [ NSAttributedString.Key.foregroundColor: color ]
-        let attributedString = NSAttributedString(string: subtitle, attributes: attribute)
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            .font: linkFont,
+            .link: learnMoreURL
+        ]
 
-//        let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
-        subtitleTextView.attributedText = attributedString
-        subtitleTextView.accessibilityLabel = attributedString.string
+        let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
+        subtitleTextView.attributedText = text
+        subtitleTextView.accessibilityLabel = text.string
         subtitleTextView.delegate = self
     }
 
