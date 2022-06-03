@@ -1,0 +1,34 @@
+name: Dispatch new release v0.1
+
+on:
+  workflow_dispatch:
+  release:
+    types: [ published ]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: tell downstream(s) repo this repo published a new release
+        run: |
+          curl -X POST https://api.github.com/repos/wireapp/wire-ios-link-preview/dispatches \
+          -H "Accept: application/vnd.github.v3+json" \
+          -u ${{ secrets.DISPATCH_SECRET }} \
+          --data '{"event_type": "newRelease", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+
+          curl -X POST https://api.github.com/repos/wireapp/wire-ios-images/dispatches \
+          -H "Accept: application/vnd.github.v3+json" \
+          -u ${{ secrets.DISPATCH_SECRET }} \
+          --data '{"event_type": "newRelease", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+
+          curl -X POST https://api.github.com/repos/wireapp/wire-ios-cryptobox/dispatches \
+          -H "Accept: application/vnd.github.v3+json" \
+          -u ${{ secrets.DISPATCH_SECRET }} \
+          --data '{"event_type": "newRelease", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+
+
+          curl -X POST https://api.github.com/repos/wireapp/wire-ios-transport/dispatches \
+          -H "Accept: application/vnd.github.v3+json" \
+          -u ${{ secrets.DISPATCH_SECRET }} \
+          --data '{"event_type": "newRelease", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'

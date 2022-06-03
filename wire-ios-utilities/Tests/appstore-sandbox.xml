@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>AppIDName</key>
+        <string>Xcode iOS Wildcard App ID</string>
+        <key>ApplicationIdentifierPrefix</key>
+        <array>
+            <string>EDF3JCE8BC</string>
+        </array>
+        <key>Platform</key>
+        <array>
+            <string>iOS</string>
+        </array>
+        <key>Entitlements</key>
+        <dict>
+            <key>application-identifier</key>
+            <string>EDF3JCE8BC.*</string>
+            <key>com.apple.developer.team-identifier</key>
+            <string>EDF3JCE8BC</string>
+        </dict>
+        <key>TeamIdentifier</key>
+        <array>
+            <string>EDF3JCE8BC</string>
+        </array>
+        <key>TimeToLive</key>
+        <integer>365</integer>
+    </dict>
+</plist>

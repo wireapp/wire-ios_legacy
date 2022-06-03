@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>ApplicationIdentifierPrefix</key>
+        <array>
+            <string>W5KEQBF9B5</string>
+        </array>
+        <key>Entitlements</key>
+        <dict>
+            <key>com.apple.developer.team-identifier</key>
+            <string>W5KEQBF9B5</string>
+            <key>aps-environment</key>
+            <string>development</string>
+        </dict>
+        <key>TeamIdentifier</key>
+        <array>
+            <string>W5KEQBF9B5</string>
+        </array>
+        <key>TimeToLive</key>
+        <integer>365</integer>
+    </dict>
+</plist>

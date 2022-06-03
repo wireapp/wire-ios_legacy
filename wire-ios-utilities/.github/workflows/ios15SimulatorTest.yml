@@ -1,0 +1,19 @@
+name: iOS 15 Simulator Test
+
+on: 
+  workflow_dispatch:
+jobs:
+  Run_Tests_Xcode_13_0_iOS_15:
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v1
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_13.0.app && /usr/bin/xcodebuild -version
+
+    - name: Carthage
+      env:
+        GITHUB_TOKEN: ${{ secrets.DISPATCH_SECRET }}
+      run: carthage bootstrap --platform ios --use-xcframeworks
+
+    - name: Run tests
+      run: xcodebuild test -scheme WireUtilities -project WireUtilities.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
