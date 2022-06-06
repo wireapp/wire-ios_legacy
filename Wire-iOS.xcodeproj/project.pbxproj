@@ -1242,6 +1242,9 @@
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
+		EE08B348284E33290022830B /* CoreCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08B347284E33290022830B /* CoreCrypto.swift */; };
+		EE08B35B284E41E60022830B /* WireCoreCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE08B358284E41C80022830B /* WireCoreCrypto.framework */; };
+		EE08B35C284E41E60022830B /* WireCoreCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE08B358284E41C80022830B /* WireCoreCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
@@ -1727,6 +1730,20 @@
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
 		};
+		EE08B357284E41C80022830B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE08B352284E41C70022830B /* WireCoreCrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE212A6E283E5BC000AB1040;
+			remoteInfo = WireCoreCrypto;
+		};
+		EE08B359284E41C80022830B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE08B352284E41C70022830B /* WireCoreCrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE212A78283E5BC000AB1040;
+			remoteInfo = WireCoreCryptoTests;
+		};
 		F1FEA14F21DCEB1700790A54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1790,6 +1807,7 @@
 				A96867B326A5E5A000679D95 /* WireProtos.xcframework in Embed Frameworks */,
 				A96867BF26A5E5A000679D95 /* WireUtilities.xcframework in Embed Frameworks */,
 				06D5C1DC2773527F00DFCD08 /* WireNotificationEngine.xcframework in Embed Frameworks */,
+				EE08B35C284E41E60022830B /* WireCoreCrypto.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3123,6 +3141,8 @@
 		EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Router.swift; sourceTree = "<group>"; };
 		EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.Interactor.swift; sourceTree = "<group>"; };
 		EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.View.swift; sourceTree = "<group>"; };
+		EE08B347284E33290022830B /* CoreCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCrypto.swift; sourceTree = "<group>"; };
+		EE08B352284E41C70022830B /* WireCoreCrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireCoreCrypto.xcodeproj; path = WireCoreCrypto/WireCoreCrypto.xcodeproj; sourceTree = "<group>"; };
 		EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleRouterTests.swift; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
@@ -3603,6 +3623,7 @@
 				A96867D626A5E70D00679D95 /* SwiftProtobuf.xcframework in Frameworks */,
 				A96867AA26A5E59F00679D95 /* WireCryptobox.xcframework in Frameworks */,
 				A96867AC26A5E59F00679D95 /* WireDataModel.xcframework in Frameworks */,
+				EE08B35B284E41E60022830B /* WireCoreCrypto.framework in Frameworks */,
 				1658E93226C5609F003D0090 /* Starscream.xcframework in Frameworks */,
 				A96867FC26A5ECA700679D95 /* avs.xcframework in Frameworks */,
 				A96867DC26A5E71900679D95 /* CallKit.framework in Frameworks */,
@@ -5593,6 +5614,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				EE08B352284E41C70022830B /* WireCoreCrypto.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				F12C48952199CBB600F49548 /* Configuration */,
@@ -5694,6 +5716,7 @@
 		8FC850D8199245760008B66B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EE08B346284E33180022830B /* MLS */,
 				EE5F54CF259B777B00F11F3C /* Viper */,
 				5EC16B6520EB782900955156 /* Vendor */,
 				871BC3181D34F94200DF0793 /* Components */,
@@ -6950,6 +6973,23 @@
 			path = "App Lock";
 			sourceTree = "<group>";
 		};
+		EE08B346284E33180022830B /* MLS */ = {
+			isa = PBXGroup;
+			children = (
+				EE08B347284E33290022830B /* CoreCrypto.swift */,
+			);
+			path = MLS;
+			sourceTree = "<group>";
+		};
+		EE08B353284E41C70022830B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE08B358284E41C80022830B /* WireCoreCrypto.framework */,
+				EE08B35A284E41C80022830B /* WireCoreCryptoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		EE430EBA25C208A90056BDE3 /* Screen Curtain */ = {
 			isa = PBXGroup;
 			children = (
@@ -7744,6 +7784,12 @@
 			);
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EE08B353284E41C70022830B /* Products */;
+					ProjectRef = EE08B352284E41C70022830B /* WireCoreCrypto.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -7754,6 +7800,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EE08B358284E41C80022830B /* WireCoreCrypto.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireCoreCrypto.framework;
+			remoteRef = EE08B357284E41C80022830B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EE08B35A284E41C80022830B /* WireCoreCryptoTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireCoreCryptoTests.xctest;
+			remoteRef = EE08B359284E41C80022830B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		065A5ADC279B07AC002D4D1E /* Resources */ = {
@@ -8624,6 +8687,7 @@
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
 				EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */,
+				EE08B348284E33290022830B /* CoreCrypto.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				A90BECF124A23E6500E5C008 /* LinkViewDelegate.swift in Sources */,
 				A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */,
