@@ -42,11 +42,22 @@ struct DeveloperToolsView: View {
         }
     }
 
+    @ViewBuilder
     private func itemView(for item: DeveloperToolsViewModel.Item) -> some View {
-        Cell(title: item.title, value: item.value)
-            .onTapGesture {
+        switch item {
+        case let .button(buttonItem):
+            SwiftUI.Button {
                 viewModel.handleEvent(.itemTapped(item))
+            } label: {
+                Text(buttonItem.title)
             }
+
+        case let .text(textItem):
+            TextItemCell(title: textItem.title, value: textItem.value)
+                .onTapGesture {
+                    viewModel.handleEvent(.itemTapped(item))
+                }
+        }
     }
 
     private var dismissButton: some View {
@@ -61,7 +72,7 @@ struct DeveloperToolsView: View {
 // MARK: - Subviews
 
 @available(iOS 14, *)
-private struct Cell: View {
+private struct TextItemCell: View {
 
     let title: String
     let value: String

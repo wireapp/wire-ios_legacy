@@ -34,7 +34,32 @@ final class DeveloperToolsViewModel: ObservableObject {
 
     }
 
-    struct Item: Identifiable {
+    enum Item: Identifiable {
+
+        case button(ButtonItem)
+        case text(TextItem)
+
+        var id: UUID {
+            switch self {
+            case .button(let buttonItem):
+                return buttonItem.id
+
+            case .text(let textItem):
+                return textItem.id
+            }
+        }
+
+    }
+
+    struct ButtonItem: Identifiable {
+
+        let id = UUID()
+        let title: String
+        let action: () -> Void
+
+    }
+
+    struct TextItem: Identifiable {
 
         let id = UUID()
         let title: String
@@ -64,20 +89,27 @@ final class DeveloperToolsViewModel: ObservableObject {
         sections = []
 
         sections.append(Section(
+            header: "Logs",
+            items: [
+                .button(ButtonItem(title: "Send debug logs", action: sendDebugLogs))
+            ]
+        ))
+
+        sections.append(Section(
             header: "App info",
             items: [
-                Item(title: "App version", value: appVersion),
-                Item(title: "Build number", value: buildNumber)
+                .text(TextItem(title: "App version", value: appVersion)),
+                .text(TextItem(title: "Build number", value: buildNumber))
             ]
         ))
 
         sections.append(Section(
             header: "Backend info",
             items: [
-                Item(title: "Name", value: backendName),
-                Item(title: "Domain", value: backendDomain),
-                Item(title: "API version", value: apiVersion),
-                Item(title: "Is federation enabled?", value: isFederationEnabled)
+                .text(TextItem(title: "Name", value: backendName)),
+                .text(TextItem(title: "Domain", value: backendDomain)),
+                .text(TextItem(title: "API version", value: apiVersion)),
+                .text(TextItem(title: "Is federation enabled?", value: isFederationEnabled))
             ]
         ))
 
@@ -85,11 +117,11 @@ final class DeveloperToolsViewModel: ObservableObject {
             sections.append(Section(
                 header: "Self user",
                 items: [
-                    Item(title: "Handle", value: selfUser.handle ?? "None"),
-                    Item(title: "Email", value: selfUser.emailAddress ?? "None"),
-                    Item(title: "User ID", value: selfUser.remoteIdentifier.uuidString),
-                    Item(title: "Analytics ID", value: selfUser.analyticsIdentifier?.uppercased() ?? "None"),
-                    Item(title: "Client ID", value: selfClient?.remoteIdentifier?.uppercased() ?? "None")
+                    .text(TextItem(title: "Handle", value: selfUser.handle ?? "None")),
+                    .text(TextItem(title: "Email", value: selfUser.emailAddress ?? "None")),
+                    .text(TextItem(title: "User ID", value: selfUser.remoteIdentifier.uuidString)),
+                    .text(TextItem(title: "Analytics ID", value: selfUser.analyticsIdentifier?.uppercased() ?? "None")),
+                    .text(TextItem(title: "Client ID", value: selfClient?.remoteIdentifier?.uppercased() ?? "None"))
                 ]
             ))
         }
@@ -98,8 +130,8 @@ final class DeveloperToolsViewModel: ObservableObject {
             sections.append(Section(
                 header: "Push token",
                 items: [
-                    Item(title: "Token type", value: String(describing: pushToken.tokenType)),
-                    Item(title: "Token data", value: pushToken.deviceTokenString)
+                    .text(TextItem(title: "Token type", value: String(describing: pushToken.tokenType))),
+                    .text(TextItem(title: "Token data", value: pushToken.deviceTokenString))
                 ]
             ))
         }
@@ -112,9 +144,18 @@ final class DeveloperToolsViewModel: ObservableObject {
         case .dismissButtonTapped:
             onDismiss?()
 
-        case let .itemTapped(item):
-            UIPasteboard.general.string = item.value
+        case let .itemTapped(.text(textItem)):
+            UIPasteboard.general.string = textItem.value
+
+        case let .itemTapped(.button(buttonItem)):
+            buttonItem.action()
         }
+    }
+
+    // MARK: - Actions
+
+    private func sendDebugLogs() {
+        DebugLogSender.sendLogsByEmail(message: "Send logs yo!")
     }
 
     // MARK: - Helpers
