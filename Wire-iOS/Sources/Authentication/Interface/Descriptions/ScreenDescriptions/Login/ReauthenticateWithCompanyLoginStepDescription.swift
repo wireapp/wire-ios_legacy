@@ -28,10 +28,11 @@ class ReauthenticateWithCompanyLoginStepDescription: AuthenticationStepDescripti
 
     init() {
         backButton = BackButtonDescription()
-        headline = "registration.signin.title".localized
-        subtext = "signin_logout.sso.subheadline".localized
-
-        mainView = SolidButtonDescription(title: "signin_logout.sso.buton".localized, accessibilityIdentifier: "company_login")
+        headline = L10n.Localizable.Registration.Signin.title
+        subtext = L10n.Localizable.SigninLogout.Sso.subheadline
+        mainView = SolidButtonDescription(
+            title: L10n.Localizable.SigninLogout.Sso.buton,
+            accessibilityIdentifier: "company_login")
         secondaryView = nil
     }
 

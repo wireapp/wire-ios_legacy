@@ -22,7 +22,7 @@ extension UIAlertController {
 
     static func requestRestorePassword(completion: @escaping (String?) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "registration.no_history.restore_backup.password.title".localized,
+            title: L10n.Localizable.Registration.NoHistory.RestoreBackup.Password.title,
             message: nil,
             preferredStyle: .alert
         )
@@ -34,15 +34,17 @@ extension UIAlertController {
             completion(result)
         }
 
-        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
-            complete(controller.textFields?.first?.text)
+        let okAction = UIAlertAction(
+            title: L10n.Localizable.General.ok,
+            style: .default){ [controller] _ in
+                complete(controller.textFields?.first?.text)
         }
 
         okAction.isEnabled = false
 
         controller.addTextField { textField in
             textField.isSecureTextEntry = true
-            textField.placeholder = "registration.no_history.restore_backup.password.placeholder".localized
+            textField.placeholder = L10n.Localizable.Registration.NoHistory.RestoreBackup.Password.placeholder
             token = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: .main) { _ in
                 okAction.isEnabled = textField.text?.count ?? 0 >= 0
             }
@@ -55,7 +57,7 @@ extension UIAlertController {
 
     static func importWrongPasswordError(completion: @escaping (UIAlertAction) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "registration.no_history.restore_backup.password_error.title".localized,
+            title: L10n.Localizable.Registration.NoHistory.RestoreBackup.PasswordError.title,
             message: nil,
             preferredStyle: .alert
         )

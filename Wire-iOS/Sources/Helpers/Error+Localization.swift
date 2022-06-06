@@ -24,65 +24,66 @@ extension SessionManager.AccountError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .accountLimitReached:
-            return "self.settings.add_account.error.title".localized
+            return L10n.Localizable.Self.Settings.AddAccount.Error.title
         }
     }
 
     public var failureReason: String? {
         switch self {
         case .accountLimitReached:
-            return "self.settings.add_account.error.message".localized
+            return L10n.Localizable.Self.Settings.AddAccount.Error.message
         }
     }
 
 }
 
 extension SessionManager.SwitchBackendError: LocalizedError {
-
+    typealias BackendError = L10n.Localizable.UrlAction.SwitchBackend.Error
     public var errorDescription: String? {
         switch self {
         case .invalidBackend:
-            return "url_action.switch_backend.error.invalid_backend.title".localized
+            return BackendError.InvalidBackend.title
         case .loggedInAccounts:
-            return "url_action.switch_backend.error.logged_in.title".localized
+            
+            return BackendError.LoggedIn.title
         }
     }
 
     public var failureReason: String? {
         switch self {
         case .invalidBackend:
-            return "url_action.switch_backend.error.invalid_backend".localized
+            return BackendError.invalidBackend
         case .loggedInAccounts:
-            return "url_action.switch_backend.error.logged_in".localized
+            return BackendError.loggedIn
         }
     }
 }
 
 extension DeepLinkRequestError: LocalizedError {
-
+    typealias URL_Actions = L10n.Localizable.UrlAction
     public var errorDescription: String? {
         switch self {
         case .invalidUserLink:
-            return "url_action.invalid_user.title".localized
+            return URL_Actions.InvalidUser.title
         case .invalidConversationLink:
-            return "url_action.invalid_conversation.title".localized
+            return URL_Actions.InvalidConversation.title
         case .malformedLink:
-            return "url_action.invalid_link.title".localized
+            return URL_Actions.InvalidLink.title
         case .notLoggedIn:
-            return "url_action.authorization_required.title".localized
+            return URL_Actions.AuthorizationRequired.title
         }
     }
 
     public var failureReason: String? {
         switch self {
         case .invalidUserLink:
-            return "url_action.invalid_user.message".localized
+            return URL_Actions.InvalidUser.message
         case .invalidConversationLink:
-            return "url_action.invalid_conversation.message".localized
+            return URL_Actions.InvalidConversation.message
         case .malformedLink:
-            return "url_action.invalid_link.message".localized
+            return URL_Actions.InvalidLink.message
         case .notLoggedIn:
-            return "url_action.authorization_required.message".localized
+            return URL_Actions.AuthorizationRequired.message
         }
     }
 
@@ -91,11 +92,11 @@ extension DeepLinkRequestError: LocalizedError {
 extension CompanyLoginError: LocalizedError {
 
     public var errorDescription: String? {
-        return "general.failure".localized
+        return L10n.Localizable.General.failure
     }
 
     public var failureReason: String? {
-        return "login.sso.error.alert.message".localized(args: displayCode)
+        return L10n.Localizable.Login.Sso.Error.Alert.message(displayCode)
     }
 
 }
@@ -105,15 +106,14 @@ extension ConmpanyLoginRequestError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidLink:
-            return "login.sso.start_error_title".localized
+            return L10n.Localizable.Login.Sso.startErrorTitle
         }
     }
 
     public var failureReason: String? {
         switch self {
         case .invalidLink:
-            return "login.sso.link_error_message".localized
-        }
+            return L10n.Localizable.Login.Sso.linkErrorMessage        }
     }
 }
 

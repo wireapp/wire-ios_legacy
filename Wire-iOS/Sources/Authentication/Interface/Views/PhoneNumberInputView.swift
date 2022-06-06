@@ -124,8 +124,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         // textField
         textField.textInsets.left = 0
-        textField.placeholder = "registration.enter_phone_number.placeholder".localized(uppercased: true)
-        textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
+        textField.placeholder = L10n.Localizable.Registration.EnterPhoneNumber.placeholder.uppercased()
+        textField.accessibilityLabel = L10n.Localizable.Registration.EnterPhoneNumber.placeholder
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.tintColor = UIColor.Team.activeButtonColor
         textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
@@ -233,10 +233,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         updateCountryButtonLabel()
 
         countryPickerButton.accessibilityValue = country.displayName
-        countryPickerButton.accessibilityLabel = "registration.phone_country".localized
-
+        countryPickerButton.accessibilityLabel = L10n.Localizable.Registration.phoneCountry
         countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
-        countryCodeInputView.accessibilityLabel = "registration.phone_code".localized
+        countryCodeInputView.accessibilityLabel = L10n.Localizable.Registration.phoneCode
         countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 

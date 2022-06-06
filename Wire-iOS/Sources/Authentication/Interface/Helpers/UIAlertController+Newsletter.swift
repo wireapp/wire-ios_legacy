@@ -30,9 +30,10 @@ extension UIAlertController {
     static func showNewsletterSubscriptionDialog(over viewController: UIViewController, completionHandler: @escaping ResultHandler) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts && !dataCollectionDisabled else { return }
 
-        let alertController = UIAlertController(title: "news_offers.consent.title".localized,
-                                                message: "news_offers.consent.message".localized,
-                                                preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: L10n.Localizable.NewsOffers.Consent.title,
+            message: L10n.Localizable.NewsOffers.Consent.message,
+            preferredStyle: .alert)
 
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             let browserViewController = BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
@@ -44,20 +45,23 @@ extension UIAlertController {
             viewController.present(browserViewController, animated: true)
         }
 
-        alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
-                                                style: .default,
-                                                handler: privacyPolicyActionHandler))
+        alertController.addAction(UIAlertAction(
+            title: L10n.Localizable.NewsOffers.Consent.Button.PrivacyPolicy.title,
+            style: .default,
+            handler: privacyPolicyActionHandler))
 
-        alertController.addAction(UIAlertAction(title: "general.decline".localized,
-                                                style: .default,
-                                                handler: { (_) in
-                                                    completionHandler(false)
+        alertController.addAction(UIAlertAction(
+            title: L10n.Localizable.General.decline,
+            style: .default,
+            handler: { (_) in
+                completionHandler(false)
         }))
 
-        alertController.addAction(UIAlertAction(title: "general.accept".localized,
-                                                style: .cancel,
-                                                handler: { (_) in
-                                                    completionHandler(true)
+        alertController.addAction(UIAlertAction(
+            title: L10n.Localizable.General.accept,
+            style: .cancel,
+            handler: { (_) in
+                completionHandler(true)
         }))
 
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true

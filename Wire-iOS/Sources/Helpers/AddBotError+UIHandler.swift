@@ -23,15 +23,15 @@ import WireSyncEngine
 extension AddBotError {
 
     var localizedTitle: String {
-        return "peoplepicker.services.add_service.error.title".localized
+        return L10n.Localizable.Peoplepicker.Services.AddService.Error.title
     }
 
     var localizedMessage: String {
         switch self {
         case .tooManyParticipants:
-            return "peoplepicker.services.add_service.error.full".localized
+            return L10n.Localizable.Peoplepicker.Services.AddService.Error.full
         default:
-            return "peoplepicker.services.add_service.error.default".localized
+            return L10n.Localizable.Peoplepicker.Services.AddService.Error.default
         }
     }
 

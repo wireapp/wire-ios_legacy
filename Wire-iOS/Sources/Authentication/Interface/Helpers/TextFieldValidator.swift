@@ -105,38 +105,38 @@ extension TextFieldValidator.ValidationError: LocalizedError {
         case .tooShort(kind: let kind):
             switch kind {
             case .name:
-                return "name.guidance.tooshort".localized
+                return L10n.Localizable.Name.Guidance.tooshort
             case .email:
-                return "email.guidance.tooshort".localized
+                return L10n.Localizable.Email.Guidance.tooshort
             case .password, .passcode:
                 return PasswordRuleSet.localizedErrorMessage
             case .unknown:
                 return "unknown.guidance.tooshort".localized
             case .phoneNumber:
-                return "phone.guidance.tooshort".localized
+                return L10n.Localizable.Phone.Guidance.tooshort
             }
         case .tooLong(kind: let kind):
             switch kind {
             case .name:
-                return "name.guidance.toolong".localized
+                return L10n.Localizable.Name.Guidance.toolong
             case .email:
-                return "email.guidance.toolong".localized
+                return L10n.Localizable.Email.Guidance.toolong
             case .password, .passcode:
-                return "password.guidance.toolong".localized
+                return L10n.Localizable.Password.Guidance.toolong
             case .unknown:
                 return "unknown.guidance.toolong".localized
             case .phoneNumber:
-                return "phone.guidance.toolong".localized
+                return L10n.Localizable.Phone.Guidance.toolong
             }
         case .invalidEmail:
-            return "email.guidance.invalid".localized
+            return L10n.Localizable.Email.Guidance.invalid
         case .invalidPhoneNumber:
-            return "phone.guidance.invalid".localized
+            return L10n.Localizable.Phone.Guidance.invalid
         case .custom(let description):
             return description
         case .invalidPassword(let violations):
             return violations.contains(.tooLong)
-                ? "password.guidance.toolong".localized
+                ? L10n.Localizable.Password.Guidance.toolong
                 : PasswordRuleSet.localizedErrorMessage
         }
     }

@@ -130,7 +130,7 @@ extension ImageResourceView: UIContextMenuInteractionDelegate {
         return UIContextMenuConfiguration(identifier: nil,
                                           previewProvider: previewProvider,
                                           actionProvider: { _ in
-                                            return self.delegate?.makeContextMenu(title: "conversation.input_bar.message_preview.image".localized, view: self)
+                                            return self.delegate?.makeContextMenu(title: L10n.Localizable.Conversation.InputBar.MessagePreview.image, view: self)
         })
     }
 

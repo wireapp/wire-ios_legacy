@@ -89,14 +89,23 @@ extension ZMConversation {
 
     func warnAboutSlowConnection(handler : @escaping (_ abortCall: Bool) -> Void) {
         if NetworkConditionHelper.shared.qualityType() == .type2G {
-            let badConnectionController = UIAlertController(title: "error.call.slow_connection.title".localized, message: "error.call.slow_connection".localized, preferredStyle: .alert)
+            let badConnectionController = UIAlertController(
+                title: L10n.Localizable.Error.Call.SlowConnection.title,
+                message: L10n.Localizable.Error.Call.slowConnection,
+                preferredStyle: .alert)
 
-            badConnectionController.addAction(UIAlertAction(title: "error.call.slow_connection.call_anyway".localized, style: .default, handler: { (_) in
-                handler(false)
+            badConnectionController.addAction(UIAlertAction(
+                title: L10n.Localizable.Error.Call.SlowConnection.callAnyway,
+                style: .default,
+                handler: { (_) in
+                    handler(false)
             }))
 
-            badConnectionController.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (_) in
-                handler(true)
+            badConnectionController.addAction(UIAlertAction(
+                title: L10n.Localizable.General.cancel,
+                style: .cancel,
+                handler: { (_) in
+                    handler(true)
             }))
 
             ZClientViewController.shared?.present(badConnectionController, animated: true)
@@ -110,8 +119,9 @@ extension ZMConversation {
             return false
         }
 
-        let internetConnectionAlert = UIAlertController.alertWithOKButton(title: "voice.network_error.title".localized,
-                                                                          message: "voice.network_error.body".localized)
+        let internetConnectionAlert = UIAlertController.alertWithOKButton(
+            title: L10n.Localizable.Voice.NetworkError.title,
+            message: L10n.Localizable.Voice.NetworkError.body)
 
         AppDelegate.shared.window?.rootViewController?.present(internetConnectionAlert, animated: true)
 

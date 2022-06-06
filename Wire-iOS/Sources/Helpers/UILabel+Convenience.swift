@@ -65,7 +65,7 @@ extension UILabel {
         style.firstLineHeadIndent = leadingMargin
         style.headIndent = leadingMargin
 
-        label.attributedText = NSAttributedString(string: "passcode.hint_label".localized,
+        label.attributedText = NSAttributedString(string: L10n.Localizable.Passcode.hintLabel,
                                                   attributes: [NSAttributedString.Key.paragraphStyle: style])
         return label
     }

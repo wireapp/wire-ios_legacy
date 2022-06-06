@@ -22,13 +22,13 @@ extension UIAlertController {
 
     static func historyImportWarning(completion: @escaping () -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "registration.no_history.restore_backup_warning.title".localized,
-            message: "registration.no_history.restore_backup_warning.message".localized,
+            title: L10n.Localizable.Registration.NoHistory.RestoreBackupWarning.title,
+            message: L10n.Localizable.Registration.NoHistory.RestoreBackupWarning.message,
             alertAction: .cancel()
         )
 
         let proceedAction = UIAlertAction(
-            title: "registration.no_history.restore_backup_warning.proceed".localized,
+            title: L10n.Localizable.Registration.NoHistory.RestoreBackupWarning.proceed,
             style: .default,
             handler: { _ in completion() }
         )

@@ -23,8 +23,12 @@ class VerifyPhoneStepSecondaryView: AuthenticationSecondaryViewDescription {
     weak var actioner: AuthenticationActioner?
 
     init(phoneNumber: String, allowChange: Bool) {
-        let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        let changePhoneNumber = ButtonDescription(title: "team.activation_code.button.change_phone".localized, accessibilityIdentifier: "change_phone_button")
+        let resendCode = ButtonDescription(
+            title: L10n.Localizable.Team.ActivationCode.Button.resend,
+            accessibilityIdentifier: "resend_button")
+        let changePhoneNumber = ButtonDescription(
+            title: L10n.Localizable.Team.ActivationCode.Button.changePhone,
+            accessibilityIdentifier: "change_phone_button")
         views = allowChange ? [resendCode, changePhoneNumber] : [resendCode]
 
         resendCode.buttonTapped = { [weak self] in
@@ -49,8 +53,8 @@ final class VerifyPhoneStepDescription: AuthenticationStepDescription {
         self.phoneNumber = phoneNumber
         backButton = nil
         mainView = VerificationCodeFieldDescription()
-        headline = "team.phone_activation_code.headline".localized
-        subtext = "team.activation_code.subheadline".localized(args: phoneNumber)
+        headline = L10n.Localizable.Team.PhoneActivationCode.headline
+        subtext = L10n.Localizable.Team.ActivationCode.subheadline(phoneNumber)
         secondaryView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber, allowChange: allowChange)
     }
 

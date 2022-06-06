@@ -78,15 +78,16 @@ extension UserClientType {
 extension DeviceType {
 
     var localizedDescription: String {
+        typealias DeviceType = L10n.Localizable.Device.`Type`
         switch self {
         case .permanent:
-            return "device.type.permanent".localized
+            return DeviceType.permanent
         case .temporary:
-            return "device.type.temporary".localized
+            return DeviceType.temporary
         case .legalHold:
-            return "device.type.legalhold".localized
+            return DeviceType.legalhold
         default:
-            return "device.type.unknown".localized
+            return DeviceType.unknown
         }
     }
 
@@ -95,17 +96,18 @@ extension DeviceType {
 extension DeviceClass {
 
     var localizedDescription: String {
+        typealias DeviceType = L10n.Localizable.Device.Class
         switch self {
         case .phone:
-            return "device.class.phone".localized
+            return DeviceType.phone
         case .desktop:
-            return "device.class.desktop".localized
+            return DeviceType.desktop
         case .tablet:
-            return "device.class.tablet".localized
+            return DeviceType.tablet
         case .legalHold:
-            return "device.class.legalhold".localized
+            return DeviceType.legalhold
         default:
-            return "device.class.unknown".localized
+            return DeviceType.unknown
         }
     }
 

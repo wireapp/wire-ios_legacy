@@ -32,10 +32,11 @@ class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        headline = "registration.signin.too_many_devices.title".localized
-        subtext = "registration.signin.too_many_devices.subtitle".localized
-
-        mainView = SolidButtonDescription(title: "registration.signin.too_many_devices.manage_button.title".localized, accessibilityIdentifier: "manage_devices")
+        headline = L10n.Localizable.Registration.Signin.TooManyDevices.title
+        subtext = L10n.Localizable.Registration.Signin.TooManyDevices.subtitle
+        mainView = SolidButtonDescription(
+            title: L10n.Localizable.Registration.Signin.TooManyDevices.ManageButton.title,
+            accessibilityIdentifier: "manage_devices")
         secondaryView = nil
     }
 

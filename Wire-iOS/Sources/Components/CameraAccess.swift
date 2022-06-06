@@ -43,7 +43,7 @@ final class CameraAccess: NSObject {
     }
 
     static private func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
-        let alert = UIAlertController.alertWithOKButton(title: "conversation.input_bar.ongoing_call_alert.title".localized,
+        let alert = UIAlertController.alertWithOKButton(title: L10n.Localizable.Conversation.InputBar.OngoingCallAlert.title,
                                             message: feature.message.localized)
 
         viewController.present(alert, animated: true)

@@ -106,10 +106,16 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let phoneInputView = PhoneNumberInputView()
 
     let tabBar: TabBar = {
-        let emailTab = UITabBarItem(title: "registration.register_by_email".localized(uppercased: true), image: nil, selectedImage: nil)
+        let emailTab = UITabBarItem(
+            title: L10n.Localizable.Registration.registerByEmail.uppercased(),
+            image: nil,
+            selectedImage: nil)
         emailTab.accessibilityIdentifier = "UseEmail"
 
-        let passwordTab = UITabBarItem(title: "registration.register_by_phone".localized(uppercased: true), image: nil, selectedImage: nil)
+        let passwordTab = UITabBarItem(
+            title: L10n.Localizable.Registration.registerByPhone.uppercased(),
+            image: nil,
+            selectedImage: nil)
         passwordTab.accessibilityIdentifier = "UsePhone"
 
         return TabBar(items: [emailTab, passwordTab], style: .light)
@@ -149,7 +155,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         // Email input view
         emailInputField.delegate = self
         emailInputField.textFieldValidationDelegate = self
-        emailInputField.placeholder = "email.placeholder".localized(uppercased: true)
+        emailInputField.placeholder = L10n.Localizable.Email.placeholder.uppercased()
         emailInputField.addTarget(self, action: #selector(emailTextInputDidChange), for: .editingChanged)
         emailInputField.confirmButton.addTarget(self, action: #selector(emailConfirmButtonTapped), for: .touchUpInside)
 

@@ -33,23 +33,23 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
     init(prefilledCredentials: AuthenticationPrefilledCredentials?) {
         backButton = BackButtonDescription()
         mainView = EmptyViewDescription()
-        headline = "registration.signin.title".localized
+        headline = L10n.Localizable.Registration.Signin.title
 
         switch prefilledCredentials?.primaryCredentialsType {
         case .email?:
             if prefilledCredentials?.isExpired == true {
-                subtext = "signin_logout.email.subheadline".localized
+                subtext = L10n.Localizable.SigninLogout.Email.subheadline
             } else {
-                subtext = "signin.email.missing_password.subtitle".localized
+                subtext = L10n.Localizable.Signin.Email.MissingPassword.subtitle
             }
         case .phone?:
             if prefilledCredentials?.isExpired == true {
-                subtext = "signin_logout.phone.subheadline".localized
+                subtext = L10n.Localizable.SigninLogout.Phone.subheadline
             } else {
-                subtext = "signin.phone.missing_password.subtitle".localized
+                subtext = L10n.Localizable.Signin.Phone.MissingPassword.subtitle
             }
         case .none:
-            subtext = "signin_logout.subheadline".localized
+            subtext = L10n.Localizable.SigninLogout.subheadline
         }
 
         secondaryView = LoginSecondaryView()

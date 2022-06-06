@@ -22,10 +22,14 @@ import UIKit
 
 extension UIAlertController {
     static func requestTOSApproval(over controller: UIViewController, forTeamAccount: Bool, completion: @escaping (_ approved: Bool) -> Void) {
-        let alert = UIAlertController(title: "registration.terms_of_use.terms.title".localized,
-                                      message: "registration.terms_of_use.terms.message".localized,
-                                      preferredStyle: .alert)
-        let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] _ in
+        let alert = UIAlertController(
+            title: L10n.Localizable.Registration.TermsOfUse.Terms.title,
+            message: L10n.Localizable.Registration.TermsOfUse.Terms.message,
+            preferredStyle: .alert)
+        let viewAction = UIAlertAction(
+            title: L10n.Localizable.Registration.TermsOfUse.Terms.view,
+            style: .default)
+        { [weak controller] _ in
             let url = URL.wr_termsOfServicesURL.appendingLocaleParameter
 
             let webViewController: BrowserViewController
@@ -39,12 +43,17 @@ extension UIAlertController {
         }
         alert.addAction(viewAction)
 
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
+        let cancelAction = UIAlertAction(
+            title: L10n.Localizable.General.cancel,
+            style: .cancel) { _ in
             completion(false)
         }
         alert.addAction(cancelAction)
 
-        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .default) { _ in
+        let acceptAction = UIAlertAction(
+            title: L10n.Localizable.Registration.TermsOfUse.accept,
+            style: .default)
+        { _ in
             completion(true)
         }
         alert.addAction(acceptAction)

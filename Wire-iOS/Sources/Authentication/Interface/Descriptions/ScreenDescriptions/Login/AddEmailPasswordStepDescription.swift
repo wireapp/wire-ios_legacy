@@ -30,9 +30,11 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = EmailPasswordFieldDescription(forRegistration: true, usePasswordDeferredValidation: true)
-        headline = "registration.add_email_password.hero.title".localized
-        subtext = "registration.add_email_password.hero.paragraph".localized
+        mainView = EmailPasswordFieldDescription(
+            forRegistration: true,
+            usePasswordDeferredValidation: true)
+        headline = L10n.Localizable.Registration.AddEmailPassword.Hero.title
+        subtext = L10n.Localizable.Registration.AddEmailPassword.Hero.paragraph
         initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
         secondaryView = nil
     }

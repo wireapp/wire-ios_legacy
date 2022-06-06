@@ -37,7 +37,7 @@ extension UIAlertController {
         )
 
         let tryAgainAction = UIAlertAction(
-            title: "registration.no_history.restore_backup_failed.try_again".localized,
+            title: L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.tryAgain,
             style: .default,
             handler: { _ in completion(.tryAgain) }
         )
@@ -51,22 +51,22 @@ extension UIAlertController {
         switch error {
         case
             CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
-            return "registration.no_history.restore_backup_failed.wrong_version.title".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.WrongVersion.title
         case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
-            return "registration.no_history.restore_backup_failed.wrong_account.title".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.WrongAccount.title
         default:
-            return "registration.no_history.restore_backup_failed.title".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.title
         }
     }
 
     private static func message(for error: Error) -> String {
         switch error {
         case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
-            return "registration.no_history.restore_backup_failed.wrong_version.message".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.WrongVersion.message
         case CoreDataStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
-            return "registration.no_history.restore_backup_failed.wrong_account.message".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.WrongAccount.message
         default:
-            return "registration.no_history.restore_backup_failed.message".localized
+            return L10n.Localizable.Registration.NoHistory.RestoreBackupFailed.message
         }
     }
 

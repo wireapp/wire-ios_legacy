@@ -95,8 +95,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
 
         if passwordIsNecessaryForDelete {
             let alert = UIAlertController.alertWithOKButton(title: nil,
-                                                            message: "self.settings.account_details.remove_device.password.error".localized)
-
+                                                            message: L10n.Localizable.Self.Settings.AccountDetails.RemoveDevice.Password.error)
             delegate?.present(self, viewControllerToPresent: alert)
             endRemoval(result: error)
         } else {

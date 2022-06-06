@@ -30,10 +30,10 @@ extension ZMConversationMessage {
 
         if Calendar.current.isDateInToday(timestamp) {
             formattedDate = Message.shortTimeFormatter.string(from: timestamp)
-            return "content.message.reply.original_timestamp.time".localized(args: formattedDate)
+            return L10n.Localizable.Content.Message.Reply.OriginalTimestamp.time(formattedDate)
         } else {
             formattedDate = Message.shortDateFormatter.string(from: timestamp)
-            return "content.message.reply.original_timestamp.date".localized(args: formattedDate)
+            return L10n.Localizable.Content.Message.Reply.OriginalTimestamp.date(formattedDate)
         }
     }
 
@@ -59,13 +59,13 @@ extension ZMConversationMessage {
         }
 
         let formattedTimestamp = Message.spellOutDateTimeFormatter.string(from: serverTimestamp)
-        let sendDate = "message_details.subtitle_send_date".localized(args: formattedTimestamp)
+        let sendDate = L10n.Localizable.MessageDetails.subtitleSendDate(formattedTimestamp)
 
         var accessibleMessageDetails = sendDate
 
         if let editTimestamp = self.updatedAt {
             let formattedEditTimestamp = Message.spellOutDateTimeFormatter.string(from: editTimestamp)
-            let editDate = "message_details.subtitle_edit_date".localized(args: formattedEditTimestamp)
+            let editDate =  L10n.Localizable.MessageDetails.subtitleEditDate(formattedEditTimestamp)
             accessibleMessageDetails += ("\n" + editDate)
         }
 

@@ -60,12 +60,12 @@ final class WirelessExpirationTimeFormatter {
     }
 
     private func localizedMinutes(_ minutes: Double) -> String {
-        return "guest_room.expiration.less_than_minutes_left".localized(args: String(format: "%.0f", minutes))
+        return  L10n.Localizable.GuestRoom.Expiration.lessThanMinutesLeft(minutes)
     }
 
     private func localizedHours(_ hours: Double) -> String {
         let localizedHoursString = numberFormatter.string(from: NSNumber(value: hours)) ?? "\(hours)"
-        return "guest_room.expiration.hours_left".localized(args: localizedHoursString)
+        return L10n.Localizable.GuestRoom.Expiration.hoursLeft(localizedHoursString)
     }
 }
 

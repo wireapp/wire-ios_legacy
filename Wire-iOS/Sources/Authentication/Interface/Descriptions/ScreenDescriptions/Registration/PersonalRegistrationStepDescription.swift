@@ -33,7 +33,7 @@ class PersonalRegistrationStepDescription: AuthenticationStepDescription {
     init() {
         backButton = BackButtonDescription()
         mainView = EmptyViewDescription()
-        headline = "registration.personal.title".localized
+        headline = L10n.Localizable.Registration.Personal.title
         subtext = nil
         secondaryView = nil
     }

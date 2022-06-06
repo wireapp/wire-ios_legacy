@@ -23,8 +23,12 @@ class VerifyEmailStepSecondaryView: AuthenticationSecondaryViewDescription {
     weak var actioner: AuthenticationActioner?
 
     init(canResend: Bool = true, canChangeEmail: Bool = true) {
-        let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
+        let resendCode = ButtonDescription(
+            title: L10n.Localizable.Team.ActivationCode.Button.resend,
+            accessibilityIdentifier: "resend_button")
+        let changeEmail = ButtonDescription(
+            title: L10n.Localizable.Team.ActivationCode.Button.changeEmail,
+            accessibilityIdentifier: "change_email_button")
         var views: [ButtonDescription] = []
 
         if canResend {
@@ -59,8 +63,8 @@ final class VerifyEmailStepDescription: AuthenticationStepDescription {
         self.email = email
         backButton = nil
         mainView = VerificationCodeFieldDescription()
-        headline = "team.activation_code.headline".localized
-        subtext = "team.activation_code.subheadline".localized(args: email)
+        headline = L10n.Localizable.Team.ActivationCode.headline
+        subtext = L10n.Localizable.Team.ActivationCode.subheadline(email)
         secondaryView = VerifyEmailStepSecondaryView(canChangeEmail: canChangeEmail)
     }
 
