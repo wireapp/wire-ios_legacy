@@ -25,7 +25,7 @@ final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.timeoutoptions"
-        title = "group_details.timeout_options_cell.title".localized
+        title = L10n.Localizable.GroupDetails.TimeoutOptionsCell.title
     }
 
     func configure(with conversation: GroupDetailsConversationType) {

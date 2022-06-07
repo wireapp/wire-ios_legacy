@@ -50,7 +50,7 @@ final class UnlockViewController: UIViewController {
     private lazy var unlockButton: Button = {
         let button = Button(style: .fullMonochrome, fontSpec: .smallSemiboldFont)
 
-        button.setTitle("unlock.submit_button.title".localized, for: .normal)
+        button.setTitle(L10n.Localizable.Unlock.SubmitButton.title, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
         button.accessibilityIdentifier = "unlock_screen.button.unlock"
@@ -60,7 +60,7 @@ final class UnlockViewController: UIViewController {
 
     lazy var validatedTextField: ValidatedTextField = {
         let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
-        textField.placeholder = "unlock.textfield.placeholder".localized
+        textField.placeholder = L10n.Localizable.Unlock.Textfield.placeholder
         textField.delegate = self
         textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
 
@@ -68,7 +68,12 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        let label = UILabel(
+            key: L10n.Localizable.Unlock.titleLabel,
+            size: FontSize.large,
+            weight: .semibold,
+            color: .textForeground,
+            variant: .dark)
 
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -119,7 +124,7 @@ final class UnlockViewController: UIViewController {
         button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
         button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
 
-        button.setTitle("unlock.wipe_button".localized, for: .normal)
+        button.setTitle(L10n.Localizable.Unlock.wipeButton, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -264,7 +269,7 @@ final class UnlockViewController: UIViewController {
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
 
-        let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
+        let attributedString = NSAttributedString(string: L10n.Localizable.Unlock.errorLabel) && UnlockViewController.errorFont
 
         errorLabel.attributedText = NSAttributedString(attachment: textAttachment) + attributedString
         unlockButton.isEnabled = false

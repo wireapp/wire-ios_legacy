@@ -115,7 +115,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         if options.contains(.displayUserName) {
             title = user.name ?? ""
         } else if availability == .none && options.contains(.allowSettingStatus) {
-            title = "availability.message.set_status".localized(uppercased: true)
+            title = L10n.Localizable.Availability.Message.setStatus.uppercased()
         } else if availability != .none {
             title = availability.localizedName.localizedUppercase
         }
@@ -123,7 +123,9 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
         super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
 
-        accessibilityLabel = options.contains(.allowSettingStatus) ? "availability.accessibility_label.change_status".localized : "availability.accessibility_label.status".localized
+        accessibilityLabel = options.contains(.allowSettingStatus)
+        ? L10n.Localizable.Availability.AccessibilityLabel.changeStatus
+        : L10n.Localizable.Availability.AccessibilityLabel.status
         accessibilityValue = availability.localizedName
     }
 

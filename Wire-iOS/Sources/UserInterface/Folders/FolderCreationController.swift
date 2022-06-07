@@ -66,7 +66,7 @@ final class FolderCreationController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
-        title = "folder.creation.name.title".localized(uppercased: true)
+        title = L10n.Localizable.Folder.Creation.Name.title.uppercased()
 
         setupNavigationBar()
         setupViews()
@@ -120,7 +120,11 @@ final class FolderCreationController: UIViewController {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: "folder.creation.name.button.create".localized(uppercased: true), style: .plain, target: self, action: #selector(tryToProceed))
+        let nextButtonItem = UIBarButtonItem(
+            title: L10n.Localizable.Folder.Creation.Name.Button.create.uppercased(),
+            style: .plain,
+            target: self,
+            action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newfolder.create"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false

@@ -32,7 +32,7 @@ class FolderCreationNameCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        setUp()
     }
 
     @available(*, unavailable)
@@ -40,11 +40,11 @@ class FolderCreationNameCell: UICollectionViewCell {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
-    fileprivate func setup() {
+    fileprivate func setUp() {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newfolder.name"
-        textField.placeholder = "folder.creation.name.placeholder".localized(uppercased: true)
+        textField.placeholder = L10n.Localizable.Folder.Creation.Name.placeholder.uppercased()
 
         contentView.addSubview(textField)
         textField.fitInSuperview()

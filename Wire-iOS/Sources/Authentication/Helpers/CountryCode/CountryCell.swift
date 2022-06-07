@@ -31,7 +31,6 @@ final class CountryCell: UITableViewCell {
     func configure(for country: Country) {
         textLabel?.text = country.displayName
         detailTextLabel?.text = "+\(country.e164)"
-
-        accessibilityHint = "registration.phone.country_code.hint".localized
+        accessibilityHint = L10n.Localizable.Registration.Phone.CountryCode.hint
     }
 }

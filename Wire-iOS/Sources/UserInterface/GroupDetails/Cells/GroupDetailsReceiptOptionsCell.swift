@@ -28,7 +28,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
         accessibilityIdentifier = "cell.groupdetails.receiptoptions"
         toggle.accessibilityIdentifier = "ReadReceiptsSwitch"
 
-        title = "group_details.receipt_options_cell.title".localized
+        title = L10n.Localizable.GroupDetails.ReceiptOptionsCell.title
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

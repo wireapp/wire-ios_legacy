@@ -33,7 +33,7 @@ final class LegalHoldHeaderView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
 
-        label.text = "legalhold.header.title".localized
+        label.text = L10n.Localizable.Legalhold.Header.title
         label.font = UIFont.largeSemiboldFont
         label.textColor = UIColor.from(scheme: .textForeground)
 
@@ -42,9 +42,11 @@ final class LegalHoldHeaderView: UIView {
 
     let descriptionLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        let text = SelfUser.current.isUnderLegalHold ? "legalhold.header.self_description" : "legalhold.header.other_description"
+        let text = SelfUser.current.isUnderLegalHold
+        ? L10n.Localizable.Legalhold.Header.selfDescription
+        : L10n.Localizable.Legalhold.Header.otherDescription
 
-        label.attributedText = text.localized && .paragraphSpacing(8)
+        label.attributedText = text && .paragraphSpacing(8)
         label.font = UIFont.normalFont
         label.numberOfLines = 0
         label.textColor = UIColor.from(scheme: .textForeground)

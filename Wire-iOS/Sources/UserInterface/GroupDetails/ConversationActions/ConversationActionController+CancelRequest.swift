@@ -44,7 +44,7 @@ enum CancelConnectionRequestResult {
     }
 
     static func title(for user: UserType) -> String {
-        return "profile.cancel_connection_request_dialog.message".localized(args: user.name ?? "")
+        return L10n.Localizable.Profile.CancelConnectionRequestDialog.message(user.name ?? "")
     }
 
     static var all: [CancelConnectionRequestResult] {

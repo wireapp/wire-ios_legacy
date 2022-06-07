@@ -24,7 +24,7 @@ extension UIAlertController {
 
     static func remove(_ user: UserType, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: user.name ?? ""),
+            title: L10n.Localizable.Profile.removeDialogMessage(user.name ?? ""),
             message: nil,
             preferredStyle: .actionSheet
         )

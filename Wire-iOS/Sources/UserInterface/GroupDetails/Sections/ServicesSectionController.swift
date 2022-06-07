@@ -39,7 +39,7 @@ final class ServicesSectionController: GroupDetailsSectionController {
     }
 
     override var sectionTitle: String {
-        return "participants.section.services".localized(uppercased: true, args: serviceUsers.count)
+        return L10n.Localizable.Participants.Section.services(serviceUsers.count).uppercased()
     }
 
     override var sectionAccessibilityIdentifier: String {

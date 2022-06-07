@@ -25,7 +25,7 @@ final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCe
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.notificationsoptions"
-        title = "group_details.notification_options_cell.title".localized
+        title = L10n.Localizable.GroupDetails.NotificationOptionsCell.title
     }
 
     func configure(with conversation: GroupDetailsConversationType) {

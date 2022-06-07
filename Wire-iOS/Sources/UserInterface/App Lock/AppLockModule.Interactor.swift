@@ -37,7 +37,7 @@ extension AppLockModule {
         /// The message to display on the OS authentication screen.
 
         private let deviceAuthenticationDescription = {
-            "self.settings.privacy_security.lock_app.description".localized
+            L10n.Localizable.Self.Settings.PrivacySecurity.LockApp.description
         }()
 
         // MARK: - Life cycle

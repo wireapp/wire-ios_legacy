@@ -49,7 +49,7 @@ enum BlockResult {
             return nil
         }
 
-        return "profile.block_dialog.message".localized(args: user.name ?? "")
+        return L10n.Localizable.Profile.BlockDialog.message(user.name ?? "")
     }
 
     static func all(isBlocked: Bool) -> [BlockResult] {

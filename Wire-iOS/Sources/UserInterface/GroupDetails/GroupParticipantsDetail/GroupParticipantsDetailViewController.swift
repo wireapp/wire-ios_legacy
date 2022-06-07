@@ -107,7 +107,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
 
         collectionView.accessibilityIdentifier = "group_details.full_list"
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        title = "participants.all.title".localized(uppercased: true)
+        title = L10n.Localizable.Participants.All.title.uppercased()
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
@@ -128,7 +128,9 @@ final class GroupParticipantsDetailViewController: UIViewController {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
 
-        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
+         let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty)
+         ? L10n.Localizable.Peoplepicker.noSearchResults
+         : ""
         collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
     }
 

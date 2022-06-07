@@ -487,7 +487,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = true
-        logoView.accessibilityLabel = "landing.header".localized
+        logoView.accessibilityLabel = L10n.Localizable.Landing.header
         logoView.accessibilityTraits.insert(.header)
     }
 

@@ -37,29 +37,28 @@ extension PasswordRuleSet {
     /// The localized error message for the shared rule set.
     static let localizedErrorMessage: String = {
         let ruleSet = PasswordRuleSet.shared
-        let minLengthRule = "registration.password.rules.min_length".localized(args: ruleSet.minimumLength)
-
+        let minLengthRule = L10n.Localizable.Registration.Password.Rules.minLength(Int(ruleSet.minimumLength))
         if ruleSet.requiredCharacters.isEmpty {
-            return "registration.password.rules.no_requirements".localized(args: minLengthRule)
+            return L10n.Localizable.Registration.Password.Rules.noRequirements(minLengthRule)
         }
 
         let localizedRules: [String] = ruleSet.requiredCharacters.compactMap { requiredClass in
+            typealias RegistrationPassword = L10n.Localizable.Registration.Password.Rules
             switch requiredClass {
             case .digits:
-                return "registration.password.rules.number".localized(args: 1)
+                return RegistrationPassword.number(1)
             case .lowercase:
-                return "registration.password.rules.lowercase".localized(args: 1)
+                return RegistrationPassword.lowercase(1)
             case .uppercase:
-                return "registration.password.rules.uppercase".localized(args: 1)
+                return RegistrationPassword.uppercase(1)
             case .special:
-                return "registration.password.rules.special".localized(args: 1)
+                return RegistrationPassword.special(1)
             default:
                 return nil
             }
         }
-
         let formattedRulesList = PasswordRuleSet.arrayFormatter.string(from: localizedRules)!
-        return "registration.password.rules.with_requirements".localized(args: minLengthRule, formattedRulesList)
+        return L10n.Localizable.Registration.Password.Rules.withRequirements(minLengthRule, formattedRulesList)
     }()
 
 }

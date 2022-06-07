@@ -58,12 +58,21 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
 
     private func handleMissingMarketingConsent(with user: UnregisteredUser) -> [AuthenticationCoordinatorAction] {
         // Alert Actions
-        let privacyPolicyAction = AuthenticationCoordinatorAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized, coordinatorActions: [.openURL(URL.wr_privacyPolicy.appendingLocaleParameter)])
-        let declineAction = AuthenticationCoordinatorAlertAction(title: "general.decline".localized, coordinatorActions: [.setMarketingConsent(false)])
-        let acceptAction = AuthenticationCoordinatorAlertAction(title: "general.accept".localized, coordinatorActions: [.setMarketingConsent(true)])
+        let privacyPolicyAction = AuthenticationCoordinatorAlertAction(
+            title: L10n.Localizable.NewsOffers.Consent.Button.PrivacyPolicy.title,
+            coordinatorActions: [.openURL(URL.wr_privacyPolicy.appendingLocaleParameter)])
+        let declineAction = AuthenticationCoordinatorAlertAction(
+            title: L10n.Localizable.General.decline,
+            coordinatorActions: [.setMarketingConsent(false)])
+        let acceptAction = AuthenticationCoordinatorAlertAction(
+            title: L10n.Localizable.General.accept,
+            coordinatorActions: [.setMarketingConsent(true)])
 
         // Alert
-        let alert = AuthenticationCoordinatorAlert(title: "news_offers.consent.title".localized, message: "news_offers.consent.message".localized, actions: [privacyPolicyAction, declineAction, acceptAction])
+        let alert = AuthenticationCoordinatorAlert(
+            title: L10n.Localizable.NewsOffers.Consent.title,
+            message: L10n.Localizable.NewsOffers.Consent.message,
+            actions: [privacyPolicyAction, declineAction, acceptAction])
 
         return [.hideLoadingView, .presentAlert(alert)]
     }

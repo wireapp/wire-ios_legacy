@@ -24,9 +24,9 @@ extension ConversationActionController {
 
     func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
         let alertController = UIAlertController.confirmController(
-            title: "conversation.delete_request_dialog.title".localized,
-            message: "conversation.delete_request_dialog.message".localized,
-            confirmTitle: "conversation.delete_request_error_dialog.button_delete_group".localized,
+            title: L10n.Localizable.Conversation.DeleteRequestDialog.title,
+            message: L10n.Localizable.Conversation.DeleteRequestDialog.message,
+            confirmTitle: L10n.Localizable.Conversation.DeleteRequestErrorDialog.buttonDeleteGroup,
             completion: completion
         )
         present(alertController)
@@ -41,8 +41,9 @@ extension ConversationActionController {
                 case .success:
                     break
                 case .failure:
-                    let alert = UIAlertController.alertWithOKButton(title: "error.conversation.title".localized,
-                                                                    message: "conversation.delete_request_error_dialog.title".localized(args: conversation.displayName))
+                    let alert = UIAlertController.alertWithOKButton(
+                        title: L10n.Localizable.Error.Conversation.title,
+                        message: L10n.Localizable.Conversation.DeleteRequestErrorDialog.title(conversation.displayName))
                     UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)
                 }
             }

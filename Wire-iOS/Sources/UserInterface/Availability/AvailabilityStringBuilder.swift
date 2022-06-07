@@ -53,7 +53,7 @@ final class AvailabilityStringBuilder: NSObject {
                     return nil
                 }
 
-                title = "availability.\(availability.canonicalName)".localized.localizedUppercase
+                title = availability.canonicalName)
             }
         }
 

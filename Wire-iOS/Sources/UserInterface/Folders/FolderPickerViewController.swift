@@ -70,7 +70,7 @@ final class FolderPickerViewController: UIViewController {
     }
 
     private func configureNavbar() {
-        title = "folder.picker.title".localized(uppercased: true)
+        title = L10n.Localizable.Folder.Picker.title.uppercased()
 
         let newFolderItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(createNewFolder))
         newFolderItem.accessibilityIdentifier = "button.newfolder.create"
@@ -90,7 +90,7 @@ final class FolderPickerViewController: UIViewController {
 
     private func configureSubviews() {
 
-        hintLabel.text = "folder.picker.empty.hint".localized
+        hintLabel.text = L10n.Localizable.Folder.Picker.Empty.hint
         hintLabel.numberOfLines = 0
         hintLabel.textColor = UIColor.from(scheme: .textForeground)
         hintLabel.textAlignment = .center
