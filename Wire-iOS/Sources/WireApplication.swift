@@ -26,7 +26,7 @@ final class WireApplication: UIApplication {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
 
-        if #available(iOS 14, *) {
+        if #available(iOS 14, *), Bundle.developerModeEnabled {
             let developerTools = UIHostingController(
                 rootView: NavigationView {
                     DeveloperToolsView(viewModel: DeveloperToolsViewModel(onDismiss: { [weak self] in
