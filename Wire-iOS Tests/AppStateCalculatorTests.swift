@@ -156,7 +156,7 @@ final class AppStateCalculatorTests: XCTestCase {
             XCTAssertEqual(sut.appState, .authenticated(completedRegistration: false))
         } else {
             guard case let .unauthenticated(error: error) = sut.appState else {
-                return XCTFail()
+                return XCTFail("Error - unauthenticated")
             }
 
             XCTAssertEqual(error?.userSessionErrorCode, .needsAuthenticationAfterMigration)
