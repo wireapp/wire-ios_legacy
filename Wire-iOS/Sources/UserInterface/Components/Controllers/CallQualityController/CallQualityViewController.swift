@@ -90,7 +90,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         dimmingView.alpha = 0
 
         let graphite = UIColor.from(scheme: .textForeground)
-        let closeButtonTitle = "calling.quality_survey.skip_button_title".localized(uppercased: true)
+        let closeButtonTitle = L10n.Localizable.Calling.QualitySurvey.skipButtonTitle.uppercased()
         closeButton.setTitle(closeButtonTitle, for: .normal)
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = closeButtonTitle

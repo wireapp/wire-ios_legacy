@@ -35,12 +35,13 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
     }
 
     var displayString: String {
+        typealias Browser = L10n.Localizable.OpenLink.Browser.Option
         switch self {
-        case .safari:   return "open_link.browser.option.safari".localized
-        case .chrome:   return "open_link.browser.option.chrome".localized
-        case .firefox:  return "open_link.browser.option.firefox".localized
-        case .snowhaze: return "open_link.browser.option.snowhaze".localized
-        case .brave:    return "open_link.browser.option.brave".localized
+        case .safari:   return Browser.safari
+        case .chrome:   return Browser.chrome
+        case .firefox:  return Browser.firefox
+        case .snowhaze: return Browser.snowhaze
+        case .brave:    return Browser.brave
         }
     }
 

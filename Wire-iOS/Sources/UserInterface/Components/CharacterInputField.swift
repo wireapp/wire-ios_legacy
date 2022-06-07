@@ -162,10 +162,13 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
         self.isAccessibilityElement = true
         self.shouldGroupAccessibilityChildren = true
 
-        accessibilityHint = "verification.code_hint".localized
+        accessibilityHint = L10n.Localizable.Verification.codeHint
 
         accessibilityCustomActions = [
-            UIAccessibilityCustomAction(name: "general.paste".localized, target: self, selector: #selector(UIResponderStandardEditActions.paste))
+            UIAccessibilityCustomAction(
+                name: L10n.Localizable.General.paste,
+                target: self,
+                selector: #selector(UIResponderStandardEditActions.paste))
         ]
 
         stackView.spacing = 8

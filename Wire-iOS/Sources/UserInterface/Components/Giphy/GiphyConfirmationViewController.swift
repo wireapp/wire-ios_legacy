@@ -88,9 +88,9 @@ final class GiphyConfirmationViewController: UIViewController {
 
         view.backgroundColor = .black
         acceptButton.isEnabled = false
-        acceptButton.setTitle("giphy.confirm".localized, for: .normal)
+        acceptButton.setTitle(L10n.Localizable.Giphy.confirm, for: .normal)
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
-        cancelButton.setTitle("giphy.cancel".localized, for: .normal)
+        cancelButton.setTitle(L10n.Localizable.Giphy.cancel, for: .normal)
         cancelButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onCancel), for: .touchUpInside)
 
         imagePreview.contentMode = .scaleAspectFit

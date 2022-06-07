@@ -48,37 +48,36 @@ final class RequestPasswordController {
         let okTitle: String
         switch context {
         case .wiping:
-            okTitle = "wipe_database.alert.confirm".localized
+            okTitle = L10n.Localizable.WipeDatabase.Alert.confirm
         default:
-            okTitle = "general.ok".localized
+            okTitle = L10n.Localizable.General.ok
         }
 
-        let cancelTitle: String = "general.cancel".localized
+        let cancelTitle: String = L10n.Localizable.General.cancel
         let title: String
         let message: String
         let placeholder: String
         let okActionStyle: UIAlertAction.Style
-
         switch context {
         case .removeDevice:
-            title = "self.settings.account_details.remove_device.title".localized
-            message = "self.settings.account_details.remove_device.message".localized
-            placeholder = "self.settings.account_details.remove_device.password".localized
+            title = L10n.Localizable.Self.Settings.AccountDetails.RemoveDevice.title
+            message = L10n.Localizable.Self.Settings.AccountDetails.RemoveDevice.message
+            placeholder = L10n.Localizable.Self.Settings.AccountDetails.RemoveDevice.password
             okActionStyle = .destructive
         case .logout:
-            title = "self.settings.account_details.log_out.alert.title".localized
-            message = "self.settings.account_details.log_out.alert.message".localized
-            placeholder = "self.settings.account_details.log_out.alert.password".localized
+            title = L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.title
+            message = L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.message
+            placeholder = L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.password
             okActionStyle = .destructive
         case .unlock(let unlockMessage):
-            title = "self.settings.privacy_security.lock_app.description".localized
+            title = L10n.Localizable.Self.Settings.PrivacySecurity.LockApp.description
             message = unlockMessage
-            placeholder = "self.settings.account_details.log_out.alert.password".localized
+            placeholder = L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.password
             okActionStyle = .default
         case .wiping:
-            title = "wipe_database.alert.description".localized
-            message = "wipe_database.alert.message".localized
-            placeholder = "wipe_database.alert.placeholder".localized
+            title = L10n.Localizable.WipeDatabase.Alert.description
+            message = L10n.Localizable.WipeDatabase.Alert.message
+            placeholder = L10n.Localizable.WipeDatabase.Alert.placeholder
             okActionStyle = .destructive
         }
 

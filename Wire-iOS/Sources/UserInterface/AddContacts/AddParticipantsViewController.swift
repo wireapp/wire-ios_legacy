@@ -70,13 +70,13 @@ extension AddParticipantsViewController.Context {
         switch self {
         case .add(let conversation):
             let freeSpace = conversation.freeParticipantSlots
-            message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
+            message = L10n.Localizable.AddParticipants.Alert.Message.existingConversation(max, freeSpace)
         case .create:
-            message = "add_participants.alert.message.new_conversation".localized(args: max)
+            message = L10n.Localizable.AddParticipants.Alert.Message.newConversation(max)
         }
 
         let controller = UIAlertController(
-            title: "add_participants.alert.title".localized,
+            title: L10n.Localizable.AddParticipants.Alert.title,
             message: message,
             preferredStyle: .alert
         )

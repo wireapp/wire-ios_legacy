@@ -297,15 +297,16 @@ final class MessagePreviewView: UIView, Themeable {
         } else if let location = message.locationMessageData {
 
             let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
+            let initialString =
+                NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? L10n.Localizable.Conversation.InputBar.MessagePreview.location).uppercased()
             contentTextView.attributedText = initialString && attributes
         } else if message.isAudio {
             let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + L10n.Localizable.Conversation.InputBar.MessagePreview.audio
             contentTextView.attributedText = initialString && attributes
         } else if let fileData = message.fileMessageData {
             let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
-            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
+            let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? L10n.Localizable.Conversation.InputBar.MessagePreview.file).uppercased()
             contentTextView.attributedText = initialString && attributes
         }
     }

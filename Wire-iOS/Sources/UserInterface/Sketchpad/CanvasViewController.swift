@@ -82,7 +82,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
         separatorLine.backgroundColor = UIColor.from(scheme: .separator)
         hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
-        hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
+        hintLabel.text = L10n.Localizable.Sketchpad.initialHint.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
         hintLabel.textAlignment = .center

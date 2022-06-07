@@ -29,10 +29,11 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
     static var defaultPreference: ApplicationOptionEnum = .none
 
     var displayString: String {
+        typealias OpenLink = L10n.Localizable.OpenLink.Twitter.Option
         switch self {
-        case .none: return "open_link.twitter.option.default".localized
-        case .tweetbot: return "open_link.twitter.option.tweetbot".localized
-        case .twitterrific: return "open_link.twitter.option.twitterrific".localized
+        case .none: return OpenLink.default
+        case .tweetbot: return OpenLink.tweetbot
+        case .twitterrific: return OpenLink.twitterrific
         }
     }
 

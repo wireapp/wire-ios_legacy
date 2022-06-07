@@ -352,7 +352,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
     @objc
     private func copyCurrent(_ sender: AnyObject!) {
-        let text = "collections.image_viewer.copied.title".localized(uppercased: true)
+        let text = L10n.Localizable.Collections.ImageViewer.Copied.title.uppercased()
         overlay.show(text: text)
         perform(action: .copy, sender: sender)
     }

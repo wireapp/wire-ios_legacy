@@ -60,7 +60,9 @@ extension SpinnerCapable where Self: UIViewController {
             spinnerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             spinnerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
 
-        UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: L10n.Localizable.General.loading)
         spinnerView.spinnerSubtitleView.spinner.startAnimation()
 
         return {

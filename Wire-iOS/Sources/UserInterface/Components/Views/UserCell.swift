@@ -205,7 +205,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: selfUser)
 
         if user.isSelfUser, let title = attributedTitle {
-            attributedTitle = title + "user_cell.title.you_suffix".localized
+            attributedTitle = title + L10n.Localizable.UserCell.Title.youSuffix
         }
 
         titleLabel.attributedText = attributedTitle

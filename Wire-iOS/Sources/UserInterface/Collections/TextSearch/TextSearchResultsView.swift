@@ -40,7 +40,7 @@ final class TextSearchResultsView: UIView {
         addSubview(tableView)
 
         noResultsView.label.accessibilityLabel = "no text messages"
-        noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
+        noResultsView.label.text = L10n.Localizable.Collections.Search.noItems.uppercased()
         noResultsView.icon = .search
         addSubview(noResultsView)
     }

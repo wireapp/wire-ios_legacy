@@ -67,12 +67,13 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
 
     private func updateButtonMode() {
-        let buttonItem = UIBarButtonItem(title: "general.done".localized,
-                                         style: .done,
-                                         target: self,
-                                         action: #selector(onClose))
+        let buttonItem = UIBarButtonItem(
+            title: L10n.Localizable.General.done,
+            style: .done,
+            target: self,
+            action: #selector(onClose))
         buttonItem.accessibilityIdentifier = "DoneButton"
-        buttonItem.accessibilityLabel = "general.done".localized
+        buttonItem.accessibilityLabel = L10n.Localizable.General.done
         buttonItem.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = buttonItem
     }

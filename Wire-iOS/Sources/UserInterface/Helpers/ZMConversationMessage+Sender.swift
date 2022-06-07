@@ -22,9 +22,9 @@ import WireDataModel
 extension ZMConversationMessage {
 
     var senderName: String {
-        guard let sender = senderUser else { return "conversation.status.someone".localized }
+        guard let sender = senderUser else { return L10n.Localizable.Conversation.Status.someone }
         if sender.isSelfUser {
-            return "conversation.status.you".localized
+            return L10n.Localizable.Conversation.Status.you
         } else {
             return sender.name ?? ""
         }

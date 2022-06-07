@@ -26,19 +26,18 @@ final class CollectionHeaderView: UICollectionReusableView {
     var section: CollectionsSectionSet = .none {
         didSet {
             let icon: StyleKitIcon
-
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = "collections.section.images.title".localized(uppercased: true)
+                titleLabel.text = L10n.Localizable.Collections.Section.Images.title
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = "collections.section.files.title".localized(uppercased: true)
+                titleLabel.text =  L10n.Localizable.Collections.Section.Files.title
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
+                titleLabel.text =  L10n.Localizable.Collections.Section.Videos.title
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = "collections.section.links.title".localized(uppercased: true)
+                titleLabel.text =  L10n.Localizable.Collections.Section.Links.title
                 icon = .link
             default: fatal("Unknown section")
             }
@@ -51,7 +50,8 @@ final class CollectionHeaderView: UICollectionReusableView {
         didSet {
             actionButton.isHidden = totalItemsCount == 0
 
-            let totalCountText = String(format: "collections.section.all.button".localized, totalItemsCount)
+            let totalCountText = String(
+                format: L10n.Localizable.Collections.Section.All.button(Int(totalItemsCount)))
             actionButton.setTitle(totalCountText, for: .normal)
         }
     }

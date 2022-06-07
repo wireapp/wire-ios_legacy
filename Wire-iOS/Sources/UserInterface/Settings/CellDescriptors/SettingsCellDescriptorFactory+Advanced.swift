@@ -35,7 +35,7 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(
             items: items,
-            title: "self.settings.advanced.title".localized,
+            title: L10n.Localizable.Self.Settings.Advanced.title,
             icon: .settingsAdvanced
         )
     }
@@ -43,21 +43,21 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
     private var troubleshootingSection: SettingsSectionDescriptor {
         let submitDebugButton = SettingsExternalScreenCellDescriptor(
-            title: "self.settings.advanced.troubleshooting.submit_debug.title".localized,
+            title: L10n.Localizable.Self.Settings.Advanced.Troubleshooting.SubmitDebug.title,
             presentationAction: { () -> (UIViewController?) in
                 return SettingsTechnicalReportViewController()
         })
 
         return SettingsSectionDescriptor(
             cellDescriptors: [submitDebugButton],
-            header: "self.settings.advanced.troubleshooting.title".localized,
-            footer: "self.settings.advanced.troubleshooting.submit_debug.subtitle".localized
+            header: L10n.Localizable.Self.Settings.Advanced.Troubleshooting.title,
+            footer: L10n.Localizable.Self.Settings.Advanced.Troubleshooting.SubmitDebug.subtitle
         )
     }
 
     private var pushSection: SettingsSectionDescriptor {
         let pushButton = SettingsExternalScreenCellDescriptor(
-            title: "self.settings.advanced.reset_push_token.title".localized,
+            title: L10n.Localizable.Self.Settings.Advanced.ResetPushToken.title,
             isDestructive: false,
             presentationStyle: PresentationStyle.modal,
             presentationAction: { () -> (UIViewController?) in
@@ -68,7 +68,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pushButton],
             header: .none,
-            footer: "self.settings.advanced.reset_push_token.subtitle".localized,
+            footer: L10n.Localizable.Self.Settings.Advanced.ResetPushToken.subtitle,
             visibilityAction: { _ in
                 return true
         })
@@ -76,7 +76,7 @@ extension SettingsCellDescriptorFactory {
 
     private var versionSection: SettingsSectionDescriptor {
         let versionCell = SettingsButtonCellDescriptor(
-            title: "self.settings.advanced.version_technical_details.title".localized,
+            title: L10n.Localizable.Self.Settings.Advanced.VersionTechnicalDetails.title,
             isDestructive: false,
             selectAction: presentVersionAction
         )
@@ -88,17 +88,17 @@ extension SettingsCellDescriptorFactory {
 
         let findUnreadConversationSection = SettingsSectionDescriptor(cellDescriptors: [
             SettingsButtonCellDescriptor(
-                title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized,
+                title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.FirstUnreadConversation.title,
                 isDestructive: false,
                 selectAction: DebugActions.findUnreadConversationContributingToBadgeCount
             ),
             SettingsButtonCellDescriptor(
-                title: "self.settings.advanced.debugging_tools.show_user_id.title".localized,
+                title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.ShowUserId.title,
                 isDestructive: false,
                 selectAction: DebugActions.showUserId
             ),
             SettingsButtonCellDescriptor(
-                title: "self.settings.advanced.debugging_tools.enter_debug_command.title".localized,
+                title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.EnterDebugCommand.title,
                 isDestructive: false,
                 selectAction: DebugActions.enterDebugCommand
             )
@@ -107,7 +107,7 @@ extension SettingsCellDescriptorFactory {
         // Inner group
         let debuggingToolsGroup = SettingsGroupCellDescriptor(
             items: [findUnreadConversationSection],
-            title: "self.settings.advanced.debugging_tools.title".localized
+            title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.title
         )
 
         // Section
@@ -117,13 +117,13 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Helpers
     private var pushButtonAlertController: UIAlertController {
         let alert = UIAlertController(
-            title: "self.settings.advanced.reset_push_token_alert.title".localized,
-            message: "self.settings.advanced.reset_push_token_alert.message".localized,
+            title: L10n.Localizable.Self.Settings.Advanced.ResetPushTokenAlert.title,
+            message: L10n.Localizable.Self.Settings.Advanced.ResetPushTokenAlert.message,
             preferredStyle: .alert
         )
 
         let action = UIAlertAction(
-            title: "general.ok".localized,
+            title: L10n.Localizable.General.ok,
             style: .default,
             handler: { [weak alert] _ in
                 alert?.dismiss(animated: true, completion: nil)

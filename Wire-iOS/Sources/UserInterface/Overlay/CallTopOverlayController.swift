@@ -32,13 +32,13 @@ extension CallState {
         switch self {
         case .incoming:
             let toAppend = (isGroup ? conversation + "・" : "")
-            return toAppend + "call.status.incoming.user".localized(args: callee)
+            return toAppend + L10n.Localizable.Call.Status.Incoming.user(callee)
         case .outgoing:
-            return "call.status.outgoing.user".localized(args: conversation)
+            return L10n.Localizable.Call.Status.Outgoing.user(conversation)
         case .answered, .establishedDataChannel:
-            return "call.status.connecting".localized
+            return L10n.Localizable.Call.Status.connecting
         case .terminating:
-            return "call.status.terminating".localized
+            return L10n.Localizable.Call.Status.terminating
         default:
             return ""
         }
@@ -125,7 +125,7 @@ final class CallTopOverlayController: UIViewController {
         view.accessibilityIdentifier = "OpenOngoingCallButton"
         view.shouldGroupAccessibilityChildren = true
         view.isAccessibilityElement = true
-        view.accessibilityLabel = "voice.top_overlay.accessibility_title".localized
+        view.accessibilityLabel = L10n.Localizable.Voice.TopOverlay.accessibilityTitle
         view.accessibilityTraits = .button
 
         interactiveView.translatesAutoresizingMaskIntoConstraints = false
@@ -214,7 +214,7 @@ final class CallTopOverlayController: UIViewController {
         switch state {
         case .established, .establishedDataChannel:
             let duration = callDurationFormatter.string(from: callDuration) ?? ""
-            return "voice.top_overlay.tap_to_return".localized + "・" + duration
+            return L10n.Localizable.Voice.TopOverlay.tapToReturn + "・" + duration
         default:
             let initiator = self.conversation.voiceChannel?.initiator?.name ?? ""
             let conversation = self.conversation.displayName

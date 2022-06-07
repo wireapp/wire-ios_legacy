@@ -70,11 +70,15 @@ final class IncomingConnectionView: UIView {
 
     private func setup() {
         acceptButton.accessibilityLabel = "accept"
-        acceptButton.setTitle("inbox.connection_request.connect_button_title".localized(uppercased: true), for: .normal)
+        acceptButton.setTitle(
+            L10n.Localizable.Inbox.ConnectionRequest.connectButtonTitle.uppercased(),
+            for: .normal)
         acceptButton.addTarget(self, action: #selector(onAcceptButton), for: .touchUpInside)
 
         ignoreButton.accessibilityLabel = "ignore"
-        ignoreButton.setTitle("inbox.connection_request.ignore_button_title".localized(uppercased: true), for: .normal)
+        ignoreButton.setTitle(
+            L10n.Localizable.Inbox.ConnectionRequest.ignoreButtonTitle,
+            for: .normal)
         ignoreButton.addTarget(self, action: #selector(onIgnoreButton), for: .touchUpInside)
 
         userImageView.accessibilityLabel = "user image"

@@ -54,9 +54,10 @@ extension UIViewController {
 
     @discardableResult
     func presentInvalidUserProfileLinkAlert(okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
-        return presentAlertWithOKButton(title: "url_action.invalid_user.title".localized,
-                                        message: "url_action.invalid_user.message".localized,
-                                        okActionHandler: okActionHandler)
+        return presentAlertWithOKButton(
+            title: L10n.Localizable.UrlAction.InvalidUser.title,
+            message: L10n.Localizable.UrlAction.InvalidUser.message,
+            okActionHandler: okActionHandler)
     }
 
 }

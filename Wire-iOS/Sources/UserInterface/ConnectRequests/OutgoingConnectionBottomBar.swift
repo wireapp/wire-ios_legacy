@@ -50,7 +50,7 @@ final class OutgoingConnectionViewController: UIViewController {
     private func setupCancelButton() {
         cancelButton.accessibilityLabel = "cancel connection"
         cancelButton.setIcon(.undo, size: .tiny, for: .normal)
-        cancelButton.setTitle("profile.cancel_connection_button_title".localized(uppercased: true), for: .normal)
+        cancelButton.setTitle(L10n.Localizable.Profile.cancelConnectionButtonTitle.uppercased(), for: .normal)
         cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
         cancelButton.setTitleColor(UIColor.from(scheme: .textForeground), for: .normal)
         cancelButton.setTitleImageSpacing(24)

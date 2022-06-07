@@ -34,8 +34,8 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
 
     var displayString: String {
         switch self {
-        case .apple: return "open_link.maps.option.apple".localized
-        case .google: return "open_link.maps.option.google".localized
+        case .apple: return L10n.Localizable.OpenLink.Maps.Option.apple
+        case .google: return L10n.Localizable.OpenLink.Maps.Option.google
         }
     }
 

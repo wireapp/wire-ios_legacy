@@ -98,7 +98,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     private func setupNoResultLabel() {
         extendedLayoutIncludesOpaqueBars = true
 
-        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
+        noResultsLabel.text = L10n.Localizable.Giphy.Error.noResult.uppercased()
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
     }
@@ -119,14 +119,14 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         searchBar.text = searchTerm
         searchBar.delegate = self
         searchBar.tintColor = .accent()
-        searchBar.placeholder = "giphy.search_placeholder".localized
+        searchBar.placeholder = L10n.Localizable.Giphy.searchPlaceholder
         searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
 
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
 
         let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
-        closeItem.accessibilityLabel = "general.close".localized
+        closeItem.accessibilityLabel = L10n.Localizable.General.close
 
         navigationItem.rightBarButtonItem = closeItem
         self.navigationItem.titleView = searchBar

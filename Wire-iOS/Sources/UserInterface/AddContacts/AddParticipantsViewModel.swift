@@ -46,8 +46,8 @@ struct AddParticipantsViewModel {
 
     func title(with users: UserSet) -> String {
         return users.isEmpty
-            ? "peoplepicker.group.title.singular".localized(uppercased: true)
-            : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)
+        ? L10n.Localizable.Peoplepicker.Group.Title.singular.uppercased()
+        : L10n.Localizable.Peoplepicker.Group.Title.plural(users.count).uppercased()
     }
 
     var filterConversation: ZMConversation? {
@@ -69,9 +69,9 @@ struct AddParticipantsViewModel {
         case .create: return nil
         case .add(let conversation):
             if conversation.conversationType == .oneOnOne {
-                return "peoplepicker.button.create_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.createConversation.uppercased()
             } else {
-                return "peoplepicker.button.add_to_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.addToConversation.uppercased()
             }
         }
     }

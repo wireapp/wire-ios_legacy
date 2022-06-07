@@ -60,7 +60,7 @@ class LaunchImageViewController: UIViewController {
         loadingScreenLabel.font = .systemFont(ofSize: 12)
         loadingScreenLabel.textColor = .white
 
-        loadingScreenLabel.text = "migration.please_wait_message".localized.uppercased(with: NSLocale.current)
+        loadingScreenLabel.text = L10n.Localizable.Migration.pleaseWaitMessage.uppercased(with: NSLocale.current)
         loadingScreenLabel.isHidden = true
 
         view.addSubview(loadingScreenLabel)
