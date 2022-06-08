@@ -189,7 +189,7 @@ final class ConversationGuestOptionsViewModel {
     /// - Parameter view: the source view which triggers shareLink action
     private func shareLink(view: UIView? = nil) {
         guard let link = link else { return }
-        let message = "guest_room.share.message".localized(args: link)
+        let message = L10n.Localizable.GuestRoom.Share.message(link)
         delegate?.viewModel(self, wantsToShareMessage: message, sourceView: view)
     }
 

@@ -32,15 +32,15 @@ extension UIAlertController {
 
     static func confirmGroupCall(participants: Int, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "conversation.call.many_participants_confirmation.title".localized,
-            message: "conversation.call.many_participants_confirmation.message".localized(args: participants),
+            title: L10n.Localizable.Conversation.Call.ManyParticipantsConfirmation.title,
+            message: L10n.Localizable.Conversation.Call.ManyParticipantsConfirmation.message(participants),
             preferredStyle: .alert
         )
 
         controller.addAction(.cancel { completion(false) })
 
         let sendAction = UIAlertAction(
-            title: "conversation.call.many_participants_confirmation.call".localized,
+            title: L10n.Localizable.Conversation.Call.ManyParticipantsConfirmation.call,
             style: .default,
             handler: { _ in completion(true) }
         )

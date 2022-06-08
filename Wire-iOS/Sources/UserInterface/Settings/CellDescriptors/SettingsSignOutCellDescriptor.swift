@@ -24,15 +24,15 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
     var requestPasswordController: RequestPasswordController?
 
     init() {
-        super.init(title: "self.sign_out".localized,
-                   isDestructive: true,
-                   presentationStyle: .modal,
-                   identifier: nil,
-                   presentationAction: { return nil },
-                   previewGenerator: nil,
-                   icon: nil,
-                   accessoryViewMode: .default)
-
+        super.init(
+            title: L10n.Localizable.Self.signOut,
+            isDestructive: true,
+            presentationStyle: .modal,
+            identifier: nil,
+            presentationAction: { return nil },
+            previewGenerator: nil,
+            icon: nil,
+            accessoryViewMode: .default)
     }
 
     private func logout(password: String? = nil) {
@@ -61,11 +61,18 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
         var viewController: UIViewController?
 
         if selfUser.emailAddress == nil || selfUser.usesCompanyLogin {
-            let alert = UIAlertController(title: "self.settings.account_details.log_out.alert.title".localized,
-                                          message: "self.settings.account_details.log_out.alert.message".localized,
-                                          preferredStyle: .alert)
-            let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
-            let actionLogout = UIAlertAction(title: "general.ok".localized, style: .destructive, handler: { [weak self] _ in
+            let alert = UIAlertController(
+                title: L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.title,
+                message: L10n.Localizable.Self.Settings.AccountDetails.LogOut.Alert.message,
+                preferredStyle: .alert)
+            let actionCancel = UIAlertAction(
+                title: L10n.Localizable.General.cancel,
+                style: .cancel,
+                handler: nil)
+            let actionLogout = UIAlertAction(
+                title: L10n.Localizable.General.ok,
+                style: .destructive,
+                handler: { [weak self] _ in
                 self?.logout()
             })
             alert.addAction(actionCancel)

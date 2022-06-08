@@ -137,7 +137,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
-        showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
+        showMyDeviceButton.setTitle( L10n.Localizable.Profile.Devices.Detail.ShowMyDevice.title.uppercased(), for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!

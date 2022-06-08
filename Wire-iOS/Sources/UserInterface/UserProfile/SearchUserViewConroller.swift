@@ -59,7 +59,7 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
 
         let cancelItem = UIBarButtonItem(icon: .cross, target: self, action: #selector(cancelButtonTapped))
         cancelItem.accessibilityIdentifier = "CancelButton"
-        cancelItem.accessibilityLabel = "general.cancel".localized
+        cancelItem.accessibilityLabel = L10n.Localizable.General.cancel
         navigationItem.rightBarButtonItem = cancelItem
 
         isLoadingViewVisible = true

@@ -137,7 +137,7 @@ final class BackupPasswordViewController: UIViewController {
 
         title = L10n.Localizable.Self.Settings.HistoryBackup.Password.title.localizedUppercase
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.cancel".localized(uppercased: true),
+            title: L10n.Localizable.Self.Settings.HistoryBackup.Password.cancel.uppercased(),
             style: .plain,
             target: self,
             action: #selector(cancel)

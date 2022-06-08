@@ -87,7 +87,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     func setupViews() {
         SettingsButtonCell.register(in: tableView)
 
-        title = "self.settings.account_section.email.change.verify.title".localized(uppercased: true)
+        title = L10n.Localizable.Self.Settings.AccountSection.Email.Change.Verify.title.uppercased()
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
 
@@ -95,8 +95,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         tableView.estimatedSectionHeaderHeight = 30
 
         let description = DescriptionHeaderView()
-        description.descriptionLabel.text = "self.settings.account_section.email.change.verify.description".localized
-
+        description.descriptionLabel.text = L10n.Localizable.Self.Settings.AccountSection.Email.Change.Verify.description
         tableView.autolayoutTableHeaderView = description
     }
 
@@ -123,12 +122,15 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
 
         let message = String(format: "self.settings.account_section.email.change.resend.message".localized, newEmail)
         let alert = UIAlertController(
-            title: "self.settings.account_section.email.change.resend.title".localized,
+            title: L10n.Localizable.Self.Settings.AccountSection.Email.Change.Resend.title,
             message: message,
             preferredStyle: .alert
         )
 
-        alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+        alert.addAction(.init(
+            title: L10n.Localizable.General.ok,
+            style: .cancel,
+            handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }

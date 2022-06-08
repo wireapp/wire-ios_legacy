@@ -285,9 +285,11 @@ enum DebugActions {
             preferredStyle: .alert
         )
 
-        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
-            callback(controller.textFields?.first?.text ?? "")
-        }
+        let okAction = UIAlertAction(
+            title: L10n.Localizable.General.ok,
+            style: .default) { [controller] _ in
+                callback(controller.textFields?.first?.text ?? "")
+            }
 
         controller.addTextField()
 

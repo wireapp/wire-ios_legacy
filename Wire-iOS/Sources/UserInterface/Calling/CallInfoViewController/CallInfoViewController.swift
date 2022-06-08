@@ -151,7 +151,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             action: #selector(minimizeCallOverlay)
         )
 
-        minimizeItem.accessibilityLabel = "call.actions.label.minimize_call".localized
+        minimizeItem.accessibilityLabel = L10n.Localizable.Call.Actions.Label.minimizeCall
         minimizeItem.accessibilityIdentifier = "CallDismissOverlayButton"
 
         navigationItem.leftBarButtonItem = minimizeItem

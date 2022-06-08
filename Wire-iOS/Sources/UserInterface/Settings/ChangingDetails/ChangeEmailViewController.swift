@@ -123,7 +123,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = "self.settings.account_section.email.change.title".localized(uppercased: true)
+        title = L10n.Localizable.Self.Settings.AccountSection.Email.Change.title.uppercased()
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
 
@@ -144,7 +144,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         emailPasswordCell.textField.setSeparatorColor(.white)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.email.change.save".localized(uppercased: true),
+            title: L10n.Localizable.Self.Settings.AccountSection.Email.Change.save.uppercased(),
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)

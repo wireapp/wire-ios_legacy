@@ -75,7 +75,7 @@ final class ParticipantDeviceHeaderView: UIView {
 
             let mutableAttributedString = NSMutableAttributedString(attributedString: attributedFingerprint(forUserName: userName, message: message))
 
-            let fingerprintLearnMoreLink = "profile.devices.fingerprint_message.link".localized && linkAttributes
+            let fingerprintLearnMoreLink = L10n.Localizable.Profile.Devices.FingerprintMessage.link && linkAttributes
 
             return mutableAttributedString + fingerprintLearnMoreLink
         }

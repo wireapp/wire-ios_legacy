@@ -46,10 +46,8 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
         if let userSession = ZMUserSession.shared() {
             tokens.append(UserChangeInfo.add(observer: self, for: user, in: userSession))
         }
-
         self.headerView.delegate = self
-
-        title = "profile.devices.title".localized
+        title = L10n.Localizable.Profile.Devices.title
     }
 
     @available(*, unavailable)

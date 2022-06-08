@@ -22,19 +22,19 @@ import UIKit
 extension UIAlertController {
     static var unsupportedVersionAlert: UIAlertController {
         let alertController = UIAlertController(
-            title: "voice.call_error.unsupported_version.title".localized,
-            message: "voice.call_error.unsupported_version.message".localized,
+            title: L10n.Localizable.Voice.CallError.UnsupportedVersion.title,
+            message: L10n.Localizable.Voice.CallError.UnsupportedVersion.message,
             preferredStyle: .alert
         )
 
         alertController.addAction(UIAlertAction(
-            title: "force.update.ok_button".localized,
+            title: L10n.Localizable.Force.Update.okButton,
             style: .default,
             handler: { _ in UIApplication.shared.open(URL.wr_wireAppOnItunes) }
         ))
 
         alertController.addAction(UIAlertAction(
-            title: "voice.call_error.unsupported_version.dismiss".localized,
+            title: L10n.Localizable.Voice.CallError.UnsupportedVersion.dismiss,
             style: .default,
             handler: nil
         ))

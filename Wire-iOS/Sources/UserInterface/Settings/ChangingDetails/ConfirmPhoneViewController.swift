@@ -81,7 +81,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         ConfirmationCodeCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
 
-        title = "self.settings.account_section.phone_number.change.verify.title".localized(uppercased: true)
+        title = L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Verify.title.uppercased()
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
 
@@ -131,7 +131,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .verificationCode:
             return nil
         case .buttons:
-            return "self.settings.account_section.phone_number.change.verify.resend_description".localized
+            return L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Verify.resendDescription
         }
     }
 
@@ -150,7 +150,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             return cell
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
-            cell.titleText = "self.settings.account_section.phone_number.change.verify.resend".localized
+            cell.titleText = L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Verify.resend
             if resendEnabled {
                 cell.titleColor = .white
                 cell.selectionStyle = .default
@@ -170,12 +170,15 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             delegate?.resendVerificationCode(inController: self)
             let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
             let alert = UIAlertController(
-                title: "self.settings.account_section.phone_number.change.resend.title".localized,
+                title: L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Resend.title,
                 message: message,
                 preferredStyle: .alert
             )
 
-            alert.addAction(.init(title: "general.ok".localized, style: .cancel, handler: nil))
+            alert.addAction(.init(
+                title: L10n.Localizable.General.ok,
+                style: .cancel,
+                handler: nil))
             present(alert, animated: true, completion: nil)
             startTimer()
             reloadResendCell()

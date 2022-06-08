@@ -79,7 +79,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "group_details.timeout_options_cell.title".localized(uppercased: true)
+        title = L10n.Localizable.GroupDetails.TimeoutOptionsCell.title.uppercased()
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
 
         configureSubviews()

@@ -123,7 +123,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
-        verifiedIconView.accessibilityLabel = client.verified ? "device.verified".localized : "device.not_verified".localized
+        verifiedIconView.accessibilityLabel = client.verified ? L10n.Localizable.Device.verified : L10n.Localizable.Device.notVerified
 
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)

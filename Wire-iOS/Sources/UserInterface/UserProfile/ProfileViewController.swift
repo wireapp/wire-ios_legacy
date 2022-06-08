@@ -213,8 +213,7 @@ final class ProfileViewController: UIViewController {
                                                                         viewer: viewModel.viewer,
                                                                         conversation: viewModel.conversation,
                                                                         context: viewModel.context)
-        profileDetailsViewController.title = "profile.details.title".localized
-
+        profileDetailsViewController.title = L10n.Localizable.Profile.Details.title
         return profileDetailsViewController
     }
 
@@ -433,20 +432,22 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         let otherUser = viewModel.user
 
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: otherUser.name ?? ""),
+            title: L10n.Localizable.Profile.removeDialogMessage(otherUser.name ?? ""),
             message: nil,
             preferredStyle: .actionSheet
         )
 
-        let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
-            self.viewModel.conversation?.removeOrShowError(participant: otherUser) { result in
-                switch result {
-                case .success:
-                    self.returnToPreviousScreen()
-                case .failure:
-                    break
+        let removeAction = UIAlertAction(
+            title: L10n.Localizable.Profile.removeDialogButtonRemoveConfirm,
+            style: .destructive) { _ in
+                self.viewModel.conversation?.removeOrShowError(participant: otherUser) { result in
+                    switch result {
+                    case .success:
+                        self.returnToPreviousScreen()
+                    case .failure:
+                        break
+                    }
                 }
-            }
         }
 
         controller.addAction(removeAction)

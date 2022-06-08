@@ -56,7 +56,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "group_details.notification_options_cell.title".localized(uppercased: true)
+        title = L10n.Localizable.GroupDetails.NotificationOptionsCell.title.uppercased()
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
 
         configureSubviews()
@@ -124,7 +124,7 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
                                                                                for: indexPath)
 
             guard let view = dequeuedView as? SectionFooter else { return UICollectionReusableView(frame: .zero) }
-            view.titleLabel.text = "group_details.notification_options_cell.description".localized
+            view.titleLabel.text = L10n.Localizable.GroupDetails.NotificationOptionsCell.description
             return view
         }
     }
@@ -136,7 +136,7 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
 
         guard let view = dequeuedView as? SectionFooter else { return .zero }
 
-        view.titleLabel.text = "group_details.notification_options_cell.description".localized
+        view.titleLabel.text = L10n.Localizable.GroupDetails.NotificationOptionsCell.description
         view.size(fittingWidth: collectionView.bounds.width)
         return view.bounds.size
     }

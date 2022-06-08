@@ -46,15 +46,22 @@ extension UIAlertController {
 
         // Add actions
         if let confirmationBlock = confirmationBlock {
-            controller.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
-                confirmationBlock(false)
+            controller.addAction(UIAlertAction(
+                title: L10n.Localizable.General.cancel,
+                style: .cancel) { _ in
+                    confirmationBlock(false)
             })
 
-            controller.addAction(UIAlertAction(title: "call.degraded.alert.action.continue".localized, style: .default) { _ in
-                confirmationBlock(true)
+            controller.addAction(UIAlertAction(
+                title: L10n.Localizable.Call.Degraded.Alert.Action.continue,
+                style: .default) { _ in
+                    confirmationBlock(true)
             })
         } else {
-            controller.addAction(UIAlertAction(title: "general.ok".localized, style: .default))
+            controller.addAction(
+                UIAlertAction(
+                    title: L10n.Localizable.General.ok,
+                    style: .default))
         }
 
         return controller

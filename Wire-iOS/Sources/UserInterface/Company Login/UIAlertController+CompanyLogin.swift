@@ -25,17 +25,17 @@ extension UIAlertController {
   fileprivate enum CompanyLoginCopy: String {
         case ssoAndEmail = "sso_and_email"
         case ssoOnly = "sso_only"
-
+        typealias SSOAlert = L10n.Localizable.Login.Sso.Alert
         init(ssoOnly: Bool) {
             self = ssoOnly ? .ssoOnly : .ssoAndEmail
         }
 
         var action: String {
-            return "login.sso.alert.action".localized
+            return SSOAlert.action
         }
 
         var title: String {
-            return "login.sso.alert.title".localized
+            return SSOAlert.title
         }
 
         var message: String {
@@ -66,15 +66,15 @@ extension UIAlertController {
             case .invalidFormat:
                 return "login.sso.error.alert.invalid_format.message.\(copy.rawValue)".localized
             case .domainNotRegistered:
-                return "login.sso.error.alert.domain_not_registered.message".localized
+                return L10n.Localizable.Login.Sso.Error.Alert.DomainNotRegistered.message
             case .domainAssociatedWithWrongServer:
-                return "login.sso.error.alert.domain_associated_with_wrong_server.message".localized
+                return L10n.Localizable.Login.Sso.Error.Alert.DomainAssociatedWithWrongServer.message
             case .invalidCode:
-                return "login.sso.error.alert.invalid_code.message".localized
+                return L10n.Localizable.Login.Sso.Error.Alert.InvalidCode.message
             case .invalidStatus(let status):
-                return "login.sso.error.alert.invalid_status.message".localized(args: String(status))
+                return L10n.Localizable.Login.Sso.Error.Alert.InvalidStatus.message(String(status)).uppercased()
             case .unknown:
-                return "login.sso.error.alert.unknown.message".localized
+                return L10n.Localizable.Login.Sso.Error.Alert.Unknown.message
             }
         }
     }
@@ -124,8 +124,8 @@ extension UIAlertController {
     /// Creates an `UIAlertController` warning about no network connection.
     static func noInternetError() -> UIAlertController {
         let controller = UIAlertController(
-            title: "team.invite.error.no_internet".localized,
-            message: "login.sso.error.offline.alert.message".localized,
+            title: L10n.Localizable.Team.Invite.Error.noInternet,
+            message: L10n.Localizable.Login.Sso.Error.Offline.Alert.message,
             preferredStyle: .alert
         )
 

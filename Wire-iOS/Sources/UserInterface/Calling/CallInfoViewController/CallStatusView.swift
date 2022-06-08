@@ -117,13 +117,13 @@ private extension CallStatusViewInputType {
     var displayString: String {
         switch state {
         case .none: return ""
-        case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name?): return "call.status.incoming.user".localized(args: name)
-        case .ringingIncoming(name: nil): return "call.status.incoming".localized
-        case .ringingOutgoing: return "call.status.outgoing".localized
+        case .connecting: return L10n.Localizable.Call.Status.connecting
+        case .ringingIncoming(name: let name?): return L10n.Localizable.Call.Status.Incoming.user(name)
+        case .ringingIncoming(name: nil): return L10n.Localizable.Call.Status.incoming
+        case .ringingOutgoing: return L10n.Localizable.Call.Status.outgoing
         case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
-        case .reconnecting: return "call.status.reconnecting".localized
-        case .terminating: return "call.status.terminating".localized
+        case .reconnecting: return L10n.Localizable.Call.Status.reconnecting
+        case .terminating: return L10n.Localizable.Call.Status.terminating
         }
     }
 }

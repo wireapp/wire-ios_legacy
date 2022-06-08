@@ -22,8 +22,8 @@ extension UIAlertController {
 
     static func checkYourConnection() -> UIAlertController {
         let controller = UIAlertController(
-            title: "guest_room.error.generic.title".localized,
-            message: "guest_room.error.generic.message".localized,
+            title: L10n.Localizable.GuestRoom.Error.Generic.title,
+            message: L10n.Localizable.GuestRoom.Error.Generic.message,
             preferredStyle: .alert
         )
         controller.addAction(.ok())
@@ -33,16 +33,16 @@ extension UIAlertController {
 
     static func confirmRemovingGuests(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            title: "guest_room.remove_guests.message".localized,
-            confirmTitle: "guest_room.remove_guests.action".localized,
+            title:  L10n.Localizable.GuestRoom.RemoveGuests.message,
+            confirmTitle:  L10n.Localizable.GuestRoom.RemoveGuests.action,
             completion: completion
         )
     }
 
     static func confirmRevokingLink(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            title: "guest_room.revoke_link.message".localized,
-            confirmTitle: "guest_room.revoke_link.action".localized,
+            title:  L10n.Localizable.GuestRoom.RevokeLink.message,
+            confirmTitle:  L10n.Localizable.GuestRoom.RevokeLink.action,
             completion: completion
         )
     }

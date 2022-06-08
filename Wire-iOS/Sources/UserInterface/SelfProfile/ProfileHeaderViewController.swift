@@ -84,7 +84,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     let nameLabel: UILabel = {
         let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
-        label.accessibilityLabel = "profile_view.accessibility.name".localized
+        label.accessibilityLabel = L10n.Localizable.ProfileView.Accessibility.name
         label.accessibilityIdentifier = "name"
 
         label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
@@ -157,7 +157,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
             tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
 
-        handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
+        handleLabel.accessibilityLabel = L10n.Localizable.ProfileView.Accessibility.handle
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
@@ -167,7 +167,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         nameHandleStack.alignment = .center
         nameHandleStack.spacing = 2
 
-        teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
+        teamNameLabel.accessibilityLabel = L10n.Localizable.ProfileView.Accessibility.teamName
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
@@ -314,11 +314,11 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateImageButton() {
         if options.contains(.allowEditingProfilePicture) {
-            imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
+            imageView.accessibilityLabel = L10n.Localizable.Self.Accessibility.profilePhotoEditButton
             imageView.accessibilityTraits = [.image, .button]
             imageView.isUserInteractionEnabled = true
         } else {
-            imageView.accessibilityLabel = "self.accessibility.profile_photo_image".localized
+            imageView.accessibilityLabel = L10n.Localizable.Self.Accessibility.profilePhotoImage
             imageView.accessibilityTraits = [.image]
             imageView.isUserInteractionEnabled = false
         }

@@ -40,21 +40,21 @@ enum ProfileAction: Equatable {
     /// The text of the button for this action.
     var buttonText: String {
         switch self {
-        case .createGroup: return "profile.create_conversation_button_title".localized
-        case .mute(let isMuted): return isMuted
-            ? "meta.menu.silence.unmute".localized
-            : "meta.menu.silence.mute".localized
-        case .manageNotifications: return "meta.menu.configure_notifications".localized
-        case .archive: return "meta.menu.archive".localized
-        case .deleteContents: return "meta.menu.clear_content".localized
-        case .block(let isBlocked): return isBlocked
-            ? "profile.unblock_button_title_action".localized
-            : "profile.block_button_title".localized
-        case .openOneToOne: return "profile.open_conversation_button_title".localized
-        case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
-        case .connect: return "profile.connection_request_dialog.button_connect".localized
-        case .cancelConnectionRequest: return "meta.menu.cancel_connection_request".localized
-        case .openSelfProfile: return "meta.menu.open_self_profile".localized
+        case .createGroup:              return L10n.Localizable.Profile.createConversationButtonTitle
+        case .mute(let isMuted):        return isMuted
+            ? L10n.Localizable.Meta.Menu.Silence.unmute
+            : L10n.Localizable.Meta.Menu.Silence.mute
+        case .manageNotifications:      return L10n.Localizable.Meta.Menu.configureNotifications
+        case .archive:                  return L10n.Localizable.Meta.Menu.archive
+        case .deleteContents:           return L10n.Localizable.Meta.Menu.clearContent
+        case .block(let isBlocked):     return isBlocked
+            ? L10n.Localizable.Profile.unblockButtonTitleAction
+            : L10n.Localizable.Profile.blockButtonTitle
+        case .openOneToOne:             return L10n.Localizable.Profile.openConversationButtonTitle
+        case .removeFromGroup:          return L10n.Localizable.Profile.removeDialogButtonRemove
+        case .connect:                  return L10n.Localizable.Profile.ConnectionRequestDialog.buttonConnect
+        case .cancelConnectionRequest:  return L10n.Localizable.Meta.Menu.cancelConnectionRequest
+        case .openSelfProfile:          return L10n.Localizable.Meta.Menu.openSelfProfile
         }
     }
 
