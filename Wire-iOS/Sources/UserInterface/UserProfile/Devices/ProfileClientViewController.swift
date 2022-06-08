@@ -234,7 +234,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
-        verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
+        verifiedToggleLabel.text = L10n.Localizable.Device.verified.uppercased()
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
     }
@@ -242,7 +242,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
-        resetButton.setTitle("profile.devices.detail.reset_session.title".localized(uppercased: true), for: [])
+        resetButton.setTitle( L10n.Localizable.Profile.Devices.Detail.ResetSession.title.uppercased(), for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
         contentView.addSubview(resetButton)

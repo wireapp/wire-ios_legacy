@@ -83,7 +83,7 @@ final class MessageToolboxView: UIView {
 
     private let resendButton: UIButton = {
         let button = UIButton()
-        let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
+        let attributedTitle = NSAttributedString(string: L10n.Localizable.Content.System.failedtosendMessageTimestampResend,
                                                  attributes: [.foregroundColor: UIColor.vividRed,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
@@ -97,7 +97,7 @@ final class MessageToolboxView: UIView {
 
     private let deleteButton: UIButton = {
         let button = UIButton()
-        let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
+        let attributedTitle = NSAttributedString(string: L10n.Localizable.Content.System.failedtosendMessageTimestampDelete,
                                                  attributes: [.foregroundColor: UIColor.vividRed,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
@@ -426,7 +426,9 @@ final class MessageToolboxView: UIView {
         }
 
         // Change State and Appearance
-        likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
+        likeButton.accessibilityLabel = message.liked
+            ? L10n.Localizable.Content.Message.unlike
+            : L10n.Localizable.Content.Message.like
         likeButton.setIcon(message.liked ? .liked : .like, size: 12, for: .normal)
         likeButton.setIcon(.liked, size: 12, for: .selected)
         likeButton.setSelected(message.liked, animated: animated)

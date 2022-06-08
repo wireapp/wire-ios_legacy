@@ -40,7 +40,7 @@ final class UserNameTakeOverViewController: UIViewController {
     private let suggestedHandle: String
     private let name: String
 
-    private let learnMore = "registration.select_handle.takeover.subtitle_link".localized
+    private let learnMore = L10n.Localizable.Registration.SelectHandle.Takeover.subtitleLink
     fileprivate let learnMoreURL = URL(string: "action://learn-more")!
 
     weak var delegate: UserNameTakeOverViewControllerDelegate?
@@ -78,8 +78,8 @@ final class UserNameTakeOverViewController: UIViewController {
         suggestedHandleLabel.text = "@" + suggestedHandle
         suggestedHandleLabel.textAlignment = .center
 
-        chooseOwnButton.setTitle("registration.select_handle.takeover.choose_own".localized, for: .normal)
-        keepSuggestedButton.setTitle("registration.select_handle.takeover.keep_suggested".localized, for: .normal)
+        chooseOwnButton.setTitle(L10n.Localizable.Registration.SelectHandle.Takeover.chooseOwn, for: .normal)
+        keepSuggestedButton.setTitle(L10n.Localizable.Registration.SelectHandle.Takeover.keepSuggested, for: .normal)
 
         setupSubtitleLabel()
 
@@ -96,7 +96,7 @@ final class UserNameTakeOverViewController: UIViewController {
         let linkFont = FontSpec(.large, .none).font!
         let color = UIColor.from(scheme: .textForeground, variant: .dark)
 
-        let subtitle = "registration.select_handle.takeover.subtitle".localized
+        let subtitle = L10n.Localizable.Registration.SelectHandle.Takeover.subtitle
         let linkAttributes: [NSAttributedString.Key: Any] = [
             .font: linkFont,
             .link: learnMoreURL

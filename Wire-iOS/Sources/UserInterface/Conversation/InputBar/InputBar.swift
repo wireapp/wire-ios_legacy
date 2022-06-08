@@ -356,12 +356,12 @@ final class InputBar: UIView {
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
 
-        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        var placeholder = NSAttributedString(string: L10n.Localizable.Conversation.InputBar.placeholder)
 
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
-            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
+            placeholder  = NSAttributedString(string: L10n.Localizable.Conversation.InputBar.placeholderEphemeral) && ephemeralColor
         }
         if state.isEditing {
             return nil

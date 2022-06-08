@@ -173,12 +173,14 @@ extension ConversationContentViewController {
     }
 
     private func presentDownloadNecessaryAlert(for message: ZMConversationMessage) {
-        let alertMessage = "digital_signature.alert.download_necessary".localized
-        let alertController = UIAlertController(title: "",
-                                                message: alertMessage,
-                                                preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "general.close".localized,
-                                         style: .default)
+        let alertMessage = L10n.Localizable.DigitalSignature.Alert.downloadNecessary
+        let alertController = UIAlertController(
+            title: "",
+            message: alertMessage,
+            preferredStyle: .alert)
+        let cancelAction = UIAlertAction(
+            title:L10n.Localizable.General.close,
+            style: .default)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
     }
@@ -265,17 +267,19 @@ extension ConversationContentViewController: SignatureObserver {
         var message: String?
         switch errorType {
         case .noConsentURL:
-            message = "digital_signature.alert.error.no_consent_url".localized
+            message = L10n.Localizable.DigitalSignature.Alert.Error.noConsentUrl
         case .retrieveFailed:
-            message = "digital_signature.alert.error.no_signature".localized
+            message = L10n.Localizable.DigitalSignature.Alert.Error.noSignature
         }
 
-        let alertController = UIAlertController(title: "",
-                                                message: message,
-                                                preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "",
+            message: message,
+            preferredStyle: .alert)
 
-        let closeAction = UIAlertAction(title: "general.close".localized,
-                                        style: .default)
+        let closeAction = UIAlertAction(
+            title: L10n.Localizable.General.close,
+            style: .default)
 
         alertController.addAction(closeAction)
         present(alertController, animated: true)

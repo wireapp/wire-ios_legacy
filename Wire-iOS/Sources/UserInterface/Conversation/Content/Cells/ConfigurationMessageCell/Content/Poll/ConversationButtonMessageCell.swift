@@ -89,7 +89,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
         button.accessibilityValue = config.state.localizedName
 
-        errorMessage = config.hasError ? "button_message_cell.generic_error".localized : nil
+        errorMessage = config.hasError ? L10n.Localizable.ButtonMessageCell.genericError : nil
     }
 
     func configure(with object: Configuration, animated: Bool) {

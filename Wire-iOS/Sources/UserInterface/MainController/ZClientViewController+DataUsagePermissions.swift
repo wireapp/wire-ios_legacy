@@ -36,16 +36,25 @@ extension ZClientViewController {
         // If the user registers, show the alert.
         guard isComingFromRegistration else { return nil }
 
-        let alertController = UIAlertController(title: "conversation_list.data_usage_permission_alert.title".localized, message: "conversation_list.data_usage_permission_alert.message".localized, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: L10n.Localizable.ConversationList.DataUsagePermissionAlert.title,
+            message: L10n.Localizable.ConversationList.DataUsagePermissionAlert.message,
+            preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.disagree".localized, style: .cancel, handler: { (_) in
-            TrackingManager.shared.disableCrashSharing = true
-            TrackingManager.shared.disableAnalyticsSharing = true
+        alertController.addAction(UIAlertAction(
+            title: L10n.Localizable.ConversationList.DataUsagePermissionAlert.disagree,
+            style: .cancel,
+            handler: { (_) in
+                TrackingManager.shared.disableCrashSharing = true
+                TrackingManager.shared.disableAnalyticsSharing = true
         }))
 
-        alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.agree".localized, style: .default, handler: { (_) in
-            TrackingManager.shared.disableCrashSharing = false
-            TrackingManager.shared.disableAnalyticsSharing = false
+        alertController.addAction(UIAlertAction(
+            title: L10n.Localizable.ConversationList.DataUsagePermissionAlert.agree,
+            style: .default,
+            handler: { (_) in
+                TrackingManager.shared.disableCrashSharing = false
+                TrackingManager.shared.disableAnalyticsSharing = false
         }))
 
         return alertController

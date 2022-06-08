@@ -40,7 +40,7 @@ final class ConversationTitleView: TitleView {
         titleColor = UIColor.from(scheme: .textForeground)
         titleColorSelected = UIColor.from(scheme: .textDimmed)
         titleFont = .mediumSemiboldFont
-        accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
+        accessibilityHint = L10n.Localizable.ConversationDetails.OpenButton.accessibilityHint
 
         var attachments: [NSTextAttachment] = []
 
@@ -68,11 +68,11 @@ final class ConversationTitleView: TitleView {
         components.append(conversation.displayName.localizedUppercase)
 
         if conversation.securityLevel == .secure {
-            components.append("conversation.voiceover.verified".localized)
+            components.append(L10n.Localizable.Conversation.Voiceover.verified)
         }
 
         if conversation.isUnderLegalHold {
-            components.append("conversation.voiceover.legalhold".localized)
+            components.append(L10n.Localizable.Conversation.Voiceover.legalhold)
         }
 
         if !UIApplication.isLeftToRightLayout {

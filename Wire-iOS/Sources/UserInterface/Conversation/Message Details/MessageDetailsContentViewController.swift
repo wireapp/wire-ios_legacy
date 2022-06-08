@@ -123,7 +123,7 @@ final class MessageDetailsContentViewController: UIViewController {
         subtitleLabel.font = .mediumFont
         subtitleLabel.textColor = UIColor.from(scheme: .sectionText)
         subtitleLabel.accessibilityIdentifier = "DeliveryStatus"
-        subtitleLabel.accessibilityLabel = "message_details.subtitle_label_voiceOver".localized
+        subtitleLabel.accessibilityLabel = L10n.Localizable.MessageDetails.subtitleLabelVoiceOver
         view.addSubview(subtitleLabel)
 
         noResultsView.isHidden = true
@@ -138,16 +138,16 @@ final class MessageDetailsContentViewController: UIViewController {
         switch contentType {
         case .receipts:
             if cells.isEmpty {
-                title = "message_details.receipts_title".localized(uppercased: true)
+                title = L10n.Localizable.MessageDetails.receiptsTitle.uppercased()
             } else {
-                title = "message_details.tabs.seen".localized(args: cells.count).localizedUppercase
+                title = L10n.Localizable.MessageDetails.Tabs.seen(cells.count).uppercased()
             }
 
         case .reactions:
             if cells.isEmpty {
-                title = "message_details.likes_title".localized(uppercased: true)
+                title = L10n.Localizable.MessageDetails.likesTitle.uppercased()
             } else {
-                title = "message_details.tabs.likes".localized(args: cells.count).localizedUppercase
+                title = L10n.Localizable.MessageDetails.Tabs.likes(cells.count).uppercased()
             }
         }
     }
@@ -185,17 +185,17 @@ final class MessageDetailsContentViewController: UIViewController {
         switch contentType {
         case .reactions:
             noResultsView.label.accessibilityIdentifier = "placeholder.no_likes"
-            noResultsView.placeholderText = "message_details.empty_likes".localized(uppercased: true)
+            noResultsView.placeholderText = L10n.Localizable.MessageDetails.emptyLikes.uppercased()
             noResultsView.icon = .like
 
         case .receipts(enabled: true):
             noResultsView.label.accessibilityIdentifier = "placeholder.no_read_receipts"
-            noResultsView.placeholderText = "message_details.empty_read_receipts".localized(uppercased: true)
+            noResultsView.placeholderText = L10n.Localizable.MessageDetails.emptyReadReceipts.uppercased()
             noResultsView.icon = .eye
 
         case .receipts(enabled: false):
             noResultsView.label.accessibilityIdentifier = "placeholder.read_receipts_disabled"
-            noResultsView.placeholderText = "message_details.read_receipts_disabled".localized(uppercased: true)
+            noResultsView.placeholderText = L10n.Localizable.MessageDetails.readReceiptsDisabled.uppercased()
             noResultsView.icon = .eye
         }
     }

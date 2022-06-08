@@ -46,7 +46,7 @@ final class StartUIInviteActionBar: UIView {
         inviteButton = Button(style: ButtonStyle.empty, variant: .dark)
         inviteButton.titleEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 3, right: 8)
         addSubview(inviteButton)
-        inviteButton.setTitle("peoplepicker.invite_more_people".localized, for: .normal)
+        inviteButton.setTitle(L10n.Localizable.Peoplepicker.inviteMorePeople, for: .normal)
     }
 
     override var isHidden: Bool {

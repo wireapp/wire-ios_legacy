@@ -120,7 +120,7 @@ final class ModalTopBar: UIView {
         [contentStackView, dismissButton, separatorView].forEach(addSubview)
 
         dismissButton.accessibilityIdentifier = "Close"
-        dismissButton.accessibilityLabel = "general.close".localized
+        dismissButton.accessibilityLabel = L10n.Localizable.General.close
 
         dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)

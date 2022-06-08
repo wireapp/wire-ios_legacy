@@ -43,7 +43,7 @@ final class ConversationListOnboardingHint: UIView {
         messageLabel.textColor = .white
         messageLabel.textAlignment = .left
         messageLabel.font = FontSpec(.large, .light).font
-        messageLabel.text = "conversation_list.empty.no_contacts.message".localized
+        messageLabel.text = L10n.Localizable.ConversationList.Empty.NoContacts.message
 
         [arrowView, messageLabel].forEach(self.addSubview)
 

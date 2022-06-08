@@ -543,7 +543,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
 
     init() {
         let title = NSAttributedString(
-            string: "content.system.is_verified".localized,
+            string: L10n.Localizable.Content.System.isVerified,
             attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
         )
 
@@ -638,12 +638,12 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
             return string.addAttributes([.font: boldFont], toSubstring: userNames)
         }
 
-        var title = "content.system.missing_messages.title".localized && font && color
+        var title = L10n.Localizable.Content.System.MissingMessages.title && font && color
 
         // We only want to display the subtitle if we have the final added and removed users and either one is not empty
         let addedOrRemovedUsers = !systemMessageData.addedUserTypes.isEmpty || !systemMessageData.removedUserTypes.isEmpty
         if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
-            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && font && color
+            title += "\n\n" + L10n.Localizable.Content.System.MissingMessages.subtitleStart + " " && font && color
             title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", Array(systemMessageData.addedUserTypes))
             title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", Array(systemMessageData.removedUserTypes))
         }
@@ -684,9 +684,9 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
         let link = View.userClientURL.absoluteString
 
         if user.isSelfUser == true {
-            string = "content.system.unverified_self_devices".localized(args: link)
+            string = L10n.Localizable.Content.System.unverifiedSelfDevices(link)
         } else {
-            string = "content.system.unverified_other_devices".localized(args: user.name ?? "", link)
+            string = L10n.Localizable.Content.System.unverifiedOtherDevices(user.name ?? "", link)
         }
 
         return .markdown(from: string, style: .systemMessage)
@@ -721,9 +721,9 @@ class ConversationSessionResetSystemMessageCellDescription: ConversationMessageC
     static func makeAttributedString(_ sender: UserType) -> NSAttributedString {
         let string: String
         if sender.isSelfUser {
-            string =  "content.system.session_reset.self".localized
+            string = L10n.Localizable.Content.System.SessionReset.`self`
         } else {
-            string = "content.system.session_reset.other".localized(args: sender.name ?? "")
+            string = L10n.Localizable.Content.System.SessionReset.other(sender.name ?? "")
         }
 
         return NSMutableAttributedString.markdown(from: string, style: .systemMessage)
@@ -934,20 +934,20 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     }
 
     private static func configureForReactivatedSelfClient(_ selfUser: UserType, link: URL) -> View.Configuration {
-        let string = "content.system.reactivated_device".localized(args: link.absoluteString)
+        let string = L10n.Localizable.Content.System.reactivatedDevice(link.absoluteString)
         let attributedText = NSAttributedString.markdown(from: string, style: .systemMessage)
         return View.Configuration(attributedText: attributedText, icon: exclamationMarkIcon, linkTarget: .user(selfUser))
     }
 
     private static func configureForNewClientOfSelfUser(_ selfUser: UserType, clients: [UserClientType], link: URL) -> View.Configuration {
-        let string = "content.system.self_user_new_client".localized(args: link.absoluteString)
+        let string = L10n.Localizable.Content.System.selfUserNewClient(link.absoluteString)
         let attributedText = NSMutableAttributedString.markdown(from: string, style: .systemMessage)
         let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient) ?? false
         return View.Configuration(attributedText: attributedText, icon: isSelfClient ? nil : verifiedIcon, linkTarget: .user(selfUser))
     }
 
     private static func configureForNewCurrentDeviceOfSelfUser(_ selfUser: UserType, link: URL) -> View.Configuration {
-        let string = "content.system.self_user_new_self_client".localized(args: link.absoluteString)
+        let string = L10n.Localizable.Content.System.selfUserNewSelfClient(link.absoluteString)
         let attributedText = NSMutableAttributedString.markdown(from: string, style: .systemMessage)
         return View.Configuration(attributedText: attributedText, icon: nil, linkTarget: .user(selfUser))
     }
@@ -982,8 +982,8 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     }
 
     private static func configureForAddedUsers(in conversation: ZMConversation, attributes: TextAttributes) -> View.Configuration {
-        let attributedNewUsers = NSAttributedString(string: "content.system.new_users".localized, attributes: attributes.startedUsingAttributes)
-        let attributedLink = NSAttributedString(string: "content.system.verify_devices".localized, attributes: attributes.linkAttributes)
+        let attributedNewUsers = NSAttributedString(string: L10n.Localizable.Content.System.newUsers, attributes: attributes.startedUsingAttributes)
+        let attributedLink = NSAttributedString(string: L10n.Localizable.Content.System.verifyDevices, attributes: attributes.linkAttributes)
         let attributedText = attributedNewUsers + " " + attributedLink
 
         return View.Configuration(attributedText: attributedText, icon: verifiedIcon, linkTarget: .conversation(conversation))

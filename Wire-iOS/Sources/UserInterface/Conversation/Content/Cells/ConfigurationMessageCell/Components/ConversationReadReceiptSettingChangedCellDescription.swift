@@ -34,7 +34,7 @@ struct ReadReceiptViewModel {
         var updateText: NSAttributedString! = .none
 
         if sender.isSelfUser {
-            let youLocalized = "content.system.you_started".localized
+            let youLocalized = L10n.Localizable.Content.System.youStarted
 
             updateText = NSAttributedString(string: template.localized(pov: sender.pov, args: youLocalized), attributes: ConversationSystemMessageCell.baseAttributes).adding(font: .mediumSemiboldFont, to: youLocalized)
         } else if let otherUserName = sender.name {
@@ -57,7 +57,7 @@ struct ReadReceiptViewModel {
         case .readReceiptsEnabled:
             updateText = createSystemMessage(template: "content.system.message_read_receipt_on")
         case .readReceiptsOn:
-            updateText = NSAttributedString(string: "content.system.message_read_receipt_on_add_to_group".localized, attributes: ConversationSystemMessageCell.baseAttributes)
+            updateText = NSAttributedString(string: L10n.Localizable.Content.System.messageReadReceiptOnAddToGroup, attributes: ConversationSystemMessageCell.baseAttributes)
         default:
             assertionFailure("invalid systemMessageType for ReadReceiptViewModel")
         }

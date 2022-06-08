@@ -93,13 +93,13 @@ final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserve
         switch (showLikesTab, showReceiptsTab) {
         case (true, true):
             self.displayMode = .combined
-            self.title = "message_details.combined_title".localized
+            self.title = L10n.Localizable.MessageDetails.combinedTitle
         case (false, true):
             self.displayMode = .receipts
-            self.title = "message_details.receipts_title".localized
+            self.title = L10n.Localizable.MessageDetails.receiptsTitle
         case (true, false):
             self.displayMode = .reactions
-            self.title = "message_details.likes_title".localized
+            self.title = L10n.Localizable.MessageDetails.likesTitle
         default:
             fatal("Trying to display a message that does not support reactions or receipts.")
         }
@@ -117,11 +117,11 @@ final class MessageDetailsDataSource: NSObject, ZMMessageObserver, ZMUserObserve
             return
         }
 
-        let sentString = "message_details.subtitle_send_date".localized(args: sentDate)
+        let sentString = L10n.Localizable.MessageDetails.subtitleSendDate(sentDate)
         var subtitle = sentString
 
         if let editedDate = message.formattedEditedDate() {
-            let editedString = "message_details.subtitle_edit_date".localized(args: editedDate)
+            let editedString = L10n.Localizable.MessageDetails.subtitleEditDate(editedDate)
             subtitle += "\n" + editedString
         }
 

@@ -105,14 +105,14 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setupEmptyResultsLabel() {
-        emptyResultsLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
+        emptyResultsLabel.text = L10n.Localizable.Peoplepicker.noMatchingResultsAfterAddressBookUploadTitle
         emptyResultsLabel.textAlignment = .center
         emptyResultsLabel.textColor = .from(scheme: .textForeground, variant: .dark)
         view.addSubview(emptyResultsLabel)
     }
 
     private func setupNoContactsLabel() {
-        noContactsLabel.text = "peoplepicker.no_contacts_title".localized
+        noContactsLabel.text = L10n.Localizable.Peoplepicker.noContactsTitle
         view.addSubview(noContactsLabel)
     }
 
@@ -121,12 +121,12 @@ final class ContactsViewController: UIViewController {
         bottomContainerView.addSubview(bottomContainerSeparatorView)
 
         inviteOthersButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
-        inviteOthersButton.setTitle("contacts_ui.invite_others".localized, for: .normal)
+        inviteOthersButton.setTitle(L10n.Localizable.ContactsUi.inviteOthers, for: .normal)
         bottomContainerView.addSubview(inviteOthersButton)
     }
 
     private func setupStyle() {
-        title = "contacts_ui.title".localized.uppercased()
+        title = L10n.Localizable.ContactsUi.title.uppercased()
         view.backgroundColor = .clear
 
         noContactsLabel.font = .normalLightFont

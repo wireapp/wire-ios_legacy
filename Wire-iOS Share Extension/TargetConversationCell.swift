@@ -18,6 +18,7 @@
 
 import UIKit
 import WireShareEngine
+//import Wire
 
 final class TargetConversationCell: UITableViewCell {
 
@@ -87,16 +88,16 @@ final class TargetConversationCell: UITableViewCell {
         var details: [String] = []
 
         if conversation.legalHoldStatus.denotesEnabledComplianceDevice {
-            details.append("share_extension.voiceover.conversation_under_legal_hold".localized)
+            details.append(L10n.Localizable.ShareExtension.Voiceover.conversationUnderLegalHold)
         }
 
         switch conversation.securityLevel {
         case .notSecure:
             break
         case .secureWithIgnored:
-            details.append("share_extension.voiceover.conversation_secure_with_ignored".localized)
+            details.append(L10n.Localizable.ShareExtension.Voiceover.conversationSecureWithIgnored)
         case .secure:
-            details.append("share_extension.voiceover.conversation_secure".localized)
+            details.append(L10n.Localizable.ShareExtension.Voiceover.conversationSecure)
         }
 
         accessibilityLabel = conversation.name

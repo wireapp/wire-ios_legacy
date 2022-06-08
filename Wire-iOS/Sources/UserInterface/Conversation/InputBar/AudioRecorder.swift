@@ -344,25 +344,26 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             let (seconds, minutes) = (duration % 60, duration / 60)
             let durationLimit = String(format: "%d:%02d", minutes, seconds)
 
-            alertMessage = "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit)
+            alertMessage = L10n.Localizable.Conversation.InputBar.AudioMessage.TooLong.message(durationLimit)
         }
 
         if error == .toMaxSize, let maxSize = maxFileSize {
             let size = ByteCountFormatter.string(fromByteCount: Int64(maxSize), countStyle: .binary)
-
-            alertMessage = "conversation.input_bar.audio_message.too_long_size.message".localized(args: size)
+            alertMessage = L10n.Localizable.Conversation.InputBar.AudioMessage.TooLongSize.message(size)
         }
 
         guard alertMessage != nil else { return nil }
 
         let alertController = UIAlertController(
-            title: "conversation.input_bar.audio_message.too_long.title".localized,
+            title: L10n.Localizable.Conversation.InputBar.AudioMessage.TooLong.title,
             message: alertMessage!,
             preferredStyle: .alert
         )
 
-        let actionOk = UIAlertAction(title: "general.ok".localized, style: .default,
-                                     handler: nil)
+        let actionOk = UIAlertAction(
+            title: L10n.Localizable.General.ok,
+            style: .default,
+            handler: nil)
         alertController.addAction(actionOk)
 
         return alertController

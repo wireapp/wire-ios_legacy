@@ -237,7 +237,7 @@ final class AudioEffectsPickerViewController: UIViewController {
 
         switch state {
         case .tip:
-            subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized(uppercased: true)
+            subtitleLabel.text = L10n.Localizable.Conversation.InputBar.AudioMessage.Keyboard.filterTip.uppercased()
             subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         case .time:
             let duration: Int

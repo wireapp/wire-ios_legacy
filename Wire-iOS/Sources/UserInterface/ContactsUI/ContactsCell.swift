@@ -262,9 +262,9 @@ extension ContactsCell {
         var localizedDescription: String {
             switch self {
             case .open:
-                return "contacts_ui.action_button.open".localized
+                return L10n.Localizable.ContactsUi.ActionButton.open
             case .invite:
-                return "contacts_ui.action_button.invite".localized
+                return L10n.Localizable.ContactsUi.ActionButton.invite
             }
         }
     }

@@ -28,15 +28,16 @@ extension ConversationViewController {
         case cancel
 
         var localizedTitle: String {
+            typealias Meta = L10n.Localizable.Meta
             switch self {
             case .verifyDevices:
-                return "meta.degraded.verify_devices_button".localized
+                return Meta.Degraded.verifyDevicesButton
             case .sendAnyway:
-                return "meta.degraded.send_anyway_button".localized
+                return Meta.Degraded.sendAnywayButton
             case .legalHoldDetails:
-                return "meta.legalhold.info_button".localized
+                return Meta.Legalhold.infoButton
             case .cancel:
-                return "general.cancel".localized
+                return L10n.Localizable.General.cancel
             }
         }
 
@@ -55,11 +56,11 @@ extension ConversationViewController {
     /// Presents an alert in response to a change in privacy (legal hold and/or client verification).
     func presentPrivacyWarningAlert(for changeInfo: ConversationChangeInfo) {
         let title: String
-        let message = "meta.degraded.dialog_message".localized
+        let message = L10n.Localizable.Meta.Degraded.dialogMessage
         var actions: [PrivacyAlertAction] = []
 
         if conversation.legalHoldStatus == .pendingApproval {
-            title = "meta.legalhold.send_alert_title".localized
+            title = L10n.Localizable.Meta.Legalhold.sendAlertTitle
             actions.append(.legalHoldDetails)
 
             if conversation.securityLevel == .secureWithIgnored {
@@ -70,8 +71,9 @@ extension ConversationViewController {
         } else if conversation.securityLevel == .secureWithIgnored {
             let users = changeInfo.usersThatCausedConversationToDegrade
             let names = changeInfo.usersThatCausedConversationToDegrade.compactMap(\.name).joined(separator: ", ")
-            let keySuffix = users.count <= 1 ? "singular" : "plural"
-            title = "meta.degraded.degradation_reason_message.\(keySuffix)".localized(args: names)
+            title = users.count <= 1
+                ? L10n.Localizable.Meta.Degraded.DegradationReasonMessage.singular(names)
+                : L10n.Localizable.Meta.Degraded.DegradationReasonMessage.plural(names)
 
             actions += [.verifyDevices, .sendAnyway, .cancel]
         } else {

@@ -171,7 +171,7 @@ final class FileTransferView: UIView, TransferView {
 
         case .uploading:
             if fileMessageData.size == 0 { fallthrough }
-            let statusText = "content.file.uploading".localized(uppercased: true) && labelFont && labelTextBlendedColor
+            let statusText = L10n.Localizable.Content.File.uploading.uppercased() && labelFont && labelTextBlendedColor
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + statusText
             topLabel.attributedText = firstLine
@@ -184,14 +184,16 @@ final class FileTransferView: UIView, TransferView {
                 topLabel.attributedText = firstLine
                 bottomLabel.attributedText = secondLine
             case .downloading:
-                let statusText = "content.file.downloading".localized(uppercased: true) && labelFont && labelTextBlendedColor
+                let statusText = L10n.Localizable.Content.File.downloading.uppercased() && labelFont && labelTextBlendedColor
                 let firstLine = fileNameAttributed
                 let secondLine = fileSizeAttributed + dot + statusText
                 topLabel.attributedText = firstLine
                 bottomLabel.attributedText = secondLine
             }
         case .uploadingFailed, .uploadingCancelled:
-            let statusText = fileMessageData.transferState == .uploadingFailed ? "content.file.upload_failed".localized : "content.file.upload_cancelled".localized
+            let statusText = fileMessageData.transferState == .uploadingFailed
+                ? L10n.Localizable.Content.File.uploadFailed
+                : L10n.Localizable.Content.File.uploadCancelled
             let attributedStatusText = statusText.localizedUppercase && labelFont && UIColor.vividRed
 
             let firstLine = fileNameAttributed

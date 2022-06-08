@@ -118,38 +118,38 @@ final class ConversationListAccessoryView: UIView {
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
-
+        typealias ConversationList = L10n.Localizable.ConversationList
         switch icon {
         case .pendingConnection:
             iconView.setIcon(.clock, size: iconSize, color: .white)
-            accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
+            accessibilityValue = ConversationList.Voiceover.Status.pendingConnection
             return iconView
         case .activeCall(false):
-            accessibilityValue = "conversation_list.voiceover.status.active_call".localized
+            accessibilityValue = ConversationList.Voiceover.Status.activeCall
             return .none
         case .activeCall(true):
-            textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
+            textLabel.text = ConversationList.RightAccessory.JoinButton.title.uppercased()
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
             iconView.setIcon(.endCall, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
+            accessibilityValue = ConversationList.Voiceover.Status.missedCall
             return iconView
         case .playingMedia:
             if let mediaPlayer = activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.setIcon(.pause, size: iconSize, color: .white)
-                accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
+                accessibilityValue = ConversationList.Voiceover.Status.pauseMedia
             } else {
                 iconView.setIcon(.play, size: iconSize, color: .white)
-                accessibilityValue = "conversation_list.voiceover.status.play_media".localized
+                accessibilityValue = ConversationList.Voiceover.Status.playMedia
             }
             return iconView
         case .silenced:
             iconView.setIcon(.bellWithStrikethrough, size: iconSize, color: .white)
-            accessibilityValue = "conversation_list.voiceover.status.silenced".localized
+            accessibilityValue = ConversationList.Voiceover.Status.silenced
             return iconView
         case .typing:
-            accessibilityValue = "conversation_list.voiceover.status.typing".localized
+            accessibilityValue = ConversationList.Voiceover.Status.typing
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
@@ -157,15 +157,15 @@ final class ConversationListAccessoryView: UIView {
             return textLabel
         case .mention:
             iconView.setIcon(.mention, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.mention".localized
+            accessibilityValue = ConversationList.Voiceover.Status.mention
             return iconView
         case .reply:
             iconView.setIcon(.reply, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.reply".localized
+            accessibilityValue = ConversationList.Voiceover.Status.reply
             return iconView
         case .unreadPing:
             iconView.setIcon(.ping, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.ping".localized
+            accessibilityValue = ConversationList.Voiceover.Status.ping
             return iconView
         }
     }

@@ -173,7 +173,7 @@ final class ConversationCreationController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
-        title = "conversation.create.group_name.title".localized(uppercased: true)
+        title = L10n.Localizable.Conversation.Create.GroupName.title.uppercased()
 
         setupNavigationBar()
         setupViews()
@@ -242,7 +242,11 @@ final class ConversationCreationController: UIViewController {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: "general.next".localized(uppercased: true), style: .plain, target: self, action: #selector(tryToProceed))
+        let nextButtonItem = UIBarButtonItem(
+            title: L10n.Localizable.General.next.uppercased(),
+            style: .plain,
+            target: self,
+            action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newgroup.next"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false

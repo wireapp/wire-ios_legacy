@@ -142,7 +142,7 @@ final class ConversationReplyContentView: UIView {
             default:
                 let attributes: [NSAttributedString.Key: AnyObject] = [.font: UIFont.mediumFont.italic,
                                                                        .foregroundColor: UIColor.from(scheme: .textDimmed)]
-                return .text(NSAttributedString(string: "content.message.reply.broken_message".localized,
+                return .text(NSAttributedString(string: L10n.Localizable.Content.Message.Reply.brokenMessage,
                                                 attributes: attributes))
             }
         }
@@ -232,7 +232,7 @@ final class ConversationReplyContentView: UIView {
 
         senderComponent.senderName = object.senderName
         senderComponent.indicatorIcon = object.isEdited ? StyleKitIcon.pencil.makeImage(size: 8, color: .from(scheme: .iconNormal)) : nil
-        senderComponent.indicatorLabel = object.isEdited ? "content.message.reply.edited_message".localized : nil
+        senderComponent.indicatorLabel = object.isEdited ? L10n.Localizable.Content.Message.Reply.editedMessage : nil
         timestampLabel.text = object.timestamp
         restrictionLabel.text = object.restrictionDescription?.localizedUppercase
 
@@ -316,7 +316,7 @@ final class ConversationReplyCellDescription: ConversationMessageCellDescription
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
-    let accessibilityLabel: String? = "content.message.original_label".localized
+    let accessibilityLabel: String? = L10n.Localizable.Content.Message.originalLabel
     let accessibilityIdentifier: String? = "ReplyCell"
 
     init(quotedMessage: ZMConversationMessage?) {

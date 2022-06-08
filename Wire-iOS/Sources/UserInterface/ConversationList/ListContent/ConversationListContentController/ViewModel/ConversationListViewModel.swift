@@ -79,17 +79,18 @@ final class ConversationListViewModel: NSObject {
             }
 
             var localizedName: String? {
+                typealias ListSection = L10n.Localizable.List.Section
                 switch self {
                 case .conversations:
                     return nil
                 case .contactRequests:
-                    return "list.section.requests".localized
+                    return ListSection.requests
                 case .contacts:
-                    return "list.section.contacts".localized
+                    return ListSection.contacts
                 case .groups:
-                    return "list.section.groups".localized
+                    return ListSection.groups
                 case .favorites:
-                    return "list.section.favorites".localized
+                    return ListSection.favorites
                 case .folder(label: let label):
                     return label.name
                 }

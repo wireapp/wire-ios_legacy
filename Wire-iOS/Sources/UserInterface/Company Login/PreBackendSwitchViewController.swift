@@ -39,7 +39,9 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     static let informationBackgroundBlue = UIColor(red: 220/255, green: 237/255, blue: 248/255, alpha: 1)
 
     // MARK: - UI Elements
-    let wireLogoInfoView = WireLogoInfoView(title: "login.sso.backend_switch.title".localized, subtitle: "login.sso.backend_switch.subtitle".localized)
+    let wireLogoInfoView = WireLogoInfoView(
+        title: L10n.Localizable.Login.Sso.BackendSwitch.title,
+        subtitle: L10n.Localizable.Login.Sso.BackendSwitch.subtitle)
 
     let progressView: TimedCircularProgressView = {
         let progress = TimedCircularProgressView()
@@ -57,7 +59,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .black
-        label.text = "login.sso.backend_switch.information".localized
+        label.text = L10n.Localizable.Login.Sso.BackendSwitch.information
         label.accessibilityValue = label.text
         return label
     }()

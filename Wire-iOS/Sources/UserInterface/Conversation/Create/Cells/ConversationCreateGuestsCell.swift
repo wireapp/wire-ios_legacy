@@ -25,7 +25,7 @@ final class ConversationCreateGuestsCell: IconToggleCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowguests"
-        title = "conversation.create.guests.title".localized
+        title = L10n.Localizable.Conversation.Create.Guests.title
         showSeparator = false
     }
 

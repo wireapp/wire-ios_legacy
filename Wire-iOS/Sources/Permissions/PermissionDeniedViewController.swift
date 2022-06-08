@@ -40,9 +40,9 @@ final class PermissionDeniedViewController: UIViewController {
 
     class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
         let vc = PermissionDeniedViewController()
-        let title = "registration.address_book_access_denied.hero.title".localized
-        let paragraph1 = "registration.address_book_access_denied.hero.paragraph1".localized
-        let paragraph2 = "registration.address_book_access_denied.hero.paragraph2".localized
+        let title = L10n.Localizable.Registration.AddressBookAccessDenied.Hero.title
+        let paragraph1 = L10n.Localizable.Registration.AddressBookAccessDenied.Hero.paragraph1
+        let paragraph2 = L10n.Localizable.Registration.AddressBookAccessDenied.Hero.paragraph2
 
         let text = [title, paragraph1, paragraph2].joined(separator: "\u{2029}")
 
@@ -56,17 +56,17 @@ final class PermissionDeniedViewController: UIViewController {
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.address_book_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(L10n.Localizable.Registration.AddressBookAccessDenied.SettingsButton.title.uppercased(), for: .normal)
 
-        vc.laterButton.setTitle("registration.address_book_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(L10n.Localizable.Registration.AddressBookAccessDenied.MaybeLaterButton.title, for: .normal)
 
         return vc
     }
 
     class func pushDeniedViewController() -> PermissionDeniedViewController {
         let vc = PermissionDeniedViewController()
-        let title = "registration.push_access_denied.hero.title".localized
-        let paragraph1 = "registration.push_access_denied.hero.paragraph1".localized
+        let title = L10n.Localizable.Registration.PushAccessDenied.Hero.title
+        let paragraph1 = L10n.Localizable.Registration.PushAccessDenied.Hero.paragraph1
 
         let text = [title, paragraph1].joined(separator: "\u{2029}")
 
@@ -80,9 +80,9 @@ final class PermissionDeniedViewController: UIViewController {
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.push_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(L10n.Localizable.Registration.PushAccessDenied.SettingsButton.title.uppercased(), for: .normal)
 
-        vc.laterButton.setTitle("registration.push_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(L10n.Localizable.Registration.PushAccessDenied.MaybeLaterButton.title.uppercased(), for: .normal)
 
         return vc
     }

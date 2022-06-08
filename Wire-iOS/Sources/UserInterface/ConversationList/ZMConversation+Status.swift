@@ -268,7 +268,7 @@ final class SelfUserLeftMatcher: ConversationStatusMatcher {
     }
 
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
-        return "conversation.status.you_left".localized && type(of: self).regularStyle
+        return L10n.Localizable.Conversation.Status.youLeft && type(of: self).regularStyle
     }
 
     func icon(with status: ConversationStatus, conversation: MatcherConversation) -> ConversationStatusIcon? {
@@ -285,7 +285,7 @@ final class BlockedMatcher: ConversationStatusMatcher {
     }
 
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
-        return "conversation.status.blocked".localized && type(of: self).regularStyle
+        return L10n.Localizable.Conversation.Status.blocked && type(of: self).regularStyle
     }
 
     var combinesWith: [ConversationStatusMatcher] = []
@@ -300,9 +300,9 @@ final class CallingMatcher: ConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: MatcherConversation) -> NSAttributedString? {
         if conversation.voiceChannel?.state.canJoinCall == true {
             if let callerDisplayName = conversation.voiceChannel?.initiator?.name {
-                return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
+                return L10n.Localizable.Conversation.Status.incomingCall(callerDisplayName) && type(of: self).regularStyle
             } else {
-                return "conversation.status.incoming_call.someone".localized && type(of: self).regularStyle
+                return L10n.Localizable.Conversation.Status.IncomingCall.unknown && type(of: self).regularStyle
             }
         }
         return .none
@@ -641,7 +641,7 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
            !sender.isSelfUser {
 
             if systemMessage.userTypes.contains(where: { ($0 as? UserType)?.isSelfUser == true }) {
-                return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
+                return L10n.Localizable.Conversation.Status.youWereRemoved && type(of: self).regularStyle
             }
         }
         return .none

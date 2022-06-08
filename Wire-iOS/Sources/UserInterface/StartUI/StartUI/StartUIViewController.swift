@@ -163,7 +163,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         let closeButton = UIBarButtonItem(icon: .cross, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onDismissPressed))
 
-        closeButton.accessibilityLabel = "general.close".localized
+        closeButton.accessibilityLabel = L10n.Localizable.General.close
         closeButton.accessibilityIdentifier = "close"
 
         navigationItem.rightBarButtonItem = closeButton

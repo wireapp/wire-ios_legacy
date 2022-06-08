@@ -230,15 +230,21 @@ final class ServiceDetailViewController: UIViewController {
 fileprivate extension Button {
 
     static func openServiceConversationButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+        return Button(
+            style: .full,
+            title: L10n.Localizable.Peoplepicker.Services.OpenConversation.item)
     }
 
     static func createAddServiceButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
+        return Button(
+            style: .full,
+            title: L10n.Localizable.Peoplepicker.Services.AddService.button)
     }
 
     static func createDestructiveServiceButton() -> Button {
-        let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
+        let button = Button(
+            style: .full,
+            title: L10n.Localizable.Participants.Services.RemoveIntegration.button)
         button.setBackgroundImageColor(.vividRed, for: .normal)
         return button
     }

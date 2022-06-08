@@ -106,17 +106,17 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
         case .youTubeVideo:
             updateAspectRatio(3/4)
             attachmentView.providerImageView.image = WireStyleKit.imageOfYoutube(color: .white)
-            accessibilityLabel = "content.message.link_attachment.accessibility_label.youtube".localized
+            accessibilityLabel = L10n.Localizable.Content.Message.LinkAttachment.AccessibilityLabel.youtube
 
         case .soundCloudTrack:
             updateAspectRatio(1/1)
             attachmentView.providerImageView.image = UIImage(named: "soundcloud")
-            accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_song".localized
+            accessibilityLabel = L10n.Localizable.Content.Message.LinkAttachment.AccessibilityLabel.soundcloudSong
 
         case .soundCloudPlaylist:
             updateAspectRatio(1/1)
             attachmentView.providerImageView.image = UIImage(named: "soundcloud")
-            accessibilityLabel = "content.message.link_attachment.accessibility_label.soundcloud_set".localized
+            accessibilityLabel = L10n.Localizable.Content.Message.LinkAttachment.AccessibilityLabel.soundcloudSet
         }
     }
 

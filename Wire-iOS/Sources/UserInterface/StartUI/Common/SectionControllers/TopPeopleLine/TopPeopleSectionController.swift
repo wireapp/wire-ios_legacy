@@ -79,7 +79,7 @@ final class TopPeopleSectionController: SearchSectionController {
     }
 
     override var sectionTitle: String {
-        return "peoplepicker.header.top_people".localized
+        return L10n.Localizable.Peoplepicker.Header.topPeople
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

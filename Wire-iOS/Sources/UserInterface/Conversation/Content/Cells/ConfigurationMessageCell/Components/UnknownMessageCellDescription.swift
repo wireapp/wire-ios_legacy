@@ -54,7 +54,7 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     let containsHighlightableContent = false
 
     init() {
-        self.configuration = "content.system.unknown_message.body".localized
+        self.configuration = L10n.Localizable.Content.System.UnknownMessage.body
     }
 
 }

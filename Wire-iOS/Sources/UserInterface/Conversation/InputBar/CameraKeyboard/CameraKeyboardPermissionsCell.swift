@@ -48,7 +48,7 @@ final class CameraKeyboardPermissionsCell: UICollectionViewCell {
         descriptionLabel.textAlignment = .center
 
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
+        settingsButton.setTitle( L10n.Localizable.KeyboardPhotosAccess.Denied.Keyboard.settings, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
         settingsButton.layer.cornerRadius = 4.0
         settingsButton.layer.masksToBounds = true

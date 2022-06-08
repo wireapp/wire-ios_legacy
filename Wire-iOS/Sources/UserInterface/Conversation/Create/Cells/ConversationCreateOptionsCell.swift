@@ -28,7 +28,7 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.options"
-        title = "conversation.create.options.title".localized
+        title = L10n.Localizable.Conversation.Create.Options.title
         icon = nil
         showSeparator = false
         contentLeadingOffset = 16
@@ -61,6 +61,6 @@ extension ConversationCreateOptionsCell: ConversationCreationValuesConfigurable 
 
 private extension Bool {
     var localized: String {
-        return self ? "general.on".localized : "general.off".localized
+        return self ? L10n.Localizable.General.on : L10n.Localizable.General.off
     }
 }

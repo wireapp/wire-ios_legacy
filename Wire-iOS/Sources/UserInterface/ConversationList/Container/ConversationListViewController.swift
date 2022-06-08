@@ -389,7 +389,7 @@ fileprivate extension NSAttributedString {
 
         paragraphStyle.paragraphSpacing = 4
 
-        let titleString = "conversation_list.empty.all_archived.message".localized
+        let titleString = L10n.Localizable.ConversationList.Empty.AllArchived.message
 
         let attributedString = NSAttributedString(string: titleString.uppercased(), attributes: titleAttributes)
 

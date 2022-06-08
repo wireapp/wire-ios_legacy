@@ -505,7 +505,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
-        button.accessibilityLabel = "conversation.action.search".localized
+        button.accessibilityLabel = L10n.Localizable.Conversation.Action.search
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()

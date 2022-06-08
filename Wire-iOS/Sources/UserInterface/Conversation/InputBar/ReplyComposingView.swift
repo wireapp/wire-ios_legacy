@@ -32,17 +32,17 @@ fileprivate extension ZMConversationMessage {
         if let textData = textMessageData {
             contentDescriptionText = textData.messageText ?? ""
         } else if isImage {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.image_message".localized
+            contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.imageMessage
         } else if let locationData = locationMessageData {
-            contentDescriptionText = locationData.name ?? "conversation.input_bar.message_preview.accessibility.location_message".localized
+            contentDescriptionText = locationData.name ?? L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.locationMessage
         } else if isVideo {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.video_message".localized
+            contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.videoMessage
         } else if isAudio {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.audio_message".localized
+            contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.audioMessage
         } else if let fileData = fileMessageData {
             contentDescriptionText = String(format: "conversation.input_bar.message_preview.accessibility.file_message".localized, fileData.filename ?? "")
         } else {
-            contentDescriptionText = "conversation.input_bar.message_preview.accessibility.unknown_message".localized
+            contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.unknownMessage
         }
 
         return String(format: "conversation.input_bar.message_preview.accessibility.message_from".localized, contentDescriptionText, senderDescriptionText)
@@ -103,7 +103,7 @@ final class ReplyComposingView: UIView {
 
         closeButton.isAccessibilityElement = true
         closeButton.accessibilityIdentifier = "cancelReply"
-        closeButton.accessibilityLabel = "conversation.input_bar.close_reply".localized
+        closeButton.accessibilityLabel = L10n.Localizable.Conversation.InputBar.closeReply
         closeButton.setIcon(.cross, size: .tiny, for: .normal)
         closeButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         closeButton.addCallback(for: .touchUpInside) { [weak self] _ in

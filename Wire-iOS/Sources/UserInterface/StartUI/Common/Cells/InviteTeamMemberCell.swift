@@ -91,7 +91,7 @@ final class InviteTeamMemberCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .envelope
-        title = "peoplepicker.invite_team_members".localized
+        title = L10n.Localizable.Peoplepicker.inviteTeamMembers
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -105,7 +105,7 @@ final class CreateGroupCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .createConversation
-        title = "peoplepicker.quick-action.create-conversation".localized
+        title = L10n.Localizable.Peoplepicker.QuickAction.createConversation
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -119,7 +119,7 @@ final class CreateGuestRoomCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .guest
-        title = "peoplepicker.quick-action.create-guest-room".localized
+        title = L10n.Localizable.Peoplepicker.QuickAction.createGuestRoom
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -165,7 +165,7 @@ final class OpenServicesAdminCell: StartUIIconCell, Themeable {
     override func setupViews() {
         super.setupViews()
         icon = .bot
-        title = "peoplepicker.quick-action.admin-services".localized
+        title = L10n.Localizable.Peoplepicker.QuickAction.adminServices
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityIdentifier = "button.searchui.open-services"

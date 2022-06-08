@@ -33,7 +33,7 @@ final class DirectorySectionController: SearchSectionController {
     }
 
     override var sectionTitle: String {
-        return "peoplepicker.header.directory".localized
+        return L10n.Localizable.Peoplepicker.Header.directory
     }
 
     override func prepareForUse(in collectionView: UICollectionView?) {

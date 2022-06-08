@@ -25,7 +25,7 @@ final class ConversationCreateReceiptsCell: IconToggleCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "toggle.newgroup.allowreceipts"
-        title = "conversation.create.receipts.title".localized
+        title = L10n.Localizable.Conversation.Create.Receipts.title
         showSeparator = false
     }
 

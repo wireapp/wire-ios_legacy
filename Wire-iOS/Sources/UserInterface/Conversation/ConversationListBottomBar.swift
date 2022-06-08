@@ -79,6 +79,7 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func createViews() {
+        typealias VoiceoverBottomBar = L10n.Localizable.ConversationList.Voiceover.BottomBar
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
         separator.isHidden = true
         separator.translatesAutoresizingMaskIntoConstraints = false
@@ -86,27 +87,27 @@ final class ConversationListBottomBarController: UIViewController {
         listButton.setIcon(.recentList, size: .tiny, for: [])
         listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
         listButton.accessibilityIdentifier = "bottomBarRecentListButton"
-        listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.recent_button.label".localized
-        listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.recent_button.hint".localized
+        listButton.accessibilityLabel = VoiceoverBottomBar.RecentButton.label
+        listButton.accessibilityHint = VoiceoverBottomBar.RecentButton.hint
 
         folderButton.setIcon(.folderList, size: .tiny, for: [])
         folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
         folderButton.accessibilityIdentifier = "bottomBarFolderListButton"
-        folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.folder_button.label".localized
-        folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.folder_button.hint".localized
+        folderButton.accessibilityLabel = VoiceoverBottomBar.FolderButton.label
+        folderButton.accessibilityHint = VoiceoverBottomBar.FolderButton.hint
 
         archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
-        archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
-        archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
+        archivedButton.accessibilityLabel = VoiceoverBottomBar.ArchivedButton.label
+        archivedButton.accessibilityHint = VoiceoverBottomBar.ArchivedButton.hint
         archivedButton.isHidden = true
 
         startUIButton.setIcon(.person, size: .tiny, for: .normal)
         startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
-        startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
-        startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
+        startUIButton.accessibilityLabel = VoiceoverBottomBar.ContactsButton.label
+        startUIButton.accessibilityHint = VoiceoverBottomBar.ContactsButton.hint
 
         buttonStackview.distribution = .equalSpacing
         buttonStackview.alignment = .center

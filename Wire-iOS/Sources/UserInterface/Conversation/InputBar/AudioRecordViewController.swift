@@ -158,7 +158,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         timeLabel.font = FontSpec(.small, .none).font!
         timeLabel.textColor = UIColor.from(scheme: .textForeground)
 
-        topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized(uppercased: true)
+        topTooltipLabel.text = L10n.Localizable.Conversation.InputBar.AudioMessage.Tooltip.pullSend.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor.from(scheme: .textDimmed)

@@ -31,7 +31,7 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: .phone, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
-        button.accessibilityLabel = "call.actions.label.make_audio_call".localized
+        button.accessibilityLabel = L10n.Localizable.Call.Actions.Label.makeAudioCall
         return button
     }
 
@@ -39,7 +39,7 @@ extension ConversationViewController {
         let button = UIBarButtonItem(icon: .camera, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
-        button.accessibilityLabel = "call.actions.label.make_video_call".localized
+        button.accessibilityLabel = L10n.Localizable.Call.Actions.Label.makeVideoCall
         return button
     }
 
@@ -47,7 +47,7 @@ extension ConversationViewController {
         let button = IconButton(fontSpec: .smallSemiboldFont)
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
-        button.setTitle("conversation_list.right_accessory.join_button.title".localized(uppercased: true), for: .normal)
+        button.setTitle( L10n.Localizable.ConversationList.RightAccessory.JoinButton.title.uppercased(), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.accessibilityTraits.insert(.startsMediaSession)
         button.backgroundColor = .strongLimeGreen
@@ -68,11 +68,11 @@ extension ConversationViewController {
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
-        button.accessibilityLabel = "general.back".localized
+        button.accessibilityLabel = L10n.Localizable.General.back
 
         if hasUnreadInOtherConversations {
             button.tintColor = UIColor.accent()
-            button.accessibilityValue = "conversation_list.voiceover.unread_messages.hint".localized
+            button.accessibilityValue = L10n.Localizable.ConversationList.Voiceover.UnreadMessages.hint
         }
 
         return button

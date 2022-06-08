@@ -202,17 +202,21 @@ extension URLActionRouter: PresentationDelegate {
     }
 
     private func presentCustomBackendAlert(with configurationURL: URL) {
-        let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                      message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
+        let alert = UIAlertController(title: L10n.Localizable.UrlAction.SwitchBackend.title,
+                                      message: L10n.Localizable.UrlAction.SwitchBackend.message(configurationURL.absoluteString),
                                       preferredStyle: .alert)
 
-        let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { [weak self] _ in
-            self?.rootViewController.isLoadingViewVisible = true
-            self?.switchBackend(with: configurationURL)
+        let agreeAction = UIAlertAction(
+            title: L10n.Localizable.General.ok,
+            style: .default) { [weak self] _ in
+                self?.rootViewController.isLoadingViewVisible = true
+                self?.switchBackend(with: configurationURL)
         }
         alert.addAction(agreeAction)
 
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
+        let cancelAction = UIAlertAction(
+            title: L10n.Localizable.General.cancel,
+            style: .cancel)
         alert.addAction(cancelAction)
 
         presentAlert(alert)

@@ -70,7 +70,7 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.titleLabel?.font = UIFont.smallLightFont
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
-        notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
+        notNowButton.setTitle(L10n.Localizable.Registration.ShareContacts.SkipButton.title.uppercased(), for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
 
         return notNowButton
@@ -86,7 +86,7 @@ final class ShareContactsViewController: UIViewController {
 
     private let shareContactsButton: Button = {
         let shareContactsButton = Button(style: .full, fontSpec: .smallLightFont)
-        shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
+        shareContactsButton.setTitle(L10n.Localizable.Registration.ShareContacts.FindFriendsButton.title.uppercased(), for: .normal)
 
         return shareContactsButton
     }()
@@ -101,8 +101,8 @@ final class ShareContactsViewController: UIViewController {
     private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
     private static var attributedHeroText: NSAttributedString {
-        let title = "registration.share_contacts.hero.title".localized
-        let paragraph = "registration.share_contacts.hero.paragraph".localized
+        let title = L10n.Localizable.Registration.ShareContacts.Hero.title
+        let paragraph = L10n.Localizable.Registration.ShareContacts.Hero.paragraph
 
         let text = [title, paragraph].joined(separator: "\u{2029}")
 

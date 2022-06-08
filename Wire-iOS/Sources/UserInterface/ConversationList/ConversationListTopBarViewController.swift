@@ -139,7 +139,7 @@ final class ConversationListTopBarViewController: UIViewController {
         button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
 
         button.setLegalHoldAccessibility()
-        button.accessibilityValue = "legalhold_request.button.accessibility".localized
+        button.accessibilityValue = L10n.Localizable.LegalholdRequest.Button.accessibility
 
         button.addTarget(self, action: #selector(presentLegalHoldRequest), for: .touchUpInside)
 
@@ -169,12 +169,12 @@ final class ConversationListTopBarViewController: UIViewController {
 
         accountView.accessibilityTraits = .button
         accountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        accountView.accessibilityLabel = "self.voiceover.label".localized
-        accountView.accessibilityHint = "self.voiceover.hint".localized
+        accountView.accessibilityLabel = L10n.Localizable.Self.Voiceover.label
+        accountView.accessibilityHint = L10n.Localizable.Self.Voiceover.hint
 
         if let selfUser = ZMUser.selfUser(),
             selfUser.clientsRequiringUserAttention.count > 0 {
-            accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
+            accountView.accessibilityLabel = L10n.Localizable.Self.NewDevice.Voiceover.label
         }
 
         return accountView.wrapInAvatarSizeContainer()

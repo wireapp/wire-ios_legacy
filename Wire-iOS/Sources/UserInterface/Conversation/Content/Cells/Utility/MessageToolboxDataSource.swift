@@ -113,7 +113,7 @@ class MessageToolboxDataSource {
         }
         // 2) Failed to send
         else if failedToSend && isSentBySelfUser {
-            let detailsString = "content.system.failedtosend_message_timestamp".localized && attributes
+            let detailsString = L10n.Localizable.Content.System.failedtosendMessageTimestamp && attributes
             content = .sendFailure(detailsString)
         }
         // 3) Likers
@@ -156,7 +156,7 @@ class MessageToolboxDataSource {
         let labelSize = likersNamesAttributedString.boundingRect(with: constrainedSize, options: [.usesFontLeading, .usesLineFragmentOrigin], context: nil)
 
         if likers.count >= 3 || labelSize.width > widthConstraint {
-            let likersCount = String(format: "participants.people.count".localized, likers.count)
+            let likersCount = String(format: L10n.Localizable.Participants.People.count(likers.count))
             return likersCount && attributes
         } else {
             return likersNamesAttributedString
@@ -232,13 +232,13 @@ class MessageToolboxDataSource {
 
         switch message.deliveryState {
         case .pending:
-            deliveryStateString = "content.system.pending_message_timestamp".localized
+            deliveryStateString = L10n.Localizable.Content.System.pendingMessageTimestamp
         case .read:
             return selfStatusForReadDeliveryState(for: message)
         case .delivered:
-            deliveryStateString = "content.system.message_delivered_timestamp".localized
+            deliveryStateString = L10n.Localizable.Content.System.messageDeliveredTimestamp
         case .sent:
-            deliveryStateString = "content.system.message_sent_timestamp".localized
+            deliveryStateString = L10n.Localizable.Content.System.messageSentTimestamp
         case .invalid, .failedToSend:
             return nil
         }
