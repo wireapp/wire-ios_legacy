@@ -71,9 +71,9 @@ final class ConversationListHeaderView: UICollectionReusableView {
     private var badgeWidthConstraint: NSLayoutConstraint?
 
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .smallRegularFont
-        label.textColor = .white
+        let label = DynamicFontLabel(
+            fontSpec: .smallRegularFont,
+            color: .white)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
         return label
