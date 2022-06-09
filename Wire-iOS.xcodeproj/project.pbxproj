@@ -1262,6 +1262,8 @@
 		EE52989026B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52988F26B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift */; };
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
+		EE742AB6284DE57900A6B5F3 /* DeveloperToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */; };
+		EE742AB8284DE66400A6B5F3 /* DeveloperToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE7905F627F326EB00FCBF8C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
@@ -3132,6 +3134,8 @@
 		EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsNotificationOptionsCell.swift; sourceTree = "<group>"; };
 		EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Interfaces.swift"; sourceTree = "<group>"; };
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
+		EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperToolsView.swift; sourceTree = "<group>"; };
+		EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperToolsViewModel.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE7C919727B40EBD00595977 /* Wire Notification Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire Notification Extension.entitlements"; sourceTree = "<group>"; };
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
@@ -5703,6 +5707,7 @@
 			children = (
 				54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */,
 				54FF9E271E813BA500323D2E /* DebugAlert.swift */,
+				EE742AB9284DE67300A6B5F3 /* DeveloperTools */,
 			);
 			path = Developer;
 			sourceTree = "<group>";
@@ -6922,6 +6927,15 @@
 			path = Viper;
 			sourceTree = "<group>";
 		};
+		EE742AB9284DE67300A6B5F3 /* DeveloperTools */ = {
+			isa = PBXGroup;
+			children = (
+				EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */,
+				EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */,
+			);
+			path = DeveloperTools;
+			sourceTree = "<group>";
+		};
 		EE7F465425B0F65E001B3EE4 /* App Lock */ = {
 			isa = PBXGroup;
 			children = (
@@ -7994,6 +8008,7 @@
 				551CD27822BA288B00EE9AE5 /* LegalHoldDisclosureController.swift in Sources */,
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
 				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
+				EE742AB8284DE66400A6B5F3 /* DeveloperToolsViewModel.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				637387C326443364004FEF79 /* AVSIdentifierProvider.swift in Sources */,
@@ -8520,6 +8535,7 @@
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				EF2E2F6F223BB6560038D7D9 /* ScreenCurtain.RootViewController.swift in Sources */,
 				EFEE97C1232271FF007A4702 /* ConversationViewController+ViewLifeCycle.swift in Sources */,
+				EE742AB6284DE57900A6B5F3 /* DeveloperToolsView.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */,
 				550C63B422C36985005CE9FC /* FormattedText.swift in Sources */,
