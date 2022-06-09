@@ -29,6 +29,7 @@ public enum FontSize: String {
     case normal
     case medium
     case small
+    case navBar
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -190,34 +191,52 @@ public enum FontScheme {
                                             contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
+        let navBarPointSize = pointSize(fontSize: .navBar, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.navBar, .none, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.navBar, .bold, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.navBar, .medium, .none)]    = .systemFont(ofSize: navBarPointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.navBar, .semibold, .none)]  = .systemFont(ofSize: navBarPointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.navBar, .regular, .none)]   = .systemFont(ofSize: navBarPointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.navBar, .light, .none)]     = .systemFont(ofSize: navBarPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.navBar, .thin, .none)]      = .systemFont(ofSize: navBarPointSize, weight: .thin)
+        
+        let largePointSize = pointSize(fontSize: .large, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: largePointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.large, .bold, .none)]      = .systemFont(ofSize: largePointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.large, .medium, .none)]    = .systemFont(ofSize: largePointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: largePointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.large, .regular, .none)]   = .systemFont(ofSize: largePointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.large, .light, .none)]     = .systemFont(ofSize: largePointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.large, .thin, .none)]      = .systemFont(ofSize: largePointSize, weight: .thin)
 
-        fontsByFontSpec[FontSpec(.large, .none, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.large, .medium, .none)]    = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .medium)
-        fontsByFontSpec[FontSpec(.large, .semibold, .none)]  = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        fontsByFontSpec[FontSpec(.large, .regular, .none)]   = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .regular)
-        fontsByFontSpec[FontSpec(.large, .light, .none)]     = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.large, .thin, .none)]      = .systemFont(ofSize: 24, contentSizeCategory: contentSizeCategory, weight: .thin)
+        let normalPointSize = pointSize(fontSize: .normal, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.normal, .none, .none)]      = .systemFont(ofSize: normalPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.normal, .bold, .none)]      = .systemFont(ofSize: normalPointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.normal, .medium, .none)]    = .systemFont(ofSize: normalPointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.normal, .semibold, .none)]  = .systemFont(ofSize: normalPointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.normal, .regular, .none)]   = .systemFont(ofSize: normalPointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.normal, .light, .none)]     = .systemFont(ofSize: normalPointSize, weight: .light)
 
-        fontsByFontSpec[FontSpec(.normal, .none, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.normal, .light, .none)]    = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.normal, .thin, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .thin)
-        fontsByFontSpec[FontSpec(.normal, .regular, .none)]  = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .regular)
-        fontsByFontSpec[FontSpec(.normal, .semibold, .none)] = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        fontsByFontSpec[FontSpec(.normal, .medium, .none)]   = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .medium)
-        fontsByFontSpec[FontSpec(.normal, .bold, .none)]     = .systemFont(ofSize: 16, contentSizeCategory: contentSizeCategory, weight: .bold)
+        let mediumPointSize = pointSize(fontSize: .medium, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.medium, .none, .none)]      = .systemFont(ofSize: mediumPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.medium, .bold, .none)]      = .systemFont(ofSize: mediumPointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.medium, .medium, .none)]    = .systemFont(ofSize: mediumPointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.medium, .semibold, .none)]  = .systemFont(ofSize: mediumPointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.medium, .regular, .none)]   = .systemFont(ofSize: mediumPointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.medium, .light, .none)]     = .systemFont(ofSize: mediumPointSize, weight: .light)
 
-        fontsByFontSpec[FontSpec(.medium, .none, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.medium, .bold, .none)]     = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .bold)
-        fontsByFontSpec[FontSpec(.medium, .medium, .none)]   = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .medium)
-        fontsByFontSpec[FontSpec(.medium, .semibold, .none)] = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        fontsByFontSpec[FontSpec(.medium, .regular, .none)]  = .systemFont(ofSize: 12, contentSizeCategory: contentSizeCategory, weight: .regular)
-
-        fontsByFontSpec[FontSpec(.small, .none, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
-        fontsByFontSpec[FontSpec(.small, .bold, .none)]      = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .bold)
-        fontsByFontSpec[FontSpec(.small, .medium, .none)]    = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .medium)
-        fontsByFontSpec[FontSpec(.small, .semibold, .none)]  = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        fontsByFontSpec[FontSpec(.small, .regular, .none)]   = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .regular)
-        fontsByFontSpec[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
+        let smallPointSize = pointSize(fontSize: .small, contentSizeCategory: contentSizeCategory)
+        
+        fontsByFontSpec[FontSpec(.small, .none, .none)]      = .systemFont(ofSize: smallPointSize, weight: .light)
+        fontsByFontSpec[FontSpec(.small, .bold, .none)]      = .systemFont(ofSize: smallPointSize, weight: .bold)
+        fontsByFontSpec[FontSpec(.small, .medium, .none)]    = .systemFont(ofSize: smallPointSize, weight: .medium)
+        fontsByFontSpec[FontSpec(.small, .semibold, .none)]  = .systemFont(ofSize: smallPointSize, weight: .semibold)
+        fontsByFontSpec[FontSpec(.small, .regular, .none)]   = .systemFont(ofSize: smallPointSize, weight: .regular)
+        fontsByFontSpec[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: smallPointSize, weight: .light)
 
     }
 
@@ -226,3 +245,139 @@ public enum FontScheme {
     }
 }
 
+func pointSize(fontSize: FontSize, contentSizeCategory: UIContentSizeCategory) -> CGFloat {
+    switch (fontSize, contentSizeCategory) {
+    // SMALLL
+    case (.small, .extraSmall):
+        return 10
+    case (.small, .small):
+        return 10
+    case (.small, .medium):
+        return 11
+    case (.small, .large):
+        return 11
+    case (.small, .extraLarge):
+        return 13
+    case (.small, .extraExtraLarge):
+        return 15
+    case (.small, .extraExtraExtraLarge):
+        return 17
+    case (.small, .accessibilityMedium):
+        return 20
+    case (.small, .accessibilityLarge):
+        return 24
+    case (.small, .accessibilityExtraLarge):
+        return 29
+    case (.small, .accessibilityExtraExtraLarge):
+        return 34
+    case (.small, .accessibilityExtraExtraExtraLarge):
+        return 40
+        
+    // Normal
+    case (.normal, .extraSmall):
+        return 13
+    case (.normal, .small):
+        return 14
+    case (.normal, .medium):
+        return 15
+    case (.normal, .large):
+        return 16
+    case (.normal, .extraLarge):
+        return 18
+    case (.normal, .extraExtraLarge):
+        return 20
+    case (.normal, .extraExtraExtraLarge):
+        return 26
+    case (.normal, .accessibilityMedium):
+        return 32
+    case (.normal, .accessibilityLarge):
+        return 33
+    case (.normal, .accessibilityExtraLarge):
+        return 38
+    case (.normal, .accessibilityExtraExtraLarge):
+        return 44
+    case (.normal, .accessibilityExtraExtraExtraLarge):
+        return 51
+        
+    // Medium
+    case (.medium, .extraSmall):
+        return 11
+    case (.medium, .small):
+        return 11
+    case (.medium, .medium):
+        return 11
+    case (.medium, .large):
+        return 12
+    case (.medium, .extraLarge):
+        return 14
+    case (.medium, .extraExtraLarge):
+        return 16
+    case (.medium, .extraExtraExtraLarge):
+        return 18
+    case (.medium, .accessibilityMedium):
+        return 22
+    case (.medium, .accessibilityLarge):
+        return 26
+    case (.medium, .accessibilityExtraLarge):
+        return 32
+    case (.medium, .accessibilityExtraExtraLarge):
+        return 37
+    case (.medium, .accessibilityExtraExtraExtraLarge):
+        return 43
+        
+    // Large
+    case (.large, .extraSmall):
+        return 21
+    case (.large, .small):
+        return 22
+    case (.large, .medium):
+        return 23
+    case (.large, .large):
+        return 24
+    case (.large, .extraLarge):
+        return 27
+    case (.large, .extraExtraLarge):
+        return 29
+    case (.large, .extraExtraExtraLarge):
+        return 31
+    case (.large, .accessibilityMedium):
+        return 36
+    case (.large, .accessibilityLarge):
+        return 41
+    case (.large, .accessibilityExtraLarge):
+        return 46
+    case (.large, .accessibilityExtraExtraLarge):
+        return 50
+    case (.large, .accessibilityExtraExtraExtraLarge):
+        return 53
+        
+    // navBar
+    case (.navBar, .extraSmall):
+        return 13
+    case (.navBar, .small):
+        return 14
+    case (.navBar, .medium):
+        return 15
+    case (.navBar, .large):
+        return 16
+    case (.navBar, .extraLarge):
+        return 17
+    case (.navBar, .extraExtraLarge):
+        return 18
+    case (.navBar, .extraExtraExtraLarge):
+        return 20
+    case (.navBar, .accessibilityMedium):
+        return 22
+    case (.navBar, .accessibilityLarge):
+        return 24
+    case (.navBar, .accessibilityExtraLarge):
+        return 28
+    case (.navBar, .accessibilityExtraExtraLarge):
+        return 29
+    case (.navBar, .accessibilityExtraExtraExtraLarge):
+        return 30
+        
+    default:
+        return 10
+    }
+}

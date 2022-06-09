@@ -29,7 +29,10 @@ enum UserNameTakeOverViewControllerAction {
 
 final class UserNameTakeOverViewController: UIViewController {
 
-    public let displayNameLabel = UILabel()
+    public let displayNameLabel = DynamicFontLabel(
+        fontSpec: FontSpec.largeThinFont,
+        color: .textDimmed,
+        variant: .light)
     public let suggestedHandleLabel = UILabel()
     public let subtitleTextView = WebLinkTextView()
 
@@ -68,8 +71,6 @@ final class UserNameTakeOverViewController: UIViewController {
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
 
-        displayNameLabel.font = FontSpec(.large, .thin).font!
-        displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
 

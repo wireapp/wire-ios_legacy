@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSystem
+import WireCommonComponents
 
 extension AppLockModule.View {
 
@@ -52,8 +53,7 @@ extension AppLockModule.View {
         private let blurView = UIVisualEffectView.blurView()
 
         private let messageLabel: UILabel = {
-            let label = UILabel()
-            label.font = .largeThinFont
+            let label = DynamicFontLabel(fontSpec: .largeThinFont, color: .textForeground, variant: .dark)
             label.textColor = .from(scheme: .textForeground, variant: .dark)
             return label
         }()

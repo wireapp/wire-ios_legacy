@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol ShareContactsViewControllerDelegate: AnyObject {
     func shareDidSkip(_ viewController: UIViewController)
@@ -67,7 +68,7 @@ final class ShareContactsViewController: UIViewController {
 
     private lazy var notNowButton: UIButton = {
         let notNowButton = UIButton(type: .custom)
-        notNowButton.titleLabel?.font = UIFont.smallLightFont
+        notNowButton.titleLabel?.font = FontSpec.smallLightFont.font!
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
         notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
@@ -78,7 +79,7 @@ final class ShareContactsViewController: UIViewController {
 
     private let heroLabel: UILabel = {
         let heroLabel = UILabel.createHeroLabel()
-        heroLabel.font = UIFont.largeSemiboldFont
+        heroLabel.font = FontSpec.largeSemiboldFont.font!
         heroLabel.attributedText = ShareContactsViewController.attributedHeroText
 
         return heroLabel
@@ -110,7 +111,7 @@ final class ShareContactsViewController: UIViewController {
 
         attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
-            NSAttributedString.Key.font: UIFont.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
             ], range: (text as NSString).range(of: paragraph))
 
         return attributedText

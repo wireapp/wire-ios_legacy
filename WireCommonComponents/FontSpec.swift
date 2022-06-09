@@ -117,5 +117,26 @@ public extension FontSpec {
     static var largeLightWithTextStyleFont: Self {
         return self.init(.large, .light, .largeTitle)
     }
+    
+    // MARK: - NavBarTitle
 
+    static var navBarThinFont: Self {
+        return self.init(.navBar, .thin)
+    }
+
+    static var navBarLightFont: Self {
+        return self.init(.navBar, .light)
+    }
+
+    static var navBarRegularFont: Self {
+        return self.init(.navBar, .regular)
+    }
+
+    static var navBarMediumFont: Self {
+        return self.init(.navBar, .medium)
+    }
+
+    static var navBarSemiboldFont: Self {
+        return self.init(.navBar, .semibold)
+    }
 }
