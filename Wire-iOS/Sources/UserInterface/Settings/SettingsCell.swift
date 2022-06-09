@@ -51,6 +51,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        label.adjustsFontSizeToFitWidth = true
 
         return label
     }()
