@@ -24,8 +24,8 @@ extension UIAlertController {
 
     static func availabilityExplanation(_ availability: AvailabilityKind) -> UIAlertController {
 
-        let title = "availability.reminder.\(availability.canonicalName).title".localized
-        let message = "availability.reminder.\(availability.canonicalName).message".localized
+        let title = availability.canonicalNameReminderTitle
+        let message = availability.canonicalNameReminderMessage
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(

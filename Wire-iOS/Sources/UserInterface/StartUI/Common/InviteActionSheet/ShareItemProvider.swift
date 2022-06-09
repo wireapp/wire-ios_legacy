@@ -30,6 +30,6 @@ final class ShareItemProvider: UIActivityItemProvider {
         }
 
         let displayHandle = "@\(handle)"
-        return String(format: "send_invitation.text".localized, displayHandle)
+        return L10n.Localizable.SendInvitation.text(_: displayHandle)
     }
 }

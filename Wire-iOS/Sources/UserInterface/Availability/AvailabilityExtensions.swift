@@ -28,18 +28,44 @@ extension AvailabilityKind {
     var canonicalName: String {
         switch self {
         case .none:
-            return "none"
+            return L10n.Localizable.Availability.none
         case .available:
-            return "available"
+            return L10n.Localizable.Availability.available
         case .away:
-            return "away"
+            return L10n.Localizable.Availability.away
         case .busy:
-            return "busy"
+            return L10n.Localizable.Availability.busy
+        }
+    }
+    
+    var canonicalNameReminderTitle: String {
+        switch self {
+        case .none:
+            return L10n.Localizable.Availability.Reminder.None.title
+        case .available:
+            return L10n.Localizable.Availability.Reminder.Available.title
+        case .away:
+            return L10n.Localizable.Availability.Reminder.Away.title
+        case .busy:
+            return L10n.Localizable.Availability.Reminder.Busy.title
+        }
+    }
+    
+    var canonicalNameReminderMessage: String {
+        switch self {
+        case .none:
+            return L10n.Localizable.Availability.Reminder.None.message
+        case .available:
+            return L10n.Localizable.Availability.Reminder.Available.message
+        case .away:
+            return L10n.Localizable.Availability.Reminder.Away.message
+        case .busy:
+            return L10n.Localizable.Availability.Reminder.Busy.message
         }
     }
 
     var localizedName: String {
-        return "availability.\(canonicalName)".localized
+        return canonicalName
     }
 
     var iconType: StyleKitIcon? {

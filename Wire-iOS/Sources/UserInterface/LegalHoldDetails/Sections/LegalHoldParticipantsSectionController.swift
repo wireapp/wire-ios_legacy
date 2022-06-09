@@ -26,7 +26,7 @@ private struct LegalHoldParticipantsSectionViewModel {
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
 
     var sectionTitle: String {
-        "legalhold.participants.section.title".localized(uppercased: true, args: participants.count)
+        L10n.Localizable.Legalhold.Participants.Section.title(participants.count).uppercased()
     }
 
     init(participants: [UserType]) {

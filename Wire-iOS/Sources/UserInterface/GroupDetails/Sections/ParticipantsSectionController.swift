@@ -67,16 +67,16 @@ private struct ParticipantsSectionViewModel {
 
         switch (conversationRole, showSectionCount) {
         case (.member, true):
-            return GroupDetails.ConversationMembersHeader.title.localizedUppercase + " (%d)".localized(args: participants.count)
+            return GroupDetails.ConversationMembersHeader.title.uppercased() + " (%d)".localized(args: participants.count)
 
         case (.member, false):
-            return GroupDetails.ConversationMembersHeader.title.localizedUppercase
+            return GroupDetails.ConversationMembersHeader.title.uppercased()
 
         case (.admin, true):
-            return GroupDetails.ConversationAdminsHeader.title.localizedUppercase + " (%d)".localized(args: participants.count)
+            return GroupDetails.ConversationAdminsHeader.title.uppercased() + " (%d)".localized(args: participants.count)
 
         case (.admin, false):
-            return GroupDetails.ConversationAdminsHeader.title.localizedUppercase
+            return GroupDetails.ConversationAdminsHeader.title.uppercased()
         }
     }
 

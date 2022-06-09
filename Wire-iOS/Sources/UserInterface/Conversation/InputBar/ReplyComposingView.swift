@@ -40,12 +40,12 @@ fileprivate extension ZMConversationMessage {
         } else if isAudio {
             contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.audioMessage
         } else if let fileData = fileMessageData {
-            contentDescriptionText = String(format: "conversation.input_bar.message_preview.accessibility.file_message".localized, fileData.filename ?? "")
+            contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.fileMessage(fileData.filename ?? "")
         } else {
             contentDescriptionText = L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.unknownMessage
         }
 
-        return String(format: "conversation.input_bar.message_preview.accessibility.message_from".localized, contentDescriptionText, senderDescriptionText)
+        return L10n.Localizable.Conversation.InputBar.MessagePreview.Accessibility.messageFrom(contentDescriptionText, senderDescriptionText)
     }
 }
 
@@ -83,7 +83,7 @@ final class ReplyComposingView: UIView {
 
     private func buildAccessibilityLabel() -> String {
         let messageDescription = message.accessibilityDescription
-        return String(format: "conversation.input_bar.message_preview.accessibility_description".localized, messageDescription)
+        return L10n.Localizable.Conversation.InputBar.MessagePreview.accessibilityDescription(messageDescription)
     }
 
     private func setupSubviews() {

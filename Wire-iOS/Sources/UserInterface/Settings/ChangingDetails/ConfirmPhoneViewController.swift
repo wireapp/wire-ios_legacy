@@ -90,8 +90,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
 
         // Create top header
         let description = DescriptionHeaderView()
-        let format = "self.settings.account_section.phone_number.change.verify.description".localized
-        let text = String(format: format, newNumber)
+        let text = L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Verify.description(newNumber)
         if let font = FontSpec(.normal, .medium).font {
             let attributedString = NSAttributedString(string: text).addAttributes([.font: font], toSubstring: newNumber)
             description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
@@ -168,7 +167,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             break
         case .buttons:
             delegate?.resendVerificationCode(inController: self)
-            let message = String(format: "self.settings.account_section.phone_number.change.resend.message".localized, newNumber)
+            let message = L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Resend.message(newNumber)
             let alert = UIAlertController(
                 title: L10n.Localizable.Self.Settings.AccountSection.PhoneNumber.Change.Resend.title,
                 message: message,

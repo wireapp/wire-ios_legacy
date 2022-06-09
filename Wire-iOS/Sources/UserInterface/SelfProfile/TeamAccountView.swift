@@ -89,7 +89,7 @@ final class TeamAccountView: AccountView {
 
     override func update() {
         super.update()
-        accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
+        accessibilityValue = L10n.Localizable.ConversationList.Header.SelfTeam.accessibilityValue(self.account.teamName ?? "") + " " + accessibilityState
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
 

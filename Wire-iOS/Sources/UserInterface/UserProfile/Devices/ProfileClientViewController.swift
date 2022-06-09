@@ -155,12 +155,12 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
-                                                    descriptionTextFont &&
-                                                    UIColor.from(scheme: .textForeground)) +
-                "\n" +
-                ("profile.devices.detail.verify_message.link".localized &&
-                    [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
+            descriptionTextView.attributedText = (
+                L10n.Localizable.Profile.Devices.Detail.verifyMessage(user.name ?? "") &&
+                descriptionTextFont &&
+                UIColor.from(scheme: .textForeground)) + "\n" +
+                (L10n.Localizable.Profile.Devices.Detail.VerifyMessage.link &&
+                [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         contentView.addSubview(descriptionTextView)
     }

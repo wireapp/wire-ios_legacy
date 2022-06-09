@@ -24,7 +24,12 @@ enum BitRateStatus: String {
     case variable
 
     fileprivate var localizedUppercasedText: String {
-        return "call.status.\(rawValue)_bitrate".localized(uppercased: true)
+        switch self {
+        case .constant:
+            return L10n.Localizable.Call.Status.constantBitrate.uppercased()
+        case .variable:
+            return L10n.Localizable.Call.Status.variableBitrate.uppercased()
+        }
     }
 
     fileprivate var accessibilityValue: String {

@@ -39,11 +39,21 @@ extension UIAlertController {
         }
 
         var message: String {
-            return "login.sso.alert.message.\(self.rawValue)".localized
+            switch self {
+            case .ssoAndEmail:
+                return L10n.Localizable.Login.Sso.Alert.Message.ssoAndEmail
+            case .ssoOnly:
+                return L10n.Localizable.Login.Sso.Alert.Message.ssoOnly
+            }
         }
 
         var placeholder: String {
-            return "login.sso.alert.text_field.placeholder.\(self.rawValue)".localized
+            switch self {
+            case .ssoAndEmail:
+                return L10n.Localizable.Login.Sso.Alert.TextField.Placeholder.ssoAndEmail
+            case .ssoOnly:
+                return L10n.Localizable.Login.Sso.Alert.TextField.Placeholder.ssoOnly
+            }
         }
     }
 
@@ -64,7 +74,12 @@ extension UIAlertController {
         fileprivate func description(for copy: CompanyLoginCopy) -> String {
             switch self {
             case .invalidFormat:
-                return "login.sso.error.alert.invalid_format.message.\(copy.rawValue)".localized
+                switch copy {
+                case .ssoAndEmail:
+                    return L10n.Localizable.Login.Sso.Error.Alert.InvalidFormat.Message.ssoAndEmail
+                case .ssoOnly:
+                    return L10n.Localizable.Login.Sso.Error.Alert.InvalidFormat.Message.ssoOnly
+                }
             case .domainNotRegistered:
                 return L10n.Localizable.Login.Sso.Error.Alert.DomainNotRegistered.message
             case .domainAssociatedWithWrongServer:

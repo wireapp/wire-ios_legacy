@@ -109,19 +109,17 @@ extension UIAlertController {
             } else {
                 deviceName = userClient.type.rawValue
             }
-
-            let formatKey = "registration.devices.activated".localized
             let formattedDate = userClient.activationDate?.formattedDate
-            let deviceDate = String(format: formatKey, formattedDate ?? "")
+            let deviceDate = L10n.Localizable.Registration.Devices.activated(formattedDate ?? "")
 
             deviceNamesAndDates.append("\(deviceName)\n\(deviceDate)")
         }
 
         let title = L10n.Localizable.Self.NewDeviceAlert.title
 
-        let messageFormat = clients.count > 1 ? "self.new_device_alert.message_plural".localized : "self.new_device_alert.message".localized
-
-        let message = String(format: messageFormat, deviceNamesAndDates.joined(separator: "\n\n"))
+        let message = clients.count > 1
+            ? L10n.Localizable.Self.NewDeviceAlert.messagePlural(deviceNamesAndDates.joined(separator: "\n\n"))
+            : L10n.Localizable.Self.NewDeviceAlert.message(deviceNamesAndDates.joined(separator: "\n\n"))
 
         self.init(title: title, message: message, preferredStyle: .alert)
     }

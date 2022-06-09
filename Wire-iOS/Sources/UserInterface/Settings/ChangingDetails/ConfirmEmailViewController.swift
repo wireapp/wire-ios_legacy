@@ -109,8 +109,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
-        let format = "self.settings.account_section.email.change.verify.resend".localized
-        let text = String(format: format, newEmail)
+        let text = L10n.Localizable.Self.Settings.AccountSection.Email.Change.Verify.resend(newEmail)
         cell.titleText = text
         cell.titleColor = .white
         return cell
@@ -119,8 +118,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.resendVerification(inController: self)
         tableView.deselectRow(at: indexPath, animated: false)
-
-        let message = String(format: "self.settings.account_section.email.change.resend.message".localized, newEmail)
+        let message = L10n.Localizable.Self.Settings.AccountSection.Email.Change.Resend.message(newEmail)
         let alert = UIAlertController(
             title: L10n.Localizable.Self.Settings.AccountSection.Email.Change.Resend.title,
             message: message,

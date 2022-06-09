@@ -135,7 +135,7 @@ extension ConversationInputBarViewController {
         guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(maxUploadFileSize), countStyle: .binary)
-        let errorMessage = String(format: "content.file.too_big".localized, maxSizeString)
+        let errorMessage = L10n.Localizable.Content.File.tooBig(maxSizeString)
         let alert = UIAlertController.alertWithOKButton(message: errorMessage)
         present(alert, animated: true)
     }

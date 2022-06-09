@@ -24,25 +24,36 @@ extension UIAlertController {
 
     static func degradedCall(degradedUser: UserType?, callEnded: Bool = false, confirmationBlock: ((_ continueDegradedCall: Bool) -> Void)? = nil) -> UIAlertController {
 
-        // Choose localization prefix
-        let prefix = callEnded
-            ? "call.degraded.ended.alert"
-            : "call.degraded.alert"
+//        // Choose localization prefix
+//        let prefix = callEnded
+//            ? "call.degraded.ended.alert"
+//            : "call.degraded.alert"
 
         // Set message
-        var message = "\(prefix).message"
+        var message = ".message"
 
         switch degradedUser {
         case .some(let user) where user.isSelfUser:
-            message = "\(message).self".localized
+            message = callEnded
+                ? L10n.Localizable.Call.Degraded.Ended.Alert.Message.`self`
+                : L10n.Localizable.Call.Degraded.Alert.Message.`self`
         case .some(let user):
-            message = "\(message).user".localized(args: user.name ?? "")
+            message = callEnded
+                ? L10n.Localizable.Call.Degraded.Ended.Alert.Message.user(user.name ?? "")
+                : L10n.Localizable.Call.Degraded.Alert.Message.user(user.name ?? "")
         default:
-            message = "\(message).unknown".localized
+            message = callEnded
+                ? L10n.Localizable.Call.Degraded.Ended.Alert.Message.unknown
+                : L10n.Localizable.Call.Degraded.Alert.Message.unknown
         }
 
         // Create controller
-        let controller = UIAlertController(title: "\(prefix).title".localized, message: message, preferredStyle: .alert)
+        let controller = UIAlertController(
+            title: callEnded
+                ? L10n.Localizable.Call.Degraded.Ended.Alert.title
+                : L10n.Localizable.Call.Degraded.Alert.title,
+            message: message,
+            preferredStyle: .alert)
 
         // Add actions
         if let confirmationBlock = confirmationBlock {

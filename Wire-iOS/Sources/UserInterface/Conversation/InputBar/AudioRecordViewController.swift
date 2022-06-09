@@ -62,7 +62,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         didSet { updateRecordingState(recordingState) }
     }
 
-    fileprivate let localizationBasePath = "conversation.input_bar.audio_message"
+//    fileprivate let localizationBasePath = "conversation.input_bar.audio_message"
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -307,8 +307,9 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         self.recordingDotView.animating = !finished
 
-        let pathComponent = finished ? "tooltip.tap_send" : "tooltip.pull_send"
-        topTooltipLabel.text = "\(localizationBasePath).\(pathComponent)".localized(uppercased: true)
+        topTooltipLabel.text = finished
+            ? L10n.Localizable.Conversation.InputBar.AudioMessage.Tooltip.tapSend.uppercased()
+            : L10n.Localizable.Conversation.InputBar.AudioMessage.Tooltip.tapSend.uppercased()
 
         if recordingState == .recording {
             NSLayoutConstraint.deactivate(recordingDotViewHidden)
