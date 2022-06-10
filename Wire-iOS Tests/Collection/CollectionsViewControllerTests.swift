@@ -27,7 +27,7 @@ extension MockMessage {
     }
 }
 
-final class CollectionsViewControllerTests: XCTestCase {
+final class CollectionsViewControllerTests: ZMSnapshotTestCase {
 
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!

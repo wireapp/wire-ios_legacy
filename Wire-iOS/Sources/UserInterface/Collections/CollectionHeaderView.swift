@@ -28,16 +28,16 @@ final class CollectionHeaderView: UICollectionReusableView {
             let icon: StyleKitIcon
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = L10n.Localizable.Collections.Section.Images.title
+                titleLabel.text = L10n.Localizable.Collections.Section.Images.title.uppercased()
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text =  L10n.Localizable.Collections.Section.Files.title
+                titleLabel.text =  L10n.Localizable.Collections.Section.Files.title.uppercased()
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text =  L10n.Localizable.Collections.Section.Videos.title
+                titleLabel.text =  L10n.Localizable.Collections.Section.Videos.title.uppercased()
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text =  L10n.Localizable.Collections.Section.Links.title
+                titleLabel.text =  L10n.Localizable.Collections.Section.Links.title.uppercased()
                 icon = .link
             default: fatal("Unknown section")
             }
