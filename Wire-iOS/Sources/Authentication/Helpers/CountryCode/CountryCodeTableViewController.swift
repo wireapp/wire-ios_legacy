@@ -82,7 +82,7 @@ final class CountryCodeTableViewController: UITableViewController, UISearchContr
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
 
         definesPresentationContext = true
-        title = NSLocalizedString( L10n.Localizable.Registration.CountrySelect.title, comment: "").localizedUppercase
+        title = L10n.Localizable.Registration.CountrySelect.title.uppercased()
     }
 
     // MARK: - UITableViewDelegate

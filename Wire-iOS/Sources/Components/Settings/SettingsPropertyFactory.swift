@@ -180,7 +180,7 @@ final class SettingsPropertyFactory {
                 switch value {
                 case .number(let number):
                     if let settingsColorScheme = SettingsColorScheme(rawValue: Int(number.int64Value)) {
-                        self.userDefaults.set(settingsColorScheme.keyValueString,
+                        self.userDefaults.set(settingsColorScheme.displayString,
                                               forKey: SettingKey.colorScheme.rawValue)
                     } else {
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")

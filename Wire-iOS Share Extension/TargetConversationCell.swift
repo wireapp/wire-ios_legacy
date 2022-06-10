@@ -18,7 +18,6 @@
 
 import UIKit
 import WireShareEngine
-//import Wire
 
 final class TargetConversationCell: UITableViewCell {
 
