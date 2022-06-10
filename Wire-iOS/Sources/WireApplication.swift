@@ -19,14 +19,28 @@
 import UIKit
 import WireCommonComponents
 import WireSyncEngine
+import SwiftUI
 
 final class WireApplication: UIApplication {
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        DebugAlert.showSendLogsMessage(
-            message: "You have performed a shake motion, please confirm sending debug logs."
-        )
+
+        if #available(iOS 14, *), Bundle.developerModeEnabled {
+            let developerTools = UIHostingController(
+                rootView: NavigationView {
+                    DeveloperToolsView(viewModel: DeveloperToolsViewModel(onDismiss: { [weak self] in
+                        self?.topmostViewController()?.dismissIfNeeded()
+                    }))
+                }
+            )
+
+            topmostViewController()?.present(developerTools, animated: true)
+        } else {
+            DebugAlert.showSendLogsMessage(
+                message: "You have performed a shake motion, please confirm sending debug logs."
+            )
+        }
     }
 }
 
