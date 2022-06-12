@@ -72,7 +72,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         guard case let .iconAction(title, icon, color, _) = configuration else { preconditionFailure() }
         let mainColor = variant.mainColor(color: color)
         iconImageView.setIcon(icon, size: .tiny, color: mainColor)
-        label.textColor = mainColor
+        label.textColor = .blueNew//mainColor
         label.text = title
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
     }

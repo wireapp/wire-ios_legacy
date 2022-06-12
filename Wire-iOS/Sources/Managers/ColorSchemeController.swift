@@ -50,6 +50,18 @@ final class ColorSchemeController: NSObject {
 
     @objc
     private func settingsColorSchemeDidChange() {
+        if #available(iOS 13.0, *) {
+            switch Settings.shared.colorScheme {
+            case .light:
+                UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = .light
+            case .dark:
+                UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = .dark
+            case .system:
+                UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = .unspecified
+            }
+        } else {
+            // Fallback on earlier versions
+        }
         ColorScheme.default.variant = Settings.shared.colorSchemeVariant
 
         NSAttributedString.invalidateMarkdownStyle()

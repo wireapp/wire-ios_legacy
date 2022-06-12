@@ -84,7 +84,7 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
         titleLabel.numberOfLines = 0
         titleLabel.text = L10n.Localizable.Content.System.Conversation.Invite.title
-        titleLabel.textColor = UIColor.from(scheme: .textForeground)
+        titleLabel.textColor = UIColor.blueNew //UIColor.from(scheme: .textForeground)
         titleLabel.font = FontSpec(.medium, .none).font
 
         inviteButton.setTitle(L10n.Localizable.Content.System.Conversation.Invite.button, for: .normal)

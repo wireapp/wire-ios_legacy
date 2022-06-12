@@ -19,6 +19,8 @@
 		0630E4C42580469300C75BFB /* AppLockChangeWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */; };
 		0646CC7627A9703B00BC0FAA /* Bundle+SecurityFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D5E01824E1286B00B982F6 /* Bundle+SecurityFlags.swift */; };
 		064AD4C425DD31A600143D74 /* UIApplication+OpenURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */; };
+		0655A5B228529373002030ED /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0655A5B128529373002030ED /* Media.xcassets */; };
+		0655A5B52852977A002030ED /* DynamicColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0655A5B42852977A002030ED /* DynamicColors.swift */; };
 		0657C1BC2829B71D002F2D48 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065A5AE0279B07AC002D4D1E /* NotificationService.swift */; };
 		0658F5AC25D16EA700DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0658F5AD25D16EA900DD6859 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
@@ -1809,6 +1811,8 @@
 		0622D6A1265B38DD00D759DB /* UserBlockingReasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBlockingReasonCell.swift; sourceTree = "<group>"; };
 		0630E4C32580469300C75BFB /* AppLockChangeWarningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockChangeWarningViewController.swift; sourceTree = "<group>"; };
 		064AD4C325DD31A600143D74 /* UIApplication+OpenURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+OpenURL.swift"; sourceTree = "<group>"; };
+		0655A5B128529373002030ED /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		0655A5B42852977A002030ED /* DynamicColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicColors.swift; sourceTree = "<group>"; };
 		065A5ADE279B07AC002D4D1E /* Wire Notification Service Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Notification Service Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		065A5AE0279B07AC002D4D1E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		065A5AE2279B07AC002D4D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3675,6 +3679,22 @@
 				EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */,
 			);
 			path = UIApplication;
+			sourceTree = "<group>";
+		};
+		0655A5B02852935D002030ED /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				0655A5B128529373002030ED /* Media.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		0655A5B32852975C002030ED /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				0655A5B42852977A002030ED /* DynamicColors.swift */,
+			);
+			path = Colors;
 			sourceTree = "<group>";
 		};
 		065A5ADF279B07AC002D4D1E /* Wire Notification Service Extension */ = {
@@ -5645,6 +5665,7 @@
 		8FC85083199245760008B66B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0655A5B02852935D002030ED /* Colors */,
 				F1B2422E219B2C9B00F7035C /* Configuration */,
 				8FC8564019924CBA0008B66B /* Localizable.strings */,
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
@@ -5715,6 +5736,7 @@
 		8FC85126199245760008B66B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0655A5B32852975C002030ED /* Colors */,
 				06B3091126AEDC830057AF9E /* UIAlertController */,
 				064AD4C225DD313C00143D74 /* UIApplication */,
 				060B1E2D25BADCDB00A6ADA7 /* Password */,
@@ -7747,6 +7769,7 @@
 				F122349921A715DA0038DCAC /* Backend.bundle in Resources */,
 				EF21270B1FB9DFE300625A9B /* CountryCodes.plist in Resources */,
 				BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */,
+				0655A5B228529373002030ED /* Media.xcassets in Resources */,
 				5E39FC5F225CBBD400C682B8 /* password_rules.json in Resources */,
 				DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */,
 				EF2B0DD121CA8EF1003B2882 /* url.json in Resources */,
@@ -8680,6 +8703,7 @@
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
 				0617001523E48B66005C262D /* VerticalTransition.swift in Sources */,
 				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
+				0655A5B52852977A002030ED /* DynamicColors.swift in Sources */,
 				06C412AC238FCAA80018866F /* Int+Const.swift in Sources */,
 				A9BBD8D026A5D51D00C768B1 /* LayoutDirection.swift in Sources */,
 				061EF88F2797F74900584C53 /* SettingsCopyButtonCellDescriptor.swift in Sources */,
