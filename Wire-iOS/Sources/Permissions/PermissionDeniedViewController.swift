@@ -58,7 +58,7 @@ final class PermissionDeniedViewController: UIViewController {
 
         vc.settingsButton.setTitle(L10n.Localizable.Registration.AddressBookAccessDenied.SettingsButton.title.uppercased(), for: .normal)
 
-        vc.laterButton.setTitle(L10n.Localizable.Registration.AddressBookAccessDenied.MaybeLaterButton.title, for: .normal)
+        vc.laterButton.setTitle(L10n.Localizable.Registration.AddressBookAccessDenied.MaybeLaterButton.title.uppercased(), for: .normal)
 
         return vc
     }
