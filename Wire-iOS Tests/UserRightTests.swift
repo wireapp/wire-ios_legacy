@@ -79,7 +79,7 @@ class UserRightTests: XCTestCase {
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .resetPassword))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editName))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editHandle))
-        XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editEmail))
+        XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editEmail))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editPhone))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editProfilePicture))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editAccentColor))
@@ -97,7 +97,7 @@ class UserRightTests: XCTestCase {
         XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editEmail))
         XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editPhone))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editProfilePicture))
-        XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editAccentColor))
+        XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editAccentColor))
     }
 
     func test_SelfUserRights_NotManagedByWire_SSOLogin() {
@@ -112,7 +112,7 @@ class UserRightTests: XCTestCase {
         XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editEmail))
         XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editPhone))
         XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editProfilePicture))
-        XCTAssertFalse(UserRight.selfUserIsPermitted(to: .editAccentColor))
+        XCTAssertTrue(UserRight.selfUserIsPermitted(to: .editAccentColor))
     }
 
 }

@@ -108,7 +108,7 @@ final class ConversationGuestOptionsViewModel {
         var rows: [CellConfiguration] = [.allowGuestsToogle(
             get: { [unowned self] in return self.configuration.allowGuests },
             set: { [unowned self] in self.setAllowGuests($0, view: $1) },
-            isDisabled: (configuration.guestLinkFeatureStatus == .enabled && !configuration.isConversationFromSelfTeam)
+            isEnabled: configuration.isConversationFromSelfTeam
         )]
         guard configuration.allowGuests else {
             return rows
