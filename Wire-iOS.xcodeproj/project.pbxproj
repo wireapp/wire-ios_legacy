@@ -5658,9 +5658,9 @@
 				876F99061D070F6700CA2788 /* Sounds */,
 				8FC85089199245760008B66B /* Images */,
 				BF0BDF701DA7A9D8003C61DE /* Fonts */,
+				E56563292859429900EC20B9 /* Colors */,
 				8FC850BA199245760008B66B /* Settings.bundle */,
 				5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */,
-				E56CA37428588C4F00CD2045 /* Colors.xcassets */,
 			);
 			name = Resources;
 			path = "Wire-iOS/Resources";
@@ -6900,6 +6900,14 @@
 				BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */,
 			);
 			path = InputBar;
+			sourceTree = "<group>";
+		};
+		E56563292859429900EC20B9 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				E56CA37428588C4F00CD2045 /* Colors.xcassets */,
+			);
+			path = Colors;
 			sourceTree = "<group>";
 		};
 		EE01D07F25ADA3AD001DB205 /* App Lock */ = {
