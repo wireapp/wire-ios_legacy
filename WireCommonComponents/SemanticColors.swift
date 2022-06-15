@@ -18,8 +18,34 @@
 
 import UIKit
 
-extension UIColor {
-    public static var blue500: UIColor {
-        UIColor(named: "Blue500")!
+enum SemanticColors {
+    case buttonBackground
+    
+    var colorValue: UIColor {
+        switch self {
+        case .buttonBackground:
+            return colorHelper(
+                light: Asset.amber100Dark.color,
+                dark: Asset.blue500Light.color)
+        }
     }
+    
+    private func colorHelper(light: UIColor, dark: UIColor) -> UIColor {
+        if #available(iOSApplicationExtension 13.0, *) {
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    /// Return the color for Dark Mode
+                    return dark
+                } else {
+                    /// Return the color for Light Mode
+                    return light
+                }
+            }
+        } else {
+            // Fallback on earlier versions (it there is 12 verion in app this must be specified. Otherwise it won't compile
+            return light
+        }
+    }
+    
+    
 }
