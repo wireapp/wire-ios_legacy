@@ -20,13 +20,12 @@ import Foundation
 import UIKit
 
 public struct LabelStyle {
-    private(set) var backgroundColor: UIColor
-    private(set) var textColor: UIColor
-
+    var backgroundColor: UIColor
+    var textColor: UIColor
 }
 
 extension UILabel: Stylable {
-    
+
     public func applyStyle(_ style: LabelStyle) {
         backgroundColor = style.backgroundColor
         textColor = style.textColor
