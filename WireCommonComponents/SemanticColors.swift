@@ -28,26 +28,17 @@ private extension UIColor {
 
     convenience init(light: ColorAsset, dark: ColorAsset) {
         if #available(iOS 13.0, *) {
-            self.init { traitCollection in
-                if traitCollection.userInterfaceStyle == .dark {
-                    return dark.color
-                } else {
-                    return light.color
-                }
+            self.init { traits in
+                return traits.userInterfaceStyle == .dark ? dark.color : light.color
             }
         } else {
-            // TODO: [Katerina] we should remove this when we stop supporting iOS 12.
             switch ColorScheme.default.variant {
             case .light:
-                self.init(colorAsset: light)
+                self.init(asset: light)!
             case .dark:
-                self.init(colorAsset: dark)
+                self.init(asset: dark)!
             }
         }
-    }
-
-    convenience init(colorAsset: ColorAsset) {
-        self.init(cgColor: colorAsset.color.cgColor)
     }
 
 }
