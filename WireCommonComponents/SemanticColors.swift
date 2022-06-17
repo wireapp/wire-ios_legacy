@@ -20,30 +20,34 @@ import UIKit
 
 enum SemanticColors {
 
-    static let buttonBackground = UIColor(light: Asset.red200Light.color, dark: Asset.green500Dark.color)
+    static let buttonBackground = UIColor(light: Asset.red200Light, dark: Asset.green500Dark)
 
 }
 
-extension UIColor {
+private extension UIColor {
 
-    convenience init(light: UIColor, dark: UIColor) {
+    convenience init(light: ColorAsset, dark: ColorAsset) {
         if #available(iOS 13.0, *) {
             self.init { traitCollection in
                 if traitCollection.userInterfaceStyle == .dark {
-                    return dark
+                    return dark.color
                 } else {
-                    return light
+                    return light.color
                 }
             }
         } else {
             // TODO: [Katerina] we should remove this when we stop supporting iOS 12.
             switch ColorScheme.default.variant {
             case .light:
-                self.init(cgColor: light.cgColor)
+                self.init(colorAsset: light)
             case .dark:
-                self.init(cgColor: dark.cgColor)
+                self.init(colorAsset: dark)
             }
         }
+    }
+
+    convenience init(colorAsset: ColorAsset) {
+        self.init(cgColor: colorAsset.color.cgColor)
     }
 
 }
