@@ -1224,6 +1224,7 @@
 		E9559B4927B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */; };
 		E96C8831281706640003245E /* UIViewController+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96C8830281706640003245E /* UIViewController+DynamicType.swift */; };
 		E9B580CC27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */; };
+		E9B909CD28588AD900F0D8EE /* Stylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B909CC28588AD900F0D8EE /* Stylable.swift */; };
 		E9D25C8727D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */; };
 		E9EBE0D028194D7E0058C793 /* DynamicTypeCapable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0CF28194D7E0058C793 /* DynamicTypeCapable.swift */; };
 		E9EBE0D228194F2D0058C793 /* FontScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EBE0D128194F2D0058C793 /* FontScheme.swift */; };
@@ -3095,6 +3096,7 @@
 		E9559B4827B3D3580020B431 /* UIAlertController+ConfirmRemovingServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConfirmRemovingServices.swift"; sourceTree = "<group>"; };
 		E96C8830281706640003245E /* UIViewController+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+DynamicType.swift"; sourceTree = "<group>"; };
 		E9B580CB27B3E71900A5814D /* ConversationOptionsServicesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsServicesViewControllerTests.swift; sourceTree = "<group>"; };
+		E9B909CC28588AD900F0D8EE /* Stylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylable.swift; sourceTree = "<group>"; };
 		E9D25C8627D9FB07007CB532 /* AuthenticationEmailVerificationRequiredErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandlerTests.swift; sourceTree = "<group>"; };
 		E9EBE0CF28194D7E0058C793 /* DynamicTypeCapable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeCapable.swift; sourceTree = "<group>"; };
 		E9EBE0D128194F2D0058C793 /* FontScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontScheme.swift; sourceTree = "<group>"; };
@@ -7485,6 +7487,7 @@
 				E9EBE0D128194F2D0058C793 /* FontScheme.swift */,
 				E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */,
 				E9EBE0D8281958BE0058C793 /* FontSpec.swift */,
+				E9B909CC28588AD900F0D8EE /* Stylable.swift */,
 			);
 			path = WireCommonComponents;
 			sourceTree = "<group>";
@@ -9440,6 +9443,7 @@
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
 				EF3B26DC2370585700245701 /* AppCenter.swift in Sources */,
 				A98370BC2488101500515687 /* URL+FileSize.swift in Sources */,
+				E9B909CD28588AD900F0D8EE /* Stylable.swift in Sources */,
 				E9EBE0D228194F2D0058C793 /* FontScheme.swift in Sources */,
 				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
