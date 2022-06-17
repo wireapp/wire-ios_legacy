@@ -30,6 +30,7 @@
 		065A5AF3279B083B002D4D1E /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		065A5AF5279B0840002D4D1E /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
 		0661925726F889DC006969AA /* PerformClipboardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661925626F889DC006969AA /* PerformClipboardAction.swift */; };
+		0666BCA8285B89E600B7A8C7 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
 		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
@@ -7466,7 +7467,6 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
-				E56CA3762858A36500CD2045 /* SemanticColors.swift */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				06F9864825CC1518005572C5 /* AccessoryTextField.swift */,
@@ -7506,6 +7506,7 @@
 				E9EBE0D128194F2D0058C793 /* FontScheme.swift */,
 				E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */,
 				E9EBE0D8281958BE0058C793 /* FontSpec.swift */,
+				E56CA3762858A36500CD2045 /* SemanticColors.swift */,
 				E9B909CC28588AD900F0D8EE /* Stylable.swift */,
 			);
 			path = WireCommonComponents;
@@ -9442,6 +9443,7 @@
 			files = (
 				63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
+				0666BCA8285B89E600B7A8C7 /* ColorScheme.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
 				F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */,
 				A945FAA42742BDA200DB8A4C /* Sequence+layout.swift in Sources */,

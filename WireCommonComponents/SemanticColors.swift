@@ -19,33 +19,31 @@
 import UIKit
 
 enum SemanticColors {
-    case buttonBackground
-    
-    var colorValue: UIColor {
-        switch self {
-        case .buttonBackground:
-            return colorHelper(
-                light: Asset.red50Dark.color,
-                dark: Asset.blue500Light.color)
-        }
-    }
-    
-    private func colorHelper(light: UIColor, dark: UIColor) -> UIColor {
+
+    static let buttonBackground = UIColor(light: Asset.red200Light.color, dark: Asset.green500Dark.color)
+
+}
+
+extension UIColor {
+
+    convenience init(light: UIColor, dark: UIColor) {
         if #available(iOS 13.0, *) {
-            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-                if UITraitCollection.userInterfaceStyle == .dark {
-                    /// Return the color for Dark Mode
+            self.init { traitCollection in
+                if traitCollection.userInterfaceStyle == .dark {
                     return dark
                 } else {
-                    /// Return the color for Light Mode
                     return light
                 }
             }
         } else {
-            // Fallback on earlier versions (it there is 12 verion in app this must be specified. Otherwise it won't compile
-            return light
+            // TODO: [Katerina] we should remove this when we stop supporting iOS 12.
+            switch ColorScheme.default.variant {
+            case .light:
+                self.init(cgColor: light.cgColor)
+            case .dark:
+                self.init(cgColor: dark.cgColor)
+            }
         }
     }
-    
-    
+
 }
