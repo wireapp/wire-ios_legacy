@@ -66,7 +66,7 @@ final class MessagePresenter: NSObject {
         }
 
         // Need to create temporary hardlink to make sure the UIDocumentInteractionController shows the correct filename
-        var tmpPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(message.fileMessageData?.filename ?? "").absoluteString
+        var tmpPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(message.fileMessageData?.filename ?? "").path
 
         let path = fileURL.path
 
@@ -166,7 +166,7 @@ final class MessagePresenter: NSObject {
             openLocationMessage(message)
         } else if Message.isVideo(message), message.canBeShared {
             openFileMessage(message, targetView: targetView)
-        } else if Message.isFileTransfer(message), message.canBeDownloaded {
+        } else if Message.isFileTransfer(message) {
             openFileMessage(message, targetView: targetView)
         } else if Message.isImage(message), message.canBeShared {
             openImageMessage(message, actionResponder: delegate)
