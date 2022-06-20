@@ -19,7 +19,7 @@
 import WireSystem
 import UIKit
 
-enum SettingsColorScheme: Int {
+enum SettingsColorScheme: Int, CaseIterable {
     
     case light = 0
     case dark = 1
@@ -74,12 +74,6 @@ enum SettingsColorScheme: Int {
 
     var displayString: String {
         return "dark_theme.option.\(keyValueString)".localized
-    }
-}
-
-extension SettingsColorScheme: CaseIterable {
-    static var allCases: [SettingsColorScheme] {
-        return [.light, .dark, .system]
     }
 }
 
