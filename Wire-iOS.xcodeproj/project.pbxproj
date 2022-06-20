@@ -30,6 +30,7 @@
 		065A5AF3279B083B002D4D1E /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		065A5AF5279B0840002D4D1E /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
 		0661925726F889DC006969AA /* PerformClipboardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0661925626F889DC006969AA /* PerformClipboardAction.swift */; };
+		0666BCA8285B89E600B7A8C7 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F174AAAE218A0B1A00AFCC4D /* ColorScheme.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
 		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
@@ -1212,7 +1213,12 @@
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		E52D5A7B2858C18600D0494E /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
+		E52D5A7C2858C25B00D0494E /* SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CA3762858A36500CD2045 /* SemanticColors.swift */; };
 		E52F448B2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */; };
+		E5436FAE285A1C83004D95EB /* SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CA3762858A36500CD2045 /* SemanticColors.swift */; };
+		E56CA37528588C4F00CD2045 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56CA37428588C4F00CD2045 /* Colors.xcassets */; };
+		E57333CD2859CF840039EE02 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */; };
 		E90B7DB628117DED001831FB /* DynamicFontLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B7DB528117DED001831FB /* DynamicFontLabel.swift */; };
 		E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */; };
@@ -3084,7 +3090,10 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		E52D5A7A2858C18600D0494E /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+DisclosureIndicator.swift"; sourceTree = "<group>"; };
+		E56CA37428588C4F00CD2045 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		E56CA3762858A36500CD2045 /* SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticColors.swift; sourceTree = "<group>"; };
 		E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandler.swift; sourceTree = "<group>"; };
 		E90B7DB528117DED001831FB /* DynamicFontLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFontLabel.swift; sourceTree = "<group>"; };
 		E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsServicesCell.swift; sourceTree = "<group>"; };
@@ -5654,6 +5663,7 @@
 				876F99061D070F6700CA2788 /* Sounds */,
 				8FC85089199245760008B66B /* Images */,
 				BF0BDF701DA7A9D8003C61DE /* Fonts */,
+				E56563292859429900EC20B9 /* Colors */,
 				8FC850BA199245760008B66B /* Settings.bundle */,
 				5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */,
 			);
@@ -6897,6 +6907,14 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		E56563292859429900EC20B9 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				E56CA37428588C4F00CD2045 /* Colors.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
 		EE01D07F25ADA3AD001DB205 /* App Lock */ = {
 			isa = PBXGroup;
 			children = (
@@ -6976,6 +6994,7 @@
 		EEA65C2525D27A8300AA7519 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				E52D5A7A2858C18600D0494E /* Colors+Generated.swift */,
 				EEA65C2625D27A8300AA7519 /* Strings+Generated.swift */,
 			);
 			name = Generated;
@@ -7487,6 +7506,7 @@
 				E9EBE0D128194F2D0058C793 /* FontScheme.swift */,
 				E9EBE0D328194F890058C793 /* FontScheme+DynamicType.swift */,
 				E9EBE0D8281958BE0058C793 /* FontSpec.swift */,
+				E56CA3762858A36500CD2045 /* SemanticColors.swift */,
 				E9B909CC28588AD900F0D8EE /* Stylable.swift */,
 			);
 			path = WireCommonComponents;
@@ -7758,6 +7778,7 @@
 				848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */,
 				1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */,
 				BF732A741D9C14C7003077DB /* emoji_flags.plist in Resources */,
+				E56CA37528588C4F00CD2045 /* Colors.xcassets in Resources */,
 				1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */,
 				1658D2021D3E742A00249609 /* hotping_from_them.caf in Resources */,
 				F1FDF2C421ADA3A600E037A1 /* OtherImages.xcassets in Resources */,
@@ -8211,6 +8232,7 @@
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
 				A9806A3C23E209FC00691DFE /* AudioTrack.swift in Sources */,
 				EF834B8422035AD400E92F13 /* ConversationContentViewController+MessageAction.swift in Sources */,
+				E52D5A7B2858C18600D0494E /* Colors+Generated.swift in Sources */,
 				8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */,
 				F1199D371FC8490A0070FAC3 /* AuthenticationStepController.swift in Sources */,
 				D53DB9A5203EE03400655CB4 /* Conversation+OptionsConfiguration.swift in Sources */,
@@ -8825,6 +8847,7 @@
 				87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */,
 				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,
 				5E35F7802183131400D3F4FE /* ConversationLinkAttachmentCell.swift in Sources */,
+				E5436FAE285A1C83004D95EB /* SemanticColors.swift in Sources */,
 				1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */,
 				A9A6506424D1C2C800B6A68D /* PasscodeError.swift in Sources */,
 				F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */,
@@ -9420,6 +9443,7 @@
 			files = (
 				63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
+				0666BCA8285B89E600B7A8C7 /* ColorScheme.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
 				F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */,
 				A945FAA42742BDA200DB8A4C /* Sequence+layout.swift in Sources */,
@@ -9435,6 +9459,7 @@
 				F15650A421DCF66600210504 /* AudioProcessing.swift in Sources */,
 				A98370BA248806E600515687 /* UIAlertController+factory.swift in Sources */,
 				F15650A121DCF3E700210504 /* ExtensionSettings.swift in Sources */,
+				E57333CD2859CF840039EE02 /* Colors+Generated.swift in Sources */,
 				5EA952C32260F90A00C83FDB /* StyleKitIconSize.swift in Sources */,
 				F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */,
 				A9730DDC250287360061BF36 /* Bundle+ThirdPartyKeys.swift in Sources */,
@@ -9443,6 +9468,7 @@
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
 				EF3B26DC2370585700245701 /* AppCenter.swift in Sources */,
 				A98370BC2488101500515687 /* URL+FileSize.swift in Sources */,
+				E52D5A7C2858C25B00D0494E /* SemanticColors.swift in Sources */,
 				E9B909CD28588AD900F0D8EE /* Stylable.swift in Sources */,
 				E9EBE0D228194F2D0058C793 /* FontScheme.swift in Sources */,
 				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,

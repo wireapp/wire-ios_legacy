@@ -22,7 +22,7 @@ import WireCommonComponents
 
 final class ConversationListOnboardingHint: UIView {
 
-    let messageLabel: UILabel = UILabel()
+    let messageLabel: UILabel = DynamicFontLabel(fontSpec: .largeLightFont, color: .iconHighlighted)
     let arrowView: UIImageView = UIImageView()
     weak var arrowPointToView: UIView? {
         didSet {
@@ -40,9 +40,7 @@ final class ConversationListOnboardingHint: UIView {
         arrowView.setIcon(.longDownArrow, size: .large, color: UIColor.white.withAlphaComponent(0.4))
 
         messageLabel.numberOfLines = 0
-        messageLabel.textColor = .white
         messageLabel.textAlignment = .left
-        messageLabel.font = FontSpec(.large, .light).font
         messageLabel.text = "conversation_list.empty.no_contacts.message".localized
 
         [arrowView, messageLabel].forEach(self.addSubview)
