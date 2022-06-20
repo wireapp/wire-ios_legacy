@@ -18,20 +18,30 @@
 
 import UIKit
 
-class WireSwitch: UISwitch {
-    init() {
-        super.init(frame: .zero)
-        
+struct SwitchStyle {
+
+    private(set) var onStateColor: UIColor
+    private(set) var offStateColor: UIColor
+    
+    static let enabled: Self = SwitchStyle(
+        onStateColor: SemanticColors.backgroundSwitchOnEnabled,
+        offStateColor: SemanticColors.backgroundSwitchOffEnabled)
+    
+    static let disabled: Self = SwitchStyle(
+        onStateColor: SemanticColors.backgroundSwitchOnDisabled,
+        offStateColor: SemanticColors.backgroundSwitchOffDisabled)
+}
+
+extension UISwitch: Stylable {
+
+    func applyStyle(_ style: SwitchStyle) {
         /*For on state*/
-        self.onTintColor = isEnabled ? SemanticColors.backgroundSwitchOnEnabled : SemanticColors.backgroundSwitchOnDisabled
+        self.onTintColor = style.onStateColor
 
         /*For off state*/
         self.layer.cornerRadius = self.frame.height / 2.0
-        self.backgroundColor = isEnabled ? SemanticColors.backgroundSwitchOffEnabled : SemanticColors.backgroundSwitchOffDisabled
+        self.backgroundColor = style.offStateColor
         self.clipsToBounds = true
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
 }
