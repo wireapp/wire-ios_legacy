@@ -224,7 +224,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupVerifiedToggle() {
-        verifiedToggle.onTintColor = UIColor(red: 0, green: 0.588, blue: 0.941, alpha: 1)
+        verifiedToggle.applyStyle(.verified)
         verifiedToggle.isOn = userClient.verified
         verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)

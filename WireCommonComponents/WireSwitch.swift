@@ -23,10 +23,13 @@ struct SwitchStyle {
     private(set) var onStateColor: UIColor
     private(set) var offStateColor: UIColor
     
-    static let enabled: Self = SwitchStyle(
+    // Predefined styles:
+    static let basic: Self = SwitchStyle(
         onStateColor: SemanticColors.backgroundSwitchOnEnabled,
         offStateColor: SemanticColors.backgroundSwitchOffEnabled)
-    
+    static let verified: Self = SwitchStyle(
+        onStateColor: SemanticColors.backgroundSwitchOnVerified,
+        offStateColor: SemanticColors.backgroundSwitchOffEnabled)
     static let disabled: Self = SwitchStyle(
         onStateColor: SemanticColors.backgroundSwitchOnDisabled,
         offStateColor: SemanticColors.backgroundSwitchOffDisabled)
