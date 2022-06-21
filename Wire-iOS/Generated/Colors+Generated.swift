@@ -150,7 +150,6 @@ internal enum Asset {
   internal static let red800Light = ColorAsset(name: "Red800Light")
   internal static let red900Dark = ColorAsset(name: "Red900Dark")
   internal static let red900Light = ColorAsset(name: "Red900Light")
-  internal static let verifiedSwitchBlue = ColorAsset(name: "VerifiedSwitchBlue")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

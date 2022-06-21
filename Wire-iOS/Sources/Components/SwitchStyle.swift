@@ -25,39 +25,24 @@ struct SwitchStyle {
     private(set) var disabledOnStateColor: UIColor
     private(set) var disabledOffStateColor: UIColor
     
-    // Predefined styles:
-    static let basic: Self = SwitchStyle(
-        onStateColor: SemanticColors.backgroundSwitchOnEnabled,
-        offStateColor: SemanticColors.backgroundSwitchOffEnabled,
-        disabledOnStateColor: SemanticColors.backgroundSwitchOnDisabled,
-        disabledOffStateColor: SemanticColors.backgroundSwitchOffDisabled)
-    
-    static let verified: Self = SwitchStyle(
-        onStateColor: SemanticColors.backgroundSwitchOnVerified,
-        offStateColor: SemanticColors.backgroundSwitchOffEnabled,
-        disabledOnStateColor: SemanticColors.backgroundSwitchOnDisabled,
-        disabledOffStateColor: SemanticColors.backgroundSwitchOffDisabled)
+    static let defaultSwitchStyle: Self = SwitchStyle(
+        onStateColor: SemanticColors.backgroundSwitchOnStateEnabled,
+        offStateColor: SemanticColors.backgroundSwitchOffStateEnabled,
+        disabledOnStateColor: SemanticColors.backgroundSwitchOnStateDisabled,
+        disabledOffStateColor: SemanticColors.backgroundSwitchOffStateDisabled)
 }
 
 extension UISwitch: Stylable {
-    func applyStyle(_ style: SwitchStyle) {
-        if isEnabled {
-            /*For on state (enabled)*/
-            self.onTintColor = style.onStateColor
-
-            /*For off state (disabled)*/
-            self.layer.cornerRadius = self.frame.height / 2.0
-            self.backgroundColor = style.offStateColor
-            self.clipsToBounds = true
-        } else {
-            /*For on state (enabled)*/
-            self.onTintColor = style.disabledOnStateColor
-
-            /*For off state (disabled)*/
-            self.layer.cornerRadius = self.frame.height / 2.0
-            self.backgroundColor = style.disabledOffStateColor
-            self.clipsToBounds = true
+    open override var isEnabled: Bool {
+        didSet {
+            applyStyle(.defaultSwitchStyle)
         }
+    }
+    func applyStyle(_ style: SwitchStyle) {
+        self.onTintColor = isEnabled ? style.onStateColor : style.disabledOnStateColor
+        self.layer.cornerRadius = self.frame.height / 2.0
+        self.backgroundColor =  isEnabled ? style.offStateColor : style.disabledOffStateColor
+        self.clipsToBounds = true
     }
 
 }

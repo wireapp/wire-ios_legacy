@@ -149,7 +149,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.accessibilityIdentifier = titleIdentifier
         toggle.isOn = get()
         toggle.isEnabled = isEnabled
-        toggle.applyStyle(.basic)
+        toggle.applyStyle(.defaultSwitchStyle)
         self.variant = variant
     }
 }
