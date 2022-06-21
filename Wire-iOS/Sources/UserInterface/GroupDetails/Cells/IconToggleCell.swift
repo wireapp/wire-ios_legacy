@@ -29,7 +29,7 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
     }
 
-    let toggle = UISwitch()
+    let toggle = UISwitch(.default)
     var action: ((Bool) -> Void)?
 
     override func setUp() {
@@ -37,7 +37,6 @@ class IconToggleCell: DetailsCollectionViewCell {
         contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
 
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
-        toggle.applyStyle(.defaultSwitchStyle)
     }
 
     @objc func toggleChanged(_ sender: UISwitch) {

@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationCreationControllerSnapshotTests: XCTestCase {
+final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ConversationCreationController!
 

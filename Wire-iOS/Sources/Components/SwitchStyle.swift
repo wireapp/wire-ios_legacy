@@ -20,14 +20,14 @@ import UIKit
 
 struct SwitchStyle {
 
-    private(set) var onStateColor: UIColor
-    private(set) var offStateColor: UIColor
+    private(set) var enabledOnStateColor: UIColor
+    private(set) var enabledOffStateColor: UIColor
     private(set) var disabledOnStateColor: UIColor
     private(set) var disabledOffStateColor: UIColor
     
-    static let defaultSwitchStyle: Self = SwitchStyle(
-        onStateColor: SemanticColors.backgroundSwitchOnStateEnabled,
-        offStateColor: SemanticColors.backgroundSwitchOffStateEnabled,
+    static let `default`: Self = SwitchStyle(
+        enabledOnStateColor: SemanticColors.backgroundSwitchOnStateEnabled,
+        enabledOffStateColor: SemanticColors.backgroundSwitchOffStateEnabled,
         disabledOnStateColor: SemanticColors.backgroundSwitchOnStateDisabled,
         disabledOffStateColor: SemanticColors.backgroundSwitchOffStateDisabled)
 }
@@ -35,13 +35,20 @@ struct SwitchStyle {
 extension UISwitch: Stylable {
     open override var isEnabled: Bool {
         didSet {
-            applyStyle(.defaultSwitchStyle)
+            applyStyle(.default)
         }
     }
+    
+    convenience init(_ style: SwitchStyle = .default) {
+        self.init()
+        print("🔥")
+        applyStyle(style)
+    }
+    
     func applyStyle(_ style: SwitchStyle) {
-        self.onTintColor = isEnabled ? style.onStateColor : style.disabledOnStateColor
+        self.onTintColor = isEnabled ? style.enabledOnStateColor : style.disabledOnStateColor
         self.layer.cornerRadius = self.frame.height / 2.0
-        self.backgroundColor =  isEnabled ? style.offStateColor : style.disabledOffStateColor
+        self.backgroundColor =  isEnabled ? style.enabledOffStateColor : style.disabledOffStateColor
         self.clipsToBounds = true
     }
 

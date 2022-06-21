@@ -340,8 +340,7 @@ final class SettingsToggleCell: SettingsTableCell {
 
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
-        let switchView = UISwitch(frame: CGRect.zero)
-        switchView.applyStyle(.defaultSwitchStyle)
+        let switchView = UISwitch(.default)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true

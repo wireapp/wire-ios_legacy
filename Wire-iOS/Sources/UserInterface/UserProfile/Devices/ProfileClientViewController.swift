@@ -33,7 +33,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let IDLabel = UILabel()
     let spinner = UIActivityIndicatorView(style: .gray)
     private let fullIDLabel = CopyableLabel()
-    private let verifiedToggle = UISwitch()
+    private let verifiedToggle = UISwitch(.default)
     private let verifiedToggleLabel = UILabel()
     private let resetButton = ButtonWithLargerHitArea()
 
@@ -224,7 +224,6 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupVerifiedToggle() {
-        verifiedToggle.applyStyle(.defaultSwitchStyle)
         verifiedToggle.isOn = userClient.verified
         verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
