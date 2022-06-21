@@ -71,11 +71,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.normalLightFont.font
-        titleLabel.applyStyle(.primaryLabelCellStyle)
+        titleLabel.applyStyle(.primaryLabelInCellStyle)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.smallRegularFont.font
-        statusLabel.applyStyle(.secondaryLabelStyle)
+        statusLabel.applyStyle(.secondaryLabelInCellStyle)
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
