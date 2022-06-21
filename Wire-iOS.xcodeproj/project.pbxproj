@@ -5104,7 +5104,7 @@
 		871BC3181D34F94200DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E9B909CC28588AD900F0D8EE /* Stylable.swift */,
+				E9E6F09C2861E549004A4BD6 /* Styles */,
 				A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */,
 				871BC31D1D34F94200DF0793 /* AudioPlayer */,
 				EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */,
@@ -5125,7 +5125,6 @@
 				1E5E0CAB1B6B83C6003B0CAC /* Buttons */,
 				160D6915212AB95100096EAD /* ImageResourceView.swift */,
 				5EDD25432141555600C0E254 /* LicensesLoader.swift */,
-				E92D1B94285B773B00366AFC /* LabelStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6919,6 +6918,15 @@
 			path = Colors;
 			sourceTree = "<group>";
 		};
+		E9E6F09C2861E549004A4BD6 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				E9B909CC28588AD900F0D8EE /* Stylable.swift */,
+				E92D1B94285B773B00366AFC /* LabelStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		EE01D07F25ADA3AD001DB205 /* App Lock */ = {
 			isa = PBXGroup;
 			children = (
@@ -7471,7 +7479,7 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
-                E56CA3762858A36500CD2045 /* SemanticColors.swift */,
+				E56CA3762858A36500CD2045 /* SemanticColors.swift */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				06F9864825CC1518005572C5 /* AccessoryTextField.swift */,
