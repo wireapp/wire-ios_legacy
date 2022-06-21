@@ -60,6 +60,12 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         set { updateStatus(newValue) }
     }
 
+    var disabled: Bool = false {
+        didSet {
+            updateDisabledState()
+        }
+    }
+
     // MARK: - Configuration - Override Methods
 
     override func setUp() {
@@ -151,6 +157,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
             statusLabel.isHidden = true
         }
     }
+
+    private func updateDisabledState() { }
 
     func redrawFont() {
         statusLabel.font = FontSpec.smallRegularFont.font
