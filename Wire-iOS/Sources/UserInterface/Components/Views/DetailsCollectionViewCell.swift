@@ -61,9 +61,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
     }
 
     var disabled: Bool = false {
-        didSet {
-            updateDisabledState()
-        }
+        didSet { }
     }
 
     // MARK: - Configuration - Override Methods
@@ -157,8 +155,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
             statusLabel.isHidden = true
         }
     }
-
-    private func updateDisabledState() { }
 
     func redrawFont() {
         statusLabel.font = FontSpec.smallRegularFont.font
