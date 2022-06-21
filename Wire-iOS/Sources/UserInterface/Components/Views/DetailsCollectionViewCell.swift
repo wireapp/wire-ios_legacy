@@ -77,9 +77,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.normalLightFont.font
+        titleLabel.applyStyle(.primaryLabelCellStyle)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.smallRegularFont.font
+        statusLabel.applyStyle(.secondaryLabelStyle)
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -116,10 +118,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-        statusLabel.textColor = sectionTextColor
-        updateDisabledState()
     }
 
     // MARK: - Layout
@@ -159,9 +158,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         }
     }
 
-    private func updateDisabledState() {
-        titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
-    }
+    private func updateDisabledState() { }
 
     func redrawFont() {
         statusLabel.font = FontSpec.smallRegularFont.font
