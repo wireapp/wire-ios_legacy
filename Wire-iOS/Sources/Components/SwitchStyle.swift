@@ -39,7 +39,6 @@ extension UISwitch: Stylable {
     }
     convenience init(_ style: SwitchStyle = .default) {
         self.init()
-        print("🔥")
         applyStyle(style)
     }
     public func applyStyle(_ style: SwitchStyle) {
