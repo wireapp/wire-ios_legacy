@@ -18,6 +18,7 @@
 
 import XCTest
 import SnapshotTesting
+import WireCommonComponents
 @testable import Wire
 
 class ChangeHandleViewControllerTests: XCTestCase {
@@ -68,7 +69,7 @@ fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
         let navigationController = wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
-        navigationController.navigationBar.tintColor = .brightOrange
+        navigationController.navigationBar.tintColor = SemanticColors.LegacyColors.brightOrange
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

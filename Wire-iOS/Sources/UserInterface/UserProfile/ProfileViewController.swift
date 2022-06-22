@@ -19,6 +19,7 @@
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "ProfileViewController")
 
@@ -378,7 +379,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     private var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.setLegalHoldAccessibility()
-        item.tintColor = .vividRed
+        item.tintColor = SemanticColors.LegacyColors.vividRed
         return item
     }
 

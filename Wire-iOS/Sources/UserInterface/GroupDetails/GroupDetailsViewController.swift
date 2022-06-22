@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
 
@@ -261,7 +262,7 @@ extension GroupDetailsViewController {
     fileprivate var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.setLegalHoldAccessibility()
-        item.tintColor = .vividRed
+        item.tintColor = SemanticColors.LegacyColors.vividRed
         return item
     }
 

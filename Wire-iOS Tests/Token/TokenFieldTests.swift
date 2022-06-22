@@ -16,6 +16,7 @@
 //
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 import SnapshotTesting
 
@@ -133,7 +134,7 @@ final class TokenFieldTests: ZMSnapshotTestCase {
         sut.addToken(token1)
 
         // when
-        sut.tokenTitleColor = .brightOrange
+        sut.tokenTitleColor = SemanticColors.LegacyColors.brightOrange
         sut.updateTokenAttachments()
         // then
 

@@ -18,6 +18,7 @@
 
 import WireSyncEngine
 import UIKit
+import WireCommonComponents
 
 extension ConversationLike where Self: SwiftConversationLike {
     var botCanBeAdded: Bool {
@@ -239,7 +240,7 @@ fileprivate extension Button {
 
     static func createDestructiveServiceButton() -> Button {
         let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
-        button.setBackgroundImageColor(.vividRed, for: .normal)
+        button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         return button
     }
 

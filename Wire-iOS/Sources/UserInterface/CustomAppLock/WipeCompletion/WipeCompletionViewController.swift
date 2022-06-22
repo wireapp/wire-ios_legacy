@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class WipeCompletionViewController: UIViewController {
     let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)
@@ -24,7 +25,7 @@ final class WipeCompletionViewController: UIViewController {
     private lazy var loginButton: Button = {
         let button = Button(style: .full, fontSpec: .smallSemiboldFont)
 
-        button.setBackgroundImageColor(.strongBlue, for: .normal)
+        button.setBackgroundImageColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
 
         button.setTitle("signin.confirm".localized(uppercased: true), for: .normal)
 

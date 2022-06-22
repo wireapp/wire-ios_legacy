@@ -17,13 +17,14 @@
 // 
 
 import UIKit
+import WireCommonComponents
 
 final class RecordingDotView: UIView {
 
     public init() {
         super.init(frame: CGRect.zero)
 
-        backgroundColor = .vividRed
+        backgroundColor = SemanticColors.LegacyColors.vividRed
     }
 
     @available(*, unavailable)
