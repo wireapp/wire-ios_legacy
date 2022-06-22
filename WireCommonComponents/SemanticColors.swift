@@ -23,6 +23,10 @@ enum SemanticColors {
     static let headerLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
     static let textLabelTitleCellActive = UIColor(light: Asset.black, dark: Asset.white)
     static let textLabelSubtitleCellActive = UIColor(light: Asset.gray90, dark: Asset.white)
+
+    static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+    static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
+    static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
 }
 
 private extension UIColor {

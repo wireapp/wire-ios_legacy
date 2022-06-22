@@ -27,6 +27,8 @@ public struct LabelStyle {
     static let headerLabelStyle: Self = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.headerLabelConversationDetails)
     static let primaryLabelInCellStyle: Self  = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.textLabelTitleCellActive)
     static let secondaryLabelInCellStyle: Self  = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.textLabelSubtitleCellActive)
+
+    static let dateInConversationLabelStyle: Self = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.textLabelMessageDetailsActive)
 }
 
 extension UILabel: Stylable {
