@@ -279,6 +279,4 @@ extension UserType {
 
         return nil
     }
-    
-
 }

@@ -21,8 +21,15 @@ import UIKit
 enum SemanticColors {
     static let footerLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
     static let headerLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
+    static let foregroundChevronCellActive = UIColor(light: Asset.black, dark: Asset.white)
     static let textLabelTitleActive = UIColor(light: Asset.black, dark: Asset.white)
     static let textLabelSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
+    static let backgroundCollectionView = UIColor(light: Asset.gray20, dark: Asset.gray100)
+
+    static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+    static let primaryTextContent = UIColor(light: Asset.black, dark: Asset.white)
+    static let secondaryTextContent = UIColor(light: Asset.gray70, dark: Asset.gray40)
+
 }
 
 private extension UIColor {
