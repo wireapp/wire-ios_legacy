@@ -32,11 +32,6 @@ public struct SwitchStyle {
 }
 
 extension UISwitch: Stylable {
-    open override var isEnabled: Bool {
-        didSet {
-            applyStyle(.default)
-        }
-    }
     convenience init(_ style: SwitchStyle = .default) {
         self.init()
         applyStyle(style)

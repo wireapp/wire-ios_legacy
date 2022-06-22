@@ -337,21 +337,16 @@ final class SettingsToggleCell: SettingsTableCell {
 
     override func setup() {
         super.setup()
-
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
         let switchView = UISwitch(.default)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true
-
         accessibilityElements = [cellNameLabel, switchView]
-        
         self.switchView = switchView
     }
-
-    @objc
-    func onSwitchChanged(_ sender: UIResponder) {
+    @objc func onSwitchChanged(_ sender: UIResponder) {
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }
