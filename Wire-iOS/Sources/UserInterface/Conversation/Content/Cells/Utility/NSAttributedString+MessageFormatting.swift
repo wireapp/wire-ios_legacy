@@ -94,7 +94,7 @@ extension NSAttributedString {
         let style = DownStyle.normal
 
         style.baseFont = UIFont.normalLightFont
-        style.baseFontColor = SemanticColors.primaryTextContent
+        style.baseFontColor = UIColor.from(scheme: .textForeground)
         style.baseParagraphStyle = paragraphStyle
         style.listItemPrefixColor = style.baseFontColor.withAlphaComponent(0.64)
 
