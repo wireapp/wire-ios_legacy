@@ -202,7 +202,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             return
         }
 
-        var attributedTitle = user.nameIncludingAvailability(color: SemanticColors.textLabelTitleActive, selfUser: selfUser)
+        var attributedTitle = user.nameIncludingAvailability(color: SemanticColors.textLabelTitleCellActive, selfUser: selfUser)
 
         if user.isSelfUser, let title = attributedTitle {
             attributedTitle = title + "user_cell.title.you_suffix".localized
