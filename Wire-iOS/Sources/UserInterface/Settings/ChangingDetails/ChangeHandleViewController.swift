@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import WireSyncEngine
-import WireCommonComponents
 
 fileprivate extension UIView {
 

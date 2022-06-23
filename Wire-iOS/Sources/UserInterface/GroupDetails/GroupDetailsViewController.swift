@@ -18,7 +18,6 @@
 
 import UIKit
 import WireSyncEngine
-import WireCommonComponents
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
 

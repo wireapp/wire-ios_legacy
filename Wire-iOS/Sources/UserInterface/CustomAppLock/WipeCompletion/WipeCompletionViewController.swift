@@ -17,7 +17,6 @@
 
 import Foundation
 import UIKit
-import WireCommonComponents
 
 final class WipeCompletionViewController: UIViewController {
     let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)

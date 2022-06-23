@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireCommonComponents
 
 extension UIColor {
     enum CallQuality {

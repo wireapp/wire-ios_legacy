@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireDataModel
+import WireCommonComponents
 
 public enum SemanticColors {
 
@@ -49,6 +51,34 @@ extension UIColor {
                 self.init(asset: dark)!
             }
         }
+    }
+
+}
+
+public extension UIColor {
+
+    convenience init(for accentColor: AccentColor) {
+        switch accentColor {
+        case .blue:
+            self.init(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        case .green:
+            self.init(light: Asset.green500Light, dark: Asset.green500Dark)
+        case .yellow: // Deprecated
+            self.init(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
+        case .red:
+            self.init(light: Asset.red500Light, dark: Asset.red500Dark)
+        case .amber:
+            self.init(light: Asset.amber500Light, dark: Asset.amber500Dark)
+        case .petrol:
+            self.init(light: Asset.petrol500Light, dark: Asset.petrol500Dark)
+        case .purple:
+            self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
+        }
+    }
+
+    convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
+        let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
+        self.init(for: safeAccentColor)
     }
 
 }

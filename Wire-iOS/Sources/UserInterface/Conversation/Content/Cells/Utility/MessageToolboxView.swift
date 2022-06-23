@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import WireDataModel
-import WireCommonComponents
 
 /// Observes events from the message toolbox.
 protocol MessageToolboxViewDelegate: AnyObject {

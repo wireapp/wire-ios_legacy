@@ -18,7 +18,6 @@
 
 import XCTest
 import SnapshotTesting
-import WireCommonComponents
 @testable import Wire
 
 class ChangeHandleViewControllerTests: XCTestCase {

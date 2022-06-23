@@ -17,7 +17,6 @@
 // 
 
 import UIKit
-import WireCommonComponents
 
 final class RecordingDotView: UIView {
 

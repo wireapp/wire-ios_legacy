@@ -19,7 +19,6 @@
 import UIKit
 import WireDataModel
 import WireSyncEngine
-import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "ProfileViewController")
 

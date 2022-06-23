@@ -17,7 +17,6 @@
 //
 
 import XCTest
-import WireCommonComponents
 @testable import Wire
 
 final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {

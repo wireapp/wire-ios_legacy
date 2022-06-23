@@ -18,7 +18,6 @@
 
 import WireSyncEngine
 import UIKit
-import WireCommonComponents
 
 extension ConversationLike where Self: SwiftConversationLike {
     var botCanBeAdded: Bool {

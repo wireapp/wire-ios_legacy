@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 import SnapshotTesting
-import WireCommonComponents
 
 final class SketchColorPickerControllerSnapshotTests: XCTestCase {
 
