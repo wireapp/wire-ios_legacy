@@ -19,11 +19,10 @@
 import WireSystem
 import UIKit
 
-enum SettingsColorScheme: Int {
+enum SettingsColorScheme: Int, CaseIterable {
     
     case light = 0
     case dark = 1
-    @available(iOS, introduced: 12.0, message: "system only supported in iOS 12+")
     case system = 2
 
     var colorSchemeVariant: ColorSchemeVariant {
@@ -33,19 +32,19 @@ enum SettingsColorScheme: Int {
         case .dark:
             return .dark
         case .system:
-            if #available(iOS 12.0, *) {
-                switch UIApplication.userInterfaceStyle {
-                case .light:
-                    return .light
-                case .dark:
-                    return .dark
-                default:
-                    break
-                }
-            }
+            return UIApplication.userInterfaceStyle == .dark ? .dark : .light
         }
+    }
 
-        return .light
+    var userInterfaceStyle: UIUserInterfaceStyle {
+        switch self {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return .unspecified
+        }
     }
 
     init(from string: String?) {
@@ -55,22 +54,14 @@ enum SettingsColorScheme: Int {
         case "light":
             self = .light
         case "system":
-            if #available(iOS 12.0, *) {
-                self = .system
-            } else {
-                self = SettingsColorScheme.defaultPreference
-            }
+            self = .system
         default:
             self = SettingsColorScheme.defaultPreference
         }
     }
 
     static var defaultPreference: SettingsColorScheme {
-        if #available(iOS 12.0, *) {
-            return .system
-        }
-
-        return .light
+        return .system
     }
 
     var keyValueString: String {
@@ -86,16 +77,6 @@ enum SettingsColorScheme: Int {
     }
 }
 
-extension SettingsColorScheme: CaseIterable {
-    static var allCases: [SettingsColorScheme] {
-       if #available(iOS 12.0, *) {
-           return [.light, .dark, .system]
-       }
-
-       return [.light, .dark]
-    }
-}
-
 extension Settings {
 
     var colorSchemeVariant: ColorSchemeVariant {
@@ -105,4 +86,13 @@ extension Settings {
 
         return SettingsColorScheme(from: string).colorSchemeVariant
     }
+
+    var colorScheme: SettingsColorScheme {
+        guard let string: String = self[.colorScheme] else {
+            return SettingsColorScheme.defaultPreference
+        }
+
+        return SettingsColorScheme(from: string)
+    }
+
 }
