@@ -1348,7 +1348,7 @@
 "guest_room.link.header.subtitle" = "Приглашайте ссылкой на эту беседу.  Любой, у кого есть ссылка, сможет присоединиться к беседе, даже если у него нет Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Генерация гостевых ссылок запрещена в вашей команде.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "Вы не можете создать гостевую ссылку в этой беседе, поскольку она была создана кем-то из другой команды, а этой команде не разрешено использовать гостевые ссылки.";
-"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
+"guest_room.link.disabled.for_other_team.explanation" = "Вы не можете отключить опцию гостя в этой беседе, поскольку она была создана кем-то из другой команды.";
 
 "guest_room.link.button.title" = "Создать ссылку";
 
