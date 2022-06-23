@@ -30,7 +30,7 @@ public enum SemanticColors {
         public static let brightYellow = UIColor(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
         public static let vividRed = UIColor(red: 1, green: 0.152, blue: 0, alpha: 1)
         public static let brightOrange = UIColor(red: 1, green: 0.537, blue: 0, alpha: 1)
-        public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha:1)
+        public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
         public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
 
