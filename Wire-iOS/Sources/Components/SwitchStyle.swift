@@ -19,11 +19,11 @@
 import UIKit
 
 public struct SwitchStyle {
-
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
     private(set) var disabledOnStateColor: UIColor
     private(set) var disabledOffStateColor: UIColor
+    
     static let `default`: Self = SwitchStyle(
         enabledOnStateColor: SemanticColors.backgroundSwitchOnStateEnabled,
         enabledOffStateColor: SemanticColors.backgroundSwitchOffStateEnabled,
@@ -34,6 +34,7 @@ public struct SwitchStyle {
 extension UISwitch: Stylable {
     convenience init(_ style: SwitchStyle = .default) {
         self.init()
+        
         applyStyle(style)
     }
     public func applyStyle(_ style: SwitchStyle) {

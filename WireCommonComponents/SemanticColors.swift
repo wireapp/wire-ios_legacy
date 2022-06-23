@@ -20,8 +20,6 @@ import UIKit
 
 enum SemanticColors {
 
-    static let buttonBackground = UIColor(light: Asset.red200Light, dark: Asset.green500Dark)
-    
     static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
     static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
     static let backgroundSwitchOnStateDisabled = UIColor(light: Asset.green300Light, dark: Asset.green300Light)
