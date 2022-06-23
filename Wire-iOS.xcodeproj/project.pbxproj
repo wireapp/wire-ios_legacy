@@ -8611,7 +8611,7 @@
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
-        E92D1B93285B3B9B00366AFC /* Stylable.swift in Sources */,
+                E92D1B93285B3B9B00366AFC /* Stylable.swift in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
