@@ -34,7 +34,6 @@ public struct SwitchStyle {
 extension UISwitch: Stylable {
     convenience init(_ style: SwitchStyle = .default) {
         self.init()
-        
         applyStyle(style)
     }
     public func applyStyle(_ style: SwitchStyle) {
