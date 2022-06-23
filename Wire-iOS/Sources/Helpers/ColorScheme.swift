@@ -257,9 +257,6 @@ final class ColorScheme: NSObject {
             return colorPair.light
         }
     }
-    func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-        return UIColor.nameColor(for: color, variant: variant)
-    }
 }
 
 private struct ColorPair {
