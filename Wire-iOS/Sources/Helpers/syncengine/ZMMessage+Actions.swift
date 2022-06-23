@@ -115,10 +115,7 @@ extension ZMConversationMessage {
               MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
             return false
         }
-        return isFile
-            && fileMessageData.transferState == .uploaded
-            && fileMessageData.downloadState == .remote
-        && MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia
+        return isFile && fileMessageData.transferState == .uploaded
     }
 
     var canCancelDownload: Bool {
