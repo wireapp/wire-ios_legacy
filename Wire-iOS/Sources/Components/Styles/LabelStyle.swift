@@ -17,15 +17,18 @@
 //
 
 import Foundation
+import UIKit
 
-// MARK: - Stylable Protocol
+public struct LabelStyle {
+    var backgroundColor: UIColor
+    var textColor: UIColor
+}
 
-/// Objects conforming to this protocol opt in to apply a certain style to UI elements
-protocol Stylable {
+extension UILabel: Stylable {
 
-    associatedtype StyleConfiguration
-    /// This method is called when we apply a certain style such as titleColor, backgroundColor to a UI Element
-    /// Your implementation should update the style of the UIElement based on its state.
-    func applyStyle(_ style: StyleConfiguration)
+    public func applyStyle(_ style: LabelStyle) {
+        backgroundColor = style.backgroundColor
+        textColor = style.textColor
+    }
 
 }
