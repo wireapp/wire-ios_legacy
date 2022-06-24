@@ -28,6 +28,7 @@ jobs:
 
       - name: Build
         run: |
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireDataModelS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
           xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Run unit tests
