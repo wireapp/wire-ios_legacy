@@ -22,6 +22,8 @@ jobs:
           /usr/bin/xcodebuild -version
 
       - name: Fetch dependencies
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./setup.sh
 
       - name: Build
