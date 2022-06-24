@@ -21,6 +21,13 @@ jobs:
           sudo xcode-select -switch /Applications/Xcode_13.2.1.app
           /usr/bin/xcodebuild -version
 
+      - name: Fetch dependencies
+        run: ./setup.sh
+
+      - name: Build
+        run: |
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
+
       - name: Run unit tests
         run: |
           xcodebuild test -workspace wire-ios.xcworkspace  -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
