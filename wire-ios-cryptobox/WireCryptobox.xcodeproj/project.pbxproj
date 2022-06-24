@@ -93,7 +93,6 @@
 		A9F499E4279A8ABD00969F4B /* crypto_box_curve25519xsalsa20poly1305.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F499A9279A8ABD00969F4B /* crypto_box_curve25519xsalsa20poly1305.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9F499E5279A8ABD00969F4B /* crypto_generichash_blake2b.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F499AA279A8ABD00969F4B /* crypto_generichash_blake2b.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9F499E6279A8ABD00969F4B /* crypto_sign_edwards25519sha512batch.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F499AB279A8ABD00969F4B /* crypto_sign_edwards25519sha512batch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A9F499E8279AC5EC00969F4B /* ios-arm64Simulator.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A9F499E7279AC5EC00969F4B /* ios-arm64Simulator.xcconfig */; };
 		EE462BFC284A9DFE00CA2111 /* WireUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */; };
 		EE462BFD284A9DFE00CA2111 /* WireUtilities.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE462BFB284A9DFE00CA2111 /* WireUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EEA2B85D24DAD1E700C6659E /* AEADEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2B85C24DAD1E700C6659E /* AEADEncryption.swift */; };
@@ -691,7 +690,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9F499E8279AC5EC00969F4B /* ios-arm64Simulator.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

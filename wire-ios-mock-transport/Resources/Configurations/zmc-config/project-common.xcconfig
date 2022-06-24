@@ -18,7 +18,7 @@
 
 #include "warnings.xcconfig"
 #include "../version.xcconfig"
-#include "../../../Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios-arm64Simulator.xcconfig"
+#include "../../../../ios-arm64Simulator.xcconfig"
 
 // Code Signing
 //

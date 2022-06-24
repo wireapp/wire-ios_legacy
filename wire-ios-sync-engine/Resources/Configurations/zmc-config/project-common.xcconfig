@@ -17,7 +17,7 @@
 //
 
 #include "warnings.xcconfig"
-#include "../../../Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"
+#include "../../../../ios.xcconfig"
 #include "../version.xcconfig"
 
 // info.plist

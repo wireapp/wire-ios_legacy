@@ -19,7 +19,7 @@
 #include "../../../Configuration/Base.xcconfig"
 #include "Warnings.xcconfig"
 #include "Version.xcconfig"
-#include "../../../Carthage/Checkouts/wire-ios-system/Resources/Configurations/zmc-config/ios.xcconfig"
+#include "../../../../ios.xcconfig"
 
 // Packaging
 //
