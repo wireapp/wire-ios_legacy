@@ -25,6 +25,7 @@ enum SemanticColors {
     static let backgroundSwitchOnStateDisabled = UIColor(light: Asset.green300Light, dark: Asset.green300Light)
     static let backgroundSwitchOffStateDisabled = UIColor(light: Asset.gray50, dark: Asset.gray50)
 
+    static let tmpSearchBartextColor = UIColor(light: .black, dark: .white)
 }
 
 private extension UIColor {
@@ -40,6 +41,21 @@ private extension UIColor {
                 self.init(asset: light)!
             case .dark:
                 self.init(asset: dark)!
+            }
+        }
+    }
+    
+    convenience init(light: UIColor, dark: UIColor) {
+        if #available(iOS 13.0, *) {
+            self.init { traits in
+                return traits.userInterfaceStyle == .dark ? dark : light
+            }
+        } else {
+            switch ColorScheme.default.variant {
+            case .light:
+                self.init(red: 1, green: 1, blue: 1, alpha: 1)
+            case .dark:
+                self.init(red: 0, green: 0, blue: 0, alpha: 1)
             }
         }
     }
