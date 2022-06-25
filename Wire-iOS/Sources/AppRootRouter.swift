@@ -46,6 +46,7 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
+    private let coreCryptoSetupManager: CoreCryptoSetupManager
 
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
@@ -69,6 +70,7 @@ public class AppRootRouter: NSObject {
         self.foregroundNotificationFilter = ForegroundNotificationFilter()
         self.sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
 
+        coreCryptoSetupManager = CoreCryptoSetupManager(sessionManager: sessionManager)
         urlActionRouter.sessionManager = sessionManager
         sessionManagerLifeCycleObserver.sessionManager = sessionManager
         foregroundNotificationFilter.sessionManager = sessionManager
@@ -77,6 +79,7 @@ public class AppRootRouter: NSObject {
         sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
         sessionManager.switchingDelegate = switchingAccountRouter
         sessionManager.presentationDelegate = urlActionRouter
+        sessionManager.coreCryptoSetupDelegate = coreCryptoSetupManager
 
         super.init()
 
