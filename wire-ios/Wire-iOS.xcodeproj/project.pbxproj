@@ -1178,6 +1178,8 @@
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
+		EE18F35D2868FEEA004012FE /* WireTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE18F35C2868FEEA004012FE /* WireTesting.framework */; };
+		EE18F35E2868FEEB004012FE /* WireTesting.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE18F35C2868FEEA004012FE /* WireTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE252AD2284966C2008ED57C /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD1284966C2008ED57C /* WireSyncEngine.framework */; };
 		EE252AD3284966C2008ED57C /* WireSyncEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE252AD1284966C2008ED57C /* WireSyncEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1705,6 +1707,7 @@
 				A96867F526A5E9C500679D95 /* Countly.xcframework in Embed Frameworks */,
 				A96867F726A5EAE600679D95 /* libcmark.xcframework in Embed Frameworks */,
 				A96867FB26A5EB8400679D95 /* WireCommonComponents.framework in Embed Frameworks */,
+				EE18F35E2868FEEB004012FE /* WireTesting.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3035,6 +3038,7 @@
 		EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleRouterTests.swift; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
+		EE18F35C2868FEEA004012FE /* WireTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE252AD1284966C2008ED57C /* WireSyncEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireSyncEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE252AD728496BE2008ED57C /* WireShareEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WireShareEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3500,6 +3504,7 @@
 				A96867F626A5EAE600679D95 /* libcmark.xcframework in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
+				EE18F35D2868FEEA004012FE /* WireTesting.framework in Frameworks */,
 				A96867F426A5E9C500679D95 /* Countly.xcframework in Frameworks */,
 				A96867C426A5E65000679D95 /* Ziphy.xcframework in Frameworks */,
 				A96867CD26A5E68600679D95 /* Down.xcframework in Frameworks */,
@@ -4642,6 +4647,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE18F35C2868FEEA004012FE /* WireTesting.framework */,
 				EE252ADB2849702E008ED57C /* WireNotificationEngine.framework */,
 				EE252AD728496BE2008ED57C /* WireShareEngine.framework */,
 				EE252AD1284966C2008ED57C /* WireSyncEngine.framework */,
