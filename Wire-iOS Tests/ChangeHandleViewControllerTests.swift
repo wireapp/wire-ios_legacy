@@ -20,11 +20,12 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-class ChangeHandleViewControllerTests: XCTestCase {
+class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
 
+        accentColor = .strongBlue
         let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.handle = nil
         mockSelfUser.domain = "wire.com"
