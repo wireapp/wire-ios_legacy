@@ -128,12 +128,10 @@ enum MessageAction: CaseIterable {
         }
     }
 
-    @available(iOS 13.0, *)
     func systemIcon() -> UIImage? {
         return imageSystemName().flatMap(UIImage.init(systemName:))
     }
 
-    @available(iOS 13.0, *)
     private func imageSystemName() -> String? {
         let imageName: String?
         switch self {

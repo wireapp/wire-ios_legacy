@@ -61,7 +61,7 @@ final class RootViewController: UIViewController {
              animated: Bool = false,
              completion: (() -> Void)? = nil) {
         if let newViewController = newViewController,
-            let previousViewController = childViewController {
+           let previousViewController = childViewController {
             transition(
                 from: previousViewController,
                 to: newViewController,
@@ -161,12 +161,8 @@ extension RootViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        // Do not refresh for iOS 13+ when the app is in background.
-        // Go to home screen may trigger `traitCollectionDidChange` twice.
-        if #available(iOS 13.0, *) {
-            if UIApplication.shared.applicationState == .background {
-                return
-            }
+        if UIApplication.shared.applicationState == .background {
+            return
         }
 
         if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {

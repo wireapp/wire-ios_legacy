@@ -211,18 +211,7 @@ final class ZClientViewController: UIViewController {
 
     // MARK: Status bar
     private var child: UIViewController? {
-        // for iOS 13, only child of this VC can be use for childForStatusBar
-        if #available(iOS 13.0, *) {
-            return topOverlayViewController ?? wireSplitViewController
-        } else {
-            if nil != topOverlayViewController {
-                return topOverlayViewController
-            } else if traitCollection.horizontalSizeClass == .compact {
-                return presentedViewController ?? wireSplitViewController
-            }
-        }
-
-        return nil
+        return topOverlayViewController ?? wireSplitViewController
     }
 
     private var childForStatusBar: UIViewController? {
@@ -503,11 +492,7 @@ final class ZClientViewController: UIViewController {
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
 
         let labelColor: UIColor
-        if #available(iOS 13.0, *) {
-            labelColor = .label
-        } else {
-            labelColor = ColorScheme.default.color(named: .textForeground, variant: .light)
-        }
+        labelColor = .label
 
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = labelColor
     }

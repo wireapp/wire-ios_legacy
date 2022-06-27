@@ -269,7 +269,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
     }
 
     // MARK: context menu
-    @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView,
                                  willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                  animator: UIContextMenuInteractionCommitAnimating) {
@@ -280,7 +279,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
         }
     }
 
-    @available(iOS 13.0, *)
     override func collectionView(_ collectionView: UICollectionView,
                                  contextMenuConfigurationForItemAt indexPath: IndexPath,
                                  point: CGPoint) -> UIContextMenuConfiguration? {

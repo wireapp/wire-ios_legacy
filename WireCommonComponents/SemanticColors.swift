@@ -21,24 +21,14 @@ import UIKit
 enum SemanticColors {
 
     static let buttonBackground = UIColor(light: Asset.red200Light, dark: Asset.green500Dark)
-
 }
 
 private extension UIColor {
 
     convenience init(light: ColorAsset, dark: ColorAsset) {
-        if #available(iOS 13.0, *) {
-            self.init { traits in
-                return traits.userInterfaceStyle == .dark ? dark.color : light.color
-            }
-        } else {
-            switch ColorScheme.default.variant {
-            case .light:
-                self.init(asset: light)!
-            case .dark:
-                self.init(asset: dark)!
-            }
+        self.init { traits in
+            return traits.userInterfaceStyle == .dark ? dark.color : light.color
         }
     }
-
 }
+

@@ -22,11 +22,9 @@ protocol ContextMenuDelegate: AnyObject {
     var delegate: ConversationMessageCellDelegate? { get }
     var message: ZMConversationMessage? { get }
 
-    @available(iOS 13.0, *)
     func makeContextMenu(title: String, view: UIView) -> UIMenu
 }
 
-@available(iOS 13.0, *)
 extension ContextMenuDelegate {
     func makeContextMenu(title: String, view: UIView) -> UIMenu {
         let actions = actionController(view: view)?.allMessageMenuElements() ?? []
@@ -47,7 +45,6 @@ extension ContextMenuDelegate {
 
 }
 
-@available(iOS 13.0, *)
 extension ContextMenuDelegate where Self: LinkViewDelegate {
     func linkPreviewContextMenu(view: UIView) -> UIContextMenuConfiguration? {
         guard let url = url else {

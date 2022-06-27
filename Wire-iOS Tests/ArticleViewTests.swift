@@ -148,7 +148,6 @@ final class ArticleViewTests: XCTestCase {
 
     // MARK: - Tests
 
-    @available(iOS 13.0, *)
     func testContextMenuIsCreatedWithDeleteItem() {
         SelfUser.setupMockSelfUser()
 
