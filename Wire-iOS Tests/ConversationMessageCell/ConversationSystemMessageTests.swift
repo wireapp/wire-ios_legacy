@@ -19,10 +19,11 @@
 import XCTest
 @testable import Wire
 
-final class ConversationSystemMessageTests: XCTestCase {
+final class ConversationSystemMessageTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
         SelfUser.provider = SelfProvider(selfUser: MockUserType.createSelfUser(name: "Alice"))
     }
 

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ConversationAvatarViewTests: XCTestCase {
+final class ConversationAvatarViewTests: ZMSnapshotTestCase {
 
     var sut: ConversationAvatarView!
 

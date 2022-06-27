@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class StartedConversationCellTests: XCTestCase {
+final class StartedConversationCellTests: ZMSnapshotTestCase {
 
     var mockSelfUser: MockUserType!
     var mockOtherUser: MockUserType!
