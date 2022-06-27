@@ -31,7 +31,10 @@ class CoreCryptoSetupManager: CoreCryptoSetupDelegate {
     }
 
     func setUpCoreCryptoIfNeeded() {
-        guard let configuration = configurationProvider?.coreCryptoConfiguration else { return }
+        guard
+            coreCryptoProvider?.coreCrypto == nil,
+            let configuration = configurationProvider?.coreCryptoConfiguration
+        else { return }
 
         do {
             let coreCrypto = try CoreCrypto(
@@ -41,8 +44,7 @@ class CoreCryptoSetupManager: CoreCryptoSetupDelegate {
             )
 
             coreCryptoProvider?.coreCrypto = coreCrypto
-        }
-        catch {
+        } catch {
             fatalError(String(describing: error))
         }
     }
