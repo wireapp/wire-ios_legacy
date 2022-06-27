@@ -63,18 +63,6 @@ extension UISearchBar {
             }
         }
     }
-//    func setClearTextButtonColor(color: UIColor) {
-//            if let searchTextField = self.value(forKey: "searchField") as? UITextField, let clearButton = searchTextField.value(forKey: "_clearButton") as? UIButton {
-//                if let img = clearButton.image(for: .highlighted) {
-//                    clearButton.isHidden = false
-//                    let tintedClearImage = img.imageWithColor(color: color)
-//                    clearButton.setImage(tintedClearImage, for: .normal)
-//                    clearButton.setImage(tintedClearImage, for: .highlighted)
-//                } else {
-//                   clearButton.isHidden = true
-//                }
-//            }
-//    }
 }
 
 final class GiphySearchViewController: VerticalColumnCollectionViewController {
