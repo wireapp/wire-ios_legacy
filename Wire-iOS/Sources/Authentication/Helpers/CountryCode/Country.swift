@@ -165,12 +165,8 @@ final class Country: NSObject {
         let networkInfo = CTTelephonyNetworkInfo()
 
         let carrier: CTCarrier?
-        if #available(iOS 12, *) {
             /// Get the carrier from first cellular provider which has isoCountryCode
-            carrier = networkInfo.serviceSubscriberCellularProviders?.values.first(where: { $0.isoCountryCode != nil })
-        } else {
-            carrier = networkInfo.subscriberCellularProvider
-        }
+        carrier = networkInfo.serviceSubscriberCellularProviders?.values.first(where: { $0.isoCountryCode != nil })
 
         if let isoCountryCode = carrier?.isoCountryCode {
             return Country.country(with: isoCountryCode)

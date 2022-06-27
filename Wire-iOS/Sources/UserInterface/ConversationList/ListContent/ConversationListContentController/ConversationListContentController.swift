@@ -68,13 +68,6 @@ final class ConversationListContentController: UICollectionViewController, Popov
 
         setupViews()
 
-        if #available(iOS 13, *) {
-            // handle Context menu in collection view delegate
-        } else {
-            if traitCollection.forceTouchCapability == .available {
-                registerForPreviewing(with: self, sourceView: collectionView)
-            }
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

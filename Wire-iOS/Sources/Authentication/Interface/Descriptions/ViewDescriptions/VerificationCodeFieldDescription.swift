@@ -79,9 +79,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         inputField.accessibilityIdentifier = "VerificationCode"
         inputField.accessibilityLabel = "verification.code_label".localized
 
-        if #available(iOS 12, *) {
-            inputField.textContentType = .oneTimeCode
-        }
+        inputField.textContentType = .oneTimeCode
 
         let containerView = ResponderContainer(responder: inputField)
         containerView.translatesAutoresizingMaskIntoConstraints = false

@@ -36,11 +36,7 @@ extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
             return .overFullScreen
         }
 
-        if #available(iOS 13, *) {
-            return .formSheet
-        } else {
-            return .fullScreen
-        }
+        return .formSheet
     }
 }
 
