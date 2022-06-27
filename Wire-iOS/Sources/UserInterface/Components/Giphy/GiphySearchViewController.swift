@@ -171,14 +171,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         searchBar.delegate = self
         searchBar.tintColor = .accent()
         searchBar.placeholder = "giphy.search_placeholder".localized
-//        searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
-//        searchBar.searchBarStyle = .minimal
-        
-        // FIXES BELOW:
         searchBar.textColor = SemanticColors.tmpSearchBartextColor
-//        searchBar.setClearTextButtonColor(color: SemanticColors.tmpSearchBartextColor)
-        
-        
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
         let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
         closeItem.accessibilityLabel = "general.close".localized
