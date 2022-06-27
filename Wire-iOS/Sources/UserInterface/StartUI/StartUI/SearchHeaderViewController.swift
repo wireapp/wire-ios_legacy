@@ -74,6 +74,7 @@ final class SearchHeaderViewController: UIViewController {
         tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         tokenField.clipsToBounds = true
         tokenField.textView.placeholderTextColor = UIColor.from(scheme: .tokenFieldTextPlaceHolder, variant: colorSchemeVariant)
+        // TMP COLOR CHANGE: UIColor(red: 0.30, green: 0.34, blue: 0.21, alpha: 1.00) but it makes diffrent UI
         tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: colorSchemeVariant)
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)

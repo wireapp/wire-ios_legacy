@@ -63,18 +63,18 @@ extension UISearchBar {
             }
         }
     }
-    func setClearTextButtonColor(color: UIColor) {
-            if let searchTextField = self.value(forKey: "searchField") as? UITextField, let clearButton = searchTextField.value(forKey: "_clearButton") as? UIButton {
-                if let img = clearButton.image(for: .highlighted) {
-                    clearButton.isHidden = false
-                    let tintedClearImage = img.imageWithColor(color: color)
-                    clearButton.setImage(tintedClearImage, for: .normal)
-                    clearButton.setImage(tintedClearImage, for: .highlighted)
-                } else {
-                   clearButton.isHidden = true
-                }
-            }
-        }
+//    func setClearTextButtonColor(color: UIColor) {
+//            if let searchTextField = self.value(forKey: "searchField") as? UITextField, let clearButton = searchTextField.value(forKey: "_clearButton") as? UIButton {
+//                if let img = clearButton.image(for: .highlighted) {
+//                    clearButton.isHidden = false
+//                    let tintedClearImage = img.imageWithColor(color: color)
+//                    clearButton.setImage(tintedClearImage, for: .normal)
+//                    clearButton.setImage(tintedClearImage, for: .highlighted)
+//                } else {
+//                   clearButton.isHidden = true
+//                }
+//            }
+//    }
 }
 
 final class GiphySearchViewController: VerticalColumnCollectionViewController {
@@ -171,13 +171,12 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         searchBar.delegate = self
         searchBar.tintColor = .accent()
         searchBar.placeholder = "giphy.search_placeholder".localized
-        searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
-        searchBar.searchBarStyle = .minimal
-
+//        searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
+//        searchBar.searchBarStyle = .minimal
         
         // FIXES BELOW:
         searchBar.textColor = SemanticColors.tmpSearchBartextColor
-        searchBar.setClearTextButtonColor(color: SemanticColors.tmpSearchBartextColor)
+//        searchBar.setClearTextButtonColor(color: SemanticColors.tmpSearchBartextColor)
         
         
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
