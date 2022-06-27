@@ -246,6 +246,9 @@ extension XCTestCase {
                                  line: UInt = #line) {
         if var themeable = matching as? Themeable {
             themeable.colorSchemeVariant = .light
+            if #available(iOS 13.0, *) {
+                matching.overrideUserInterfaceStyle = .light
+            }
 
             verify(matching: matching,
                    named: "LightTheme",
@@ -253,6 +256,9 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
             themeable.colorSchemeVariant = .dark
+            if #available(iOS 13.0, *) {
+                matching.overrideUserInterfaceStyle = .dark
+            }
 
             verify(matching: matching,
                    named: "DarkTheme",
