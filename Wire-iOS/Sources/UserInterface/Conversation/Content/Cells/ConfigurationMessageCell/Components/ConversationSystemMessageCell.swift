@@ -459,7 +459,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
             icon: missed ? .endCall : .phone,
-            iconColor: missed ? SemanticColors.LegacyColors.vividRed : SemanticColors.LegacyColors.strongLimeGreen,
+            iconColor: UIColor(for: missed ? .red : .green),
             systemMessageType: data.systemMessageType,
             font: .mediumFont,
             boldFont: .mediumSemiboldFont,

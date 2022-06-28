@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MarkDownSnapshotTests: ZMSnapshotTestCase {
+final class MarkDownSnapshotTests: XCTestCase {
     var mockOtherUser: MockUserType!
     var mockSelfUser: MockUserType!
 

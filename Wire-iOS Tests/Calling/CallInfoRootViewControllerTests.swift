@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class CallInfoRootViewControllerTests: ZMSnapshotTestCase {
+final class CallInfoRootViewControllerTests: XCTestCase {
 
     var sut: CallInfoRootViewController!
     var mockSelfUser: MockUserType!
