@@ -191,8 +191,8 @@ class CollectionCell: UICollectionViewCell {
 
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
-        menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
-        menuController.setMenuVisible(true, animated: true)
+        menuController.showMenu(from: menuConfigurationProperties.targetView,
+                                rect: menuConfigurationProperties.targetRect)
     }
 
     override var canBecomeFirstResponder: Bool {
