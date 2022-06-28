@@ -33,7 +33,7 @@ final class AccountViewSnapshotTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         imageData = nil
-        
+
         super.tearDown()
     }
 
