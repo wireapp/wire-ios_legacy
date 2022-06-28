@@ -1245,7 +1245,6 @@
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
 		EE08B348284E33290022830B /* CoreCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08B347284E33290022830B /* CoreCrypto.swift */; };
 		EE08B35B284E41E60022830B /* WireCoreCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE08B358284E41C80022830B /* WireCoreCrypto.framework */; };
-		EE08B35C284E41E60022830B /* WireCoreCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EE08B358284E41C80022830B /* WireCoreCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
@@ -1808,7 +1807,6 @@
 				A96867B326A5E5A000679D95 /* WireProtos.xcframework in Embed Frameworks */,
 				A96867BF26A5E5A000679D95 /* WireUtilities.xcframework in Embed Frameworks */,
 				06D5C1DC2773527F00DFCD08 /* WireNotificationEngine.xcframework in Embed Frameworks */,
-				EE08B35C284E41E60022830B /* WireCoreCrypto.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
