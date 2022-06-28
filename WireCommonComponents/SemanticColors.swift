@@ -25,7 +25,7 @@ enum SemanticColors {
     static let backgroundSwitchOnStateDisabled = UIColor(light: Asset.green300Light, dark: Asset.green300Light)
     static let backgroundSwitchOffStateDisabled = UIColor(light: Asset.gray50, dark: Asset.gray50)
 
-    static let tmpSearchBartextColor = UIColor(light: .black, dark: .white)
+    static let defaultSearchBarTextColor = UIColor(light: .black, dark: .white)
 }
 
 private extension UIColor {
