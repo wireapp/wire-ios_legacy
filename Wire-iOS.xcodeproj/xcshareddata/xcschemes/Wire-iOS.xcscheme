@@ -194,6 +194,9 @@
                   Identifier = "MultiParagraphSnapshotTests">
                </Test>
                <Test
+                  Identifier = "NetworkStatusViewSnapShotTests">
+               </Test>
+               <Test
                   Identifier = "NetworkStatusViewTests">
                </Test>
                <Test
