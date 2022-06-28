@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 import WireCoreCrypto
 
-class CoreCryptoSetupManager: CoreCryptoSetupDelegate {
+class CoreCryptoSetupManager {
 
     weak var configurationProvider: CoreCryptoConfigurationProvider?
     weak var coreCryptoProvider: CoreCryptoProvider?
@@ -45,6 +45,7 @@ class CoreCryptoSetupManager: CoreCryptoSetupDelegate {
 
             coreCryptoProvider?.coreCrypto = coreCrypto
         } catch {
+            // TODO: error handling
             fatalError(String(describing: error))
         }
     }

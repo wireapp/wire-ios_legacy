@@ -79,7 +79,6 @@ public class AppRootRouter: NSObject {
         sessionManager.foregroundNotificationResponder = foregroundNotificationFilter
         sessionManager.switchingDelegate = switchingAccountRouter
         sessionManager.presentationDelegate = urlActionRouter
-        sessionManager.coreCryptoSetupDelegate = coreCryptoSetupManager
 
         super.init()
 
