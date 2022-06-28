@@ -407,6 +407,13 @@ extension AppRootRouter {
         appStateTransitionGroup.enter()
         configureSelfUserProviderIfNeeded(for: appState)
         configureColorScheme()
+        createCoreCryptoIfNeeded(for: appState)
+    }
+
+    private func createCoreCryptoIfNeeded(for appState: AppState) {
+        guard case .authenticated = appState else { return }
+
+        coreCryptoSetupManager.setUpCoreCryptoIfNeeded()
     }
 
     private func applicationDidTransition(to appState: AppState) {
