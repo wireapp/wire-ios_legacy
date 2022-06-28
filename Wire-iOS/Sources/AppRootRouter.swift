@@ -458,6 +458,9 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
+        if #available(iOS 13.0, *) {
+            UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+        }
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
