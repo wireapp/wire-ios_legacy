@@ -27,48 +27,30 @@ extension ConversationInputBarViewController {
         var commands: [UIKeyCommand] = []
 
         commands.append(
-            UIKeyCommand(input: "\r",
-                         modifierFlags: .command,
-                         action: #selector(commandReturnPressed),
-                         discoverabilityTitle: Shortcut.send)
+            UIKeyCommand(action: #selector(commandReturnPressed), input: "\r", modifierFlags: .command, discoverabilityTitle: Shortcut.send)
         )
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             commands.append(
-                UIKeyCommand(input: "\r",
-                             modifierFlags: .shift,
-                             action: #selector(shiftReturnPressed),
-                             discoverabilityTitle: Shortcut.newline)
+                UIKeyCommand(action: #selector(shiftReturnPressed), input: "\r", modifierFlags: .shift, discoverabilityTitle: Shortcut.newline)
             )
         }
 
         if inputBar.isEditing {
             commands.append(
-                UIKeyCommand(input: UIKeyCommand.inputEscape,
-                             modifierFlags: [],
-                             action: #selector(escapePressed),
-                             discoverabilityTitle: Shortcut.cancelEditingMessage)
+                UIKeyCommand(action: #selector(escapePressed), input: UIKeyCommand.inputEscape, modifierFlags: [], discoverabilityTitle: Shortcut.cancelEditingMessage)
             )
         } else if inputBar.textView.text.isEmpty {
             commands.append(
-                UIKeyCommand(input: UIKeyCommand.inputUpArrow,
-                             modifierFlags: [],
-                             action: #selector(upArrowPressed),
-                             discoverabilityTitle: Shortcut.editLastMessage)
+                UIKeyCommand(action: #selector(upArrowPressed), input: UIKeyCommand.inputUpArrow, modifierFlags: [], discoverabilityTitle: Shortcut.editLastMessage)
             )
         } else if let mentionsView = mentionsView as? UIViewController, !mentionsView.view.isHidden {
             commands.append(
-                UIKeyCommand(input: UIKeyCommand.inputUpArrow,
-                             modifierFlags: [],
-                             action: #selector(upArrowPressedForMention),
-                             discoverabilityTitle: Shortcut.choosePreviousMention)
+                UIKeyCommand(action: #selector(upArrowPressedForMention), input: UIKeyCommand.inputUpArrow, modifierFlags: [], discoverabilityTitle: Shortcut.choosePreviousMention)
             )
 
             commands.append(
-                UIKeyCommand(input: UIKeyCommand.inputDownArrow,
-                             modifierFlags: [],
-                             action: #selector(downArrowPressedForMention),
-                             discoverabilityTitle: Shortcut.chooseNextMention)
+                UIKeyCommand(action: #selector(downArrowPressedForMention), input: UIKeyCommand.inputDownArrow, modifierFlags: [], discoverabilityTitle: Shortcut.chooseNextMention)
             )
         }
 
