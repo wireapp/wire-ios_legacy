@@ -19,7 +19,7 @@
 import UIKit
 
 extension UIWindow {
-    
+
     public static var isPortrait: Bool {
             return UIApplication.shared.windows
                 .first?
