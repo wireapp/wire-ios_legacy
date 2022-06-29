@@ -42,5 +42,4 @@ extension UISwitch: Stylable {
         self.backgroundColor =  isEnabled ? style.enabledOffStateColor : style.disabledOffStateColor
         self.clipsToBounds = true
     }
-    
 }
