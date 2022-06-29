@@ -101,9 +101,6 @@
                   Identifier = "ClientListViewControllerTests/testForLightThemeWrappedInNavigationController()">
                </Test>
                <Test
-                  Identifier = "CollectionsViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "CompositeMessageCellTests">
                </Test>
                <Test
