@@ -53,10 +53,16 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "ArticleViewTests">
+               </Test>
+               <Test
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
                </Test>
                <Test
                   Identifier = "ArticleViewTests/testArticleViewWithPicture()">
+               </Test>
+               <Test
+                  Identifier = "AuthenticationInterfaceBuilderTests/testLandingScreen()">
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
@@ -66,6 +72,72 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "ButtonTests">
+               </Test>
+               <Test
+                  Identifier = "CallGridViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "CallInfoRootViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "CallInfoViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "CallParticipantDetailsViewTests/testPulsingState()">
+               </Test>
+               <Test
+                  Identifier = "CallParticipantViewTests/testActiveState()">
+               </Test>
+               <Test
+                  Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Dark()">
+               </Test>
+               <Test
+                  Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Light()">
+               </Test>
+               <Test
+                  Identifier = "CallSystemMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ClientListViewControllerTests/testForEditMode()">
+               </Test>
+               <Test
+                  Identifier = "ClientListViewControllerTests/testForLightThemeWrappedInNavigationController()">
+               </Test>
+               <Test
+                  Identifier = "CollectionsViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "CompositeMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConnectRequestsCellSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ConnectRequestsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ContactsCellSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ContactsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationAvatarViewTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationListViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationPingMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationSystemMessageTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
@@ -83,13 +155,79 @@
                   Identifier = "ConversationVideoMessageCellTests/testUploadedCell_fromOtherUser()">
                </Test>
                <Test
+                  Identifier = "ConversationViewControllerSnapshotTests">
+               </Test>
+               <Test
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
+               </Test>
+               <Test
+                  Identifier = "GiphyConfirmationViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "GroupConversationCellTests">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
+                  Identifier = "IncomingConnectionViewTests">
+               </Test>
+               <Test
+                  Identifier = "LandingViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "LegalHoldDetailsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "LocationMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "MarkDownSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "MessageDetailsViewControllerTests/testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked()">
+               </Test>
+               <Test
+                  Identifier = "MultiParagraphSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkStatusViewSnapShotTests">
+               </Test>
+               <Test
+                  Identifier = "NetworkStatusViewTests">
+               </Test>
+               <Test
+                  Identifier = "PasscodeSetupViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ProfileDetailsViewControllerTests">
+               </Test>
+               <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
+               </Test>
+               <Test
+                  Identifier = "ProfileViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "RoundedPageIndicatorTests">
+               </Test>
+               <Test
+                  Identifier = "SearchResultLabelTests">
+               </Test>
+               <Test
+                  Identifier = "SettingsTableViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "SettingsTechnicalReportViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ShareContactsViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests/testForAllowMultipleSelectionDisabled()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -105,6 +243,9 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()">
@@ -123,6 +264,24 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
+               </Test>
+               <Test
+                  Identifier = "TextMessageMentionsTests">
+               </Test>
+               <Test
+                  Identifier = "TopPeopleCellSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "UnlockViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "UserImageViewContainerSnapshotTests/testForNoUserImageWithoutSession()">
+               </Test>
+               <Test
+                  Identifier = "UserSearchResultsViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "VerticalColumnCollectionViewLayoutTests">
                </Test>
             </SkippedTests>
          </TestableReference>

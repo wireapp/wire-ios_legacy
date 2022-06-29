@@ -29,7 +29,7 @@ final class CollectionCellHeader: UIView {
                 return
             }
 
-            nameLabel.textColor = sender.nameAccentColor
+            nameLabel.textColor = sender.accentColor
 
             nameLabel.text = sender.name
             dateLabel.text = serverTimestamp.formattedDate

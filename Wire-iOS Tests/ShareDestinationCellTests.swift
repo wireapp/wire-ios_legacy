@@ -41,7 +41,7 @@ final class MockDestination: NSObject, ShareDestination {
     }
 }
 
-final class ShareDestinationCellTests: XCTestCase {
+final class ShareDestinationCellTests: ZMSnapshotTestCase {
 
     var sut: ShareDestinationCell<MockDestination>!
     var destination: MockDestination?
