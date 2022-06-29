@@ -33,6 +33,13 @@ public enum SemanticColors {
         public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
         public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
+    
+    public enum SwitchColors {
+        public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
+        public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
+        public static let backgroundSwitchOnStateDisabled = UIColor(light: Asset.green300Light, dark: Asset.green300Light)
+        public static let backgroundSwitchOffStateDisabled = UIColor(light: Asset.gray50, dark: Asset.gray50)
+    }
 
 }
 
