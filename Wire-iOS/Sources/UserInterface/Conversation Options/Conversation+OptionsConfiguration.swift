@@ -48,8 +48,6 @@ extension ZMConversation {
                     self?.guestLinkFeatureStatus = .disabled
                 case .failure:
                     self?.guestLinkFeatureStatus = .unknown
-                @unknown default:
-                    self?.guestLinkFeatureStatus = .unknown
                 }
             }
 
