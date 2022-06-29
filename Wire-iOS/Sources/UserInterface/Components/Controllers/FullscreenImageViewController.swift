@@ -560,7 +560,7 @@ final class FullscreenImageViewController: UIViewController {
     private func didTapBackground(_ tapper: UITapGestureRecognizer?) {
         isShowingChrome = !isShowingChrome
         setSelectedByMenu(false, animated: false)
-        UIMenuController.shared.isMenuVisible = false
+        UIMenuController.shared.hideMenu()
         delegate?.fadeAndHideMenu(delegate?.menuVisible == false)
     }
 
