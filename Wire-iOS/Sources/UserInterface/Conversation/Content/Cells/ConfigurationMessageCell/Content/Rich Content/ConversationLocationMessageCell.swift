@@ -79,7 +79,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
         mapView.mapType = .standard
-        mapView.showsPointsOfInterest = true
+        mapView.pointOfInterestFilter = .includingAll
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
 
