@@ -25,7 +25,7 @@ final class LikeButton: IconButton {
     }
 
     static var selectedColor: UIColor {
-        return UIColor(for: .vividRed)
+        return UIColor(for: .red)
     }
 
     func setSelected(_ selected: Bool, animated: Bool) {

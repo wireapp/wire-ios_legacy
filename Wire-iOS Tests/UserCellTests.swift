@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class UserCellTests: XCTestCase {
+final class UserCellTests: ZMSnapshotTestCase {
 
     var sut: UserCell!
     var teamID = UUID()

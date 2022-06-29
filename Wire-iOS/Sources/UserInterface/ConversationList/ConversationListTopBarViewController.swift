@@ -106,7 +106,7 @@ final class ConversationListTopBarViewController: UIViewController {
     private func createLegalHoldView() -> UIView {
         let imageView = UIImageView()
 
-        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.setIcon(.legalholdactive, size: .tiny, color: SemanticColors.LegacyColors.vividRed)
         imageView.isUserInteractionEnabled = true
 
         let imageViewContainer = UIView()
@@ -132,7 +132,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     func createPendingLegalHoldRequestView() -> UIView {
         let button = IconButton(style: .circular)
-        button.setBackgroundImageColor(UIColor.vividRed.withAlphaComponent(0.5), for: .normal)
+        button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed.withAlphaComponent(0.5), for: .normal)
 
         button.setIcon(.clock, size: 12, for: .normal)
         button.setIconColor(.white, for: .normal)

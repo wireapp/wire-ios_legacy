@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: XCTestCase {
+final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     private var sut: ProfileViewController!
     private var mockUser: MockUser!
@@ -30,6 +30,8 @@ final class ProfileViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+        accentColor = .strongBlue
         teamIdentifier = UUID()
         selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: teamIdentifier)
         selfUser.handle = "georgejohnson"

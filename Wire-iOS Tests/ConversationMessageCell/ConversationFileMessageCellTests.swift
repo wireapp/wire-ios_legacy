@@ -20,7 +20,7 @@
 
 import XCTest
 
-final class ConversationFileMessageTests: XCTestCase {
+final class ConversationFileMessageTests: ZMSnapshotTestCase {
 
     var message: MockMessage!
     var mockSelfUser: MockUserType!
