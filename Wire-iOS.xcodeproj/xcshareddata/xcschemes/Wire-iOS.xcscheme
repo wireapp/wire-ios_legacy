@@ -68,9 +68,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "CallInfoViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "CallParticipantDetailsViewTests/testPulsingState()">
                </Test>
                <Test
