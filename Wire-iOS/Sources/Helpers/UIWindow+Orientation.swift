@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,25 +18,21 @@
 
 import UIKit
 
-final class KeyboardHeight: NSObject {
-
-    /// The height of the system keyboard with the prediction row
-    public static var current: CGFloat {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return UIWindow.isPortrait ? 264 : 352
-        default:
-            return phoneKeyboardHeight()
-        }
+extension UIWindow {
+    
+    public static var isPortrait: Bool {
+            return UIApplication.shared.windows
+                .first?
+                .windowScene?
+                .interfaceOrientation
+                .isPortrait ?? false
     }
 
-    private static func phoneKeyboardHeight() -> CGFloat {
-        switch UIScreen.main.bounds.height {
-        case 667: return 258
-        case 736: return 271
-        case 812: return 253 + UIScreen.safeArea.bottom
-        default: return 253
-        }
+    public static var isLandscapce: Bool {
+            return UIApplication.shared.windows
+                .first?
+                .windowScene?
+                .interfaceOrientation
+                .isLandscape ?? false
     }
-
 }

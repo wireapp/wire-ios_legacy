@@ -55,7 +55,7 @@ final class UINavigationBarContainer: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        let orientation = UIApplication.shared.statusBarOrientation
+        let orientation = UIApplication.shared.windows.first!.windowScene!.interfaceOrientation
         let deviceType = UIDevice.current.userInterfaceIdiom
 
         if orientation.isLandscape && deviceType == .phone {

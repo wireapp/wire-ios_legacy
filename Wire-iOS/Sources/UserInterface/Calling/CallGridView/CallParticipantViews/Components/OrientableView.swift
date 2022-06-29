@@ -28,7 +28,7 @@ protocol OrientableViewProtocol {
 
 extension OrientableViewProtocol {
     func layoutForOrientation() {
-        layout(forInterfaceOrientation: UIApplication.shared.statusBarOrientation,
+        layout(forInterfaceOrientation: UIApplication.shared.windows.first!.windowScene!.interfaceOrientation,
                deviceOrientation: UIDevice.current.orientation)
     }
 }
