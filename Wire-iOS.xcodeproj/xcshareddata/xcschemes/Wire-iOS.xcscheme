@@ -68,9 +68,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ButtonTests">
-               </Test>
-               <Test
                   Identifier = "CallGridViewControllerSnapshotTests">
                </Test>
                <Test
