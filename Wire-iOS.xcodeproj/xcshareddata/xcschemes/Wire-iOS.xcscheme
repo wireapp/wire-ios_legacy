@@ -98,9 +98,6 @@
                   Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Light()">
                </Test>
                <Test
-                  Identifier = "ClientListViewControllerTests/testForEditMode()">
-               </Test>
-               <Test
                   Identifier = "ClientListViewControllerTests/testForLightThemeWrappedInNavigationController()">
                </Test>
                <Test
