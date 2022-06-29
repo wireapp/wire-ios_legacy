@@ -346,8 +346,8 @@ final class SettingsToggleCell: SettingsTableCell {
         accessibilityElements = [cellNameLabel, switchView]
         self.switchView = switchView
     }
-    
-    @objc 
+
+    @objc
     func onSwitchChanged(_ sender: UIResponder) {
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
