@@ -64,20 +64,11 @@ final class NetworkStatusViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIDevice.orientationDidChangeNotification, object: .none)
+
         view.addSubview(networkStatusView)
 
         createConstraints()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        let before = self.view.window?.windowScene?.interfaceOrientation
-        coordinator.animate(alongsideTransition: nil) { _ in
-            let after = self.view.window?.windowScene?.interfaceOrientation
-            if before != after {
-                self.updateStateForIPad()
-            }
-        }
-
     }
 
     private func createConstraints() {
@@ -220,7 +211,6 @@ extension NetworkStatusViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
         updateStateForIPad()
     }
 }

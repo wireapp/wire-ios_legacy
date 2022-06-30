@@ -490,21 +490,22 @@ extension ConversationImagesViewController: MenuVisibilityController {
     }
 
     func fadeAndHideMenu(_ hidden: Bool) {
-        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+        let duration = 0.3
 
-        showNavigationBarVisible(hidden: hidden)
+        showNavigationBarVisible(hidden: hidden, duration: duration)
 
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
     }
 
-    private func showNavigationBarVisible(hidden: Bool) {
+    private func showNavigationBarVisible(hidden: Bool, duration: TimeInterval) {
         guard let view = navigationController?.view else { return }
 
-        UIView.transition(with: view, duration: UIApplication.shared.statusBarOrientationAnimationDuration, animations: {
+        UIView.transition(with: view, duration: duration, animations: {
             self.navigationController?.setNavigationBarHidden(hidden, animated: false)
         })
     }
+
 }
 
 extension ConversationImagesViewController {
