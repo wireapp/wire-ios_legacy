@@ -131,12 +131,6 @@
                   Identifier = "ConversationListViewControllerTests">
                </Test>
                <Test
-                  Identifier = "ConversationPingMessageTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationSystemMessageTests">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
