@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE128A60286DD1D900558550 /* libcore_crypto_ffi_universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */; };
 		EE212A73283E5BC000AB1040 /* WireCoreCrypto.docc in Sources */ = {isa = PBXBuildFile; fileRef = EE212A72283E5BC000AB1040 /* WireCoreCrypto.docc */; };
 		EE212A79283E5BC000AB1040 /* WireCoreCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE212A6E283E5BC000AB1040 /* WireCoreCrypto.framework */; };
 		EE212A7E283E5BC000AB1040 /* WireCoreCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A7D283E5BC000AB1040 /* WireCoreCryptoTests.swift */; };
 		EE212A7F283E5BC000AB1040 /* WireCoreCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = EE212A71283E5BC000AB1040 /* WireCoreCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE212A8A283E5DE700AB1040 /* CoreCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A89283E5DE700AB1040 /* CoreCryptoSwift.swift */; };
 		EE212A99283E604600AB1040 /* core_cryptoFFI.h in Headers */ = {isa = PBXBuildFile; fileRef = EE212A97283E604600AB1040 /* core_cryptoFFI.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		EEAFB69F284798E800D7B245 /* libcore_crypto_ffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EEAFB69E284798E800D7B245 /* libcore_crypto_ffi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi_universal.a; sourceTree = "<group>"; };
 		EE212A6E283E5BC000AB1040 /* WireCoreCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireCoreCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE212A71283E5BC000AB1040 /* WireCoreCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireCoreCrypto.h; sourceTree = "<group>"; };
 		EE212A72283E5BC000AB1040 /* WireCoreCrypto.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = WireCoreCrypto.docc; sourceTree = "<group>"; };
@@ -36,7 +37,6 @@
 		EE212A8C283E5F2600AB1040 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcore_crypto_ffi.a; path = CoreCryptoRust/libcore_crypto_ffi.a; sourceTree = "<group>"; };
 		EE212A97283E604600AB1040 /* core_cryptoFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_cryptoFFI.h; sourceTree = "<group>"; };
 		EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = WireCoreCrypto.modulemap; sourceTree = "<group>"; };
-		EEAFB69E284798E800D7B245 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEAFB69F284798E800D7B245 /* libcore_crypto_ffi.a in Frameworks */,
+				EE128A60286DD1D900558550 /* libcore_crypto_ffi_universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				EE212A97283E604600AB1040 /* core_cryptoFFI.h */,
-				EEAFB69E284798E800D7B245 /* libcore_crypto_ffi.a */,
+				EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */,
 			);
 			name = CoreCrypto;
 			path = WireCoreCrypto/CoreCrypto;
@@ -391,6 +391,8 @@
 		EE212A83283E5BC000AB1040 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				"ARCHS[sdk=iphonesimulator*]" = x86_64;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
@@ -429,6 +431,8 @@
 		EE212A84283E5BC000AB1040 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = arm64;
+				"ARCHS[sdk=iphonesimulator*]" = x86_64;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
