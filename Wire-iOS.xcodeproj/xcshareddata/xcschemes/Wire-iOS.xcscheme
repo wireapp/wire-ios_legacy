@@ -182,12 +182,6 @@
                   Identifier = "NetworkStatusViewSnapShotTests">
                </Test>
                <Test
-                  Identifier = "PasscodeSetupViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "ProfileDetailsViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
                </Test>
                <Test
