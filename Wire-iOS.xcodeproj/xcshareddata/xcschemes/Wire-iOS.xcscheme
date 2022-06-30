@@ -253,15 +253,6 @@
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
-               <Test
-                  Identifier = "UserImageViewContainerSnapshotTests/testForNoUserImageWithoutSession()">
-               </Test>
-               <Test
-                  Identifier = "UserSearchResultsViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "VerticalColumnCollectionViewLayoutTests">
-               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
