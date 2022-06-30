@@ -149,9 +149,6 @@
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
-                  Identifier = "GroupConversationCellTests">
-               </Test>
-               <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
