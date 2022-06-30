@@ -179,16 +179,7 @@
                   Identifier = "LandingViewControllerSnapshotTests">
                </Test>
                <Test
-                  Identifier = "MessageDetailsViewControllerTests/testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked()">
-               </Test>
-               <Test
-                  Identifier = "MultiParagraphSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "NetworkStatusViewSnapShotTests">
-               </Test>
-               <Test
-                  Identifier = "NetworkStatusViewTests">
                </Test>
                <Test
                   Identifier = "PasscodeSetupViewControllerTests">
