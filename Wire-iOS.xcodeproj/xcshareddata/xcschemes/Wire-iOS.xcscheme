@@ -131,9 +131,6 @@
                   Identifier = "ConversationListViewControllerTests">
                </Test>
                <Test
-                  Identifier = "ConversationTextMessageTests">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
@@ -147,9 +144,6 @@
                </Test>
                <Test
                   Identifier = "ConversationVideoMessageCellTests/testUploadedCell_fromOtherUser()">
-               </Test>
-               <Test
-                  Identifier = "ConversationViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
