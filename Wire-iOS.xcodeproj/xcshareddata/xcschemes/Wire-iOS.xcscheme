@@ -101,12 +101,6 @@
                   Identifier = "ClientListViewControllerTests/testForLightThemeWrappedInNavigationController()">
                </Test>
                <Test
-                  Identifier = "ConnectRequestsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ContactsCellSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ContactsViewControllerSnapshotTests">
                </Test>
                <Test
