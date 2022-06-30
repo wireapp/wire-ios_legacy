@@ -152,16 +152,7 @@
                   Identifier = "GroupConversationCellTests">
                </Test>
                <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
-               </Test>
-               <Test
-                  Identifier = "IncomingConnectionViewTests">
-               </Test>
-               <Test
-                  Identifier = "LandingViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "LegalHoldDetailsViewControllerSnapshotTests">
