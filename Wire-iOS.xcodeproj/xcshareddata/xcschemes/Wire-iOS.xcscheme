@@ -254,15 +254,6 @@
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
                </Test>
                <Test
-                  Identifier = "TextMessageMentionsTests">
-               </Test>
-               <Test
-                  Identifier = "TopPeopleCellSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "UnlockViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "UserImageViewContainerSnapshotTests/testForNoUserImageWithoutSession()">
                </Test>
                <Test
