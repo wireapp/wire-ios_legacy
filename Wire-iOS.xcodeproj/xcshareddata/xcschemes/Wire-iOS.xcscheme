@@ -221,15 +221,6 @@
                   Identifier = "SettingsTableViewControllerSnapshotTests">
                </Test>
                <Test
-                  Identifier = "SettingsTechnicalReportViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ShareContactsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ShareViewControllerTests/testForAllowMultipleSelectionDisabled()">
-               </Test>
-               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
@@ -243,9 +234,6 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()">
