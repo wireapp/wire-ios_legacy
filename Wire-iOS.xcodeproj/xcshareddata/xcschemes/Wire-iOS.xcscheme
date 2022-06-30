@@ -185,12 +185,6 @@
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
                </Test>
                <Test
-                  Identifier = "ProfileViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "RoundedPageIndicatorTests">
-               </Test>
-               <Test
                   Identifier = "SearchResultLabelTests">
                </Test>
                <Test
