@@ -179,15 +179,6 @@
                   Identifier = "LandingViewControllerSnapshotTests">
                </Test>
                <Test
-                  Identifier = "LegalHoldDetailsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "LocationMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "MarkDownSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "MessageDetailsViewControllerTests/testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked()">
                </Test>
                <Test
