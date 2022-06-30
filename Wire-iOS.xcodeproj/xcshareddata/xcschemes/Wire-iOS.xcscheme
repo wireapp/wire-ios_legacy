@@ -149,9 +149,6 @@
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
-                  Identifier = "GiphyConfirmationViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "GroupConversationCellTests">
                </Test>
                <Test
