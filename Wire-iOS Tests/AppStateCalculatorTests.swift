@@ -180,6 +180,7 @@ final class AppStateCalculatorTests: XCTestCase {
         XCTAssertFalse(delegate.wasNotified)
     }
 
+    // Quarantined
     func testApplicationTransit_WhenAppStateChanges() {
         // WHEN
         let userSession = MockZMUserSession()
