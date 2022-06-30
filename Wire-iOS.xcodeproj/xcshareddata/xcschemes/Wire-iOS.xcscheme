@@ -188,9 +188,6 @@
                   Identifier = "SearchResultLabelTests">
                </Test>
                <Test
-                  Identifier = "SettingsTableViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "SettingsTechnicalReportViewControllerSnapshotTests">
                </Test>
                <Test
