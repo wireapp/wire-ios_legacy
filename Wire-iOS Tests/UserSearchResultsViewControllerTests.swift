@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 
+@available(iOS 13.0, *)
 final class UserSearchResultsViewControllerTests: ZMSnapshotTestCase {
 
     var sut: UserSearchResultsViewController!
@@ -95,6 +96,7 @@ final class UserSearchResultsViewControllerTests: ZMSnapshotTestCase {
     func testThatItOverflowsWithTooManyUsers_darkMode() {
         ColorScheme.default.variant = .dark
         createSUT()
+        sut.overrideUserInterfaceStyle = .dark
 
         sut.users = mockSearchResultUsers()
         verify(matching: sut)

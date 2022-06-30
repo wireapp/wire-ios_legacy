@@ -20,6 +20,7 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
+@available(iOS 13.0, *)
 final class CheckmarkCellTests: XCTestCase {
 
     var cell: CheckmarkCell!
@@ -50,6 +51,7 @@ final class CheckmarkCellTests: XCTestCase {
         cell.title = "Option A"
         cell.showCheckmark = false
         cell.colorSchemeVariant = .dark
+        cell.overrideUserInterfaceStyle = .dark
         verify(matching: cell)
     }
 
@@ -65,6 +67,7 @@ final class CheckmarkCellTests: XCTestCase {
         cell.title = "Option B"
         cell.showCheckmark = true
         cell.colorSchemeVariant = .dark
+        cell.overrideUserInterfaceStyle = .dark
         verify(matching: cell)
     }
 }
