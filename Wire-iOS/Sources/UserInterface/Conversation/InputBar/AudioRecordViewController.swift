@@ -62,8 +62,6 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         didSet { updateRecordingState(recordingState) }
     }
 
-//    fileprivate let localizationBasePath = "conversation.input_bar.audio_message"
-
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

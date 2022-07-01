@@ -214,7 +214,7 @@ final class ConversationListAccessoryView: UIView {
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = .strongLimeGreen
+            self.badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
 
         case .typing:
             self.badgeView.isHidden = true

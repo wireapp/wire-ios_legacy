@@ -30,7 +30,7 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
         if textFieldTint == nil {
             textFieldTint = UITextField.appearance().tintColor
         }
-        UITextField.appearance().tintColor = .vividRed
+        UITextField.appearance().tintColor = SemanticColors.LegacyColors.vividRed
 
         sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
         sut.view.layoutIfNeeded()

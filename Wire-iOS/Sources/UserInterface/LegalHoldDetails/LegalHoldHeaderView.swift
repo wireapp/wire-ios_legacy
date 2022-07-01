@@ -25,7 +25,7 @@ final class LegalHoldHeaderView: UIView {
     let iconView: UIImageView = {
         let imageView = UIImageView()
 
-        imageView.setIcon(.legalholdactive, size: .large, color: .vividRed)
+        imageView.setIcon(.legalholdactive, size: .large, color: SemanticColors.LegacyColors.vividRed)
 
         return imageView
     }()

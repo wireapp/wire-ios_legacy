@@ -24,7 +24,7 @@ final class WipeCompletionViewController: UIViewController {
     private lazy var loginButton: Button = {
         let button = Button(style: .full, fontSpec: .smallSemiboldFont)
 
-        button.setBackgroundImageColor(.strongBlue, for: .normal)
+        button.setBackgroundImageColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
 
         button.setTitle(L10n.Localizable.Signin.confirm.uppercased(), for: .normal)
 

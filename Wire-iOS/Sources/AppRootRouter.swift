@@ -227,6 +227,7 @@ extension AppRootRouter: AppStateCalculatorDelegate {
     private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
         switch state {
         case .authenticated:
+            authenticationCoordinator?.tearDown()
             authenticationCoordinator = nil
         default:
             break
@@ -305,13 +306,19 @@ extension AppRootRouter {
             return
         }
 
-        let navigationController = SpinnerCapableNavigationController(navigationBarClass: AuthenticationNavigationBar.self,
-                                                                      toolbarClass: nil)
+        let navigationController = SpinnerCapableNavigationController(
+            navigationBarClass: AuthenticationNavigationBar.self,
+            toolbarClass: nil
+        )
 
-        authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
-                                                              sessionManager: sessionManager,
-                                                              featureProvider: BuildSettingAuthenticationFeatureProvider(),
-                                                              statusProvider: AuthenticationStatusProvider())
+        authenticationCoordinator?.tearDown()
+
+        authenticationCoordinator = AuthenticationCoordinator(
+            presenter: navigationController,
+            sessionManager: sessionManager,
+            featureProvider: BuildSettingAuthenticationFeatureProvider(),
+            statusProvider: AuthenticationStatusProvider()
+        )
 
         guard let authenticationCoordinator = authenticationCoordinator else {
             completion()
@@ -451,6 +458,9 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
+        if #available(iOS 13.0, *) {
+            UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+        }
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {

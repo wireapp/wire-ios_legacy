@@ -246,6 +246,9 @@ extension XCTestCase {
                                  line: UInt = #line) {
         if var themeable = matching as? Themeable {
             themeable.colorSchemeVariant = .light
+            if #available(iOS 13.0, *) {
+                matching.overrideUserInterfaceStyle = .light
+            }
 
             verify(matching: matching,
                    named: "LightTheme",
@@ -253,6 +256,9 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
             themeable.colorSchemeVariant = .dark
+            if #available(iOS 13.0, *) {
+                matching.overrideUserInterfaceStyle = .dark
+            }
 
             verify(matching: matching,
                    named: "DarkTheme",
@@ -527,6 +533,14 @@ extension XCTestCase {
         let container = containerView(with: sut,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
+
+        if #available(iOS 13.0, *) {
+            if ColorScheme.default.variant == .light {
+                container.overrideUserInterfaceStyle = .light
+            } else {
+                container.overrideUserInterfaceStyle = .dark
+            }
+        }
 
         verifyWithWidthInName(matching: container,
                               width: width,

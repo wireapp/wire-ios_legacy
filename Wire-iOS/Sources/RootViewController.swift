@@ -169,10 +169,8 @@ extension RootViewController {
             }
         }
 
-        if #available(iOS 12.0, *) {
-            if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
-                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
-            }
+        if previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle {
+            NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: nil)
         }
     }
 }

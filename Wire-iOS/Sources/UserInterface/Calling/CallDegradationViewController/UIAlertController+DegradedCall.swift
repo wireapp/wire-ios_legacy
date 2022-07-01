@@ -24,11 +24,6 @@ extension UIAlertController {
 
     static func degradedCall(degradedUser: UserType?, callEnded: Bool = false, confirmationBlock: ((_ continueDegradedCall: Bool) -> Void)? = nil) -> UIAlertController {
 
-//        // Choose localization prefix
-//        let prefix = callEnded
-//            ? "call.degraded.ended.alert"
-//            : "call.degraded.alert"
-
         // Set message
         var message = ".message"
 

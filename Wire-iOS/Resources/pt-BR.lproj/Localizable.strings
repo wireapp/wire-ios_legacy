@@ -261,7 +261,7 @@
 "conversation.status.you" = "Você";
 "conversation.status.someone" = "Alguém";
 "conversation.status.you_was_added" = "%@ adicionou você";
-"conversation.status.you_were_removed" = "Você foram removido";
+"conversation.status.you_were_removed" = "Você foi removido";
 "conversation.status.you_left" = "Você saiu";
 "conversation.status.started_conversation" = "%@ iniciou uma conversa";
 
@@ -1348,7 +1348,7 @@
 "guest_room.link.header.subtitle" = "Convide outras pessoas com um link para esta conversa. Qualquer pessoa com o link pode participar da conversa, mesmo que não possuam o Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "A geração de links de convidados não é permitida em sua equipe.";
 "guest_room.link.not_allowed.for_other_team.explanation" = "Você não pode gerar um link de convidado nesta conversa, pois ele foi criado por alguém de outra equipe e essa equipe não tem permissão para usar links de convidado.";
-"guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
+"guest_room.link.disabled.for_other_team.explanation" = "Você não pode desativar a opção de convidado nesta conversa, pois ela foi criada por alguém de outra equipe.";
 
 "guest_room.link.button.title" = "Criar Link";
 
