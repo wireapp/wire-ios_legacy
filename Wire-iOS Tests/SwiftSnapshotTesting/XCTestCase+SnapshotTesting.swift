@@ -193,23 +193,23 @@ extension XCTestCase {
 			   line: line)
 	}
 
+    @available(iOS 13.0, *)
     func verifyInAllColorSchemes(createSut: () -> UIViewController,
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
+
         verifyInDarkScheme(createSut: createSut,
                            name: "DarkTheme",
                            file: file,
                            testName: testName,
                            line: line)
 
-        ColorScheme.default.variant = .light
-
-        verify(matching: createSut(),
-               named: "LightTheme",
-               file: file,
-               testName: testName,
-               line: line)
+        verifyInLightScheme(createSut: createSut,
+                            name: "LightTheme",
+                            file: file,
+                            testName: testName,
+                            line: line)
     }
 
     func verifyInDarkScheme(createSut: () -> UIView,
@@ -226,14 +226,36 @@ extension XCTestCase {
 			   line: line)
 	}
 
+    @available(iOS 13.0, *)
     func verifyInDarkScheme(createSut: () -> UIViewController,
                             name: String? = nil,
                             file: StaticString = #file,
                             testName: String = #function,
                             line: UInt = #line) {
-        ColorScheme.default.variant = .dark
 
-        verify(matching: createSut(),
+        ColorScheme.default.variant = .dark
+        let sut = createSut()
+        sut.overrideUserInterfaceStyle = .dark
+
+        verify(matching: sut,
+               named: name,
+               file: file,
+               testName: testName,
+               line: line)
+    }
+
+    @available(iOS 13.0, *)
+    func verifyInLightScheme(createSut: () -> UIViewController,
+                             name: String? = nil,
+                             file: StaticString = #file,
+                             testName: String = #function,
+                             line: UInt = #line) {
+
+        ColorScheme.default.variant = .light
+        let sut = createSut()
+        sut.overrideUserInterfaceStyle = .light
+
+        verify(matching: sut,
                named: name,
                file: file,
                testName: testName,
