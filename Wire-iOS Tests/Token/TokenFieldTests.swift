@@ -133,7 +133,7 @@ final class TokenFieldTests: ZMSnapshotTestCase {
         sut.addToken(token1)
 
         // when
-        sut.tokenTitleColor = .brightOrange
+        sut.tokenTitleColor = SemanticColors.LegacyColors.brightOrange
         sut.updateTokenAttachments()
         // then
 

@@ -28,7 +28,7 @@ extension IconButton {
         return .init(
             icon: .phone,
             accessibilityId: "AcceptButton",
-            backgroundColor: [.normal: UIColor.strongLimeGreen],
+            backgroundColor: [.normal: SemanticColors.LegacyColors.strongLimeGreen],
             iconColor: [.normal: .white],
             width: IconButton.width
         )
@@ -39,7 +39,7 @@ extension IconButton {
             icon: .endCall,
             size: .small,
             accessibilityId: "LeaveCallButton",
-            backgroundColor: [.normal: UIColor.vividRed],
+            backgroundColor: [.normal: SemanticColors.LegacyColors.vividRed],
             iconColor: [.normal: .white],
             width: IconButton.width
         )

@@ -553,6 +553,14 @@ extension XCTestCase {
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
 
+        if #available(iOS 13.0, *) {
+            if ColorScheme.default.variant == .light {
+                container.overrideUserInterfaceStyle = .light
+            } else {
+                container.overrideUserInterfaceStyle = .dark
+            }
+        }
+
         verifyWithWidthInName(matching: container,
                               width: width,
                               named: name,

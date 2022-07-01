@@ -257,9 +257,6 @@ final class ColorScheme: NSObject {
             return colorPair.light
         }
     }
-    func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-        return UIColor.nameColor(for: color, variant: variant)
-    }
 }
 
 private struct ColorPair {
@@ -283,7 +280,7 @@ extension UIColor {
     private static let accentColorNameColorBlendingCoefficientsLight: [CGFloat] = [0.8, 0.8, 0.72, 1.0, 0.8, 0.8, 0.64, 1.0]
     /// Creates UIColor instance with color corresponding to @p accentColor that can be used to display the name.
     class func nameColor(for accentColor: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
-        let accentColor = AccentColor(ZMAccentColor: accentColor) ?? .strongBlue
+        let accentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
         let coefficientsArray = variant == .dark ? accentColorNameColorBlendingCoefficientsDark : accentColorNameColorBlendingCoefficientsLight
         let coefficient = coefficientsArray[Int(accentColor.rawValue)]
         let background: UIColor = variant == .dark ? .black : .white
