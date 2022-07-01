@@ -101,15 +101,6 @@
                   Identifier = "ConversationListViewControllerTests">
                </Test>
                <Test
-                  Identifier = "ConversationPingMessageTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationSystemMessageTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationTextMessageTests">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
@@ -125,28 +116,10 @@
                   Identifier = "ConversationVideoMessageCellTests/testUploadedCell_fromOtherUser()">
                </Test>
                <Test
-                  Identifier = "ConversationViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "DeveloperOptionsControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
-                  Identifier = "GiphyConfirmationViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "GroupConversationCellTests">
-               </Test>
-               <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
-               </Test>
-               <Test
-                  Identifier = "IncomingConnectionViewTests">
-               </Test>
-               <Test
-                  Identifier = "LandingViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "LegalHoldDetailsViewControllerSnapshotTests">
