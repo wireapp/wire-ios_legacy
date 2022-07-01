@@ -53,16 +53,10 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
-                  Identifier = "ArticleViewTests">
-               </Test>
-               <Test
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
                </Test>
                <Test
                   Identifier = "ArticleViewTests/testArticleViewWithPicture()">
-               </Test>
-               <Test
-                  Identifier = "AuthenticationInterfaceBuilderTests/testLandingScreen()">
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
@@ -72,30 +66,6 @@
                </Test>
                <Test
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
-               </Test>
-               <Test
-                  Identifier = "ButtonTests">
-               </Test>
-               <Test
-                  Identifier = "CallGridViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "CallInfoRootViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "CallInfoViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "CallParticipantDetailsViewTests/testPulsingState()">
-               </Test>
-               <Test
-                  Identifier = "CallParticipantViewTests/testActiveState()">
-               </Test>
-               <Test
-                  Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Dark()">
-               </Test>
-               <Test
-                  Identifier = "CallParticipantsListViewControllerTests/testCallParticipants_Overflowing_Light()">
                </Test>
                <Test
                   Identifier = "CallSystemMessageTests">
