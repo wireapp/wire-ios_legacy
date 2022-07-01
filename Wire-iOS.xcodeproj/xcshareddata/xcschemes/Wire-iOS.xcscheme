@@ -194,9 +194,6 @@
                   Identifier = "MultiParagraphSnapshotTests">
                </Test>
                <Test
-                  Identifier = "NetworkStatusViewSnapShotTests">
-               </Test>
-               <Test
                   Identifier = "NetworkStatusViewTests">
                </Test>
                <Test
@@ -213,9 +210,6 @@
                </Test>
                <Test
                   Identifier = "RoundedPageIndicatorTests">
-               </Test>
-               <Test
-                  Identifier = "SearchResultLabelTests">
                </Test>
                <Test
                   Identifier = "SettingsTableViewControllerSnapshotTests">
