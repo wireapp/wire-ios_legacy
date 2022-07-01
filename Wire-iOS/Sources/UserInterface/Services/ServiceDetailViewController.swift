@@ -245,7 +245,7 @@ fileprivate extension Button {
         let button = Button(
             style: .full,
             title: L10n.Localizable.Participants.Services.RemoveIntegration.button)
-        button.setBackgroundImageColor(.vividRed, for: .normal)
+        button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         return button
     }
 

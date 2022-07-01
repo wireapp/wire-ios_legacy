@@ -194,7 +194,7 @@ final class FileTransferView: UIView, TransferView {
             let statusText = fileMessageData.transferState == .uploadingFailed
                 ? L10n.Localizable.Content.File.uploadFailed
                 : L10n.Localizable.Content.File.uploadCancelled
-            let attributedStatusText = statusText.localizedUppercase && labelFont && UIColor.vividRed
+            let attributedStatusText = statusText.localizedUppercase && labelFont && SemanticColors.LegacyColors.vividRed
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + attributedStatusText
             topLabel.attributedText = firstLine
