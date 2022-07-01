@@ -191,8 +191,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
-        titleLabel.applyStyle(.primaryLabelInCellStyle)
-        subtitleLabel.applyStyle(.secondaryLabelInCellStyle)
+        titleLabel.applyStyle(.primaryCellLabel)
+        subtitleLabel.applyStyle(.secondaryCellLabel)
         updateTitleLabel()
     }
 

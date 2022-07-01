@@ -40,7 +40,7 @@ final class SectionHeaderView: UIView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.accessibilityTraits.insert(.header)
-        titleLabel.applyStyle(.headerLabelStyle)
+        titleLabel.applyStyle(.headerLabel)
         addSubview(titleLabel)
     }
 
