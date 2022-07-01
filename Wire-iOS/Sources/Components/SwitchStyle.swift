@@ -19,16 +19,20 @@
 import UIKit
 
 public struct SwitchStyle {
+
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
     private(set) var disabledOnStateColor: UIColor
     private(set) var disabledOffStateColor: UIColor
+    
     static let `default`: Self = SwitchStyle(
         enabledOnStateColor:
             SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
         enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled,
         disabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateDisabled,
-        disabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateDisabled)
+        disabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateDisabled
+    )
+    
 }
 
 extension UISwitch: Stylable {
