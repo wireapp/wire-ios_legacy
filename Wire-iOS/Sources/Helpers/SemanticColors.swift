@@ -34,12 +34,10 @@ public enum SemanticColors {
         public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
 
-        static let footerLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let headerLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
-        static let textLabelTitleActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textLabelTitleCellActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelSubtitleCellActive = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
+        static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
+        static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
 }
 
 extension UIColor {
