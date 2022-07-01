@@ -122,46 +122,19 @@
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
-                  Identifier = "LegalHoldDetailsViewControllerSnapshotTests">
+                  Identifier = "IncomingConnectionViewTests">
                </Test>
                <Test
-                  Identifier = "LocationMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "MarkDownSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "MessageDetailsViewControllerTests/testThatItShowsBothTabs_WhenMessageIsSeenButNotLiked()">
-               </Test>
-               <Test
-                  Identifier = "MultiParagraphSnapshotTests">
+                  Identifier = "LandingViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "NetworkStatusViewSnapShotTests">
                </Test>
                <Test
-                  Identifier = "NetworkStatusViewTests">
-               </Test>
-               <Test
-                  Identifier = "PasscodeSetupViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "ProfileDetailsViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
                </Test>
                <Test
-                  Identifier = "ProfileViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "RoundedPageIndicatorTests">
-               </Test>
-               <Test
                   Identifier = "SearchResultLabelTests">
-               </Test>
-               <Test
-                  Identifier = "SettingsTableViewControllerSnapshotTests">
                </Test>
                <Test
                   Identifier = "SettingsTechnicalReportViewControllerSnapshotTests">
