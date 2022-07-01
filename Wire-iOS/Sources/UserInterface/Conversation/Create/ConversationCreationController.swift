@@ -33,7 +33,7 @@ final class ConversationCreationValues {
     var allowGuests: Bool
     var allowServices: Bool
     var enableReceipts: Bool
-    var useMLS: Bool
+    var encryptionType: EncryptionType
 
     var participants: UserSet {
         get {
@@ -62,7 +62,7 @@ final class ConversationCreationValues {
         allowGuests: Bool = true,
         allowServices: Bool = true,
         enableReceipts: Bool = true,
-        useMLS: Bool = false,
+        encryptionType: EncryptionType = .proteus,
         selfUser: UserType
     ) {
         self.name = name
@@ -70,7 +70,7 @@ final class ConversationCreationValues {
         self.allowGuests = allowGuests
         self.allowServices = allowServices
         self.enableReceipts = enableReceipts
-        self.useMLS = useMLS
+        self.encryptionType = encryptionType
         self.selfUser = selfUser
     }
 }
@@ -114,7 +114,7 @@ final class ConversationCreationController: UIViewController {
         guestsSection,
         servicesSection,
         receiptsSection,
-        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? mlsSection : nil
+        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? encryptionTypeSection : nil
     ].compactMap(\.self)
 
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
@@ -152,13 +152,15 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
 
-    private lazy var mlsSection: ConversationCreateMLSSectionController = {
-        let section = ConversationCreateMLSSectionController(values: values)
+    private lazy var encryptionTypeSection: ConversationEncryptionTypeSectionController = {
+        let section = ConversationEncryptionTypeSectionController(values: values)
         section.isHidden = true
 
-        section.toggleAction = { [unowned self] useMLS in
-            self.values.useMLS = useMLS
-            self.updateOptions()
+        section.tapAction = {
+            self.presentEncryptionTypePicker { [weak self] encryptionType in
+                self?.values.encryptionType = encryptionType
+                self?.updateOptions()
+            }
         }
 
         return section
@@ -305,7 +307,7 @@ final class ConversationCreationController: UIViewController {
         self.optionsToggle.configure(with: values)
         self.guestsSection.configure(with: values)
         self.servicesSection.configure(with: values)
-        self.receiptsSection.configure(with: values)
+        self.encryptionTypeSection.configure(with: values)
     }
 }
 
@@ -396,4 +398,36 @@ extension ConversationCreationController {
         }
     }
 
+}
+
+extension ConversationCreationController {
+
+    func presentEncryptionTypePicker(_ completion: @escaping (EncryptionType) -> Void) {
+        let alertViewController = encryptionTypePicker { type in
+            completion(type)
+        }
+
+        alertViewController.configPopover(pointToView: view)
+        present(alertViewController, animated: true)
+    }
+
+    func encryptionTypePicker(_ completion: @escaping (EncryptionType) -> Void) -> UIAlertController {
+        let alert = UIAlertController(title: L10n.Localizable.Conversation.Create.Mls.pickerTitle, message: nil, preferredStyle: .actionSheet)
+
+        for encryptionType in EncryptionType.allCases {
+            alert.addAction(UIAlertAction(title: encryptionType.rawValue, style: .default, handler: { _ in
+                completion(encryptionType)
+            }))
+        }
+
+        alert.popoverPresentationController?.permittedArrowDirections = [ .up, .down ]
+        alert.addAction(UIAlertAction(title: L10n.Localizable.Conversation.Create.Mls.cancel, style: .cancel, handler: nil))
+
+        return alert
+    }
+}
+
+enum EncryptionType: String, CaseIterable {
+    case proteus = "Proteus (default)"
+    case mls = "MLS"
 }

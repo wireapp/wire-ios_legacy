@@ -540,6 +540,7 @@
 		669105C327397E6A00324115 /* NSAttributedString+DownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669105C227397E6900324115 /* NSAttributedString+DownTests.swift */; };
 		70355A7127AAD96E00F02C76 /* SecurityLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70355A7027AAD96E00F02C76 /* SecurityLevelView.swift */; };
 		706B282C27B3049700A511BD /* MockClassificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706B282B27B3049700A511BD /* MockClassificationProvider.swift */; };
+		7A702FB7286322D800004580 /* ConversationEncryptionTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A702FB6286322D800004580 /* ConversationEncryptionTypeCell.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
@@ -1273,8 +1274,8 @@
 		EE52989026B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52988F26B7FB21001A6D03 /* ZClientViewController+ConferenceCallingAvailabilty.swift */; };
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE5F54D2259B77DD00F11F3C /* Viper+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */; };
-		EE6C2125284118B00031EFB9 /* ConversationCreateMLSSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2124284118B00031EFB9 /* ConversationCreateMLSSectionController.swift */; };
-		EE6C2127284118D80031EFB9 /* ConversationCreateMLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2126284118D80031EFB9 /* ConversationCreateMLSCell.swift */; };
+		EE6C2125284118B00031EFB9 /* ConversationEncryptionTypeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2124284118B00031EFB9 /* ConversationEncryptionTypeSectionController.swift */; };
+		EE6C2127284118D80031EFB9 /* ConversationCreateEncryptionTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2126284118D80031EFB9 /* ConversationCreateEncryptionTypeCell.swift */; };
 		EE6C212928438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */; };
 		EE6C212D284390FB0031EFB9 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */; };
 		EE742AB6284DE57900A6B5F3 /* DeveloperToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */; };
@@ -2362,6 +2363,7 @@
 		669105C227397E6900324115 /* NSAttributedString+DownTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+DownTests.swift"; sourceTree = "<group>"; };
 		70355A7027AAD96E00F02C76 /* SecurityLevelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityLevelView.swift; sourceTree = "<group>"; };
 		706B282B27B3049700A511BD /* MockClassificationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClassificationProvider.swift; sourceTree = "<group>"; };
+		7A702FB6286322D800004580 /* ConversationEncryptionTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationEncryptionTypeCell.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3171,8 +3173,8 @@
 		EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsNotificationOptionsCell.swift; sourceTree = "<group>"; };
 		EE5F54D0259B77DD00F11F3C /* Viper+Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Interfaces.swift"; sourceTree = "<group>"; };
 		EE5F54D1259B77DD00F11F3C /* Viper+Relationships.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viper+Relationships.swift"; sourceTree = "<group>"; };
-		EE6C2124284118B00031EFB9 /* ConversationCreateMLSSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateMLSSectionController.swift; sourceTree = "<group>"; };
-		EE6C2126284118D80031EFB9 /* ConversationCreateMLSCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateMLSCell.swift; sourceTree = "<group>"; };
+		EE6C2124284118B00031EFB9 /* ConversationEncryptionTypeSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationEncryptionTypeSectionController.swift; sourceTree = "<group>"; };
+		EE6C2126284118D80031EFB9 /* ConversationCreateEncryptionTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateEncryptionTypeCell.swift; sourceTree = "<group>"; };
 		EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Developer.swift"; sourceTree = "<group>"; };
 		EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlagsView.swift; sourceTree = "<group>"; };
 		EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperToolsView.swift; sourceTree = "<group>"; };
@@ -7074,7 +7076,7 @@
 				EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */,
 				EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */,
 				E94784E8278EDDC200F9FE80 /* ConversationCreateServicesSectionController.swift */,
-				EE6C2124284118B00031EFB9 /* ConversationCreateMLSSectionController.swift */,
+				EE6C2124284118B00031EFB9 /* ConversationEncryptionTypeSectionController.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -7088,7 +7090,8 @@
 				EEC6A08E21B7BF7900133BC7 /* ConversationCreateGuestsCell.swift */,
 				EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */,
 				E91DCC35278DE2AE00B66DD7 /* ConversationCreateServicesCell.swift */,
-				EE6C2126284118D80031EFB9 /* ConversationCreateMLSCell.swift */,
+				EE6C2126284118D80031EFB9 /* ConversationCreateEncryptionTypeCell.swift */,
+				7A702FB6286322D800004580 /* ConversationEncryptionTypeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -8259,6 +8262,7 @@
 				639290A2252633E600046171 /* UIAlertController+DegradedCall.swift in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */,
+				7A702FB7286322D800004580 /* ConversationEncryptionTypeCell.swift in Sources */,
 				1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */,
 				A96A21EF23D5AE6D005B5579 /* UIApplication+Permissions.swift in Sources */,
 				5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */,
@@ -8783,7 +8787,7 @@
 				5E028DEE21F9C34D00E5512A /* AuthenticationNavigationBar.swift in Sources */,
 				F18993B62241356C00535A74 /* ConversationContentViewController+Scrolling.swift in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
-				EE6C2127284118D80031EFB9 /* ConversationCreateMLSCell.swift in Sources */,
+				EE6C2127284118D80031EFB9 /* ConversationCreateEncryptionTypeCell.swift in Sources */,
 				5E39FC6B225F81FD00C682B8 /* ConversationViewController+GuestBar.swift in Sources */,
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
@@ -9126,7 +9130,7 @@
 				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
 				546EEA89253493FF00195097 /* ForegroundNotificationFilter.swift in Sources */,
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
-				EE6C2125284118B00031EFB9 /* ConversationCreateMLSSectionController.swift in Sources */,
+				EE6C2125284118B00031EFB9 /* ConversationEncryptionTypeSectionController.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfCallParticipantView.swift in Sources */,
