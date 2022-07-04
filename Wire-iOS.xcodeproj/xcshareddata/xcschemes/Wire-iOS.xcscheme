@@ -68,39 +68,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "CallSystemMessageTests">
-               </Test>
-               <Test
-                  Identifier = "ClientListViewControllerTests/testForEditMode()">
-               </Test>
-               <Test
-                  Identifier = "ClientListViewControllerTests/testForLightThemeWrappedInNavigationController()">
-               </Test>
-               <Test
-                  Identifier = "CollectionsViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "CompositeMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "ConnectRequestsCellSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ConnectRequestsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ContactsCellSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ContactsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationAvatarViewTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationListViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
