@@ -19,6 +19,7 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
+@available(iOS 13.0, *)
 final class WipeDatabaseViewControllerTests: ZMSnapshotTestCase {
     var sut: WipeDatabaseViewController!
 

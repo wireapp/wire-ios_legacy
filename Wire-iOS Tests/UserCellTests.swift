@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 
+@available(iOS 13.0, *)
 final class UserCellTests: ZMSnapshotTestCase {
 
     var sut: UserCell!

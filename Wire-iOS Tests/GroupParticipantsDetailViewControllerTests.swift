@@ -47,7 +47,8 @@ private final class MockConversation: MockStableRandomParticipantsConversation, 
     var syncedMessageDestructionTimeout: TimeInterval = 0
 }
 
-final class GroupParticipantsDetailViewControllerTests: XCTestCase {
+@available(iOS 13.0, *)
+final class GroupParticipantsDetailViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
