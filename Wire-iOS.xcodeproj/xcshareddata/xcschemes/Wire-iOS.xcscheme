@@ -71,9 +71,6 @@
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
-                  Identifier = "ConversationVideoMessageCellTests">
-               </Test>
-               <Test
                   Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
                </Test>
                <Test
@@ -89,28 +86,7 @@
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
                </Test>
                <Test
-                  Identifier = "IncomingConnectionViewTests">
-               </Test>
-               <Test
-                  Identifier = "LandingViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "NetworkStatusViewSnapShotTests">
-               </Test>
-               <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">
-               </Test>
-               <Test
-                  Identifier = "SearchResultLabelTests">
-               </Test>
-               <Test
-                  Identifier = "SettingsTechnicalReportViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ShareContactsViewControllerSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "ShareViewControllerTests/testForAllowMultipleSelectionDisabled()">
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
@@ -126,9 +102,6 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers()">
@@ -147,24 +120,6 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
-               </Test>
-               <Test
-                  Identifier = "TextMessageMentionsTests">
-               </Test>
-               <Test
-                  Identifier = "TopPeopleCellSnapshotTests">
-               </Test>
-               <Test
-                  Identifier = "UnlockViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "UserImageViewContainerSnapshotTests/testForNoUserImageWithoutSession()">
-               </Test>
-               <Test
-                  Identifier = "UserSearchResultsViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "VerticalColumnCollectionViewLayoutTests">
                </Test>
             </SkippedTests>
          </TestableReference>
