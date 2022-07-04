@@ -36,8 +36,6 @@ public enum SemanticColors {
     public enum SwitchColors {
         public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
         public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
-        public static let backgroundSwitchOnStateDisabled = UIColor(light: Asset.green300Light, dark: Asset.green300Light)
-        public static let backgroundSwitchOffStateDisabled = UIColor(light: Asset.gray50, dark: Asset.gray50)
     }
     public enum SearchBarColor {
         public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
