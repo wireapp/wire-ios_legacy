@@ -33,7 +33,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let IDLabel = UILabel()
     let spinner = UIActivityIndicatorView(style: .gray)
     private let fullIDLabel = CopyableLabel()
-    private let verifiedToggle = UISwitch(.default)
+    private let verifiedToggle = UISwitch(style: .default)
     private let verifiedToggleLabel = UILabel()
     private let resetButton = ButtonWithLargerHitArea()
 

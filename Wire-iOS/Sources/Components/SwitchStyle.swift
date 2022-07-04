@@ -29,9 +29,9 @@ public struct SwitchStyle {
 }
 
 extension UISwitch: Stylable {
-    convenience init(_ style: SwitchStyle = .default) {
+    convenience init(style switchStyle: SwitchStyle = .default) {
         self.init()
-        applyStyle(style)
+        applyStyle(switchStyle)
     }
     public func applyStyle(_ style: SwitchStyle) {
         self.onTintColor = style.enabledOnStateColor
