@@ -48,7 +48,7 @@ final class UserRight: UserRightInterface {
         #if EMAIL_EDITING_DISABLED
             return false
         #else
-            return isProfileEditable
+            return isProfileEditable && !usesCompanyLogin
         #endif
 
         case .resetPassword:
@@ -60,9 +60,11 @@ final class UserRight: UserRightInterface {
 
         case .editName,
              .editHandle,
-             .editPhone,
-             .editAccentColor:
+             .editPhone:
 			return isProfileEditable
+
+        case .editAccentColor:
+            return true
         }
     }
 

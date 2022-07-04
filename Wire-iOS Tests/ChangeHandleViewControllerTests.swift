@@ -20,11 +20,12 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-class ChangeHandleViewControllerTests: XCTestCase {
+class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
 
+        accentColor = .strongBlue
         let mockSelfUser = MockUserType.createSelfUser(name: "selfUser")
         mockSelfUser.handle = nil
         mockSelfUser.domain = "wire.com"
@@ -68,7 +69,7 @@ fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
         let navigationController = wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
-        navigationController.navigationBar.tintColor = .brightOrange
+        navigationController.navigationBar.tintColor = SemanticColors.LegacyColors.brightOrange
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

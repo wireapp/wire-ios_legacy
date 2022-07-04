@@ -191,8 +191,8 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = sectionTextColor
+        titleLabel.applyStyle(.primaryCellLabel)
+        subtitleLabel.applyStyle(.secondaryCellLabel)
         updateTitleLabel()
     }
 
@@ -202,7 +202,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             return
         }
 
-        var attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: selfUser)
+        var attributedTitle = user.nameIncludingAvailability(color: SemanticColors.textLabelCellTitleActive, selfUser: selfUser)
 
         if user.isSelfUser, let title = attributedTitle {
             attributedTitle = title + "user_cell.title.you_suffix".localized
@@ -279,5 +279,4 @@ extension UserType {
 
         return nil
     }
-
 }

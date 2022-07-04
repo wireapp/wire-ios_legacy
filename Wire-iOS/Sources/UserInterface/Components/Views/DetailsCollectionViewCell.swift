@@ -61,9 +61,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
     }
 
     var disabled: Bool = false {
-        didSet {
-            updateDisabledState()
-        }
+        didSet { }
     }
 
     // MARK: - Configuration - Override Methods
@@ -77,9 +75,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.normalLightFont.font
+        titleLabel.applyStyle(.primaryCellLabel)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.smallRegularFont.font
+        statusLabel.applyStyle(.secondaryCellLabel)
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -116,10 +116,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-        statusLabel.textColor = sectionTextColor
-        updateDisabledState()
     }
 
     // MARK: - Layout
@@ -157,10 +154,6 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         } else {
             statusLabel.isHidden = true
         }
-    }
-
-    private func updateDisabledState() {
-        titleLabel.textColor = UIColor.from(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
     }
 
     func redrawFont() {

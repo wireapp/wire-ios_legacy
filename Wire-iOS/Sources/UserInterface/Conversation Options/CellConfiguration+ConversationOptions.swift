@@ -36,7 +36,7 @@ extension CellConfiguration {
         )
     }
 
-    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void, isDisabled: Bool) -> CellConfiguration {
+    static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool, UIView?) -> Void, isEnabled: Bool) -> CellConfiguration {
         return .iconToggle(
             title: "guest_room.allow_guests.title".localized,
             subtitle: "guest_room.allow_guests.subtitle".localized,
@@ -44,7 +44,7 @@ extension CellConfiguration {
             titleIdentifier: "label.guestoptions.description",
             icon: nil,
             color: nil,
-            isEnabled: !isDisabled,
+            isEnabled: isEnabled,
             get: get,
             set: set
         )
