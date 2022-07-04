@@ -25,22 +25,22 @@ final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
 
     var tiles: [ColorTile]! = [
         // square, downscale
-        ColorTile(color: .vividRed, size: CGSize(width: 1000, height: 1000)),
+        ColorTile(color: .red, size: CGSize(width: 1000, height: 1000)),
         // square, upscale
-        ColorTile(color: .violet, size: CGSize(width: 10, height: 10)),
+        ColorTile(color: .purple, size: CGSize(width: 10, height: 10)),
         // portrait, downscale
-        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500)),
+        ColorTile(color: .yellow, size: CGSize(width: 1000, height: 1500)),
         // landscape, upscale
-        ColorTile(color: .softPink, size: CGSize(width: 15, height: 10)),
+        ColorTile(color: .petrol, size: CGSize(width: 15, height: 10)),
         // landscape, downscale
-        ColorTile(color: .strongBlue, size: CGSize(width: 1500, height: 1000)),
+        ColorTile(color: .blue, size: CGSize(width: 1500, height: 1000)),
         // portrait, upscale
-        ColorTile(color: .strongLimeGreen, size: CGSize(width: 10, height: 15)),
+        ColorTile(color: .green, size: CGSize(width: 10, height: 15)),
         // add 4 more to test multiline on iPad
-        ColorTile(color: .vividRed, size: CGSize(width: 1000, height: 1000)),
-        ColorTile(color: .strongLimeGreen, size: CGSize(width: 10, height: 15)),
-        ColorTile(color: .violet, size: CGSize(width: 10, height: 10)),
-        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500))
+        ColorTile(color: .red, size: CGSize(width: 1000, height: 1000)),
+        ColorTile(color: .green, size: CGSize(width: 10, height: 15)),
+        ColorTile(color: .purple, size: CGSize(width: 10, height: 10)),
+        ColorTile(color: .yellow, size: CGSize(width: 1000, height: 1500))
     ]
 
     override func tearDown() {

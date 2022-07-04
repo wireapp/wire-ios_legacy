@@ -52,7 +52,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
     private let legalHoldIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.setIcon(.legalholdactive, size: .tiny, color: SemanticColors.LegacyColors.vividRed)
         imageView.accessibilityIdentifier = "legalHoldIcon"
         imageView.isAccessibilityElement = true
 

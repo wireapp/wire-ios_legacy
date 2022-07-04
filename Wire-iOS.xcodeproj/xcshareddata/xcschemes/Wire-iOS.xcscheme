@@ -71,9 +71,6 @@
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
-                  Identifier = "ConversationVideoMessageCellTests">
-               </Test>
-               <Test
                   Identifier = "ConversationVideoMessageCellTests/testCancelledUploadCell_fromThisDevice()">
                </Test>
                <Test
