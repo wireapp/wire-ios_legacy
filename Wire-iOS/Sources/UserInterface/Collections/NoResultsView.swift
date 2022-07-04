@@ -52,7 +52,7 @@ final class NoResultsView: UIView {
         accessibilityElements = [label]
 
         label.numberOfLines = 0
-        label.textColor = SemanticColors.textLabelConversationSearchNoItems
+        label.textColor = SemanticColors.LabelsColor.textLabelConversationSearchNoItems
         label.textAlignment = .center
         label.font = .mediumSemiboldFont
         addSubview(label)
