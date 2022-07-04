@@ -105,7 +105,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
         warningLabel.numberOfLines = 0
         warningLabel.isAccessibilityElement = true
         warningLabel.font = FontSpec(.small, .regular).font
-        warningLabel.textColor = .vividRed
+        warningLabel.textColor = SemanticColors.LegacyColors.vividRed
         bottomContentView.addSubview(warningLabel)
     }
 
@@ -459,7 +459,7 @@ class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescr
     init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
         let viewModel = CallCellViewModel(
             icon: missed ? .endCall : .phone,
-            iconColor: UIColor(for: missed ? .vividRed : .strongLimeGreen),
+            iconColor: missed ? SemanticColors.LegacyColors.vividRed : SemanticColors.LegacyColors.strongLimeGreen,
             systemMessageType: data.systemMessageType,
             font: .mediumFont,
             boldFont: .mediumSemiboldFont,
@@ -621,7 +621,10 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
 
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
-        configuration =  View.Configuration(icon: StyleKitIcon.exclamationMark.makeImage(size: .tiny, color: .vividRed), attributedText: title, showLine: true)
+        configuration =  View.Configuration(icon: StyleKitIcon.exclamationMark.makeImage(size: .tiny,
+                                                                                         color: SemanticColors.LegacyColors.vividRed),
+                                            attributedText: title,
+                                            showLine: true)
         actionController = nil
     }
 
@@ -754,9 +757,9 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType) {
         let icon: UIImage
         if data.systemMessageType == .decryptionFailedResolved {
-            icon = StyleKitIcon.checkmark.makeImage(size: 16, color: .strongLimeGreen)
+            icon = StyleKitIcon.checkmark.makeImage(size: 16, color: SemanticColors.LegacyColors.strongLimeGreen)
         } else {
-            icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
+            icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: SemanticColors.LegacyColors.vividRed)
         }
 
         let title = ConversationCannotDecryptSystemMessageCellDescription
@@ -930,7 +933,7 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
     }
 
     private static var exclamationMarkIcon: UIImage {
-        return StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
+        return StyleKitIcon.exclamationMark.makeImage(size: 16, color: SemanticColors.LegacyColors.vividRed)
     }
 
     private static func configureForReactivatedSelfClient(_ selfUser: UserType, link: URL) -> View.Configuration {

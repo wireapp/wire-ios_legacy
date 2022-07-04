@@ -20,7 +20,8 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
+@available(iOS 13.0, *)
+final class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: LegalHoldDetailsViewController!
     var selfUser: MockUserType!

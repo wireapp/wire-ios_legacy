@@ -40,6 +40,7 @@ final class CallParticipantsListHelper {
 
 }
 
+@available(iOS 13.0, *)
 final class CallParticipantsListViewControllerTests: XCTestCase {
 
     var sut: CallParticipantsListViewController!
@@ -72,6 +73,7 @@ final class CallParticipantsListViewControllerTests: XCTestCase {
         // When
         sut = CallParticipantsListViewController(participants: mockParticipants, showParticipants: true, selfUser: ZMUser.selfUser())
         sut.variant = .dark
+        sut.overrideUserInterfaceStyle = .dark
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()

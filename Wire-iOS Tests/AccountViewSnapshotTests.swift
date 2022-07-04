@@ -21,17 +21,17 @@ import SnapshotTesting
 
 @testable import Wire
 
-final class AccountViewSnapshotTests: XCTestCase {
-    static var imageData: Data!
+final class AccountViewSnapshotTests: ZMSnapshotTestCase {
+    var imageData: Data!
 
-    override class func setUp() {
+    override func setUp() {
         super.setUp()
 
-        imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", for: AccountViewSnapshotTests.self)!.jpegData(compressionQuality: 0.9)
         accentColor = .violet
+        imageData = UIImage(inTestBundleNamed: "unsplash_matterhorn.jpg", for: AccountViewSnapshotTests.self)!.jpegData(compressionQuality: 0.9)
     }
 
-    override class func tearDown() {
+    override func tearDown() {
         imageData = nil
 
         super.tearDown()
@@ -57,7 +57,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: imageData)
         let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
@@ -65,7 +65,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: imageData)
         let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN 
         sut.selected = true
@@ -93,7 +93,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: imageData)
         let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
@@ -101,7 +101,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: imageData)
         let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN
         sut.selected = true
@@ -113,7 +113,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPictureSelected_Team_withUnreadDot() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: imageData)
         account.unreadConversationCount = 100
         let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
@@ -127,7 +127,7 @@ final class AccountViewSnapshotTests: XCTestCase {
 
     func testThatItShowsBasicAccountWithPictureSelected_Personal_withUnreadDot() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: imageData)
         account.unreadConversationCount = 100
         let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current

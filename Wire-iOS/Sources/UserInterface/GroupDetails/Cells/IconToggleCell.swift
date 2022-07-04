@@ -29,13 +29,12 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
     }
 
-    let toggle = UISwitch()
+    let toggle = UISwitch(style: .default)
     var action: ((Bool) -> Void)?
 
     override func setUp() {
         super.setUp()
         contentStackView.insertArrangedSubview(toggle, at: contentStackView.arrangedSubviews.count)
-
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
     }
 

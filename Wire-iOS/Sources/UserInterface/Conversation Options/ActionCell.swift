@@ -41,8 +41,8 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
         selectedBackgroundView = backgroundView
         imageContainer.addSubview(iconImageView)
-        iconImageView.setIcon(.link, size: .tiny, color: .strongBlue)
-        label.textColor = .strongBlue
+        iconImageView.setIcon(.link, size: .tiny, color: SemanticColors.LegacyColors.strongBlue)
+        label.textColor = SemanticColors.LegacyColors.strongBlue
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label].forEach(contentView.addSubview)
     }
