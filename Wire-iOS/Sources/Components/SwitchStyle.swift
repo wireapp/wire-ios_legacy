@@ -22,17 +22,10 @@ public struct SwitchStyle {
 
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
-    private(set) var disabledOnStateColor: UIColor
-    private(set) var disabledOffStateColor: UIColor
-    
     static let `default`: Self = SwitchStyle(
-        enabledOnStateColor:
-            SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
-        enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled,
-        disabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateDisabled,
-        disabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateDisabled
+        enabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
+        enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled
     )
-    
 }
 
 extension UISwitch: Stylable {
@@ -41,9 +34,9 @@ extension UISwitch: Stylable {
         applyStyle(style)
     }
     public func applyStyle(_ style: SwitchStyle) {
-        self.onTintColor = isEnabled ? style.enabledOnStateColor : style.disabledOnStateColor
+        self.onTintColor = style.enabledOnStateColor
         self.layer.cornerRadius = self.frame.height / 2.0
-        self.backgroundColor =  isEnabled ? style.enabledOffStateColor : style.disabledOffStateColor
+        self.backgroundColor = style.enabledOffStateColor
         self.clipsToBounds = true
     }
 }
