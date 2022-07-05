@@ -1141,14 +1141,14 @@ internal enum L10n {
           internal static let toolong = L10n.tr("Localizable", "conversation.create.guidance.toolong")
         }
         internal enum Mls {
-          /// Use the MLS protocol for this conversation.
-          internal static let subtitle = L10n.tr("Localizable", "conversation.create.mls.subtitle")
-          /// Use MLS
-          internal static let title = L10n.tr("Localizable", "conversation.create.mls.title")
-          /// MLS protocol picker title
-          internal static let pickerTitle = L10n.tr("Localizable", "conversation.create.mls.picker_title")
-          /// MLS protocol picker cancel button text
+          /// Cancel
           internal static let cancel = L10n.tr("Localizable", "conversation.create.mls.cancel")
+          /// Select Protocol
+          internal static let pickerTitle = L10n.tr("Localizable", "conversation.create.mls.picker_title")
+          /// Select MLS to create a MLS conversation (Beta functionality, use at your own risk).
+          internal static let subtitle = L10n.tr("Localizable", "conversation.create.mls.subtitle")
+          /// Protocol
+          internal static let title = L10n.tr("Localizable", "conversation.create.mls.title")
         }
         internal enum Options {
           /// Guests: %@, Services: %@, Read receipts: %@
