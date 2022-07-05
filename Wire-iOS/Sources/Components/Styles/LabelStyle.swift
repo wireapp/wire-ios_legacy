@@ -22,11 +22,26 @@ import UIKit
 public struct LabelStyle {
     var backgroundColor: UIColor
     var textColor: UIColor
+<<<<<<< HEAD
 
     static let footerLabelStyle: Self = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.footerLabelConversationDetails)
     static let headerLabelStyle: Self = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.headerLabelConversationDetails)
     static let primaryLabelInCellStyle: Self  = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.textLabelTitleCellActive)
     static let secondaryLabelInCellStyle: Self  = LabelStyle(backgroundColor: .clear, textColor: SemanticColors.textLabelSubtitleCellActive)
+=======
+    static let footerLabel: Self = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textFooterLabelConversationDetails)
+    static let headerLabel: Self = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textHeaderLabelConversationDetails)
+    static let primaryCellLabel: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textLabelCellTitleActive)
+    static let secondaryCellLabel: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+>>>>>>> develop
 }
 
 extension UILabel: Stylable {

@@ -38,7 +38,11 @@ final class SectionFooterView: UIView {
         titleLabel.font = .preferredFont(forTextStyle: .footnote)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
+<<<<<<< HEAD
         titleLabel.applyStyle(.footerLabelStyle)
+=======
+        titleLabel.applyStyle(.footerLabel)
+>>>>>>> develop
         addSubview(titleLabel)
     }
 

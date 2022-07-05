@@ -272,7 +272,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
         let infoText = HandleChange.footer.attributedString && UIColor(white: 1, alpha: 0.4)
-        let alreadyTakenText = HandleChange.Footer.unavailable && UIColor.vividRed
+        let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.LegacyColors.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont
     }

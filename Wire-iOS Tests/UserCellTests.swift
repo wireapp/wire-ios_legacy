@@ -19,7 +19,8 @@
 import XCTest
 @testable import Wire
 
-final class UserCellTests: XCTestCase {
+@available(iOS 13.0, *)
+final class UserCellTests: ZMSnapshotTestCase {
 
     var sut: UserCell!
     var teamID = UUID()

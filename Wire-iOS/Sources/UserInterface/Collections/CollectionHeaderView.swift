@@ -66,7 +66,7 @@ final class CollectionHeaderView: UICollectionReusableView {
 
     let actionButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.strongBlue, for: .normal)
+        button.setTitleColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
         button.titleLabel?.font = .smallSemiboldFont
 
         return button

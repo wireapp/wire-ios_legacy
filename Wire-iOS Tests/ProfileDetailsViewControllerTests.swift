@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileDetailsViewControllerTests: XCTestCase {
+final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUserType!

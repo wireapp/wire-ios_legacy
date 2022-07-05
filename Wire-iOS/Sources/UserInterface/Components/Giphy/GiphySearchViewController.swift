@@ -26,6 +26,25 @@ protocol GiphySearchViewControllerDelegate: AnyObject {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
+extension UISearchBar {
+    var textColor: UIColor? {
+        get {
+            if let textField = self.value(forKey: "searchField") as?
+                UITextField {
+                return textField.textColor
+            } else {
+                return nil
+            }
+        }
+        set (newValue) {
+            if let textField = self.value(forKey: "searchField") as?
+                UITextField {
+                textField.textColor = newValue
+            }
+        }
+    }
+}
+
 final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     weak var delegate: GiphySearchViewControllerDelegate?
@@ -120,11 +139,8 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         searchBar.delegate = self
         searchBar.tintColor = .accent()
         searchBar.placeholder = "giphy.search_placeholder".localized
-        searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
-        searchBar.searchBarStyle = .minimal
-
+        searchBar.textColor = SemanticColors.SearchBarColor.textSearchBarUserInput
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
-
         let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
         closeItem.accessibilityLabel = "general.close".localized
 

@@ -133,7 +133,7 @@ final class InputBar: UIView {
 
     let markdownView = MarkdownBarView()
 
-    var editingBackgroundColor = UIColor.brightYellow
+    var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
     var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
     var writingSeparatorColor: UIColor? = .from(scheme: .separator)
     var ephemeralColor: UIColor {
