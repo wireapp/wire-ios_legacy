@@ -35,6 +35,9 @@ public struct LabelStyle {
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+    static let dateInConversationLabel: Self = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textLabelMessageDetailsActive)
 }
 
 extension UILabel: Stylable {
