@@ -54,7 +54,7 @@ public enum SemanticColors {
 }
 
 extension UIColor {
-    
+
     convenience init(light: ColorAsset, dark: ColorAsset) {
         if #available(iOS 13.0, *) {
             self.init { traits in
@@ -69,11 +69,11 @@ extension UIColor {
             }
         }
     }
-    
+
 }
 
 public extension UIColor {
-    
+
     convenience init(for accentColor: AccentColor) {
         switch accentColor {
         case .blue:
@@ -92,10 +92,10 @@ public extension UIColor {
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }
     }
-    
+
     convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
         self.init(for: safeAccentColor)
     }
-    
+
 }
