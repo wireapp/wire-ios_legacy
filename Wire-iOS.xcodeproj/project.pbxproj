@@ -527,7 +527,7 @@
 		63B9F5B825E7D7190059020D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9F5B725E7D7190059020D /* ToastView.swift */; };
 		63CE88A42506A83300E457C7 /* OrientationDeltaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */; };
 		63D17D6B268E142100B0CC4F /* MockCallGridViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D17D6A268E142000B0CC4F /* MockCallGridViewControllerDelegate.swift */; };
-		63DA333D2867708800818C3C /* CoreCryptoSetupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA333C2867708800818C3C /* CoreCryptoSetupManager.swift */; };
+		63DA333D2867708800818C3C /* MLSControllerSetupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA333C2867708800818C3C /* MLSControllerSetupManager.swift */; };
 		63E128B726208BAD009D9AF2 /* CallGridHintNotificationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */; };
 		63E128BB26208DDC009D9AF2 /* CallGridEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */; };
 		63F239352694A151000BFFC6 /* Array+Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D17D70268F52A300B0CC4F /* Array+Prefix.swift */; };
@@ -2351,7 +2351,7 @@
 		63CE88A32506A83300E457C7 /* OrientationDeltaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationDeltaTests.swift; sourceTree = "<group>"; };
 		63D17D6A268E142000B0CC4F /* MockCallGridViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallGridViewControllerDelegate.swift; sourceTree = "<group>"; };
 		63D17D70268F52A300B0CC4F /* Array+Prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Prefix.swift"; sourceTree = "<group>"; };
-		63DA333C2867708800818C3C /* CoreCryptoSetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCryptoSetupManager.swift; sourceTree = "<group>"; };
+		63DA333C2867708800818C3C /* MLSControllerSetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLSControllerSetupManager.swift; sourceTree = "<group>"; };
 		63E128B626208BAD009D9AF2 /* CallGridHintNotificationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridHintNotificationLabel.swift; sourceTree = "<group>"; };
 		63E128BA26208DDC009D9AF2 /* CallGridEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallGridEvent.swift; sourceTree = "<group>"; };
 		63F2398D269F242B000BFFC6 /* VideoGridPresentationMode+CallActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VideoGridPresentationMode+CallActions.swift"; sourceTree = "<group>"; };
@@ -6979,7 +6979,7 @@
 			isa = PBXGroup;
 			children = (
 				EE08B347284E33290022830B /* CoreCrypto.swift */,
-				63DA333C2867708800818C3C /* CoreCryptoSetupManager.swift */,
+				63DA333C2867708800818C3C /* MLSControllerSetupManager.swift */,
 			);
 			path = MLS;
 			sourceTree = "<group>";
@@ -8954,7 +8954,7 @@
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
 				16A5FDC52154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift in Sources */,
-				63DA333D2867708800818C3C /* CoreCryptoSetupManager.swift in Sources */,
+				63DA333D2867708800818C3C /* MLSControllerSetupManager.swift in Sources */,
 				87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */,
 				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
 				54D5E01924E1286B00B982F6 /* Bundle+SecurityFlags.swift in Sources */,

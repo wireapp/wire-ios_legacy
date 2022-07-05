@@ -20,21 +20,24 @@ import Foundation
 import WireSyncEngine
 import WireCoreCrypto
 
-class CoreCryptoSetupManager {
+class MLSControllerSetupManager {
 
     weak var configurationProvider: CoreCryptoConfigurationProvider?
-    weak var coreCryptoProvider: CoreCryptoProvider?
+    weak var mlsControllerInitializerHelper: MLSControllerInitializerHelper?
 
-    init(sessionManager: CoreCryptoConfigurationProvider & CoreCryptoProvider) {
+    init(sessionManager: CoreCryptoConfigurationProvider & MLSControllerInitializerHelper) {
         self.configurationProvider = sessionManager
-        self.coreCryptoProvider = sessionManager
+        self.mlsControllerInitializerHelper = sessionManager
     }
 
-    func setUpCoreCryptoIfNeeded() {
+    func setUpMLSControllerIfNeeded() {
         guard
-            coreCryptoProvider?.coreCrypto == nil,
+            let mlsControllerInitializerHelper = mlsControllerInitializerHelper,
+            !mlsControllerInitializerHelper.isMLSControllerInitialized,
             let configuration = configurationProvider?.coreCryptoConfiguration
-        else { return }
+        else {
+            return
+        }
 
         do {
             let coreCrypto = try CoreCrypto(
@@ -43,10 +46,12 @@ class CoreCryptoSetupManager {
                 clientId: configuration.clientId
             )
 
-            coreCryptoProvider?.coreCrypto = coreCrypto
+            mlsControllerInitializerHelper.initializeMLSController(coreCrypto: coreCrypto)
+
         } catch {
             // TODO: error handling
             fatalError(String(describing: error))
         }
     }
+
 }
