@@ -103,8 +103,7 @@ final class UserNameDetailViewModel: NSObject {
 
     static func attributedSubtitle(for user: UserType?) -> NSAttributedString? {
         guard let user = user, let handle = user.handleDisplayString(withDomain: user.isFederated) else { return nil }
-
-        return handle && smallBoldFont.font! && UIColor.from(scheme: .textDimmed)
+        return handle && smallBoldFont.font! && SemanticColors.LabelsColor.textLabelUseraname
     }
 
     static func attributedCorrelationText(for user: UserType?, addressBookName: String?) -> NSAttributedString? {
