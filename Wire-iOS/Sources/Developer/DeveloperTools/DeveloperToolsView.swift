@@ -57,6 +57,10 @@ struct DeveloperToolsView: View {
                 .onTapGesture {
                     viewModel.handleEvent(.itemTapped(item))
                 }
+
+        case let .destination(destinationItem):
+            NavigationLink(destinationItem.title, destination: destinationItem.makeView)
+
         }
     }
 

@@ -24,9 +24,8 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private var iconImageView = UIImageView()
     private let topContainer = UIView()
     private let titleLabel = UILabel()
-    private let toggle = UISwitch()
+    private let toggle = UISwitch(style: .default)
     private let subtitleLabel = UILabel()
-
     private var action: ((Bool, UIView?) -> Void)?
     private var variant: ColorSchemeVariant = .light {
         didSet {
