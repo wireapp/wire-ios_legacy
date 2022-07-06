@@ -67,4 +67,3 @@ struct DeveloperFlagsView_Previews: PreviewProvider {
     }
 
 }
-
