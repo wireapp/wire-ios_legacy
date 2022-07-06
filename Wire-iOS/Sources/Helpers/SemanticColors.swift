@@ -35,16 +35,19 @@ public enum SemanticColors {
         public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
         public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
     }
-    public enum LabelsColor {
+    public enum LabelsColors {
         static let textLabelUseraname = UIColor(light: Asset.black, dark: Asset.white)
         static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
+        static let textLabelConversationSearchNoItems = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
-    public enum SearchBarColor {
+    public enum SearchBarColors {
         public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
+    }
+    public enum BackgroundColors {
+        static let ConversationScreenBackground = UIColor(light: Asset.gray20, dark: Asset.gray100)
     }
 }
 

@@ -34,7 +34,7 @@ final class CollectionsView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .from(scheme: .contentBackground)
+        backgroundColor = SemanticColors.BackgroundColors.ConversationScreenBackground
 
         recreateLayout()
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
