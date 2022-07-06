@@ -46,6 +46,8 @@ final class DeveloperFlagsViewModel: ObservableObject {
 
     // MARK: - State
 
-    var flags = DeveloperFlag.allCases
+    var flags = DeveloperFlag.allCases.sorted {
+        $0.rawValue < $1.rawValue
+    }
 
 }
