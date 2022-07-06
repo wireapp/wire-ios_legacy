@@ -67,7 +67,6 @@ extension UIColor {
 
 }
 
-
 public extension UIColor {
     convenience init(for accentColor: AccentColor) {
         switch accentColor {
