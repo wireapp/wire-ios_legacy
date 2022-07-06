@@ -179,7 +179,7 @@ extension ConversationContentViewController {
             message: alertMessage,
             preferredStyle: .alert)
         let cancelAction = UIAlertAction(
-            title:L10n.Localizable.General.close,
+            title: L10n.Localizable.General.close,
             style: .default)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)

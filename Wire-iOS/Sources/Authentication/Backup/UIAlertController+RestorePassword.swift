@@ -34,10 +34,9 @@ extension UIAlertController {
             completion(result)
         }
 
-        let okAction = UIAlertAction(
-            title: L10n.Localizable.General.ok,
-            style: .default){ [controller] _ in
-                complete(controller.textFields?.first?.text)
+        let okAction = UIAlertAction(title: L10n.Localizable.General.ok,
+                                     style: .default) { [controller] _ in
+            complete(controller.textFields?.first?.text)
         }
 
         okAction.isEnabled = false

@@ -37,7 +37,6 @@ extension AvailabilityKind {
             return L10n.Localizable.Availability.busy
         }
     }
-    
     var canonicalNameReminderTitle: String {
         switch self {
         case .none:
@@ -50,7 +49,6 @@ extension AvailabilityKind {
             return L10n.Localizable.Availability.Reminder.Busy.title
         }
     }
-    
     var canonicalNameReminderMessage: String {
         switch self {
         case .none:
@@ -63,11 +61,9 @@ extension AvailabilityKind {
             return L10n.Localizable.Availability.Reminder.Busy.message
         }
     }
-
     var localizedName: String {
         return canonicalName
     }
-
     var iconType: StyleKitIcon? {
         switch self {
         case .none:

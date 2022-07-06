@@ -33,16 +33,16 @@ extension UIAlertController {
 
     static func confirmRemovingGuests(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            title:  L10n.Localizable.GuestRoom.RemoveGuests.message,
-            confirmTitle:  L10n.Localizable.GuestRoom.RemoveGuests.action,
+            title: L10n.Localizable.GuestRoom.RemoveGuests.message,
+            confirmTitle: L10n.Localizable.GuestRoom.RemoveGuests.action,
             completion: completion
         )
     }
 
     static func confirmRevokingLink(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            title:  L10n.Localizable.GuestRoom.RevokeLink.message,
-            confirmTitle:  L10n.Localizable.GuestRoom.RevokeLink.action,
+            title: L10n.Localizable.GuestRoom.RevokeLink.message,
+            confirmTitle: L10n.Localizable.GuestRoom.RevokeLink.action,
             completion: completion
         )
     }

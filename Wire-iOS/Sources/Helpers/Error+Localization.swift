@@ -44,7 +44,6 @@ extension SessionManager.SwitchBackendError: LocalizedError {
         case .invalidBackend:
             return BackendError.InvalidBackend.title
         case .loggedInAccounts:
-            
             return BackendError.LoggedIn.title
         }
     }
