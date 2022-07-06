@@ -20,6 +20,7 @@ import Foundation
 import WireSyncEngine
 import WireTransport
 import UIKit
+import SwiftUI
 
 @available(iOS 14, *)
 final class DeveloperToolsViewModel: ObservableObject {
@@ -38,14 +39,18 @@ final class DeveloperToolsViewModel: ObservableObject {
 
         case button(ButtonItem)
         case text(TextItem)
+        case destination(DestinationItem)
 
         var id: UUID {
             switch self {
-            case .button(let buttonItem):
-                return buttonItem.id
+            case .button(let item):
+                return item.id
 
-            case .text(let textItem):
-                return textItem.id
+            case .text(let item):
+                return item.id
+
+            case .destination(let item):
+                return item.id
             }
         }
 
@@ -64,6 +69,14 @@ final class DeveloperToolsViewModel: ObservableObject {
         let id = UUID()
         let title: String
         let value: String
+
+    }
+
+    struct DestinationItem: Identifiable {
+
+        let id = UUID()
+        let title: String
+        let makeView: () -> AnyView
 
     }
 
@@ -89,9 +102,12 @@ final class DeveloperToolsViewModel: ObservableObject {
         sections = []
 
         sections.append(Section(
-            header: "Logs",
+            header: "Actions",
             items: [
-                .button(ButtonItem(title: "Send debug logs", action: sendDebugLogs))
+                .button(ButtonItem(title: "Send debug logs", action: sendDebugLogs)),
+                .destination(DestinationItem(title: "Configure flags", makeView: {
+                    AnyView(erasing: DeveloperFlagsView(viewModel: DeveloperFlagsViewModel()))
+                }))
             ]
         ))
 
@@ -149,13 +165,16 @@ final class DeveloperToolsViewModel: ObservableObject {
 
         case let .itemTapped(.button(buttonItem)):
             buttonItem.action()
+
+        default:
+            break
         }
     }
 
     // MARK: - Actions
 
     private func sendDebugLogs() {
-        DebugLogSender.sendLogsByEmail(message: "Send logs yo!")
+        DebugLogSender.sendLogsByEmail(message: "Send logs")
     }
 
     // MARK: - Helpers
