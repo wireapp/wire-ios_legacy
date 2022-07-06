@@ -72,6 +72,9 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
+        contentHandler(request.content)
+        return
+
         self.contentHandler = contentHandler
 
         guard
