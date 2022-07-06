@@ -20,7 +20,6 @@ import Foundation
 
 private let storage = UserDefaults(suiteName: "com.wire.developer-flags")!
 
-
 @available(iOS 14, *)
 final class DeveloperFlagsViewModel: ObservableObject {
 
@@ -29,11 +28,19 @@ final class DeveloperFlagsViewModel: ObservableObject {
     enum DeveloperFlag: String, CaseIterable {
 
         case showCreateMLSGroupToggle
+        case nseDebugging
+        case useDevelopmentBackendAPI
 
         var description: String {
             switch self {
             case .showCreateMLSGroupToggle:
                 return "Turn on to show the MLS toggle when creating a new group."
+
+            case .nseDebugging:
+                return "Turn on to make the notification service extension (NSE) display debug notifications."
+
+            case .useDevelopmentBackendAPI:
+                return "Turn on to use the developement backend API version instead of the latest production API version."
             }
         }
 
