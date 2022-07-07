@@ -162,7 +162,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         if atRange.location != NSNotFound {
             let effects = AVSAudioEffectType.displayedEffects.filter { $0 != .none }
             let max = UInt32(effects.count)
-            let effect = effects[Int(arc4random_uniform(max))]
+            let effect = effects[Int.random(in: 0..<Int(max))]
             let image = effect.icon.makeImage(size: 14, color: color)
 
             let attachment = NSTextAttachment()
@@ -186,21 +186,21 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
         self.recordButton.setIcon(.recordDot, size: .tiny, for: [])
         self.recordButton.setIconColor(.white, for: [])
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed), for: .touchUpInside)
-        self.recordButton.setBackgroundImageColor(.vividRed, for: .normal)
+        self.recordButton.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         self.recordButton.layer.masksToBounds = true
         self.recordButton.accessibilityLabel = "record"
 
         self.stopRecordButton.setIcon(.stopRecording, size: .tiny, for: [])
         self.stopRecordButton.setIconColor(.white, for: [])
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed), for: .touchUpInside)
-        self.stopRecordButton.setBackgroundImageColor(.vividRed, for: .normal)
+        self.stopRecordButton.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         self.stopRecordButton.layer.masksToBounds = true
         self.stopRecordButton.accessibilityLabel = "stopRecording"
 
         self.confirmButton.setIcon(.checkmark, size: .tiny, for: [])
         self.confirmButton.setIconColor(.white, for: [])
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
-        self.confirmButton.setBackgroundImageColor(.strongLimeGreen, for: .normal)
+        self.confirmButton.setBackgroundImageColor(SemanticColors.LegacyColors.strongLimeGreen, for: .normal)
         self.confirmButton.layer.masksToBounds = true
         self.confirmButton.accessibilityLabel = "confirmRecording"
 

@@ -35,21 +35,21 @@ private struct SenderCellConfiguration {
             icon = .bot
             accessibilityIdentifier = "img.serviceUser"
         } else if user.isExternalPartner {
-            textColor = user.nameAccentColor
+            textColor = user.accentColor
             icon = .externalPartner
             accessibilityIdentifier = "img.externalPartner"
         } else if user.isFederated {
-            textColor = user.nameAccentColor
+            textColor = user.accentColor
             icon = .federated
             accessibilityIdentifier = "img.federatedUser"
         } else if !user.isTeamMember,
                   let selfUser = SelfUser.provider?.selfUser,
                   selfUser.isTeamMember {
-            textColor = user.nameAccentColor
+            textColor = user.accentColor
             icon = .guest
             accessibilityIdentifier = "img.guest"
         } else {
-            textColor = user.nameAccentColor
+            textColor = user.accentColor
             icon = .none
             accessibilityIdentifier = "img.member"
         }

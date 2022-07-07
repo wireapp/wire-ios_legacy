@@ -66,7 +66,6 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
-        clearButton.alpha = 0.4
         clearButton.isHidden = true
 
         tokenField.layer.cornerRadius = 4

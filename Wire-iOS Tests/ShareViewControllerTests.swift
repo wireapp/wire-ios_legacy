@@ -34,7 +34,7 @@ extension MockShareViewControllerConversation: StableRandomParticipantsProvider 
 	}
 }
 
-final class ShareViewControllerTests: XCTestCase {
+final class ShareViewControllerTests: ZMSnapshotTestCase {
     fileprivate var groupConversation: MockShareViewControllerConversation!
     fileprivate var oneToOneConversation: MockShareViewControllerConversation!
     fileprivate var sut: ShareViewController<MockShareViewControllerConversation, MockShareableMessage>!

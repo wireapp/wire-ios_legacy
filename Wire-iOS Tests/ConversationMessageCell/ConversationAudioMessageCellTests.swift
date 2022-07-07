@@ -20,7 +20,7 @@
 
 import XCTest
 
-final class ConversationAudioMessageCellTests: XCTestCase {
+final class ConversationAudioMessageCellTests: ZMSnapshotTestCase {
 
     var message: MockMessage!
     var mockSelfUser: MockUserType!

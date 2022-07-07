@@ -66,9 +66,15 @@ final class MockArticleViewDelegate: ContextMenuLinkViewDelegate {
     }
 }
 
-final class ArticleViewTests: XCTestCase {
+final class ArticleViewTests: ZMSnapshotTestCase {
 
     var sut: ArticleView!
+
+    override func setUp() {
+        super.setUp()
+
+        accentColor = .strongBlue
+    }
 
     override func tearDown() {
 
