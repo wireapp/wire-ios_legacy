@@ -217,7 +217,7 @@ final class FullscreenImageViewController: UIViewController {
         snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
         snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
-        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height),
+        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
         ])
         snapshotBackgroundView.alpha = 0
 
