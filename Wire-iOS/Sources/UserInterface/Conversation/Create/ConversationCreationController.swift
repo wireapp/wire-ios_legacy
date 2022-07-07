@@ -33,7 +33,7 @@ final class ConversationCreationValues {
     var allowGuests: Bool
     var allowServices: Bool
     var enableReceipts: Bool
-    var encryptionType: EncryptionType
+    var encryptionProtocol: EncryptionProtocol
 
     var participants: UserSet {
         get {
@@ -62,7 +62,7 @@ final class ConversationCreationValues {
         allowGuests: Bool = true,
         allowServices: Bool = true,
         enableReceipts: Bool = true,
-        encryptionType: EncryptionType = .proteus,
+        encryptionProtocol: EncryptionProtocol = .proteus,
         selfUser: UserType
     ) {
         self.name = name
@@ -70,7 +70,7 @@ final class ConversationCreationValues {
         self.allowGuests = allowGuests
         self.allowServices = allowServices
         self.enableReceipts = enableReceipts
-        self.encryptionType = encryptionType
+        self.encryptionProtocol = encryptionProtocol
         self.selfUser = selfUser
     }
 }
@@ -114,7 +114,7 @@ final class ConversationCreationController: UIViewController {
         guestsSection,
         servicesSection,
         receiptsSection,
-        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? encryptionTypeSection : nil
+        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? encryptionProtocolSection : nil
     ].compactMap(\.self)
 
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
@@ -152,13 +152,13 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
 
-    private lazy var encryptionTypeSection: ConversationEncryptionTypeSectionController = {
-        let section = ConversationEncryptionTypeSectionController(values: values)
+    private lazy var encryptionProtocolSection: ConversationEncryptionProtocolSectionController = {
+        let section = ConversationEncryptionProtocolSectionController(values: values)
         section.isHidden = true
 
         section.tapAction = {
-            self.presentEncryptionTypePicker { [weak self] encryptionType in
-                self?.values.encryptionType = encryptionType
+            self.presentEncryptionProtocolPicker { [weak self] encryptionProtocol in
+                self?.values.encryptionProtocol = encryptionProtocol
                 self?.updateOptions()
             }
         }
@@ -307,7 +307,7 @@ final class ConversationCreationController: UIViewController {
         self.optionsToggle.configure(with: values)
         self.guestsSection.configure(with: values)
         self.servicesSection.configure(with: values)
-        self.encryptionTypeSection.configure(with: values)
+        self.encryptionProtocolSection.configure(with: values)
     }
 }
 
@@ -402,8 +402,8 @@ extension ConversationCreationController {
 
 extension ConversationCreationController {
 
-    func presentEncryptionTypePicker(_ completion: @escaping (EncryptionType) -> Void) {
-        let alertViewController = encryptionTypePicker { type in
+    func presentEncryptionProtocolPicker(_ completion: @escaping (EncryptionProtocol) -> Void) {
+        let alertViewController = encryptionProtocolPicker { type in
             completion(type)
         }
 
@@ -411,12 +411,12 @@ extension ConversationCreationController {
         present(alertViewController, animated: true)
     }
 
-    func encryptionTypePicker(_ completion: @escaping (EncryptionType) -> Void) -> UIAlertController {
+    func encryptionProtocolPicker(_ completion: @escaping (EncryptionProtocol) -> Void) -> UIAlertController {
         let alert = UIAlertController(title: L10n.Localizable.Conversation.Create.Mls.pickerTitle, message: nil, preferredStyle: .actionSheet)
 
-        for encryptionType in EncryptionType.allCases {
-            alert.addAction(UIAlertAction(title: encryptionType.rawValue, style: .default, handler: { _ in
-                completion(encryptionType)
+        for encryptionProtocol in EncryptionProtocol.allCases {
+            alert.addAction(UIAlertAction(title: encryptionProtocol.rawValue, style: .default, handler: { _ in
+                completion(encryptionProtocol)
             }))
         }
 
@@ -427,7 +427,7 @@ extension ConversationCreationController {
     }
 }
 
-enum EncryptionType: String, CaseIterable {
+enum EncryptionProtocol: String, CaseIterable {
     case proteus = "Proteus (default)"
     case mls = "MLS"
 }

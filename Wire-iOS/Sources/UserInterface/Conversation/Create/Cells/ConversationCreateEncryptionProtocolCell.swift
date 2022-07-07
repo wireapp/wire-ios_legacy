@@ -19,7 +19,7 @@
 import WireCommonComponents
 import UIKit
 
-final class ConversationCreateEncryptionTypeCell: ConversationEncryptionTypeCell {
+final class ConversationCreateEncryptionProtocolCell: ConversationEncryptionProtocolCell {
 
     override func setUp() {
         super.setUp()
@@ -34,10 +34,10 @@ final class ConversationCreateEncryptionTypeCell: ConversationEncryptionTypeCell
     }
 }
 
-extension ConversationCreateEncryptionTypeCell: ConversationCreationValuesConfigurable {
+extension ConversationCreateEncryptionProtocolCell: ConversationCreationValuesConfigurable {
 
     func configure(with values: ConversationCreationValues) {
-        encryptionType = values.encryptionType.rawValue
+        encryptionProtocol = values.encryptionProtocol.rawValue
     }
 
 }

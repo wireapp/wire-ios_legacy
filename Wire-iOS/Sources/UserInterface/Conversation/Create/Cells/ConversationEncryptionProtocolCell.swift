@@ -18,11 +18,11 @@
 
 import UIKit
 
-class ConversationEncryptionTypeCell: DetailsCollectionViewCell {
+class ConversationEncryptionProtocolCell: DetailsCollectionViewCell {
 
-    var encryptionType: String {
+    var encryptionProtocol: String {
         get {
-            return label.text ?? EncryptionType.proteus.rawValue
+            return label.text ?? EncryptionProtocol.proteus.rawValue
         }
 
         set {
@@ -38,7 +38,7 @@ class ConversationEncryptionTypeCell: DetailsCollectionViewCell {
 
     override func setUp() {
         super.setUp()
-        label.text = encryptionType
+        label.text = encryptionProtocol
         contentStackView.insertArrangedSubview(label, at: contentStackView.arrangedSubviews.count)
     }
 }

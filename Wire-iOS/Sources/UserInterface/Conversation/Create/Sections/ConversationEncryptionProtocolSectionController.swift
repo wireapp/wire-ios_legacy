@@ -19,9 +19,9 @@
 import Foundation
 import UIKit
 
-final class ConversationEncryptionTypeSectionController: ConversationCreateSectionController {
+final class ConversationEncryptionProtocolSectionController: ConversationCreateSectionController {
 
-    typealias Cell = ConversationCreateEncryptionTypeCell
+    typealias Cell = ConversationCreateEncryptionProtocolCell
 
     var tapAction: (() -> Void)?
 
@@ -33,7 +33,7 @@ final class ConversationEncryptionTypeSectionController: ConversationCreateSecti
     }
 }
 
-extension ConversationEncryptionTypeSectionController {
+extension ConversationEncryptionProtocolSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: Cell.self, for: indexPath)
