@@ -102,11 +102,12 @@ final class MediaBar: UIView {
 
         titleLabel.pinToSuperview(axisAnchor: .centerY)
 
-        playPauseButton.setDimensions(length: iconSize)
+        playPauseButton.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
+        playPauseButton.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
         playPauseButton.pinToSuperview(axisAnchor: .centerY)
         playPauseButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: buttonInsets).isActive = true
-
-        closeButton.setDimensions(length: iconSize)
+        closeButton.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
         closeButton.pinToSuperview(axisAnchor: .centerY)
         closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: buttonInsets).isActive = true
 
