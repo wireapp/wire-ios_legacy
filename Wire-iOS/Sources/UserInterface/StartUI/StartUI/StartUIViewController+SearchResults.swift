@@ -154,21 +154,27 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
         }
     }
 
-    func conversationCreationController(_ controller: ConversationCreationController,
-                                        didSelectName name: String,
-                                        participants: UserSet,
-                                        allowGuests: Bool,
-                                        allowServices: Bool,
-                                        enableReceipts: Bool) {
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: UserSet,
+        allowGuests: Bool,
+        allowServices: Bool,
+        enableReceipts: Bool,
+        encryptionProtocol: EncryptionProtocol
+    ) {
         dismiss(controller: controller) { [weak self] in
             guard let weakSelf = self else { return }
 
-            weakSelf.delegate?.startUI(weakSelf,
-                                       createConversationWith: participants,
-                                       name: name,
-                                       allowGuests: allowGuests,
-                                       allowServices: allowServices,
-                                       enableReceipts: enableReceipts)
+            weakSelf.delegate?.startUI(
+                weakSelf,
+                createConversationWith: participants,
+                name: name,
+                allowGuests: allowGuests,
+                allowServices: allowServices,
+                enableReceipts: enableReceipts,
+                encryptionProtocol: encryptionProtocol
+            )
         }
     }
 

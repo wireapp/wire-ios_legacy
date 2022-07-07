@@ -469,16 +469,22 @@ extension ProfileViewController: ProfileViewControllerDelegate {
 }
 
 extension ProfileViewController: ConversationCreationControllerDelegate {
-    func conversationCreationController(_ controller: ConversationCreationController,
-                                        didSelectName name: String,
-                                        participants: UserSet,
-                                        allowGuests: Bool,
-                                        allowServices: Bool,
-                                        enableReceipts: Bool) {
+
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: UserSet,
+        allowGuests: Bool,
+        allowServices: Bool,
+        enableReceipts: Bool,
+        encryptionProtocol: EncryptionProtocol
+    ) {
         controller.dismiss(animated: true) { [weak self] in
-            self?.delegate?.profileViewController(self,
-                                                  wantsToCreateConversationWithName: name,
-                                                  users: participants)
+            self?.delegate?.profileViewController(
+                self,
+                wantsToCreateConversationWithName: name,
+                users: participants
+            )
         }
     }
 }

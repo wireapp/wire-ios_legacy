@@ -77,12 +77,15 @@ final class ConversationCreationValues {
 
 protocol ConversationCreationControllerDelegate: AnyObject {
 
-    func conversationCreationController(_ controller: ConversationCreationController,
-                                        didSelectName name: String,
-                                        participants: UserSet,
-                                        allowGuests: Bool,
-                                        allowServices: Bool,
-                                        enableReceipts: Bool)
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: UserSet,
+        allowGuests: Bool,
+        allowServices: Bool,
+        enableReceipts: Bool,
+        encryptionProtocol: EncryptionProtocol
+    )
 
 }
 
@@ -330,7 +333,8 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
                 participants: values.participants,
                 allowGuests: values.allowGuests,
                 allowServices: values.allowServices,
-                enableReceipts: values.enableReceipts
+                enableReceipts: values.enableReceipts,
+                encryptionProtocol: values.encryptionProtocol
             )
         }
     }
