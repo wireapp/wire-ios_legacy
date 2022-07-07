@@ -24,7 +24,7 @@ final class KeyboardHeight: NSObject {
     public static var current: CGFloat {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            return UIWindow.isPortrait ? 264 : 352
+            return UIWindow.interfaceOrientation!.isPortrait ? 264 : 352
         default:
             return phoneKeyboardHeight()
         }

@@ -31,7 +31,7 @@ enum OrientationDelta: Int, CaseIterable {
         return OrientationDelta(rawValue: value)
     }
 
-    init(interfaceOrientation: UIInterfaceOrientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation ?? .unknown,
+    init(interfaceOrientation: UIInterfaceOrientation = UIWindow.interfaceOrientation ?? .unknown,
          deviceOrientation: UIDeviceOrientation = UIDevice.current.orientation) {
         guard let delta = deviceOrientation.deltaFromPortrait + interfaceOrientation.deltaFromPortrait else {
             self = .equal
