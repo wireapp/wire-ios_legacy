@@ -176,10 +176,12 @@ final class SearchResultsView: UIView {
 
             // Add padding at the bottom of the screen
             collectionView.contentInset.bottom = bottomInset
-            collectionView.scrollIndicatorInsets.bottom  = bottomInset
+            collectionView.horizontalScrollIndicatorInsets.bottom = bottomInset
+            collectionView.verticalScrollIndicatorInsets.bottom = bottomInset
         } else {
             collectionView.contentInset.bottom = 0
-            collectionView.scrollIndicatorInsets.bottom = 0
+            collectionView.horizontalScrollIndicatorInsets.bottom = 0
+            collectionView.verticalScrollIndicatorInsets.bottom = 0
         }
 
     }

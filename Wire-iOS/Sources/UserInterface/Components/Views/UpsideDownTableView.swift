@@ -53,8 +53,9 @@ final class UpsideDownTableView: UITableView {
 
     var correctedScrollIndicatorInsets: UIEdgeInsets {
         get {
-            let insets = super.scrollIndicatorInsets
-            return UIEdgeInsets(top: insets.bottom, left: insets.left, bottom: insets.top, right: insets.right)
+            let verticalInsets = super.verticalScrollIndicatorInsets
+            let horizontalInsets = super.horizontalScrollIndicatorInsets
+            return UIEdgeInsets(top: verticalInsets.bottom, left: horizontalInsets.left, bottom: verticalInsets.top, right: horizontalInsets.right)
         }
 
         set {

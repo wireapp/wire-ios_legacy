@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2020 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
-typealias OrientableView = UIView & OrientableViewProtocol
+extension UIWindow {
 
-protocol OrientableViewProtocol {
-    func layout(forInterfaceOrientation interfaceOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation)
-    func layoutForOrientation()
-}
-
-extension OrientableViewProtocol {
-    func layoutForOrientation() {
-        layout(forInterfaceOrientation: UIWindow.interfaceOrientation ?? .unknown,
-               deviceOrientation: UIDevice.current.orientation)
+    static var interfaceOrientation: UIInterfaceOrientation? {
+        return UIApplication
+          .shared
+          .windows
+          .first?
+          .windowScene?
+          .interfaceOrientation
     }
 }
