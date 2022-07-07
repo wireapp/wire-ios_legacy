@@ -213,11 +213,12 @@ final class FullscreenImageViewController: UIViewController {
 
         let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
 
-        snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight).isActive = true
-        snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width).isActive = true
-        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height).isActive = true
-
+        NSLayoutConstraint.activate([
+        snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
+        snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
+        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height),
+        ])
         snapshotBackgroundView.alpha = 0
 
         self.snapshotBackgroundView = snapshotBackgroundView
