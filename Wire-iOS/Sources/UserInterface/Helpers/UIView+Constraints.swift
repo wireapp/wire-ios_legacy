@@ -139,29 +139,6 @@ extension UIView {
 
     // MARK: - signal edge alignment
 
-    /// Pin this view's specific edge to superview's same edge with custom inset
-    ///
-    /// - Parameters:
-    ///   - anchor: the edge to pin
-    ///   - inset: the inset to the edge
-    ///   - activate: true by default, set to false if do not activate the NSLayoutConstraint
-    /// - Returns: the NSLayoutConstraint created
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func pinToSuperview(safely: Bool = false,
-                        anchor: Anchor,
-                        inset: CGFloat = 0,
-                        activate: Bool = true) -> NSLayoutConstraint {
-        guard let superview = superview else {
-            fatal("Not in view hierarchy: self.superview = nil")
-        }
-
-        return pin(to: superview,
-                   safely: false,
-                   anchor: anchor,
-                   inset: inset,
-                   activate: activate)
-    }
-
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func pin(to view: UIView,
              safely: Bool = false,
