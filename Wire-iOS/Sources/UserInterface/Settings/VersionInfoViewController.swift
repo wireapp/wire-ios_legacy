@@ -55,7 +55,7 @@ final class VersionInfoViewController: UIViewController {
         // Layout
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 24).isActive = true
+        closeButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -18).isActive = true
 
         // Target
