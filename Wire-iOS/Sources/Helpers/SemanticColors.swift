@@ -32,7 +32,7 @@ public enum SemanticColors {
         public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
     public enum SwitchColors {
-        public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
+        public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green700Dark)
         public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
     }
     public enum LabelsColor {
@@ -49,7 +49,6 @@ public enum SemanticColors {
 }
 
 extension UIColor {
-
     convenience init(light: ColorAsset, dark: ColorAsset) {
         if #available(iOS 13.0, *) {
             self.init { traits in
@@ -64,7 +63,6 @@ extension UIColor {
             }
         }
     }
-
 }
 
 public extension UIColor {

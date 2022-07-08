@@ -22,6 +22,7 @@ public struct SwitchStyle {
 
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
+    
     static let `default`: Self = SwitchStyle(
         enabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
         enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled
@@ -33,6 +34,16 @@ extension UISwitch: Stylable {
         self.init()
         applyStyle(switchStyle)
     }
+    //TODO: This needs to be implemented!
+    public func applyBorderStyle() {
+        if self.traitCollection.userInterfaceStyle == .dark {
+            let enabledOnBorderColor = UIColor(asset: Asset.green500Dark)!
+            let enabledOffBorderColor = UIColor(asset: Asset.gray60)!
+            self.layer.borderWidth = 1
+            self.layer.borderColor = isOn ? enabledOnBorderColor.cgColor : enabledOffBorderColor.cgColor
+        }
+    }
+
     public func applyStyle(_ style: SwitchStyle) {
         self.onTintColor = style.enabledOnStateColor
         self.layer.cornerRadius = self.frame.height / 2.0
