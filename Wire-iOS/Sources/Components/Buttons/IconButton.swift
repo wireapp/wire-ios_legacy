@@ -23,6 +23,7 @@ enum IconButtonStyle {
     case `default`
     case circular
     case navigation
+    case searchBarClear
 }
 
 struct IconDefinition: Equatable {
@@ -89,6 +90,13 @@ class IconButton: ButtonWithLargerHitArea {
             adjustsImageWhenDisabled = false
             borderWidth = 0
             contentHorizontalAlignment = .left
+        case .searchBarClear:
+            setIcon(.clearInput, size: .tiny, for: .normal)
+            isHidden = true
+            accessibilityIdentifier = "cancel search"
+            setIconColor(
+                SemanticColors.Icon.clearButton,
+                for: .normal)
         }
     }
 

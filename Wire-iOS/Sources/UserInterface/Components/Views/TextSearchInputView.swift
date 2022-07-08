@@ -30,7 +30,7 @@ final class TextSearchInputView: UIView {
     let iconView = UIImageView()
     let searchInput = UITextView()
     let placeholderLabel = UILabel()
-    let clearButton = IconButton(style: .default)
+    let clearButton = IconButton(style: .searchBarClear)
 
     private let spinner = ProgressSpinner()
 
@@ -58,7 +58,10 @@ final class TextSearchInputView: UIView {
         super.init(frame: frame)
 
         backgroundColor = SemanticColors.SearchBarColor.backgroundSearchBar
-        iconView.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground))
+        iconView.setIcon(
+            .search,
+            size: .tiny,
+            color: SemanticColors.Icon.magnifyingGlassButton)
         iconView.contentMode = .center
 
         searchInput.delegate = self
@@ -79,10 +82,7 @@ final class TextSearchInputView: UIView {
         placeholderLabel.font = .smallRegularFont
         placeholderLabel.applyStyle(.searchBarPlaceholder)
 
-        clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
-        clearButton.isHidden = true
-        clearButton.accessibilityIdentifier = "cancel search"
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
