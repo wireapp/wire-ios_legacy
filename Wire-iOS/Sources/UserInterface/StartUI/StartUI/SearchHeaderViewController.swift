@@ -61,20 +61,20 @@ final class SearchHeaderViewController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        searchIcon.setIcon(
+            .search,
+            size: .tiny,
+            color: SemanticColors.Icon.magnifyingGlassButton)
 
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
-
-        tokenField.layer.cornerRadius = 4
-        tokenField.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        clearButton.setIconColor(
+            SemanticColors.Icon.clearButton,
+            for: .normal)
+        tokenField.applyStyle(.default)
         tokenField.clipsToBounds = true
-        tokenField.textView.placeholderTextColor = UIColor.from(scheme: .tokenFieldTextPlaceHolder, variant: colorSchemeVariant)
-        tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: colorSchemeVariant)
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
@@ -88,17 +88,16 @@ final class SearchHeaderViewController: UIViewController {
 
         createConstraints()
     }
-
     private func createConstraints() {
         [tokenFieldContainer, tokenField, searchIcon, clearButton, tokenFieldContainer].prepareForLayout()
         NSLayoutConstraint.activate([
           searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-          searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8),
+          searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
 
-          clearButton.widthAnchor.constraint(equalToConstant: 32),
+          clearButton.widthAnchor.constraint(equalToConstant: 16),
           clearButton.heightAnchor.constraint(equalTo: clearButton.widthAnchor),
           clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor),
+          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -16),
 
           tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
           tokenField.topAnchor.constraint(greaterThanOrEqualTo: tokenFieldContainer.topAnchor, constant: 8),

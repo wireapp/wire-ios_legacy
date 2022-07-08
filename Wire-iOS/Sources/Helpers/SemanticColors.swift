@@ -48,6 +48,7 @@ public enum SemanticColors {
         public static let textUserInput = UIColor(light: Asset.black, dark: Asset.white)
         public static let backgroundSearchBar = UIColor(light: Asset.white, dark: Asset.black)
         public static let borderDefault = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        static let placeholderText = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum Icon {
         public static let clearButton = UIColor(light: Asset.black, dark: Asset.white)
