@@ -82,6 +82,7 @@ final class ToggleView: UIView, Themeable {
     }
 
     @objc private func toggleValueChanged(_ sender: UISwitch) {
+        sender.applyBorderStyle()
         handler?(sender.isOn)
     }
 

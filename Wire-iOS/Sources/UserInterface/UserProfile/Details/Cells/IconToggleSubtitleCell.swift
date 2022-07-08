@@ -102,6 +102,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
+        sender.applyBorderStyle()
         action?(sender.isOn, self)
     }
 

@@ -145,6 +145,7 @@ final class DeveloperOptionsController: UIViewController {
     @objc
     func switchDidChange(sender: AnyObject) {
         if let toggle = sender as? UISwitch {
+            toggle.applyBorderStyle()
             guard let action = uiSwitchToAction[toggle] else {
                 fatalError("Unknown switch?")
             }

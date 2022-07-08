@@ -343,6 +343,9 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     @objc
     private func onTrustChanged(_ sender: AnyObject) {
+        if let toggle = sender as? UISwitch {
+            toggle.applyBorderStyle()
+        }
         ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let weakSelf = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient

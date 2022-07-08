@@ -39,6 +39,7 @@ class IconToggleCell: DetailsCollectionViewCell {
     }
 
     @objc func toggleChanged(_ sender: UISwitch) {
+        sender.applyBorderStyle()
         action?(sender.isOn)
     }
 }

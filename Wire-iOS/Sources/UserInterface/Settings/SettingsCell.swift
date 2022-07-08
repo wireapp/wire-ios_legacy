@@ -349,6 +349,9 @@ final class SettingsToggleCell: SettingsTableCell {
 
     @objc
     func onSwitchChanged(_ sender: UIResponder) {
+        if let toggle = sender as? UISwitch {
+            toggle.applyBorderStyle()
+        }
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }
