@@ -31,7 +31,7 @@ final class ConversationViewController: UIViewController {
             UIKeyCommand(action: #selector(gotoBottom(_:)),
                          input: UIKeyCommand.inputDownArrow,
                          modifierFlags: [.command, .alternate],
-                         discoverabilityTitle:keyboardShortcut.scrollToBottom),
+                         discoverabilityTitle: keyboardShortcut.scrollToBottom),
             UIKeyCommand(action: #selector(onCollectionButtonPressed(_:)),
                          input: "f",
                          modifierFlags: [.command],
