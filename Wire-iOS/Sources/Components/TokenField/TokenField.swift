@@ -779,6 +779,12 @@ extension TokenField: UITextViewDelegate {
 
         return true
     }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        layer.borderColor = UIColor.accent().cgColor
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        layer.borderColor = SemanticColors.SearchBarColor.borderDefault.cgColor
+    }
 }
 
 extension UnicodeScalar {

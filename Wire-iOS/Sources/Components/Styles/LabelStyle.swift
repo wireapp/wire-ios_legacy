@@ -69,3 +69,28 @@ extension UITextView: Stylable {
         layer.borderColor = style.borderColor.cgColor
     }
 }
+
+public struct TokenFieldStyle {
+    var borderColor: UIColor
+    var textColor: UIColor
+    var backgroundColor: UIColor = SemanticColors.SearchBarColor.backgroundSearchBar
+    var cornerRadius: CGFloat = 12
+    var borderWidth: CGFloat = 1
+
+    static let `default`: Self = TokenFieldStyle(
+        borderColor: SemanticColors.SearchBarColor.borderDefault,
+        textColor: SemanticColors.SearchBarColor.textUserInput)
+    static let active: Self = TokenFieldStyle(
+        borderColor: UIColor.accent(),
+        textColor: SemanticColors.SearchBarColor.textUserInput)
+}
+
+extension TokenField: Stylable {
+    public func applyStyle(_ style: TokenFieldStyle) {
+        textColor = style.textColor
+        backgroundColor = style.backgroundColor
+        layer.borderWidth = style.borderWidth
+        layer.cornerRadius = style.cornerRadius
+        layer.borderColor = style.borderColor.cgColor
+    }
+}
