@@ -55,11 +55,8 @@ public struct TextViewStyle {
     var backgroundColor: UIColor = .clear
     var borderWidth: CGFloat = 1
 
-    static let `default`: Self = TextViewStyle(
+    static let searchBar: Self = TextViewStyle(
         borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput)
-    static let active: Self = TextViewStyle(
-        borderColor: UIColor.accent(),
         textColor: SemanticColors.SearchBarColor.textUserInput)
 }
 

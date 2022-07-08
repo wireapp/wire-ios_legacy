@@ -71,8 +71,7 @@ final class TextSearchInputView: UIView {
         searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
         searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
         searchInput.font = .normalFont
-        searchInput.applyStyle(.default)
-
+        searchInput.applyStyle(.searchBar)
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         placeholderLabel.font = .smallRegularFont
@@ -164,10 +163,12 @@ extension TextSearchInputView: UITextViewDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
+        searchInput.layer.borderColor = UIColor.accent().cgColor
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
+        searchInput.layer.borderColor = SemanticColors.SearchBarColor.borderDefault.cgColor
     }
 
 }
