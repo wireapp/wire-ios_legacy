@@ -248,13 +248,6 @@ extension UIView {
     // MARK: - dimensions
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func setDimensions(width: CGFloat,
-                       height: CGFloat,
-                       activate: Bool = true) -> LengthConstraints {
-        return setDimensions(size: CGSize(width: width, height: height), activate: activate)
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func setDimensions(size: CGSize,
                        activate: Bool = true) -> LengthConstraints {
         let constraints: [LengthAnchor: NSLayoutConstraint] = [
