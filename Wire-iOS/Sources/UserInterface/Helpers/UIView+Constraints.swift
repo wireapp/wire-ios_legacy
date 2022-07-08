@@ -248,23 +248,6 @@ extension UIView {
     // MARK: - dimensions
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func setDimensions(size: CGSize,
-                       activate: Bool = true) -> LengthConstraints {
-        let constraints: [LengthAnchor: NSLayoutConstraint] = [
-            .width: widthAnchor.constraint(equalToConstant: size.width),
-            .height: heightAnchor.constraint(equalToConstant: size.height)
-        ]
-
-        let lengthConstraints = LengthConstraints(constraints: constraints)
-
-        if activate {
-            NSLayoutConstraint.activate(lengthConstraints.array)
-        }
-
-        return lengthConstraints
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
         guard let superview = superview else { return [] }
 
