@@ -77,11 +77,8 @@ public struct TokenFieldStyle {
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
 
-    static let `default`: Self = TokenFieldStyle(
+    static let searchBar: Self = TokenFieldStyle(
         borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput)
-    static let active: Self = TokenFieldStyle(
-        borderColor: UIColor.accent(),
         textColor: SemanticColors.SearchBarColor.textUserInput)
 }
 

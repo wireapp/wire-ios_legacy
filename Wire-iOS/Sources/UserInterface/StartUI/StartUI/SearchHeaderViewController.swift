@@ -74,7 +74,7 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIconColor(
             SemanticColors.Icon.clearButton,
             for: .normal)
-        tokenField.applyStyle(.default)
+        tokenField.applyStyle(.searchBar)
         tokenField.clipsToBounds = true
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
