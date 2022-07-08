@@ -160,8 +160,8 @@ final class PermissionDeniedViewController: UIViewController {
         constraints += settingsButton.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map {$0.value}
 
         constraints += [laterButton.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 28),
-                        laterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 28),
-                        laterButton.pinToSuperview(axisAnchor: .centerX, activate: false)]
+                        laterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28),
+                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
 
         NSLayoutConstraint.activate(constraints)
 
