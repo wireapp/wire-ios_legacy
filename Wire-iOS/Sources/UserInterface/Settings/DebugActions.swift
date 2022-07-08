@@ -41,7 +41,8 @@ enum DebugActions {
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
     static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
-        let predicate = ZMConversation.predicateForConversationConsideredUnread()!
+//        let predicate = ZMConversation.predicateForConversationConsideredUnread()!
+        let predicate = predicateForUnreadCount()
 
         let uiMOC = userSession.managedObjectContext
         let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
@@ -58,6 +59,48 @@ enum DebugActions {
         } else {
             alert("No unread conversation")
         }
+    }
+
+    static private func predicateForUnreadCount() -> NSPredicate {
+
+        let notSelfConversation = NSPredicate(format: "%K != %d", "conversationType", 1)
+        let notInvalidConversation = NSPredicate(format: "%K != %d", "conversationType", 0)
+
+        let pendingConnection = NSPredicate(format: "%K != nil AND %K.status == %d", "connection", "connection", 2)
+        let acceptablePredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [pendingConnection,  predicateForUnreadMessages()])
+        let notBlockedConnection = NSPredicate(format: "(%K == nil) OR (%K != nil AND %K.status != %d)", "connection", "connection", "connection", 4)
+
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [notSelfConversation, notInvalidConversation, notBlockedConnection, acceptablePredicate])
+    }
+
+    static private func predicateForUnreadMessages() -> NSPredicate {
+        let notifyAllPredicate = NSPredicate(format: "%K != %lu", "mutedStatus", 0)
+        let notifyMentionsAndRepliesPredicate = NSPredicate(format: "%K < %lu", "mutedStatus", 2)
+
+
+        let unreadMentionsOrReplies = NSPredicate(format: "%K > 0 OR %K > 0", "internalEstimatedUnreadSelfMentionCount", "internalEstimatedUnreadSelfReplyCount")
+        let unreadMessages = NSPredicate(format: "%K > 0", "internalEstimatedUnreadCount")
+
+        let notifyAllAndHasUnreadMessages = NSCompoundPredicate(andPredicateWithSubpredicates: [notifyAllPredicate, unreadMessages])
+        let notifyMentionsAndRepliesAndHasUnreadMentionsOrReplies = NSCompoundPredicate(andPredicateWithSubpredicates: [notifyMentionsAndRepliesPredicate, unreadMentionsOrReplies])
+
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [notifyAllAndHasUnreadMessages, notifyMentionsAndRepliesAndHasUnreadMentionsOrReplies])
+    }
+
+    static func findUnreadMessage(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = NSPredicate(format: "isUnreadMessage == %@", NSNumber(booleanLiteral: true))
+
+        let uiMOC = userSession.managedObjectContext
+        let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
+        let allMessages = uiMOC.fetchOrAssert(request: fetchRequest)
+        var unreaded = allMessages.filter { (item) -> Bool in
+                    predicate.evaluate(with: item)
+                }
+
+        let message = "Found \(unreaded.count) unread messages."
+        let textToCopy = unreaded.debugDescription
+            alert(message, textToCopy: textToCopy)
     }
 
     /// Shows the user ID of the self user
