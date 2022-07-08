@@ -99,7 +99,7 @@ final class SearchHeaderViewController: UIViewController {
           clearButton.widthAnchor.constraint(equalToConstant: 16),
           clearButton.heightAnchor.constraint(equalTo: clearButton.widthAnchor),
           clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor),
+          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -16),
 
           tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
           tokenField.topAnchor.constraint(greaterThanOrEqualTo: tokenFieldContainer.topAnchor, constant: 8),
