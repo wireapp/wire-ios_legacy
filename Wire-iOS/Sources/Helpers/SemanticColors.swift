@@ -42,9 +42,16 @@ public enum SemanticColors {
         static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
+        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum SearchBarColor {
-        public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
+        public static let textUserInput = UIColor(light: Asset.black, dark: Asset.white)
+        public static let backgroundSearchBar = UIColor(light: Asset.white, dark: Asset.black)
+        public static let borderDefault = UIColor(light: Asset.gray40, dark: Asset.gray80)
+    }
+    public enum Icon {
+        public static let clearButton = UIColor(light: Asset.black, dark: Asset.white)
+        public static let magnifyingGlassButton = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 
