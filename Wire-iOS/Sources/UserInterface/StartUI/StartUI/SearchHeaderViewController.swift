@@ -51,6 +51,7 @@ final class SearchHeaderViewController: UIViewController {
         colorSchemeVariant = variant
         clearButton = IconButton(style: .default, variant: variant)
 
+        
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
