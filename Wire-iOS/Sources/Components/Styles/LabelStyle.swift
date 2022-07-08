@@ -34,6 +34,9 @@ public struct LabelStyle {
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+    static let searchBarPlaceholder: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textSearchBarPlaceholder)
 }
 
 extension UILabel: Stylable {
@@ -43,4 +46,29 @@ extension UILabel: Stylable {
         textColor = style.textColor
     }
 
+}
+
+public struct TextViewStyle {
+    var borderColor: UIColor
+    var textColor: UIColor
+    var cornerRadius: CGFloat = 12
+    var backgroundColor: UIColor = .clear
+    var borderWidth: CGFloat = 1
+
+    static let `default`: Self = TextViewStyle(
+        borderColor: SemanticColors.SearchBarColor.borderDefault,
+        textColor: SemanticColors.SearchBarColor.textUserInput)
+    static let active: Self = TextViewStyle(
+        borderColor: UIColor.accent(),
+        textColor: SemanticColors.SearchBarColor.textUserInput)
+}
+
+extension UITextView: Stylable {
+    public func applyStyle(_ style: TextViewStyle) {
+        textColor = style.textColor
+        backgroundColor = style.backgroundColor
+        layer.borderWidth = style.borderWidth
+        layer.cornerRadius = style.cornerRadius
+        layer.borderColor = style.borderColor.cgColor
+    }
 }
