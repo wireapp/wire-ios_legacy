@@ -83,7 +83,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsListV
         participantsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         videoPlaceholderStatusLabel.translatesAutoresizingMaskIntoConstraints = false
-        participantsViewController.view.fitInSuperview()
+        participantsViewController.view.fitIn(view: view)
         avatarView.fitIn(view: view)
 
         NSLayoutConstraint.activate([

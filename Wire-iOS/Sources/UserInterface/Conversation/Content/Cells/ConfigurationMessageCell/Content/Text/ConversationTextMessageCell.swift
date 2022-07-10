@@ -91,7 +91,7 @@ final class ConversationTextMessageCell: UIView,
 
     private func configureConstraints() {
         messageTextView.translatesAutoresizingMaskIntoConstraints = false
-        messageTextView.fitInSuperview()
+        messageTextView.fitIn(view: self)
     }
 
     func configure(with object: Configuration, animated: Bool) {

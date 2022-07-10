@@ -98,7 +98,7 @@ final class MediaBar: UIView {
          closeButton,
          bottomSeparatorLine].prepareForLayout()
 
-        contentView.fitInSuperview()
+        contentView.fitIn(view: self)
 
         titleLabel.pinToSuperview(axisAnchor: .centerY)
 

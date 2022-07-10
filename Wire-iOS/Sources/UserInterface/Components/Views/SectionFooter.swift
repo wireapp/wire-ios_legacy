@@ -65,7 +65,7 @@ final class SectionFooter: UICollectionReusableView {
         super.init(frame: frame)
         addSubview(footerView)
         footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.fitInSuperview()
+        footerView.fitIn(view: self)
     }
 
     @available(*, unavailable)
@@ -90,7 +90,7 @@ class SectionTableFooter: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         addSubview(footerView)
         footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.fitInSuperview()
+        footerView.fitIn(view: self)
     }
 
     @available(*, unavailable)

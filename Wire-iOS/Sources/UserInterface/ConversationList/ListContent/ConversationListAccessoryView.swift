@@ -106,7 +106,7 @@ final class ConversationListAccessoryView: UIView {
             ] +
             transparentIconView.topAndBottomEdgesToSuperviewEdges()
         )
-        badgeView.fitInSuperview()
+        badgeView.fitIn(view: self)
     }
 
     @available(*, unavailable)

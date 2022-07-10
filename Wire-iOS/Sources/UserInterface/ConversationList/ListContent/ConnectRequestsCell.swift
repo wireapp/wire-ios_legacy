@@ -86,7 +86,7 @@ final class ConnectRequestsCell: UICollectionViewCell, SectionListCellType {
         if !hasCreatedInitialConstraints {
             hasCreatedInitialConstraints = true
             itemView.translatesAutoresizingMaskIntoConstraints = false
-            itemView.fitInSuperview()
+            itemView.fitIn(view: self)
         }
         super.updateConstraints()
     }

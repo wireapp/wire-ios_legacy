@@ -149,7 +149,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
          overlay,
          separator].prepareForLayout()
 
-        pageViewController.view.fitInSuperview()
+        pageViewController.view.fitIn(view: view)
         buttonsBar.fitInSuperview(exclude: [.top])
         overlay.pin(to: buttonsBar)
 
