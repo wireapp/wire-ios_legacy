@@ -113,7 +113,7 @@ final class FolderPickerViewController: UIViewController {
 
         hintLabel.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.fitInSuperview()
+        collectionView.fitIn(view: view)
 
         NSLayoutConstraint.activate([hintLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
                                      hintLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),

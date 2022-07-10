@@ -109,7 +109,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        collectionView.fitInSuperview()
+        collectionView.fitIn(view: view)
     }
 
 }

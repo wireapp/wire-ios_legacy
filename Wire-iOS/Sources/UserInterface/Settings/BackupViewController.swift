@@ -158,7 +158,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupLayout() {
-        tableView.fitInSuperview()
+        tableView.fitIn(view: view)
     }
 
     var loadingHostController: SpinnerCapableViewController {

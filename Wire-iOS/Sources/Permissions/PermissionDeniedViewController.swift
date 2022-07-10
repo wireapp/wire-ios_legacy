@@ -138,7 +138,7 @@ final class PermissionDeniedViewController: UIViewController {
 
     private func createConstraints() {
         backgroundBlurView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBlurView.fitInSuperview()
+        backgroundBlurView.fitIn(view: view)
     }
 
     override func updateViewConstraints() {

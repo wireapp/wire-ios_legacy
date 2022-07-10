@@ -126,8 +126,8 @@ class CollectionCell: UICollectionViewCell {
         secureContentsView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
 
-        secureContentsView.fitInSuperview()
-        obfuscationView.fitInSuperview()
+        secureContentsView.fitIn(view: contentView)
+        obfuscationView.fitIn(view: contentView)
     }
 
     override func prepareForReuse() {
