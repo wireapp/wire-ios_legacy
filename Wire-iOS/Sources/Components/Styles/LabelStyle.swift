@@ -45,43 +45,4 @@ extension UILabel: Stylable {
         backgroundColor = style.backgroundColor
         textColor = style.textColor
     }
-
-}
-
-public struct SearchBarStyle {
-    var borderColor: UIColor
-    var textColor: UIColor
-    var backgroundColor: UIColor
-    var activeBorderColor: UIColor = UIColor.accent()
-    var cornerRadius: CGFloat = 12
-    var borderWidth: CGFloat = 1
-
-    static let textViewSearchBar: Self = SearchBarStyle(
-        borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: .clear)
-    static let tokenFieldSearchBar: Self = SearchBarStyle(
-        borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar)
-}
-
-extension TokenField: Stylable {
-    public func applyStyle(_ style: SearchBarStyle) {
-        textColor = style.textColor
-        backgroundColor = style.backgroundColor
-        layer.borderWidth = style.borderWidth
-        layer.cornerRadius = style.cornerRadius
-        layer.borderColor = style.borderColor.cgColor
-    }
-}
-
-extension UITextView: Stylable {
-    public func applyStyle(_ style: SearchBarStyle) {
-        textColor = style.textColor
-        backgroundColor = style.backgroundColor
-        layer.borderWidth = style.borderWidth
-        layer.cornerRadius = style.cornerRadius
-        layer.borderColor = style.borderColor.cgColor
-    }
 }
