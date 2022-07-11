@@ -48,20 +48,26 @@ extension UILabel: Stylable {
 
 }
 
-public struct TextViewStyle {
+public struct SearchBarStyle {
     var borderColor: UIColor
     var textColor: UIColor
+    var backgroundColor: UIColor
+    var activeBorderColor: UIColor = UIColor.accent()
     var cornerRadius: CGFloat = 12
-    var backgroundColor: UIColor = .clear
     var borderWidth: CGFloat = 1
 
-    static let searchBar: Self = TextViewStyle(
+    static let textViewSearchBar: Self = SearchBarStyle(
         borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput)
+        textColor: SemanticColors.SearchBarColor.textUserInput,
+        backgroundColor: .clear)
+    static let tokenFieldSearchBar: Self = SearchBarStyle(
+        borderColor: SemanticColors.SearchBarColor.borderDefault,
+        textColor: SemanticColors.SearchBarColor.textUserInput,
+        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar)
 }
 
-extension UITextView: Stylable {
-    public func applyStyle(_ style: TextViewStyle) {
+extension TokenField: Stylable {
+    public func applyStyle(_ style: SearchBarStyle) {
         textColor = style.textColor
         backgroundColor = style.backgroundColor
         layer.borderWidth = style.borderWidth
@@ -70,20 +76,8 @@ extension UITextView: Stylable {
     }
 }
 
-public struct TokenFieldStyle {
-    var borderColor: UIColor
-    var textColor: UIColor
-    var backgroundColor: UIColor = SemanticColors.SearchBarColor.backgroundSearchBar
-    var cornerRadius: CGFloat = 12
-    var borderWidth: CGFloat = 1
-
-    static let searchBar: Self = TokenFieldStyle(
-        borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput)
-}
-
-extension TokenField: Stylable {
-    public func applyStyle(_ style: TokenFieldStyle) {
+extension UITextView: Stylable {
+    public func applyStyle(_ style: SearchBarStyle) {
         textColor = style.textColor
         backgroundColor = style.backgroundColor
         layer.borderWidth = style.borderWidth
