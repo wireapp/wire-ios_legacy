@@ -77,15 +77,6 @@ extension UIView {
     // MARK: - center alignment
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func centerInSuperview(activate: Bool = true) -> [NSLayoutConstraint] {
-        guard let superview = superview else {
-            fatal("Not in view hierarchy: self.superview = nil")
-        }
-
-        return alignCenter(to: superview, activate: activate)
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func alignCenter(to view: UIView,
                      with offset: CGPoint = .zero,
                      activate: Bool = true) -> [NSLayoutConstraint] {

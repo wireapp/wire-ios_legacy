@@ -110,7 +110,8 @@ final class EmptySearchResultsView: UIView {
 
         addSubview(stackView)
 
-        stackView.centerInSuperview()
+        stackView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
 
         statusLabel.numberOfLines = 0
         statusLabel.preferredMaxLayoutWidth = 200
