@@ -230,7 +230,7 @@ final class AppStateCalculatorTests: XCTestCase {
     func testThatItDoesntTransitionAwayFromBlacklisted_IfThereIsNoCurrentAPIVersion() {
         // GIVEN
         sut.applicationDidBecomeActive()
-        APIVersion.current = nil
+        APIVersion.setVersions(production: [], development: [])
 
         let blacklistState = AppState.blacklisted(reason: .clientAPIVersionObsolete)
         sut.testHelper_setAppState(blacklistState)
