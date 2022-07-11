@@ -114,7 +114,8 @@ final class ProfileSelfPictureViewController: UIViewController {
         bottomOverlayView.addSubview(closeButton)
 
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setDimensions(length: 32)
+        closeButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
 
         NSLayoutConstraint.activate([
             closeButton.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor),
@@ -138,8 +139,10 @@ final class ProfileSelfPictureViewController: UIViewController {
         bottomOverlayView.addSubview(libraryButton)
 
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
-        libraryButton.setDimensions(length: length)
+
         NSLayoutConstraint.activate([
+            libraryButton.widthAnchor.constraint(equalToConstant: length),
+            libraryButton.heightAnchor.constraint(equalToConstant: length),
             libraryButton.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor),
             libraryButton.leftAnchor.constraint(equalTo: bottomOverlayView.leftAnchor, constant: 24)
             ])
