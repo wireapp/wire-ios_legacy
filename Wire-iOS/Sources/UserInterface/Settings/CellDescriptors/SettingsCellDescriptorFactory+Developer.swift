@@ -28,14 +28,6 @@ extension SettingsCellDescriptorFactory {
 
         var developerCellDescriptors: [SettingsCellDescriptorType] = []
 
-        if #available(iOS 13, *) {
-            developerCellDescriptors.append(
-                ExternalScreen(title: "Developer flags") {
-                    UIHostingController(rootView: DeveloperFlagsView().environment(\.colorScheme, .dark))
-                }
-            )
-        }
-
         developerCellDescriptors.append(
             ExternalScreen(title: "Logging") { DeveloperOptionsController() }
         )

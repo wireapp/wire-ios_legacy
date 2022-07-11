@@ -21,8 +21,6 @@ import SwiftUI
 @available(iOS 14, *)
 struct DeveloperFlagsView: View {
 
-    typealias Flag = DeveloperFlagsViewModel.DeveloperFlag
-
     // MARK: - Properties
 
     @StateObject
@@ -37,7 +35,7 @@ struct DeveloperFlagsView: View {
         }
     }
 
-    private func cell(for flag: Flag) -> some View {
+    private func cell(for flag: DeveloperFlag) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Toggle(flag.rawValue, isOn: binding(for: flag))
             Text(flag.description)
@@ -46,7 +44,7 @@ struct DeveloperFlagsView: View {
         }
     }
 
-    private func binding(for flag: Flag) -> Binding<Bool> {
+    private func binding(for flag: DeveloperFlag) -> Binding<Bool> {
         var flag = flag
         return Binding(
             get: { flag.isOn },

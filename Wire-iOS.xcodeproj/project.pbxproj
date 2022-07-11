@@ -1281,7 +1281,6 @@
 		EE6C2125284118B00031EFB9 /* ConversationEncryptionProtocolSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2124284118B00031EFB9 /* ConversationEncryptionProtocolSectionController.swift */; };
 		EE6C2127284118D80031EFB9 /* ConversationCreateEncryptionProtocolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C2126284118D80031EFB9 /* ConversationCreateEncryptionProtocolCell.swift */; };
 		EE6C212928438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */; };
-		EE6C212D284390FB0031EFB9 /* DeveloperFlagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */; };
 		EE742AB6284DE57900A6B5F3 /* DeveloperToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */; };
 		EE742AB8284DE66400A6B5F3 /* DeveloperToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
@@ -1302,6 +1301,7 @@
 		EE948F1923E17778000A663E /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE948F1823E17778000A663E /* ContactsDataSource.swift */; };
 		EE94CA1925C2E490005F1155 /* ScreenCurtainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE94CA0B25C2E48B005F1155 /* ScreenCurtainTests.swift */; };
 		EE997A1A2507A851008336D2 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE997A192507A851008336D2 /* Logging.swift */; };
+		EE9BC5FD287C7C0100AF9AEE /* DeveloperFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BC5FC287C7C0100AF9AEE /* DeveloperFlag.swift */; };
 		EEA1ED7325BF430B006D07D3 /* AppLockModule.View.LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736F1831E4B67F0001CBA62 /* AppLockModule.View.LockView.swift */; };
 		EEA2E57125B2386500E726C3 /* AppLockModulePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2E56F25B2385D00E726C3 /* AppLockModulePresenterTests.swift */; };
 		EEA2E57425B23A3100E726C3 /* AppLockModuleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA2E57225B23A2B00E726C3 /* AppLockModuleViewTests.swift */; };
@@ -3185,7 +3185,6 @@
 		EE6C2124284118B00031EFB9 /* ConversationEncryptionProtocolSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationEncryptionProtocolSectionController.swift; sourceTree = "<group>"; };
 		EE6C2126284118D80031EFB9 /* ConversationCreateEncryptionProtocolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateEncryptionProtocolCell.swift; sourceTree = "<group>"; };
 		EE6C212828438B3A0031EFB9 /* SettingsCellDescriptorFactory+Developer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Developer.swift"; sourceTree = "<group>"; };
-		EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlagsView.swift; sourceTree = "<group>"; };
 		EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperToolsView.swift; sourceTree = "<group>"; };
 		EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperToolsViewModel.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
@@ -3206,6 +3205,7 @@
 		EE948F1823E17778000A663E /* ContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDataSource.swift; sourceTree = "<group>"; };
 		EE94CA0B25C2E48B005F1155 /* ScreenCurtainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCurtainTests.swift; sourceTree = "<group>"; };
 		EE997A192507A851008336D2 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		EE9BC5FC287C7C0100AF9AEE /* DeveloperFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperFlag.swift; sourceTree = "<group>"; };
 		EEA2E56F25B2385D00E726C3 /* AppLockModulePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModulePresenterTests.swift; sourceTree = "<group>"; };
 		EEA2E57225B23A2B00E726C3 /* AppLockModuleViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleViewTests.swift; sourceTree = "<group>"; };
 		EEA4F47B2410054100DBEA3D /* HashBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashBox.swift; sourceTree = "<group>"; };
@@ -5767,7 +5767,6 @@
 			isa = PBXGroup;
 			children = (
 				54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */,
-				EE6C212C284390FB0031EFB9 /* DeveloperFlagsView.swift */,
 				54FF9E271E813BA500323D2E /* DebugAlert.swift */,
 				EE742AB9284DE67300A6B5F3 /* DeveloperTools */,
 			);
@@ -6988,15 +6987,6 @@
 			path = "App Lock";
 			sourceTree = "<group>";
 		};
-		EE2DF75C2875E29F0028ECA2 /* PreferredAPIVersion */ = {
-			isa = PBXGroup;
-			children = (
-				EE2DF75D2875E2C30028ECA2 /* PreferredAPIVersionView.swift */,
-				EE2DF75F2875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift */,
-			);
-			path = PreferredAPIVersion;
-			sourceTree = "<group>";
-		};
 		EE08B346284E33180022830B /* MLS */ = {
 			isa = PBXGroup;
 			children = (
@@ -7013,6 +7003,15 @@
 				EE08B35A284E41C80022830B /* WireCoreCryptoTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		EE2DF75C2875E29F0028ECA2 /* PreferredAPIVersion */ = {
+			isa = PBXGroup;
+			children = (
+				EE2DF75D2875E2C30028ECA2 /* PreferredAPIVersionView.swift */,
+				EE2DF75F2875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift */,
+			);
+			path = PreferredAPIVersion;
 			sourceTree = "<group>";
 		};
 		EE430EBA25C208A90056BDE3 /* Screen Curtain */ = {
@@ -7095,6 +7094,7 @@
 			children = (
 				EECA90A9287449EC0024B301 /* DeveloperFlagsView.swift */,
 				EECA90AB28744A060024B301 /* DeveloperFlagsViewModel.swift */,
+				EE9BC5FC287C7C0100AF9AEE /* DeveloperFlag.swift */,
 			);
 			path = DeveloperFlags;
 			sourceTree = "<group>";
@@ -8138,6 +8138,7 @@
 				0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
+				EE9BC5FD287C7C0100AF9AEE /* DeveloperFlag.swift in Sources */,
 				EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */,
 				1639A80F225F863000868AB9 /* ProfileHeaderViewController.swift in Sources */,
 				6305206024FFD68100ED295A /* UIEdgeInsets+DeviceOrientation.swift in Sources */,
