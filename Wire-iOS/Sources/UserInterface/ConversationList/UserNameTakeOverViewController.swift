@@ -114,10 +114,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             displayNameLabel.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor),
-            displayNameLabel.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
+            displayNameLabel.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor),
             suggestedHandleLabel.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor),
             suggestedHandleLabel.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor)
         ])

@@ -115,9 +115,7 @@ final class ArticleView: UIView {
 
         NSLayoutConstraint.activate([
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
-        ])
-        NSLayoutConstraint.activate([
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)

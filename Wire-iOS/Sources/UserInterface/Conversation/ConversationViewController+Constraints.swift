@@ -58,9 +58,7 @@ extension ConversationViewController {
         NSLayoutConstraint.activate([
             conversationBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             conversationBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            conversationBarController.view.topAnchor.constraint(equalTo: view.topAnchor)
-        ])
-        NSLayoutConstraint.activate([
+            conversationBarController.view.topAnchor.constraint(equalTo: view.topAnchor),
             contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor)

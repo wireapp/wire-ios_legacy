@@ -122,7 +122,6 @@ final class TopPeopleCell: UICollectionViewCell {
             constraints.append(contentsOf: [conversationImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                                             conversationImageView.topAnchor.constraint(equalTo: contentView.topAnchor)])
 
-
             constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
 
             constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,

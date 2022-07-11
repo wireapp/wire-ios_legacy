@@ -155,16 +155,10 @@ final class ServiceDetailViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             detailView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            detailView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-
-        NSLayoutConstraint.activate([
+            detailView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             actionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(16 + UIScreen.safeArea.bottom))
-        ])
-
-        NSLayoutConstraint.activate([
+            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(16 + UIScreen.safeArea.bottom)),
             detailView.topAnchor.constraint(equalTo: safeTopAnchor, constant: 16),
             actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
             actionButton.heightAnchor.constraint(equalToConstant: 48)
