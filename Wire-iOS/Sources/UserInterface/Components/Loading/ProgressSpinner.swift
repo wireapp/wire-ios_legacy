@@ -114,8 +114,8 @@ final class ProgressSpinner: UIView {
 
     private func setupConstraints() {
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
     private func startAnimationInternal() {
