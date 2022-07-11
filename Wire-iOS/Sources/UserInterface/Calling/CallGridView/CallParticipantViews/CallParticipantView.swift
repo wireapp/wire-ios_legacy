@@ -144,7 +144,7 @@ final class CallParticipantView: BaseCallParticipantView {
 //            scalableView.fitIn(view: userDetailsView)
         }
 
-//        preview.fitIn(view: scalableView)
+//        preview.fitIn(view: self.scalableView)
         [scalableView, preview].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.fitInSuperview()
@@ -155,7 +155,8 @@ final class CallParticipantView: BaseCallParticipantView {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
         insertSubview(snapshotView, belowSubview: blurView)
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
-        snapshotView.fitIn(view: blurView)
+        snapshotView.fitInSuperview()
+//        snapshotView.fitIn(view: blurView)
         self.snapshotView = snapshotView
     }
 
