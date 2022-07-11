@@ -99,7 +99,8 @@ final class ProfileSelfPictureViewController: UIViewController {
             bottomOffset = -UIScreen.safeArea.bottom + 20.0
         }
 
-        cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x: 0, y: bottomOffset))
+        cameraButton.centerXAnchor.constraint(equalTo: bottomOverlayView.centerXAnchor).isActive = true
+        cameraButton.centerYAnchor.constraint(equalTo: bottomOverlayView.centerYAnchor, constant: bottomOffset).isActive = true
 
         cameraButton.setIconColor(.white, for: .normal)
         cameraButton.setIcon(.cameraLens, size: 40, for: .normal)
