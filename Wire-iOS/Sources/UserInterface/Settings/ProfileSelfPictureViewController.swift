@@ -187,7 +187,11 @@ final class ProfileSelfPictureViewController: UIViewController {
         view.addSubview(topView)
 
         topView.bottomAnchor.constraint(equalTo: bottomOverlayView.topAnchor).isActive = true
-        topView.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topView.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
 
         topView.backgroundColor = .clear
 
@@ -216,7 +220,11 @@ final class ProfileSelfPictureViewController: UIViewController {
             height = 88
         }
 
-        bottomOverlayView.fitInSuperview(exclude: [.top])
+        NSLayoutConstraint.activate([
+            bottomOverlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomOverlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomOverlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         bottomOverlayView.heightAnchor.constraint(equalToConstant: height + UIScreen.safeArea.bottom).isActive = true
         bottomOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
 

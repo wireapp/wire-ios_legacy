@@ -90,10 +90,8 @@ class KeyboardAvoidingViewController: UIViewController, SpinnerCapable {
     }
 
     private func createInitialConstraints() {
-
-        let constraints = viewController.view.fitInSuperview(exclude: [.bottom])
-
-        topEdgeConstraint = constraints[.top]
+        topEdgeConstraint = viewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+        topEdgeConstraint?.isActive = true
 
         bottomEdgeConstraint = viewController.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
 

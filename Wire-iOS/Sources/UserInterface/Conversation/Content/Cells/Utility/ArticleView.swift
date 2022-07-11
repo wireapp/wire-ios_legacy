@@ -105,12 +105,23 @@ final class ArticleView: UIView {
 
         [messageLabel, authorLabel, imageView, obfuscationView].prepareForLayout()
 
-        imageView.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor)
+        ])
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
         imageHeightConstraint.priority = UILayoutPriority(rawValue: 999)
 
-        messageLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.bottom, .top])
-        authorLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.top])
+        NSLayoutConstraint.activate([
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
+        ])
+        NSLayoutConstraint.activate([
+            authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+        ])
         obfuscationView.pin(to: imageView)
 
         NSLayoutConstraint.activate([

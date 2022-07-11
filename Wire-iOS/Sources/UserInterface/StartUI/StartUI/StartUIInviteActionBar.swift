@@ -62,7 +62,9 @@ final class StartUIInviteActionBar: UIView {
     private func createConstraints() {
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
 
-        bottomEdgeConstraint = inviteButton.fitInSuperview(with: EdgeInsets(top: padding, leading: padding * 2, bottom: padding + UIScreen.safeArea.bottom, trailing: padding * 2))[.bottom]
+        bottomEdgeConstraint = inviteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(padding + UIScreen.safeArea.bottom))
+        bottomEdgeConstraint.isActive = true
+
         inviteButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
     }
 

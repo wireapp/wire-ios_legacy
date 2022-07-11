@@ -203,23 +203,6 @@ extension UIView {
     // MARK: - all edges alignment
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func fitInSuperview(safely: Bool = false,
-                        with insets: EdgeInsets = .zero,
-                        exclude excludedAnchors: [Anchor] = [],
-                        activate: Bool = true) -> [Anchor: NSLayoutConstraint] {
-
-        guard let superview = superview else {
-            fatal("Not in view hierarchy: self.superview = nil")
-        }
-
-        return pin(to: superview,
-                   safely: safely,
-                   with: insets,
-                   exclude: excludedAnchors,
-                   activate: activate)
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func pin(to view: UIView,
              safely: Bool = false,
              with insets: EdgeInsets = .zero,

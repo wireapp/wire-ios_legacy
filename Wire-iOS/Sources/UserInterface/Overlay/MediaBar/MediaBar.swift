@@ -114,7 +114,11 @@ final class MediaBar: UIView {
         closeButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8).isActive = true
 
         bottomSeparatorLine.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        bottomSeparatorLine.fitInSuperview(exclude: [.top])
+        NSLayoutConstraint.activate([
+            bottomSeparatorLine.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bottomSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomSeparatorLine.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
 
     }
 }
