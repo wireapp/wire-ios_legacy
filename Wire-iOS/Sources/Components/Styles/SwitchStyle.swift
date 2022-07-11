@@ -34,13 +34,15 @@ extension UISwitch: Stylable {
         self.init()
         applyStyle(switchStyle)
     }
-    //TODO: This needs to be implemented!
     public func applyBorderStyle() {
         if self.traitCollection.userInterfaceStyle == .dark {
             let enabledOnBorderColor = UIColor(asset: Asset.green500Dark)!
             let enabledOffBorderColor = UIColor(asset: Asset.gray60)!
             self.layer.borderWidth = 1
             self.layer.borderColor = isOn ? enabledOnBorderColor.cgColor : enabledOffBorderColor.cgColor
+        } else {
+            self.layer.borderColor = UIColor.clear.cgColor
+            self.layer.borderWidth = 0
         }
     }
 
@@ -49,5 +51,6 @@ extension UISwitch: Stylable {
         self.layer.cornerRadius = self.frame.height / 2.0
         self.backgroundColor = style.enabledOffStateColor
         self.clipsToBounds = true
+        applyBorderStyle()
     }
 }
