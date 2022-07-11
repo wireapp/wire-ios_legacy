@@ -77,23 +77,6 @@ extension UIView {
     // MARK: - center alignment
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func alignCenter(to view: UIView,
-                     with offset: CGPoint = .zero,
-                     activate: Bool = true) -> [NSLayoutConstraint] {
-
-        let constraints = [
-            view.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x),
-            view.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offset.y)
-        ]
-
-        if activate {
-            NSLayoutConstraint.activate(constraints)
-        }
-
-        return constraints
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func pin(to view: UIView,
              axisAnchor: AxisAnchor,
              constant: CGFloat = 0,
