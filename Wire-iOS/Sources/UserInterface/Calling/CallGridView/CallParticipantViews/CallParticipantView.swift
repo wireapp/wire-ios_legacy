@@ -81,7 +81,8 @@ final class CallParticipantView: BaseCallParticipantView {
 
     override func createConstraints() {
         super.createConstraints()
-        blurView.fitIn(view: userDetailsView)
+//        blurView.fitIn(view: userDetailsView)
+        blurView.fitInSuperview()
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
@@ -133,25 +134,30 @@ final class CallParticipantView: BaseCallParticipantView {
         self.scalableView?.removeFromSuperview()
         self.scalableView = scalableView
 
-        scalableView.translatesAutoresizingMaskIntoConstraints = false
-        preview.translatesAutoresizingMaskIntoConstraints = false
+//        scalableView.translatesAutoresizingMaskIntoConstraints = false
+//        preview.translatesAutoresizingMaskIntoConstraints = false
 
         if let snapshotView = snapshotView {
             insertSubview(scalableView, belowSubview: snapshotView)
-            scalableView.fitIn(view: snapshotView)
+//            scalableView.fitIn(view: snapshotView)
         } else {
             insertSubview(scalableView, belowSubview: userDetailsView)
-            scalableView.fitIn(view: userDetailsView)
+//            scalableView.fitIn(view: userDetailsView)
         }
 
-        preview.fitIn(view: scalableView)
+//        preview.fitIn(view: scalableView)
+        [scalableView, preview].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.fitInSuperview()
+        }
     }
 
     private func createSnapshotView() {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
         insertSubview(snapshotView, belowSubview: blurView)
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
-        snapshotView.fitIn(view: blurView)
+//        snapshotView.fitIn(view: blurView)
+        snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
     }
 
