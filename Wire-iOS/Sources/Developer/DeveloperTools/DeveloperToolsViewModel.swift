@@ -106,7 +106,7 @@ final class DeveloperToolsViewModel: ObservableObject {
             items: [
                 .button(ButtonItem(title: "Send debug logs", action: sendDebugLogs)),
                 .destination(DestinationItem(title: "Configure flags", makeView: {
-                    AnyView(erasing: DeveloperFlagsView(viewModel: DeveloperFlagsViewModel()))
+                    AnyView(DeveloperFlagsView(viewModel: DeveloperFlagsViewModel()))
                 }))
             ]
         ))
@@ -125,6 +125,9 @@ final class DeveloperToolsViewModel: ObservableObject {
                 .text(TextItem(title: "Name", value: backendName)),
                 .text(TextItem(title: "Domain", value: backendDomain)),
                 .text(TextItem(title: "API version", value: apiVersion)),
+                .destination(DestinationItem(title: "Preferred API version", makeView: {
+                    AnyView(PreferredAPIVersionView(viewModel: PreferredAPIVersionViewModel()))
+                })),
                 .text(TextItem(title: "Is federation enabled?", value: isFederationEnabled))
             ]
         ))
