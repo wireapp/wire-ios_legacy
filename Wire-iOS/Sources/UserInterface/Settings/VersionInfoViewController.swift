@@ -55,8 +55,8 @@ final class VersionInfoViewController: UIViewController {
         // Layout
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        closeButton.pinToSuperview(safely: true, anchor: .top, inset: 24)
-        closeButton.pinToSuperview(safely: true, anchor: .trailing, inset: 18)
+        closeButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -18).isActive = true
 
         // Target
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
