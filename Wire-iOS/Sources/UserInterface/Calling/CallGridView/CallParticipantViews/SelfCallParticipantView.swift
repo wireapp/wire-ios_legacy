@@ -56,11 +56,10 @@ final class SelfCallParticipantView: BaseCallParticipantView {
     override func createConstraints() {
         super.createConstraints()
 
-        previewView.translatesAutoresizingMaskIntoConstraints = false
-        scalableView?.translatesAutoresizingMaskIntoConstraints = false
-
-        scalableView?.fitIn(view: userDetailsView)
-        previewView.fitIn(view: scalableView!)
+        [previewView, scalableView].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+            $0?.fitIn(view: self)
+        }
     }
 
     override func updateUserDetails() {
