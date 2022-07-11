@@ -100,7 +100,7 @@ final class CollectionsView: UIView {
 
     func constrainViews(searchViewController: TextSearchViewController) {
 
-        let searchBar = searchViewController.searchBar
+        let searchBar = searchViewController.textSearchInputView
         let resultsView = searchViewController.resultsView
         [searchBar, resultsView].forEach {
             addSubview($0)

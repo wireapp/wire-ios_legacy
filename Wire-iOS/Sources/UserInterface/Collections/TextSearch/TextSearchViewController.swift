@@ -21,12 +21,12 @@ import WireSyncEngine
 
 final class TextSearchViewController: NSObject {
     let resultsView: TextSearchResultsView = TextSearchResultsView()
-    let searchBar: TextSearchInputView = TextSearchInputView()
+    let textSearchInputView: TextSearchInputView = TextSearchInputView()
 
     weak var delegate: MessageActionResponder? = .none
     let conversation: ConversationLike
     var searchQuery: String? {
-        return searchBar.query
+        return textSearchInputView.query
     }
 
     fileprivate var textSearchQuery: TextSearchQuery?
@@ -53,8 +53,8 @@ final class TextSearchViewController: NSObject {
         resultsView.tableView.delegate = self
         resultsView.tableView.dataSource = self
 
-        searchBar.delegate = self
-        searchBar.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
+        textSearchInputView.delegate = self
+        textSearchInputView.placeholderString = "collections.search.field.placeholder".localized(uppercased: true)
     }
 
     func teardown() {
@@ -104,12 +104,12 @@ final class TextSearchViewController: NSObject {
 
     @objc
     fileprivate func showLoadingSpinner() {
-        searchBar.isLoading = true
+        textSearchInputView.isLoading = true
     }
 
     fileprivate func hideLoadingSpinner() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showLoadingSpinner), object: nil)
-        searchBar.isLoading = false
+        textSearchInputView.isLoading = false
     }
 
 }
@@ -160,6 +160,6 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.searchInput.endEditing(true)
+        textSearchInputView.customSearchBar.searchBar.endEditing(true)
     }
 }
