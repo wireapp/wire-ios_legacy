@@ -100,15 +100,17 @@ final class MediaBar: UIView {
 
         contentView.fitInSuperview()
 
-        titleLabel.pinToSuperview(axisAnchor: .centerY)
+        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
 
-        playPauseButton.setDimensions(length: iconSize)
-        playPauseButton.pinToSuperview(axisAnchor: .centerY)
-        playPauseButton.pinToSuperview(anchor: .leading, inset: buttonInsets)
+        playPauseButton.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
+        playPauseButton.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
+        playPauseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        playPauseButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: buttonInsets).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
 
-        closeButton.setDimensions(length: iconSize)
-        closeButton.pinToSuperview(axisAnchor: .centerY)
-        closeButton.pinToSuperview(anchor: .trailing, inset: buttonInsets)
+        closeButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: buttonInsets).isActive = true
 
         titleLabel.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor, constant: 8).isActive = true
         closeButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8).isActive = true

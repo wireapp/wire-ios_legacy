@@ -104,8 +104,8 @@ final class TopPeopleCell: UICollectionViewCell {
             constraints.append(contentsOf: contentView.fitInSuperview(activate: false).values)
             constraints.append(contentsOf: badgeUserImageView.fitInSuperview(activate: false).values)
 
-            conversationImageViewSize = conversationImageView.setDimensions(length: 80, activate: false)[.width]
-            avatarViewSizeConstraint = avatarContainer.setDimensions(length: 80, activate: false)[.width]
+            conversationImageViewSize = conversationImageView.widthAnchor.constraint(equalToConstant: 80)
+            avatarViewSizeConstraint = avatarContainer.widthAnchor.constraint(equalToConstant: 80)
 
             constraints.append(conversationImageViewSize!)
             constraints.append(avatarViewSizeConstraint!)
