@@ -22,7 +22,6 @@ public struct SwitchStyle {
 
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
-    
     static let `default`: Self = SwitchStyle(
         enabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
         enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled
