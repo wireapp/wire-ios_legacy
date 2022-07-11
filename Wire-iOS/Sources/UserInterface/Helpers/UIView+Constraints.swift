@@ -208,18 +208,6 @@ extension UIView {
         return constraints
     }
 
-    // MARK: - dimensions
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
-        guard let superview = superview else { return [] }
-
-        return [
-            superview.topAnchor.constraint(equalTo: topAnchor),
-            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ]
-    }
-
 }
 
 extension UIView {
