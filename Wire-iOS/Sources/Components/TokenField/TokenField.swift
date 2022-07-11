@@ -26,6 +26,7 @@ final class TokenField: UIView {
     let accessoryButtonSize: CGFloat = 32
 
     weak var delegate: TokenFieldDelegate?
+    weak var customTokenFieldDelegate: CustomTokenField?
 
     let textView: TokenizedTextView = TokenizedTextView()
     let accessoryButton: IconButton = IconButton()
@@ -780,10 +781,10 @@ extension TokenField: UITextViewDelegate {
         return true
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
-        layer.borderColor = UIColor.accent().cgColor
+        customTokenFieldDelegate?.setIsEditing()
     }
     func textViewDidEndEditing(_ textView: UITextView) {
-        layer.borderColor = SemanticColors.SearchBarColor.borderDefault.cgColor
+        customTokenFieldDelegate?.resetIsEditing()
     }
 }
 
