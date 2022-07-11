@@ -81,7 +81,8 @@ final class CallParticipantView: BaseCallParticipantView {
 
     override func createConstraints() {
         super.createConstraints()
-        blurView.fitIn(view: userDetailsView)
+        blurView.fitInSuperview()
+//        blurView.fitIn(view: userDetailsView)
         pausedLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
@@ -144,7 +145,7 @@ final class CallParticipantView: BaseCallParticipantView {
 //            scalableView.fitIn(view: userDetailsView)
         }
 
-//        preview.fitIn(view: self.scalableView)
+//        preview.fitIn(view: self.scalableView!)
         [scalableView, preview].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.fitInSuperview()
@@ -155,8 +156,8 @@ final class CallParticipantView: BaseCallParticipantView {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
         insertSubview(snapshotView, belowSubview: blurView)
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
-        snapshotView.fitInSuperview()
-//        snapshotView.fitIn(view: blurView)
+//        snapshotView.fitInSuperview()
+        snapshotView.fitIn(view: blurView)
         self.snapshotView = snapshotView
     }
 
