@@ -48,7 +48,7 @@ final class ConnectRequestCell: UITableViewCell {
             contentView.addSubview(view)
 
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.pinToSuperview(axisAnchor: .centerX)
+            view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
             view.fitInSuperview()
             view.widthAnchor.constraint(lessThanOrEqualToConstant: 420).isActive = true
 

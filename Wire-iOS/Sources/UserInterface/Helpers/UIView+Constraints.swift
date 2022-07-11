@@ -94,17 +94,6 @@ extension UIView {
     }
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func pinToSuperview(axisAnchor: AxisAnchor,
-                        constant: CGFloat = 0,
-                        activate: Bool = true) -> NSLayoutConstraint {
-        guard let superview = superview else {
-            fatal("Not in view hierarchy: self.superview = nil")
-        }
-
-        return pin(to: superview, axisAnchor: axisAnchor, constant: constant, activate: activate)
-    }
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
     func pin(to view: UIView,
              axisAnchor: AxisAnchor,
              constant: CGFloat = 0,
