@@ -65,7 +65,7 @@ extension UIApplication {
     }
 
     static var userInterfaceStyle: UIUserInterfaceStyle? {
-        UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController?.traitCollection.userInterfaceStyle
+        UIApplication.shared.firstKeyWindow?.rootViewController?.traitCollection.userInterfaceStyle
     }
 }
 

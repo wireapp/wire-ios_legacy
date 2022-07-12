@@ -1,5 +1,6 @@
+//
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,20 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireSyncEngine
+import UIKit
 
-extension ZClientViewController: ZMUserObserver {
+extension UIApplication {
 
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.accentColorValueChanged {
-            UIApplication.shared.firstKeyWindow?.tintColor = UIColor.accent()
-        }
-    }
-
-    @objc func setupUserChangeInfoObserver() {
-        guard let userSession = ZMUserSession.shared() else { return }
-        userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
-    }
+  var firstKeyWindow: UIWindow? {
+      return windows.first(where: \.isKeyWindow)
+  }
 
 }
