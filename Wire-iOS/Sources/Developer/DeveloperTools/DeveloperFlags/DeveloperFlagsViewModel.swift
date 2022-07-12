@@ -29,6 +29,7 @@ final class DeveloperFlagsViewModel: ObservableObject {
 
         case showCreateMLSGroupToggle
         case nseDebugging
+        case nseDebugEntryPoint
         case useDevelopmentBackendAPI
 
         var description: String {
@@ -38,6 +39,9 @@ final class DeveloperFlagsViewModel: ObservableObject {
 
             case .nseDebugging:
                 return "Turn on to make the notification service extension (NSE) display debug notifications."
+
+            case .nseDebugEntryPoint:
+                return "Turn on to display a notification immediately at the entry point of the notification service extension, skipping any further push processing."
 
             case .useDevelopmentBackendAPI:
                 return "Turn on to use the developement backend API version instead of the latest production API version."
