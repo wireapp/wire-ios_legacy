@@ -79,17 +79,19 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         self.contentHandler = contentHandler
 
-        guard
-            let accountID = request.content.accountID,
-            let session = try? createSession(accountID: accountID)
-        else {
-            // TODO: what happens here?
+        guard let accountID = request.content.accountID else {
+            contentHandler(.debugMessageIfNeeded(message: "Missing account id."))
+            return
+        }
+
+        guard let session = try? createSession(accountID: accountID) else {
+            contentHandler(.debugMessageIfNeeded(message: "Failed to create session."))
             return
         }
 
         session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
             if !isUserAuthenticated {
-                contentHandler(.empty)
+                contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
             }
         }
 
@@ -98,9 +100,8 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
     }
 
     public override func serviceExtensionTimeWillExpire() {
-        // TODO: discuss with product/design what should we display
         guard let contentHandler = contentHandler else { return }
-        contentHandler(.empty)
+        contentHandler(.debugMessageIfNeeded(message: "Extension is expiring."))
         tearDown()
     }
 
@@ -112,20 +113,25 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         guard let contentHandler = contentHandler else { return }
 
-        guard let content = notification?.content as? UNMutableNotificationContent else {
-            contentHandler(.empty)
+        guard let content = notification?.content else {
+            contentHandler(.debugMessageIfNeeded(message: "No notification generated."))
+            return
+        }
+
+        guard let mutabaleContent = content as? UNMutableNotificationContent else {
+            contentHandler(.debugMessageIfNeeded(message: "Content not mutable."))
             return
         }
 
         if #available(iOS 15, *) {
-            content.interruptionLevel = .timeSensitive
+            mutabaleContent.interruptionLevel = .timeSensitive
         }
 
         let badgeCount = totalUnreadCount(unreadConversationCount)
-        content.badge = badgeCount
+        mutabaleContent.badge = badgeCount
         Logging.push.safePublic("Updated badge count to \(SanitizedString(stringLiteral: String(describing: badgeCount)))")
 
-        contentHandler(content)
+        contentHandler(mutabaleContent)
     }
 
     public func reportCallEvent(_ event: ZMUpdateEvent, currentTimestamp: TimeInterval) {
@@ -211,6 +217,18 @@ extension UNNotificationContent {
 
     static var empty: Self {
         return Self()
+    }
+
+    static func debugMessageIfNeeded(message: String) -> UNNotificationContent {
+        guard DeveloperFlag.nseDebugging.isOn else { return .empty }
+        return debug(message: message)
+    }
+
+    static func debug(message: String) -> UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = "DEBUG 👀"
+        content.body = message
+        return content
     }
 
     var accountID: UUID? {
