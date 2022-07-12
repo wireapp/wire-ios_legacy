@@ -65,6 +65,11 @@ extension ConversationViewController {
         ])
 
         contentViewController.view.bottomAnchor.constraint(equalTo: inputBarController.view.topAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            inputBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            inputBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            inputBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         inputBarBottomMargin = inputBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         inputBarBottomMargin?.isActive = true
 
