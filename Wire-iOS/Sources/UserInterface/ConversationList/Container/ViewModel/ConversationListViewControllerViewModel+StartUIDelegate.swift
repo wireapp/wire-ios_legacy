@@ -96,19 +96,22 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
             return
         }
 
-        var conversation: ZMConversation! = nil
+        var conversation: ZMConversation?
 
         userSession.enqueue {
             conversation = ZMConversation.insertGroupConversation(
-                session: userSession,
-                participants: Array(users),
+                moc: userSession.viewContext,
+                participants: users.materialize(in: userSession.viewContext),
                 name: name,
                 team: ZMUser.selfUser().team,
                 allowGuests: allowGuests,
                 allowServices: allowServices,
-                readReceipts: enableReceipts
+                readReceipts: enableReceipts,
+                messageProtocol: encryptionProtocol == .mls ? .mls : .proteus
             )
         } completionHandler: {
+            guard let conversation = conversation else {return }
+
             delay(0.3) {
                 ZClientViewController.shared?.select(
                     conversation: conversation,
