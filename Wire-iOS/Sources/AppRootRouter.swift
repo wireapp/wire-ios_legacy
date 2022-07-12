@@ -458,7 +458,7 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
-        UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+        UIApplication.shared.windows.first { $0.isKeyWindow }?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
 
     }
 
@@ -537,7 +537,7 @@ extension AppRootRouter: ApplicationStateObserving {
         if let size = size {
             screenCurtain.frame.size = size
         } else {
-            screenCurtain.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+            screenCurtain.frame = UIApplication.shared.windows.first { $0.isKeyWindow }?.frame ?? UIScreen.main.bounds
         }
     }
 }

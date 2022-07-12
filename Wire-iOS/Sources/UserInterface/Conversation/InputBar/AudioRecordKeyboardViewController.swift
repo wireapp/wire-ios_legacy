@@ -106,7 +106,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
-        if isAppLockActive { UIApplication.shared.keyWindow?.endEditing(true) }
+        if isAppLockActive { UIApplication.shared.windows.first { $0.isKeyWindow }?.endEditing(true) }
     }
 
     // MARK: - View Configuration
