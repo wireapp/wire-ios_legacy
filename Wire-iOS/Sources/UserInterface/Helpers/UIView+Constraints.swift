@@ -100,46 +100,6 @@ extension UIView {
         return constraint
     }
 
-    // MARK: - signal edge alignment
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func pin(to view: UIView,
-             safely: Bool = false,
-             anchor: Anchor,
-             inset: CGFloat = 0,
-             activate: Bool = true) -> NSLayoutConstraint {
-        let constant: CGFloat
-        switch anchor {
-        case .top, .leading:
-            constant = inset
-        case .bottom, .trailing:
-            constant = -inset
-        }
-
-        var selfAnchor: NSObject!
-        var otherAnchor: NSObject!
-
-        switch anchor {
-        case .top:
-            selfAnchor = topAnchor
-            otherAnchor = safely ? view.safeTopAnchor: view.topAnchor
-        case .bottom:
-            selfAnchor = bottomAnchor
-            otherAnchor = safely ? view.safeBottomAnchor: view.bottomAnchor
-        case .leading:
-            selfAnchor = leadingAnchor
-            otherAnchor = safely ? view.safeLeadingAnchor: view.leadingAnchor
-        case .trailing:
-            selfAnchor = trailingAnchor
-            otherAnchor = safely ? view.safeTrailingAnchor: view.trailingAnchor
-        }
-
-        let constraint = (selfAnchor as! NSLayoutAnchor<AnyObject>).constraint(equalTo: (otherAnchor as! NSLayoutAnchor<AnyObject>), constant: constant)
-        constraint.isActive = activate
-
-        return constraint
-    }
-
     // MARK: - all edges alignment
 
     @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
@@ -206,18 +166,6 @@ extension UIView {
         }
 
         return constraints
-    }
-
-    // MARK: - dimensions
-
-    @discardableResult @available(iOS, introduced: 10.0, deprecated: 13.0, message: "Use the anchors API instead")
-    func topAndBottomEdgesToSuperviewEdges() -> [NSLayoutConstraint] {
-        guard let superview = superview else { return [] }
-
-        return [
-            superview.topAnchor.constraint(equalTo: topAnchor),
-            superview.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ]
     }
 
 }
