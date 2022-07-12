@@ -160,6 +160,6 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        textSearchInputView.customSearchBar.searchBar.endEditing(true)
+        textSearchInputView.searchInput.endEditing(true)
     }
 }

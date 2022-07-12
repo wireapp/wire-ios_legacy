@@ -22,18 +22,20 @@ public struct SearchBarStyle {
     var borderColor: UIColor
     var textColor: UIColor
     var backgroundColor: UIColor
+    var searchImageColor: UIColor
     var activeBorderColor: UIColor = UIColor.accent()
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
-
-    static let textViewSearchBar: Self = SearchBarStyle(
+    static let DEFAULTSTYLE: Self = SearchBarStyle(
         borderColor: SemanticColors.SearchBarColor.borderDefault,
         textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: .clear)
+        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar,
+        searchImageColor: SemanticColors.Icon.magnifyingGlassButton)
     static let tokenFieldSearchBar: Self = SearchBarStyle(
         borderColor: SemanticColors.SearchBarColor.borderDefault,
         textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar)
+        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar,
+        searchImageColor: SemanticColors.Icon.magnifyingGlassButton)
 }
 
 extension TokenField: Stylable {
@@ -53,5 +55,6 @@ extension UITextView: Stylable {
         layer.borderWidth = style.borderWidth
         layer.cornerRadius = style.cornerRadius
         layer.borderColor = style.borderColor.cgColor
+        self.applyLeftImage(color: style.searchImageColor)
     }
 }

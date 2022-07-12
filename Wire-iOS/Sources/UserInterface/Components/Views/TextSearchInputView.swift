@@ -21,31 +21,6 @@ import UIKit
 import WireCommonComponents
 import WireSystem
 
-class CustomSearchBar {
-    private var isEditing: Bool = false {
-        didSet {
-            searchBar.layer.borderColor = isEditing
-            ? style.activeBorderColor.cgColor
-            : style.borderColor.cgColor
-        }
-    }
-    private var style: SearchBarStyle
-    lazy var searchBar: UITextView = {
-        let textView = UITextView()
-        textView.applyStyle(self.style)
-        return textView
-    }()
-    init(style searchBarStyle: SearchBarStyle) {
-        self.style = searchBarStyle
-    }
-    func setIsEditing() {
-        self.isEditing = true
-    }
-    func resetIsEditing() {
-        self.isEditing = false
-    }
-}
-
 protocol TextSearchInputViewDelegate: AnyObject {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
@@ -53,7 +28,7 @@ protocol TextSearchInputViewDelegate: AnyObject {
 
 final class TextSearchInputView: UIView {
     let iconView = UIImageView()
-    let customSearchBar = CustomSearchBar(style: .textViewSearchBar)
+    let searchInput = CustomSearchBar(style: .DEFAULTSTYLE)
     let placeholderLabel = UILabel()
     let clearButton = IconButton(style: .default)
 
@@ -88,13 +63,13 @@ final class TextSearchInputView: UIView {
             size: .tiny,
             color: SemanticColors.Icon.magnifyingGlassButton)
         iconView.contentMode = .center
-        customSearchBar.searchBar.delegate = self
-        customSearchBar.searchBar.autocorrectionType = .no
-        customSearchBar.searchBar.accessibilityLabel = "Search"
-        customSearchBar.searchBar.accessibilityIdentifier = "search input"
-        customSearchBar.searchBar.keyboardAppearance = ColorScheme.default.keyboardAppearance
-        customSearchBar.searchBar.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
-        customSearchBar.searchBar.font = .normalFont
+        searchInput.delegate = self
+        searchInput.autocorrectionType = .no
+        searchInput.accessibilityLabel = "Search"
+        searchInput.accessibilityIdentifier = "search input"
+        searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
+        searchInput.font = .normalFont
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         placeholderLabel.font = .smallRegularFont
@@ -107,31 +82,31 @@ final class TextSearchInputView: UIView {
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
-        [iconView, customSearchBar.searchBar, clearButton, placeholderLabel, spinner].forEach(addSubview)
+        [iconView, searchInput, clearButton, placeholderLabel, spinner].forEach(addSubview)
 
         createConstraints()
     }
 
     private func createConstraints() {
-        [self, iconView, customSearchBar.searchBar, placeholderLabel, clearButton, self, customSearchBar.searchBar, clearButton, spinner].prepareForLayout()
+        [self, iconView, searchInput, placeholderLabel, clearButton, self, searchInput, clearButton, spinner].prepareForLayout()
 
         NSLayoutConstraint.activate(
-            customSearchBar.searchBar.fitInConstraints(view: self, inset: 8) + [
-            iconView.leadingAnchor.constraint(equalTo: customSearchBar.searchBar.leadingAnchor, constant: 16),
-            iconView.centerYAnchor.constraint(equalTo: customSearchBar.searchBar.centerYAnchor),
+            searchInput.fitInConstraints(view: self, inset: 8) + [
+            iconView.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 16),
+            iconView.centerYAnchor.constraint(equalTo: searchInput.centerYAnchor),
 
             iconView.topAnchor.constraint(equalTo: topAnchor),
             iconView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             heightAnchor.constraint(lessThanOrEqualToConstant: 100),
 
-            placeholderLabel.leadingAnchor.constraint(equalTo: customSearchBar.searchBar.leadingAnchor, constant: 48),
-            placeholderLabel.topAnchor.constraint(equalTo: customSearchBar.searchBar.topAnchor),
-            placeholderLabel.bottomAnchor.constraint(equalTo: customSearchBar.searchBar.bottomAnchor),
+            placeholderLabel.leadingAnchor.constraint(equalTo: searchInput.leadingAnchor, constant: 48),
+            placeholderLabel.topAnchor.constraint(equalTo: searchInput.topAnchor),
+            placeholderLabel.bottomAnchor.constraint(equalTo: searchInput.bottomAnchor),
             placeholderLabel.trailingAnchor.constraint(equalTo: clearButton.leadingAnchor),
 
             clearButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            clearButton.trailingAnchor.constraint(equalTo: customSearchBar.searchBar.trailingAnchor, constant: -16),
+            clearButton.trailingAnchor.constraint(equalTo: searchInput.trailingAnchor, constant: -16),
             clearButton.widthAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue),
             clearButton.heightAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue),
 
@@ -149,8 +124,8 @@ final class TextSearchInputView: UIView {
     @objc
     func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
         self.query = ""
-        self.customSearchBar.searchBar.text = ""
-        self.customSearchBar.searchBar.resignFirstResponder()
+        self.searchInput.text = ""
+        self.searchInput.resignFirstResponder()
     }
 
     fileprivate func updatePlaceholderLabel() {
@@ -186,11 +161,11 @@ extension TextSearchInputView: UITextViewDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
-        customSearchBar.setIsEditing()
+        searchInput.isEditing = true
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
-        customSearchBar.resetIsEditing()
+        searchInput.isEditing = false
     }
 
 }
