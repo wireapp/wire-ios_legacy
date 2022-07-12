@@ -18,14 +18,14 @@
 
 import Foundation
 
-private let storage = UserDefaults(suiteName: "com.wire.developer-flags")!
-
 @available(iOS 14, *)
 final class DeveloperFlagsViewModel: ObservableObject {
 
     // MARK: - Models
 
     enum DeveloperFlag: String, CaseIterable {
+
+        private static let storage = UserDefaults.applicationGroup
 
         case showCreateMLSGroupToggle
         case nseDebugging
@@ -45,8 +45,8 @@ final class DeveloperFlagsViewModel: ObservableObject {
         }
 
         var isOn: Bool {
-            get { return storage.bool(forKey: rawValue) }
-            set { storage.set(newValue, forKey: rawValue) }
+            get { return Self.storage.bool(forKey: rawValue) }
+            set { Self.storage.set(newValue, forKey: rawValue) }
         }
 
     }
