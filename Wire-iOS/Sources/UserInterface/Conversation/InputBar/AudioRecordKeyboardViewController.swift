@@ -393,7 +393,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
             let changes: () -> Void = {
                 picker.view.translatesAutoresizingMaskIntoConstraints = false
                 self.topContainer.addSubview(picker.view)
-                picker.view.fitInSuperview()
+                picker.view.fitIn(view: self.topContainer)
                 picker.view.alpha = 1
             }
 

@@ -49,7 +49,7 @@ final class ConnectRequestCell: UITableViewCell {
 
             view.translatesAutoresizingMaskIntoConstraints = false
             view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-            view.fitInSuperview()
+            view.fitIn(view: contentView)
             view.widthAnchor.constraint(lessThanOrEqualToConstant: 420).isActive = true
 
             connectRequestViewController = incomingConnectionViewController

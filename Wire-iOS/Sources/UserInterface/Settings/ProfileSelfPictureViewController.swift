@@ -205,7 +205,7 @@ final class ProfileSelfPictureViewController: UIViewController {
         topView.addSubview(selfUserImageView)
 
         selfUserImageView.translatesAutoresizingMaskIntoConstraints = false
-        selfUserImageView.fitInSuperview()
+        selfUserImageView.fitIn(view: topView)
     }
 
     private func setupBottomOverlay() {

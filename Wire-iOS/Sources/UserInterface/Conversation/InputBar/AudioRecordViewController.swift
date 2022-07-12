@@ -202,10 +202,15 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
 
-        constraints.append(contentsOf: bottomContainerView.fitInSuperview(exclude: [.top], activate: false).map({$0.value}))
+        constraints.append(contentsOf: [bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        bottomContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+
         constraints.append(button.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
 
-        constraints.append(contentsOf: topContainerView.fitInSuperview(exclude: [.bottom], activate: false).map({$0.value}))
+        constraints.append(contentsOf: [topContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        topContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        topContainerView.topAnchor.constraint(equalTo: view.topAnchor)])
 
         constraints.append(contentsOf: [topContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor),
 

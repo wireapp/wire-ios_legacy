@@ -123,7 +123,7 @@ final class UserNameTakeOverViewController: UIViewController {
         let inset: CGFloat = 28
         let edgeInsets = EdgeInsets(margin: inset)
 
-        contentView.fitInSuperview()
+        contentView.fitIn(view: view)
         topContainer.fitInSuperview(with: edgeInsets, exclude: [.bottom])
 
         NSLayoutConstraint.activate([

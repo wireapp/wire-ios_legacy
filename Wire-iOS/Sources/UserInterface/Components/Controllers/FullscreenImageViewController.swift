@@ -228,7 +228,7 @@ final class FullscreenImageViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
 
-        scrollView.fitInSuperview()
+        scrollView.fitIn(view: view)
 
         scrollView.contentInsetAdjustmentBehavior = .never
 

@@ -106,7 +106,7 @@ extension ConversationInputBarViewController {
 
         addChild(audioRecordViewController)
         inputBar.addSubview(audioRecordViewContainer)
-        audioRecordViewContainer.fitInSuperview()
+        audioRecordViewContainer.fitIn(view: inputBar)
         audioRecordViewContainer.addSubview(audioRecordViewController.view)
 
         let recordButtonFrame = inputBar.convert(audioButton.bounds, from: audioButton)

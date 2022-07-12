@@ -103,9 +103,9 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         addressContainerView.translatesAutoresizingMaskIntoConstraints = false
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        containerView.fitInSuperview()
-        mapView.fitInSuperview()
-        obfuscationView.fitInSuperview()
+        containerView.fitIn(view: self)
+        mapView.fitIn(view: containerView)
+        obfuscationView.fitIn(view: containerView)
 
         NSLayoutConstraint.activate([
             // containerView
