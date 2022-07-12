@@ -146,14 +146,14 @@ final class EmojiSectionViewController: UIViewController {
 
             switch idx {
             case 0:
-                constraints.append(button.pinToSuperview(anchor: .leading, inset: inset, activate: false))
+                constraints.append(button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset))
                 constraints.append(view.heightAnchor.constraint(equalToConstant: iconSize + inset))
             default:
                 let previous = sectionButtons[idx - 1]
                 constraints.append(button.centerXAnchor.constraint(equalTo: previous.centerXAnchor, constant: padding))
             }
 
-            constraints.append(button.pinToSuperview(anchor: .top, activate: false))
+            constraints.append(button.topAnchor.constraint(equalTo: view.topAnchor))
         }
 
         NSLayoutConstraint.activate(constraints)
