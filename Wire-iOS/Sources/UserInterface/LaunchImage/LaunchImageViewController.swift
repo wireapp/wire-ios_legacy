@@ -83,10 +83,10 @@ class LaunchImageViewController: UIViewController {
                         contentView.topAnchor.constraint(equalTo: view.topAnchor),
                         contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)]
 
-        constraints.append(loadingScreenLabel.pinToSuperview(axisAnchor: .centerX, activate: false))
-        constraints.append(loadingScreenLabel.pinToSuperview(anchor: .bottom, inset: 40, activate: false))
+        constraints.append(loadingScreenLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+        constraints.append(loadingScreenLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40))
 
-        constraints.append(activityIndicator.pinToSuperview(axisAnchor: .centerX, activate: false))
+        constraints.append(activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor))
         constraints.append(activityIndicator.bottomAnchor.constraint(equalTo: loadingScreenLabel.topAnchor, constant: -24))
 
         NSLayoutConstraint.activate(constraints)

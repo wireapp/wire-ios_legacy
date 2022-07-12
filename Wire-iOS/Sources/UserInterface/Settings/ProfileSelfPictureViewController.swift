@@ -99,7 +99,8 @@ final class ProfileSelfPictureViewController: UIViewController {
             bottomOffset = -UIScreen.safeArea.bottom + 20.0
         }
 
-        cameraButton.alignCenter(to: bottomOverlayView, with: CGPoint(x: 0, y: bottomOffset))
+        cameraButton.centerXAnchor.constraint(equalTo: bottomOverlayView.centerXAnchor).isActive = true
+        cameraButton.centerYAnchor.constraint(equalTo: bottomOverlayView.centerYAnchor, constant: bottomOffset).isActive = true
 
         cameraButton.setIconColor(.white, for: .normal)
         cameraButton.setIcon(.cameraLens, size: 40, for: .normal)
@@ -114,7 +115,8 @@ final class ProfileSelfPictureViewController: UIViewController {
         bottomOverlayView.addSubview(closeButton)
 
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setDimensions(length: 32)
+        closeButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
 
         NSLayoutConstraint.activate([
             closeButton.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor),
@@ -138,8 +140,10 @@ final class ProfileSelfPictureViewController: UIViewController {
         bottomOverlayView.addSubview(libraryButton)
 
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
-        libraryButton.setDimensions(length: length)
+
         NSLayoutConstraint.activate([
+            libraryButton.widthAnchor.constraint(equalToConstant: length),
+            libraryButton.heightAnchor.constraint(equalToConstant: length),
             libraryButton.centerYAnchor.constraint(equalTo: cameraButton.centerYAnchor),
             libraryButton.leftAnchor.constraint(equalTo: bottomOverlayView.leftAnchor, constant: 24)
             ])

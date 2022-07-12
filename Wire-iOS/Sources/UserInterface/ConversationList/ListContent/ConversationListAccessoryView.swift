@@ -102,9 +102,10 @@ final class ConversationListAccessoryView: UIView {
             transparentIconViewLeading,
             transparentIconViewTrailing,
             expandTransparentIconViewWidthConstraint,
-            expandWidthConstraint
-            ] +
-            transparentIconView.topAndBottomEdgesToSuperviewEdges()
+            expandWidthConstraint,
+            transparentIconView.topAnchor.constraint(equalTo: topAnchor),
+            transparentIconView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ]
         )
         badgeView.fitIn(view: self)
     }

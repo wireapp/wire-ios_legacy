@@ -85,7 +85,8 @@ final class Spinner: UIView {
 
     private func setupConstraints() {
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerInSuperview()
+        spinner.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 
     private func startAnimationInternal() {
