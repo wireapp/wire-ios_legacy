@@ -532,7 +532,7 @@ final class ZClientViewController: UIViewController {
                            to: viewController,
                            duration: 0.5,
                            options: .transitionCrossDissolve,
-                           animations: { viewController.view.fitInSuperview() },
+                           animations: { viewController.view.fitIn(view: self.view) },
                            completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
@@ -541,7 +541,7 @@ final class ZClientViewController: UIViewController {
                             })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
-                viewController.view.fitInSuperview()
+                viewController.view.fitIn(view: topOverlayContainer)
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
@@ -574,7 +574,7 @@ final class ZClientViewController: UIViewController {
             viewController.view.frame = topOverlayContainer.bounds
             viewController.view.translatesAutoresizingMaskIntoConstraints = false
             topOverlayContainer.addSubview(viewController.view)
-            viewController.view.fitInSuperview()
+            viewController.view.fitIn(view: topOverlayContainer)
 
             viewController.didMove(toParent: self)
 

@@ -236,7 +236,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         addChild(mentionsSearchResultsViewController)
         view.addSubview(mentionsSearchResultsViewController.view)
 
-        mentionsSearchResultsViewController.view.fitInSuperview()
+        mentionsSearchResultsViewController.view.fitIn(view: view)
     }
 
     func scrollToFirstUnreadMessageIfNeeded() {
