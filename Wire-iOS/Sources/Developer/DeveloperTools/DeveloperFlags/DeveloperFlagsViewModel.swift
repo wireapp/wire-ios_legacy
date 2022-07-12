@@ -17,43 +17,10 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 @available(iOS 14, *)
 final class DeveloperFlagsViewModel: ObservableObject {
-
-    // MARK: - Models
-
-    enum DeveloperFlag: String, CaseIterable {
-
-        private static let storage = UserDefaults.applicationGroup
-
-        case showCreateMLSGroupToggle
-        case nseDebugging
-        case nseDebugEntryPoint
-        case useDevelopmentBackendAPI
-
-        var description: String {
-            switch self {
-            case .showCreateMLSGroupToggle:
-                return "Turn on to show the MLS toggle when creating a new group."
-
-            case .nseDebugging:
-                return "Turn on to make the notification service extension (NSE) display debug notifications."
-
-            case .nseDebugEntryPoint:
-                return "Turn on to display a notification immediately at the entry point of the notification service extension, skipping any further push processing."
-
-            case .useDevelopmentBackendAPI:
-                return "Turn on to use the developement backend API version instead of the latest production API version."
-            }
-        }
-
-        var isOn: Bool {
-            get { return Self.storage.bool(forKey: rawValue) }
-            set { Self.storage.set(newValue, forKey: rawValue) }
-        }
-
-    }
 
     // MARK: - State
 
