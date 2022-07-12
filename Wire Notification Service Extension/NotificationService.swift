@@ -72,6 +72,11 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
+        if DeveloperFlag.nseDebugEntryPoint.isOn {
+            contentHandler(request.debugContent)
+            return
+        }
+
         self.contentHandler = contentHandler
 
         guard
@@ -176,6 +181,24 @@ extension UNNotificationRequest {
 
     var mutableContent: UNMutableNotificationContent? {
         return content.mutableCopy() as? UNMutableNotificationContent
+    }
+
+    var debugContent: UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = "DEBUG 👀"
+
+        guard
+            let notificationData = self.content.userInfo["data"] as? [String: Any],
+            let userID = notificationData["user"] as? String,
+            let data = notificationData["data"] as? [String: Any],
+            let eventID = data["id"] as? String
+        else {
+            content.body = "Received a push"
+            return content
+        }
+
+        content.body = "USER: \(userID), EVENT: \(eventID)"
+        return content
     }
 
 }
