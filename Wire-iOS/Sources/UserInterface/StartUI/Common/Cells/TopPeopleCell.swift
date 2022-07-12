@@ -118,7 +118,6 @@ final class TopPeopleCell: UICollectionViewCell {
             nameLabel.trailingAnchor.constraint(equalTo: avatarContainer.trailingAnchor).isActive = true
             nameLabel.leadingAnchor.constraint(equalTo: avatarContainer.leadingAnchor).isActive = true
 
-
             NSLayoutConstraint.activate(constraints)
             initialConstraintsCreated = true
 

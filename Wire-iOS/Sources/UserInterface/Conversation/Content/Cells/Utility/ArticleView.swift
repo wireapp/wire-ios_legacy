@@ -116,7 +116,6 @@ final class ArticleView: UIView {
         obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
         obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
 
-
         NSLayoutConstraint.activate([
             imageHeightConstraint,
             messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
