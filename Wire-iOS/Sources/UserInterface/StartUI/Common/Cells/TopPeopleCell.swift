@@ -105,14 +105,13 @@ final class TopPeopleCell: UICollectionViewCell {
                                             contentView.topAnchor.constraint(equalTo: topAnchor),
                                             contentView.bottomAnchor.constraint(equalTo: bottomAnchor)])
 
-            constraints.append(contentsOf: [badgeUserImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                            badgeUserImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                            badgeUserImageView.topAnchor.constraint(equalTo: topAnchor),
-                                            badgeUserImageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+            constraints.append(contentsOf: [badgeUserImageView.trailingAnchor.constraint(equalTo: avatarContainer.trailingAnchor),
+                                            badgeUserImageView.leadingAnchor.constraint(equalTo: avatarContainer.leadingAnchor),
+                                            badgeUserImageView.topAnchor.constraint(equalTo: avatarContainer.topAnchor),
+                                            badgeUserImageView.bottomAnchor.constraint(equalTo: avatarContainer.bottomAnchor)])
 
             conversationImageViewSize = conversationImageView.widthAnchor.constraint(equalToConstant: 80)
             avatarViewSizeConstraint = avatarContainer.widthAnchor.constraint(equalToConstant: 80)
-
             constraints.append(conversationImageViewSize!)
             constraints.append(avatarViewSizeConstraint!)
 
@@ -127,7 +126,6 @@ final class TopPeopleCell: UICollectionViewCell {
             constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,
                                                          with: EdgeInsets(top: .nan, leading: 0, bottom: .nan, trailing: 0),
                                                          exclude: [.top, .bottom], activate: false).values)
-
             NSLayoutConstraint.activate(constraints)
             initialConstraintsCreated = true
 
