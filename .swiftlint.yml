@@ -20,6 +20,7 @@ disabled_rules:
 included:
     - Wire-iOS/Sources
     - Wire-iOS Tests/
+    - WireCommonComponents
 
 # In order to deal with the huge number of violations, first set
 # very high limits then iteratively reduce the limits and resolve
