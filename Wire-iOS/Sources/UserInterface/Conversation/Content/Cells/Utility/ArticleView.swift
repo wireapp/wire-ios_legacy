@@ -105,18 +105,24 @@ final class ArticleView: UIView {
 
         [messageLabel, authorLabel, imageView, obfuscationView].prepareForLayout()
 
-        imageView.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor)
+        ])
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
         imageHeightConstraint.priority = UILayoutPriority(rawValue: 999)
 
-        messageLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.bottom, .top])
-        authorLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.top])
-        obfuscationView.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
-        obfuscationView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
-        obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-
         NSLayoutConstraint.activate([
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            obfuscationView.topAnchor.constraint(equalTo: imageView.topAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
             imageHeightConstraint,
             messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             authorLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8)

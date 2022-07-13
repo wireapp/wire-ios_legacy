@@ -41,6 +41,11 @@ class ConversationCreateErrorCell: UICollectionViewCell {
         label.textColor = UIColor.from(scheme: .errorIndicator, variant: .light)
 
         contentView.addSubview(label)
-        label.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+        ])
     }
 }
