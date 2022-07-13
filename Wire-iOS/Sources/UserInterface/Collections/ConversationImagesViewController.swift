@@ -153,12 +153,18 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         NSLayoutConstraint.activate([
             buttonsBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             buttonsBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            buttonsBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        overlay.pin(to: buttonsBar)
+            buttonsBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            overlay.topAnchor.constraint(equalTo: buttonsBar.topAnchor),
+            overlay.bottomAnchor.constraint(equalTo: buttonsBar.bottomAnchor),
+            overlay.trailingAnchor.constraint(equalTo: buttonsBar.trailingAnchor),
+            overlay.leadingAnchor.constraint(equalTo: buttonsBar.leadingAnchor),
 
-        separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
-        separator.pin(to: buttonsBar, exclude: [.bottom])
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.topAnchor.constraint(equalTo: buttonsBar.topAnchor),
+            separator.trailingAnchor.constraint(equalTo: buttonsBar.trailingAnchor),
+            separator.leadingAnchor.constraint(equalTo: buttonsBar.leadingAnchor)
+        ])
+
     }
 
     private func createPageController() {

@@ -118,11 +118,11 @@ final class ArticleView: UIView {
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
-        ])
-        obfuscationView.pin(to: imageView)
-
-        NSLayoutConstraint.activate([
+            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            obfuscationView.topAnchor.constraint(equalTo: imageView.topAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
             imageHeightConstraint,
             messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             authorLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8)
