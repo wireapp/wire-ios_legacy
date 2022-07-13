@@ -22,7 +22,6 @@ import AppCenterDistribute
 import AppCenterAnalytics
 
 public extension AppCenter {
-    
     static func setTrackingEnabled(_ enabled: Bool) {
         Analytics.enabled = enabled
         Distribute.enabled = enabled
