@@ -32,7 +32,6 @@ public extension AppCenter {
         Crashes.enabled = enabled
 #endif
     }
-    
     static func start() {
         Distribute.updateTrack = .private
 
@@ -44,7 +43,6 @@ public extension AppCenter {
                         Distribute.self,
                         Analytics.self]
 #endif
-
         AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: services)
     }
 }
