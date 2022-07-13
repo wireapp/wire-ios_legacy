@@ -418,7 +418,6 @@ public class WireStyleKit: NSObject {
         clipPath.close()
         clipPath.usesEvenOddFillRule = true
         clipPath.addClip()
-        
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 64, height: 64))
         color.setFill()
