@@ -63,7 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */,
-				EE212A96283E604600AB1040 /* CoreCrypto */,
+				EE212A97283E604600AB1040 /* core_cryptoFFI.h */,
+				EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */,
 				EE212A70283E5BC000AB1040 /* WireCoreCrypto */,
 				EE212A7C283E5BC000AB1040 /* WireCoreCryptoTests */,
 				EE212A6F283E5BC000AB1040 /* Products */,
@@ -112,16 +113,6 @@
 				EE212A8C283E5F2600AB1040 /* libcore_crypto_ffi.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EE212A96283E604600AB1040 /* CoreCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				EE212A97283E604600AB1040 /* core_cryptoFFI.h */,
-				EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */,
-			);
-			name = CoreCrypto;
-			path = WireCoreCrypto/CoreCrypto;
 			sourceTree = "<group>";
 		};
 		EE212A9D283E61E700AB1040 /* Docs */ = {
