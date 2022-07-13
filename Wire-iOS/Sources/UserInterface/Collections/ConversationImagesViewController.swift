@@ -151,7 +151,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         pageViewController.view.fitIn(view: view)
         buttonsBar.fitInSuperview(exclude: [.top])
-        overlay.pin(to: buttonsBar)
+        overlay.topAnchor.constraint(equalTo: buttonsBar.topAnchor).isActive = true
+        overlay.bottomAnchor.constraint(equalTo: buttonsBar.bottomAnchor).isActive = true
+        overlay.trailingAnchor.constraint(equalTo: buttonsBar.trailingAnchor).isActive = true
+        overlay.leadingAnchor.constraint(equalTo: buttonsBar.leadingAnchor).isActive = true
 
         separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
         separator.pin(to: buttonsBar, exclude: [.bottom])

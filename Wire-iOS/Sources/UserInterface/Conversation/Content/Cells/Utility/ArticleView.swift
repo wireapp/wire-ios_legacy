@@ -111,7 +111,10 @@ final class ArticleView: UIView {
 
         messageLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.bottom, .top])
         authorLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.top])
-        obfuscationView.pin(to: imageView)
+        obfuscationView.topAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
+        obfuscationView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
+        obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
+        obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
 
         NSLayoutConstraint.activate([
             imageHeightConstraint,

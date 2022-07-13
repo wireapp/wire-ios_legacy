@@ -115,9 +115,8 @@ final class TopPeopleCell: UICollectionViewCell {
 
             constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
 
-            constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,
-                                                         with: EdgeInsets(top: .nan, leading: 0, bottom: .nan, trailing: 0),
-                                                         exclude: [.top, .bottom], activate: false).values)
+            nameLabel.trailingAnchor.constraint(equalTo: avatarContainer.trailingAnchor).isActive = true
+            nameLabel.leadingAnchor.constraint(equalTo: avatarContainer.leadingAnchor).isActive = true
 
             NSLayoutConstraint.activate(constraints)
             initialConstraintsCreated = true
