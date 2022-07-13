@@ -1,11 +1,12 @@
 framework module WireCoreCrypto {
+
     umbrella header "WireCoreCrypto.h"
+    export *
     
     explicit module CoreCrypto {
         header "core_cryptoFFI.h"
-        link "core_crypto_ffi"
+        link "core_crypto_ffi_universal"
         export *
     }
 
-    export *
 }
