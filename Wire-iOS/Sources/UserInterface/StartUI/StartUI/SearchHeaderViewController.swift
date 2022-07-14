@@ -25,36 +25,10 @@ protocol SearchHeaderViewControllerDelegate: AnyObject {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
 }
 
-class CustomTokenField {
-    private var isEditing: Bool = false {
-        didSet {
-            tokenField.layer.borderColor = isEditing
-            ? style.activeBorderColor.cgColor
-            : style.borderColor.cgColor
-        }
-    }
-    private var style: SearchBarStyle
-    lazy var tokenField: TokenField = {
-        let view = TokenField()
-        view.applyStyle(self.style)
-        view.customTokenFieldDelegate = self
-        return view
-    }()
-    init(style searchBarStyle: SearchBarStyle) {
-        self.style = searchBarStyle
-    }
-    func setIsEditing() {
-        self.isEditing = true
-    }
-    func resetIsEditing() {
-        self.isEditing = false
-    }
-}
-
 final class SearchHeaderViewController: UIViewController {
 
     let tokenFieldContainer = UIView()
-    let customTokenField = CustomTokenField(style: .tokenFieldSearchBar)
+    let tokenField = TokenField()
     let searchIcon = UIImageView()
     let clearButton: IconButton
     let userSelection: UserSelection
@@ -64,7 +38,7 @@ final class SearchHeaderViewController: UIViewController {
     weak var delegate: SearchHeaderViewControllerDelegate?
 
     var query: String {
-        return customTokenField.tokenField.filterText
+        return tokenField.filterText
     }
 
     @available(*, unavailable)
@@ -75,7 +49,7 @@ final class SearchHeaderViewController: UIViewController {
     init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         colorSchemeVariant = variant
-        clearButton = IconButton(style: .default, variant: variant)
+        clearButton = IconButton(style: .default/*, variant: variant*/)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -87,51 +61,44 @@ final class SearchHeaderViewController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.setIcon(
-            .search,
-            size: .tiny,
-            color: SemanticColors.Icon.magnifyingGlassButton)
+        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
 
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
 
-        clearButton.setIconColor(
-            SemanticColors.Icon.clearButton,
-            for: .normal)
-        customTokenField.tokenField.clipsToBounds = true
-        customTokenField.tokenField.textView.accessibilityIdentifier = "textViewSearch"
-        customTokenField.tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
-        customTokenField.tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
-        customTokenField.tokenField.textView.returnKeyType = .done
-        customTokenField.tokenField.textView.autocorrectionType = .no
-        customTokenField.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
-        customTokenField.tokenField.delegate = self
+        tokenField.textView.accessibilityIdentifier = "textViewSearch"
+        tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
+        tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
+        tokenField.textView.returnKeyType = .done
+        tokenField.textView.autocorrectionType = .no
+        tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
+        tokenField.delegate = self
 
-        [customTokenField.tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
+        [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
         [tokenFieldContainer].forEach(view.addSubview)
 
         createConstraints()
     }
 
     private func createConstraints() {
-        [tokenFieldContainer, customTokenField.tokenField, searchIcon, clearButton, tokenFieldContainer].prepareForLayout()
+        [tokenFieldContainer, tokenField, searchIcon, clearButton, tokenFieldContainer].prepareForLayout()
         NSLayoutConstraint.activate([
-          searchIcon.centerYAnchor.constraint(equalTo: customTokenField.tokenField.centerYAnchor),
-          searchIcon.leadingAnchor.constraint(equalTo: customTokenField.tokenField.leadingAnchor, constant: 16),
+          searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+          searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
 
           clearButton.widthAnchor.constraint(equalToConstant: 16),
           clearButton.heightAnchor.constraint(equalTo: clearButton.widthAnchor),
-          clearButton.centerYAnchor.constraint(equalTo: customTokenField.tokenField.centerYAnchor),
-          clearButton.trailingAnchor.constraint(equalTo: customTokenField.tokenField.trailingAnchor, constant: -16),
+          clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+          clearButton.trailingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -16),
 
-          customTokenField.tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
-          customTokenField.tokenField.topAnchor.constraint(greaterThanOrEqualTo: tokenFieldContainer.topAnchor, constant: 8),
-          customTokenField.tokenField.bottomAnchor.constraint(lessThanOrEqualTo: tokenFieldContainer.bottomAnchor, constant: -8),
-          customTokenField.tokenField.leadingAnchor.constraint(equalTo: tokenFieldContainer.leadingAnchor, constant: 8),
-          customTokenField.tokenField.trailingAnchor.constraint(equalTo: tokenFieldContainer.trailingAnchor, constant: -8),
-          customTokenField.tokenField.centerYAnchor.constraint(equalTo: tokenFieldContainer.centerYAnchor),
+          tokenField.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
+          tokenField.topAnchor.constraint(greaterThanOrEqualTo: tokenFieldContainer.topAnchor, constant: 8),
+          tokenField.bottomAnchor.constraint(lessThanOrEqualTo: tokenFieldContainer.bottomAnchor, constant: -8),
+          tokenField.leadingAnchor.constraint(equalTo: tokenFieldContainer.leadingAnchor, constant: 8),
+          tokenField.trailingAnchor.constraint(equalTo: tokenFieldContainer.trailingAnchor, constant: -8),
+          tokenField.centerYAnchor.constraint(equalTo: tokenFieldContainer.centerYAnchor),
 
         // pin to the bottom of the navigation bar
 
@@ -146,21 +113,22 @@ final class SearchHeaderViewController: UIViewController {
 
     @objc
     private func onClearButtonPressed() {
-        customTokenField.tokenField.clearFilterText()
-        customTokenField.tokenField.removeAllTokens()
+        tokenField.clearFilterText()
+        tokenField.removeAllTokens()
+        tokenField.textView.resignFirstResponder()
         resetQuery()
-        updateClearIndicator(for: customTokenField.tokenField)
+        updateClearIndicator(for: tokenField)
     }
 
     func clearInput() {
-        customTokenField.tokenField.removeAllTokens()
-        customTokenField.tokenField.clearFilterText()
+        tokenField.removeAllTokens()
+        tokenField.clearFilterText()
         userSelection.replace([])
     }
 
     func resetQuery() {
-        customTokenField.tokenField.filterUnwantedAttachments()
-        delegate?.searchHeaderViewController(self, updatedSearchQuery: customTokenField.tokenField.filterText)
+        tokenField.filterUnwantedAttachments()
+        delegate?.searchHeaderViewController(self, updatedSearchQuery: tokenField.filterText)
     }
 
     private func updateClearIndicator(for tokenField: TokenField) {
@@ -177,13 +145,13 @@ extension SearchHeaderViewController: UserSelectionObserver {
 
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         guard allowsMultipleSelection else { return }
-        customTokenField.tokenField.addToken(forTitle: user.name ?? "", representedObject: user)
+        tokenField.addToken(forTitle: user.name ?? "", representedObject: user)
     }
 
     func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
-        guard let token = customTokenField.tokenField.token(forRepresentedObject: user) else { return }
-        customTokenField.tokenField.removeToken(token)
-        updateClearIndicator(for: customTokenField.tokenField)
+        guard let token = tokenField.token(forRepresentedObject: user) else { return }
+        tokenField.removeToken(token)
+        updateClearIndicator(for: tokenField)
     }
 
 }

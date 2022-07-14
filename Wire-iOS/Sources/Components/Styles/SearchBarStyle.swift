@@ -19,42 +19,33 @@
 import UIKit
 
 public struct SearchBarStyle {
-    var borderColor: UIColor
+
+    typealias SearchBarColors = SemanticColors.SearchBarColor
+
+    var borderColors: (active: UIColor, notActive: UIColor)
     var textColor: UIColor
     var backgroundColor: UIColor
-    var searchImageColor: UIColor
-    var activeBorderColor: UIColor = UIColor.accent()
+
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
-    static let DEFAULTSTYLE: Self = SearchBarStyle(
-        borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar,
-        searchImageColor: SemanticColors.Icon.magnifyingGlassButton)
-    static let tokenFieldSearchBar: Self = SearchBarStyle(
-        borderColor: SemanticColors.SearchBarColor.borderDefault,
-        textColor: SemanticColors.SearchBarColor.textUserInput,
-        backgroundColor: SemanticColors.SearchBarColor.backgroundSearchBar,
-        searchImageColor: SemanticColors.Icon.magnifyingGlassButton)
-}
 
-extension TokenField: Stylable {
-    public func applyStyle(_ style: SearchBarStyle) {
-        textColor = style.textColor
-        backgroundColor = style.backgroundColor
-        layer.borderWidth = style.borderWidth
-        layer.cornerRadius = style.cornerRadius
-        layer.borderColor = style.borderColor.cgColor
-    }
+    static let `default` = SearchBarStyle(borderColors: (.accent(), SearchBarColors.borderInputView),
+                                          textColor: SearchBarColors.textInputView,
+                                          backgroundColor: SearchBarColors.backgroundInputView)
+
 }
 
 extension UITextView: Stylable {
+
     public func applyStyle(_ style: SearchBarStyle) {
+
         textColor = style.textColor
         backgroundColor = style.backgroundColor
+
         layer.borderWidth = style.borderWidth
         layer.cornerRadius = style.cornerRadius
-        layer.borderColor = style.borderColor.cgColor
-        self.applyLeftImage(color: style.searchImageColor)
+        layer.borderColor = style.borderColors.notActive.cgColor
+
     }
+
 }

@@ -68,7 +68,7 @@ final class ContactsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        _ = searchHeaderViewController.customTokenField.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
     // MARK: - Setup
@@ -145,7 +145,7 @@ final class ContactsViewController: UIViewController {
 
     private func showKeyboardIfNeeded() {
         if tableView.numberOfTotalRows > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
-            _ = searchHeaderViewController.customTokenField.tokenField.becomeFirstResponder()
+            _ = searchHeaderViewController.tokenField.becomeFirstResponder()
         }
     }
 

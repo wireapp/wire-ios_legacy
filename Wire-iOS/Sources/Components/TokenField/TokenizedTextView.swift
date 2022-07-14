@@ -27,7 +27,7 @@ protocol TokenizedTextViewDelegate: AnyObject {
 // ! Shouldn't be used anywhere else.
 // TODO: as a inner class of TokenField
 
-final class TokenizedTextView: TextView {
+class TokenizedTextView: TextView {
 
     weak var tokenizedTextViewDelegate: TokenizedTextViewDelegate?
 

@@ -135,7 +135,7 @@ final class AddParticipantsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        _ = searchHeaderViewController.customTokenField.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -363,20 +363,20 @@ final class AddParticipantsViewController: UIViewController {
 
     fileprivate func performSearch() {
         let searchingForServices = searchResultsViewController.searchGroup == .services
-        let hasFilter = !searchHeaderViewController.customTokenField.tokenField.filterText.isEmpty
+        let hasFilter = !searchHeaderViewController.tokenField.filterText.isEmpty
 
         emptyResultView.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
 
         switch (searchResultsViewController.searchGroup, hasFilter) {
         case (.services, _):
             searchResultsViewController.mode = .search
-            searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.customTokenField.tokenField.filterText)
+            searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.tokenField.filterText)
         case (.people, false):
             searchResultsViewController.mode = .list
             searchResultsViewController.searchContactList()
         case (.people, true):
             searchResultsViewController.mode = .search
-            searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.customTokenField.tokenField.filterText)
+            searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
         }
     }
 

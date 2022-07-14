@@ -45,16 +45,13 @@ public enum SemanticColors {
         static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum SearchBarColor {
-        public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
-        public static let textUserInput = UIColor(light: Asset.black, dark: Asset.white)
-        public static let backgroundSearchBar = UIColor(light: Asset.white, dark: Asset.black)
-        public static let borderDefault = UIColor(light: Asset.gray40, dark: Asset.gray80)
-        static let placeholderText = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        public static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
+        public static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        public static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
+        public static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        public static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
-    public enum Icon {
-        public static let clearButton = UIColor(light: Asset.black, dark: Asset.white)
-        public static let magnifyingGlassButton = UIColor(light: Asset.black, dark: Asset.white)
-    }
+
 }
 
 extension UIColor {

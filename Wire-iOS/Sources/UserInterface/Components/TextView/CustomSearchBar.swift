@@ -18,39 +18,48 @@
 
 import UIKit
 
-class CustomSearchBar: UITextView {
-    var isEditing: Bool = false {
+// A custom UITextView with applied styles for the search bars. Should be used for every search bar.
+final class CustomSearchBar: TokenizedTextView {
+
+    // MARK: - Properties
+
+    private var style: SearchBarStyle?
+
+    private var isEditing: Bool = false {
         didSet {
+            guard let style = style else {
+                return
+            }
             layer.borderColor = isEditing
-            ? style?.activeBorderColor.cgColor
-            : style?.borderColor.cgColor
+            ? style.borderColors.active.cgColor
+            : style.borderColors.notActive.cgColor
         }
     }
-    private var style: SearchBarStyle?
-    convenience init(style searchBarStyle: SearchBarStyle) {
-        self.init(frame: .zero)
-        self.style = searchBarStyle
-        self.applyStyle(searchBarStyle)
-        self.applyLeftImage(color: SemanticColors.Icon.magnifyingGlassButton)
-    }
-    init(frame: CGRect) {
-        super.init(frame: CGRect.zero, textContainer: nil)
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
-extension UITextView {
-    func applyLeftImage(color col: UIColor) {
-        let searchImageView = UIImageView()
-        searchImageView.setIcon(
-            .search,
-            size: .tiny,
-            color: .black)
-        let searchIcon: UIImage = searchImageView.image!
-        searchImageView.frame = CGRect(x: 16.0, y: 12.0, width: searchIcon.size.width, height: searchIcon.size.height)
-        searchImageView.contentMode = UIView.ContentMode.center
-        self.addSubview(searchImageView)
+    // MARK: - initialization
+
+    convenience init(style: SearchBarStyle) {
+        self.init(frame: .zero)
+
+        self.style = style
+        applyStyle(style)
+        configureObservers()
     }
+
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: self)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidEndEditing(_:)), name: UITextView.textDidEndEditingNotification, object: self)
+    }
+
+    @objc
+    func textViewDidBeginEditing(_ note: Notification?) {
+        isEditing = true
+    }
+
+    @objc
+    func textViewDidEndEditing(_ note: Notification?) {
+        isEditing = false
+    }
+
 }

@@ -198,7 +198,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     func showKeyboardIfNeeded() {
         let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count /// TODO: unwrap
         if conversationCount > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
-            _ = searchHeader.customTokenField.tokenField.becomeFirstResponder()
+            _ = searchHeader.tokenField.becomeFirstResponder()
         }
 
     }
@@ -215,7 +215,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     @objc
     private func onDismissPressed() {
-        _ = searchHeader.customTokenField.tokenField.resignFirstResponder()
+        _ = searchHeader.tokenField.resignFirstResponder()
         navigationController?.dismiss(animated: true)
     }
 

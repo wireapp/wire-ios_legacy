@@ -44,7 +44,6 @@ extension ShareViewController {
 
         createShareablePreview()
 
-        self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
         self.tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)

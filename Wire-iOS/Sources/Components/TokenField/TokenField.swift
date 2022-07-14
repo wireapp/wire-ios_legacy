@@ -26,9 +26,8 @@ final class TokenField: UIView {
     let accessoryButtonSize: CGFloat = 32
 
     weak var delegate: TokenFieldDelegate?
-    weak var customTokenFieldDelegate: CustomTokenField?
 
-    let textView: TokenizedTextView = TokenizedTextView()
+    let textView: TokenizedTextView = CustomSearchBar(style: .default)
     let accessoryButton: IconButton = IconButton()
 
     var hasAccessoryButton = false {
@@ -154,7 +153,7 @@ final class TokenField: UIView {
         inputParagraphStyle.lineSpacing = lineSpacing
 
         return [.font: font,
-                .foregroundColor: textColor,
+                .foregroundColor: textView.textColor ?? .clear,
                 .paragraphStyle: inputParagraphStyle]
     }
 
@@ -212,16 +211,6 @@ final class TokenField: UIView {
     }
 
     // MARK: - Appearance
-
-    var textColor: UIColor = .black {
-        didSet {
-            guard oldValue != textColor else {
-                return
-            }
-
-            updateTextAttributes()
-        }
-    }
 
     var lineSpacing: CGFloat = 8 {
         didSet {
@@ -518,7 +507,6 @@ final class TokenField: UIView {
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = UIColor.clear
         textView.textDragInteraction?.isEnabled = false
         addSubview(textView)
 
@@ -779,12 +767,6 @@ extension TokenField: UITextViewDelegate {
         updateTextAttributes()
 
         return true
-    }
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        customTokenFieldDelegate?.setIsEditing()
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        customTokenFieldDelegate?.resetIsEditing()
     }
 }
 

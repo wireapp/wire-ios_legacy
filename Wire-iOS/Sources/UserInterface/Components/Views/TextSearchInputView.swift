@@ -28,7 +28,7 @@ protocol TextSearchInputViewDelegate: AnyObject {
 
 final class TextSearchInputView: UIView {
     let iconView = UIImageView()
-    let searchInput = CustomSearchBar(style: .DEFAULTSTYLE)
+    let searchInput = CustomSearchBar(style: .default)
     let placeholderLabel = UILabel()
     let clearButton = IconButton(style: .default)
 
@@ -57,11 +57,9 @@ final class TextSearchInputView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = SemanticColors.SearchBarColor.backgroundSearchBar
-        iconView.setIcon(
-            .search,
-            size: .tiny,
-            color: SemanticColors.Icon.magnifyingGlassButton)
+        backgroundColor = .clear
+        iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
+
         iconView.contentMode = .center
         searchInput.delegate = self
         searchInput.autocorrectionType = .no
@@ -82,7 +80,7 @@ final class TextSearchInputView: UIView {
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
         spinner.iconSize = StyleKitIcon.Size.tiny.rawValue
-        [iconView, searchInput, clearButton, placeholderLabel, spinner].forEach(addSubview)
+        [searchInput, iconView, clearButton, placeholderLabel, spinner].forEach(addSubview)
 
         createConstraints()
     }
@@ -161,11 +159,10 @@ extension TextSearchInputView: UITextViewDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
-        searchInput.isEditing = true
     }
+
     func textViewDidEndEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
-        searchInput.isEditing = false
     }
 
 }
