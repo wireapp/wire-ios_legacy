@@ -917,10 +917,6 @@ final class ConversationNewDeviceSystemMessageCellDescription: ConversationMessa
 
         if !systemMessage.addedUserTypes.isEmpty {
             return configureForAddedUsers(in: conversation, attributes: textAttributes)
-        } else if systemMessage.systemMessageType == .reactivatedDevice {
-            return configureForReactivatedSelfClient(SelfUser.current, link: View.userClientURL)
-        } else if let user = users.first, user.isSelfUser && systemMessage.systemMessageType == .usingNewDevice {
-            return configureForNewCurrentDeviceOfSelfUser(user, link: View.userClientURL)
         } else if users.count == 1, let user = users.first, user.isSelfUser {
             return configureForNewClientOfSelfUser(user, clients: clients, link: View.userClientURL)
         } else {
