@@ -41,7 +41,7 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     public func wire_createConversation(
         conversationId: WireDataModel.ConversationId,
         config: WireDataModel.ConversationConfiguration
-    ) throws  {
+    ) throws {
         return try createConversation(
             conversationId: conversationId,
             config: .init(config: config)
