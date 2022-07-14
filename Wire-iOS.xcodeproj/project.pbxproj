@@ -1250,6 +1250,8 @@
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2C42EC25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */; };
+		EE2DF75E2875E2C30028ECA2 /* PreferredAPIVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2DF75D2875E2C30028ECA2 /* PreferredAPIVersionView.swift */; };
+		EE2DF7602875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2DF75F2875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
 		EE329F9525E65AC100861EC6 /* AppLockModule.MockApplicationStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE329F9325E65ABE00861EC6 /* AppLockModule.MockApplicationStateProvider.swift */; };
 		EE329F9725E65D4700861EC6 /* ApplicationStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */; };
@@ -3130,6 +3132,8 @@
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2C42EB25B70F2200B07EFF /* AppLockModule.MockAuthenticationTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockAuthenticationTypeDetector.swift; sourceTree = "<group>"; };
+		EE2DF75D2875E2C30028ECA2 /* PreferredAPIVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredAPIVersionView.swift; sourceTree = "<group>"; };
+		EE2DF75F2875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredAPIVersionViewModel.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
 		EE329F9325E65ABE00861EC6 /* AppLockModule.MockApplicationStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModule.MockApplicationStateProvider.swift; sourceTree = "<group>"; };
 		EE329F9625E65D4700861EC6 /* ApplicationStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateProvider.swift; sourceTree = "<group>"; };
@@ -6949,6 +6953,15 @@
 			path = "App Lock";
 			sourceTree = "<group>";
 		};
+		EE2DF75C2875E29F0028ECA2 /* PreferredAPIVersion */ = {
+			isa = PBXGroup;
+			children = (
+				EE2DF75D2875E2C30028ECA2 /* PreferredAPIVersionView.swift */,
+				EE2DF75F2875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift */,
+			);
+			path = PreferredAPIVersion;
+			sourceTree = "<group>";
+		};
 		EE430EBA25C208A90056BDE3 /* Screen Curtain */ = {
 			isa = PBXGroup;
 			children = (
@@ -6974,6 +6987,7 @@
 				EE742AB5284DE57900A6B5F3 /* DeveloperToolsView.swift */,
 				EE742AB7284DE66400A6B5F3 /* DeveloperToolsViewModel.swift */,
 				EECA90A8287449D10024B301 /* DeveloperFlags */,
+				EE2DF75C2875E29F0028ECA2 /* PreferredAPIVersion */,
 			);
 			path = DeveloperTools;
 			sourceTree = "<group>";
@@ -8073,6 +8087,7 @@
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
+				EE2DF75E2875E2C30028ECA2 /* PreferredAPIVersionView.swift in Sources */,
 				5E8DA788211C499900360979 /* AuthenticationCoordinator+LoginDelegate.swift in Sources */,
 				63B9F5A525E528E70059020D /* ActiveSpeakerState+Helper.swift in Sources */,
 				A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */,
@@ -8658,6 +8673,7 @@
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
 				63497734268CBDAE00824A05 /* CallGridAction.swift in Sources */,
 				EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */,
+				EE2DF7602875E2E20028ECA2 /* PreferredAPIVersionViewModel.swift in Sources */,
 				5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
