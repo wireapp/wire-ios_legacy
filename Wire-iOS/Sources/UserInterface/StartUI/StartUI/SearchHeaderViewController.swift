@@ -49,7 +49,7 @@ final class SearchHeaderViewController: UIViewController {
     init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         colorSchemeVariant = variant
-        clearButton = IconButton(style: .default/*, variant: variant*/)
+        clearButton = IconButton(style: .default)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -115,7 +115,6 @@ final class SearchHeaderViewController: UIViewController {
     private func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
-        tokenField.textView.resignFirstResponder()
         resetQuery()
         updateClearIndicator(for: tokenField)
     }

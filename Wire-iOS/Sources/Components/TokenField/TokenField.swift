@@ -434,6 +434,7 @@ final class TokenField: UIView {
         textView.textStorage.deleteCharacters(in: nsRange)
         textView.textStorage.endEditing()
         textView.insertText("")
+        textView.resignFirstResponder()
 
         invalidateIntrinsicContentSize()
         layoutIfNeeded()

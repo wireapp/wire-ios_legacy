@@ -48,7 +48,6 @@ final class CustomSearchBar: TokenizedTextView {
 
     private func configureObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: self)
-
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidEndEditing(_:)), name: UITextView.textDidEndEditingNotification, object: self)
     }
 
