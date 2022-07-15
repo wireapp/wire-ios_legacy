@@ -24,7 +24,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     private var iconImageView = UIImageView()
     private let topContainer = UIView()
     private let titleLabel = UILabel()
-    private let toggle = UISwitch(style: .default)
+    private let toggle = Switch(style: .default)
     private let subtitleLabel = UILabel()
     private var action: ((Bool, UIView?) -> Void)?
     private var variant: ColorSchemeVariant = .light {
@@ -102,7 +102,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
-        sender.applyBorderStyle()
         action?(sender.isOn, self)
     }
 

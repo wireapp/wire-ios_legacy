@@ -28,11 +28,34 @@ public struct SwitchStyle {
     )
 }
 
-extension UISwitch: Stylable {
-    convenience init(style switchStyle: SwitchStyle = .default) {
-        self.init()
+class Switch: UISwitch, Stylable {
+
+    let switchStyle: SwitchStyle
+
+    override var isOn: Bool {
+        didSet {
+            guard isOn != oldValue else { return }
+            valueDidChange()
+        }
+    }
+
+    init(style: SwitchStyle = .default) {
+        self.switchStyle = style
+        super.init(frame: .zero)
+        applyStyle(switchStyle)
+
+        addTarget(self, action: #selector(valueDidChange), for: .valueChanged)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc
+    private func valueDidChange() {
         applyStyle(switchStyle)
     }
+
     public func applyBorderStyle() {
         if self.traitCollection.userInterfaceStyle == .dark {
             let enabledOnBorderColor = UIColor(asset: Asset.green500Dark)!
@@ -46,10 +69,11 @@ extension UISwitch: Stylable {
     }
 
     public func applyStyle(_ style: SwitchStyle) {
+        self.backgroundColor = style.enabledOffStateColor
         self.onTintColor = style.enabledOnStateColor
         self.layer.cornerRadius = self.frame.height / 2.0
-        self.backgroundColor = style.enabledOffStateColor
         self.clipsToBounds = true
         applyBorderStyle()
     }
+
 }

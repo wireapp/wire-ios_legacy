@@ -339,7 +339,7 @@ final class SettingsToggleCell: SettingsTableCell {
         super.setup()
         selectionStyle = .none
         shouldGroupAccessibilityChildren = false
-        let switchView = UISwitch(style: .default)
+        let switchView = Switch(style: .default)
         switchView.addTarget(self, action: #selector(SettingsToggleCell.onSwitchChanged(_:)), for: .valueChanged)
         accessoryView = switchView
         switchView.isAccessibilityElement = true
@@ -349,9 +349,7 @@ final class SettingsToggleCell: SettingsTableCell {
 
     @objc
     func onSwitchChanged(_ sender: UIResponder) {
-        if let toggle = sender as? UISwitch {
-            toggle.applyBorderStyle()
-        }
+
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }

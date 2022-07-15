@@ -33,7 +33,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let IDLabel = UILabel()
     let spinner = UIActivityIndicatorView(style: .gray)
     private let fullIDLabel = CopyableLabel()
-    private let verifiedToggle = UISwitch(style: .default)
+    private let verifiedToggle = Switch(style: .default)
     private let verifiedToggleLabel = UILabel()
     private let resetButton = ButtonWithLargerHitArea()
 
@@ -343,9 +343,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     @objc
     private func onTrustChanged(_ sender: AnyObject) {
-        if let toggle = sender as? UISwitch {
-            toggle.applyBorderStyle()
-        }
+
         ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let weakSelf = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient
