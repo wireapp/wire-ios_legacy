@@ -22,9 +22,15 @@ public struct SwitchStyle {
 
     private(set) var enabledOnStateColor: UIColor
     private(set) var enabledOffStateColor: UIColor
-    static let `default`: Self = SwitchStyle(
+    private(set) var enabledOnStateBorderColor: UIColor
+    private(set) var enabledOffStateBorderColor: UIColor
+    private(set) var borderWidth: CGFloat = 1
+
+    static let `default` = SwitchStyle(
         enabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
-        enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled
+        enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled,
+        enabledOnStateBorderColor: SemanticColors.SwitchColors.borderSwitchOnStateEnabled,
+        enabledOffStateBorderColor: SemanticColors.SwitchColors.borderSwitchOffStateEnabled
     )
 }
 
@@ -56,24 +62,13 @@ class Switch: UISwitch, Stylable {
         applyStyle(switchStyle)
     }
 
-    public func applyBorderStyle() {
-        if self.traitCollection.userInterfaceStyle == .dark {
-            let enabledOnBorderColor = UIColor(asset: Asset.green500Dark)!
-            let enabledOffBorderColor = UIColor(asset: Asset.gray60)!
-            self.layer.borderWidth = 1
-            self.layer.borderColor = isOn ? enabledOnBorderColor.cgColor : enabledOffBorderColor.cgColor
-        } else {
-            self.layer.borderColor = UIColor.clear.cgColor
-            self.layer.borderWidth = 0
-        }
-    }
-
     public func applyStyle(_ style: SwitchStyle) {
-        self.backgroundColor = style.enabledOffStateColor
-        self.onTintColor = style.enabledOnStateColor
-        self.layer.cornerRadius = self.frame.height / 2.0
-        self.clipsToBounds = true
-        applyBorderStyle()
+        backgroundColor = style.enabledOffStateColor
+        onTintColor = style.enabledOnStateColor
+        layer.cornerRadius = self.frame.height / 2.0
+        layer.borderColor = isOn ? style.enabledOnStateBorderColor.cgColor : style.enabledOffStateBorderColor.cgColor
+        layer.borderWidth = style.borderWidth
+        clipsToBounds = true
     }
 
 }
