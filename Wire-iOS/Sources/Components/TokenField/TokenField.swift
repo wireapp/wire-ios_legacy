@@ -27,7 +27,7 @@ final class TokenField: UIView {
 
     weak var delegate: TokenFieldDelegate?
 
-    let textView: TokenizedTextView = CustomSearchBar(style: .default)
+    let textView = SearchTextView(style: .default)
     let accessoryButton: IconButton = IconButton()
 
     var hasAccessoryButton = false {
@@ -532,6 +532,7 @@ final class TokenField: UIView {
         textView.autocorrectionType = .no
         textView.returnKeyType = .go
         textView.placeholderFont = .smallRegularFont
+        textView.placeholderTextColor = SemanticColors.LabelsColor.textSearchBarPlaceholder
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 0)
         textView.placeholderTextTransform = .upper
         textView.lineFragmentPadding = 0

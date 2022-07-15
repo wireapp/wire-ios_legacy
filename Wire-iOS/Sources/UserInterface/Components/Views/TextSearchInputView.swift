@@ -28,7 +28,7 @@ protocol TextSearchInputViewDelegate: AnyObject {
 
 final class TextSearchInputView: UIView {
     let iconView = UIImageView()
-    let searchInput = CustomSearchBar(style: .default)
+    let searchInput = SearchTextView(style: .default)
     let placeholderLabel = UILabel()
     let clearButton = IconButton(style: .default)
 

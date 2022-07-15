@@ -18,8 +18,8 @@
 
 import UIKit
 
-// A custom UITextView with applied styles for the search bars. Should be used for every search bar.
-final class CustomSearchBar: TokenizedTextView {
+// A custom UITextView with applied styles for the search bar.
+final class SearchTextView: TokenizedTextView {
 
     // MARK: - Properties
 
@@ -31,8 +31,8 @@ final class CustomSearchBar: TokenizedTextView {
                 return
             }
             layer.borderColor = isEditing
-            ? style.borderColors.active.cgColor
-            : style.borderColors.notActive.cgColor
+            ? style.borderColorSelected.cgColor
+            : style.borderColorNotSelected.cgColor
         }
     }
 

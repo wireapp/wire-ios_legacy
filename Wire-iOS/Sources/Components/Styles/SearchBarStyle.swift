@@ -22,14 +22,17 @@ public struct SearchBarStyle {
 
     typealias SearchBarColors = SemanticColors.SearchBarColor
 
-    var borderColors: (active: UIColor, notActive: UIColor)
+    var borderColorSelected: UIColor {
+        return .accent()
+    }
+    var borderColorNotSelected: UIColor
     var textColor: UIColor
     var backgroundColor: UIColor
 
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
 
-    static let `default` = SearchBarStyle(borderColors: (.accent(), SearchBarColors.borderInputView),
+    static let `default` = SearchBarStyle(borderColorNotSelected: SearchBarColors.borderInputView,
                                           textColor: SearchBarColors.textInputView,
                                           backgroundColor: SearchBarColors.backgroundInputView)
 
@@ -44,7 +47,7 @@ extension UITextView: Stylable {
 
         layer.borderWidth = style.borderWidth
         layer.cornerRadius = style.cornerRadius
-        layer.borderColor = style.borderColors.notActive.cgColor
+        layer.borderColor = style.borderColorNotSelected.cgColor
 
     }
 
