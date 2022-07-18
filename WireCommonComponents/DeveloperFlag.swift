@@ -25,6 +25,7 @@ public enum DeveloperFlag: String, CaseIterable {
     case showCreateMLSGroupToggle
     case nseDebugging
     case nseDebugEntryPoint
+    case nseTwoPointOh
     case useDevelopmentBackendAPI
 
     public var description: String {
@@ -37,6 +38,9 @@ public enum DeveloperFlag: String, CaseIterable {
 
         case .nseDebugEntryPoint:
             return "Turn on to display a notification immediately at the entry point of the notification service extension, skipping any further push processing."
+
+        case .nseTwoPointOh:
+            return "Turn on to use a new implementation of the NSE."
 
         case .useDevelopmentBackendAPI:
             return "Turn on to use the developement backend API version instead of the latest production API version."
