@@ -51,7 +51,7 @@ final class GroupDetailsReceiptOptionsCellTests: CoreDataSnapshotTestCase {
         XCTAssert(sut.isOn)
 
         // WHEN
-        let mockSwitch = UISwitch()
+        let mockSwitch = Switch(style: .default)
         mockSwitch.isOn = false
 
         sut.toggleChanged(mockSwitch)
