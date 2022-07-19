@@ -192,6 +192,12 @@ class SettingsCellDescriptorFactory {
         )
 
         developerCellDescriptors.append(
+            Button(title: "First unread messages",
+                   isDestructive: false,
+                   selectAction: DebugActions.findUnreadMessages)
+        )
+
+        developerCellDescriptors.append(
             Button(title: "First unread conversation (back arrow count)",
                    isDestructive: false,
                    selectAction: DebugActions.findUnreadConversationContributingToBackArrowDot)

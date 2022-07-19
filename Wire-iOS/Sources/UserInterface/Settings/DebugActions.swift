@@ -87,7 +87,7 @@ enum DebugActions {
         return NSCompoundPredicate(orPredicateWithSubpredicates: [notifyAllAndHasUnreadMessages, notifyMentionsAndRepliesAndHasUnreadMentionsOrReplies])
     }
 
-    static func findUnreadMessage(_ type: SettingsCellDescriptorType) {
+    static func findUnreadMessages(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = NSPredicate(format: "isUnreadMessage == %@", NSNumber(booleanLiteral: true))
 

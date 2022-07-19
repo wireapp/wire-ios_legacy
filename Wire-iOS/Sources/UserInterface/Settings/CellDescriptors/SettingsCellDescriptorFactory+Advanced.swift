@@ -93,6 +93,11 @@ extension SettingsCellDescriptorFactory {
                 selectAction: DebugActions.findUnreadConversationContributingToBadgeCount
             ),
             SettingsButtonCellDescriptor(
+                title: "Show unread messages",
+                isDestructive: false,
+                selectAction: DebugActions.findUnreadMessages(_:)
+            ),
+            SettingsButtonCellDescriptor(
                 title: "self.settings.advanced.debugging_tools.show_user_id.title".localized,
                 isDestructive: false,
                 selectAction: DebugActions.showUserId
