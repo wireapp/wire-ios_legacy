@@ -126,8 +126,8 @@ class CollectionCell: UICollectionViewCell {
         secureContentsView.translatesAutoresizingMaskIntoConstraints = false
         obfuscationView.translatesAutoresizingMaskIntoConstraints = false
 
-        secureContentsView.fitInSuperview()
-        obfuscationView.fitInSuperview()
+        secureContentsView.fitIn(view: contentView)
+        obfuscationView.fitIn(view: contentView)
     }
 
     override func prepareForReuse() {
@@ -191,8 +191,8 @@ class CollectionCell: UICollectionViewCell {
 
         let menuController = UIMenuController.shared
         menuController.menuItems = ConversationMessageActionController.allMessageActions
-        menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
-        menuController.setMenuVisible(true, animated: true)
+        menuController.showMenu(from: menuConfigurationProperties.targetView,
+                                rect: menuConfigurationProperties.targetRect)
     }
 
     override var canBecomeFirstResponder: Bool {

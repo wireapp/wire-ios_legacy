@@ -20,22 +20,15 @@ import UIKit
 
 extension UITableViewCell {
     func showDisclosureIndicator() {
-        if #available(iOS 13.0, *) {
-            let image = UIImage(systemName: "chevron.right")
-            let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-            accessory.image = image
+        let image = UIImage(systemName: "chevron.right")
+        let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
+        accessory.image = image
 
-            accessory.tintColor = UIColor.white
-            accessoryView = accessory
-        } else {
-            accessoryType = .disclosureIndicator
-        }
+        accessory.tintColor = UIColor.white
+        accessoryView = accessory
     }
+
     func hideDisclosureIndicator() {
-        if #available(iOS 13.0, *) {
-            accessoryView = nil
-        } else {
-            accessoryType = .none
-        }
+        accessoryView = nil
     }
 }

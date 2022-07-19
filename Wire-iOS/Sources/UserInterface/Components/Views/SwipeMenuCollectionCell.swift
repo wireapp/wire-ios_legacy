@@ -199,8 +199,8 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
             }
             openedFeedbackGenerator.prepare()
         case .ended,
-             .failed,
-             .cancelled:
+                .failed,
+                .cancelled:
             drawerScrollingEnded(withOffset: offset.x)
 
             if offset.x + initialDrawerOffset > bounds.size.width * overscrollFraction {
@@ -263,7 +263,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
 
     private func setDrawerOpen(_ isOpened: Bool, animated: Bool) {
         if isOpened && visualDrawerOffset == drawerWidth ||
-           !isOpened && visualDrawerOffset == 0 {
+            !isOpened && visualDrawerOffset == 0 {
             return
         }
 
@@ -370,12 +370,7 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if #available(iOS 13.0, *) {
-            return gestureRecognizer is UILongPressGestureRecognizer
-        }
-
-        // all other recognizers require this pan recognizer to fail
-        return gestureRecognizer == revealDrawerGestureRecognizer
+        return gestureRecognizer is UILongPressGestureRecognizer
     }
 
     /// NOTE:
@@ -393,23 +388,15 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 
-        if #available(iOS 13.0, *) {
-            return false
-        }
+        return false
 
-        // pan recognizer should not require failure of any other recognizer
-        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 
-        if #available(iOS 13.0, *) {
-            return true
-        }
+        return true
 
-        // pan recognizer should not recognize simultaneously with any other recognizer
-        return !(gestureRecognizer is UIPanGestureRecognizer)
     }
 
 }

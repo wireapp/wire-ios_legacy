@@ -65,7 +65,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
     }
 
     private func configureConstraints() {
-        tabBar.fitInSuperview()
+        tabBar.fitIn(view: self)
     }
 
     // MARK: - Tab Bar Delegate

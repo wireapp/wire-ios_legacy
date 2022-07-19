@@ -86,7 +86,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        collectionView.fitInSuperview()
+        collectionView.fitIn(view: view)
     }
 }
 

@@ -85,8 +85,8 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     }
 
     private func createConstraints() {
-        contentNavigationController.view.fitInSuperview()
-        callDegradationController.view.fitInSuperview()
+        contentNavigationController.view.fitIn(view: view)
+        callDegradationController.view.fitIn(view: view)
     }
 
     private func updateConfiguration(animated: Bool = false) {

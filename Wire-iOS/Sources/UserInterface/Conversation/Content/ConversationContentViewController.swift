@@ -236,7 +236,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         addChild(mentionsSearchResultsViewController)
         view.addSubview(mentionsSearchResultsViewController.view)
 
-        mentionsSearchResultsViewController.view.fitInSuperview()
+        mentionsSearchResultsViewController.view.fitIn(view: view)
     }
 
     func scrollToFirstUnreadMessageIfNeeded() {
@@ -270,7 +270,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
 
         // If the menu is visible, hide it and do nothing
         if UIMenuController.shared.isMenuVisible {
-            UIMenuController.shared.setMenuVisible(false, animated: true)
+            UIMenuController.shared.hideMenu()
             return nil
         }
 
@@ -348,7 +348,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     // MARK: - Custom UI, utilities
 
     func removeHighlightsAndMenu() {
-        UIMenuController.shared.setMenuVisible(false, animated: true)
+        UIMenuController.shared.hideMenu()
     }
 
     func didFinishEditing(_ message: ZMConversationMessage?) {

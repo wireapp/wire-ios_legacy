@@ -142,7 +142,7 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
         tabBarHeight = tabBar.heightAnchor.constraint(equalToConstant: 0)
         tabBarHeight?.isActive = isTabBarHidden
 
-        pageViewController.view.fitInSuperview()
+        pageViewController.view.fitIn(view: contentView)
 
         NSLayoutConstraint.activate([
             // tabBar

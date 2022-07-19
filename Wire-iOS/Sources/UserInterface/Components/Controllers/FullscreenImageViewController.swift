@@ -179,7 +179,7 @@ final class FullscreenImageViewController: UIViewController {
 
     private func updateForMessage() {
         if message.isObfuscated ||
-           message.hasBeenDeleted {
+            message.hasBeenDeleted {
             removeImage()
         } else {
             loadImageAndSetupImageView()
@@ -213,10 +213,12 @@ final class FullscreenImageViewController: UIViewController {
 
         let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
 
-        snapshotBackgroundView.pinToSuperview(anchor: .top, inset: topBarHeight)
-        snapshotBackgroundView.pinToSuperview(anchor: .leading)
-        snapshotBackgroundView.setDimensions(size: UIScreen.main.bounds.size)
-
+        NSLayoutConstraint.activate([
+        snapshotBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight),
+        snapshotBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        snapshotBackgroundView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width),
+        snapshotBackgroundView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.height)
+        ])
         snapshotBackgroundView.alpha = 0
 
         self.snapshotBackgroundView = snapshotBackgroundView
@@ -226,7 +228,7 @@ final class FullscreenImageViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
 
-        scrollView.fitInSuperview()
+        scrollView.fitIn(view: view)
 
         scrollView.contentInsetAdjustmentBehavior = .never
 
@@ -495,7 +497,7 @@ final class FullscreenImageViewController: UIViewController {
 
     private var isImageViewHightlighted: Bool {
         if let highlightLayer = highlightLayer,
-            imageView?.layer.sublayers?.contains(highlightLayer) == true {
+           imageView?.layer.sublayers?.contains(highlightLayer) == true {
             return true
         }
 
@@ -532,8 +534,8 @@ final class FullscreenImageViewController: UIViewController {
             highlightLayer = layer
 
             animated ?
-                UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
-                blackLayerClosure()
+            UIView.animate(withDuration: fadeAnimationDuration, animations: blackLayerClosure) :
+            blackLayerClosure()
         } else {
 
             let removeLayerClosure: Completion = {
@@ -560,7 +562,7 @@ final class FullscreenImageViewController: UIViewController {
     private func didTapBackground(_ tapper: UITapGestureRecognizer?) {
         isShowingChrome = !isShowingChrome
         setSelectedByMenu(false, animated: false)
-        UIMenuController.shared.isMenuVisible = false
+        UIMenuController.shared.hideMenu()
         delegate?.fadeAndHideMenu(delegate?.menuVisible == false)
     }
 
@@ -575,27 +577,15 @@ final class FullscreenImageViewController: UIViewController {
 
         prepareShowingMenu()
 
-        if #available(iOS 13.0, *) {
-
-            if let imageView = imageView {
-                let frame = imageView.frame
-                menuController.showMenu(from: imageView, rect: frame)
-            }
-        } else {
-            if let imageView = imageView {
-                menuController.setTargetRect(imageView.bounds, in: imageView)
-            }
-            menuController.setMenuVisible(true, animated: true)
+        if let imageView = imageView {
+            let frame = imageView.frame
+            menuController.showMenu(from: imageView, rect: frame)
         }
         setSelectedByMenu(true, animated: true)
     }
 
     private func hideMenu() {
-        if #available(iOS 13.0, *) {
-            UIMenuController.shared.hideMenu()
-        } else {
-            UIMenuController.shared.isMenuVisible = false
-        }
+        UIMenuController.shared.hideMenu()
     }
 
     @objc
@@ -737,7 +727,7 @@ extension FullscreenImageViewController: MessageActionResponder {
         case .forward:
             perform(action: action)
         case .showInConversation,
-             .reply:
+                .reply:
             dismiss(animated: true) {
                 self.perform(action: action)
             }
@@ -754,10 +744,10 @@ extension FullscreenImageViewController: MessageActionResponder {
 
         /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
         if action == .delete,
-            let conversationImagesViewController = delegate as? ConversationImagesViewController {
+           let conversationImagesViewController = delegate as? ConversationImagesViewController {
             sourceView = conversationImagesViewController.deleteButton
         } else if action == .forward,
-            let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
+                  let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
             sourceView = shareButton
         } else {
             sourceView = scrollView

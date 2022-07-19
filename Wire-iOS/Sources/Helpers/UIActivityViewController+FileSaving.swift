@@ -37,7 +37,7 @@ extension UIViewController {
     /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
     ///
     /// - Parameter pointToView: the view which the popover points to
-    func configPopover(pointToView: UIView, popoverPresenter: PopoverPresenterViewController? = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenterViewController) {
+    func configPopover(pointToView: UIView, popoverPresenter: PopoverPresenterViewController? = UIApplication.shared.firstKeyWindow?.rootViewController as? PopoverPresenterViewController) {
         guard let popover = popoverPresentationController,
             let popoverPresenter = popoverPresenter else { return }
 

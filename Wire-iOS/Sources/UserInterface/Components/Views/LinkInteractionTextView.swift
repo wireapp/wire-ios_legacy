@@ -113,8 +113,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
                   interaction: UITextItemInteraction) -> Bool {
 
         // present system context preview
-        if #available(iOS 13.0, *),
-            UIApplication.shared.canOpenURL(URL),
+        if  UIApplication.shared.canOpenURL(URL),
             interaction == .presentActions,
             !isMarkdownLink(in: characterRange) {
             return true
@@ -131,10 +130,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
 
             if #available(iOS 13.2, *) {
                 needFixForRepeatedGesture = false
-            } else if #available(iOS 13.0, *) {
-                needFixForRepeatedGesture = true
             } else {
-                needFixForRepeatedGesture = false
+                needFixForRepeatedGesture = true
             }
 
             let performLinkInteraction: () -> Bool = {
