@@ -65,6 +65,9 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         title = conversation.displayName.localizedUppercase
         performSearch()
     }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        searchBar.iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
+    }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {

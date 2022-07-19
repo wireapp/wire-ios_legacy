@@ -55,7 +55,6 @@ final class SearchHeaderViewController: UIViewController {
         userSelection.add(observer: self)
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        // Trait collection has already changed
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
     }
     override func viewDidLoad() {
