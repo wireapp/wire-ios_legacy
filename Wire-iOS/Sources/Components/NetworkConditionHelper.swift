@@ -52,11 +52,7 @@ final class NetworkConditionHelper {
             return .typeWifi
         }
 
-        if #available(iOS 12, *) {
-            return bestQualityType(cellularTypeDict: networkInfo.serviceCurrentRadioAccessTechnology)
-        } else {
-            return qualityType(from: networkInfo.currentRadioAccessTechnology)
-        }
+        return bestQualityType(cellularTypeDict: networkInfo.serviceCurrentRadioAccessTechnology)
     }
 
     func bestQualityType(cellularTypeDict: [String: String]?) -> NetworkQualityType {

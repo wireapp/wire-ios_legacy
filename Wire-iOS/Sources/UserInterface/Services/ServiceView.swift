@@ -66,11 +66,13 @@ final class ServiceDetailView: UIView {
     private func createConstraints() {
         [self, serviceView, descriptionTextView].prepareForLayout()
 
-        serviceView.fitInSuperview(exclude: [.bottom])
-
-        descriptionTextView.fitInSuperview(exclude: [.top])
-
         NSLayoutConstraint.activate([
+            serviceView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            serviceView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            serviceView.topAnchor.constraint(equalTo: topAnchor),
+            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionTextView.bottomAnchor.constraint(equalTo: bottomAnchor),
             descriptionTextView.topAnchor.constraint(equalTo: serviceView.bottomAnchor, constant: 16)])
     }
 

@@ -36,11 +36,8 @@ final class ConversationImageMessageCell: UIView,
     private lazy var imageResourceView: ImageResourceView = {
         let view = ImageResourceView()
 
-        // allow iOS 13 context menu
-        if #available(iOS 13.0, *) {
-            view.delegate = self
-            view.isUserInteractionEnabled = true
-        }
+        view.delegate = self
+        view.isUserInteractionEnabled = true
 
         return view
     }()

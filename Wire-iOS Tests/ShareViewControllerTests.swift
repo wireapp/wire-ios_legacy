@@ -65,6 +65,7 @@ final class ShareViewControllerTests: ZMSnapshotTestCase {
 
     private func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
+        sut.overrideUserInterfaceStyle = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }

@@ -24,12 +24,13 @@ final class MockConversationList: ConversationListHelperType {
     static var hasArchivedConversations: Bool = false
 }
 
-final class ConversationListViewControllerTests: XCTestCase {
+final class ConversationListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ConversationListViewController!
 
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
 
         MockConversationList.hasArchivedConversations = false
         let selfUser = MockUserType.createSelfUser(name: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", inTeam: UUID())
