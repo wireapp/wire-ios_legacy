@@ -20,16 +20,17 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class ContactsViewControllerSnapshotTests: XCTestCase {
+final class ContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ContactsViewController!
 
     override func setUp() {
         super.setUp()
+        XCTestCase.accentColor = .strongBlue
         ColorScheme.default.variant = .dark
         sut = ContactsViewController()
+        sut.searchHeaderViewController.overrideUserInterfaceStyle = .dark
         sut.view.backgroundColor = .black
-        XCTestCase.accentColor = .strongBlue
     }
 
     override func tearDown() {
