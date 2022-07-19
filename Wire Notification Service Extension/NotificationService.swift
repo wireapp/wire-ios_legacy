@@ -24,24 +24,6 @@ import WireCommonComponents
 import WireDataModel
 import WireSyncEngine
 import UIKit
-import CallKit
-
-protocol CallEventHandlerProtocol {
-    func reportIncomingVoIPCall(_ payload: [String: Any])
-}
-
-class CallEventHandler: CallEventHandlerProtocol {
-
-    func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        guard #available(iOS 14.5, *) else { return }
-        CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
-            if let error = error {
-                // TODO: handle
-            }
-        }
-    }
-
-}
 
 public class NotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
 
