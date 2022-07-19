@@ -47,7 +47,7 @@ class FolderCreationNameCell: UICollectionViewCell {
         textField.placeholder = "folder.creation.name.placeholder".localized(uppercased: true)
 
         contentView.addSubview(textField)
-        textField.fitInSuperview()
+        textField.fitIn(view: contentView)
 
         configureColors()
     }

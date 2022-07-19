@@ -161,7 +161,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
         [itemView, menuDotsView, menuView].prepareForLayout()
 
-        itemView.fitInSuperview()
+        itemView.fitIn(view: swipeView)
 
         if let superview = menuDotsView.superview {
             let menuDotsViewEdges = [

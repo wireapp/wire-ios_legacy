@@ -87,7 +87,12 @@ final class BackupActionCell: UITableViewCell {
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(actionTitleLabel)
-        actionTitleLabel.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+        NSLayoutConstraint.activate([
+            actionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            actionTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            actionTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            actionTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+        ])
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
     }
 
@@ -158,7 +163,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupLayout() {
-        tableView.fitInSuperview()
+        tableView.fitIn(view: view)
     }
 
     var loadingHostController: SpinnerCapableViewController {

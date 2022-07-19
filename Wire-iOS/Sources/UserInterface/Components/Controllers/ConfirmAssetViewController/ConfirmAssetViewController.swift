@@ -199,11 +199,6 @@ final class ConfirmAssetViewController: UIViewController {
 
         let navigationController = canvasViewController.wrapInNavigationController(setBackgroundColor: true)
 
-        if #available(iOS 13.0, *) {
-        } else {
-            navigationController.modalTransitionStyle = .crossDissolve
-        }
-
         present(navigationController, animated: true)
     }
 

@@ -61,7 +61,7 @@ final class LocationPreviewController: TintColorCorrectedViewController {
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
         mapView.mapType = .standard
-        mapView.showsPointsOfInterest = true
+        mapView.pointOfInterestFilter = .includingAll
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
 

@@ -210,8 +210,6 @@ private extension VideoGridPresentationMode {
             return .smoothedActiveSpeakers
         case .allVideoStreams:
             return .all
-        @unknown default:
-            return .all
         }
     }
 

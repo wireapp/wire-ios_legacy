@@ -30,10 +30,8 @@ final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, Hig
     lazy var attachmentView: MediaPreviewView = {
         let view = MediaPreviewView()
 
-        if #available(iOS 13.0, *) {
-            view.delegate = self
-            view.isUserInteractionEnabled = true
-        }
+        view.delegate = self
+        view.isUserInteractionEnabled = true
 
         return view
     }()
