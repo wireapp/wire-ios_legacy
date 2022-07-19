@@ -21,6 +21,9 @@ import WireSyncEngine
 import WireCommonComponents
 
 final class ConversationViewController: UIViewController {
+
+    typealias AccessibilityStrings = L10n.Localizable.Accessibility
+
     unowned let zClientViewController: ZClientViewController
     private let visibleMessage: ZMConversationMessage?
 
@@ -505,7 +508,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
-        button.accessibilityLabel = "conversation.action.search".localized
+        button.accessibilityLabel = AccessibilityStrings.Conversation.Search.button
 
         if showingSearchResults {
             button.tintColor = UIColor.accent()

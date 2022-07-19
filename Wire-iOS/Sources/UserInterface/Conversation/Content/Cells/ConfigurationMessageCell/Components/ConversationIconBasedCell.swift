@@ -51,7 +51,10 @@ class ConversationIconBasedCell: UIView {
     var attributedText: NSAttributedString? {
         didSet {
             textLabel.attributedText = attributedText
-            textLabel.accessibilityLabel = attributedText?.string
+            textLabel.accessibilityTraits = .staticText
+            textLabel.isEditable = false
+//            textLabel.autocorrectionType = .no
+            textLabel.spellCheckingType = .no
 
             let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
             if let lineHeight = font?.lineHeight {
@@ -78,8 +81,8 @@ class ConversationIconBasedCell: UIView {
 
     func configureSubviews() {
         imageView.contentMode = .center
-        imageView.isAccessibilityElement = true
-        imageView.accessibilityLabel = "Icon"
+//        imageView.isAccessibilityElement = true
+//        imageView.accessibilityLabel = "Icon"
 
         textLabel.isAccessibilityElement = true
         textLabel.backgroundColor = .clear
@@ -94,6 +97,13 @@ class ConversationIconBasedCell: UIView {
         lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)
+
+        textLabel.accessibilityTraits = .staticText
+        textLabel.isEditable = false
+//        textLabel.autocorrectionType = .no
+        textLabel.spellCheckingType = .no
+        imageView.isAccessibilityElement = false
+
         addSubview(imageContainer)
         addSubview(textLabel)
         addSubview(topContentView)

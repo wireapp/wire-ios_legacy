@@ -271,7 +271,7 @@
 "compose.contact.title" = "Conversation";
 "compose.message.title" = "Message";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "Double tap to open conversation details.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -344,8 +344,6 @@
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
 
-"conversation.action.search" = "Search";
-
 // Reply message preview
 "conversation.input_bar.message_preview.image" = "Image";
 "conversation.input_bar.message_preview.location" = "Location";
@@ -410,9 +408,6 @@
 "content.system.started_conversation.truncated_people.others" = "%@ others";
 "content.system.started_conversation.complete_team" = "all team members";
 "content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
-
-"content.system.other_started_conversation" = "%@ started a conversation with %@";
-"content.system.you_started_conversation" = "You started a conversation with %@";
 
 "content.system.you_added_participant" = "You added %@";
 "content.system.other_added_participant" = "%@ added %@";
@@ -1943,3 +1938,7 @@
 "security_classification.security_level" = "SECURITY LEVEL:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "UNCLASSIFIED";
+
+// MARK: - Accessibility
+"accessibility.conversation.back.button" = "Go back to the conversation list";
+"accessibility.conversation.search.button" = "Open search";

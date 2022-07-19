@@ -37,6 +37,7 @@ class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMess
     func configure(with object: Configuration, animated: Bool) {
         lineView.isHidden = !object.showLine
         imageView.image = object.icon
+        imageView.isAccessibilityElement = false
         attributedText = object.attributedText
     }
 
@@ -72,6 +73,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
         titleLabel.attributedText = object.title
         attributedText = object.message
         imageView.image = object.icon
+        imageView.isAccessibilityElement = false
         selectedUsers = object.selectedUsers
     }
 

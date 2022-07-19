@@ -57,6 +57,18 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "about.website.title")
       }
     }
+    internal enum Accessibility {
+      internal enum Conversation {
+        internal enum Back {
+          /// Go back to the conversation list
+          internal static let button = L10n.tr("Localizable", "accessibility.conversation.back.button")
+        }
+        internal enum Search {
+          /// Open search
+          internal static let button = L10n.tr("Localizable", "accessibility.conversation.search.button")
+        }
+      }
+    }
     internal enum AccountDeletedMissingPasscodeAlert {
       /// In order to use Wire, please set a passcode in your device settings.
       internal static let message = L10n.tr("Localizable", "account_deleted_missing_passcode_alert.message")
@@ -776,10 +788,6 @@ internal enum L10n {
         internal static func otherRenamedConvToNothing(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.other_renamed_conv_to_nothing", String(describing: p1))
         }
-        /// %@ started a conversation with %@
-        internal static func otherStartedConversation(_ p1: Any, _ p2: Any) -> String {
-          return L10n.tr("Localizable", "content.system.other_started_conversation", String(describing: p1), String(describing: p2))
-        }
         /// %@ called
         internal static func otherWantedToTalk(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.other_wanted_to_talk", String(describing: p1))
@@ -842,10 +850,6 @@ internal enum L10n {
         internal static let youRenamedConvToNothing = L10n.tr("Localizable", "content.system.you_renamed_conv_to_nothing")
         /// You
         internal static let youStarted = L10n.tr("Localizable", "content.system.you_started")
-        /// You started a conversation with %@
-        internal static func youStartedConversation(_ p1: Any) -> String {
-          return L10n.tr("Localizable", "content.system.you_started_conversation", String(describing: p1))
-        }
         /// You called
         internal static let youWantedToTalk = L10n.tr("Localizable", "content.system.you_wanted_to_talk")
         internal enum Call {
@@ -1077,10 +1081,6 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
-      internal enum Action {
-        /// Search
-        internal static let search = L10n.tr("Localizable", "conversation.action.search")
-      }
       internal enum Alert {
         /// The message is deleted.
         internal static let messageDeleted = L10n.tr("Localizable", "conversation.alert.message_deleted")
@@ -1453,7 +1453,7 @@ internal enum L10n {
     }
     internal enum ConversationDetails {
       internal enum OpenButton {
-        /// Double tap to view the details of the conversation.
+        /// Double tap to open conversation details.
         internal static let accessibilityHint = L10n.tr("Localizable", "conversation_details.open_button.accessibility_hint")
       }
     }

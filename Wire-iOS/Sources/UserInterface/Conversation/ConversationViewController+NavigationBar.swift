@@ -68,7 +68,7 @@ extension ConversationViewController {
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
-        button.accessibilityLabel = "general.back".localized
+        button.accessibilityLabel = AccessibilityStrings.Conversation.Back.button
 
         if hasUnreadInOtherConversations {
             button.tintColor = UIColor.accent()
