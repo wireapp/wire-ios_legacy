@@ -71,11 +71,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             return
         }
 
-        session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
-            if !isUserAuthenticated {
-                contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
-            }
-        }
+        session.processPushPayload(request.content.userInfo)
 
         // Retain the session otherwise it will tear down.
         self.session = session
@@ -85,6 +81,21 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         guard let contentHandler = contentHandler else { return }
         contentHandler(.debugMessageIfNeeded(message: "Extension is expiring."))
         tearDown()
+    }
+
+    // MARK: - Notification Session Delegate
+
+    public func notificationSessionFailedwithError(error: NotificationSessionError) {
+        switch error {
+        case .unknownAccount:
+            contentHandler?(.debugMessageIfNeeded(message: "Unknown account"))
+
+        case .noEventID:
+            contentHandler?(.debugMessageIfNeeded(message: "No event id"))
+
+        case .accountNotAuthenticated:
+            contentHandler?(.debugMessageIfNeeded(message: "User is not authenticated."))
+        }
     }
 
     public func notificationSessionDidGenerateNotification(
@@ -140,10 +151,9 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     private func createSession(accountID: UUID) throws -> NotificationSession {
         let session = try NotificationSession(
-            applicationGroupIdentifier: appGroupID,
-            accountIdentifier: accountID,
-            environment: BackendEnvironment.shared,
-            analytics: nil
+            accountID: accountID,
+            appGroupID: appGroupID,
+            environment: BackendEnvironment.shared
         )
 
         session.delegate = self
