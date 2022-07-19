@@ -47,9 +47,6 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
         self.viewModel = viewModel
         self.variant = variant
         super.init(nibName: nil, bundle: nil)
-        if variant == .dark {
-            overrideUserInterfaceStyle = .dark
-        }
         setupViews()
         createConstraints()
         viewModel.delegate = self
