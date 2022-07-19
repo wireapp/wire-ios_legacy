@@ -161,6 +161,8 @@ extension RootViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        // Do not refresh for iOS 13+ when the app is in background.
+        // Go to home screen may trigger `traitCollectionDidChange` twice.
         if UIApplication.shared.applicationState == .background {
             return
         }

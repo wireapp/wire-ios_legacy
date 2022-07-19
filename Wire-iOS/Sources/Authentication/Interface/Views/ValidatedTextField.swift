@@ -192,6 +192,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
             accessibilityIdentifier = "PasscodeField"
             autocapitalizationType = .none
             returnKeyType = isNew ? .default : .continue
+            // Hack: disable auto fill passcode
             textContentType = .oneTimeCode
             passwordRules = textFieldValidator.passwordRules
         }
