@@ -72,9 +72,10 @@ final class SketchColorCollectionViewCell: UICollectionViewCell {
         }
 
         knobView.translatesAutoresizingMaskIntoConstraints = false
-        knobView.centerInSuperview()
-        knobView.setDimensions(length: 25)
-
+        knobView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        knobView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        knobView.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        knobView.heightAnchor.constraint(equalToConstant: 25).isActive = true
         initialContraintsCreated = true
     }
 }

@@ -36,9 +36,7 @@ final class MediaPreviewView: RoundedView {
         setupSubviews()
         setupLayout()
 
-        if #available(iOS 13.0, *) {
-            addInteraction(UIContextMenuInteraction(delegate: self))
-        }
+        addInteraction(UIContextMenuInteraction(delegate: self))
 
     }
 
@@ -111,7 +109,6 @@ final class MediaPreviewView: RoundedView {
 
 // MARK: - UIContextMenuInteractionDelegate
 
-@available(iOS 13.0, *)
 extension MediaPreviewView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {

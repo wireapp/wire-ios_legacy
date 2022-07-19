@@ -1,20 +1,20 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
 import WireLinkPreview
@@ -60,10 +60,8 @@ final class ArticleView: UIView {
         setupViews()
         setupConstraints(imagePlaceholder)
 
-        if #available(iOS 13.0, *) {
-            let interaction = UIContextMenuInteraction(delegate: self)
-            addInteraction(interaction)
-        }
+        let interaction = UIContextMenuInteraction(delegate: self)
+        addInteraction(interaction)
     }
 
     @available(*, unavailable)
@@ -107,19 +105,28 @@ final class ArticleView: UIView {
 
         [messageLabel, authorLabel, imageView, obfuscationView].prepareForLayout()
 
-        imageView.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor)
+        ])
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: imageHeight)
         imageHeightConstraint.priority = UILayoutPriority(rawValue: 999)
 
-        messageLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.bottom, .top])
-        authorLabel.fitInSuperview(with: EdgeInsets(margin: 12), exclude: [.top])
-        obfuscationView.pin(to: imageView)
-
         NSLayoutConstraint.activate([
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            authorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            authorLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            obfuscationView.topAnchor.constraint(equalTo: imageView.topAnchor),
+            obfuscationView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            obfuscationView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            obfuscationView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
             imageHeightConstraint,
             messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             authorLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8)
-            ])
+        ])
     }
 
     private var authorHighlightAttributes: [NSAttributedString.Key: AnyObject] {
@@ -198,7 +205,7 @@ final class ArticleView: UIView {
     @objc
     private func viewTapped(_ sender: UITapGestureRecognizer) {
         if UIMenuController.shared.isMenuVisible {
-            return UIMenuController.shared.setMenuVisible(false, animated: true)
+            return UIMenuController.shared.hideMenu()
         }
 
         openURL()
@@ -211,7 +218,6 @@ final class ArticleView: UIView {
 
 // MARK: - UIContextMenuInteractionDelegate
 
-@available(iOS 13.0, *)
 extension ArticleView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
@@ -234,10 +240,10 @@ extension LinkMetadata {
         let application = UIApplication.shared
 
         if let originalURL = URL(string: originalURLString),
-            application.canOpenURL(originalURL) {
+           application.canOpenURL(originalURL) {
             return originalURL
         } else if let permanentURL = permanentURL,
-            application.canOpenURL(permanentURL) {
+                  application.canOpenURL(permanentURL) {
             return permanentURL
         }
 

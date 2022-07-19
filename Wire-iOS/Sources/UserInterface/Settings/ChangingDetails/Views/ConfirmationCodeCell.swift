@@ -43,9 +43,7 @@ class ConfirmationCodeCell: UITableViewCell {
     private func setupViews() {
         addSubview(textField)
 
-        if #available(iOS 12, *) {
-            textField.textContentType = .oneTimeCode
-        }
+        textField.textContentType = .oneTimeCode
 
         textField.keyboardType = .decimalPad
         textField.accessibilityIdentifier = "VerificationCode"

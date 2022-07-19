@@ -93,8 +93,7 @@ final class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
 
     fileprivate func showMenu() {
         let menuController = UIMenuController.shared
-        menuController.setTargetRect(bounds, in: self)
-        menuController.setMenuVisible(true, animated: true)
+        menuController.showMenu(from: self, rect: bounds)
     }
 
     final class CharacterView: UIView {

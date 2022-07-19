@@ -22,7 +22,6 @@ import WireCommonComponents
 
 final class MessageActionTests: XCTestCase {
 
-    @available(iOS 13.0, *)
     func testForSystemIcons() {
         MessageAction.allCases.forEach { action in
             if let image = action.systemIcon() {

@@ -41,14 +41,7 @@ final class WebLinkTextView: UITextView {
 
     private func setup() {
 
-        // WORKAROUND: isEditable needs to true on iOS 13 for links to be visible as an accessiblity element
-        // and set to false in iOS 12 or earlier for links to be tappable.
-        if #available(iOS 13.0, *) {
-            isEditable = true
-        } else {
-            isEditable = false
-        }
-
+        isEditable = true
         isScrollEnabled = false
         bounces = false
         backgroundColor = UIColor.clear

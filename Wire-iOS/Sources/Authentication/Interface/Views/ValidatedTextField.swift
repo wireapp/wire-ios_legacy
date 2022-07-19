@@ -173,10 +173,8 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
             autocapitalizationType = .none
-            if #available(iOS 12, *) {
-                textContentType = isNew ? .newPassword : .password
-                passwordRules = textFieldValidator.passwordRules
-            }
+            textContentType = isNew ? .newPassword : .password
+            passwordRules = textFieldValidator.passwordRules
         case .name(let isTeam):
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
@@ -194,14 +192,9 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
             accessibilityIdentifier = "PasscodeField"
             autocapitalizationType = .none
             returnKeyType = isNew ? .default : .continue
-            if #available(iOS 12, *) {
-                // Hack: disable auto fill passcode
-                textContentType = .oneTimeCode
-                passwordRules = textFieldValidator.passwordRules
-            } else {
-                textContentType = .init(rawValue: "")
-            }
-
+            // Hack: disable auto fill passcode
+            textContentType = .oneTimeCode
+            passwordRules = textFieldValidator.passwordRules
         }
     }
 

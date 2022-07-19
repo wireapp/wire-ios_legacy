@@ -146,7 +146,6 @@ final class EphemeralKeyboardViewController: UIViewController {
         picker.dataSource = self
         picker.backgroundColor = .clear
         picker.tintColor = .red
-        picker.showsSelectionIndicator = true
         picker.selectorColor = separatorColor
         picker.didTapViewClosure = dismissKeyboardIfNeeded
 

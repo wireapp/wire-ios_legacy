@@ -34,7 +34,7 @@ final class MessagePresenterTests: XCTestCase {
         UIView.setAnimationsEnabled(false)
 
         if originalRootViewConttoller == nil {
-            originalRootViewConttoller = UIApplication.shared.keyWindow?.rootViewController
+            originalRootViewConttoller = UIApplication.shared.firstKeyWindow?.rootViewController
         }
     }
 
@@ -43,7 +43,7 @@ final class MessagePresenterTests: XCTestCase {
         mediaPlaybackManager = nil
         super.tearDown()
         UIView.setAnimationsEnabled(true)
-        UIApplication.shared.keyWindow?.rootViewController = originalRootViewConttoller
+        UIApplication.shared.firstKeyWindow?.rootViewController = originalRootViewConttoller
     }
 
     // MARK: - Video
@@ -54,7 +54,7 @@ final class MessagePresenterTests: XCTestCase {
         message.backingFileMessageData?.fileURL = fileURL
 
         let targetViewController = UIViewController()
-        UIApplication.shared.keyWindow?.rootViewController = targetViewController
+        UIApplication.shared.firstKeyWindow?.rootViewController = targetViewController
         sut.targetViewController = targetViewController
         _ = targetViewController.view
 

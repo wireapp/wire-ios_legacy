@@ -289,7 +289,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
     private func configureConstraints() {
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.fitInSuperview()
+        container.fitIn(view: self)
     }
 
     func configure(with object: Configuration, animated: Bool) {
