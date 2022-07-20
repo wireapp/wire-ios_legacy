@@ -94,7 +94,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
                                                selector: #selector(keyboardFrameDidChange(notification:)),
                                                name: UIResponder.keyboardDidChangeFrameNotification,
                                                object: nil)
-
         createViews()
         createConstraints()
     }
