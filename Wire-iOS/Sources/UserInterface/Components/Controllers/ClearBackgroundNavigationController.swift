@@ -56,13 +56,11 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.clear
+        self.view.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
         self.useDefaultPopGesture = false
 
-        self.navigationBar.tintColor = .white
-        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.isTranslucent = true
+        self.navigationBar.tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
+
         self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
