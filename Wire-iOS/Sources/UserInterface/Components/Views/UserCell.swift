@@ -75,8 +75,14 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             let backgroundColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)
             let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
             checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: foregroundColor) : nil
-            checkmarkIconView.backgroundColor = isSelected ? backgroundColor : .clear
+            checkmarkIconView.backgroundColor = isSelected ? backgroundColor  : .clear
             checkmarkIconView.layer.borderColor = borderColor.cgColor
+        }
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted : SemanticColors.BackgroundColors.backgroundUserCell
         }
     }
 
@@ -99,6 +105,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     override func setUp() {
         super.setUp()
+
 
         userTypeIconView.setUpIconImageView()
         microphoneIconView.setUpIconImageView()
@@ -156,6 +163,10 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         createConstraints()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
+    }
+
     private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
@@ -179,12 +190,11 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-
         let iconColor = UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant)
 
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
+        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
 
-        userTypeIconView.set(size: .tiny, color: iconColor)
+        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
         microphoneIconView.set(size: .tiny, color: iconColor)
         videoIconView.set(size: .tiny, color: iconColor)
 
