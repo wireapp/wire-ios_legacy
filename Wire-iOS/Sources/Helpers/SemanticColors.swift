@@ -52,6 +52,28 @@ public enum SemanticColors {
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
 
+    public enum BackgroundColors {
+        static let backgroundConversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+    }
+
+    public enum IconColors {
+        static let cellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
+    }
+
+    public enum SeparatorColors {
+        static let separatorCellActive = UIColor(light: Asset.gray40, dark: Asset.gray90)
+    }
+
+    public enum TabBarColors {
+        static let textTabBarActive = UIColor(light: Asset.black, dark: Asset.white)
+    }
+
+    public enum NavigationBarColors {
+        static let foregroundNavigationTintColor = UIColor(light: Asset.black, dark: Asset.white)
+    }
+
 }
 
 extension UIColor {

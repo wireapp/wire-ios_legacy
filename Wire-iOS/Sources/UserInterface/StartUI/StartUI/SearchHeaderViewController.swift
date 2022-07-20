@@ -61,7 +61,7 @@ final class SearchHeaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        view.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
 
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
 
