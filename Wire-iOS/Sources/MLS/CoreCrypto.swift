@@ -39,16 +39,16 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_createConversation(
-        conversationId: [UInt8],
+        conversationId: WireDataModel.ConversationId,
         config: WireDataModel.ConversationConfiguration
-    ) throws -> WireDataModel.MemberAddedMessages? {
+    ) throws {
         return try createConversation(
             conversationId: conversationId,
             config: .init(config: config)
-        ).map(WireDataModel.MemberAddedMessages.init)
+        )
     }
 
-    public func wire_conversationExists(conversationId: [UInt8]) -> Bool {
+    public func wire_conversationExists(conversationId: WireDataModel.ConversationId) -> Bool {
         return conversationExists(conversationId: conversationId)
     }
 
@@ -57,10 +57,9 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_addClientsToConversation(
-        conversationId: [UInt8],
+        conversationId: WireDataModel.ConversationId,
         clients: [WireDataModel.Invitee]
     ) throws -> WireDataModel.MemberAddedMessages? {
-
         return try addClientsToConversation(
             conversationId: conversationId,
             clients: clients.map(WireCoreCrypto.Invitee.init)
@@ -68,10 +67,9 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_removeClientsFromConversation(
-        conversationId: [UInt8],
-        clients: [[UInt8]]
+        conversationId: WireDataModel.ConversationId,
+        clients: [WireDataModel.ClientId]
     ) throws -> [UInt8]? {
-
         return try removeClientsFromConversation(
             conversationId: conversationId,
             clients: clients
@@ -79,10 +77,9 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_leaveConversation(
-        conversationId: [UInt8],
-        otherClients: [[UInt8]]
+        conversationId: WireDataModel.ConversationId,
+        otherClients: [WireDataModel.ClientId]
     ) throws -> WireDataModel.ConversationLeaveMessages {
-
         let result =  try leaveConversation(
             conversationId: conversationId,
             otherClients: otherClients
@@ -92,10 +89,9 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_decryptMessage(
-        conversationId: [UInt8],
+        conversationId: WireDataModel.ConversationId,
         payload: [UInt8]
     ) throws -> [UInt8]? {
-
         return try decryptMessage(
             conversationId: conversationId,
             payload: payload
@@ -103,10 +99,9 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_encryptMessage(
-        conversationId: [UInt8],
+        conversationId: WireDataModel.ConversationId,
         message: [UInt8]
     ) throws -> [UInt8] {
-
         return try encryptMessage(
             conversationId: conversationId,
             message: message
@@ -114,28 +109,74 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_newAddProposal(
-        conversationId: [UInt8],
+        conversationId: WireDataModel.ConversationId,
         keyPackage: [UInt8]
     ) throws -> [UInt8] {
-
         return try newAddProposal(
             conversationId: conversationId,
             keyPackage: keyPackage
         )
     }
 
-    public func wire_newUpdateProposal(conversationId: [UInt8]) throws -> [UInt8] {
+    public func wire_newUpdateProposal(conversationId: WireDataModel.ConversationId) throws -> [UInt8] {
         return try newUpdateProposal(conversationId: conversationId)
     }
 
     public func wire_newRemoveProposal(
-        conversationId: [UInt8],
-        clientId: [UInt8]
+        conversationId: WireDataModel.ConversationId,
+        clientId: WireDataModel.ClientId
     ) throws -> [UInt8] {
-
         return try newRemoveProposal(
             conversationId: conversationId,
             clientId: clientId
+        )
+    }
+
+    public func wire_newExternalAddProposal(
+        conversationId: WireDataModel.ConversationId,
+        epoch: UInt64,
+        keyPackage: [UInt8]
+    ) throws -> [UInt8] {
+        return try newExternalAddProposal(
+            conversationId: conversationId,
+            epoch: epoch,
+            keyPackage: keyPackage
+        )
+    }
+
+    public func wire_newExternalRemoveProposal(
+        conversationId: WireDataModel.ConversationId,
+        epoch: UInt64,
+        keyPackageRef: [UInt8]
+    ) throws -> [UInt8] {
+        return try newExternalRemoveProposal(
+            conversationId: conversationId,
+            epoch: epoch,
+            keyPackageRef: keyPackageRef
+        )
+    }
+
+    public func wire_updateKeyingMaterial(conversationId: WireDataModel.ConversationId) throws -> WireDataModel.CommitBundle {
+        let result = try updateKeyingMaterial(conversationId: conversationId)
+        return .init(welcome: result.welcome, message: result.message)
+    }
+
+    public func wire_joinByExternalCommit(groupState: [UInt8]) throws -> WireDataModel.MlsConversationInitMessage {
+        let result = try joinByExternalCommit(groupState: groupState)
+        return .init(group: result.group, message: result.message)
+    }
+
+    public func wire_exportGroupState(conversationId: WireDataModel.ConversationId) throws -> [UInt8] {
+        return try exportGroupState(conversationId: conversationId)
+    }
+
+    public func wire_mergePendingGroupFromExternalCommit(
+        conversationId: WireDataModel.ConversationId,
+        config: WireDataModel.ConversationConfiguration
+    ) throws {
+        try mergePendingGroupFromExternalCommit(
+            conversationId: conversationId,
+            config: .init(config: config)
         )
     }
 
@@ -144,14 +185,13 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
 private extension WireCoreCrypto.ConversationConfiguration {
 
     init(config: WireDataModel.ConversationConfiguration) {
-        let extraMembers = config.extraMembers.map(WireCoreCrypto.Invitee.init)
-        let cipherSuiteName = config.ciphersuite.map(WireCoreCrypto.CiphersuiteName.init)
+        let ciphersuite = config.ciphersuite.map(WireCoreCrypto.CiphersuiteName.init)
 
         self.init(
-            extraMembers: extraMembers,
             admins: config.admins,
-            ciphersuite: cipherSuiteName,
-            keyRotationSpan: config.keyRotationSpan
+            ciphersuite: ciphersuite,
+            keyRotationSpan: config.keyRotationSpan,
+            externalSenders: config.externalSenders
         )
     }
 

@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EE128A60286DD1D900558550 /* libcore_crypto_ffi_universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */; };
 		EE212A73283E5BC000AB1040 /* WireCoreCrypto.docc in Sources */ = {isa = PBXBuildFile; fileRef = EE212A72283E5BC000AB1040 /* WireCoreCrypto.docc */; };
 		EE212A79283E5BC000AB1040 /* WireCoreCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE212A6E283E5BC000AB1040 /* WireCoreCrypto.framework */; };
 		EE212A7E283E5BC000AB1040 /* WireCoreCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A7D283E5BC000AB1040 /* WireCoreCryptoTests.swift */; };
 		EE212A7F283E5BC000AB1040 /* WireCoreCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = EE212A71283E5BC000AB1040 /* WireCoreCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE212A8A283E5DE700AB1040 /* CoreCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A89283E5DE700AB1040 /* CoreCryptoSwift.swift */; };
-		EE212A99283E604600AB1040 /* core_cryptoFFI.h in Headers */ = {isa = PBXBuildFile; fileRef = EE212A97283E604600AB1040 /* core_cryptoFFI.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		EE59EBAC287F01380080A36C /* libcore_crypto_ffi_universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE59EBAB287F01380080A36C /* libcore_crypto_ffi_universal.a */; };
+		EE59EBB2287F01F10080A36C /* core_cryptoFFI.h in Headers */ = {isa = PBXBuildFile; fileRef = EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,7 +27,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi_universal.a; sourceTree = "<group>"; };
 		EE212A6E283E5BC000AB1040 /* WireCoreCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireCoreCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE212A71283E5BC000AB1040 /* WireCoreCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireCoreCrypto.h; sourceTree = "<group>"; };
 		EE212A72283E5BC000AB1040 /* WireCoreCrypto.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = WireCoreCrypto.docc; sourceTree = "<group>"; };
@@ -35,8 +34,9 @@
 		EE212A7D283E5BC000AB1040 /* WireCoreCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireCoreCryptoTests.swift; sourceTree = "<group>"; };
 		EE212A89283E5DE700AB1040 /* CoreCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreCryptoSwift.swift; sourceTree = "<group>"; };
 		EE212A8C283E5F2600AB1040 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcore_crypto_ffi.a; path = CoreCryptoRust/libcore_crypto_ffi.a; sourceTree = "<group>"; };
-		EE212A97283E604600AB1040 /* core_cryptoFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_cryptoFFI.h; sourceTree = "<group>"; };
 		EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = WireCoreCrypto.modulemap; sourceTree = "<group>"; };
+		EE59EBAB287F01380080A36C /* libcore_crypto_ffi_universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi_universal.a; sourceTree = "<group>"; };
+		EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_cryptoFFI.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE128A60286DD1D900558550 /* libcore_crypto_ffi_universal.a in Frameworks */,
+				EE59EBAC287F01380080A36C /* libcore_crypto_ffi_universal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */,
-				EE212A96283E604600AB1040 /* CoreCrypto */,
+				EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */,
+				EE59EBAB287F01380080A36C /* libcore_crypto_ffi_universal.a */,
 				EE212A70283E5BC000AB1040 /* WireCoreCrypto */,
 				EE212A7C283E5BC000AB1040 /* WireCoreCryptoTests */,
 				EE212A6F283E5BC000AB1040 /* Products */,
@@ -114,16 +115,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EE212A96283E604600AB1040 /* CoreCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				EE212A97283E604600AB1040 /* core_cryptoFFI.h */,
-				EE128A5F286DD1D900558550 /* libcore_crypto_ffi_universal.a */,
-			);
-			name = CoreCrypto;
-			path = WireCoreCrypto/CoreCrypto;
-			sourceTree = "<group>";
-		};
 		EE212A9D283E61E700AB1040 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,7 +130,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE212A99283E604600AB1040 /* core_cryptoFFI.h in Headers */,
+				EE59EBB2287F01F10080A36C /* core_cryptoFFI.h in Headers */,
 				EE212A7F283E5BC000AB1040 /* WireCoreCrypto.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +404,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WireCoreCrypto/CoreCrypto",
+					"$(PROJECT_DIR)",
 				);
 				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
@@ -453,6 +445,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WireCoreCrypto/CoreCrypto",
+					"$(PROJECT_DIR)",
 				);
 				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
