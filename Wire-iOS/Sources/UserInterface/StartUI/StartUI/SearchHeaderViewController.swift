@@ -57,6 +57,7 @@ final class SearchHeaderViewController: UIViewController {
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
+        clearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,7 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
+        clearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
