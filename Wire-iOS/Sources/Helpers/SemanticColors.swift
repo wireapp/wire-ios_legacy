@@ -68,6 +68,7 @@ public enum SemanticColors {
 
     public enum TabBarColors {
         static let textTabBarActive = UIColor(light: Asset.black, dark: Asset.white)
+        static let foregroundSelectedTabActive = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum NavigationBarColors {
