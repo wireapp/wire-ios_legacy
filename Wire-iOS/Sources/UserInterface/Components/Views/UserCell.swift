@@ -199,7 +199,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         videoIconView.set(size: .tiny, color: iconColor)
 
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
-        connectButton.setIconColor(sectionTextColor, for: .normal)
+        connectButton.setIconColor(SemanticColors.IconColors.cellIconActive, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
         titleLabel.applyStyle(.primaryCellLabel)
         subtitleLabel.applyStyle(.secondaryCellLabel)
