@@ -31,7 +31,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
 
-    let groupSelector: SearchGroupSelector = SearchGroupSelector(style: .dark)
+    let groupSelector: SearchGroupSelector = SearchGroupSelector()
 
     let searchResultsViewController: SearchResultsViewController
 
@@ -93,20 +93,16 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        navigationController?.navigationBar.barTintColor = UIColor.clear
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        navigationController?.navigationBar.barTintColor = SemanticColors.BackgroundColors.backgroundConversationList
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private func configGroupSelector() {
         groupSelector.translatesAutoresizingMaskIntoConstraints = false
-        groupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        groupSelector.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
     }
 
     func setupViews() {
@@ -129,7 +125,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         searchHeader.delegate = self
         searchHeader.allowsMultipleSelection = false
-        searchHeader.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        searchHeader.view.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
 
         addToSelf(searchHeader)
 

@@ -72,7 +72,7 @@ final class SearchHeaderViewController: UIViewController {
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
-        tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
+        tokenField.textView.keyboardAppearance = .default
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
         tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
