@@ -106,10 +106,11 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func setUp() {
         super.setUp()
 
-
         userTypeIconView.setUpIconImageView()
         microphoneIconView.setUpIconImageView()
         videoIconView.setUpIconImageView()
+
+        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
 
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")
@@ -163,10 +164,6 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         createConstraints()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
-    }
-
     private func createConstraints() {
         let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
@@ -190,13 +187,12 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let iconColor = UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant)
 
         backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
 
         userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
-        microphoneIconView.set(size: .tiny, color: iconColor)
-        videoIconView.set(size: .tiny, color: iconColor)
+        microphoneIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
+        videoIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
 
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(SemanticColors.IconColors.cellIconActive, for: .normal)
