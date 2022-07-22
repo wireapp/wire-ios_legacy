@@ -91,6 +91,8 @@ extension ShareViewController {
         if self.allowsMultipleSelection {
             self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.searchIcon)
         } else {
+            self.tokenFieldClearButton.isHidden = true
+            self.tokenField.isHidden = true
             self.searchIcon.isHidden = true
             self.sendButton.isHidden = true
             self.closeButton.isHidden = true
