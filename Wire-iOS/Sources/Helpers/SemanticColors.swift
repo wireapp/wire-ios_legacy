@@ -59,7 +59,11 @@ public enum SemanticColors {
     }
 
     public enum IconColors {
-        static let cellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let foregroundCellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let boarderCellCheckMarkActive = UIColor(light: Asset.gray80, dark: Asset.gray60)
+        static let backgroundCellCheckMarkActive = UIColor(light: Asset.gray20, dark: Asset.gray90)
+        static let backgroundCellCheckMarkSelectedActive = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        static let foregroundCellCheckMarkIconActive = UIColor(light: Asset.white, dark: Asset.black)
     }
 
     public enum SeparatorColors {

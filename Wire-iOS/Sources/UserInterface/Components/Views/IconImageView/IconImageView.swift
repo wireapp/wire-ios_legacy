@@ -43,7 +43,7 @@ extension IconImageStyle {
 
 class IconImageView: UIImageView {
     private(set) var size: StyleKitIcon.Size = .tiny
-    private(set) var color: UIColor = SemanticColors.IconColors.cellIconActive
+    private(set) var color: UIColor = SemanticColors.IconColors.foregroundCellIconActive
     private(set) var style: IconImageStyle?
 
     override init(frame: CGRect) {

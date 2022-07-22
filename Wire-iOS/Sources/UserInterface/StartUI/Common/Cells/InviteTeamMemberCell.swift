@@ -28,7 +28,7 @@ class StartUIIconCell: UICollectionViewCell {
 
     fileprivate var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
+            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive)
         }
     }
 
@@ -51,7 +51,7 @@ class StartUIIconCell: UICollectionViewCell {
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
+        iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive)
 
     }
 

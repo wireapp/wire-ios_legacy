@@ -32,6 +32,7 @@ extension UIImageView {
 class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
+    typealias icon = SemanticColors.IconColors
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
@@ -68,15 +69,13 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var sectionName: String?
     var cellIdentifier: String?
+    let iconColor = icon.foregroundCellIconActive
 
     override var isSelected: Bool {
         didSet {
-            let foregroundColor = UIColor.from(scheme: .background, variant: colorSchemeVariant)
-            let backgroundColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant)
-            let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
-            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: foregroundColor) : nil
-            checkmarkIconView.backgroundColor = isSelected ? backgroundColor  : .clear
-            checkmarkIconView.layer.borderColor = borderColor.cgColor
+            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: icon.foregroundCellCheckMarkIconActive) : nil
+            checkmarkIconView.backgroundColor = isSelected ? icon.backgroundCellCheckMarkSelectedActive : icon.backgroundCellCheckMarkActive
+            checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : icon.boarderCellCheckMarkActive.cgColor
         }
     }
 
@@ -98,39 +97,55 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             connectButton.isHidden = true
             accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
-            checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
+            checkmarkIconView.layer.borderColor = icon.boarderCellCheckMarkActive.cgColor
             checkmarkIconView.isHidden = true
         }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        //  Border colors are not dynamically updating for Dark Mode
+        //  When you use adaptive colors with CALayers you’ll notice that these colors,
+        // are not updating when switching appearance live in the app.
+        // That's why we use the traitCollectionDidChange(_:) method.
+        checkmarkIconView.layer.borderColor = icon.boarderCellCheckMarkActive.cgColor
     }
 
     override func setUp() {
         super.setUp()
 
+        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
+
         userTypeIconView.setUpIconImageView()
         microphoneIconView.setUpIconImageView()
         videoIconView.setUpIconImageView()
 
-        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
+        userTypeIconView.set(size: .tiny, color: iconColor)
+        microphoneIconView.set(size: .tiny, color: iconColor)
+        videoIconView.set(size: .tiny, color: iconColor)
 
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")
 
         connectButton.setIcon(.plusCircled, size: .tiny, for: .normal)
+        connectButton.setIconColor(iconColor, for: .normal)
         connectButton.imageView?.contentMode = .center
         connectButton.isHidden = true
 
         checkmarkIconView.layer.borderWidth = 2
         checkmarkIconView.contentMode = .center
         checkmarkIconView.layer.cornerRadius = 12
+        checkmarkIconView.backgroundColor = icon.backgroundCellCheckMarkActive
         checkmarkIconView.isHidden = true
 
         accessoryIconView.setUpIconImageView()
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.accessibilityIdentifier = "user_cell.name"
+        titleLabel.applyStyle(.primaryCellLabel)
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
+        subtitleLabel.applyStyle(.secondaryCellLabel)
 
         avatar.userSession = ZMUserSession.shared()
         avatar.initialsFont = .avatarInitial
@@ -188,25 +203,16 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
 
-        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
-
-        userTypeIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
-        microphoneIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
-        videoIconView.set(size: .tiny, color: SemanticColors.IconColors.cellIconActive)
-
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
-        connectButton.setIconColor(SemanticColors.IconColors.cellIconActive, for: .normal)
-        checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
-        titleLabel.applyStyle(.primaryCellLabel)
-        subtitleLabel.applyStyle(.secondaryCellLabel)
+
         updateTitleLabel()
     }
 
     private func updateTitleLabel(selfUser: UserType? = nil) {
         guard let user = user,
               let selfUser = selfUser else {
-            return
-        }
+                  return
+              }
         var attributedTitle = user.nameIncludingAvailability(
             color: SemanticColors.LabelsColor.textLabelCellTitleActive,
             selfUser: selfUser)
