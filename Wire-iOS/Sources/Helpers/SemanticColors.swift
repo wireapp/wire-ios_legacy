@@ -51,6 +51,7 @@ public enum SemanticColors {
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
         static let clearButton = UIColor(light: Asset.black, dark: Asset.white)
+        static let searchIcon = UIColor(light: Asset.black, dark: Asset.white)
     }
 
 }

@@ -112,6 +112,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     let destinationsTableView = UITableView()
     let closeButton = IconButton(style: .default, variant: .dark)
     let sendButton = IconButton(style: .default, variant: .light)
+    let tokenFieldClearButton = IconButton(style: .default)
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {
         let view = UIView()
@@ -143,18 +144,24 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     }
 
     // MARK: - Actions
-
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.searchIcon)
+    }
     @objc
     func onCloseButtonPressed(sender: AnyObject?) {
         onDismiss?(self, false)
     }
-
     @objc
     func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)
         }
+    }
+    @objc
+    func onTokenFieldClearButtonPressed() {
+        tokenField.textView.text = ""
+        filterString = tokenField.textView.text
     }
 
     // MARK: - UITableViewDataSource & UITableViewDelegate

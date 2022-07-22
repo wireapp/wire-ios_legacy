@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 extension ShareViewController {
 
@@ -46,8 +47,10 @@ extension ShareViewController {
 
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
-        self.tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        self.tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        self.tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
+        self.tokenField.tokenSelectedTitleColor = SemanticColors.SearchBarColor.textInputView
+        self.tokenField.textView.placeholderTextColor = SemanticColors.SearchBarColor.textInputViewPlaceholder
+        self.tokenField.textView.textColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -55,10 +58,13 @@ extension ShareViewController {
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
-        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
-        self.tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: .dark)
+        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
+        self.tokenField.textView.backgroundColor = SemanticColors.SearchBarColor.backgroundInputView
         self.tokenField.delegate = self
-
+        tokenFieldClearButton.accessibilityLabel = "clear"
+        tokenFieldClearButton.setIcon(.clearInput, size: .tiny, for: .normal)
+        tokenFieldClearButton.addTarget(self, action: #selector(onTokenFieldClearButtonPressed), for: .touchUpInside)
+        tokenFieldClearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
@@ -83,7 +89,7 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.setIcon(.search, size: .tiny, color: .white)
+            self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.searchIcon)
         } else {
             self.searchIcon.isHidden = true
             self.sendButton.isHidden = true
@@ -92,7 +98,7 @@ extension ShareViewController {
         }
 
         [self.blurView, self.containerView].forEach(self.view.addSubview)
-        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.containerView.addSubview)
+        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.tokenFieldClearButton].forEach(self.containerView.addSubview)
 
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {
             self.containerView.addSubview(shareablePreviewWrapper)
@@ -113,6 +119,7 @@ extension ShareViewController {
          shareablePreviewView,
          tokenField,
          searchIcon,
+         tokenFieldClearButton,
          destinationsTableView,
          bottomSeparatorLine,
          topSeparatorView,
@@ -183,7 +190,9 @@ extension ShareViewController {
             tokenFieldHeightConstraint,
 
             searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8), // the search icon glyph has whitespaces,
+            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
+            tokenFieldClearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+            tokenFieldClearButton.leadingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -32),
 
             topSeparatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topSeparatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
