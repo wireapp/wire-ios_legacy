@@ -56,7 +56,7 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
+        self.view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
         self.useDefaultPopGesture = false
 
         self.navigationBar.tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor

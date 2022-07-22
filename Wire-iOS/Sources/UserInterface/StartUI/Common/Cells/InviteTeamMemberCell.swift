@@ -64,7 +64,7 @@ class StartUIIconCell: UICollectionViewCell {
         iconView.contentMode = .center
         titleLabel.applyStyle(.primaryCellLabel)
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
-        separator.backgroundColor = SemanticColors.SeparatorColors.separatorCellActive
+        separator.backgroundColor = SemanticColors.SeparatorColors.foregroundSeparatorCellActive
     }
 
     fileprivate func createConstraints() {

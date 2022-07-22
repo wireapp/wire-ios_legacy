@@ -93,7 +93,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        navigationController?.navigationBar.barTintColor = SemanticColors.BackgroundColors.backgroundConversationList
+        navigationController?.navigationBar.barTintColor = SemanticColors.BackgroundColors.backgroundViewDefault
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
@@ -102,7 +102,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     private func configGroupSelector() {
         groupSelector.translatesAutoresizingMaskIntoConstraints = false
-        groupSelector.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
+        groupSelector.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
     }
 
     func setupViews() {
@@ -125,7 +125,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         searchHeader.delegate = self
         searchHeader.allowsMultipleSelection = false
-        searchHeader.view.backgroundColor = SemanticColors.BackgroundColors.backgroundConversationList
+        searchHeader.view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
 
         addToSelf(searchHeader)
 

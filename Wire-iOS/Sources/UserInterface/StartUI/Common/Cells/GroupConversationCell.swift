@@ -82,7 +82,7 @@ final class GroupConversationCell: UICollectionViewCell {
         contentView.addSubview(separator)
 
         backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
-        separator.backgroundColor = SemanticColors.SeparatorColors.separatorCellActive
+        separator.backgroundColor = SemanticColors.SeparatorColors.foregroundSeparatorCellActive
         titleLabel.applyStyle(.primaryCellLabel)
         subtitleLabel.applyStyle(.secondaryCellLabel)
 
