@@ -81,7 +81,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .dark)
 
-        // THENgit 
+        // THEN
         verify(matching: sut)
     }
 
