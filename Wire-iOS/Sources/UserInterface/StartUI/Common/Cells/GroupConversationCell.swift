@@ -33,7 +33,6 @@ final class GroupConversationCell: UICollectionViewCell {
     var contentStackView: UIStackView!
     var titleStackView: UIStackView!
 
-
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted : SemanticColors.BackgroundColors.backgroundUserCell

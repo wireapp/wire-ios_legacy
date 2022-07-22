@@ -75,7 +75,7 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
 
     var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
-           
+
         }
     }
 

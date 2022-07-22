@@ -153,7 +153,6 @@ final class BackgroundViewController: UIViewController {
         setBackground(color: UIColor(fromZMAccentColor: user.accentColorValue))
     }
 
-
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
 
         if imageMediumDataChanged {
