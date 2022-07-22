@@ -46,7 +46,6 @@ extension ShareViewController {
         createShareablePreview()
 
         self.tokenField.clipsToBounds = true
-        self.tokenField.layer.cornerRadius = 4
         self.tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.tokenSelectedTitleColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.textView.placeholderTextColor = SemanticColors.SearchBarColor.textInputViewPlaceholder
