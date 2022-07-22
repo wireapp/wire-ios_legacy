@@ -49,7 +49,6 @@ extension ShareViewController {
         self.tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.tokenSelectedTitleColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.textView.placeholderTextColor = SemanticColors.SearchBarColor.textInputViewPlaceholder
-        self.tokenField.textView.textColor = SemanticColors.SearchBarColor.textInputView
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -58,7 +57,6 @@ extension ShareViewController {
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
-        self.tokenField.textView.backgroundColor = SemanticColors.SearchBarColor.backgroundInputView
         self.tokenField.delegate = self
         tokenFieldClearButton.accessibilityLabel = "clear"
         tokenFieldClearButton.setIcon(.clearInput, size: .tiny, for: .normal)
