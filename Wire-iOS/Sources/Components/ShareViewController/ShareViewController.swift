@@ -161,6 +161,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     @objc
     func onTokenFieldClearButtonPressed() {
         tokenField.textView.text = ""
+        hideTokenFieldClearButton()
         filterString = tokenField.textView.text
     }
 
@@ -241,6 +242,13 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     private func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
+    private func hideTokenFieldClearButton() {
+        if tokenField.textView.text.count > 0 {
+            tokenFieldClearButton.isHidden = false
+        } else {
+            tokenFieldClearButton.isHidden = true
+        }
+    }
 }
 
 // MARK: - TokenFieldDelegate
@@ -252,6 +260,7 @@ extension ShareViewController: TokenFieldDelegate {
     }
 
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+        hideTokenFieldClearButton()
         filterString = text
     }
 

@@ -65,6 +65,7 @@ extension ShareViewController {
         tokenFieldClearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         tokenFieldClearButton.addTarget(self, action: #selector(onTokenFieldClearButtonPressed), for: .touchUpInside)
         tokenFieldClearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
+        tokenFieldClearButton.isHidden = true
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
