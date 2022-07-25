@@ -55,10 +55,11 @@ final class SearchHeaderViewController: UIViewController {
         userSelection.add(observer: self)
         tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
     }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
-        clearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
