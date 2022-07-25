@@ -18,7 +18,7 @@ jobs:
       
       - name: Select Xcode
         run: |
-          sudo xcode-select -switch /Applications/Xcode_13.2.1.app
+          sudo xcode-select -switch /Applications/Xcode_13.1.app
           /usr/bin/xcodebuild -version
 
       - name: Fetch dependencies
