@@ -78,6 +78,7 @@ final class CallParticipantsListViewControllerTests: XCTestCase {
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         // Then
         verify(matching: sut.view)
