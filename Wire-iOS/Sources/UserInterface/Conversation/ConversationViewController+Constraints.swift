@@ -36,7 +36,11 @@ extension ConversationViewController {
                 outgoingConnectionViewController.willMove(toParent: self)
                 view.addSubview(outgoingConnectionViewController.view)
                 addChild(outgoingConnectionViewController)
-                outgoingConnectionViewController.view.fitInSuperview(exclude: [.top])
+                NSLayoutConstraint.activate([
+                    outgoingConnectionViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    outgoingConnectionViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    outgoingConnectionViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                ])
             }
         } else {
             outgoingConnectionViewController?.willMove(toParent: nil)
@@ -51,13 +55,23 @@ extension ConversationViewController {
          contentViewController.view,
          inputBarController.view].forEach {$0?.translatesAutoresizingMaskIntoConstraints = false}
 
-        conversationBarController.view.fitInSuperview(exclude: [.bottom])
-        contentViewController.view.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            conversationBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            conversationBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            conversationBarController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
 
         contentViewController.view.bottomAnchor.constraint(equalTo: inputBarController.view.topAnchor).isActive = true
-        let constraints = inputBarController.view.fitInSuperview(exclude: [.top])
-
-        inputBarBottomMargin = constraints[.bottom]
+        NSLayoutConstraint.activate([
+            inputBarController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            inputBarController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            inputBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        inputBarBottomMargin = inputBarController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        inputBarBottomMargin?.isActive = true
 
         inputBarZeroHeight = inputBarController.view.heightAnchor.constraint(equalToConstant: 0)
     }

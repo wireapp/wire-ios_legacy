@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,31 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
-import SnapshotTesting
+import UIKit
 
-final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+extension UIApplication {
 
-    var sut: ShareContactsViewController!
+  var firstKeyWindow: UIWindow? {
+      return windows.first(where: \.isKeyWindow)
+  }
 
-    override func setUp() {
-        super.setUp()
-        XCTestCase.accentColor = .vividRed
-        sut = ShareContactsViewController()
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState() {
-        verify(matching: sut)
-    }
-
-    func testForContactsPermissionDenied() {
-        sut.displayContactsAccessDeniedMessage(animated: false)
-        verify(matching: sut)
-    }
 }

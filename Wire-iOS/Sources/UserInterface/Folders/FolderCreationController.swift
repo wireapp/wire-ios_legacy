@@ -94,7 +94,12 @@ final class FolderCreationController: UIViewController {
 
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.fitInSuperview(safely: true)
+        NSLayoutConstraint.activate([
+            collectionView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+        ])
 
         collectionViewController.collectionView = collectionView
         collectionViewController.sections = [nameSection]// , errorSection]

@@ -51,7 +51,7 @@ extension AppLockModule {
         private func setUpViews() {
             view.addSubview(lockView)
             lockView.translatesAutoresizingMaskIntoConstraints = false
-            lockView.fitInSuperview()
+            lockView.fitIn(view: view)
         }
 
         private func setUpObserver() {

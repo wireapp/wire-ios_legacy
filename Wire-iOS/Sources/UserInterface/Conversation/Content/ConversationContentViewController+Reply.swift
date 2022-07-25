@@ -25,7 +25,7 @@ extension ConversationContentViewController {
         replyComposingView.translatesAutoresizingMaskIntoConstraints = false
 
         bottomContainer.addSubview(replyComposingView)
-        replyComposingView.fitInSuperview()
+        replyComposingView.fitIn(view: bottomContainer)
 
         return replyComposingView
     }
