@@ -152,7 +152,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     func onCloseButtonPressed(sender: AnyObject?) {
         onDismiss?(self, false)
     }
-    
+
     @objc
     func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
