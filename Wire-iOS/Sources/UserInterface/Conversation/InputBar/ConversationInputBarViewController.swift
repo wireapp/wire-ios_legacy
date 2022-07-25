@@ -921,6 +921,24 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         view.addSubview(inputBar)
 
         inputBar.editingView.delegate = self
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias InputBarAccessibilityStrings = L10n.Localizable.Accessibility.Conversation.InputBar
+
+        photoButton.accessibilityLabel = InputBarAccessibilityStrings.Photo.button
+        mentionButton.accessibilityLabel = InputBarAccessibilityStrings.Mention.button
+        sketchButton.accessibilityLabel = InputBarAccessibilityStrings.Sketch.button
+        gifButton.accessibilityLabel = InputBarAccessibilityStrings.Gif.button
+        audioButton.accessibilityLabel = InputBarAccessibilityStrings.Audio.button
+        pingButton.accessibilityLabel = InputBarAccessibilityStrings.Ping.button
+        uploadFileButton.accessibilityLabel = InputBarAccessibilityStrings.UploadFile.button
+        locationButton.accessibilityLabel = InputBarAccessibilityStrings.Location.button
+        videoButton.accessibilityLabel = InputBarAccessibilityStrings.Video.button
+        hourglassButton.accessibilityLabel = InputBarAccessibilityStrings.SetTime.button
+        sendButton.accessibilityLabel = InputBarAccessibilityStrings.Send.button
+        ephemeralIndicatorButton.accessibilityLabel = InputBarAccessibilityStrings.Sketch.button
     }
 
     private func createConstraints() {

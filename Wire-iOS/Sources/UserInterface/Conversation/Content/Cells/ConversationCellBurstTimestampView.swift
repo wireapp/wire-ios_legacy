@@ -152,6 +152,9 @@ final class ConversationCellBurstTimestampView: UIView {
             isSeparatorHidden = false
             label.font = burstNormalFont
             label.text = timestamp.formattedDate.localizedUppercase
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.setLocalizedDateFormatFromTemplate("EEEEdMMMM hh:mm")
+//            label.accessibilityLabel = dateFormatter.string(from: timestamp)
         }
 
         isShowingUnreadDot = showUnreadDot

@@ -60,6 +60,7 @@ public class WRDateFormatter {
         let locale = Locale.current
         let timeFormatter = DateFormatter()
         let formatString: String? = DateFormatter.dateFormat(fromTemplate: "EEEE", options: 0, locale: locale)
+//        let formatString: String? = DateFormatter.dateFormat(fromTemplate: "EEEE HH:mm", options: 0, locale: locale)
         timeFormatter.dateFormat = formatString ?? ""
 
         return timeFormatter
@@ -68,7 +69,7 @@ public class WRDateFormatter {
     public static var thisYearFormatter: DateFormatter = {
         let locale = Locale.current
         let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
-
+//        let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM HH:mm", options: 0, locale: locale)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = formatString
 
@@ -129,10 +130,12 @@ extension Date {
             WRDateFormatter.todayYesterdayFormatter.dateStyle = dateStyle
             dateString = WRDateFormatter.todayYesterdayFormatter.string(from: self)
         } else if isThisWeek {
-            dateString = "\(WRDateFormatter.thisWeekFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
+            dateString = "\(WRDateFormatter.thisWeekFormatter.string(from: self))" //"\(WRDateFormatter.thisWeekFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
         } else {
             let dateFormatter = self.olderThanOneWeekdateFormatter
-            dateString = "\(dateFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
+            dateString = "\(dateFormatter.string(from: self))" //"\(dateFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
+            print(dateFormatter.string(from: self))
+            print(WRDateFormatter.clockTimeFormatter.string(from: self))
         }
 
         return dateString

@@ -29,6 +29,8 @@ extension ConversationInputBarViewController {
     }
 
     func updateMarkdownButton() {
+        typealias InputBarAccessibilityStrings = L10n.Localizable.Accessibility.Conversation.InputBar
+
         let color: UIColor
         markdownButton.isHidden = inputBar.isEditing
 
@@ -40,6 +42,9 @@ extension ConversationInputBarViewController {
 
         markdownButton.setIconColor(color, for: .normal)
         markdownButton.isEnabled = !inputBar.isEditing
+        markdownButton.accessibilityLabel = inputBar.isMarkingDown ?
+                                            InputBarAccessibilityStrings.FormattingEnabled.button :
+                                            InputBarAccessibilityStrings.FormattingDisabled.button
     }
 
     @objc
@@ -54,5 +59,6 @@ extension ConversationInputBarViewController {
 
         updateMarkdownButton()
         updateRightAccessoryView()
+        inputBar.markdownView.updateAccessibilityElements(isAccessible: inputBar.isMarkingDown)
     }
 }

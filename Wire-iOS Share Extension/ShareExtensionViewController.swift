@@ -68,7 +68,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let imageView = PreviewImageView(frame: .zero)
         imageView.clipsToBounds = true
         imageView.shouldGroupAccessibilityChildren = true
-        imageView.isAccessibilityElement = false
         return imageView
     }()
 

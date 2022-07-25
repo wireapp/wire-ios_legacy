@@ -67,6 +67,8 @@ final class InputBarButtonsView: UIView {
     }
 
     func configureViews() {
+        typealias InputBarAccessibilityStrings = L10n.Localizable.Accessibility.Conversation.InputBar
+
         addSubview(buttonInnerContainer)
 
         buttons.forEach {
@@ -76,6 +78,7 @@ final class InputBarButtonsView: UIView {
 
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
+        expandRowButton.accessibilityLabel = InputBarAccessibilityStrings.More.button
         expandRowButton.hitAreaPadding = .zero
         expandRowButton.setIcon(.ellipsis, size: .tiny, for: [])
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
@@ -121,12 +124,28 @@ final class InputBarButtonsView: UIView {
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
         UIView.animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        if multilineLayout {
+            let firstRowButtons = [UIButton](buttons.prefix(customButtonCount))
+            let secondRowButtons = [UIButton](buttons.suffix(buttons.count - customButtonCount))
+            buttons.forEach { $0.isAccessibilityElement = currentRow == 0 ? firstRowButtons.contains($0) : secondRowButtons.contains($0) }
+        }
     }
 
     // MARK: - Button Layout
 
     fileprivate var buttonMargin: CGFloat {
         return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
+    }
+
+    fileprivate var customButtonCount: Int {
+        let minButtonWidth: CGFloat = constants.minimumButtonWidth(forWidth: bounds.width)
+        let ratio = floorf(Float(bounds.width / minButtonWidth))
+        let numberOfButtons: Int = Int(ratio)
+        return numberOfButtons >= 1 ? numberOfButtons - 1 : 0
     }
 
     private func layoutAndConstrainButtonRows() {
@@ -145,7 +164,6 @@ final class InputBarButtonsView: UIView {
         multilineLayout = numberOfButtons < buttons.count
 
         let (firstRow, secondRow): ([UIButton], [UIButton])
-        let customButtonCount = numberOfButtons >= 1 ? numberOfButtons - 1 : 0 // Last one is alway the expand button
 
         expandRowButton.isHidden = !multilineLayout
 
@@ -175,6 +193,7 @@ final class InputBarButtonsView: UIView {
 
         constraints.append(contentsOf: constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
         )
+        setupAccessibility()
     }
 
     private func constrainRowOfButtons(_ buttons: [UIButton],

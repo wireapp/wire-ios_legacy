@@ -96,6 +96,19 @@ final class MarkdownBarView: UIView {
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
         headerButton.delegate = self
         headerButton.setupView()
+
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias MarkdownBarAccessibilityStrings = L10n.Localizable.Accessibility.Conversation.MarkdownBar
+
+        headerButton.accessibilityLabel = MarkdownBarAccessibilityStrings.Header.button
+        boldButton.accessibilityLabel = MarkdownBarAccessibilityStrings.Bold.button
+        italicButton.accessibilityLabel = MarkdownBarAccessibilityStrings.Italic.button
+        numberListButton.accessibilityLabel = MarkdownBarAccessibilityStrings.NumberList.button
+        bulletListButton.accessibilityLabel = MarkdownBarAccessibilityStrings.BulletList.button
+        codeButton.accessibilityLabel = MarkdownBarAccessibilityStrings.Code.button
     }
 
     @objc func textViewDidChangeActiveMarkdown(note: Notification) {
@@ -145,6 +158,10 @@ final class MarkdownBarView: UIView {
 
     @objc func resetIcons() {
         buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
+    }
+
+    func updateAccessibilityElements(isAccessible: Bool) {
+        buttons.forEach { $0.isAccessibilityElement = isAccessible }
     }
 }
 

@@ -1940,5 +1940,27 @@
 "security_classification.level.not_classified" = "UNCLASSIFIED";
 
 // MARK: - Accessibility
-"accessibility.conversation.back.button" = "Go back to the conversation list";
+"accessibility.conversation.back.button" = "Go back to conversation list";
 "accessibility.conversation.search.button" = "Open search";
+"accessibility.conversation.input_bar.photo.button" = "Take or select a photo";
+"accessibility.conversation.input_bar.mention.button" = "Mention someone";
+"accessibility.conversation.input_bar.sketch.button" = "Open sketch to draw or write";
+"accessibility.conversation.input_bar.gif.button" = "Select a GIF";
+"accessibility.conversation.input_bar.audio.button" = "Record an audio message";
+"accessibility.conversation.input_bar.ping.button" = "Send a ping";
+"accessibility.conversation.input_bar.upload_file.button" = "Share a file";
+"accessibility.conversation.input_bar.location.button" = "Share your location";
+"accessibility.conversation.input_bar.video.button" = "Record a video";
+"accessibility.conversation.input_bar.more.button" = "Open more messaging options";
+"accessibility.conversation.input_bar.set_time.button" = "Set a time for the message";
+"accessibility.conversation.input_bar.formatting_enabled.button" = "Hide formatting options";
+"accessibility.conversation.input_bar.formatting_disabled.button" = "Open formatting options";
+"accessibility.conversation.input_bar.send.button" = "Send this message";
+
+"accessibility.conversation.markdown_bar.header.button" = "Header";
+"accessibility.conversation.markdown_bar.bold.button" = "Bold style";
+"accessibility.conversation.markdown_bar.italic.button" = "Italic style";
+"accessibility.conversation.markdown_bar.number_list.button" = "Number list";
+"accessibility.conversation.markdown_bar.bullet_list.button" = "Bullet list";
+"accessibility.conversation.markdown_bar.code.button" = "Code style";
+

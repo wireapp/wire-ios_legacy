@@ -60,8 +60,92 @@ internal enum L10n {
     internal enum Accessibility {
       internal enum Conversation {
         internal enum Back {
-          /// Go back to the conversation list
+          /// Go back to conversation list
           internal static let button = L10n.tr("Localizable", "accessibility.conversation.back.button")
+        }
+        internal enum InputBar {
+          internal enum Audio {
+            /// Record an audio message
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.audio.button")
+          }
+          internal enum FormattingDisabled {
+            /// Open formatting options
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.formatting_disabled.button")
+          }
+          internal enum FormattingEnabled {
+            /// Hide formatting options
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.formatting_enabled.button")
+          }
+          internal enum Gif {
+            /// Select a GIF
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.gif.button")
+          }
+          internal enum Location {
+            /// Share your location
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.location.button")
+          }
+          internal enum Mention {
+            /// Mention someone
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.mention.button")
+          }
+          internal enum More {
+            /// Open more messaging options
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.more.button")
+          }
+          internal enum Photo {
+            /// Take or select a photo
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.photo.button")
+          }
+          internal enum Ping {
+            /// Send a ping
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.ping.button")
+          }
+          internal enum Send {
+            /// Send this message
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.send.button")
+          }
+          internal enum SetTime {
+            /// Set a time for the message
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.set_time.button")
+          }
+          internal enum Sketch {
+            /// Open sketch to draw or write
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.sketch.button")
+          }
+          internal enum UploadFile {
+            /// Share a file
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.upload_file.button")
+          }
+          internal enum Video {
+            /// Record a video
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.input_bar.video.button")
+          }
+        }
+        internal enum MarkdownBar {
+          internal enum Bold {
+            /// Bold style
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.bold.button")
+          }
+          internal enum BulletList {
+            /// Bullet list
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.bullet_list.button")
+          }
+          internal enum Code {
+            /// Code style
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.code.button")
+          }
+          internal enum Header {
+            /// Header
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.header.button")
+          }
+          internal enum Italic {
+            /// Italic style
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.italic.button")
+          }
+          internal enum NumberList {
+            /// Number list
+            internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.number_list.button")
+          }
         }
         internal enum Search {
           /// Open search
