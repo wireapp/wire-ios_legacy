@@ -147,10 +147,12 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.searchIcon)
     }
+
     @objc
     func onCloseButtonPressed(sender: AnyObject?) {
         onDismiss?(self, false)
     }
+    
     @objc
     func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
@@ -158,11 +160,16 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
             self.onDismiss?(self, true)
         }
     }
+
     @objc
-    func onTokenFieldClearButtonPressed() {
-        tokenField.textView.text = ""
-        hideTokenFieldClearButton()
-        filterString = tokenField.textView.text
+    func onClearButtonPressed() {
+        tokenField.clearFilterText()
+        tokenField.removeAllTokens()
+        updateClearIndicator(for: tokenField)
+    }
+
+    func resetQuery() {
+        tokenField.filterUnwantedAttachments()
     }
 
     // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -242,12 +249,9 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     private func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
-    private func hideTokenFieldClearButton() {
-        if tokenField.textView.text.count > 0 {
-            tokenFieldClearButton.isHidden = false
-        } else {
-            tokenFieldClearButton.isHidden = true
-        }
+
+    private func updateClearIndicator(for tokenField: TokenField) {
+        tokenFieldClearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
     }
 }
 
@@ -260,7 +264,7 @@ extension ShareViewController: TokenFieldDelegate {
     }
 
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
-        hideTokenFieldClearButton()
+        updateClearIndicator(for: tokenField)
         filterString = text
     }
 

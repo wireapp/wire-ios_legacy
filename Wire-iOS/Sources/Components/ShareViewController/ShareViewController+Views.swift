@@ -45,10 +45,6 @@ extension ShareViewController {
 
         createShareablePreview()
 
-        self.tokenField.clipsToBounds = true
-        self.tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
-        self.tokenField.tokenSelectedTitleColor = SemanticColors.SearchBarColor.textInputView
-        self.tokenField.textView.placeholderTextColor = SemanticColors.SearchBarColor.textInputViewPlaceholder
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -58,11 +54,13 @@ extension ShareViewController {
         self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
         self.tokenField.delegate = self
+
         tokenFieldClearButton.accessibilityLabel = "clear"
         tokenFieldClearButton.setIcon(.clearInput, size: .tiny, for: .normal)
-        tokenFieldClearButton.addTarget(self, action: #selector(onTokenFieldClearButtonPressed), for: .touchUpInside)
+        tokenFieldClearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         tokenFieldClearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
         tokenFieldClearButton.isHidden = true
+
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
