@@ -53,6 +53,9 @@
                   Identifier = "AVURLAsset_conversionTests">
                </Test>
                <Test
+                  Identifier = "AppLockModuleInteractorTests">
+               </Test>
+               <Test
                   Identifier = "ArticleViewTests/testArticleViewWithImageHavingExactSize()">
                </Test>
                <Test

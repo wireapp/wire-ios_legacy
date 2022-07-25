@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
 final class SearchResultLabelTests: ZMSnapshotTestCase {
