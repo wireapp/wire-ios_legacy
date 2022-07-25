@@ -28,11 +28,11 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireDataModel -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireSyncEngine -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireDataModel -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireSyncEngine -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
           exit ${PIPESTATUS[0]}
 
       - name: Run unit tests
         run: |
-          xcodebuild test -workspace wire-ios.xcworkspace  -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild test -workspace wire-ios.xcworkspace  -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
