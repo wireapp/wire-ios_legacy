@@ -15,7 +15,10 @@ jobs:
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
       - uses: actions/checkout@v2.1.0
+      - run: echo "CHANGED_FILES=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})" >> $GITHUB_ENV
+      
       - uses: monorepo/get-changed-files@v1
+      
         id: filter
         with:
           filters: |
