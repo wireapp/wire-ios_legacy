@@ -159,7 +159,7 @@ final class UserNameTakeOverViewController: UIViewController {
         NSLayoutConstraint.activate([
             keepSuggestedButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edgeInsets.leading),
             keepSuggestedButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edgeInsets.trailing),
-            keepSuggestedButton.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -edgeInsets.bottom)
+            keepSuggestedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -edgeInsets.bottom)
         ])
 
         NSLayoutConstraint.activate([
