@@ -12,27 +12,7 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: List available Xcode versions
-        run: ls /Applications | grep Xcode
       
-      - name: Select Xcode
-        run: |
-          sudo xcode-select -switch /Applications/Xcode_13.1.app
-          /usr/bin/xcodebuild -version
-
-      - name: Fetch dependencies
-        env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./setup.sh
-
-      - name: Build
-        run: |
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireDataModel -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireSyncEngine -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
-          xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
-          exit ${PIPESTATUS[0]}
-        
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
       - uses: actions/checkout@v2.1.0
