@@ -54,6 +54,37 @@ jobs:
           git status
           #git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
           
-          
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: get parent directory and set matrix
+        id: set-matrix
+        run: |
+          git diff --name-only HEAD^ HEAD > files.txt
+          tf_config=''
+
+          while IFS= read -r file
+          do
+            echo "file = $file"
+            parent_dir=$(dirname -- "$file")
+            echo "parent_dir = $parent_dir"
+            
+            if [[ -z $tf_config ]]; then
+              tf_config="{\"tf_config\":\"$parent_dir\"}"
+            else
+              tf_config="$tf_config, {\"tf_config\":\"$parent_dir\"}"
+            fi
+          done < files.txt
+
+          tf_config="{\"include\":[$tf_config]}"
+          echo "::set-output name=matrix::$tf_config"
+       
         
         
