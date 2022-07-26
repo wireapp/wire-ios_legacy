@@ -33,7 +33,7 @@ jobs:
           Write-Host "::set-output name=docs_changed::$HasDiff"
 
       - name: Run step when a file changes
-        if: contains(steps.check_file_changed.outputs.docs_changed, 'wire-ios')
+        if: contains(steps.check_file_changed.outputs.docs_changed, 'AppDelegate.swift')
         run: |
           echo "Your wire-ios framework has been modified."
       - name: Run step when a file changes false
