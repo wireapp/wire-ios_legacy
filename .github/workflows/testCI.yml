@@ -15,9 +15,27 @@ jobs:
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
       - uses: actions/checkout@v2.1.0
-      - run: |
-          mapfile -t changed_files < <(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
-          printf 'changed file: %s\n' ${changed_files[*]}
-    
+        with:
+          # Checkout as many commits as needed for the diff
+          fetch-depth: 2
+      - shell: pwsh
+      # Give an id to the step, so we can reference it later
+        id: check_file_changed
+        run: |
+          # Diff HEAD with the previous commit
+          $diff = git diff --name-only HEAD^ HEAD
+
+          # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
+          $SourceDiff = $diff | Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
+          $HasDiff = $SourceDiff.Length -gt 0
+
+          # Set the output named "docs_changed"
+          Write-Host "::set-output name=docs_changed::$HasDiff"
+
+      # Run the step only with "docs_changed" equals "True"
+      - shell: pwsh
+        # steps.<step_id>.outputs.<output name>
+        if: steps.check_file_changed.outputs.docs_changed == 'True'
+        run: echo publish docs
         
         
