@@ -10,6 +10,20 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Accessibility {
+    internal enum Accessibility {
+      internal enum Conversation {
+        internal enum Back {
+          /// Go back to conversation list
+          internal static let button = L10n.tr("Accessibility", "accessibility.conversation.back.button")
+        }
+        internal enum Search {
+          /// Open search
+          internal static let button = L10n.tr("Accessibility", "accessibility.conversation.search.button")
+        }
+      }
+    }
+  }
   internal enum InfoPlist {
     /// Allow Wire to access your camera so you can place video calls and send photos.
     internal static let nsCameraUsageDescription = L10n.tr("InfoPlist", "NSCameraUsageDescription")
