@@ -32,6 +32,11 @@ jobs:
           # Set the output named "docs_changed"
           Write-Host "::set-output name=docs_changed::$HasDiff"
 
+      - name: Run step when a file changes
+        if: contains(steps.check_file_changed.outputs.docs_changed, 'wire-ios')
+        run: |
+          echo "Your wire-ios framework has been modified."
+          
       # Run the step only with "docs_changed" equals "True"
       - shell: pwsh
         # steps.<step_id>.outputs.<output name>
