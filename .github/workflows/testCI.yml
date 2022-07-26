@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+
+jobs:
+  build-and-test:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: List available Xcode versions
+        run: ls /Applications | grep Xcode
+      
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -switch /Applications/Xcode_13.1.app
+          /usr/bin/xcodebuild -version
+
+      - name: Fetch dependencies
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./setup.sh
+
+      - name: Build
+        run: |
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireDataModel -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme WireSyncEngine -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
+          xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
+          exit ${PIPESTATUS[0]}
+        
+      - name: Filtering path
+        run: echo 'Filtering path to extract framework'
+      - uses: wire-ios/Wire-iOS/Sources
+        id: filter
+        with:
+          filters: |
+            uiFrameWork:
+              - 'Wire-iOS/**'
+            dataModelFramework:
+              - 'Wire-ios-data-model/**'
+      - name: Prepared variables for testing
+        run: echo 'The selected framework in uiFrameWork is' $uiFrameWork
+        run: echo 'The selected framework in dataModelFramework is' $dataModelFramework
+        
+      - name: Run unit tests
+        run: |
+          xcodebuild test -workspace wire-ios.xcworkspace  -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
+
