@@ -36,6 +36,11 @@ jobs:
         if: contains(steps.check_file_changed.outputs.docs_changed, 'wire-ios')
         run: |
           echo "Your wire-ios framework has been modified."
+      - name: Run step when a file changes false
+        if: false == contains(steps.check_file_changed.outputs.docs_changed, 'wire-ios')
+        run: |
+          echo "Your wire-ios framework not exists."
+          
           
       # Run the step only with "docs_changed" equals "True"
       - shell: pwsh
