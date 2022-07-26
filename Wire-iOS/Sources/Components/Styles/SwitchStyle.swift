@@ -27,10 +27,10 @@ public struct SwitchStyle {
     private(set) var borderWidth: CGFloat = 1
 
     static let `default` = SwitchStyle(
-        enabledOnStateColor: SemanticColors.SwitchColors.backgroundSwitchOnStateEnabled,
-        enabledOffStateColor: SemanticColors.SwitchColors.backgroundSwitchOffStateEnabled,
-        enabledOnStateBorderColor: SemanticColors.SwitchColors.borderSwitchOnStateEnabled,
-        enabledOffStateBorderColor: SemanticColors.SwitchColors.borderSwitchOffStateEnabled
+        enabledOnStateColor: SemanticColors.Switch.backgroundOnStateEnabled,
+        enabledOffStateColor: SemanticColors.Switch.backgroundOffStateEnabled,
+        enabledOnStateBorderColor: SemanticColors.Switch.borderOnStateEnabled,
+        enabledOffStateBorderColor: SemanticColors.Switch.borderOffStateEnabled
     )
 }
 
