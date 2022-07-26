@@ -65,7 +65,7 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
 
     override func configureConstraints() {
         super.configureConstraints()
-        titleLabel.fitInSuperview()
+        titleLabel.fitIn(view: topContentView)
     }
 
     func configure(with object: Configuration, animated: Bool) {
@@ -113,7 +113,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
     override func configureConstraints() {
         super.configureConstraints()
         warningLabel.translatesAutoresizingMaskIntoConstraints = false
-        warningLabel.fitInSuperview()
+        warningLabel.fitIn(view: bottomContentView)
     }
 
     // MARK: - Configuration

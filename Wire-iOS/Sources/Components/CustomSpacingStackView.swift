@@ -57,7 +57,7 @@ final class CustomSpacingStackView: UIView {
 
     private func createConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.fitInSuperview()
+        stackView.fitIn(view: self)
     }
 
     var alignment: UIStackView.Alignment {

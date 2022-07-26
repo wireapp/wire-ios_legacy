@@ -67,7 +67,7 @@ class SectionHeader: UICollectionReusableView {
         super.init(frame: frame)
         addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.fitInSuperview()
+        headerView.fitIn(view: self)
     }
 
     @available(*, unavailable)
