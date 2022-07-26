@@ -109,7 +109,9 @@ class TitleView: UIView, DynamicTypeCapable {
 extension NSTextAttachment {
     static func downArrow(color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
-        attachment.image = StyleKitIcon.downArrow.makeImage(size: 8, color: color)
+        attachment.image = StyleKitIcon.downArrow.makeImage(
+            size: 8,
+            color: SemanticColors.ButtonsColor.accountAvailabilityIcon)
         return attachment
     }
 }

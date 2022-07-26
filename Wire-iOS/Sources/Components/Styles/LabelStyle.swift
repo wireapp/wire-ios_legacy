@@ -34,6 +34,9 @@ public struct LabelStyle {
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+    static let settingsAccountLabel: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textLabelSettingsAccount)
 }
 
 extension UILabel: Stylable {

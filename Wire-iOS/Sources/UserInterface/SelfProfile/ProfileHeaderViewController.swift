@@ -247,10 +247,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
         guestIndicator.colorSchemeVariant = variant
 
-        handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        teamNameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
+        handleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        nameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        teamNameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        remainingTimeLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
     }
 
     private func updateGuestIndicator() {
