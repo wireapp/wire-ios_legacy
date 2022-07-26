@@ -35,7 +35,7 @@ jobs:
         
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
-      - uses: wire-ios/Wire-iOS/Sources
+      - uses: actions/checkout@v2.1.0
         id: filter
         with:
           filters: |
@@ -45,7 +45,6 @@ jobs:
               - 'Wire-ios-data-model/**'
       - name: Prepared variables for testing
         run: echo 'The selected framework in uiFrameWork is' $uiFrameWork
-        run: echo 'The selected framework in dataModelFramework is' $dataModelFramework
         
       - name: Run unit tests
         run: |
