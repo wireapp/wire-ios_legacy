@@ -48,4 +48,11 @@ jobs:
         if: steps.check_file_changed.outputs.docs_changed == 'True'
         run: echo publish docs
         
+      - name: git
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git status
+          
+          
+        
         
