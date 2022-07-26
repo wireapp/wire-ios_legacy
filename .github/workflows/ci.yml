@@ -32,19 +32,6 @@ jobs:
           xcodebuild build -workspace wire-ios.xcworkspace -scheme WireSyncEngine -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
           xcodebuild build -workspace wire-ios.xcworkspace -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty
           exit ${PIPESTATUS[0]}
-
-      - name: Filtering path
-        run: echo 'Filtering path to extract framework'
-      - uses: pathStr/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            uiFrameWork:
-              - 'Wire-iOS/**'
-            dataModelFramework:
-              - 'Wire-ios-data-model/**'
-      - name: Prepared variables for testing
-        run: echo 'The selected backend is' $uiFrameWork
         
       - name: Run unit tests
         run: |
