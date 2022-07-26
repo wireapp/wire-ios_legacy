@@ -15,6 +15,7 @@ jobs:
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
       - uses: actions/checkout@v2.1.0
+      - uses: monorepo/get-changed-files@v1
         id: filter
         with:
           filters: |
@@ -25,7 +26,4 @@ jobs:
       - name: Prepared variables for testing
         run: echo 'The selected framework in uiFrameWork is' $uiFrameWork
         
-      - name: Run unit tests
-        run: |
-          xcodebuild test -workspace wire-ios.xcworkspace  -scheme Wire-iOS -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.0' | xcpretty && exit ${PIPESTATUS[0]}
-
+        
