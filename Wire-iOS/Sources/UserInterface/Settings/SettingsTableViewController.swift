@@ -77,7 +77,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = SemanticColors.BackgroundColor.settingsViewBakcground
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension

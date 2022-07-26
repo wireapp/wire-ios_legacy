@@ -46,6 +46,9 @@ public enum SemanticColors {
     public enum SearchBarColor {
         public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
     }
+    public enum BackgroundColor {
+        public static let settingsViewBakcground = UIColor(light: Asset.gray20, dark: Asset.gray100)
+    }
 }
 
 extension UIColor {
