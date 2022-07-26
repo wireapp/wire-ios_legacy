@@ -12,7 +12,6 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: Filtering path
         run: echo 'Filtering path to extract framework'
       - uses: actions/checkout@v2.1.0
