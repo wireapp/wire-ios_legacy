@@ -434,7 +434,7 @@ extension XCTestCase {
         container.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.fitInSuperview()
+        view.fitIn(view: container)
         return container
     }
 

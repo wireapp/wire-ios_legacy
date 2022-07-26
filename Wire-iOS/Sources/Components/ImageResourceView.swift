@@ -98,10 +98,8 @@ final class ImageResourceView: FLAnimatedImageView {
             centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
             centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)])
 
-        if #available(iOS 13.0, *) {
             let interaction = UIContextMenuInteraction(delegate: self)
             addInteraction(interaction)
-        }
     }
 
     @available(*, unavailable)
@@ -113,7 +111,6 @@ final class ImageResourceView: FLAnimatedImageView {
 
 // MARK: - UIContextMenuInteractionDelegate
 
-@available(iOS 13.0, *)
 extension ImageResourceView: UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {

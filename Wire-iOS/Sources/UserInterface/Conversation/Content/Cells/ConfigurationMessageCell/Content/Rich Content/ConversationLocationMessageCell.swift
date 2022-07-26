@@ -59,10 +59,8 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         configureViews()
         createConstraints()
 
-        if #available(iOS 13.0, *) {
-            let interaction = UIContextMenuInteraction(delegate: self)
-            addInteraction(interaction)
-        }
+        let interaction = UIContextMenuInteraction(delegate: self)
+        addInteraction(interaction)
     }
 
     @available(*, unavailable)
@@ -81,7 +79,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
         mapView.mapType = .standard
-        mapView.showsPointsOfInterest = true
+        mapView.pointOfInterestFilter = .includingAll
         mapView.showsBuildings = true
         mapView.isUserInteractionEnabled = false
 
@@ -105,9 +103,9 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
         addressContainerView.translatesAutoresizingMaskIntoConstraints = false
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        containerView.fitInSuperview()
-        mapView.fitInSuperview()
-        obfuscationView.fitInSuperview()
+        containerView.fitIn(view: self)
+        mapView.fitIn(view: containerView)
+        obfuscationView.fitIn(view: containerView)
 
         NSLayoutConstraint.activate([
             // containerView
@@ -185,7 +183,6 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell, Co
 // MARK: - context menu
 extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
 
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         guard let message = message,
@@ -204,7 +201,6 @@ extension ConversationLocationMessageCell: UIContextMenuInteractionDelegate {
         })
     }
 
-    @available(iOS 13.0, *)
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
                                 willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                                 animator: UIContextMenuInteractionCommitAnimating) {

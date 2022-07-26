@@ -92,7 +92,6 @@ final class TextFieldValidator {
 
 extension TextFieldValidator {
 
-    @available(iOS 12, *)
     var passwordRules: UITextInputPasswordRules {
         return UITextInputPasswordRules(descriptor: PasswordRuleSet.shared.encodeInKeychainFormat())
     }
