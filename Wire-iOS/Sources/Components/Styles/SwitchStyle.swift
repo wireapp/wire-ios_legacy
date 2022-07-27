@@ -34,8 +34,8 @@ public struct SwitchStyle {
     )
 }
 
-class Switch: UISwitch, Stylable {
-
+final class Switch: UISwitch, Stylable {
+    // MARK: - Properties
     let switchStyle: SwitchStyle
 
     override var isOn: Bool {
@@ -44,7 +44,7 @@ class Switch: UISwitch, Stylable {
             valueDidChange()
         }
     }
-
+    // MARK: - Life cycle
     init(style: SwitchStyle = .default) {
         self.switchStyle = style
         super.init(frame: .zero)
@@ -56,7 +56,7 @@ class Switch: UISwitch, Stylable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    // MARK: - Methods
     @objc
     private func valueDidChange() {
         applyStyle(switchStyle)
