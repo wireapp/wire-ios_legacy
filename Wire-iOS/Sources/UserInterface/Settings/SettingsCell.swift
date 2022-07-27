@@ -70,7 +70,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let badge: RoundedBadge = {
         let badge = RoundedBadge(view: UIView())
-        badge.backgroundColor = .white
+        badge.backgroundColor = SemanticColors.BackgroundColor.settingsTableCellBadge
         badge.isHidden = true
 
         return badge
@@ -79,6 +79,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     private let badgeLabel: UILabel = {
         let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
         badgeLabel.textAlignment = .center
+        badgeLabel.textColor = SemanticColors.LabelsColor.textLabelBadge
 
         return badgeLabel
     }()
