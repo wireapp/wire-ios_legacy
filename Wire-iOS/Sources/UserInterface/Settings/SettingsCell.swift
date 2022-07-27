@@ -349,7 +349,6 @@ final class SettingsToggleCell: SettingsTableCell {
 
     @objc
     func onSwitchChanged(_ sender: UIResponder) {
-
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }
