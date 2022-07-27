@@ -83,8 +83,8 @@ class IconImageView: UIImageView {
         }
 
         isHidden = false
-        let color = style.tintColor ?? self.color
-        self.setIcon(icon, size: self.size, color: color)
+        self.tintColor = style.tintColor ?? self.color
+        self.setTemplateIcon(icon, size: self.size)
         self.style = style
     }
 
