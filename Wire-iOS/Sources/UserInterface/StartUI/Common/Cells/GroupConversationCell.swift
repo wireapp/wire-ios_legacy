@@ -33,9 +33,11 @@ final class GroupConversationCell: UICollectionViewCell {
     var contentStackView: UIStackView!
     var titleStackView: UIStackView!
 
+    typealias backgroundColors = SemanticColors.BackgroundColors
+
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted : SemanticColors.BackgroundColors.backgroundUserCell
+            backgroundColor = isHighlighted ? backgroundColors.backgroundUserCellHightLighted : backgroundColors.backgroundUserCell
         }
     }
 
@@ -80,7 +82,7 @@ final class GroupConversationCell: UICollectionViewCell {
         contentView.addSubview(contentStackView)
         contentView.addSubview(separator)
 
-        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
+        backgroundColor = backgroundColors.backgroundUserCell
         separator.backgroundColor = SemanticColors.SeparatorColors.foregroundSeparatorCellActive
         titleLabel.applyStyle(.primaryCellLabel)
         subtitleLabel.applyStyle(.secondaryCellLabel)
