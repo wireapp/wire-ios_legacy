@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireUtilities
+import WireCommonComponents
 
 final class ClearBackgroundNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
@@ -59,11 +60,14 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         self.view.backgroundColor = SemanticColors.BackgroundColor.settingsView
         self.useDefaultPopGesture = false
 
-        self.navigationBar.tintColor = .white
+        self.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
         self.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
+        self.navigationBar.titleTextAttributes = [
+            .font: FontSpec.smallSemiboldFont.font!,
+            .foregroundColor: SemanticColors.LabelsColor.textLabelNavigationController,
+            .baselineOffset: 1.0]
 
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
