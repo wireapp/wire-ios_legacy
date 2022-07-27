@@ -333,7 +333,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         if isHighlighted && selectionStyle != .none {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
             badge.backgroundColor = UIColor.white
-            badgeLabel.textColor = .red
+            badgeLabel.textColor = SemanticColors.LabelsColor.textLabelBadge
         }
 //        else {
 //            backgroundColor = UIColor.clear

@@ -21,7 +21,19 @@ import UIKit
 import WireUtilities
 import WireCommonComponents
 
-final class ClearBackgroundNavigationController: UINavigationController, SpinnerCapable {
+class ClearBackgroundNavigationController: NavigationController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .clear
+        navigationBar.tintColor = .white
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
+class NavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
 
     fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
@@ -59,7 +71,6 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
         super.viewDidLoad()
         self.view.backgroundColor = SemanticColors.BackgroundColor.settingsView
         self.useDefaultPopGesture = false
-
         self.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
         self.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationBar.shadowImage = UIImage()
@@ -120,7 +131,7 @@ final class ClearBackgroundNavigationController: UINavigationController, Spinner
     }
 }
 
-extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
+extension NavigationController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
                               animationControllerFor operation: UINavigationController.Operation,
                               from fromVC: UIViewController,
@@ -140,7 +151,7 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
     }
 }
 
-extension ClearBackgroundNavigationController: UIViewControllerTransitioningDelegate {
+extension NavigationController: UIViewControllerTransitioningDelegate {
 
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SwizzleTransition(direction: .vertical)
@@ -151,7 +162,7 @@ extension ClearBackgroundNavigationController: UIViewControllerTransitioningDele
     }
 }
 
-extension ClearBackgroundNavigationController: UIGestureRecognizerDelegate {
+extension NavigationController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if self.useDefaultPopGesture && gestureRecognizer == self.dismissGestureRecognizer {
             return false

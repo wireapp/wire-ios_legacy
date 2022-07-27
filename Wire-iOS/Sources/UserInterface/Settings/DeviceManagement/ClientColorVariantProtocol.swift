@@ -33,12 +33,7 @@ protocol ClientColorVariantProtocol {
 extension ClientColorVariantProtocol where Self: UIViewController {
 
     var headerFooterViewTextColor: UIColor {
-        switch variant {
-        case .none, .dark?:
-            return UIColor(white: 1, alpha: 0.4)
-        case .light?:
-            return UIColor.from(scheme: .textForeground, variant: .light)
-        }
+        return SemanticColors.LabelsColor.textLabelSettingsTableViewFooter
     }
 
     var separatorColor: UIColor {

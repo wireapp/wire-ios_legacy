@@ -121,7 +121,7 @@ final class DeveloperOptionsController: UIViewController {
 
         let label = UILabel()
         label.text = labelText
-        label.textColor = .white
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         label.translatesAutoresizingMaskIntoConstraints = false
         [label, view].forEach {
             cell.contentView.addSubview($0)
