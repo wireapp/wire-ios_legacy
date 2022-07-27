@@ -72,6 +72,7 @@ final class Switch: UISwitch, Stylable {
     public func applyStyle(_ style: SwitchStyle) {
         backgroundColor = style.enabledOffStateColor
         onTintColor = style.enabledOnStateColor
+
         layer.cornerRadius = self.frame.height / 2.0
         layer.borderColor = isOn ? style.enabledOnStateBorderColor.cgColor : style.enabledOffStateBorderColor.cgColor
         layer.borderWidth = style.borderWidth
