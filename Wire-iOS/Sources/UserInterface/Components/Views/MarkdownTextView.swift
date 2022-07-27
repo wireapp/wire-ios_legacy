@@ -27,7 +27,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
+final class MarkdownTextView: NextResponderTextView {
 
     enum ListType {
         case number, bullet
@@ -64,14 +64,9 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
                                    withSender sender: Any?) -> Bool {
         switch action {
         case #selector(UIResponderStandardEditActions.paste(_:)),
-             #selector(UIResponderStandardEditActions.cut(_:)),
-             #selector(UIResponderStandardEditActions.copy(_:)):
-
-            let pasteboard = UIPasteboard.general
-            let canFilesBeShared = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
-            guard shouldAllowPerformAction(isText: pasteboard.hasText,
-                                         isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
-                                         canFilesBeShared: canFilesBeShared) else { return false }
+            #selector(UIResponderStandardEditActions.cut(_:)),
+            #selector(UIResponderStandardEditActions.copy(_:)):
+            guard MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canUseClipboard else { return false }
             fallthrough
         default:
             return super.canPerformAction(action, withSender: sender)

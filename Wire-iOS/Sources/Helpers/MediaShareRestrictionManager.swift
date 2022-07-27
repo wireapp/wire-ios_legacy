@@ -80,9 +80,10 @@ final class MediaShareRestrictionManager {
         }
     }
 
-    var canCopyFromClipboard: Bool {
+    var canUseClipboard: Bool {
         return canUploadMedia(from: .clipboard)
     }
+
 
     var hasAccessToCameraRoll: Bool {
         switch mediaShareRestrictionLevel {
