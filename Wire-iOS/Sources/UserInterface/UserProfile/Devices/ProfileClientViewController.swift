@@ -343,7 +343,6 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     @objc
     private func onTrustChanged(_ sender: AnyObject) {
-
         ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let weakSelf = self else { return }
             let selfClient = ZMUserSession.shared()!.selfUserClient
