@@ -94,7 +94,6 @@ class ConversationIconBasedCell: UIView {
         lineView.backgroundColor = .from(scheme: .separator)
 
         imageContainer.addSubview(imageView)
-
         addSubview(imageContainer)
         addSubview(textLabel)
         addSubview(topContentView)

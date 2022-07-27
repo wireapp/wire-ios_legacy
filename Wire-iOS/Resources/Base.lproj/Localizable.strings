@@ -1957,10 +1957,12 @@
 "accessibility.conversation.input_bar.formatting_disabled.button" = "Open formatting options";
 "accessibility.conversation.input_bar.send.button" = "Send this message";
 
-"accessibility.conversation.markdown_bar.header.button" = "Header";
-"accessibility.conversation.markdown_bar.bold.button" = "Bold style";
-"accessibility.conversation.markdown_bar.italic.button" = "Italic style";
-"accessibility.conversation.markdown_bar.number_list.button" = "Number list";
-"accessibility.conversation.markdown_bar.bullet_list.button" = "Bullet list";
-"accessibility.conversation.markdown_bar.code.button" = "Code style";
+"accessibility.conversation.markdown_bar.header.button" = "Use a heading";
+"accessibility.conversation.markdown_bar.bold.button" = "Use bolded text";
+"accessibility.conversation.markdown_bar.italic.button" = "Use italic text";
+"accessibility.conversation.markdown_bar.number_list.button" = "Use number list";
+"accessibility.conversation.markdown_bar.bullet_list.button" = "Use bullet listt";
+"accessibility.conversation.markdown_bar.code.button" = "Use code format";
 
+"accessibility.profile_image.title" = "Profile picture";
+"accessibility.profile_image.button" = "Double tap to open profile";

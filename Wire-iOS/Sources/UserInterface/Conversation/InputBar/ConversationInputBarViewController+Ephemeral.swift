@@ -93,7 +93,6 @@ extension ConversationInputBarViewController {
 
         guard let controller = ephemeralKeyboardViewController else { return }
         self.parent?.present(controller, animated: true)
-//        UIAccessibility.post(notification: .layoutChanged, argument: controller.picker)
     }
 
     func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {

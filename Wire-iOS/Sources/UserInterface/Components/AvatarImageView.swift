@@ -129,8 +129,8 @@ class AvatarImageView: UIControl {
         container.clipsToBounds = true
         container.isUserInteractionEnabled = false
 
-        imageView.isAccessibilityElement = false
-        initialsLabel.isAccessibilityElement = false
+        imageView.isAccessibilityElement = true
+        initialsLabel.isAccessibilityElement = true
 
         addSubview(container)
         container.addSubview(imageView)

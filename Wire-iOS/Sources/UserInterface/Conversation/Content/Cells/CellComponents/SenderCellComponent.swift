@@ -83,6 +83,8 @@ final class SenderCellComponent: UIView {
     }
 
     private func configureViews(for configuration: SenderCellConfiguration) {
+        typealias ProfileImage = L10n.Localizable.Accessibility.ProfileImage
+
         configureNameLabel(for: configuration)
         configureTeamRoleIndicator(for: configuration)
 
@@ -95,6 +97,11 @@ final class SenderCellComponent: UIView {
         avatar.size = .badge
         avatar.translatesAutoresizingMaskIntoConstraints = false
         avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnAvatar)))
+        avatar.accessibilityElementsHidden = false
+        avatar.isAccessibilityElement = true
+        avatar.accessibilityTraits = .button
+        avatar.accessibilityLabel = ProfileImage.title
+        avatar.accessibilityHint = ProfileImage.button
 
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false

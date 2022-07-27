@@ -123,27 +123,27 @@ internal enum L10n {
         }
         internal enum MarkdownBar {
           internal enum Bold {
-            /// Bold style
+            /// Use bolded text
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.bold.button")
           }
           internal enum BulletList {
-            /// Bullet list
+            /// Use bullet listt
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.bullet_list.button")
           }
           internal enum Code {
-            /// Code style
+            /// Use code format
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.code.button")
           }
           internal enum Header {
-            /// Header
+            /// Use a heading
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.header.button")
           }
           internal enum Italic {
-            /// Italic style
+            /// Use italic text
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.italic.button")
           }
           internal enum NumberList {
-            /// Number list
+            /// Use number list
             internal static let button = L10n.tr("Localizable", "accessibility.conversation.markdown_bar.number_list.button")
           }
         }
@@ -151,6 +151,12 @@ internal enum L10n {
           /// Open search
           internal static let button = L10n.tr("Localizable", "accessibility.conversation.search.button")
         }
+      }
+      internal enum ProfileImage {
+        /// Double tap to open profile
+        internal static let button = L10n.tr("Localizable", "accessibility.profile_image.button")
+        /// Profile picture
+        internal static let title = L10n.tr("Localizable", "accessibility.profile_image.title")
       }
     }
     internal enum AccountDeletedMissingPasscodeAlert {
