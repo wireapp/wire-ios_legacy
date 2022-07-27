@@ -52,7 +52,7 @@ public enum SemanticColors {
     }
     public enum BackgroundColor {
         public static let settingsView = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        public static let settingsTableCell = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        public static let settingsTableCell = UIColor(light: Asset.gray20, dark: Asset.gray95)
     }
 }
 

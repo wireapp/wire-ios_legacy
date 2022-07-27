@@ -311,17 +311,28 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        if cellColor != nil {
-            return
+//        if cellColor != nil {
+//            return
+//        }
+        if let iconID = self.icon?.rawValue {
+            if iconID == 40 {
+                backgroundColor = UIColor.clear
+                print("🔥 SET clear color")
+            } else { backgroundColor = SemanticColors.BackgroundColor.settingsTableCell
+                print("🔥 SET yellow color")
+            }
+        } else {
+            backgroundColor = .yellow
+            print("🔥 SET yellow color (but could not unwrap)")
         }
-
         if isHighlighted && selectionStyle != .none {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
             badge.backgroundColor = UIColor.white
             badgeLabel.textColor = UIColor.black
-        } else {
-            backgroundColor = UIColor.clear
         }
+//        else {
+//            backgroundColor = UIColor.clear
+//        }
     }
 }
 
