@@ -94,7 +94,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         super.viewDidAppear(animated)
 
         navigationController?.navigationBar.barTintColor = SemanticColors.BackgroundColors.backgroundViewDefault
-        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
