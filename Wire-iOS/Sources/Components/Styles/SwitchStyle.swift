@@ -32,6 +32,7 @@ public struct SwitchStyle {
         enabledOnStateBorderColor: SemanticColors.Switch.borderOnStateEnabled,
         enabledOffStateBorderColor: SemanticColors.Switch.borderOffStateEnabled
     )
+
 }
 
 final class Switch: UISwitch, Stylable {
