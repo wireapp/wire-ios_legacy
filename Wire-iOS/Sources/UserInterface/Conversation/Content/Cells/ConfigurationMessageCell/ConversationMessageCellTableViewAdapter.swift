@@ -214,8 +214,7 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             self.becomeFirstResponder()
         }
 
-        menu.setTargetRect(selectionRect, in: selectionView)
-        menu.setMenuVisible(true, animated: true)
+        menu.showMenu(from: selectionView, rect: selectionRect)
     }
 
     // MARK: - Single Tap Action

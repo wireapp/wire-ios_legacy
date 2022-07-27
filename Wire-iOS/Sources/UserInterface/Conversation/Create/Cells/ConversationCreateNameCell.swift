@@ -47,7 +47,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
         textField.placeholder = "conversation.create.group_name.placeholder".localized(uppercased: true)
 
         contentView.addSubview(textField)
-        textField.fitInSuperview()
+        textField.fitIn(view: contentView)
 
         configureColors()
     }

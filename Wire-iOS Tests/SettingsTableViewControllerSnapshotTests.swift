@@ -108,6 +108,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
+        sut.view.overrideUserInterfaceStyle = .dark
 
         // set the width of the VC, to calculate the height on content size
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
@@ -159,6 +160,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         verify(matching: sut, file: file, testName: testName, line: line)
     }

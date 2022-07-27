@@ -22,13 +22,13 @@ extension UIScreen {
 
     static var safeArea: UIEdgeInsets {
         if hasNotch {
-            return UIApplication.shared.keyWindow!.safeAreaInsets
+            return UIApplication.shared.firstKeyWindow!.safeAreaInsets
         }
         return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 
     static var hasBottomInset: Bool {
-        guard let window = UIApplication.shared.keyWindow else { return false }
+        guard let window = UIApplication.shared.firstKeyWindow else { return false }
         let insets = window.safeAreaInsets
 
         return insets.bottom > 0
@@ -37,7 +37,7 @@ extension UIScreen {
     static var hasNotch: Bool {
         // On iOS12 insets.top == 20 on device without notch.
         // insets.top == 44 on device with notch.
-        guard let window = UIApplication.shared.keyWindow else { return false }
+        guard let window = UIApplication.shared.firstKeyWindow else { return false }
         let insets = window.safeAreaInsets
 
         return insets.top > 20 || insets.bottom > 0

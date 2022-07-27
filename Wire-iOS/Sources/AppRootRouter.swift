@@ -297,9 +297,9 @@ extension AppRootRouter {
         // Only execute handle events if there is no current flow
         guard
             self.authenticationCoordinator == nil ||
-            error?.userSessionErrorCode == .addAccountRequested ||
-            error?.userSessionErrorCode == .accountDeleted ||
-            error?.userSessionErrorCode == .needsAuthenticationAfterMigration,
+                error?.userSessionErrorCode == .addAccountRequested ||
+                error?.userSessionErrorCode == .accountDeleted ||
+                error?.userSessionErrorCode == .needsAuthenticationAfterMigration,
             let sessionManager = SessionManager.shared
         else {
             completion()
@@ -458,9 +458,8 @@ extension AppRootRouter {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
         colorScheme.variant = Settings.shared.colorSchemeVariant
-        if #available(iOS 13.0, *) {
-            UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
-        }
+        UIApplication.shared.firstKeyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
+
     }
 
     private func presentAlertForDeletedAccountIfNeeded(_ error: NSError?) {
@@ -538,7 +537,7 @@ extension AppRootRouter: ApplicationStateObserving {
         if let size = size {
             screenCurtain.frame.size = size
         } else {
-            screenCurtain.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+            screenCurtain.frame = UIApplication.shared.firstKeyWindow?.frame ?? UIScreen.main.bounds
         }
     }
 }

@@ -141,7 +141,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
 
-        backgroundViewController.view.fitInSuperview()
+        backgroundViewController.view.fitIn(view: view)
     }
 
     private func updateNavigationItem() {

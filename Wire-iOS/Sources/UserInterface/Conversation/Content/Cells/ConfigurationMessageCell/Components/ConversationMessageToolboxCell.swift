@@ -58,7 +58,7 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
 
     private func configureConstraints() {
         toolboxView.translatesAutoresizingMaskIntoConstraints = false
-        toolboxView.fitInSuperview()
+        toolboxView.fitIn(view: self)
     }
 
     func willDisplay() {

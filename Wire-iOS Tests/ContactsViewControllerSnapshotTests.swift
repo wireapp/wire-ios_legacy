@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class ContactsViewControllerSnapshotTests: XCTestCase {
+final class ContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ContactsViewController!
 
