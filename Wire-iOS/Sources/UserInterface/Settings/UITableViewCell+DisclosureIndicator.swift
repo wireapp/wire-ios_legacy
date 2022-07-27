@@ -24,7 +24,7 @@ extension UITableViewCell {
         let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         accessory.image = image
 
-        accessory.tintColor = UIColor.white
+        accessory.tintColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         accessoryView = accessory
     }
 

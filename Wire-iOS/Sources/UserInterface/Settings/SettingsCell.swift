@@ -26,6 +26,7 @@ enum SettingsCellPreview {
     case image(UIImage)
     case color(UIColor)
 }
+// TODO: 1. delete titleColor from SettingsCellType (not being used)
 
 protocol SettingsCellType: AnyObject {
     var titleText: String {get set}
@@ -48,6 +49,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         let label = DynamicFontLabel(
             fontSpec: .normalLightFont,
             color: .textForeground)
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -59,7 +61,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     let valueLabel: UILabel = {
         let valueLabel = UILabel()
 
-        valueLabel.textColor = .lightGray
+        valueLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
 
@@ -109,16 +111,17 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
-    var variant: ColorSchemeVariant? = .none {
-        didSet {
-            switch variant {
-            case .dark?, .none:
-                titleColor = .white
-            case .light?:
-                titleColor = UIColor.from(scheme: .textForeground, variant: .light)
-            }
-        }
-    }
+//    var variant: ColorSchemeVariant? = .none {
+//        didSet {
+//            switch variant {
+//            case .dark?, .none:
+//                titleColor = .white
+//            case .light?:
+//                titleColor = UIColor.from(scheme: .textForeground, variant: .light)
+//            }
+//        }
+//    }
+    var variant: ColorSchemeVariant? = .none
 
     var titleText: String = "" {
         didSet {
@@ -180,7 +183,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
-                iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
+                iconImageView.setIcon(icon, size: .tiny, color: SemanticColors.LabelsColor.textLabelSettingsAccount)
                 cellNameLabelToIconInset.isActive = true
             } else {
                 iconImageView.image = nil
@@ -195,11 +198,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var titleColor: UIColor = .white {
-        didSet {
-            cellNameLabel.textColor = titleColor
-        }
-    }
+//    var titleColor: UIColor = .white {
+//        didSet {
+//            cellNameLabel.textColor = titleColor
+//        }
+//    }
+    var titleColor: UIColor = UIColor.red
 
     var cellColor: UIColor? {
         didSet {
@@ -322,13 +326,13 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 print("🔥 SET yellow color")
             }
         } else {
-            backgroundColor = .yellow
+            backgroundColor = SemanticColors.BackgroundColor.settingsTableCell
             print("🔥 SET yellow color (but could not unwrap)")
         }
         if isHighlighted && selectionStyle != .none {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
             badge.backgroundColor = UIColor.white
-            badgeLabel.textColor = UIColor.black
+            badgeLabel.textColor = .red
         }
 //        else {
 //            backgroundColor = UIColor.clear
@@ -339,7 +343,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 final class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
-        cellNameLabel.textColor = UIColor.accent()
+        cellNameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
     }
 }
 
@@ -402,7 +406,7 @@ final class SettingsTextCell: SettingsTableCell,
         textInput = TailEditingTextField(frame: CGRect.zero)
         textInput.delegate = self
         textInput.textAlignment = .right
-        textInput.textColor = UIColor.lightGray
+        textInput.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         textInput.isAccessibilityElement = true
 
@@ -502,7 +506,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
         backgroundColor = .clear
         contentView.addSubview(label)
 
-        label.textColor = UIColor.from(scheme: .iconGuest, variant: .dark)
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
