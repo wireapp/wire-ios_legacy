@@ -21,11 +21,8 @@ import UIKit
 
 public class TimedCircularProgressView: CircularProgressView {
     public typealias Completion = () -> Void
-    
     public var duration: CFTimeInterval = 5
-    
     private var completion: Completion?
-    
     public func animate(with completion: @escaping Completion) {
         self.completion = completion
 
