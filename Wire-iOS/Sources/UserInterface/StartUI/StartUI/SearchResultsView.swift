@@ -59,10 +59,6 @@ final class SearchResultsView: UIView {
                                                object: nil)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        collectionView.reloadData()
-    }
-
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
