@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireCommonComponents
 
 extension ShareViewController {
 
@@ -55,11 +54,11 @@ extension ShareViewController {
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
         self.tokenField.delegate = self
 
-        tokenFieldClearButton.accessibilityLabel = "clear"
-        tokenFieldClearButton.setIcon(.clearInput, size: .tiny, for: .normal)
-        tokenFieldClearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
-        tokenFieldClearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
-        tokenFieldClearButton.isHidden = true
+        clearButton.accessibilityLabel = "clear"
+        clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
+        clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
+        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
+        clearButton.isHidden = true
 
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
@@ -85,9 +84,9 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.searchIcon)
+            self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
         } else {
-            self.tokenFieldClearButton.isHidden = true
+            self.clearButton.isHidden = true
             self.tokenField.isHidden = true
             self.searchIcon.isHidden = true
             self.sendButton.isHidden = true
@@ -96,7 +95,7 @@ extension ShareViewController {
         }
 
         [self.blurView, self.containerView].forEach(self.view.addSubview)
-        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.tokenFieldClearButton].forEach(self.containerView.addSubview)
+        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.clearButton].forEach(self.containerView.addSubview)
 
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {
             self.containerView.addSubview(shareablePreviewWrapper)
@@ -117,7 +116,7 @@ extension ShareViewController {
          shareablePreviewView,
          tokenField,
          searchIcon,
-         tokenFieldClearButton,
+         clearButton,
          destinationsTableView,
          bottomSeparatorLine,
          topSeparatorView,
@@ -189,8 +188,8 @@ extension ShareViewController {
 
             searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
             searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
-            tokenFieldClearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-            tokenFieldClearButton.leadingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -32),
+            clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+            clearButton.leadingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -32),
 
             topSeparatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topSeparatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

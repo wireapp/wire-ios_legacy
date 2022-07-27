@@ -20,7 +20,7 @@ import UIKit
 
 public struct SearchBarStyle {
 
-    typealias SearchBarColors = SemanticColors.SearchBarColor
+    typealias SearchBarColors = SemanticColors.SearchBar
 
     var borderColorSelected: UIColor {
         return .accent()

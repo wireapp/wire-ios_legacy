@@ -53,11 +53,11 @@ final class SearchHeaderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
-        tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
+        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
     }
 
     override func viewDidLoad() {
@@ -65,13 +65,13 @@ final class SearchHeaderViewController: UIViewController {
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
+        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
 
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
-        clearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
+        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
