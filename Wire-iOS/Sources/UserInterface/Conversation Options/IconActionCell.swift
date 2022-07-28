@@ -70,8 +70,8 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconAction(title, icon, _, _) = configuration else { preconditionFailure() }
-        iconImageView.setIcon(icon, size: .tiny, color: SemanticColors.LabelsColor.textLabelSettingsAccount)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        iconImageView.setIcon(icon, size: .tiny, color: SemanticColors.LabelsColor.textLabelSettingsCell)
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         label.text = title
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
     }

@@ -123,7 +123,7 @@ final class SelfProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
         createConstraints()
-        view.backgroundColor = SemanticColors.BackgroundColor.settingsView
+        view.backgroundColor = SemanticColors.Background.settingsView
     }
 
     override func viewDidAppear(_ animated: Bool) {

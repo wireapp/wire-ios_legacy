@@ -26,7 +26,7 @@ final class BackupStatusCell: UITableViewCell {
         let label = DynamicFontLabel(fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -40,7 +40,7 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        let color = SemanticColors.LabelsColor.textLabelSettingsAccount
+        let color = SemanticColors.LabelsColor.textLabelSettingsCell
 
         iconView.setIcon(.restore, size: .large, color: color)
         iconView.contentMode = .center
@@ -76,7 +76,7 @@ final class BackupActionCell: UITableViewCell {
                                      fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         label.textAlignment = .left
         return label
     }()

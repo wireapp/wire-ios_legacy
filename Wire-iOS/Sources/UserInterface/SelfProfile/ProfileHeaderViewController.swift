@@ -224,7 +224,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         if let team = (user as? ZMUser)?.team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
         }
-        view.backgroundColor = SemanticColors.BackgroundColor.settingsView
+        view.backgroundColor = SemanticColors.Background.settingsView
     }
 
     private func configureConstraints() {
@@ -247,10 +247,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
         guestIndicator.colorSchemeVariant = variant
 
-        handleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
-        nameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
-        teamNameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
-        remainingTimeLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        handleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        nameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        teamNameLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        remainingTimeLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
     }
 
     private func updateGuestIndicator() {

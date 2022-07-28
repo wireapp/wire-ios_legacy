@@ -45,7 +45,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
 
         return label
     }()
@@ -53,7 +53,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
-        textField.textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        textField.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
 
         return textField
     }()

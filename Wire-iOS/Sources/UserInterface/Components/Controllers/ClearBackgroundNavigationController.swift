@@ -69,7 +69,7 @@ class NavigationController: UINavigationController, SpinnerCapable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = SemanticColors.BackgroundColor.settingsView
+        self.view.backgroundColor = SemanticColors.Background.settingsView
         self.useDefaultPopGesture = false
         self.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
         self.navigationBar.setBackgroundImage(UIImage(), for: .default)

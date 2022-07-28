@@ -42,11 +42,11 @@ public enum SemanticColors {
         static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
-        static let textLabelSettingsAccount = UIColor(light: Asset.black, dark: Asset.white)
+        static let textLabelSettingsCell = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelSettingsTableViewHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textLabelSettingsTableViewFooter = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let textLabelNavigationController = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textLabelSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
     }
     public enum ButtonsColor {
         public static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
@@ -54,10 +54,11 @@ public enum SemanticColors {
     public enum SearchBarColor {
         public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
     }
-    public enum BackgroundColor {
+    public enum Background {
         public static let settingsView = UIColor(light: Asset.gray20, dark: Asset.gray100)
         public static let settingsTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         public static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+        public static let settingsTableCellBorder = UIColor(light: Asset.gray50, dark: Asset.gray90)
     }
 }
 
@@ -77,7 +78,6 @@ extension UIColor {
             }
         }
     }
-
 }
 
 public extension UIColor {
@@ -104,5 +104,4 @@ public extension UIColor {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
         self.init(for: safeAccentColor)
     }
-
 }

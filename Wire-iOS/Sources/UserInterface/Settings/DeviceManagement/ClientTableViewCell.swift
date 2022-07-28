@@ -156,7 +156,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
     func setupStyle() {
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
-        let textColor = SemanticColors.LabelsColor.textLabelSettingsAccount
+        let textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         verifiedLabel.textColor = textColor
         fingerprintTextColor = textColor
         nameLabel.textColor = textColor
