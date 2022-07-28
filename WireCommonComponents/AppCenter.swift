@@ -22,7 +22,6 @@ import AppCenterDistribute
 import AppCenterAnalytics
 
 public extension AppCenter {
-    
     static func setTrackingEnabled(_ enabled: Bool) {
         Analytics.enabled = enabled
         Distribute.enabled = enabled
@@ -32,7 +31,6 @@ public extension AppCenter {
         Crashes.enabled = enabled
 #endif
     }
-    
     static func start() {
         Distribute.updateTrack = .private
 
@@ -44,7 +42,6 @@ public extension AppCenter {
                         Distribute.self,
                         Analytics.self]
 #endif
-
         AppCenter.start(withAppSecret: Bundle.appCenterAppId, services: services)
     }
 }

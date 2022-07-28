@@ -103,7 +103,15 @@ extension AVAsset {
                 var audioBufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: 0, mDataByteSize: 0, mData: nil))
                 var buffer: CMBlockBuffer?
                 var bufferSize: Int = 0
-                CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, bufferListSizeNeededOut: &bufferSize, bufferListOut: nil, bufferListSize: 0, blockBufferAllocator: nil, blockBufferMemoryAllocator: nil, flags: 0, blockBufferOut: nil)
+                CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(
+                    sampleBuffer,
+                    bufferListSizeNeededOut: &bufferSize,
+                    bufferListOut: nil,
+                    bufferListSize: 0,
+                    blockBufferAllocator: nil,
+                    blockBufferMemoryAllocator: nil,
+                    flags: 0,
+                    blockBufferOut: nil)
 
                 CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer,
                                                                         bufferListSizeNeededOut: nil,
