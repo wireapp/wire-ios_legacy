@@ -24,19 +24,19 @@ public struct LabelStyle {
     var textColor: UIColor
     static let footerLabel: Self = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.LabelsColor.textFooterLabelConversationDetails)
+        textColor: SemanticColors.Label.textSectionFooter)
     static let headerLabel: Self = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.LabelsColor.textHeaderLabelConversationDetails)
+        textColor: SemanticColors.Label.textSectionHeader)
     static let primaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.LabelsColor.textLabelCellTitleActive)
+        textColor: SemanticColors.Label.textCellTitle)
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+        textColor: SemanticColors.Label.textCellSubtitle)
     static let searchBarPlaceholder: Self  = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.LabelsColor.textSearchBarPlaceholder)
+        textColor: SemanticColors.SearchBarColor.textSearchBarPlaceholder)
 }
 
 extension UILabel: Stylable {

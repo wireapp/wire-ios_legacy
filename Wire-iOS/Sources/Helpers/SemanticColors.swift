@@ -35,16 +35,16 @@ public enum SemanticColors {
         public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
         public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
     }
-    public enum LabelsColor {
-        static let textLabelUseraname = UIColor(light: Asset.black, dark: Asset.white)
-        static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
-        static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
-        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+    public enum Label {
+        static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
+        static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
+        static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
     }
     public enum SearchBarColor {
+        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
         static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)

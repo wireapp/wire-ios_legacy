@@ -214,7 +214,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
                   return
               }
         var attributedTitle = user.nameIncludingAvailability(
-            color: SemanticColors.LabelsColor.textLabelCellTitleActive,
+            color: SemanticColors.Label.textCellTitle,
             selfUser: selfUser)
 
         if user.isSelfUser, let title = attributedTitle {

@@ -41,8 +41,8 @@ class Tab: Button {
     }
 
     private func updateColors() {
-        setTitleColor(SemanticColors.LabelsColor.textLabelCellTitleActive, for: .normal)
-        setTitleColor(SemanticColors.LabelsColor.textLabelCellTitleActive, for: .highlighted)
+        setTitleColor(SemanticColors.Label.textCellTitle, for: .normal)
+        setTitleColor(SemanticColors.Label.textCellTitle, for: .highlighted)
 
     }
 }
