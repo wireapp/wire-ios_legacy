@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-"conversation.backButton.content" = "Go back to conversation list";
-"conversation.searchButton.content" = "Open search";
-"conversation.profileImage.content" = "Profile picture";
-"conversation.profileImage.action" = "Double tap to open profile";
+"conversation.backButton.description" = "Go back to conversation list";
+"conversation.searchButton.description" = "Open search";
+"conversation.profileImage.description" = "Profile picture";
+"conversation.profileImage.hint" = "Double tap to open profile";

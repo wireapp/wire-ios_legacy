@@ -11,16 +11,20 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum Accessibility {
-    internal enum Accessibility {
-      internal enum Conversation {
-        internal enum Back {
-          /// Go back to conversation list
-          internal static let button = L10n.tr("Accessibility", "accessibility.conversation.back.button")
-        }
-        internal enum Search {
-          /// Open search
-          internal static let button = L10n.tr("Accessibility", "accessibility.conversation.search.button")
-        }
+    internal enum Conversation {
+      internal enum BackButton {
+        /// Go back to conversation list
+        internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
+      }
+      internal enum ProfileImage {
+        /// Profile picture
+        internal static let description = L10n.tr("Accessibility", "conversation.profileImage.description")
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversation.profileImage.hint")
+      }
+      internal enum SearchButton {
+        /// Open search
+        internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
     }
   }
