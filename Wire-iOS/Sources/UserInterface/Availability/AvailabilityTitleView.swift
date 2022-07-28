@@ -114,17 +114,24 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
         if options.contains(.displayUserName) {
             title = user.name ?? ""
+            accessibilityLabel = title
         } else if availability == .none && options.contains(.allowSettingStatus) {
             title = "availability.message.set_status".localized(uppercased: true)
+            accessibilityLabel = title
         } else if availability != .none {
             title = availability.localizedName.localizedUppercase
+            accessibilityLabel = "accessibility.conversationList.availabilityStatus.content".localized
         }
 
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
         super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
 
-        accessibilityLabel = options.contains(.allowSettingStatus) ? "availability.accessibility_label.change_status".localized : "availability.accessibility_label.status".localized
-        accessibilityValue = availability.localizedName
+        accessibilityValue = availability != .none ? availability.localizedName : ""
+        if options.contains(.allowSettingStatus) {
+            accessibilityTraits = .button
+            accessibilityHint = "accessibility.conversationList.availabilityStatusButton.action".localized
+        }
+
     }
 
     /// Refreshes the appearance of the view, based on the options.

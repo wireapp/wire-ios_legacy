@@ -169,8 +169,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
         accountView.accessibilityTraits = .button
         accountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        accountView.accessibilityLabel = "self.voiceover.label".localized
-        accountView.accessibilityHint = "self.voiceover.hint".localized
+        accountView.accessibilityHint = L10n.Localizable.Accessibility.ConversationList.ProfileButton.action
 
         if let selfUser = ZMUser.selfUser(),
             selfUser.clientsRequiringUserAttention.count > 0 {

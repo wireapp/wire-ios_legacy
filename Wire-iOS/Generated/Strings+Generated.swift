@@ -152,6 +152,22 @@ internal enum L10n {
           internal static let button = L10n.tr("Localizable", "accessibility.conversation.search.button")
         }
       }
+      internal enum ConversationList {
+        internal enum AvailabilityStatus {
+          /// Status
+          internal static let content = L10n.tr("Localizable", "accessibility.conversationList.availabilityStatus.content")
+        }
+        internal enum AvailabilityStatusButton {
+          /// Double tap to change status
+          internal static let action = L10n.tr("Localizable", "accessibility.conversationList.availabilityStatusButton.action")
+        }
+        internal enum ProfileButton {
+          /// Double tap to open profile and settings
+          internal static let action = L10n.tr("Localizable", "accessibility.conversationList.profileButton.action")
+          /// Profile
+          internal static let content = L10n.tr("Localizable", "accessibility.conversationList.profileButton.content")
+        }
+      }
       internal enum ProfileImage {
         /// Double tap to open profile
         internal static let button = L10n.tr("Localizable", "accessibility.profile_image.button")
@@ -220,12 +236,6 @@ internal enum L10n {
       internal static let busy = L10n.tr("Localizable", "availability.busy")
       /// None
       internal static let `none` = L10n.tr("Localizable", "availability.none")
-      internal enum AccessibilityLabel {
-        /// Change Status
-        internal static let changeStatus = L10n.tr("Localizable", "availability.accessibility_label.change_status")
-        /// Status
-        internal static let status = L10n.tr("Localizable", "availability.accessibility_label.status")
-      }
       internal enum Message {
         /// Cancel
         internal static let cancel = L10n.tr("Localizable", "availability.message.cancel")
@@ -4324,12 +4334,6 @@ internal enum L10n {
           /// Variable Bit Rate Encoding
           internal static let title = L10n.tr("Localizable", "self.settings.vbr.title")
         }
-      }
-      internal enum Voiceover {
-        /// Open profile and settings
-        internal static let hint = L10n.tr("Localizable", "self.voiceover.hint")
-        /// Profile
-        internal static let label = L10n.tr("Localizable", "self.voiceover.label")
       }
     }
     internal enum SendInvitation {

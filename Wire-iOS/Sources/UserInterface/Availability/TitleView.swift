@@ -86,7 +86,6 @@ class TitleView: UIView, DynamicTypeCapable {
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
-        accessibilityLabel = titleButton.titleLabel?.text
 
         subtitleLabel.isHidden = subtitle == nil
         subtitleLabel.text = subtitle

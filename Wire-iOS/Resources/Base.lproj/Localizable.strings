@@ -954,8 +954,6 @@
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";
-"self.voiceover.label" = "Profile";
-"self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_email_password" = "Add email address and password";
@@ -1734,8 +1732,6 @@
 
 "availability.message.cancel" = "Cancel";
 "availability.message.set_status" = "Set a status";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "None";
 "availability.available" = "Available";
@@ -1966,3 +1962,9 @@
 
 "accessibility.profile_image.title" = "Profile picture";
 "accessibility.profile_image.button" = "Double tap to open profile";
+
+"accessibility.conversationList.profileButton.content" = "Profile";
+"accessibility.conversationList.profileButton.action" = "Double tap to open profile and settings";
+"accessibility.conversationList.availabilityStatus.content" = "Status";
+"accessibility.conversationList.availabilityStatusButton.action" = "Double tap to change status";
+
