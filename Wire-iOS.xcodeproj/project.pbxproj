@@ -1192,7 +1192,6 @@
 		D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F57820445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift */; };
 		D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567460F208F39D200DC7F26 /* TintColorCorrectedViewController.swift */; };
 		D5677158202B496700308448 /* CreateGroupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5677157202B496700308448 /* CreateGroupSection.swift */; };
-		D5694B502044144500C84C8F /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5694B4F2044144500C84C8F /* ToggleView.swift */; };
 		D5694B5220441EE900C84C8F /* UILabel+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5694B5120441EE900C84C8F /* UILabel+Convenience.swift */; };
 		D56A2D44207DFC9E00DB59F5 /* UIAlertController+Restore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A2D43207DFC9E00DB59F5 /* UIAlertController+Restore.swift */; };
 		D56A2D46207DFE8700DB59F5 /* UIAlertController+ImportWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56A2D45207DFE8700DB59F5 /* UIAlertController+ImportWarning.swift */; };
@@ -3076,7 +3075,6 @@
 		D550F57820445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConfirmRemovingGuests.swift"; sourceTree = "<group>"; };
 		D567460F208F39D200DC7F26 /* TintColorCorrectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintColorCorrectedViewController.swift; sourceTree = "<group>"; };
 		D5677157202B496700308448 /* CreateGroupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupSection.swift; sourceTree = "<group>"; };
-		D5694B4F2044144500C84C8F /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		D5694B5120441EE900C84C8F /* UILabel+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Convenience.swift"; sourceTree = "<group>"; };
 		D56A2D43207DFC9E00DB59F5 /* UIAlertController+Restore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Restore.swift"; sourceTree = "<group>"; };
 		D56A2D45207DFE8700DB59F5 /* UIAlertController+ImportWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ImportWarning.swift"; sourceTree = "<group>"; };
@@ -5142,7 +5140,6 @@
 				1E5E0CAB1B6B83C6003B0CAC /* Buttons */,
 				160D6915212AB95100096EAD /* ImageResourceView.swift */,
 				5EDD25432141555600C0E254 /* LicensesLoader.swift */,
-				E5443392286192CF00F2E0ED /* SwitchStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6944,6 +6941,7 @@
 			children = (
 				06717E5B2865183600AF442C /* Stylable.swift */,
 				E92D1B94285B773B00366AFC /* LabelStyle.swift */,
+				E5443392286192CF00F2E0ED /* SwitchStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -7368,7 +7366,6 @@
 				F10F46D320288CEB00261449 /* ConversationCreationController.swift */,
 				EEFF3E7321B6755D000834A6 /* Sections */,
 				EEFF3E7421B67573000834A6 /* Cells */,
-				D5694B4F2044144500C84C8F /* ToggleView.swift */,
 				F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */,
 				F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */,
 			);
@@ -8893,7 +8890,6 @@
 				5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */,
 				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,
 				EF17B0D6223A70D1006252A8 /* SketchColorPickerController.swift in Sources */,
-				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
 				A9CBBEC324CF7FF9006543D4 /* AccessoryTextField+factory.swift in Sources */,
