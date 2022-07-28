@@ -79,7 +79,6 @@ final class SettingsClientViewController: UIViewController,
 
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = []
-
         self.userClientToken = UserClientChangeInfo.add(observer: self, for: userClient)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueue({ () -> Void in
