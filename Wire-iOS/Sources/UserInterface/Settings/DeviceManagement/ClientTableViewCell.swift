@@ -162,6 +162,26 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         nameLabel.textColor = textColor
         labelLabel.textColor = textColor
         activationLabel.textColor = textColor
+        addTopBorder()
+        addBottomBorder()
+    }
+    
+    private func addTopBorder() {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
+        border.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+        border.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: borderWidth)
+        addSubview(border)
+    }
+
+    private func addBottomBorder() {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: borderWidth)
+        addSubview(border)
     }
 
     func updateVerifiedLabel() {

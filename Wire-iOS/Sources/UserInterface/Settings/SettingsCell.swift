@@ -91,21 +91,21 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return imagePreview
     }()
 
-    private let separatorLine: UIView = {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        separatorLine.isAccessibilityElement = false
-
-        return separatorLine
-    }()
-
-    private let topSeparatorLine: UIView = {
-        let topSeparatorLine = UIView()
-        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        topSeparatorLine.isAccessibilityElement = false
-
-        return topSeparatorLine
-    }()
+//    private let separatorLine: UIView = {
+//        let separatorLine = UIView()
+//        separatorLine.backgroundColor = .green
+//        separatorLine.isAccessibilityElement = false
+//
+//        return separatorLine
+//    }()
+//
+//    private let topSeparatorLine: UIView = {
+//        let topSeparatorLine = UIView()
+//        topSeparatorLine.backgroundColor = .red
+//        topSeparatorLine.isAccessibilityElement = false
+//
+//        return topSeparatorLine
+//    }()
 
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
@@ -181,11 +181,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var isFirst: Bool = false {
-        didSet {
-            topSeparatorLine.isHidden = !isFirst
-        }
-    }
+    var isFirst: Bool = false
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
@@ -220,10 +216,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             contentView.addSubview($0)
         }
 
-        [separatorLine, topSeparatorLine].forEach {
-            addSubview($0)
-        }
-
         createConstraints()
         addTopBorder()
         addBottomBorder()
@@ -239,7 +231,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
+        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, cellNameLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
@@ -269,21 +261,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
-            separatorLine.heightAnchor.constraint(equalToConstant: .hairline),
-
-            topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-            topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
-            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline),
-
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
     }
 
-    func addTopBorder() {
+    private func addTopBorder() {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
         border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
@@ -292,7 +274,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         addSubview(border)
     }
 
-    func addBottomBorder() {
+    private func addBottomBorder() {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
         border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
