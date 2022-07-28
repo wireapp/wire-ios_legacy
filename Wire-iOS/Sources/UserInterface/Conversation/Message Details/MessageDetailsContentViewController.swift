@@ -104,7 +104,7 @@ final class MessageDetailsContentViewController: UIViewController {
     }
 
     private func configureSubviews() {
-        view.backgroundColor = .from(scheme: .contentBackground)
+        view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
 
         collectionView = UICollectionView(forGroupedSections: ())
         collectionView.contentInset.bottom = 64
@@ -121,7 +121,7 @@ final class MessageDetailsContentViewController: UIViewController {
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
         subtitleLabel.font = .mediumFont
-        subtitleLabel.textColor = UIColor.from(scheme: .sectionText)
+        subtitleLabel.textColor = SemanticColors.LabelsColor.textHeaderLabelConversationDetails
         subtitleLabel.accessibilityIdentifier = "DeliveryStatus"
         subtitleLabel.accessibilityLabel = "message_details.subtitle_label_voiceOver".localized
         view.addSubview(subtitleLabel)

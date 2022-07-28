@@ -37,13 +37,8 @@ final class NoResultsView: UIView {
 
     var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
+            iconView.image = icon?.makeImage(size: 160, color: SemanticColors.IconColors.foregroundIconNoResults)
         }
-    }
-
-    var placeholderColor: UIColor {
-        let backgroundColor = UIColor.from(scheme: .background)
-        return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
     }
 
     override init(frame: CGRect) {
@@ -52,7 +47,7 @@ final class NoResultsView: UIView {
         accessibilityElements = [label]
 
         label.numberOfLines = 0
-        label.textColor = SemanticColors.LabelsColor.textLabelConversationSearchNoItems
+        label.textColor = SemanticColors.LabelsColor.foregroundTextNoResults
         label.textAlignment = .center
         label.font = .mediumSemiboldFont
         addSubview(label)

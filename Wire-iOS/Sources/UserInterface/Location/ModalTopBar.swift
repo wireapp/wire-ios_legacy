@@ -28,9 +28,9 @@ final class ModalTopBar: UIView {
 
     public let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .from(scheme: .textForeground)
         label.textAlignment = .center
         label.accessibilityIdentifier = "Title"
+        label.applyStyle(.modalTopBarTitleLabel)
 
         return label
     }()
@@ -123,7 +123,7 @@ final class ModalTopBar: UIView {
         dismissButton.accessibilityLabel = "general.close".localized
 
         dismissButton.setIcon(.cross, size: .tiny, for: [])
-        dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        dismissButton.setIconColor(SemanticColors.IconColors.foregroundCellIconActive, for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }
