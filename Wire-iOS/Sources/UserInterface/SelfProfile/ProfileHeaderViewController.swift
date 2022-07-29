@@ -224,7 +224,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         if let team = (user as? ZMUser)?.team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
         }
-        view.backgroundColor = SemanticColors.Background.settingsView
+        view.backgroundColor = UIColor.clear
     }
 
     private func configureConstraints() {
