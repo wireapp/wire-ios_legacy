@@ -1965,7 +1965,7 @@
 "accessibility.accountPage.handle.description" = "Username";
 "accessibility.accountPage.profileName.description" = "Profile name";
 "accessibility.accountPage.teamName.description" = "Team name";
-"accessibility.accountPage.profilePicture.description" = "Your profile picture";
+"accessibility.accountPage.profilePicture.description" = "Profile picture";
 "accessibility.accountPage.profilePictureButton.hint" = "Double tap to change your picture";
 
 //"self.accessibility.profile_photo_image" = "Profile picture";

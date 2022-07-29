@@ -72,7 +72,7 @@ internal enum L10n {
           internal static let description = L10n.tr("Localizable", "accessibility.accountPage.profileName.description")
         }
         internal enum ProfilePicture {
-          /// Your profile picture
+          /// Profile picture
           internal static let description = L10n.tr("Localizable", "accessibility.accountPage.profilePicture.description")
         }
         internal enum ProfilePictureButton {
