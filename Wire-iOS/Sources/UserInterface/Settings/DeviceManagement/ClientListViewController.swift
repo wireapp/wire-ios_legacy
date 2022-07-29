@@ -182,10 +182,6 @@ final class ClientListViewController: UIViewController,
         isLoadingViewVisible = false
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)

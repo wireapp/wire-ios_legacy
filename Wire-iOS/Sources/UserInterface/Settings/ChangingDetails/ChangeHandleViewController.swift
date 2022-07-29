@@ -251,7 +251,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.08)
+        tableView.separatorColor = SemanticColors.Background.settingsTableCellBorder
         footerLabel.numberOfLines = 0
         updateUI()
 
@@ -261,7 +261,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
+        navigationItem.rightBarButtonItem?.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
     }
 
     @objc func saveButtonTapped(sender: UIBarButtonItem) {

@@ -24,13 +24,13 @@ public enum SemanticColors {
 
     public enum LegacyColors {
         // Legacy accent colors
-        public static let strongBlue = UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
-        public static let strongLimeGreen = UIColor(red: 0, green: 0.784, blue: 0, alpha: 1)
-        public static let brightYellow = UIColor(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
-        public static let vividRed = UIColor(red: 1, green: 0.152, blue: 0, alpha: 1)
-        public static let brightOrange = UIColor(red: 1, green: 0.537, blue: 0, alpha: 1)
-        public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
-        public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
+        static let strongBlue = UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
+        static let strongLimeGreen = UIColor(red: 0, green: 0.784, blue: 0, alpha: 1)
+        static let brightYellow = UIColor(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
+        static let vividRed = UIColor(red: 1, green: 0.152, blue: 0, alpha: 1)
+        static let brightOrange = UIColor(red: 1, green: 0.537, blue: 0, alpha: 1)
+        static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
+        static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
 
     public enum Switch {
@@ -54,17 +54,18 @@ public enum SemanticColors {
         static let textLabelSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
     }
     public enum ButtonsColor {
-        public static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textLabelSettingsButton = UIColor(light: Asset.white, dark: Asset.black)
     }
 
     public enum SearchBarColor {
-        public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
+        static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum Background {
-        public static let settingsView = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        public static let settingsTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        public static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
-        public static let settingsTableCellBorder = UIColor(light: Asset.gray50, dark: Asset.gray90)
+        static let settingsView = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let settingsTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+        static let settingsTableCellBorder = UIColor(light: Asset.gray50, dark: Asset.gray90)
     }
 }
 

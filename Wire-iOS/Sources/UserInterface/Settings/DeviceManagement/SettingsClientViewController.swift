@@ -242,7 +242,6 @@ final class SettingsClientViewController: UIViewController,
 
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
-                        cell.variant = self.variant
                     return cell
                 }
             } else {

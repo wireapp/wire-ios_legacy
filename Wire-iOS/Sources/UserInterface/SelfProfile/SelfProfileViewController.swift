@@ -49,10 +49,6 @@ final class SelfProfileViewController: UIViewController {
         return [.portrait]
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private var userCanSetProfilePicture: Bool {
         return userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture)
     }

@@ -128,10 +128,6 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
         ])
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {

@@ -138,10 +138,6 @@ final class BackupViewController: UIViewController, SpinnerCapable {
         setupLayout()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private func setupViews() {
         view.backgroundColor = .clear
 
