@@ -43,4 +43,12 @@ final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCe
                        color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted
+            : SemanticColors.BackgroundColors.backgroundUserCell
+        }
+    }
+
 }

@@ -116,7 +116,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
     }
 
     // MARK: - Layout
