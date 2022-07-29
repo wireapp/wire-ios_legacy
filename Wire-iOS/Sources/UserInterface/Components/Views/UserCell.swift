@@ -201,9 +201,9 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-
-        accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
+        
+        accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
+        accessoryIconView.tintColor = icon.foregroundCellIconActive
 
         updateTitleLabel()
     }
