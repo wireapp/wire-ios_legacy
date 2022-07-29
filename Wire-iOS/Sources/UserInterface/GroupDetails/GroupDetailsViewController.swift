@@ -103,7 +103,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         super.viewWillAppear(animated)
 
         updateLegalHoldIndicator()
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         collectionViewController.collectionView?.reloadData()
     }
 
