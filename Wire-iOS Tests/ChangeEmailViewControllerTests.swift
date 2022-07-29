@@ -19,16 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class ChangeEmailViewControllerTests: XCTestCase {
+final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     private func createSut(emailAddress: String?) -> UIViewController {
         let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = emailAddress
 
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
-
-        viewController.view.backgroundColor = .black
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: NavigationController.self)
 
         return viewController
     }
@@ -36,6 +34,7 @@ final class ChangeEmailViewControllerTests: XCTestCase {
     func testForChangingExistingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: "user@example.com")
+        viewController.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: viewController)
@@ -44,6 +43,7 @@ final class ChangeEmailViewControllerTests: XCTestCase {
     func testForAddingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: nil)
+        viewController.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: viewController)
