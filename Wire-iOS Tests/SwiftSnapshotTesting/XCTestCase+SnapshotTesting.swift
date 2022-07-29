@@ -292,7 +292,7 @@ extension XCTestCase {
                    file: file,
                    testName: testName,
                    line: line)
-            
+
             matching.overrideUserInterfaceStyle = .dark
 
             verify(matching: matching,
