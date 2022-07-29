@@ -31,10 +31,7 @@ extension UIBarButtonItem {
     }
 
     static func createCloseItem() -> UIBarButtonItem {
-        let item = UIBarButtonItem(icon: .cross, target: nil, action: nil)
-        item.accessibilityIdentifier = "close"
-        item.accessibilityLabel = "general.close".localized
-        return item
+        return UIBarButtonItem(icon: .cross, target: nil, action: nil)
     }
 
 }

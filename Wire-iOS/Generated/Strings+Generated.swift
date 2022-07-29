@@ -58,6 +58,32 @@ internal enum L10n {
       }
     }
     internal enum Accessibility {
+      internal enum AccountPage {
+        internal enum CloseButton {
+          /// Close account overview
+          internal static let description = L10n.tr("Localizable", "accessibility.accountPage.closeButton.description")
+        }
+        internal enum Handle {
+          /// Username
+          internal static let description = L10n.tr("Localizable", "accessibility.accountPage.handle.description")
+        }
+        internal enum ProfileName {
+          /// Profile name
+          internal static let description = L10n.tr("Localizable", "accessibility.accountPage.profileName.description")
+        }
+        internal enum ProfilePicture {
+          /// Your profile picture
+          internal static let description = L10n.tr("Localizable", "accessibility.accountPage.profilePicture.description")
+        }
+        internal enum ProfilePictureButton {
+          /// Double tap to change your picture
+          internal static let hint = L10n.tr("Localizable", "accessibility.accountPage.profilePictureButton.hint")
+        }
+        internal enum TeamName {
+          /// Team name
+          internal static let description = L10n.tr("Localizable", "accessibility.accountPage.teamName.description")
+        }
+      }
       internal enum Conversation {
         internal enum Back {
           /// Go back to conversation list
@@ -3239,16 +3265,6 @@ internal enum L10n {
         internal static let body = L10n.tr("Localizable", "profile.read_receipts_memo.body")
       }
     }
-    internal enum ProfileView {
-      internal enum Accessibility {
-        /// Username
-        internal static let handle = L10n.tr("Localizable", "profile_view.accessibility.handle")
-        /// Display name
-        internal static let name = L10n.tr("Localizable", "profile_view.accessibility.name")
-        /// Team name
-        internal static let teamName = L10n.tr("Localizable", "profile_view.accessibility.team_name")
-      }
-    }
     internal enum Push {
       internal enum Notification {
         /// New message
@@ -3683,12 +3699,6 @@ internal enum L10n {
       internal static let settings = L10n.tr("Localizable", "self.settings")
       /// Log Out
       internal static let signOut = L10n.tr("Localizable", "self.sign_out")
-      internal enum Accessibility {
-        /// Change profile picture
-        internal static let profilePhotoEditButton = L10n.tr("Localizable", "self.accessibility.profile_photo_edit_button")
-        /// Profile picture
-        internal static let profilePhotoImage = L10n.tr("Localizable", "self.accessibility.profile_photo_image")
-      }
       internal enum HelpCenter {
         /// Contact Support
         internal static let contactSupport = L10n.tr("Localizable", "self.help_center.contact_support")

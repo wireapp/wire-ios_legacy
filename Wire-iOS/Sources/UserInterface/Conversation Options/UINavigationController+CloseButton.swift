@@ -21,10 +21,12 @@ import UIKit
 
 extension UINavigationController {
 
-    func closeItem() -> UIBarButtonItem {
+    func closeItem(accessibilityLabel: String = "general.close".localized) -> UIBarButtonItem {
         let item = UIBarButtonItem.createCloseItem()
         item.target = self
         item.action = #selector(closeTapped)
+        item.accessibilityIdentifier = "close"
+        item.accessibilityLabel = accessibilityLabel
         return item
     }
 

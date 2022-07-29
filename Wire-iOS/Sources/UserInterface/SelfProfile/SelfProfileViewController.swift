@@ -120,7 +120,7 @@ final class SelfProfileViewController: UIViewController {
 
         settingsController.tableView.isScrollEnabled = false
 
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem = navigationController?.closeItem(accessibilityLabel: L10n.Localizable.Accessibility.AccountPage.CloseButton.description)
         configureAccountTitle()
         createConstraints()
     }

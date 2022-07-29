@@ -305,9 +305,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func setupAccessibiltyElements() {
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
-        accessibilityElements = currentElements
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 
     func updateBackgroundColor() {

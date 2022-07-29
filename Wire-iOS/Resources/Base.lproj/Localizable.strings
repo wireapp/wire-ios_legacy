@@ -883,10 +883,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Username";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
-
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
@@ -957,9 +953,6 @@
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_email_password" = "Add email address and password";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title"="Terms of Use";
@@ -1968,3 +1961,12 @@
 "accessibility.conversationList.availabilityStatus.content" = "Status";
 "accessibility.conversationList.availabilityStatusButton.action" = "Double tap to change status";
 
+"accessibility.accountPage.closeButton.description" = "Close account overview";
+"accessibility.accountPage.handle.description" = "Username";
+"accessibility.accountPage.profileName.description" = "Profile name";
+"accessibility.accountPage.teamName.description" = "Team name";
+"accessibility.accountPage.profilePicture.description" = "Your profile picture";
+"accessibility.accountPage.profilePictureButton.hint" = "Double tap to change your picture";
+
+//"self.accessibility.profile_photo_image" = "Profile picture";
+//"self.accessibility.profile_photo_edit_button" = "Change profile picture";
