@@ -156,7 +156,6 @@ extension NavigationController: UIGestureRecognizerDelegate {
 
 class ClearBackgroundNavigationController: NavigationController {
 
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

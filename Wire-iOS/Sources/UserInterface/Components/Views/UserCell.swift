@@ -201,7 +201,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        
+
         accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
         accessoryIconView.tintColor = icon.foregroundCellIconActive
 

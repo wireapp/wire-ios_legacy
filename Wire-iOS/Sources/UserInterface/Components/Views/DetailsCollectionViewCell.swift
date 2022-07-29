@@ -50,6 +50,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         set { updateIcon(newValue) }
     }
 
+    var iconColor: UIColor? {
+        get { return leftIconView.tintColor }
+        set { leftIconView.tintColor = newValue }
+    }
+
     var title: String? {
         get { return titleLabel.text }
         set { updateTitle(newValue) }

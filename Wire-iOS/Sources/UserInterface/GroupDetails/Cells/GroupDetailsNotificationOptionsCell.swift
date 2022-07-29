@@ -38,9 +38,11 @@ final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCe
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
+        iconColor = SemanticColors.IconColors.foregroundCellIconActive
+        guard let iconColor = iconColor else { return }
 
         icon = StyleKitIcon.alerts.makeImage(size: .tiny,
-                       color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+                                             color: iconColor).withRenderingMode(.alwaysTemplate)
     }
 
     override var isHighlighted: Bool {
