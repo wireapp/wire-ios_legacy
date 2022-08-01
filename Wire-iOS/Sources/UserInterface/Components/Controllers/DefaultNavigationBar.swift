@@ -46,19 +46,17 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
     }
 
     func configure() {
-        tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)?.withRenderingMode(.alwaysTemplate)
-        backIndicatorImage?.withTintColor(SemanticColors.IconColors.foregroundCellIconActive)
-        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .red).with(insets: backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
         isTranslucent = false
-        barTintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
-        setBackgroundImage(UIImage.singlePixelImage(with: UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)), for: .default)
+        barTintColor = SemanticColors.BackgroundColors.backgroundViewDefault
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
 
