@@ -98,7 +98,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
 
     func testForLightTheme() {
         prepareSut(variant: .light)
-
+        sut.overrideUserInterfaceStyle = .light
         verify(matching: sut)
     }
 

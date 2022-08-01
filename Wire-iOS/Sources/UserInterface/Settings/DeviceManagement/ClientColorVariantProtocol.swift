@@ -46,13 +46,10 @@ extension ClientColorVariantProtocol where Self: UIViewController {
     }
 
     func setColor(for variant: ColorSchemeVariant?) {
-        switch variant {
-        case .none:
+        if variant == .none {
             view.backgroundColor = .clear
-        case .dark?:
-            view.backgroundColor = .black
-        case .light?:
-            view.backgroundColor = .white
+        } else {
+            view.backgroundColor = SemanticColors.Background.settingsView
         }
     }
 }
