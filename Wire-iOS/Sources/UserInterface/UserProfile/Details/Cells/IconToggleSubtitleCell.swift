@@ -54,20 +54,22 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func setupViews() {
-        [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
+        [imageContainer, titleLabel].forEach(topContainer.addSubview)
         imageContainer.addSubview(iconImageView)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         titleLabel.font = FontSpec(.normal, .light).font
-        accessibilityElements = [titleLabel, toggle]
+
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = false
+        accessoryView = toggle
     }
 
     private func createConstraints() {
         [topContainer,
          titleLabel,
-         toggle,
          iconImageView,
          imageContainer,
          subtitleLabel].prepareForLayout()
@@ -78,8 +80,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: CGFloat.IconCell.IconSpacing),
             iconImageViewLeadingConstraint,
 
-            toggle.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
-            toggle.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -CGFloat.IconCell.IconSpacing),
             titleLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
 
             topContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -96,9 +96,9 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
     private func styleViews() {
         topContainer.backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
+        backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         subtitleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
-        backgroundColor = .clear
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
