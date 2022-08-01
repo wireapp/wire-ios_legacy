@@ -27,9 +27,9 @@ extension StyleKitIcon {
 
     public enum Size: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 
-        ///8pt
+        /// 8pt
         case nano
-        
+
         /// 16pt.
         case tiny
 

@@ -80,7 +80,7 @@ public class ExtensionSettings: NSObject {
             defaults.set(newValue, forKey: ExtensionSettingsKey.disableAnalyticsSharing.rawValue)
         }
     }
-    
+
     public var disableCrashSharing: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableCrashSharing.rawValue)
@@ -89,7 +89,7 @@ public class ExtensionSettings: NSObject {
             defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashSharing.rawValue)
         }
     }
-    
+
     public var disableLinkPreviews: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
