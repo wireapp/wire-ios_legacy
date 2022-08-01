@@ -75,7 +75,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
             fontSpec: .smallRegularFont,
             color: .white)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-
         return label
     }()
 

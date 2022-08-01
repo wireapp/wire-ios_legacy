@@ -94,6 +94,9 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         setNeedsUpdateConstraints()
 
         AVSMediaManagerClientChangeNotification.add(self)
+        backgroundColor = SemanticColors.Background.conversationListTableCell
+        addTopBorder()
+        addBottomBorder()
     }
 
     override func drawerScrollingEnded(withOffset offset: CGFloat) {
@@ -249,6 +252,28 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     // MARK: - ConversationChangeInfo
     func setupConversationObserver(conversation: ZMConversation) {
         conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+    }
+}
+
+// MARK: - Top and Bottom Boder
+
+extension ConversationListCell {
+    private func addTopBorder() {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = SemanticColors.Background.conversationListTableCellBorder
+        border.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+        border.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: borderWidth)
+        addSubview(border)
+    }
+
+    private func addBottomBorder() {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = SemanticColors.Background.conversationListTableCellBorder
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: borderWidth)
+        addSubview(border)
     }
 }
 

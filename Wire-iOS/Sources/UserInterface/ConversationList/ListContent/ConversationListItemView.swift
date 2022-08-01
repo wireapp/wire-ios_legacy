@@ -42,6 +42,7 @@ final class ConversationListItemView: UIView {
     var subtitleAttributedText: NSAttributedString? {
         didSet {
             subtitleField.attributedText = subtitleAttributedText
+            subtitleField.textColor = SemanticColors.LabelsColor.textLabelConversationSubtitleField
             subtitleField.accessibilityValue = subtitleAttributedText?.string
         }
     }
@@ -69,7 +70,6 @@ final class ConversationListItemView: UIView {
     let labelsStack: UIStackView = UIStackView()
     let contentStack: UIStackView = UIStackView()
     private let subtitleField: UILabel = UILabel()
-    let lineView: UIView = UIView()
 
     init() {
         super.init(frame: .zero)
@@ -100,8 +100,8 @@ final class ConversationListItemView: UIView {
         contentStack.addArrangedSubview(labelsStack)
         contentStack.addArrangedSubview(rightAccessory)
 
-        lineView.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        addSubview(lineView)
+//        lineView.backgroundColor = .red
+//        addSubview(lineView)
 
         rightAccessory.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -121,7 +121,7 @@ final class ConversationListItemView: UIView {
 
     private func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
-        lineView.translatesAutoresizingMaskIntoConstraints = false
+//        lineView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // height
@@ -133,11 +133,11 @@ final class ConversationListItemView: UIView {
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
             contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
 
-            // lineView
-            lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
-            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
+//            // lineView
+//            lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
+//            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
         ])
     }
 
@@ -164,11 +164,11 @@ final class ConversationListItemView: UIView {
     }
 
     private func setupStyle() {
-        titleField.textColor = .from(scheme: .textForeground, variant: .dark)
+        titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
     }
 
     private func setupSubtitleField() {
-        subtitleField.textColor = .whiteAlpha64
+        subtitleField.textColor = .systemPink
         subtitleField.accessibilityIdentifier = "subtitle"
         subtitleField.numberOfLines = 1
         labelsStack.addArrangedSubview(subtitleField)
