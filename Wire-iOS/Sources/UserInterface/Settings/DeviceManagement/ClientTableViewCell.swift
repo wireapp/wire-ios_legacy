@@ -165,7 +165,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         addTopBorder()
         addBottomBorder()
     }
-    
+
     private func addTopBorder() {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
