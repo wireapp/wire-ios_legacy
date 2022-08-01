@@ -91,22 +91,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return imagePreview
     }()
 
-//    private let separatorLine: UIView = {
-//        let separatorLine = UIView()
-//        separatorLine.backgroundColor = .green
-//        separatorLine.isAccessibilityElement = false
-//
-//        return separatorLine
-//    }()
-//
-//    private let topSeparatorLine: UIView = {
-//        let topSeparatorLine = UIView()
-//        topSeparatorLine.backgroundColor = .red
-//        topSeparatorLine.isAccessibilityElement = false
-//
-//        return topSeparatorLine
-//    }()
-
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
 
     var titleText: String = "" {
@@ -169,10 +153,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
-                iconImageView.setIcon(
-                    icon,
-                    size: .tiny,
-                    color: SemanticColors.LabelsColor.textLabelSettingsCell)
+                iconImageView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+                iconImageView.setTemplateIcon(icon, size: .tiny)
                 cellNameLabelToIconInset.isActive = true
             } else {
                 iconImageView.image = nil
