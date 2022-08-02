@@ -140,8 +140,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
-        addTopBorder(borderColor: SemanticColors.Background.conversationListTableCellBorder)
-        addBottomBorder(borderColor: SemanticColors.Background.conversationListTableCellBorder)
+        addTopBorder(color: SemanticColors.Background.conversationListTableCellBorder)
+        addBottomBorder(color: SemanticColors.Background.conversationListTableCellBorder)
     }
 
     @objc

@@ -20,19 +20,19 @@ import Foundation
 import UIKit
 
 public extension UIView {
-    func addTopBorder(borderColor: UIColor) {
+    func addTopBorder(color: UIColor) {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
-        border.backgroundColor = borderColor
+        border.backgroundColor = color
         border.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
         border.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: borderWidth)
         addSubview(border)
     }
 
-    func addBottomBorder(borderColor: UIColor) {
+    func addBottomBorder(color: UIColor) {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
-        border.backgroundColor = borderColor
+        border.backgroundColor = color
         border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         border.frame = CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: borderWidth)
         addSubview(border)

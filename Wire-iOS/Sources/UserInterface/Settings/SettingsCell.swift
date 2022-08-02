@@ -217,8 +217,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
-        addTopBorder(borderColor: SemanticColors.Background.settingsTableCellBorder)
-        addBottomBorder(borderColor: SemanticColors.Background.settingsTableCellBorder)
+        addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
     }
 
     private func createConstraints() {

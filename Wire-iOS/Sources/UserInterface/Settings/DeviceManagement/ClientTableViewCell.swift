@@ -162,8 +162,8 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         nameLabel.textColor = textColor
         labelLabel.textColor = textColor
         activationLabel.textColor = textColor
-        addTopBorder(borderColor: SemanticColors.Background.settingsTableCellBorder)
-        addBottomBorder(borderColor: SemanticColors.Background.settingsTableCellBorder)
+        addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
     }
 
     func updateVerifiedLabel() {
