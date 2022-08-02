@@ -120,7 +120,7 @@ final class ConversationListAccessoryView: UIView {
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
-
+        badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
         switch icon {
         case .pendingConnection:
             tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
@@ -132,6 +132,7 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
+            badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
@@ -153,7 +154,11 @@ final class ConversationListAccessoryView: UIView {
         case .silenced:
             tintColor = SemanticColors.LabelsColor.textLabelSettingsCellBadgeReverted
             badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadgeReverted
+            badgeView.layer.borderColor = SemanticColors.Background.conversationListTableCellBadgeRevertedBorder.cgColor
+            badgeView.layer.borderWidth = 1
+            badgeView.layer.cornerRadius = 6
             iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
+
             accessibilityValue = "conversation_list.voiceover.status.silenced".localized
             return iconView
         case .typing:
@@ -216,7 +221,7 @@ final class ConversationListAccessoryView: UIView {
         case .activeCall(false):
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
-            self.transparentIconView.setIcon(.phone, size: 18, color: SemanticColors.LabelsColor.textLabelConversationListCell)
+            self.transparentIconView.setIcon(.phone, size: 18, color: .white)
 
             self.expandTransparentIconViewWidthConstraint.constant = activeCallWidth
             self.expandWidthConstraint.constant = activeCallWidth
@@ -227,17 +232,17 @@ final class ConversationListAccessoryView: UIView {
         case .typing:
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
-            self.transparentIconView.setIcon(.pencil, size: 12, color: SemanticColors.LabelsColor.textLabelConversationListCell)
+            self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
 
         case .unreadMessages, .mention:
-            self.textLabel.textColor = SemanticColors.LabelsColor.textLabelConversationListCell
-            self.badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
+            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
 
         case .unreadPing,
-             .reply,
-             .missedCall:
+                .reply,
+                .missedCall:
 
-            self.badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
+            self.badgeView.backgroundColor = .from(scheme: .textBackground, variant: .light)
 
         default:
             self.transparentIconView.image = .none

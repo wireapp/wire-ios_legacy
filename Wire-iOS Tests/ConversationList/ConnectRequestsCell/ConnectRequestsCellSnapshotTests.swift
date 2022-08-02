@@ -31,6 +31,7 @@ final class ConnectRequestsCellSnapshotTests: XCTestCase {
         let otherUser = MockUserType.createDefaultOtherUser()
         sut.itemView.configure(with: title, subtitle: nil, users: [otherUser])
         sut.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
     }
 
     override func tearDown() {
