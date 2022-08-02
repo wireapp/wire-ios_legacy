@@ -100,9 +100,6 @@ final class ConversationListItemView: UIView {
         contentStack.addArrangedSubview(labelsStack)
         contentStack.addArrangedSubview(rightAccessory)
 
-//        lineView.backgroundColor = .red
-//        addSubview(lineView)
-
         rightAccessory.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         titleField.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -121,7 +118,6 @@ final class ConversationListItemView: UIView {
 
     private func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
-//        lineView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // height
@@ -131,13 +127,7 @@ final class ConversationListItemView: UIView {
             contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
-            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-
-//            // lineView
-//            lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
-//            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
 
