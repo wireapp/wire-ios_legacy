@@ -115,8 +115,8 @@ class IncomingRequestFooterView: UIView, Themeable {
     // MARK: - Theme
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
+        titleLabel.textColor = SemanticColors.Label.textDefault
+        backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
 
         acceptButton.setTitleColor(.white, for: .normal)
         acceptButton.setTitleColor(.whiteAlpha40, for: .highlighted)
