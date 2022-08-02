@@ -35,7 +35,7 @@ enum MediaShareRestrictionLevel {
     case APIFlag
 }
 
-final class MediaShareRestrictionManager {
+class MediaShareRestrictionManager {
 
     // MARK: - Private Properties
 
@@ -51,13 +51,17 @@ final class MediaShareRestrictionManager {
         self.sessionRestriction = sessionRestriction
     }
 
+    func isFileSharingFlagEnabled() -> Bool {
+        return SecurityFlags.fileSharing.isEnabled
+    }
+
     // MARK: - Public Properties
 
     var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
         if let sessionRestriction = sessionRestriction, !sessionRestriction.isFileSharingEnabled {
             return .APIFlag
         }
-        return SecurityFlags.fileSharing.isEnabled ? .none : .securityFlag
+        return isFileSharingFlagEnabled() ? .none : .securityFlag
     }
 
     func canUploadMedia(from source: ShareableMediaSource) -> Bool {
@@ -83,7 +87,6 @@ final class MediaShareRestrictionManager {
     var canUseClipboard: Bool {
         return canUploadMedia(from: .clipboard)
     }
-
 
     var hasAccessToCameraRoll: Bool {
         switch mediaShareRestrictionLevel {
