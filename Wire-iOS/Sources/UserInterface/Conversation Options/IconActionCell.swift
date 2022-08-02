@@ -36,7 +36,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
         selectedBackgroundView = backgroundView
-        backgroundColor = .clear
+        backgroundColor = .red
         imageContainer.addSubview(iconImageView)
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label, separator].forEach(contentView.addSubview)

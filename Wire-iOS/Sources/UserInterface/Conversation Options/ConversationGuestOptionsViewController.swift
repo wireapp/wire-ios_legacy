@@ -50,11 +50,18 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         setupViews()
         createConstraints()
         viewModel.delegate = self
+        view.backgroundColor = SemanticColors.Background.settingsView
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationController?.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
+        if var textAttributes = navigationController?.navigationBar.titleTextAttributes {
+            textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.LabelsColor.textLabelNavigationController
+            navigationController?.navigationBar.titleTextAttributes = textAttributes
+        }
+        navigationController?.navigationBar.backgroundColor = SemanticColors.Background.settingsView
     }
 
     @available(*, unavailable)
@@ -71,7 +78,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor.from(scheme: .contentBackground, variant: variant)
+        tableView.backgroundColor = SemanticColors.Background.settingsView
         tableView.contentInsetAdjustmentBehavior = .never
     }
 

@@ -151,11 +151,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsButtonCell.zm_reuseIdentifier, for: indexPath) as! SettingsButtonCell
             cell.titleText = "self.settings.account_section.phone_number.change.verify.resend".localized
-            if resendEnabled {
-                cell.selectionStyle = .default
-            } else {
-                cell.selectionStyle = .none
-            }
+            cell.selectionStyle = resendEnabled ? .default : .none
             return cell
         }
     }

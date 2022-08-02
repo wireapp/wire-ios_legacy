@@ -20,16 +20,13 @@ import Foundation
 
 extension AutomationHelper {
     private static let backendEnvironmentTypeOverrideKey = "BackendEnvironmentTypeOverrideKey"
-    
     public func backendEnvironmentTypeOverride() -> String? {
         return UserDefaults.applicationGroupCombinedWithStandard.string(forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
     }
-    
     public func persistBackendTypeOverrideIfNeeded(with type: String?) {
         guard shouldPersistBackendType else { return }
         UserDefaults.applicationGroup.set(type, forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
     }
-    
     public func disableBackendTypeOverride() {
         UserDefaults.applicationGroup.removeObject(forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
     }
