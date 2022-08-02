@@ -99,6 +99,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
+    var isTransparent: Bool = false {
+        didSet {
+            backgroundColor = isTransparent ? .clear : SemanticColors.Background.settingsTableCell
+        }
+    }
+    
     var preview: SettingsCellPreview = .none {
         didSet {
             switch preview {
@@ -272,7 +278,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        backgroundColor = SemanticColors.Background.settingsTableCell
+        backgroundColor = isTransparent ? .clear : SemanticColors.Background.settingsTableCell
 
         if isHighlighted && selectionStyle != .none {
             backgroundColor = UIColor(white: 0, alpha: 0.2)
@@ -302,6 +308,7 @@ final class SettingsToggleCell: SettingsTableCell {
         switchView.isAccessibilityElement = true
         accessibilityElements = [cellNameLabel, switchView]
         self.switchView = switchView
+        backgroundColor = isTransparent ? .clear : SemanticColors.Background.settingsTableCell
     }
 
     @objc

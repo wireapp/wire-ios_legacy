@@ -110,7 +110,7 @@ final class SettingsClientViewController: UIViewController,
     }
 
     func setupFromConversationStyle() {
-        view.backgroundColor = SemanticColors.Background.settingsView
+        view.backgroundColor = variant == nil ? .clear : SemanticColors.Background.settingsView
         tableView.separatorColor = .red
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.LabelsColor.textLabelNavigationController]
     }
@@ -137,7 +137,7 @@ final class SettingsClientViewController: UIViewController,
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-            tableView.backgroundColor = SemanticColors.Background.settingsView
+        tableView.backgroundColor = variant == nil ? .clear : SemanticColors.Background.settingsView
         tableView.separatorColor = separatorColor
 
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
@@ -252,6 +252,7 @@ final class SettingsClientViewController: UIViewController,
                     cell.switchView.accessibilityIdentifier = "device verified"
                     cell.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
+                    cell.isTransparent = variant == .none ? true : false
                     return cell
                 }
             }
@@ -260,6 +261,7 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
                 cell.accessibilityIdentifier = "reset session"
+                cell.isTransparent = variant == .none ? true : false
                 return cell
             }
 
@@ -267,6 +269,7 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
                 cell.accessibilityIdentifier = "remove device"
+                cell.isTransparent = variant == .none ? true : false
                 return cell
             }
         }

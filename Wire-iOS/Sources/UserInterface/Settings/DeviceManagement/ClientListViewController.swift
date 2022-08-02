@@ -185,7 +185,7 @@ final class ClientListViewController: UIViewController,
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)
-            clientViewController.view.backgroundColor = SemanticColors.Background.settingsView
+            clientViewController.view.backgroundColor = variant == .none ? .clear : SemanticColors.Background.settingsView
             navigationController.pushViewController(clientViewController, animated: true)
         }
     }
@@ -199,7 +199,7 @@ final class ClientListViewController: UIViewController,
         tableView.estimatedRowHeight = 80
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
-        tableView.backgroundColor = SemanticColors.Background.settingsView
+        tableView.backgroundColor = variant == .none ? .clear : SemanticColors.Background.settingsView
         tableView.separatorColor = separatorColor
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
