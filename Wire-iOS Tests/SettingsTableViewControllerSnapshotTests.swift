@@ -159,6 +159,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
         sut = SettingsTableViewController(group: group as! SettingsInternalGroupCellDescriptorType)
 
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         verify(matching: sut, file: file, testName: testName, line: line)
     }
