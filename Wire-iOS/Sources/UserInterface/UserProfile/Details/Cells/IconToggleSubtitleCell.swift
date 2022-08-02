@@ -99,6 +99,8 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         subtitleLabel.textColor = SemanticColors.LabelsColor.textConversationQuestOptionInfo
         backgroundColor = .clear
+        topContainer.addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        topContainer.addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
@@ -119,7 +121,8 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         let mainColor = variant.mainColor(color: color)
 
         if let icon = icon {
-            iconImageView.setIcon(icon, size: .tiny, color: mainColor)
+            tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+            iconImageView.setTemplateIcon(icon, size: .tiny)
             imageContainerWidthConstraint.constant = CGFloat.IconCell.IconWidth
             iconImageViewLeadingConstraint.constant = CGFloat.IconCell.IconSpacing
         } else {

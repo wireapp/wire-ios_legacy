@@ -24,7 +24,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
-    private var variant: ColorSchemeVariant = .light 
+    private var variant: ColorSchemeVariant = .light
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

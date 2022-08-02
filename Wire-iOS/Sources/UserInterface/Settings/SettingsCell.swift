@@ -205,8 +205,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
-        addTopBorder()
-        addBottomBorder()
+        addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
     }
 
     private func createConstraints() {
@@ -251,24 +251,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
-    }
-
-    private func addTopBorder() {
-        let border = UIView()
-        let borderWidth: CGFloat = 1.0
-        border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
-        border.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
-        border.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: borderWidth)
-        addSubview(border)
-    }
-
-    private func addBottomBorder() {
-        let border = UIView()
-        let borderWidth: CGFloat = 1.0
-        border.backgroundColor = SemanticColors.Background.settingsTableCellBorder
-        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
-        border.frame = CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: borderWidth)
-        addSubview(border)
     }
 
     func setupAccessibiltyElements() {

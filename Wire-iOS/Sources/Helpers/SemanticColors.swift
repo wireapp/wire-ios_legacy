@@ -53,6 +53,8 @@ public enum SemanticColors {
         static let textLabelNavigationController = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
+        static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum ButtonsColor {
         static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
