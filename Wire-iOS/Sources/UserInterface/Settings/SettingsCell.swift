@@ -104,7 +104,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             backgroundColor = isTransparent ? .clear : SemanticColors.Background.settingsTableCell
         }
     }
-    
+
     var preview: SettingsCellPreview = .none {
         didSet {
             switch preview {
