@@ -51,6 +51,7 @@ final class ConversationListTopBarViewController: UIViewController {
         }
 
         viewRespectsSystemMinimumLayoutMargins = false
+        view.backgroundColor = SemanticColors.Background.conversationList
     }
 
     @available(*, unavailable)

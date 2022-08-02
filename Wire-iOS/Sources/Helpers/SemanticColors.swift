@@ -52,11 +52,12 @@ public enum SemanticColors {
         static let textLabelSettingsTableViewFooter = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let textLabelNavigationController = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
-        static let textLabelConversationTitleField = UIColor(light: Asset.amber400Dark, dark: Asset.amber400Dark)
-        static let textLabelConversationSubtitleField = UIColor(light: Asset.amber400Dark, dark: Asset.amber400Dark)
-        static let conversationListTableCellBadgeLabel = UIColor(light: Asset.red500Dark, dark: Asset.red500Dark)
-        static let textLabelConversationListCell = UIColor(light: Asset.red500Dark, dark: Asset.red500Dark)
-
+        static let textLabelConversationTitleField = UIColor(light: Asset.black, dark: Asset.white)
+        static let textLabelConversationSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let conversationListTableCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textLabelSettingsCellBadgeReverted = UIColor(light: Asset.black, dark: Asset.white)
+        static let textLabelConversationListCell = UIColor(light: Asset.black, dark: Asset.white)
+        static let teamImageView = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum ButtonsColor {
         static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
@@ -71,9 +72,13 @@ public enum SemanticColors {
         static let settingsTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let settingsTableCellBorder = UIColor(light: Asset.gray50, dark: Asset.gray90)
+        static let conversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
         static let conversationListTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let conversationListTableCellBorder = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let conversationListTableCellBadge = UIColor(light: Asset.amber400Dark, dark: Asset.amber400Dark)
+        static let conversationListTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+        static let conversationListTableCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
+        static let conversationListTableCellBadgeRevertedBorder = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let teamImageView = UIColor(light: Asset.white, dark: Asset.black)
     }
 }
 

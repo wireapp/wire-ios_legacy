@@ -54,7 +54,7 @@ final class ConversationListViewController: UIViewController {
 
     let contentContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = SemanticColors.Background.conversationListTableCell
 
         return view
     }()
@@ -105,6 +105,7 @@ final class ConversationListViewController: UIViewController {
 
         /// setup UI
         view.addSubview(contentContainer)
+        self.view.backgroundColor = SemanticColors.Background.conversationList
 
         setupTopBar()
         setupListContentController()
@@ -124,8 +125,7 @@ final class ConversationListViewController: UIViewController {
     }
 
     override func loadView() {
-        view = PassthroughTouchesView(frame: UIScreen.main.bounds)
-        view.backgroundColor = .clear
+        view = UIView(frame: UIScreen.main.bounds)
     }
 
     override func viewDidLoad() {
@@ -169,10 +169,6 @@ final class ConversationListViewController: UIViewController {
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
 
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

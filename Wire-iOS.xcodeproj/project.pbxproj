@@ -1221,6 +1221,7 @@
 		E5443393286192CF00F2E0ED /* SwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5443392286192CF00F2E0ED /* SwitchStyle.swift */; };
 		E56CA37528588C4F00CD2045 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56CA37428588C4F00CD2045 /* Colors.xcassets */; };
 		E57333CD2859CF840039EE02 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
+		E57917AF28995F4F0063339D /* BorderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57917AE28995F4F0063339D /* BorderExtension.swift */; };
 		E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */; };
 		E90B7DB628117DED001831FB /* DynamicFontLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B7DB528117DED001831FB /* DynamicFontLabel.swift */; };
 		E91DCC34278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */; };
@@ -3125,6 +3126,7 @@
 		E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+DisclosureIndicator.swift"; sourceTree = "<group>"; };
 		E5443392286192CF00F2E0ED /* SwitchStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchStyle.swift; sourceTree = "<group>"; };
 		E56CA37428588C4F00CD2045 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		E57917AE28995F4F0063339D /* BorderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderExtension.swift; sourceTree = "<group>"; };
 		E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandler.swift; sourceTree = "<group>"; };
 		E90B7DB528117DED001831FB /* DynamicFontLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFontLabel.swift; sourceTree = "<group>"; };
 		E91DCC33278DAEDA00B66DD7 /* GroupDetailsServicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsServicesCell.swift; sourceTree = "<group>"; };
@@ -5843,6 +5845,7 @@
 				E9DA4684286C547A00F47C14 /* UIWindow+Orientation.swift */,
 				06717E582865178F00AF442C /* SemanticColors.swift */,
 				E986CAA7287D979300AF39E1 /* UIApplication+KeyWindow.swift */,
+				E57917AE28995F4F0063339D /* BorderExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8039,7 +8042,6 @@
 				06E89B0025C82CA9008E3846 /* PasscodeTextField.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,
 				06F9864425CBFA6E005572C5 /* UIButton+SetIcon.swift in Sources */,
-				06717E5D2865183600AF442C /* Stylable.swift in Sources */,
 				5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */,
 				5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */,
 				06F9864625CC146B005572C5 /* UIView+ConstraintFactory.swift in Sources */,
@@ -8336,6 +8338,7 @@
 				16626502217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift in Sources */,
 				161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */,
 				EFF9404822414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift in Sources */,
+				E57917AF28995F4F0063339D /* BorderExtension.swift in Sources */,
 				EF0154B7225B922200A77FB6 /* ContactsViewController+Constraints.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* String+Fingerprint.swift in Sources */,
 				EFEC285F233A6FF8007F47FF /* ConversationListHeaderView.swift in Sources */,

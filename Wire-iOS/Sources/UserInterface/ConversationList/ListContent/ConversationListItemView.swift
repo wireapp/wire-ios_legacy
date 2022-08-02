@@ -36,6 +36,7 @@ final class ConversationListItemView: UIView {
     var titleText: NSAttributedString? {
         didSet {
             titleField.attributedText = titleText
+            titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
         }
     }
 
@@ -170,6 +171,7 @@ final class ConversationListItemView: UIView {
 
     func updateAppearance() {
         titleField.attributedText = titleText
+        titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
     }
 
     // MARK: - Observer

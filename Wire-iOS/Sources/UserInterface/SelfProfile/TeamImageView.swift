@@ -61,8 +61,8 @@ final class TeamImageView: UIImageView {
             initialLabel.font = .mediumLightLargeTitleFont
         }
 
-        initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
-        backgroundColor = .from(scheme: .background, variant: .light)
+        initialLabel.textColor = SemanticColors.LabelsColor.teamImageView
+        backgroundColor = SemanticColors.Background.teamImageView
     }
 
     private func updateRoundCorner() {
