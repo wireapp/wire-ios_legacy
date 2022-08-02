@@ -21,15 +21,10 @@ import WireCommonComponents
 
 final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
 
-    private let topSeparator = UIView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
 
-    private var variant: ColorSchemeVariant = .light {
-        didSet {
-            styleViews()
-        }
-    }
+    private var variant: ColorSchemeVariant = .light 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,7 +39,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func setupViews() {
-        [topSeparator, titleLabel, subtitleLabel].forEach(contentView.addSubview)
+        [titleLabel, subtitleLabel].forEach(contentView.addSubview)
         titleLabel.font = FontSpec(.small, .semibold).font
         titleLabel.text = "guest_room.link.header.title".localized(uppercased: true)
         subtitleLabel.numberOfLines = 0
@@ -53,29 +48,23 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        [topSeparator, titleLabel, subtitleLabel].prepareForLayout()
+        [titleLabel, subtitleLabel].prepareForLayout()
         NSLayoutConstraint.activate([
-          topSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
-          topSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-          topSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-          topSeparator.heightAnchor.constraint(equalToConstant: .hairline),
 
-          titleLabel.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 24),
-          titleLabel.leadingAnchor.constraint(equalTo: topSeparator.leadingAnchor),
-          titleLabel.trailingAnchor.constraint(equalTo: topSeparator.trailingAnchor),
+          titleLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 24),
+          titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 
           subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-          subtitleLabel.leadingAnchor.constraint(equalTo: topSeparator.leadingAnchor),
-          subtitleLabel.trailingAnchor.constraint(equalTo: topSeparator.trailingAnchor),
+          subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
           subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
     }
 
     private func styleViews() {
-        let color = UIColor.from(scheme: .textDimmed, variant: variant)
-        topSeparator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
-        titleLabel.textColor = color
-        subtitleLabel.textColor = color
+        titleLabel.textColor = SemanticColors.LabelsColor.textConversationQuestOptionInfo
+        subtitleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         backgroundColor = .clear
     }
 
