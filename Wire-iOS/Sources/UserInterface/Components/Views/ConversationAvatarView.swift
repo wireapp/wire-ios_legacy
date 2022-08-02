@@ -187,6 +187,15 @@ final class ConversationAvatarView: UIView {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
 
+            if case .one = mode {
+                layer.borderWidth = 0
+                backgroundColor = .clear
+            } else {
+                layer.borderWidth = .hairline
+                layer.borderColor = UIColor(white: 1, alpha: 0.24).cgColor
+                backgroundColor = UIColor(white: 0, alpha: 0.16)
+            }
+
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()

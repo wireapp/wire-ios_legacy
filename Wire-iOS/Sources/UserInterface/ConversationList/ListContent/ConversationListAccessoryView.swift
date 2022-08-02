@@ -166,6 +166,7 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
+            textLabel.textColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             accessibilityValue = textLabel.text
             return textLabel
         case .mention:

@@ -25,6 +25,7 @@ final class ConnectRequestsCellSnapshotTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        accentColor = .brightOrange
         sut = ConnectRequestsCell(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
         let titleString = String(format: "list.connect_request.people_waiting".localized, 1)
         let title = NSAttributedString(string: titleString)
