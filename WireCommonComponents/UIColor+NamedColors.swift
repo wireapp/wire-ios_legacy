@@ -20,9 +20,8 @@ import Foundation
 import UIKit
 
 public extension UIColor {
-
     struct Wire {
-
+    
         public static var primaryLabel: UIColor {
             return label
         }

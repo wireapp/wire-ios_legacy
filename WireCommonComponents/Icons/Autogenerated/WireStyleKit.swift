@@ -9,11 +9,9 @@
 //  http://www.paintcodeapp.com
 //
 
-
-
 import UIKit
 
-public class WireStyleKit : NSObject {
+public class WireStyleKit: NSObject {
 
     //// Cache
 
@@ -420,13 +418,10 @@ public class WireStyleKit : NSObject {
         clipPath.close()
         clipPath.usesEvenOddFillRule = true
         clipPath.addClip()
-
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 64, height: 64))
         color.setFill()
         rectanglePath.fill()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -2691,7 +2686,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
         bezier2Path.move(to: CGPoint(x: 43.82, y: 19.27))
@@ -2748,7 +2742,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezier2Path.fill()
 
-
         //// Bezier 3 Drawing
         let bezier3Path = UIBezierPath()
         bezier3Path.move(to: CGPoint(x: 40.3, y: 16.02))
@@ -2791,7 +2784,6 @@ public class WireStyleKit : NSObject {
         bezier3Path.usesEvenOddFillRule = true
         color.setFill()
         bezier3Path.fill()
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -2838,7 +2830,6 @@ public class WireStyleKit : NSObject {
         bezier2Path.usesEvenOddFillRule = true
         color.setFill()
         bezier2Path.fill()
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -3250,7 +3241,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezier2Path.fill()
 
-
         //// Bezier 3 Drawing
         let bezier3Path = UIBezierPath()
         bezier3Path.move(to: CGPoint(x: 4, y: 0))
@@ -3294,7 +3284,6 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
-
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -3448,7 +3437,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: 12, y: 55, width: 37, height: 9))
         color.setFill()
@@ -3483,7 +3471,6 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
-
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -3543,7 +3530,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
         bezier2Path.move(to: CGPoint(x: 0, y: 29.42))
@@ -3567,7 +3553,6 @@ public class WireStyleKit : NSObject {
         bezier2Path.usesEvenOddFillRule = true
         color.setFill()
         bezier2Path.fill()
-
 
         //// Bezier 3 Drawing
         let bezier3Path = UIBezierPath()
@@ -3594,7 +3579,6 @@ public class WireStyleKit : NSObject {
         bezier3Path.usesEvenOddFillRule = true
         color.setFill()
         bezier3Path.fill()
-
 
         //// Bezier 4 Drawing
         let bezier4Path = UIBezierPath()
@@ -3631,7 +3615,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
         bezier2Path.move(to: CGPoint(x: 19.6, y: 17.16))
@@ -3644,7 +3627,6 @@ public class WireStyleKit : NSObject {
         bezier2Path.close()
         color.setFill()
         bezier2Path.fill()
-
 
         //// Rectangle Drawing
         context.saveGState()
@@ -3986,7 +3968,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezier2Path.fill()
 
-
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: 32, y: 14))
@@ -4032,7 +4013,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
         bezier2Path.move(to: CGPoint(x: 32, y: 14))
@@ -4071,7 +4051,6 @@ public class WireStyleKit : NSObject {
         bezier2Path.usesEvenOddFillRule = true
         color.setFill()
         bezier2Path.fill()
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -4126,8 +4105,6 @@ public class WireStyleKit : NSObject {
     @objc dynamic public class func drawIcon_networkCondition_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
 
         //// Group 2
-
-
         //// Network Drawing
         let networkPath = UIBezierPath()
         networkPath.move(to: CGPoint(x: 10.24, y: 8.55))
@@ -4255,12 +4232,10 @@ public class WireStyleKit : NSObject {
         clipPath.usesEvenOddFillRule = true
         clipPath.addClip()
 
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: -0, y: 0, width: 64, height: 64))
         color.setFill()
         rectanglePath.fill()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -4367,7 +4342,6 @@ public class WireStyleKit : NSObject {
 
         context.restoreGState()
 
-
         //// Pending Drawing
         let pendingPath = UIBezierPath()
         pendingPath.move(to: CGPoint(x: 32, y: 44))
@@ -4422,7 +4396,6 @@ public class WireStyleKit : NSObject {
         bezierPath.fill()
 
         context.restoreGState()
-
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -4485,9 +4458,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         bezierPath.fill()
 
-
-
-
         //// Group 3
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -4501,9 +4471,6 @@ public class WireStyleKit : NSObject {
         bezier2Path.close()
         color.setFill()
         bezier2Path.fill()
-
-
-
 
         //// Group 4
         //// Bezier 3 Drawing
@@ -4702,7 +4669,6 @@ public class WireStyleKit : NSObject {
         clip2Path.usesEvenOddFillRule = true
         clip2Path.addClip()
 
-
         //// Group 2
         context.saveGState()
         context.beginTransparencyLayer(auxiliaryInfo: nil)
@@ -4711,22 +4677,18 @@ public class WireStyleKit : NSObject {
         let clipPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 64, height: 64))
         clipPath.addClip()
 
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: -29, y: -29, width: 122, height: 122))
         color.setFill()
         rectanglePath.fill()
-
 
         //// Rectangle 2 Drawing
         let rectangle2Path = UIBezierPath(rect: CGRect(x: -29, y: -29, width: 122, height: 122))
         color.setFill()
         rectangle2Path.fill()
 
-
         context.endTransparencyLayer()
         context.restoreGState()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -4786,12 +4748,10 @@ public class WireStyleKit : NSObject {
         clip2Path.close()
         clip2Path.addClip()
 
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: -3, y: 9, width: 67, height: 49))
         fillColor7.setFill()
         rectanglePath.fill()
-
 
         //// Group 2
         context.saveGState()
@@ -4801,16 +4761,13 @@ public class WireStyleKit : NSObject {
         let clipPath = UIBezierPath(rect: CGRect(x: -3, y: 9, width: 67, height: 49))
         clipPath.addClip()
 
-
         //// Rectangle 2 Drawing
         let rectangle2Path = UIBezierPath(rect: CGRect(x: -37.33, y: -32, width: 138.25, height: 128))
         color.setFill()
         rectangle2Path.fill()
 
-
         context.endTransparencyLayer()
         context.restoreGState()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -4869,12 +4826,10 @@ public class WireStyleKit : NSObject {
         clip2Path.close()
         clip2Path.addClip()
 
-
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: -3, y: 13, width: 67, height: 38))
         color.setFill()
         rectanglePath.fill()
-
 
         //// Group 2
         context.saveGState()
@@ -4884,16 +4839,13 @@ public class WireStyleKit : NSObject {
         let clipPath = UIBezierPath(rect: CGRect(x: -3, y: 13, width: 67, height: 40.5))
         clipPath.addClip()
 
-
         //// Rectangle 2 Drawing
         let rectangle2Path = UIBezierPath(rect: CGRect(x: -38.33, y: -29, width: 140.25, height: 129))
         color.setFill()
         rectangle2Path.fill()
 
-
         context.endTransparencyLayer()
         context.restoreGState()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -5185,13 +5137,11 @@ public class WireStyleKit : NSObject {
         ovalPath.lineWidth = 1
         ovalPath.stroke()
 
-
         //// Oval 2 Drawing
         let oval2Path = UIBezierPath(ovalIn: CGRect(x: 5, y: 5, width: 30, height: 30))
         accentopacity64.setStroke()
         oval2Path.lineWidth = 1
         oval2Path.stroke()
-
 
         //// Oval 3 Drawing
         let oval3Path = UIBezierPath(ovalIn: CGRect(x: 9, y: 9, width: 22, height: 22))
@@ -5393,13 +5343,11 @@ public class WireStyleKit : NSObject {
         ovalPath.lineWidth = 1
         ovalPath.stroke()
 
-
         //// Oval 2 Drawing
         let oval2Path = UIBezierPath(ovalIn: CGRect(x: 5, y: 5, width: 30, height: 30))
         accentopacity64.setStroke()
         oval2Path.lineWidth = 1
         oval2Path.stroke()
-
 
         //// Text Drawing
         let textPath = UIBezierPath()
@@ -5620,12 +5568,10 @@ public class WireStyleKit : NSObject {
         black16.setFill()
         bezierPath.fill()
 
-
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 6, y: 6, width: 6, height: 6))
         fillColor9.setFill()
         ovalPath.fill()
-
 
         //// Oval 2 Drawing
         let oval2Path = UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: 12, height: 12))
@@ -5654,7 +5600,6 @@ public class WireStyleKit : NSObject {
         clipPath.usesEvenOddFillRule = true
         clipPath.addClip()
 
-
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: 9, y: 18))
@@ -5667,10 +5612,8 @@ public class WireStyleKit : NSObject {
         bezierPath.lineWidth = 2
         bezierPath.stroke()
 
-
         context.endTransparencyLayer()
         context.restoreGState()
-
 
         //// Group 4
         context.saveGState()
@@ -5681,17 +5624,14 @@ public class WireStyleKit : NSObject {
         let clip2Path = UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: 12, height: 12))
         clip2Path.addClip()
 
-
         //// Oval Drawing
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: 12, height: 12))
         color.setStroke()
         ovalPath.lineWidth = 2
         ovalPath.stroke()
 
-
         context.endTransparencyLayer()
         context.restoreGState()
-
 
         //// Group 5
         context.saveGState()
@@ -5701,13 +5641,11 @@ public class WireStyleKit : NSObject {
         let clip3Path = UIBezierPath(ovalIn: CGRect(x: 6, y: 6, width: 6, height: 6))
         clip3Path.addClip()
 
-
         //// Oval 3 Drawing
         let oval3Path = UIBezierPath(ovalIn: CGRect(x: 6, y: 6, width: 6, height: 6))
         color.setStroke()
         oval3Path.lineWidth = 2
         oval3Path.stroke()
-
 
         context.endTransparencyLayer()
         context.restoreGState()
@@ -5868,7 +5806,6 @@ public class WireStyleKit : NSObject {
         e2EE.setFill()
         path1Path.fill()
 
-
         //// Shadow Drawing
         let shadowPath = UIBezierPath()
         shadowPath.move(to: CGPoint(x: 15, y: 1.87))
@@ -5955,7 +5892,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill1Path.fill()
 
-
         //// Fill-4 Drawing
         let fill4Path = UIBezierPath()
         fill4Path.move(to: CGPoint(x: 255.88, y: 276.29))
@@ -5974,7 +5910,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill4Path.fill()
 
-
         //// Fill-6 Drawing
         let fill6Path = UIBezierPath()
         fill6Path.move(to: CGPoint(x: 269.16, y: 260.2))
@@ -5991,18 +5926,15 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill6Path.fill()
 
-
         //// Fill-8 Drawing
         let fill8Path = UIBezierPath(ovalIn: CGRect(x: 259.6, y: 247.82, width: 7.4, height: 7.4))
         color.setFill()
         fill8Path.fill()
 
-
         //// Fill-10 Drawing
         let fill10Path = UIBezierPath(ovalIn: CGRect(x: 245.85, y: 247.82, width: 7.4, height: 7.4))
         color.setFill()
         fill10Path.fill()
-
 
         //// Fill-12 Drawing
         let fill12Path = UIBezierPath()
@@ -6045,7 +5977,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill12Path.fill()
 
-
         //// Fill-14 Drawing
         let fill14Path = UIBezierPath()
         fill14Path.move(to: CGPoint(x: 55.88, y: 114.62))
@@ -6071,18 +6002,15 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill14Path.fill()
 
-
         //// Fill-16 Drawing
         let fill16Path = UIBezierPath(roundedRect: CGRect(x: 29, y: 81, width: 18, height: 6), cornerRadius: 3)
         color.setFill()
         fill16Path.fill()
 
-
         //// Fill-18 Drawing
         let fill18Path = UIBezierPath(roundedRect: CGRect(x: 29, y: 91, width: 18, height: 6), cornerRadius: 3)
         color.setFill()
         fill18Path.fill()
-
 
         //// Fill-20 Drawing
         let fill20Path = UIBezierPath()
@@ -6112,24 +6040,20 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill20Path.fill()
 
-
         //// Fill-22 Drawing
         let fill22Path = UIBezierPath(ovalIn: CGRect(x: 159, y: 344.1, width: 6, height: 6))
         color.setFill()
         fill22Path.fill()
-
 
         //// Fill-24 Drawing
         let fill24Path = UIBezierPath(ovalIn: CGRect(x: 171, y: 344.1, width: 6, height: 6))
         color.setFill()
         fill24Path.fill()
 
-
         //// Fill-26 Drawing
         let fill26Path = UIBezierPath(ovalIn: CGRect(x: 182, y: 344.1, width: 6, height: 6))
         color.setFill()
         fill26Path.fill()
-
 
         //// Fill-28 Drawing
         let fill28Path = UIBezierPath()
@@ -6148,7 +6072,6 @@ public class WireStyleKit : NSObject {
         fill28Path.usesEvenOddFillRule = true
         color.setFill()
         fill28Path.fill()
-
 
         //// Fill-30 Drawing
         let fill30Path = UIBezierPath()
@@ -6186,7 +6109,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill30Path.fill()
 
-
         //// Fill-32 Drawing
         let fill32Path = UIBezierPath()
         fill32Path.move(to: CGPoint(x: 150, y: 135.93))
@@ -6204,7 +6126,6 @@ public class WireStyleKit : NSObject {
         fill32Path.usesEvenOddFillRule = true
         color.setFill()
         fill32Path.fill()
-
 
         //// Fill-34 Drawing
         let fill34Path = UIBezierPath()
@@ -6242,7 +6163,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill34Path.fill()
 
-
         //// Fill-36 Drawing
         let fill36Path = UIBezierPath()
         fill36Path.move(to: CGPoint(x: 200, y: 176.35))
@@ -6260,7 +6180,6 @@ public class WireStyleKit : NSObject {
         fill36Path.usesEvenOddFillRule = true
         color.setFill()
         fill36Path.fill()
-
 
         //// Fill-38 Drawing
         let fill38Path = UIBezierPath()
@@ -6298,7 +6217,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill38Path.fill()
 
-
         //// Fill-40 Drawing
         let fill40Path = UIBezierPath()
         fill40Path.move(to: CGPoint(x: 100, y: 177.08))
@@ -6316,7 +6234,6 @@ public class WireStyleKit : NSObject {
         fill40Path.usesEvenOddFillRule = true
         color.setFill()
         fill40Path.fill()
-
 
         //// Fill-42 Drawing
         let fill42Path = UIBezierPath()
@@ -6353,7 +6270,6 @@ public class WireStyleKit : NSObject {
         fill42Path.usesEvenOddFillRule = true
         color.setFill()
         fill42Path.fill()
-
 
         //// Fill-44 Drawing
         let fill44Path = UIBezierPath()
@@ -6426,7 +6342,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill44Path.fill()
 
-
         //// Fill-47 Drawing
         let fill47Path = UIBezierPath()
         fill47Path.move(to: CGPoint(x: 102.94, y: 307.93))
@@ -6468,7 +6383,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill47Path.fill()
 
-
         //// Fill-49 Drawing
         let fill49Path = UIBezierPath()
         fill49Path.move(to: CGPoint(x: 114.71, y: 320.38))
@@ -6504,7 +6418,6 @@ public class WireStyleKit : NSObject {
         fill49Path.usesEvenOddFillRule = true
         color.setFill()
         fill49Path.fill()
-
 
         //// Fill-51 Drawing
         let fill51Path = UIBezierPath()
@@ -6545,12 +6458,10 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill51Path.fill()
 
-
         //// Fill-53 Drawing
         let fill53Path = UIBezierPath(roundedRect: CGRect(x: 147, y: 21, width: 6, height: 12), cornerRadius: 3)
         color.setFill()
         fill53Path.fill()
-
 
         //// Fill-54 Drawing
         context.saveGState()
@@ -6563,12 +6474,10 @@ public class WireStyleKit : NSObject {
 
         context.restoreGState()
 
-
         //// Fill-55 Drawing
         let fill55Path = UIBezierPath(roundedRect: CGRect(x: 174, y: 54, width: 11, height: 6), cornerRadius: 3)
         color.setFill()
         fill55Path.fill()
-
 
         //// Fill-56 Drawing
         context.saveGState()
@@ -6581,12 +6490,10 @@ public class WireStyleKit : NSObject {
 
         context.restoreGState()
 
-
         //// Fill-57 Drawing
         let fill57Path = UIBezierPath(roundedRect: CGRect(x: 115, y: 54, width: 11, height: 6), cornerRadius: 3)
         color.setFill()
         fill57Path.fill()
-
 
         //// Fill-58 Drawing
         let fill58Path = UIBezierPath()
@@ -6606,7 +6513,6 @@ public class WireStyleKit : NSObject {
         fill58Path.usesEvenOddFillRule = true
         color.setFill()
         fill58Path.fill()
-
 
         //// Fill-59 Drawing
         let fill59Path = UIBezierPath()
@@ -6631,7 +6537,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill59Path.fill()
 
-
         //// Fill-60 Drawing
         let fill60Path = UIBezierPath()
         fill60Path.move(to: CGPoint(x: 277.04, y: 142.3))
@@ -6654,7 +6559,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill60Path.fill()
 
-
         //// Fill-61 Drawing
         let fill61Path = UIBezierPath()
         fill61Path.move(to: CGPoint(x: 283.22, y: 126.79))
@@ -6675,7 +6579,6 @@ public class WireStyleKit : NSObject {
         fill61Path.usesEvenOddFillRule = true
         color.setFill()
         fill61Path.fill()
-
 
         //// Fill-62 Drawing
         let fill62Path = UIBezierPath()
@@ -6724,7 +6627,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill62Path.fill()
 
-
         //// Fill-63 Drawing
         let fill63Path = UIBezierPath()
         fill63Path.move(to: CGPoint(x: 44.12, y: 221.17))
@@ -6743,30 +6645,25 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill63Path.fill()
 
-
         //// Fill-64 Drawing
         let fill64Path = UIBezierPath(roundedRect: CGRect(x: 41, y: 264, width: 6, height: 13), cornerRadius: 3)
         color.setFill()
         fill64Path.fill()
-
 
         //// Fill-65 Drawing
         let fill65Path = UIBezierPath(roundedRect: CGRect(x: 41, y: 246, width: 6, height: 13), cornerRadius: 3)
         color.setFill()
         fill65Path.fill()
 
-
         //// Fill-66 Drawing
         let fill66Path = UIBezierPath(roundedRect: CGRect(x: 41, y: 281, width: 6, height: 14), cornerRadius: 3)
         color.setFill()
         fill66Path.fill()
 
-
         //// Fill-67 Drawing
         let fill67Path = UIBezierPath(ovalIn: CGRect(x: 200, y: 289, width: 6, height: 6))
         color.setFill()
         fill67Path.fill()
-
 
         //// Fill-68 Drawing
         let fill68Path = UIBezierPath()
@@ -6792,7 +6689,6 @@ public class WireStyleKit : NSObject {
         fill68Path.usesEvenOddFillRule = true
         color.setFill()
         fill68Path.fill()
-
 
         //// Fill-69 Drawing
         let fill69Path = UIBezierPath()
@@ -6826,7 +6722,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill69Path.fill()
 
-
         //// Fill-70 Drawing
         let fill70Path = UIBezierPath()
         fill70Path.move(to: CGPoint(x: 89.71, y: 91.11))
@@ -6854,7 +6749,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill70Path.fill()
 
-
         //// Fill-71 Drawing
         let fill71Path = UIBezierPath()
         fill71Path.move(to: CGPoint(x: 92.65, y: 75.19))
@@ -6871,7 +6765,6 @@ public class WireStyleKit : NSObject {
         fill71Path.usesEvenOddFillRule = true
         color.setFill()
         fill71Path.fill()
-
 
         //// Fill-72 Drawing
         let fill72Path = UIBezierPath()
@@ -6897,7 +6790,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill72Path.fill()
 
-
         //// Fill-73 Drawing
         let fill73Path = UIBezierPath()
         fill73Path.move(to: CGPoint(x: 85.29, y: 126.38))
@@ -6920,12 +6812,10 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill73Path.fill()
 
-
         //// Fill-74 Drawing
         let fill74Path = UIBezierPath(ovalIn: CGRect(x: 110, y: 118, width: 6, height: 6))
         color.setFill()
         fill74Path.fill()
-
 
         //// Fill-75 Drawing
         let fill75Path = UIBezierPath()
@@ -6949,30 +6839,25 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill75Path.fill()
 
-
         //// Fill-76 Drawing
         let fill76Path = UIBezierPath(ovalIn: CGRect(x: 110, y: 144, width: 6, height: 6))
         color.setFill()
         fill76Path.fill()
-
 
         //// Fill-77 Drawing
         let fill77Path = UIBezierPath(ovalIn: CGRect(x: 187, y: 141, width: 6, height: 6))
         color.setFill()
         fill77Path.fill()
 
-
         //// Fill-78 Drawing
         let fill78Path = UIBezierPath(ovalIn: CGRect(x: 197, y: 141, width: 6, height: 6))
         color.setFill()
         fill78Path.fill()
 
-
         //// Fill-79 Drawing
         let fill79Path = UIBezierPath(ovalIn: CGRect(x: 208, y: 141, width: 6, height: 6))
         color.setFill()
         fill79Path.fill()
-
 
         //// Fill-80 Drawing
         let fill80Path = UIBezierPath()
@@ -7010,7 +6895,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill80Path.fill()
 
-
         //// Fill-81 Drawing
         let fill81Path = UIBezierPath()
         fill81Path.move(to: CGPoint(x: 230.88, y: 304.21))
@@ -7024,7 +6908,6 @@ public class WireStyleKit : NSObject {
         fill81Path.usesEvenOddFillRule = true
         color.setFill()
         fill81Path.fill()
-
 
         //// Fill-82 Drawing
         let fill82Path = UIBezierPath()
@@ -7040,7 +6923,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill82Path.fill()
 
-
         //// Fill-83 Drawing
         let fill83Path = UIBezierPath()
         fill83Path.move(to: CGPoint(x: 254.41, y: 304.21))
@@ -7054,7 +6936,6 @@ public class WireStyleKit : NSObject {
         fill83Path.usesEvenOddFillRule = true
         color.setFill()
         fill83Path.fill()
-
 
         //// Fill-84 Drawing
         let fill84Path = UIBezierPath()
@@ -7078,7 +6959,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill84Path.fill()
 
-
         //// Fill-85 Drawing
         let fill85Path = UIBezierPath()
         fill85Path.move(to: CGPoint(x: 253.68, y: 205.74))
@@ -7100,7 +6980,6 @@ public class WireStyleKit : NSObject {
         fill85Path.usesEvenOddFillRule = true
         color.setFill()
         fill85Path.fill()
-
 
         //// Fill-86 Drawing
         let fill86Path = UIBezierPath()
@@ -7124,12 +7003,10 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill86Path.fill()
 
-
         //// Fill-87 Drawing
         let fill87Path = UIBezierPath(roundedRect: CGRect(x: 229, y: 218, width: 53, height: 5), cornerRadius: 2.5)
         color.setFill()
         fill87Path.fill()
-
 
         //// Fill-88 Drawing
         let fill88Path = UIBezierPath()
@@ -7153,12 +7030,10 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill88Path.fill()
 
-
         //// Fill-89 Drawing
         let fill89Path = UIBezierPath(roundedRect: CGRect(x: 135, y: 294, width: 30, height: 6), cornerRadius: 3)
         color.setFill()
         fill89Path.fill()
-
 
         //// Fill-90 Drawing
         let fill90Path = UIBezierPath()
@@ -7201,7 +7076,6 @@ public class WireStyleKit : NSObject {
         color.setFill()
         fill90Path.fill()
 
-
         //// Fill-91 Drawing
         let fill91Path = UIBezierPath()
         fill91Path.move(to: CGPoint(x: 67.65, y: 126.38))
@@ -7240,13 +7114,11 @@ public class WireStyleKit : NSObject {
     @objc dynamic public class func drawDegradation(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 260, height: 260), resizing: ResizingBehavior = .aspectFit) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 260, height: 260), target: targetFrame)
         context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         context.scaleBy(x: resizedFrame.width / 260, y: resizedFrame.height / 260)
-
 
         //// Color Declarations
         let white80 = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 0.800)
@@ -7276,21 +7148,17 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         white80.setFill()
         bezierPath.fill()
-        
         context.restoreGState()
-
     }
 
     @objc dynamic public class func drawSpace(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 28, height: 28), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 28, height: 28), target: targetFrame)
         context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         context.scaleBy(x: resizedFrame.width / 28, y: resizedFrame.height / 28)
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -7317,7 +7185,6 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
-        
         context.restoreGState()
 
     }
@@ -7325,13 +7192,11 @@ public class WireStyleKit : NSObject {
     @objc dynamic public class func drawSpaceFocus(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 36, height: 36), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 36, height: 36), target: targetFrame)
         context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         context.scaleBy(x: resizedFrame.width / 36, y: resizedFrame.height / 36)
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -7367,9 +7232,7 @@ public class WireStyleKit : NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
-        
         context.restoreGState()
-
     }
 
     @objc dynamic public class func drawIcon_restore_48pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
@@ -7412,10 +7275,8 @@ public class WireStyleKit : NSObject {
         //// Color Declarations
         let black40 = backgroundColor.withAlpha(0.4)
 
-
         //// Subframes
         let frame2 = CGRect(x: frame.minX + fastFloor((frame.width - 16) * 0.50000 + 0.5), y: frame.minY + fastFloor((frame.height - 12) * 1.00000 + 0.5), width: 16, height: 12)
-
 
         //// Bezier Drawing
         let bezierPath = UIBezierPath()
@@ -7432,7 +7293,6 @@ public class WireStyleKit : NSObject {
         bezierPath.close()
         black40.setFill()
         bezierPath.fill()
-
 
         //// Bezier 2 Drawing
         let bezier2Path = UIBezierPath()
@@ -7636,48 +7496,45 @@ public class WireStyleKit : NSObject {
 
     //// Customization Infrastructure
 
-    @objc @IBOutlet dynamic var ongoingcallTargets: [AnyObject]! {
+    @IBOutlet dynamic var ongoingcallTargets: [AnyObject]! {
         get { return Cache.ongoingcallTargets }
         set {
             Cache.ongoingcallTargets = newValue
             for target: AnyObject in newValue {
-                let _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfOngoingcall)
+                _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfOngoingcall)
             }
         }
     }
 
-    @objc @IBOutlet dynamic var shieldverifiedTargets: [AnyObject]! {
+    @IBOutlet dynamic var shieldverifiedTargets: [AnyObject]! {
         get { return Cache.shieldverifiedTargets }
         set {
             Cache.shieldverifiedTargets = newValue
             for target: AnyObject in newValue {
-                let _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfShieldverified)
+                _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfShieldverified)
             }
         }
     }
 
-    @objc @IBOutlet dynamic var shieldnotverifiedTargets: [AnyObject]! {
+    @IBOutlet dynamic var shieldnotverifiedTargets: [AnyObject]! {
         get { return Cache.shieldnotverifiedTargets }
         set {
             Cache.shieldnotverifiedTargets = newValue
             for target: AnyObject in newValue {
-                let _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfShieldnotverified)
+                _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfShieldnotverified)
             }
         }
     }
 
-    @objc @IBOutlet dynamic var degradationTargets: [AnyObject]! {
+    @IBOutlet dynamic var degradationTargets: [AnyObject]! {
         get { return Cache.degradationTargets }
         set {
             Cache.degradationTargets = newValue
             for target: AnyObject in newValue {
-                let _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfDegradation)
+                _ = target.perform(NSSelectorFromString("setImage:"), with: WireStyleKit.imageOfDegradation)
             }
         }
     }
-
-
-
 
     @objc(WireStyleKitResizingBehavior)
     public enum ResizingBehavior: Int {
@@ -7694,19 +7551,18 @@ public class WireStyleKit : NSObject {
             var scales = CGSize.zero
             scales.width = abs(target.width / rect.width)
             scales.height = abs(target.height / rect.height)
-
             switch self {
-                case .aspectFit:
-                    scales.width = min(scales.width, scales.height)
-                    scales.height = scales.width
-                case .aspectFill:
-                    scales.width = max(scales.width, scales.height)
-                    scales.height = scales.width
-                case .stretch:
-                    break
-                case .center:
-                    scales.width = 1
-                    scales.height = 1
+            case .aspectFit:
+                scales.width = min(scales.width, scales.height)
+                scales.height = scales.width
+            case .aspectFill:
+                scales.width = max(scales.width, scales.height)
+                scales.height = scales.width
+            case .stretch:
+                break
+            case .center:
+                scales.width = 1
+                scales.height = 1
             }
 
             var result = rect.standardized
@@ -7718,8 +7574,6 @@ public class WireStyleKit : NSObject {
         }
     }
 }
-
-
 
 private extension UIColor {
     func withHue(_ newHue: CGFloat) -> UIColor {

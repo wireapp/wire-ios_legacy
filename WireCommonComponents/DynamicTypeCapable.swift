@@ -25,5 +25,4 @@ public protocol DynamicTypeCapable {
     /// This method is called when the preferred content size category changes.
     /// Your implementation should update all of its fonts that are appropriately sized for the current content size category.
     func redrawFont()
-    
 }
