@@ -326,7 +326,7 @@
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Lesebekreftelser";
-"conversation.create.receipts.subtitle" = "When this is on, people can see when their messages in this conversation are read.";
+"conversation.create.receipts.subtitle" = "Når denne er skrudd på, kan man se når ens beskjeder i samtalen er blitt lest.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Pågående anrop";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -931,7 +931,7 @@
 "group_details.notification_options_cell.title" = "Varsler";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Lesebekreftelser";
-"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+"group_details.receipt_options_cell.description" = "Når denne er skrudd på, kan man se når ens beskjeder i samtalen er blitt lest.";
 
 "group_details.conversation_admins_header.title" = "Group admins";
 "group_details.conversation_members_header.title" = "Group members";
