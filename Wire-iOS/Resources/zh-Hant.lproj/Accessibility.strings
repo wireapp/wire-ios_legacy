@@ -15,8 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+/// Naming convention:
+///
+/// The names of all accessibility strings should follow the format:
+///
+///  "<screen>.<component>.<usage>"
+
 
 "conversation.backButton.description" = "Go back to conversation list";
 "conversation.searchButton.description" = "Open search";
-"conversation.profileImage.description" = "Profile picture";
+"conversation.profileImage.description" = "個人頭像";
 "conversation.profileImage.hint" = "Double tap to open profile";
