@@ -61,7 +61,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let domainLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = .green
+        label.textColor = .gray
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         return label

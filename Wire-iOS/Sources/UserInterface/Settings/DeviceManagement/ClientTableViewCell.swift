@@ -133,7 +133,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
             verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
 
-        backgroundColor = UIColor.clear
+        backgroundColor = SemanticColors.Background.deviceTableCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 

@@ -50,9 +50,9 @@ public final class FileMetaDataGenerator: NSObject {
 
 extension AVURLAsset {
     static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
-        return audiovisualTypes().reduce(false) { (conformsBefore, compatibleUTI) -> Bool in
-            conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
-        }
+        return audiovisualTypes().contains(where: { compatibleUTI  -> Bool in
+            UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
+        })
     }
 }
 
@@ -65,8 +65,7 @@ extension AVAsset {
         let reader: AVAssetReader
         do {
             reader = try AVAssetReader(asset: self)
-        }
-        catch let error {
+        } catch let error {
             zmLog.error("Cannot read asset metadata for \(self): \(error)")
             return .none
         }

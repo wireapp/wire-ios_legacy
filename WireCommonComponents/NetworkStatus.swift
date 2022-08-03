@@ -114,16 +114,12 @@ public final class NetworkStatus {
 
     // MARK: - Utilities
 
-    private var reachabilityCallback: SCNetworkReachabilityCallBack = {
-        (reachability: SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
+    private var reachabilityCallback: SCNetworkReachabilityCallBack = { (_ : SCNetworkReachability, _ : SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
         guard let info = info else {
             assert(false, "info was NULL in ReachabilityCallback")
-            
             return
         }
-        
         let networkStatus = Unmanaged<NetworkStatus>.fromOpaque(info).takeUnretainedValue()
-        
         // Post a notification to notify the client that the network reachability changed.
         NotificationCenter.default.post(name: Notification.Name.NetworkStatus, object: networkStatus)
     }

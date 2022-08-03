@@ -26,7 +26,6 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
         contentView.addSubview(container)
         container.addSubview(label)
         label.font = FontSpec(.normal, .light).font
@@ -53,8 +52,8 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .text(text) = configuration else { preconditionFailure() }
         label.attributedText = text && .lineSpacing(8)
-        label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        container.backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
+        label.textColor = SemanticColors.LabelsColor.textEmailCellValue
+        container.backgroundColor = SemanticColors.Background.settingsView
     }
 
 }
