@@ -27,15 +27,15 @@ class IncomingRequestFooterTests: ZMSnapshotTestCase {
 
     func testIncomingRequestFooter_Light() {
         let footer = IncomingRequestFooterView()
-        footer.colorSchemeVariant = .light
         let view = footer.prepareForSnapshots()
+        view.overrideUserInterfaceStyle = .light
         verify(view: view)
     }
 
     func testIncomingRequestFooter_Dark() {
         let footer = IncomingRequestFooterView()
-        footer.colorSchemeVariant = .dark
         let view = footer.prepareForSnapshots()
+        view.overrideUserInterfaceStyle = .dark
         verify(view: view)
     }
 
