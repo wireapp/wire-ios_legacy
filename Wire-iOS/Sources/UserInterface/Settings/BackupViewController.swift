@@ -40,9 +40,8 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        let color = SemanticColors.LabelsColor.textLabelSettingsCell
-
-        iconView.setIcon(.restore, size: .large, color: color)
+        tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.setTemplateIcon(.restore, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -84,7 +83,7 @@ final class BackupActionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .clear
+        backgroundColor = SemanticColors.Background.settingsTableCell
         contentView.backgroundColor = .clear
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false

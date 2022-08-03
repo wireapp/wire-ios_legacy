@@ -29,22 +29,25 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
 
     init() {
         sendReportCell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        sendReportCell.backgroundColor = UIColor.clear
+        sendReportCell.backgroundColor = SemanticColors.Background.settingsTableCell
         sendReportCell.textLabel?.text = "self.settings.technical_report.send_report".localized
         sendReportCell.textLabel?.textColor = UIColor.accent()
-        sendReportCell.backgroundColor = UIColor.clear
         sendReportCell.backgroundView = UIView()
         sendReportCell.selectedBackgroundView = UIView()
 
         includedVoiceLogCell = UITableViewCell(style: .default, reuseIdentifier: nil)
         includedVoiceLogCell.accessoryType = .checkmark
         includedVoiceLogCell.textLabel?.text = "self.settings.technical_report.include_log".localized
-        includedVoiceLogCell.textLabel?.textColor = UIColor.white
-        includedVoiceLogCell.backgroundColor = UIColor.clear
+        includedVoiceLogCell.textLabel?.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        includedVoiceLogCell.backgroundColor = SemanticColors.Background.settingsTableCell
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
 
         super.init(nibName: nil, bundle: nil)
+
+        createBorders(
+            color: SemanticColors.Background.settingsTableCellBorder,
+            elements: [sendReportCell, includedVoiceLogCell])
     }
 
     @available(*, unavailable)
@@ -86,6 +89,13 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
 
+    private func createBorders(color: UIColor, elements: [UIView]) {
+        for element in elements {
+            element.addTopBorder(color: color)
+            element.addBottomBorder(color: color)
+        }
+    }
+
     // MARK: - TableView Delegates
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -111,7 +121,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "self.settings.technical_report.privacy_warning".localized
-        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.textColor = SemanticColors.LabelsColor.textFooterLabelConversationDetails
         label.backgroundColor = .clear
         label.font = FontSpec(.small, .light).font!
 
@@ -146,9 +156,5 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
