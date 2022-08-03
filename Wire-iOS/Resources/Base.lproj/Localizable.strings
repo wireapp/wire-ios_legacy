@@ -1967,3 +1967,6 @@
 "accessibility.accountPage.teamName.description" = "Team name";
 "accessibility.accountPage.profilePicture.description" = "Profile picture";
 "accessibility.accountPage.profilePictureButton.hint" = "Double tap to change your picture";
+
+
+"accessibility.profile.back.button" = "Go back to conversation details";

@@ -194,6 +194,12 @@ internal enum L10n {
           internal static let content = L10n.tr("Localizable", "accessibility.conversationList.profileButton.content")
         }
       }
+      internal enum Profile {
+        internal enum Back {
+          /// Go back to conversation details
+          internal static let button = L10n.tr("Localizable", "accessibility.profile.back.button")
+        }
+      }
       internal enum ProfileImage {
         /// Double tap to open profile
         internal static let button = L10n.tr("Localizable", "accessibility.profile_image.button")

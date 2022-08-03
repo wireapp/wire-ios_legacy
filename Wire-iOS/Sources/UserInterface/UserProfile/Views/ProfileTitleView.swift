@@ -70,6 +70,23 @@ final class ProfileTitleView: UIView {
     func configure(with user: UserType, variant: ColorSchemeVariant) {
         let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant), selfUser: ZMUser.selfUser())
         titleLabel.attributedText = attributedTitle
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        var components: [String] = []
+        components.append(titleLabel.text ?? "")
+
+        if showVerifiedShield {
+            components.append("conversation.voiceover.verified".localized)
+        }
+
+//        shouldGroupAccessibilityChildren = true
+//        titleLabel.isAccessibilityElement = false
+        isAccessibilityElement = true
+        accessibilityTraits.insert(.header)
+        accessibilityLabel = components.joined(separator: ", ")
+
     }
 
     private func updateVerifiedShield() {
@@ -79,6 +96,7 @@ final class ProfileTitleView: UIView {
             options: .transitionCrossDissolve,
             animations: { self.verifiedImageView.isHidden = !self.showVerifiedShield }
         )
+        setupAccessibility()
     }
 
 }
