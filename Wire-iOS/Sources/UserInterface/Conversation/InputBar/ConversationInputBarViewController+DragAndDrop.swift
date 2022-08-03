@@ -73,13 +73,11 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
         return dropProposal(mediaShareRestrictionManager: MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()))
     }
 
-
     func dropProposal(mediaShareRestrictionManager: MediaShareRestrictionManager) -> UIDropProposal {
         return mediaShareRestrictionManager.canUseClipboard
         ? UIDropProposal(operation: .copy)
         : UIDropProposal(operation: .forbidden)
     }
-
 
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return true

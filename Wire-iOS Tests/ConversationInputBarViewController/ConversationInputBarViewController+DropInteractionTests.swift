@@ -31,7 +31,6 @@ final class ConversationInputBarViewControllerDropInteractionTests: XCTestCase {
         XCTAssertEqual(dropProposal.operation, UIDropOperation.copy, file: #file, line: #line)
     }
 
-
     func testThatItPreventsDroppingFilesWithFlagEnabled() {
         let mockConversation = MockInputBarConversationType()
         let sut = ConversationInputBarViewController(conversation: mockConversation)
