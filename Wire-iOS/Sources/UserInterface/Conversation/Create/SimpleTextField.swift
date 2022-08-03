@@ -137,7 +137,7 @@ final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
         return placeholder && attribute
     }
 
-    func updatePlaceholderAttributedText(attributes: [NSAttributedString.Key : Any]) {
+    func updatePlaceholderAttributedText(attributes: [NSAttributedString.Key: Any]) {
         attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "", attributes: attributes)
     }
 
