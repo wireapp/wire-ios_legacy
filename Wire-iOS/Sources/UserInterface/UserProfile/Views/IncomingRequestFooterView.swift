@@ -77,7 +77,6 @@ class IncomingRequestFooterView: UIView {
 
         ignoreButton.applyStyle(.secondaryTextButtonStyle)
 
-
         let buttonsStack = UIStackView(arrangedSubviews: [ignoreButton, acceptButton])
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 16

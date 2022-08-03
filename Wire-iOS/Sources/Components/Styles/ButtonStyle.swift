@@ -43,5 +43,3 @@ public struct NonLegacyButtonStyle {
                                                                border: .clear))
 
 }
-
-
