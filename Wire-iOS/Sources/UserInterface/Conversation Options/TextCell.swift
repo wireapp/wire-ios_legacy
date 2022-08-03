@@ -54,6 +54,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
         label.attributedText = text && .lineSpacing(8)
         label.textColor = SemanticColors.LabelsColor.textEmailCellValue
         container.backgroundColor = SemanticColors.Background.settingsView
+        backgroundColor = SemanticColors.Background.settingsView
     }
 
 }
