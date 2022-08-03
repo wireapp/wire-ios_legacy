@@ -132,6 +132,7 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
+            textLabel.textColor = UIColor.white
             badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
             accessibilityValue = textLabel.text
             return textLabel
