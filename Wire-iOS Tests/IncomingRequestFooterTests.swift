@@ -23,19 +23,22 @@ class IncomingRequestFooterTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        recordMode = true
     }
 
     func testIncomingRequestFooter_Light() {
         let footer = IncomingRequestFooterView()
+        footer.overrideUserInterfaceStyle = .light
         let view = footer.prepareForSnapshots()
-        view.overrideUserInterfaceStyle = .light
+
         verify(view: view)
     }
 
     func testIncomingRequestFooter_Dark() {
         let footer = IncomingRequestFooterView()
+        footer.overrideUserInterfaceStyle = .dark
         let view = footer.prepareForSnapshots()
-        view.overrideUserInterfaceStyle = .dark
+
         verify(view: view)
     }
 
