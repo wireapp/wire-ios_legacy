@@ -33,8 +33,8 @@ class StylableButton: UIButton, Stylable {
     }
 
     private func applyStyleToNonDynamicProperties(style: NonLegacyButtonStyle) {
-        setNonLegacyBackgroundImageColor(style.normalStateColors.background, for: .normal)
-        setNonLegacyBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+        setBackgroundImageColor(style.normalStateColors.background, for: .normal)
+        setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
 
         self.layer.borderWidth = 1
         self.layer.borderColor = isHighlighted ? style.normalStateColors.border.cgColor : style.highlightedStateColors.border.cgColor
@@ -47,7 +47,7 @@ class StylableButton: UIButton, Stylable {
         applyStyleToNonDynamicProperties(style: style)
     }
 
-    func setNonLegacyBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
+    func setBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
         if let color = color {
             setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
         } else {
