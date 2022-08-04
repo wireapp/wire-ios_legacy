@@ -44,6 +44,9 @@ class StylableButton: UIButton, Stylable {
         super.traitCollectionDidChange(previousTraitCollection)
         guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         guard let style = nonLegacyStyle else { return }
+        // We need to call this method here because the background,
+        // and the border color of the button when switching from dark to light mode
+        // or vice versa can be updated only inside traitCollectionDidChange.
         applyStyleToNonDynamicProperties(style: style)
     }
 
