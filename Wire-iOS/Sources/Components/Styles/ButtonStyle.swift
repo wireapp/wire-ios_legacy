@@ -33,12 +33,12 @@ public struct NonLegacyButtonStyle {
                                                                title: SemanticColors.Button.textSecondaryEnabled,
                                                                border: SemanticColors.Button.borderSecondaryHighlighted))
 
-    static let primaryTextButtonStyle = NonLegacyButtonStyle(normalStateColors: (
-                                                               background: SemanticColors.Button.backgroundPrimaryEnabled,
+    static let accentColorTextButtonStyle = NonLegacyButtonStyle(normalStateColors: (
+                                                               background: UIColor.accent(),
                                                                title: SemanticColors.Button.textPrimaryEnabled,
                                                                border: .clear),
                                                              highlightedStateColors: (
-                                                               background: SemanticColors.Button.backgroundPrimaryHighlighted,
+                                                               background: UIColor.accentDarken,
                                                                title: SemanticColors.Button.textPrimaryEnabled,
                                                                border: .clear))
 

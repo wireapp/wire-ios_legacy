@@ -73,7 +73,7 @@ class IncomingRequestFooterView: UIView {
         titleLabel.textColor = SemanticColors.Label.textDefault
         backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
 
-        acceptButton.applyStyle(.primaryTextButtonStyle)
+        acceptButton.applyStyle(.accentColorTextButtonStyle)
 
         ignoreButton.applyStyle(.secondaryTextButtonStyle)
 
