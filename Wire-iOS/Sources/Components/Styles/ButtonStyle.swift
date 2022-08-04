@@ -26,20 +26,20 @@ public struct NonLegacyButtonStyle {
 
     static let secondaryTextButtonStyle = NonLegacyButtonStyle(normalStateColors: (
                                                                background: SemanticColors.Button.backgroundSecondaryEnabled,
-                                                               title: SemanticColors.Button.foregroundTextSecondaryEnabled,
-                                                               border: SemanticColors.Button.backgroundBorderSecondaryEnabled),
+                                                               title: SemanticColors.Button.textSecondaryEnabled,
+                                                               border: SemanticColors.Button.borderSecondaryEnabled),
                                                                highlightedStateColors: (
                                                                background: SemanticColors.Button.backgroundSecondaryHighlighted,
-                                                               title: SemanticColors.Button.foregroundTextSecondaryEnabled,
-                                                               border: SemanticColors.Button.backgroundBorderSecondaryHighlighted))
+                                                               title: SemanticColors.Button.textSecondaryEnabled,
+                                                               border: SemanticColors.Button.borderSecondaryHighlighted))
 
     static let primaryTextButtonStyle = NonLegacyButtonStyle(normalStateColors: (
                                                                background: SemanticColors.Button.backgroundPrimaryEnabled,
-                                                               title: SemanticColors.Button.foregroundTextPrimaryEnabled,
+                                                               title: SemanticColors.Button.textPrimaryEnabled,
                                                                border: .clear),
                                                              highlightedStateColors: (
                                                                background: SemanticColors.Button.backgroundPrimaryHighlighted,
-                                                               title: SemanticColors.Button.foregroundTextPrimaryEnabled,
+                                                               title: SemanticColors.Button.textPrimaryEnabled,
                                                                border: .clear))
 
 }
