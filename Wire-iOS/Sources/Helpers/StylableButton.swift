@@ -21,10 +21,10 @@ import UIKit
 
 class StylableButton: UIButton, Stylable {
 
-    var nonLegacyStyle: NonLegacyButtonStyle?
+    var buttonStyle: ButtonStyle?
 
-    public func applyStyle(_ style: NonLegacyButtonStyle) {
-        self.nonLegacyStyle = style
+    public func applyStyle(_ style: ButtonStyle) {
+        self.buttonStyle = style
 
         setTitleColor(style.normalStateColors.title, for: .normal)
         setTitleColor(style.highlightedStateColors.title, for: .highlighted)
@@ -32,7 +32,7 @@ class StylableButton: UIButton, Stylable {
         applyStyleToNonDynamicProperties(style: style)
     }
 
-    private func applyStyleToNonDynamicProperties(style: NonLegacyButtonStyle) {
+    private func applyStyleToNonDynamicProperties(style: ButtonStyle) {
         setBackgroundImageColor(style.normalStateColors.background, for: .normal)
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
 
@@ -43,7 +43,7 @@ class StylableButton: UIButton, Stylable {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
-        guard let style = nonLegacyStyle else { return }
+        guard let style = buttonStyle else { return }
         // We need to call this method here because the background,
         // and the border color of the button when switching from dark to light mode
         // or vice versa can be updated only inside traitCollectionDidChange.
