@@ -154,7 +154,6 @@ final class ArticleViewTests: ZMSnapshotTestCase {
 
     // MARK: - Tests
 
-    @available(iOS 13.0, *)
     func testContextMenuIsCreatedWithDeleteItem() {
         SelfUser.setupMockSelfUser()
 

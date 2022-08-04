@@ -106,7 +106,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
-        if isAppLockActive { UIApplication.shared.keyWindow?.endEditing(true) }
+        if isAppLockActive { UIApplication.shared.firstKeyWindow?.endEditing(true) }
     }
 
     // MARK: - View Configuration
@@ -393,7 +393,7 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
             let changes: () -> Void = {
                 picker.view.translatesAutoresizingMaskIntoConstraints = false
                 self.topContainer.addSubview(picker.view)
-                picker.view.fitInSuperview()
+                picker.view.fitIn(view: self.topContainer)
                 picker.view.alpha = 1
             }
 

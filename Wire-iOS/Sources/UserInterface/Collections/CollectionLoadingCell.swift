@@ -21,7 +21,7 @@ import UIKit
 import WireDataModel
 
 final class CollectionLoadingCell: UICollectionViewCell {
-    let loadingView = UIActivityIndicatorView(style: .gray)
+    let loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

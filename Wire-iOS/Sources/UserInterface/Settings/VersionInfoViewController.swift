@@ -55,8 +55,8 @@ final class VersionInfoViewController: UIViewController {
         // Layout
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        closeButton.pinToSuperview(safely: true, anchor: .top, inset: 24)
-        closeButton.pinToSuperview(safely: true, anchor: .trailing, inset: 18)
+        closeButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 24).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -18).isActive = true
 
         // Target
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
@@ -75,7 +75,12 @@ final class VersionInfoViewController: UIViewController {
         view.addSubview(versionInfoLabel)
 
         versionInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        versionInfoLabel.fitInSuperview(with: EdgeInsets(top: 80, leading: 24, bottom: 24, trailing: 24))
+        NSLayoutConstraint.activate([
+            versionInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            versionInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            versionInfoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            versionInfoLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
+        ])
 
         var versionString: String = ""
 

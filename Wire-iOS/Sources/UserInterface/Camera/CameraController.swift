@@ -283,7 +283,7 @@ private extension AVCaptureVideoOrientation {
     /// then the interface orientation. Must be called on the main thread.
     static var current: AVCaptureVideoOrientation {
         let device = UIDevice.current.orientation
-        let ui = UIApplication.shared.statusBarOrientation
+        let ui = UIWindow.interfaceOrientation ?? .unknown
 
         let deviceOrientation = self.init(deviceOrientation: device)
         let uiOrientation = self.init(uiOrientation: ui)

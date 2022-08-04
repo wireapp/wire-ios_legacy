@@ -48,7 +48,6 @@ final class ConversationMessageActionController {
             .filter(canPerformAction)
     }
 
-    @available(iOS 13.0, *)
     func allMessageMenuElements() -> [UIAction] {
         weak var responder = self.responder
         weak var message = self.message

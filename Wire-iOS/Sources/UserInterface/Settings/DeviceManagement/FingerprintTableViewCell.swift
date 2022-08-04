@@ -25,7 +25,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     // MARK: - Properties
     let titleLabel = DynamicFontLabel(fontSpec: .smallSemiboldFont, color: .textForeground)
     let fingerprintLabel = CopyableLabel()
-    let spinner = UIActivityIndicatorView(style: .gray)
+    let spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
 
     var variant: ColorSchemeVariant? {
         didSet {

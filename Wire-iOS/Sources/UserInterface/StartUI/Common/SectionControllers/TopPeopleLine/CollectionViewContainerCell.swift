@@ -26,7 +26,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
             contentView.addSubview(collectionView)
 
             collectionView.translatesAutoresizingMaskIntoConstraints = false
-            collectionView.fitInSuperview()
+            collectionView.fitIn(view: contentView)
         }
     }
 

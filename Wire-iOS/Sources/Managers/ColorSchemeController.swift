@@ -50,9 +50,8 @@ final class ColorSchemeController: NSObject {
 
     @objc
     private func settingsColorSchemeDidChange() {
-        if #available(iOS 13.0, *) {
-            UIApplication.shared.keyWindow?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
-        }
+        let window = UIApplication.shared.firstKeyWindow
+        window?.rootViewController?.overrideUserInterfaceStyle = Settings.shared.colorScheme.userInterfaceStyle
 
         ColorScheme.default.variant = Settings.shared.colorSchemeVariant
 
