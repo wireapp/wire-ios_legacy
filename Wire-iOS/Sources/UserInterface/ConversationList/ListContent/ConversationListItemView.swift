@@ -56,7 +56,7 @@ final class ConversationListItemView: UIView {
 
     var selected = false {
         didSet {
-            backgroundColor = selected ? UIColor(white: 0, alpha: 0.08) : .clear
+            backgroundColor = selected ? UIColor.accent() : .clear
         }
     }
 
