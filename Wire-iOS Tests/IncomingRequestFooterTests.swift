@@ -23,7 +23,6 @@ class IncomingRequestFooterTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
     }
 
     func testIncomingRequestFooter_Light() {
