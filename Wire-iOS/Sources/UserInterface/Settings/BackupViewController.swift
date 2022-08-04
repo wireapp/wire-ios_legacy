@@ -40,7 +40,7 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
         iconView.setTemplateIcon(.restore, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false

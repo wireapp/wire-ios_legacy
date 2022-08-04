@@ -111,7 +111,7 @@ extension NSTextAttachment {
         let attachment = NSTextAttachment()
         attachment.image = StyleKitIcon.downArrow.makeImage(
             size: 8,
-            color: SemanticColors.ButtonsColor.accountAvailabilityIcon)
+            color: SemanticColors.ButtonsColor.accountAvailabilityIcon).withRenderingMode(.alwaysTemplate)
         return attachment
     }
 }

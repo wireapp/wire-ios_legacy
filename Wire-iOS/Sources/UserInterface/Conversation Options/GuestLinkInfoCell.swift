@@ -71,7 +71,7 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .info(infoText) = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
-        tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconImageView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
         iconImageView.setTemplateIcon(.about, size: .tiny)
 
         label.configMultipleLineLabel()
