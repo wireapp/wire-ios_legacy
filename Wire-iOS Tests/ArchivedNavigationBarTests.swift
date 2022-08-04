@@ -42,7 +42,6 @@ final class ArchivedNavigationBarTests: ZMSnapshotTestCase {
 
     func testThatItShowsTheSeparatorWhen_ShowSeparator_IsSetToYes() {
         UIView.setAnimationsEnabled(false)
-        sut.showSeparator = true
         verifyInAllPhoneWidths(view: sut)
         UIView.setAnimationsEnabled(true)
     }
