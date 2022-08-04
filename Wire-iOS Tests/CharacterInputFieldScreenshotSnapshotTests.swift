@@ -199,7 +199,7 @@ final class CharacterInputFieldTests: XCTestCase {
     }
 }
 
-final class CharacterInputFieldScreenshotTests: XCTestCase {
+final class CharacterInputFieldScreenshotSnapshotTests: XCTestCase {
     var sut: CharacterInputField! = nil
 
     override func setUp() {
