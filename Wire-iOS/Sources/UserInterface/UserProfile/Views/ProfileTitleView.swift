@@ -67,7 +67,7 @@ final class ProfileTitleView: UIView {
         ])
     }
 
-    func configure(with user: UserType, variant: ColorSchemeVariant) {
+    func configure(with user: UserType) {
         let attributedTitle = user.nameIncludingAvailability(color: SemanticColors.Label.textDefault, selfUser: ZMUser.selfUser())
         titleLabel.attributedText = attributedTitle
     }

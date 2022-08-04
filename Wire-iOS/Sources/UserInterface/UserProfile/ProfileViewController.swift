@@ -492,7 +492,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateTitleView() {
-        profileTitleView.configure(with: viewModel.user, variant: ColorScheme.default.variant)
+        profileTitleView.configure(with: viewModel.user)
     }
 
     func updateShowVerifiedShield() {
