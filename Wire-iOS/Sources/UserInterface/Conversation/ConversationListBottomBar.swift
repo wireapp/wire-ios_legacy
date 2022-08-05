@@ -165,7 +165,7 @@ final class ConversationListBottomBarController: UIViewController {
             stackView.distribution = .fillEqually
             stackView.alignment = .center
             stackView.isUserInteractionEnabled = true
-            stackView.spacing = 5
+            stackView.spacing = 4
             stackView.layer.cornerRadius = 6
             stackView.layer.masksToBounds = true
             stackView.isLayoutMarginsRelativeArrangement = true
