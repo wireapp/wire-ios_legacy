@@ -53,7 +53,7 @@ final class SearchHeaderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
-        tokenField.tokenTitleColor = SemanticColors.SearchBarColor.textInputView
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textSearchBarPlaceholder
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

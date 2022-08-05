@@ -48,7 +48,7 @@ public enum SemanticColors {
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
     }
-    public enum SearchBarColor {
+    public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
         static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
