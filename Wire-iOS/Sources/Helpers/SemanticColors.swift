@@ -70,7 +70,6 @@ public enum SemanticColors {
         static let deviceTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let settingsTableCellBorder = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
