@@ -29,19 +29,14 @@ extension StyleKitIcon {
 
         /// 8pt
         case nano
-
         /// 16pt.
         case tiny
-
         /// 20pt.
         case small
-
         /// 24pt.
         case medium
-
         /// 48pt.
         case large
-
         /// A custom size.
         case custom(CGFloat)
 

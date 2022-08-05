@@ -7153,7 +7153,6 @@ public class WireStyleKit: NSObject {
         bezierPath.fill()
 
         context.restoreGState()
-
     }
 
     @objc dynamic public class func drawSpace(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 28, height: 28), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
@@ -7199,7 +7198,7 @@ public class WireStyleKit: NSObject {
     @objc dynamic public class func drawSpaceFocus(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 36, height: 36), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-
+        
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 36, height: 36), target: targetFrame)
@@ -7242,7 +7241,6 @@ public class WireStyleKit: NSObject {
         bezierPath.fill()
 
         context.restoreGState()
-
     }
 
     @objc dynamic public class func drawIcon_restore_48pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
@@ -7561,19 +7559,18 @@ public class WireStyleKit: NSObject {
             var scales = CGSize.zero
             scales.width = abs(target.width / rect.width)
             scales.height = abs(target.height / rect.height)
-
             switch self {
-                case .aspectFit:
-                    scales.width = min(scales.width, scales.height)
-                    scales.height = scales.width
-                case .aspectFill:
-                    scales.width = max(scales.width, scales.height)
-                    scales.height = scales.width
-                case .stretch:
-                    break
-                case .center:
-                    scales.width = 1
-                    scales.height = 1
+            case .aspectFit:
+                scales.width = min(scales.width, scales.height)
+                scales.height = scales.width
+            case .aspectFill:
+                scales.width = max(scales.width, scales.height)
+                scales.height = scales.width
+            case .stretch:
+                break
+            case .center:
+                scales.width = 1
+                scales.height = 1
             }
 
             var result = rect.standardized
