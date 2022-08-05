@@ -115,7 +115,7 @@ final class BackupPasswordViewController: UIViewController {
         passwordView.delegate = self
         passwordView.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         passwordView.backgroundColor = SemanticColors.Background.settingsTableCell
-        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.LabelsColor.textLabelSettingsPasswordPlaceholder,
+        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.LabelsColor.textSearchBarPlaceholder,
                                                         .font: FontSpec.smallRegularFont.font!]
         passwordView.updatePlaceholderAttributedText(attributes: attributes)
     }
