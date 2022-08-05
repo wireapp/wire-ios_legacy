@@ -60,7 +60,7 @@ final class MockOptionsViewModelConfiguration: ConversationGuestOptionsViewModel
     }
 }
 
-final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
+final class ConversationOptionsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     // MARK: Renders Guests Screen when AllowGuests is either enabled or disabled
 

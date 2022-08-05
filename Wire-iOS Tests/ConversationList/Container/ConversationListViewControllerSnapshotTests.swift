@@ -24,7 +24,7 @@ final class MockConversationList: ConversationListHelperType {
     static var hasArchivedConversations: Bool = false
 }
 
-final class ConversationListViewControllerTests: ZMSnapshotTestCase {
+final class ConversationListViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ConversationListViewController!
 

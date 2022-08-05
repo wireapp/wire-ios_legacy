@@ -35,7 +35,7 @@ class GridViewDelegateMock: GridViewDelegate {
     }
 }
 
-class GridViewTests: XCTestCase {
+class GridViewSnapshotTests: XCTestCase {
 
     var sut: GridView!
     var gridViewDelegateMock: GridViewDelegateMock!
@@ -141,7 +141,7 @@ class GridViewTests: XCTestCase {
     }
 }
 
-extension GridViewTests: UICollectionViewDataSource {
+extension GridViewSnapshotTests: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
