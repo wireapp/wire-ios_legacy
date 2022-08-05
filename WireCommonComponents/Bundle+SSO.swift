@@ -23,4 +23,3 @@ public extension Bundle {
         return Bundle.appMainBundle.infoForKey("Wire SSO URL Scheme")
     }
 }
-

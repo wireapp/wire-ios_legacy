@@ -50,9 +50,9 @@ public final class FileMetaDataGenerator: NSObject {
 
 extension AVURLAsset {
     static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
-        return audiovisualTypes().reduce(false) { (conformsBefore, compatibleUTI) -> Bool in
-            conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
-        }
+        return audiovisualTypes().contains(where: { compatibleUTI  -> Bool in
+            UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
+        })
     }
 }
 
@@ -65,8 +65,7 @@ extension AVAsset {
         let reader: AVAssetReader
         do {
             reader = try AVAssetReader(asset: self)
-        }
-        catch let error {
+        } catch let error {
             zmLog.error("Cannot read asset metadata for \(self): \(error)")
             return .none
         }
@@ -103,7 +102,15 @@ extension AVAsset {
                 var audioBufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: 0, mDataByteSize: 0, mData: nil))
                 var buffer: CMBlockBuffer?
                 var bufferSize: Int = 0
-                CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, bufferListSizeNeededOut: &bufferSize, bufferListOut: nil, bufferListSize: 0, blockBufferAllocator: nil, blockBufferMemoryAllocator: nil, flags: 0, blockBufferOut: nil)
+                CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(
+                    sampleBuffer,
+                    bufferListSizeNeededOut: &bufferSize,
+                    bufferListOut: nil,
+                    bufferListSize: 0,
+                    blockBufferAllocator: nil,
+                    blockBufferMemoryAllocator: nil,
+                    flags: 0,
+                    blockBufferOut: nil)
 
                 CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer,
                                                                         bufferListSizeNeededOut: nil,

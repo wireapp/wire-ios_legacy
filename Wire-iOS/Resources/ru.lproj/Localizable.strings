@@ -689,7 +689,7 @@
 "call.participants.show_all" = "Участников (%d)";
 "call.participants.list.title" = "Участники";
 
-"call.overlay.switch_to.speakers" = "СПИКЕРЫ";
+"call.overlay.switch_to.speakers" = "ДИНАМИКИ";
 "call.overlay.switch_to.all" = "ВСЕ";
 
 "call.grid.no_active_speakers" = "Нет активных видеоспикеров...";
@@ -1143,7 +1143,7 @@
 "self.settings.mute_other_call.description" = "Уведомление будет отключено, если вы в этот момент с кем-то разговариваете";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
-"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом (CBR). Эта настройка влияет только на звонки 1:1; конференц-звонки всегда используют кодирование CBR.";
+"self.settings.vbr.description" = "Благодаря этой опции аудиозвонки расходуют меньше данных и лучше работают при использовании низкоскоростных сетей. Выключите, чтобы использовать кодирование с постоянным битрейтом (CBR). Эта настройка влияет только на звонки 1:1; конференц-звонки всегда используют кодирование CBR.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";

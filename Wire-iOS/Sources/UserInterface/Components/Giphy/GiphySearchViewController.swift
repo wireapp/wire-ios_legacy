@@ -66,8 +66,8 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         performSearch()
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        searchBar.iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBarColor.backgroundButton)
-        searchBar.clearButton.setIconColor(SemanticColors.SearchBarColor.clearButton, for: .normal)
+        searchBar.iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+        searchBar.clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
     }
 
     @available(*, unavailable)
