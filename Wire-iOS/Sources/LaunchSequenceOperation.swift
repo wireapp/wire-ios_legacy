@@ -220,3 +220,13 @@ final class VoIPPushHelperOperation: LaunchSequenceOperation {
     }
 
 }
+
+final class DebugLoggerOperation: LaunchSequenceOperation {
+
+    func execute() {
+        DebugLogger.storage = .applicationGroup
+        UserDefaults.applicationGroup.set(DeveloperFlag.nseDebugging.isOn, forKey: DebugLogger.DebugFlagIsOnKey)
+    }
+
+}
+

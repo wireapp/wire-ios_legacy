@@ -101,6 +101,11 @@ extension SettingsCellDescriptorFactory {
                 title: "self.settings.advanced.debugging_tools.enter_debug_command.title".localized,
                 isDestructive: false,
                 selectAction: DebugActions.enterDebugCommand
+            ),
+            SettingsButtonCellDescriptor(
+                title: "Copy PushNotification debug logs",
+                isDestructive: false,
+                selectAction: DebugActions.getNotificationsDebugLogs
             )
         ])
 

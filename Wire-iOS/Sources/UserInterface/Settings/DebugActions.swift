@@ -60,6 +60,38 @@ enum DebugActions {
         }
     }
 
+    static func getNotificationsDebugLogs(_ type: SettingsCellDescriptorType) {
+        //        alert("copy push notification logs", title: "", textToCopy: getLogs())
+
+        let activityViewController = UIActivityViewController(activityItems: [getLogs()], applicationActivities: nil)
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
+        activityViewController.popoverPresentationController?.sourceView = controller.view
+        //                activityViewController.excludedActivityTypes = [UIActivity.ActivityType.postToFacebook ]
+        controller.present(activityViewController, animated: true, completion: nil)
+    }
+
+
+    static func getLogs() -> String {
+//        var res = ""
+//        for i in 1...1000 {
+//            res += "\(i) example text for push notification logs --------===========----------======="
+//        }
+//        return res
+        guard let logs =  UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, Any> else {
+            return  "error NO LOGS DICTIONARY WERE CREATED"
+        }
+        var result = ""
+        for  eventID in logs.keys {
+            result += eventID as String
+            result += "\n"
+            guard let eventLogs = logs[eventID] as? Dictionary<String, String> else { continue }
+            for singleLog in eventLogs.values {
+                result += "     \(singleLog as String)\n"
+            }
+        }
+        return result
+    }
+
     /// Shows the user ID of the self user
     static func showUserId(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared(),
