@@ -64,21 +64,24 @@ public enum SemanticColors {
         static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textLabelSettingsButton = UIColor(light: Asset.white, dark: Asset.black)
     }
-
-    public enum SearchBarColor {
-        static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
-    }
     public enum Background {
         static let settingsView = UIColor(light: Asset.gray20, dark: Asset.gray100)
         static let settingsTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let deviceTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let settingsTableCellBorder = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+    }
+    public enum SearchBar {
+        static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
+        static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
+        static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 
 extension UIColor {
-
     convenience init(light: ColorAsset, dark: ColorAsset) {
         self.init { traits in
             return traits.userInterfaceStyle == .dark ? dark.color : light.color
@@ -106,7 +109,6 @@ public extension UIColor {
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }
     }
-
     convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
         self.init(for: safeAccentColor)

@@ -94,7 +94,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
                                                selector: #selector(keyboardFrameDidChange(notification:)),
                                                name: UIResponder.keyboardDidChangeFrameNotification,
                                                object: nil)
-
         createViews()
         createConstraints()
     }
@@ -113,6 +112,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     let destinationsTableView = UITableView()
     let closeButton = IconButton(style: .default, variant: .dark)
     let sendButton = IconButton(style: .default, variant: .light)
+    let clearButton = IconButton(style: .default)
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {
         let view = UIView()
@@ -144,6 +144,9 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     }
 
     // MARK: - Actions
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+    }
 
     @objc
     func onCloseButtonPressed(sender: AnyObject?) {
@@ -156,6 +159,17 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)
         }
+    }
+
+    @objc
+    func onClearButtonPressed() {
+        tokenField.clearFilterText()
+        tokenField.removeAllTokens()
+        updateClearIndicator(for: tokenField)
+    }
+
+    func resetQuery() {
+        tokenField.filterUnwantedAttachments()
     }
 
     // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -235,6 +249,10 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     private func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
+
+    private func updateClearIndicator(for tokenField: TokenField) {
+        clearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
+    }
 }
 
 // MARK: - TokenFieldDelegate
@@ -246,6 +264,7 @@ extension ShareViewController: TokenFieldDelegate {
     }
 
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+        updateClearIndicator(for: tokenField)
         filterString = text
     }
 

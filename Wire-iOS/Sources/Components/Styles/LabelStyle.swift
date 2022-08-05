@@ -37,6 +37,9 @@ public struct LabelStyle {
     static let settingsAccountLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.LabelsColor.textLabelSettingsCell)
+    static let searchBarPlaceholder: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textSearchBarPlaceholder)
 }
 
 extension UILabel: Stylable {
@@ -45,5 +48,4 @@ extension UILabel: Stylable {
         backgroundColor = style.backgroundColor
         textColor = style.textColor
     }
-
 }
