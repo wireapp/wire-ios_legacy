@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ChangeEmailViewControllerTests: XCTestCase {
+final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     private func createSut(emailAddress: String?) -> UIViewController {
         let mockUser = MockUserType.createSelfUser(name: "User")
@@ -28,6 +28,7 @@ final class ChangeEmailViewControllerTests: XCTestCase {
         let sut = ChangeEmailViewController(user: mockUser)
         let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
+        viewController.overrideUserInterfaceStyle = .dark
         viewController.view.backgroundColor = .black
 
         return viewController

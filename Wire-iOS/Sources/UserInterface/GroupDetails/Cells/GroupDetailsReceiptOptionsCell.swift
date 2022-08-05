@@ -33,11 +33,20 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-
+        iconColor = SemanticColors.IconColors.foregroundCellIconActive
+        guard let iconColor = iconColor else { return }
         icon = StyleKitIcon.eye.makeImage(
             size: .tiny,
-            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        )
+            color: iconColor).withRenderingMode(.alwaysTemplate)
+
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted
+            : SemanticColors.BackgroundColors.backgroundUserCell
+        }
     }
 }
 

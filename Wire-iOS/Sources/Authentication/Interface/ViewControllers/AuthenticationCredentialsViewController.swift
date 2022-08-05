@@ -112,7 +112,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         let passwordTab = UITabBarItem(title: "registration.register_by_phone".localized(uppercased: true), image: nil, selectedImage: nil)
         passwordTab.accessibilityIdentifier = "UsePhone"
 
-        return TabBar(items: [emailTab, passwordTab], style: .light)
+        return TabBar(items: [emailTab, passwordTab])
     }()
 
     // MARK: - Lifecycle

@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 extension ShareViewController {
 
@@ -95,6 +96,7 @@ extension ShareViewController {
         }
 
         [self.blurView, self.containerView].forEach(self.view.addSubview)
+
         [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.clearButton].forEach(self.containerView.addSubview)
 
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {

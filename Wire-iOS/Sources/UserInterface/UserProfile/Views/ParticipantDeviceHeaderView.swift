@@ -24,7 +24,7 @@ protocol ParticipantDeviceHeaderViewDelegate: AnyObject {
 
 final class ParticipantDeviceHeaderView: UIView {
     private var font: UIFont = .normalLightFont
-    private var textColor: UIColor = .from(scheme: .textForeground)
+    private var textColor: UIColor = SemanticColors.Label.textSectionHeader
     private var linkAttributeColor: UIColor = .accent()
     private var textView: WebLinkTextView = WebLinkTextView()
     let userName: String

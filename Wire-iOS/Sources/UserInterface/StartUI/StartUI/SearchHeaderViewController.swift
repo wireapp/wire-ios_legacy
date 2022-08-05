@@ -53,17 +53,18 @@ final class SearchHeaderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
-        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textSearchBarPlaceholder
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
 
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
 
@@ -71,11 +72,12 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
+
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
-        tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
+        tokenField.textView.keyboardAppearance = .default
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
         tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
