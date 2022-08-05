@@ -31,24 +31,33 @@ final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
-    let buttonStackview = UIStackView(axis: .horizontal)
-
-    let startUIButton  = IconButton()
-    let listButton     = IconButton()
-    let folderButton   = IconButton()
-    let archivedButton = IconButton()
-
-    let startUILabel  = UILabel()
-    let listLabel   = UILabel()
-    let folderLabel  = UILabel()
-    let archivedLabel = UILabel()
-
+    let mainStackview = UIStackView(axis: .horizontal)
     let startUIStackView  = UIStackView(axis: .vertical)
     let listStackView   = UIStackView(axis: .vertical)
     let folderStackView = UIStackView(axis: .vertical)
     let archivedStackView = UIStackView(axis: .vertical)
 
-    let separator = UIView()
+    let startUIButton = IconButton()
+    let listButton = IconButton()
+    let folderButton = IconButton()
+    let archivedButton = IconButton()
+
+    let startUILabel = DynamicFontLabel(
+        text: "Contacts",
+        fontSpec: .mediumRegularFont,
+        color: SemanticColors.ButtonsColor.bottomBarNormalButton)
+    let listLabel = DynamicFontLabel(
+        text: "Conversations",
+        fontSpec: .mediumRegularFont,
+        color: SemanticColors.ButtonsColor.bottomBarNormalButton)
+    let folderLabel = DynamicFontLabel(
+        text: "Folders",
+        fontSpec: .mediumRegularFont,
+        color: SemanticColors.ButtonsColor.bottomBarNormalButton)
+    let archivedLabel = DynamicFontLabel(
+        text: "Archived",
+        fontSpec: .mediumRegularFont,
+        color: SemanticColors.ButtonsColor.bottomBarNormalButton)
 
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
@@ -62,18 +71,16 @@ final class ConversationListBottomBarController: UIViewController {
         }
     }
 
-    var showSeparator: Bool {
-        get {
-            return !separator.isHidden
-        }
-
-        set {
-            separator.fadeAndHide(!newValue)
-        }
-    }
-
     private var allButtons: [IconButton] {
         return [startUIButton, listButton, folderButton, archivedButton]
+    }
+
+    private var allSubStackViews: [UIStackView] {
+        return [startUIStackView, listStackView, folderStackView, archivedStackView]
+    }
+
+    private var allLabels: [UILabel] {
+        return [startUILabel, listLabel, folderLabel, archivedLabel]
     }
 
     required init() {
@@ -91,10 +98,6 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func createViews() {
-        separator.backgroundColor = SemanticColors.Background.conversationListTableCellBorder
-        separator.isHidden = true
-        separator.translatesAutoresizingMaskIntoConstraints = false
-
         startUIButton.setIcon(.person, size: .tiny, for: .normal)
         startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
         startUIButton.tag = 1
@@ -124,61 +127,11 @@ final class ConversationListBottomBarController: UIViewController {
         archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
         archivedButton.isHidden = true
 
-        startUILabel.text = "START"
-        startUILabel.font = .smallLightFont
-        listLabel.text = "LIST"
-        listLabel.font = .smallLightFont
-        folderLabel.text = "FOLDER"
-        folderLabel.font = .smallLightFont
-        archivedLabel.text = "ARCHIVED"
-        archivedLabel.font = .smallLightFont
-        archivedLabel.isHidden = true
+        setupStackViews()
+        populeteSubStackViews()
+        addTargetForStackViews()
 
-        startUIStackView.distribution = .fillEqually
-        startUIStackView.alignment = .center
-        startUIStackView.translatesAutoresizingMaskIntoConstraints = false
-        startUIStackView.spacing = 5
-
-        listStackView.distribution = .fillEqually
-        listStackView.alignment = .center
-        listStackView.translatesAutoresizingMaskIntoConstraints = false
-        listStackView.spacing = 5
-
-        folderStackView.distribution = .fillEqually
-        folderStackView.alignment = .center
-        folderStackView.translatesAutoresizingMaskIntoConstraints = false
-        folderStackView.spacing = 5
-        
-        archivedStackView.distribution = .fillEqually
-        archivedStackView.alignment = .center
-        archivedStackView.translatesAutoresizingMaskIntoConstraints = false
-        archivedStackView.spacing = 5
-        archivedStackView.isHidden = true
-
-        startUIStackView.addArrangedSubview(startUIButton)
-        startUIStackView.addArrangedSubview(startUILabel)
-        listStackView.addArrangedSubview(listButton)
-        listStackView.addArrangedSubview(listLabel)
-        folderStackView.addArrangedSubview(folderButton)
-        folderStackView.addArrangedSubview(folderLabel)
-        archivedStackView.addArrangedSubview(archivedButton)
-        archivedStackView.addArrangedSubview(archivedLabel)
-
-        buttonStackview.distribution = .fillEqually
-        buttonStackview.alignment = .center
-        buttonStackview.translatesAutoresizingMaskIntoConstraints = false
-        buttonStackview.addArrangedSubview(startUIStackView)
-        buttonStackview.addArrangedSubview(listStackView)
-        buttonStackview.addArrangedSubview(folderStackView)
-        buttonStackview.addArrangedSubview(archivedStackView)
-
-//        allButtons.forEach { button in
-//            button.translatesAutoresizingMaskIntoConstraints = false
-//            buttonStackview.addArrangedSubview(button)
-//        }
-
-        view.addSubview(buttonStackview)
-        view.addSubview(separator)
+        view.addSubview(mainStackview)
         view.backgroundColor = SemanticColors.Background.conversationList
         view.addTopBorder(color: SemanticColors.Background.conversationListTableCellBorder)
     }
@@ -187,15 +140,10 @@ final class ConversationListBottomBarController: UIViewController {
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: heightConstant),
 
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
-            separator.leftAnchor.constraint(equalTo: view.leftAnchor),
-            separator.rightAnchor.constraint(equalTo: view.rightAnchor),
-            separator.topAnchor.constraint(equalTo: view.topAnchor),
-
-            buttonStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
-            buttonStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
-            buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
-            buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            mainStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
+            mainStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
+            mainStackview.topAnchor.constraint(equalTo: view.topAnchor, constant: 1),
+            mainStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -2)
         ])
     }
 
@@ -212,7 +160,69 @@ final class ConversationListBottomBarController: UIViewController {
         }
     }
 
+    private func setupStackViews() {
+        allSubStackViews.forEach { stackView in
+            stackView.distribution = .fillEqually
+            stackView.alignment = .center
+            stackView.isUserInteractionEnabled = true
+            stackView.spacing = 5
+            stackView.layer.cornerRadius = 6
+            stackView.layer.masksToBounds = true
+            stackView.isLayoutMarginsRelativeArrangement = true
+            stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+
+            mainStackview.distribution = .fillEqually
+            mainStackview.alignment = .fill
+            mainStackview.translatesAutoresizingMaskIntoConstraints = false
+            mainStackview.addArrangedSubview(startUIStackView)
+            mainStackview.addArrangedSubview(listStackView)
+            mainStackview.addArrangedSubview(folderStackView)
+            mainStackview.addArrangedSubview(archivedStackView)
+        }
+    }
+
+    private func populeteSubStackViews() {
+        startUIStackView.addArrangedSubview(startUIButton)
+        startUIStackView.addArrangedSubview(startUILabel)
+        listStackView.addArrangedSubview(listButton)
+        listStackView.addArrangedSubview(listLabel)
+        folderStackView.addArrangedSubview(folderButton)
+        folderStackView.addArrangedSubview(folderLabel)
+        archivedStackView.addArrangedSubview(archivedButton)
+        archivedStackView.addArrangedSubview(archivedLabel)
+    }
+
+    private func addTargetForStackViews() {
+        var stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(listStackViewTapped))
+        listStackView.addGestureRecognizer(stackViewTapGesture)
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(folderStackViewTapped))
+        folderStackView.addGestureRecognizer(stackViewTapGesture)
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(archiveStackViewTapped))
+        archivedStackView.addGestureRecognizer(stackViewTapGesture)
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(startUIStackViewTapped))
+        startUIStackView.addGestureRecognizer(stackViewTapGesture)
+    }
+
     // MARK: - Target Action
+    @objc
+    private func listStackViewTapped() {
+        listButton.sendActions(for: .touchUpInside)
+    }
+
+    @objc
+    private func folderStackViewTapped() {
+        folderButton.sendActions(for: .touchUpInside)
+    }
+
+    @objc
+    private func archiveStackViewTapped() {
+        archivedButton.sendActions(for: .touchUpInside)
+    }
+
+    @objc
+    private func startUIStackViewTapped() {
+        startUIButton.sendActions(for: .touchUpInside)
+    }
 
     @objc
     private func listButtonTapped(_ sender: IconButton) {
@@ -237,10 +247,9 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func updateSelection(with button: IconButton) {
-        allButtons.forEach({ $0.isSelected = $0 == button })
-
-        allButtons.forEach { button in
-            updateColorForSpecifiedStackView(button: button)
+        allButtons.forEach { currentButton in
+            currentButton.isSelected = currentButton.isEqual(button)
+            updateColorForSpecifiedStackView(button: currentButton)
         }
     }
 
@@ -251,16 +260,22 @@ final class ConversationListBottomBarController: UIViewController {
 
         switch button.tag {
         case 2:
-            listLabel.textColor = SemanticColors.ButtonsColor.bottomBarSelectedButton
-            listStackView.backgroundColor = .accent()
+            setActiveTab(stackView: listStackView, label: listLabel)
         case 3:
-            folderLabel.textColor = SemanticColors.ButtonsColor.bottomBarSelectedButton
-            folderStackView.backgroundColor = .accent()
+            setActiveTab(stackView: folderStackView, label: folderLabel)
         case 4:
-            archivedLabel.textColor = SemanticColors.ButtonsColor.bottomBarSelectedButton
-            archivedStackView.backgroundColor = .accent()
+            setActiveTab(stackView: archivedStackView, label: archivedLabel)
         default:
             return
+        }
+    }
+
+    private func setActiveTab(stackView: UIStackView, label: UILabel) {
+        allLabels.forEach { currentLabel in
+            currentLabel.textColor = currentLabel.isEqual(label) ? SemanticColors.ButtonsColor.bottomBarSelectedButton : SemanticColors.ButtonsColor.bottomBarNormalButton
+        }
+        allSubStackViews.forEach { currentStackView in
+            currentStackView.backgroundColor = currentStackView.isEqual(stackView) ? .accent() : .clear
         }
     }
 }
@@ -300,5 +315,4 @@ extension ConversationListBottomBarController: ZMUserObserver {
 
         updateColorScheme()
     }
-
 }
