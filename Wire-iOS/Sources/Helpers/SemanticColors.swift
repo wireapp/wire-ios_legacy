@@ -68,6 +68,8 @@ public enum SemanticColors {
     public enum ButtonsColor {
         static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textLabelSettingsButton = UIColor(light: Asset.white, dark: Asset.black)
+        static let bottomBarNormalButton = UIColor(light: Asset.gray90, dark: Asset.gray50)
+        static let bottomBarSelectedButton = UIColor(light: Asset.white, dark: Asset.black)
     }
 
     public enum SearchBarColor {
