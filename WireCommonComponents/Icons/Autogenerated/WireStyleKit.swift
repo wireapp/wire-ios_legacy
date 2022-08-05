@@ -418,6 +418,7 @@ public class WireStyleKit: NSObject {
         clipPath.close()
         clipPath.usesEvenOddFillRule = true
         clipPath.addClip()
+
         //// Rectangle Drawing
         let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 64, height: 64))
         color.setFill()
@@ -4105,6 +4106,7 @@ public class WireStyleKit: NSObject {
     @objc dynamic public class func drawIcon_networkCondition_64pt(color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
 
         //// Group 2
+
         //// Network Drawing
         let networkPath = UIBezierPath()
         networkPath.move(to: CGPoint(x: 10.24, y: 8.55))
@@ -7114,6 +7116,7 @@ public class WireStyleKit: NSObject {
     @objc dynamic public class func drawDegradation(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 260, height: 260), resizing: ResizingBehavior = .aspectFit) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
+
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 260, height: 260), target: targetFrame)
@@ -7148,12 +7151,14 @@ public class WireStyleKit: NSObject {
         bezierPath.usesEvenOddFillRule = true
         white80.setFill()
         bezierPath.fill()
+
         context.restoreGState()
     }
 
     @objc dynamic public class func drawSpace(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 28, height: 28), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
+
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 28, height: 28), target: targetFrame)
@@ -7185,6 +7190,7 @@ public class WireStyleKit: NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
+
         context.restoreGState()
 
     }
@@ -7192,6 +7198,7 @@ public class WireStyleKit: NSObject {
     @objc dynamic public class func drawSpaceFocus(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 36, height: 36), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1.000)) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
+        
         //// Resize to Target Frame
         context.saveGState()
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 36, height: 36), target: targetFrame)
@@ -7232,6 +7239,7 @@ public class WireStyleKit: NSObject {
         bezierPath.usesEvenOddFillRule = true
         color.setFill()
         bezierPath.fill()
+
         context.restoreGState()
     }
 

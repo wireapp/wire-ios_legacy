@@ -117,6 +117,7 @@ public final class AutomationHelper: NSObject {
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
+
     fileprivate enum AutomationKey: String {
         case email = "loginemail"
         case password = "loginpassword"

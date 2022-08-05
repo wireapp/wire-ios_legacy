@@ -38,7 +38,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.contentMode = .center
-
+        iconImageView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
         return iconImageView
     }()
 
@@ -159,7 +159,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
-                iconImageView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
                 iconImageView.setTemplateIcon(icon, size: .tiny)
                 cellNameLabelToIconInset.isActive = true
             } else {

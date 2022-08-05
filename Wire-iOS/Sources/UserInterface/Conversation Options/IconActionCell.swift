@@ -36,7 +36,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
         selectedBackgroundView = backgroundView
-        backgroundColor = .red
+        backgroundColor = .clear
         imageContainer.addSubview(iconImageView)
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label, separator].forEach(contentView.addSubview)
@@ -70,7 +70,8 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconAction(title, icon, _, _) = configuration else { preconditionFailure() }
-        iconImageView.setIcon(icon, size: .tiny, color: SemanticColors.LabelsColor.textLabelSettingsCell)
+        iconImageView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconImageView.setTemplateIcon(icon, size: .tiny)
         label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
         label.text = title
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
