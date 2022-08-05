@@ -123,14 +123,13 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     private let arrowIconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.tintColor = SemanticColors.LabelsColor.textLabelConversationListCell
         imageView.setTemplateIcon(.downArrow, size: .tiny)
         return imageView
     }()
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
-
-        self.tintColor = SemanticColors.LabelsColor.textLabelConversationListCell
 
         [titleLabel, arrowIconImageView, badgeView].forEach(addSubview)
 

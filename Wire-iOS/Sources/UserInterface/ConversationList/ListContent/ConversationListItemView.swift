@@ -161,6 +161,7 @@ final class ConversationListItemView: UIView {
     private func setupSubtitleField() {
         subtitleField.accessibilityIdentifier = "subtitle"
         subtitleField.numberOfLines = 1
+        subtitleField.textColor = SemanticColors.LabelsColor.textLabelConversationSubtitleField
         labelsStack.addArrangedSubview(subtitleField)
     }
 

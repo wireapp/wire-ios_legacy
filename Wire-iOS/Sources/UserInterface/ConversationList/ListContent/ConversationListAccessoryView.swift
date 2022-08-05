@@ -121,9 +121,9 @@ final class ConversationListAccessoryView: UIView {
 
         guard let icon = icon else { return nil }
         badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
+        tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
         switch icon {
         case .pendingConnection:
-            tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             iconView.setTemplateIcon(.clock, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
@@ -137,29 +137,25 @@ final class ConversationListAccessoryView: UIView {
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             iconView.setTemplateIcon(.endCall, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
             if let mediaPlayer = activeMediaPlayer, mediaPlayer.state == .playing {
-                tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
                 iconView.setTemplateIcon(.pause, size: iconSize)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             } else {
-                tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
                 iconView.setTemplateIcon(.play, size: iconSize)
                 accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
             return iconView
         case .silenced:
             tintColor = SemanticColors.LabelsColor.textLabelSettingsCellBadgeReverted
+            iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
             badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadgeReverted
             badgeView.layer.borderColor = SemanticColors.Background.conversationListTableCellBadgeRevertedBorder.cgColor
             badgeView.layer.borderWidth = 1
             badgeView.layer.cornerRadius = 6
-            iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
-
             accessibilityValue = "conversation_list.voiceover.status.silenced".localized
             return iconView
         case .typing:
@@ -171,17 +167,14 @@ final class ConversationListAccessoryView: UIView {
             accessibilityValue = textLabel.text
             return textLabel
         case .mention:
-            tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             iconView.setTemplateIcon(.mention, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.mention".localized
             return iconView
         case .reply:
-            tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             iconView.setTemplateIcon(.reply, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.reply".localized
             return iconView
         case .unreadPing:
-            tintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
             iconView.setTemplateIcon(.ping, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
