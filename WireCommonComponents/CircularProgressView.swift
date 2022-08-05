@@ -84,12 +84,10 @@ public class CircularProgressView: UIView {
     }
 
     var shapeLayer: CAShapeLayer {
-        get {
-            if let shapeLayer = self.layer as? CAShapeLayer {
-                return shapeLayer
-            }
-            fatalError("shapeLayer is missing: \(self.layer)")
+        if let shapeLayer = self.layer as? CAShapeLayer {
+            return shapeLayer
         }
+        fatalError("shapeLayer is missing: \(self.layer)")
     }
 
     fileprivate(set) var progress: Float = 0.0

@@ -19,101 +19,78 @@
 public extension FontSpec {
 
     // MARK: - Small
-
     static var smallFont: Self {
         return self.init(.small, .none)
     }
-
     static var smallLightFont: Self {
         return self.init(.small, .light)
     }
-
     static var smallRegularFont: Self {
         return self.init(.small, .regular)
     }
-
     static var smallMediumFont: Self {
         return self.init(.small, .medium)
     }
-
     static var smallSemiboldFont: Self {
         return self.init(.small, .semibold)
     }
 
     // MARK: - Normal
-
     static var normalFont: Self {
         return self.init(.normal, .none)
     }
-
     static var normalLightFont: Self {
         return self.init(.normal, .light)
     }
-
     static var normalRegularFont: Self {
         return self.init(.normal, .regular)
     }
-
     static var normalMediumFont: Self {
         return self.init(.normal, .medium)
     }
-
     static var normalSemiboldFont: Self {
         return self.init(.normal, .semibold)
     }
-
     static var normalBoldFont: Self {
         return self.init(.normal, .bold)
     }
-
     static var normalRegularFontWithInputTextStyle: Self {
         return self.init(.normal, .regular, .inputText)
     }
 
     // MARK: - Medium
-
     static var mediumFont: Self {
         return self.init(.medium, .none)
     }
-
     static var mediumSemiboldFont: Self {
         return self.init(.medium, .semibold)
     }
-
     static var mediumLightLargeTitleFont: Self {
         return self.init(.medium, .light, .largeTitle)
     }
-    
     static var mediumRegularFont: Self {
         return self.init(.medium, .regular)
     }
-
     static var mediumSemiboldInputText: Self {
         return self.init(.medium, .semibold, .inputText)
     }
 
     // MARK: - Large
-
     static var largeThinFont: Self {
         return self.init(.large, .thin)
     }
-
     static var largeLightFont: Self {
         return self.init(.large, .light)
     }
-
     static var largeRegularFont: Self {
         return self.init(.large, .regular)
     }
-
     static var largeMediumFont: Self {
         return self.init(.large, .medium)
     }
-
     static var largeSemiboldFont: Self {
         return self.init(.large, .semibold)
     }
-
     static var largeLightWithTextStyleFont: Self {
         return self.init(.large, .light, .largeTitle)
     }

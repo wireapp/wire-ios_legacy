@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-enum ButtonStyle: Int {
+enum LegacyButtonStyle: Int {
     // background color: accent, text color: white
     case full
     case empty
@@ -51,7 +51,7 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    var style: ButtonStyle? {
+    var style: LegacyButtonStyle? {
         didSet {
             updateStyle(variant: variant)
         }
@@ -69,7 +69,7 @@ class Button: ButtonWithLargerHitArea {
         clipsToBounds = true
     }
 
-    convenience init(style: ButtonStyle,
+    convenience init(style: LegacyButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
                      fontSpec: FontSpec = .smallLightFont) {
@@ -136,14 +136,6 @@ class Button: ButtonWithLargerHitArea {
     override var bounds: CGRect {
         didSet {
             updateCornerRadius()
-        }
-    }
-
-    func setBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
-        if let color = color {
-            setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
-        } else {
-            setBackgroundImage(nil, for: state)
         }
     }
 
