@@ -65,6 +65,7 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase, CoreDataFixtu
 
     func testForDarkTheme() {
         prepareSut(variant: .dark)
+        sut.overrideUserInterfaceStyle = .dark
 
         verify(matching: sut)
     }

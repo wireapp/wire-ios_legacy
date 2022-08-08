@@ -132,7 +132,7 @@ final class PasscodeSetupViewController: UIViewController {
         self.context = context
 
         self.useCompactLayout = useCompactLayout ??
-                                (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
+        (AppDelegate.shared.window!.frame.height <= CGFloat.iPhone4Inch.height)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -336,7 +336,7 @@ extension PasscodeSetupViewController: PasscodeSetupUserInterface {
 
 // MARK: - UIAdaptivePresentationControllerDelegate
 extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate {
-    @available(iOS 13.0, *)
+
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         appLockSetupViewControllerDismissed()
     }
@@ -346,14 +346,9 @@ extension PasscodeSetupViewController: UIAdaptivePresentationControllerDelegate 
         if view.frame.size.height <= CGFloat.iPhone4Inch.height {
             return .fullScreen
         } else {
-            if #available(iOS 13.0, *) {
-                return .automatic
-            } else {
-                return .none
-            }
+            return .automatic
         }
     }
-
 }
 
 private extension DownStyle {

@@ -61,7 +61,7 @@ final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell,
 
     private func configureConstraints() {
         articleView.translatesAutoresizingMaskIntoConstraints = false
-        articleView.fitInSuperview()
+        articleView.fitIn(view: self)
     }
 
     func configure(with object: Configuration, animated: Bool) {

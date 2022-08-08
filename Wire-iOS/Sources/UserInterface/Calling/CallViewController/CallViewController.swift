@@ -209,7 +209,7 @@ final class CallViewController: UIViewController {
     }
 
     private func createConstraints() {
-        [callGridViewController, callInfoRootViewController].forEach { $0.view.fitInSuperview() }
+        [callGridViewController, callInfoRootViewController].forEach { $0.view.fitIn(view: view) }
     }
 
     private func setupObservers() {

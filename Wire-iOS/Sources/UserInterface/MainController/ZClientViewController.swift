@@ -192,7 +192,9 @@ final class ZClientViewController: UIViewController {
     // MARK: keyboard shortcut
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: "n", modifierFlags: [.command], action: #selector(openStartUI(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.openPeople)]
+            UIKeyCommand(action: #selector(openStartUI(_:)),
+                         input: "n", modifierFlags: [.command],
+                         discoverabilityTitle: L10n.Localizable.Keyboardshortcut.openPeople)]
     }
 
     @objc
@@ -211,18 +213,7 @@ final class ZClientViewController: UIViewController {
 
     // MARK: Status bar
     private var child: UIViewController? {
-        // for iOS 13, only child of this VC can be use for childForStatusBar
-        if #available(iOS 13.0, *) {
-            return topOverlayViewController ?? wireSplitViewController
-        } else {
-            if nil != topOverlayViewController {
-                return topOverlayViewController
-            } else if traitCollection.horizontalSizeClass == .compact {
-                return presentedViewController ?? wireSplitViewController
-            }
-        }
-
-        return nil
+        return topOverlayViewController ?? wireSplitViewController
     }
 
     private var childForStatusBar: UIViewController? {
@@ -495,6 +486,7 @@ final class ZClientViewController: UIViewController {
     private func setupAppearance() {
         GuestIndicator.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         UserCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
+        UserCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).overrideUserInterfaceStyle = .dark
         UserCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
         GroupConversationCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         GroupConversationCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
@@ -502,11 +494,7 @@ final class ZClientViewController: UIViewController {
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
 
         let labelColor: UIColor
-        if #available(iOS 13.0, *) {
-            labelColor = .label
-        } else {
-            labelColor = ColorScheme.default.color(named: .textForeground, variant: .light)
-        }
+        labelColor = .label
 
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = labelColor
     }
@@ -547,7 +535,7 @@ final class ZClientViewController: UIViewController {
                            to: viewController,
                            duration: 0.5,
                            options: .transitionCrossDissolve,
-                           animations: { viewController.view.fitInSuperview() },
+                           animations: { viewController.view.fitIn(view: self.view) },
                            completion: { _ in
                             viewController.didMove(toParent: self)
                             previousViewController.removeFromParent()
@@ -556,7 +544,7 @@ final class ZClientViewController: UIViewController {
                             })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
-                viewController.view.fitInSuperview()
+                viewController.view.fitIn(view: topOverlayContainer)
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
@@ -589,7 +577,7 @@ final class ZClientViewController: UIViewController {
             viewController.view.frame = topOverlayContainer.bounds
             viewController.view.translatesAutoresizingMaskIntoConstraints = false
             topOverlayContainer.addSubview(viewController.view)
-            viewController.view.fitInSuperview()
+            viewController.view.fitIn(view: topOverlayContainer)
 
             viewController.didMove(toParent: self)
 

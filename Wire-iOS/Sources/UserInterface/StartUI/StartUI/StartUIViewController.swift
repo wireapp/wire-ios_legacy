@@ -173,22 +173,33 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     private func createConstraints() {
         [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach { $0?.translatesAutoresizingMaskIntoConstraints = false }
 
-        searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])
+        NSLayoutConstraint.activate([
+            searchHeaderViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchHeaderViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchHeaderViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
 
         if showsGroupSelector {
             NSLayoutConstraint.activate([
                 groupSelector.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor),
                 searchResultsViewController.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
-                ])
+            ])
 
-            groupSelector.fitInSuperview(exclude: [.bottom, .top])
+            NSLayoutConstraint.activate([
+                groupSelector.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                groupSelector.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
         } else {
             NSLayoutConstraint.activate([
             searchResultsViewController.view.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor)
                 ])
         }
 
-        searchResultsViewController.view.fitInSuperview(exclude: [.top])
+        NSLayoutConstraint.activate([
+            searchResultsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchResultsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchResultsViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     var showsGroupSelector: Bool {

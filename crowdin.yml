@@ -19,6 +19,11 @@ files: [
   "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",
  },
  {
+  "source" : "/Wire-iOS/Resources/Base.lproj/Accessibility.strings",
+  "dest" : "/App/Wire-iOS/Resources/Accessibility.strings",
+  "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",
+ },
+ {
   "source" : "/Wire-iOS/Resources/Base.lproj/Localizable.stringsdict",
   "dest" : "/App/Wire-iOS/Resources/Localizable.stringsdict",
   "translation" : "/Wire-iOS/Resources/%osx_code%/%original_file_name%",

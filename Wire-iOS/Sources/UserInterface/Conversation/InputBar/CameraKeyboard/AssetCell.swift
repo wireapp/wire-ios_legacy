@@ -86,7 +86,8 @@ final class AssetCell: UICollectionViewCell {
                 return
             }
 
-            let maxDimensionRetina = max(bounds.size.width, bounds.size.height) * (window ?? UIApplication.shared.keyWindow!).screen.scale
+            guard let keyWindow = UIApplication.shared.firstKeyWindow else { return }
+            let maxDimensionRetina = max(bounds.size.width, bounds.size.height) * (window ?? keyWindow).screen.scale
 
             representedAssetIdentifier = asset.localIdentifier
             imageRequestTag = manager.requestImage(for: asset,

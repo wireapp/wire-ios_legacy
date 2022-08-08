@@ -216,7 +216,12 @@ final class ClientListViewController: UIViewController,
 
         clientsTableView.translatesAutoresizingMaskIntoConstraints = false
 
-        clientsTableView.fitInSuperview(safely: true)
+        NSLayoutConstraint.activate([
+            clientsTableView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            clientsTableView.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            clientsTableView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            clientsTableView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+        ])
     }
 
     fileprivate func convertSection(_ section: Int) -> Int {

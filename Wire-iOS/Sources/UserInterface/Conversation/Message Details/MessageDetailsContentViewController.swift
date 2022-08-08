@@ -205,7 +205,7 @@ final class MessageDetailsContentViewController: UIViewController {
         noResultsView.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        collectionView.fitInSuperview()
+        collectionView.fitIn(view: view)
         subtitleBottom = subtitleLabel.bottomAnchor.constraint(equalTo: safeBottomAnchor)
         subtitleBottom!.priority = .defaultHigh
 

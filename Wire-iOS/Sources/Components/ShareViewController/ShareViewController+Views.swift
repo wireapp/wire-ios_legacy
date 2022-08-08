@@ -44,11 +44,6 @@ extension ShareViewController {
 
         createShareablePreview()
 
-        self.tokenField.textColor = .white
-        self.tokenField.clipsToBounds = true
-        self.tokenField.layer.cornerRadius = 4
-        self.tokenField.tokenTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        self.tokenField.tokenSelectedTitleColor = UIColor.from(scheme: .textForeground, variant: .dark)
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -56,9 +51,14 @@ extension ShareViewController {
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
-        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
-        self.tokenField.textView.backgroundColor = UIColor.from(scheme: .tokenFieldBackground, variant: .dark)
+        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
         self.tokenField.delegate = self
+
+        clearButton.accessibilityLabel = "clear"
+        clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
+        clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
+        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
+        clearButton.isHidden = true
 
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
@@ -84,8 +84,10 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.setIcon(.search, size: .tiny, color: .white)
+            self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
         } else {
+            self.clearButton.isHidden = true
+            self.tokenField.isHidden = true
             self.searchIcon.isHidden = true
             self.sendButton.isHidden = true
             self.closeButton.isHidden = true
@@ -93,7 +95,7 @@ extension ShareViewController {
         }
 
         [self.blurView, self.containerView].forEach(self.view.addSubview)
-        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon].forEach(self.containerView.addSubview)
+        [self.tokenField, self.destinationsTableView, self.closeButton, self.sendButton, self.bottomSeparatorLine, self.topSeparatorView, self.searchIcon, self.clearButton].forEach(self.containerView.addSubview)
 
         if let shareablePreviewWrapper = self.shareablePreviewWrapper {
             self.containerView.addSubview(shareablePreviewWrapper)
@@ -114,6 +116,7 @@ extension ShareViewController {
          shareablePreviewView,
          tokenField,
          searchIcon,
+         clearButton,
          destinationsTableView,
          bottomSeparatorLine,
          topSeparatorView,
@@ -184,7 +187,9 @@ extension ShareViewController {
             tokenFieldHeightConstraint,
 
             searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
-            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 8), // the search icon glyph has whitespaces,
+            searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
+            clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
+            clearButton.leadingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -32),
 
             topSeparatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topSeparatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

@@ -200,10 +200,15 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         constraints.append(bottomContainerView.heightAnchor.constraint(equalToConstant: 56))
 
-        constraints.append(contentsOf: bottomContainerView.fitInSuperview(exclude: [.top], activate: false).map({$0.value}))
+        constraints.append(contentsOf: [bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        bottomContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+
         constraints.append(button.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor))
 
-        constraints.append(contentsOf: topContainerView.fitInSuperview(exclude: [.bottom], activate: false).map({$0.value}))
+        constraints.append(contentsOf: [topContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        topContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        topContainerView.topAnchor.constraint(equalTo: view.topAnchor)])
 
         constraints.append(contentsOf: [topContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor),
 
@@ -226,8 +231,10 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             recordingDotView.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor)
         ]
 
-        recordingDotViewVisible.append(contentsOf:
-            recordingDotView.setDimensions(length: 8, activate: false).array)
+        recordingDotViewVisible.append(contentsOf: [
+        recordingDotView.widthAnchor.constraint(equalToConstant: 8),
+        recordingDotView.heightAnchor.constraint(equalToConstant: 8)
+        ])
 
         NSLayoutConstraint.activate(recordingDotViewVisible)
 
@@ -243,11 +250,13 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
                                         cancelButton.centerYAnchor.constraint(equalTo: bottomContainerView.centerYAnchor),
                                         cancelButton.rightAnchor.constraint(equalTo: bottomContainerView.rightAnchor),
-                                        buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12)])
-
-        constraints.append(contentsOf: cancelButton.setDimensions(length: 56, activate: false).array)
+                                        buttonOverlay.rightAnchor.constraint(equalTo: cancelButton.leftAnchor, constant: -12),
+                                        cancelButton.widthAnchor.constraint(equalToConstant: 56),
+                                        cancelButton.heightAnchor.constraint(equalToConstant: 56)
+                                       ])
 
         NSLayoutConstraint.activate(constraints)
+
     }
 
     private func configureAudioRecorder() {

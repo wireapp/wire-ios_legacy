@@ -24,11 +24,21 @@ final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
     private let visibleMessage: ZMConversationMessage?
 
+    typealias keyboardShortcut = L10n.Localizable.Keyboardshortcut
+
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [.command, .alternate], action: #selector(gotoBottom(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.scrollToBottom),
-            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(onCollectionButtonPressed(_:)), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.searchInConversation),
-            UIKeyCommand(input: "i", modifierFlags: [.command], action: #selector(titleViewTapped), discoverabilityTitle: L10n.Localizable.Keyboardshortcut.conversationDetail)
+            UIKeyCommand(action: #selector(gotoBottom(_:)),
+                         input: UIKeyCommand.inputDownArrow,
+                         modifierFlags: [.command, .alternate],
+                         discoverabilityTitle: keyboardShortcut.scrollToBottom),
+            UIKeyCommand(action: #selector(onCollectionButtonPressed(_:)),
+                         input: "f",
+                         modifierFlags: [.command],
+                         discoverabilityTitle: keyboardShortcut.searchInConversation),
+            UIKeyCommand(action: #selector(titleViewTapped),
+                         input: "i", modifierFlags: [.command],
+                         discoverabilityTitle: keyboardShortcut.conversationDetail)
         ]
     }
 
@@ -293,7 +303,7 @@ final class ConversationViewController: UIViewController {
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
         if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
-            conversation === mediaPlayingMessage.conversationLike {
+           conversation === mediaPlayingMessage.conversationLike {
             contentViewController.scroll(to: mediaPlayingMessage, completion: nil)
         }
     }
@@ -327,7 +337,7 @@ final class ConversationViewController: UIViewController {
     @objc
     private func titleViewTapped() {
         if let superview = titleView.superview,
-            let participantsController = participantsController {
+           let participantsController = participantsController {
             presentParticipantsViewController(participantsController, from: superview)
         }
     }
@@ -471,7 +481,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         contentViewController.didFinishEditing(message)
         session.enqueue({
             if let newText = newText,
-                !newText.isEmpty {
+               !newText.isEmpty {
                 let fetchLinkPreview = !Settings.disableLinkPreviews
                 message.textMessageData?.editText(newText, mentions: mentions, fetchLinkPreview: fetchLinkPreview)
             } else {

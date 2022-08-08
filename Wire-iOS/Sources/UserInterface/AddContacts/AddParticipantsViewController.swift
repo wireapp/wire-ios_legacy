@@ -463,8 +463,6 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             case .failure(let error):
                 guard let controller = self.navigationController?.topViewController else { return }
                 error.displayAddBotError(in: controller)
-            @unknown default:
-                fatalError()
             }
         }
 

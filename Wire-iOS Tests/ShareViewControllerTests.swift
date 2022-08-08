@@ -55,22 +55,23 @@ final class ShareViewControllerTests: ZMSnapshotTestCase {
     }
 
     override func tearDown() {
+        disableDarkColorScheme()
         groupConversation = nil
         oneToOneConversation = nil
         sut = nil
-        disableDarkColorScheme()
-
         super.tearDown()
     }
 
     private func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
+        sut.overrideUserInterfaceStyle = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
 
     private func disableDarkColorScheme() {
         ColorScheme.default.variant = .light
+        sut.overrideUserInterfaceStyle = .light
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }

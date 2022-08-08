@@ -64,7 +64,7 @@ final class NetworkStatusViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIApplication.didChangeStatusBarOrientationNotification, object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIDevice.orientationDidChangeNotification, object: .none)
 
         view.addSubview(networkStatusView)
 
@@ -74,10 +74,10 @@ final class NetworkStatusViewController: UIViewController {
     private func createConstraints() {
         networkStatusView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          networkStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-          networkStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-          networkStatusView.topAnchor.constraint(equalTo: view.topAnchor),
-          networkStatusView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            networkStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            networkStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            networkStatusView.topAnchor.constraint(equalTo: view.topAnchor),
+            networkStatusView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
     }
 
@@ -136,7 +136,7 @@ final class NetworkStatusViewController: UIViewController {
         case .onlineSynchronizing:
             return .onlineSynchronizing
         @unknown default:
-            /// TODO: ZMNetworkState change to NS_CLOSED_ENUM 
+            /// TODO: ZMNetworkState change to NS_CLOSED_ENUM
             fatalError()
         }
     }
@@ -212,7 +212,6 @@ extension NetworkStatusViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
         updateStateForIPad()
     }
 }

@@ -153,15 +153,16 @@ final class ServiceDetailViewController: UIViewController {
     private func createConstraints() {
         [detailView, actionButton].prepareForLayout()
 
-        detailView.fitInSuperview(with: EdgeInsets(margin: 16), exclude: [.top, .bottom])
-
-        actionButton.fitInSuperview(with: EdgeInsets(top: 0, leading: 16, bottom: 16 + UIScreen.safeArea.bottom, trailing: 16), exclude: [.top])
-
         NSLayoutConstraint.activate([
+            detailView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            detailView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            actionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(16 + UIScreen.safeArea.bottom)),
             detailView.topAnchor.constraint(equalTo: safeTopAnchor, constant: 16),
             actionButton.topAnchor.constraint(equalTo: detailView.bottomAnchor, constant: 16),
             actionButton.heightAnchor.constraint(equalToConstant: 48)
-            ])
+        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -111,7 +111,12 @@ final class ParticipantDeviceHeaderView: UIView {
 
     private func setupConstraints() {
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.fitInSuperview(with: EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24))
+        NSLayoutConstraint.activate([
+            textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            textView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+        ])
     }
 
 }

@@ -83,9 +83,7 @@ class PasscodeTextField: AccessoryTextField {
         isSecureTextEntry = true
         accessibilityIdentifier = "passcode_text_field"
         autocapitalizationType = .none
-        if #available(iOS 12, *) {
-            textContentType = .password
-        }
+        textContentType = .password
     }
 
     @objc

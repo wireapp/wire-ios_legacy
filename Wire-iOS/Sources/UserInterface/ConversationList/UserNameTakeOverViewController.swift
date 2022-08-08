@@ -112,8 +112,12 @@ final class UserNameTakeOverViewController: UIViewController {
 
         [displayNameLabel, suggestedHandleLabel, topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton, contentView].prepareForLayout()
 
-        displayNameLabel.fitInSuperview(exclude: [.top, .bottom])
-        suggestedHandleLabel.fitInSuperview(exclude: [.top, .bottom])
+        NSLayoutConstraint.activate([
+            displayNameLabel.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor),
+            displayNameLabel.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor),
+            suggestedHandleLabel.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor),
+            suggestedHandleLabel.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor)
+        ])
 
         NSLayoutConstraint.activate([
             displayNameLabel.bottomAnchor.constraint(equalTo: topContainer.centerYAnchor, constant: -4),
@@ -123,26 +127,40 @@ final class UserNameTakeOverViewController: UIViewController {
         let inset: CGFloat = 28
         let edgeInsets = EdgeInsets(margin: inset)
 
-        contentView.fitInSuperview()
-        topContainer.fitInSuperview(with: edgeInsets, exclude: [.bottom])
+        contentView.fitIn(view: view)
+        NSLayoutConstraint.activate([
+            topContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edgeInsets.leading),
+            topContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edgeInsets.trailing),
+            topContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: edgeInsets.top)
+        ])
 
         NSLayoutConstraint.activate([
             topContainer.bottomAnchor.constraint(equalTo: subtitleTextView.topAnchor)
             ])
 
-        subtitleTextView.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
+        NSLayoutConstraint.activate([
+            subtitleTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edgeInsets.leading),
+            subtitleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edgeInsets.trailing)
+        ])
 
         NSLayoutConstraint.activate([
             subtitleTextView.bottomAnchor.constraint(equalTo: chooseOwnButton.topAnchor, constant: -inset)
             ])
 
-        chooseOwnButton.fitInSuperview(with: edgeInsets, exclude: [.top, .bottom])
+        NSLayoutConstraint.activate([
+            chooseOwnButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edgeInsets.leading),
+            chooseOwnButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edgeInsets.trailing)
+        ])
         NSLayoutConstraint.activate([
             chooseOwnButton.bottomAnchor.constraint(equalTo: keepSuggestedButton.topAnchor, constant: -8),
             chooseOwnButton.heightAnchor.constraint(equalToConstant: 40)
             ])
 
-        keepSuggestedButton.fitInSuperview(with: edgeInsets, exclude: [.top])
+        NSLayoutConstraint.activate([
+            keepSuggestedButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edgeInsets.leading),
+            keepSuggestedButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edgeInsets.trailing),
+            keepSuggestedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -edgeInsets.bottom)
+        ])
 
         NSLayoutConstraint.activate([
             keepSuggestedButton.heightAnchor.constraint(equalToConstant: 40)

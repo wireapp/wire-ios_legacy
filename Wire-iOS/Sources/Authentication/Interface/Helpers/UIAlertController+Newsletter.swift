@@ -66,7 +66,7 @@ extension UIAlertController {
 
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
         viewController.present(alertController, animated: true) {
-            UIApplication.shared.keyWindow?.endEditing(true)
+            UIApplication.shared.firstKeyWindow?.endEditing(true)
         }
     }
 

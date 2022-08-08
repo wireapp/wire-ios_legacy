@@ -138,7 +138,7 @@ final class PermissionDeniedViewController: UIViewController {
 
     private func createConstraints() {
         backgroundBlurView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBlurView.fitInSuperview()
+        backgroundBlurView.fitIn(view: view)
     }
 
     override func updateViewConstraints() {
@@ -152,16 +152,18 @@ final class PermissionDeniedViewController: UIViewController {
             $0?.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        var constraints = heroLabel.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map {$0.value}
+        var constraints = [heroLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+                           heroLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [settingsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 28),
                         settingsButton.heightAnchor.constraint(equalToConstant: 40)]
 
-        constraints += settingsButton.fitInSuperview(with: EdgeInsets(margin: 28), exclude: [.top, .bottom], activate: false).map {$0.value}
+        constraints += [settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+                        settingsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [laterButton.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 28),
-                        laterButton.pinToSuperview(anchor: .bottom, inset: 28, activate: false),
-                        laterButton.pinToSuperview(axisAnchor: .centerX, activate: false)]
+                        laterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28),
+                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
 
         NSLayoutConstraint.activate(constraints)
 

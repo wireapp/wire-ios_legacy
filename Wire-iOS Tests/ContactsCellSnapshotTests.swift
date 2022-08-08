@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 @available(iOS 13.0, *)
-final class ContactsCellSnapshotTests: XCTestCase {
+final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ContactsCell!
 

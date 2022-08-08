@@ -158,7 +158,7 @@ final class SketchColorPickerController: UIViewController {
         colorsCollectionView.delegate = self
 
         colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        colorsCollectionView.fitInSuperview()
+        colorsCollectionView.fitIn(view: view)
     }
 }
 

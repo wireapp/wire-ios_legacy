@@ -26,35 +26,22 @@ protocol GiphySearchViewControllerDelegate: AnyObject {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
-extension UISearchBar {
-    var textColor: UIColor? {
-        get {
-            if let textField = self.value(forKey: "searchField") as?
-                UITextField {
-                return textField.textColor
-            } else {
-                return nil
-            }
-        }
-        set (newValue) {
-            if let textField = self.value(forKey: "searchField") as?
-                UITextField {
-                textField.textColor = newValue
-            }
-        }
-    }
-}
-
 final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
-    let searchBar: UISearchBar = UISearchBar()
+    let searchBar: TextSearchInputView = TextSearchInputView()
     let noResultsLabel = UILabel()
     let conversation: ZMConversation
 
-    var ziphs: [Ziph] = []
+    var ziphs: [Ziph] = [] {
+        didSet {
+            collectionView?.reloadData()
+            noResultsLabel.isHidden = self.ziphs.count > 0
+        }
+    }
+
     var searchTerm: String
     var pendingTimer: Timer?
     var pendingSearchtask: CancelableTask?
@@ -75,8 +62,12 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
 
-        title = ""
+        title = conversation.displayName.localizedUppercase
         performSearch()
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        searchBar.iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+        searchBar.clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
     }
 
     @available(*, unavailable)
@@ -120,40 +111,49 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         noResultsLabel.text = L10n.Localizable.Giphy.Error.noResult.uppercased()
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
+        view.addSubview(searchBar)
     }
 
     private func setupCollectionView() {
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
-        let offset = navigationController?.navigationBar.frame.maxY ?? 0
         edgesForExtendedLayout = []
-        collectionView.contentInset = UIEdgeInsets(top: offset,
-                                                   left: 0,
-                                                   bottom: 0,
-                                                   right: 0)
     }
 
     private func setupNavigationItem() {
-        searchBar.text = searchTerm
+        searchBar.searchInput.text = searchTerm
+        searchBar.placeholderString = "giphy.search_placeholder".localized(uppercased: true)
         searchBar.delegate = self
         searchBar.tintColor = .accent()
         searchBar.placeholder = L10n.Localizable.Giphy.searchPlaceholder
         searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
+
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
         let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
         closeItem.accessibilityLabel = L10n.Localizable.General.close
 
         navigationItem.rightBarButtonItem = closeItem
-        self.navigationItem.titleView = searchBar
     }
 
     private func createConstraints() {
         noResultsLabel.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+            searchBar.topAnchor.constraint(equalTo: view.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.heightAnchor.constraint(equalToConstant: 56),
+
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
@@ -267,9 +267,9 @@ extension GiphySearchViewController {
 
         let callback: ZiphyListRequestCallback = { [weak self] result in
             if case let .success(ziphs) = result {
-                self?.setInitialSearchResults(ziphs)
+                self?.ziphs = ziphs
             } else {
-                self?.setInitialSearchResults([])
+                self?.ziphs = []
             }
         }
 
@@ -287,12 +287,6 @@ extension GiphySearchViewController {
         pendingTimer = .scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
             self?.performSearch()
         }
-    }
-
-    private func setInitialSearchResults(_ results: [Ziph]) {
-        self.ziphs = results
-        self.collectionView?.reloadData()
-        self.noResultsLabel.isHidden = self.ziphs.count > 0
     }
 
 }
@@ -347,16 +341,18 @@ extension GiphySearchViewController: GiphyConfirmationViewControllerDelegate {
 
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: - TextSearchInputViewDelegate
 
-extension GiphySearchViewController: UISearchBarDelegate {
+extension GiphySearchViewController: TextSearchInputViewDelegate {
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchTerm = searchBar.text ?? ""
+    func searchView(_ searchView: TextSearchInputView, didChangeQueryTo query: String) {
+
+        searchTerm = searchBar.query
         performSearchAfter(delay: 0.3)
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
+        return TextSearchQuery.isValid(query: searchBar.query)
     }
+
 }
