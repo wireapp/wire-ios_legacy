@@ -49,6 +49,14 @@ final class CheckmarkCell: RightIconDetailsCell {
         updateCheckmark(forColor: colorSchemeVariant)
     }
 
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted
+                : SemanticColors.BackgroundColors.backgroundUserCell
+        }
+    }
+
     private func updateCheckmark(forColor colorSchemeVariant: ColorSchemeVariant) {
 
         guard showCheckmark else {
@@ -60,16 +68,17 @@ final class CheckmarkCell: RightIconDetailsCell {
 
         switch (colorSchemeVariant, disabled) {
         case (.light, false):
-            color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+            color = SemanticColors.IconColors.foregroundCellPlainCheckMarkIcon
         case (.light, true):
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         case (.dark, false):
-            color = .white
+            color = SemanticColors.IconColors.foregroundCellPlainCheckMarkIcon
         case (.dark, true):
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
 
-        accessory = StyleKitIcon.checkmark.makeImage(size: .tiny, color: color)
+        accessory = StyleKitIcon.checkmark.makeImage(size: .tiny, color: color).withRenderingMode(.alwaysTemplate)
+        accessoryColor = color
     }
 
     // MARK: - accessibility

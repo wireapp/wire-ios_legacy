@@ -106,7 +106,7 @@ final class DeveloperOptionsController: UIViewController {
 
     /// Creates and sets the layout of a cell with a UISwitch
     func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool) -> Void ) -> UITableViewCell {
-        let toggle = UISwitch(style: .default)
+        let toggle = Switch(style: .default)
         toggle.translatesAutoresizingMaskIntoConstraints = false
         toggle.isOn = isOn
         toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)

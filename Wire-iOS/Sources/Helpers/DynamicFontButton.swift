@@ -21,7 +21,7 @@ import WireCommonComponents
 
 /// A helper class that provides the Button with Dynamic Type Support
 /// by conforming to the DynamicTypeCapable protocol
-class DynamicFontButton: UIButton, DynamicTypeCapable {
+class DynamicFontButton: StylableButton, DynamicTypeCapable {
 
     // MARK: - Properties
     private let fontSpec: FontSpec

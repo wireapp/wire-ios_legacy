@@ -19,7 +19,6 @@
 import Foundation
 
 public extension String {
-    
     /// Returns the NSLocalizedString version of self
     var localized: String {
         return NSLocalizedString(self, comment: "")

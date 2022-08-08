@@ -21,6 +21,7 @@ import WireDataModel
 import WireCommonComponents
 
 public enum SemanticColors {
+
     public enum LegacyColors {
         // Legacy accent colors
         public static let strongBlue = UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
@@ -31,10 +32,14 @@ public enum SemanticColors {
         public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
         public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
-    public enum SwitchColors {
-        public static let backgroundSwitchOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green600Light)
-        public static let backgroundSwitchOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
+
+    public enum Switch {
+        static let backgroundOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green700Dark)
+        static let backgroundOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
+        static let borderOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green500Dark)
+        static let borderOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
+
     public enum Label {
         static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
         static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
@@ -43,10 +48,10 @@ public enum SemanticColors {
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
     }
-    public enum SearchBarColor {
-        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+
+    public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
-        static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
@@ -61,6 +66,8 @@ public enum SemanticColors {
     }
 
     public enum IconColors {
+
+        static let foregroundCellPlainCheckMarkIcon = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
         static let boarderCellCheckMarkActive = UIColor(light: Asset.gray80, dark: Asset.gray60)
         static let backgroundCellCheckMarkActive = UIColor(light: Asset.gray20, dark: Asset.gray90)
@@ -81,26 +88,30 @@ public enum SemanticColors {
         static let foregroundNavigationTintColor = UIColor(light: Asset.black, dark: Asset.white)
     }
 
+    public enum Button {
+        static let backgroundSecondaryEnabled = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundSecondaryHighlighted = UIColor(light: Asset.white, dark: Asset.gray80)
+        static let textSecondaryEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let borderSecondaryEnabled = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        static let borderSecondaryHighlighted = UIColor(light: Asset.gray40, dark: Asset.gray60)
+
+        static let backgroundPrimaryEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
+        static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
+    }
+
 }
 
 extension UIColor {
     convenience init(light: ColorAsset, dark: ColorAsset) {
-        if #available(iOS 13.0, *) {
-            self.init { traits in
-                return traits.userInterfaceStyle == .dark ? dark.color : light.color
-            }
-        } else {
-            switch ColorScheme.default.variant {
-            case .light:
-                self.init(asset: light)!
-            case .dark:
-                self.init(asset: dark)!
-            }
+        self.init { traits in
+            return traits.userInterfaceStyle == .dark ? dark.color : light.color
         }
     }
 }
 
 public extension UIColor {
+
     convenience init(for accentColor: AccentColor) {
         switch accentColor {
         case .blue:
