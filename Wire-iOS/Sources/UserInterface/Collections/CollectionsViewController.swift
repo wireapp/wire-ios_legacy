@@ -102,6 +102,7 @@ final class CollectionsViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
         collection.assetCollectionDelegate.add(self)
         deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self)
+        view.backgroundColor = SemanticColors.Background.noMessageInConversation
     }
 
     deinit {
@@ -168,6 +169,11 @@ final class CollectionsViewController: UIViewController {
 
         /// Prevent content overlaps navi bar
         navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = SemanticColors.Background.noMessageInConversation
+        appearance.shadowColor = .clear
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -293,6 +299,7 @@ final class CollectionsViewController: UIViewController {
         navigationItem.titleView = titleViewWrapper
 
         let button = CollectionsView.closeButton()
+        button.setIconColor(SemanticColors.Button.noMessageInConversationNaviagtionBar, for: .normal)
         button.addTarget(self, action: #selector(CollectionsViewController.closeButtonPressed(_:)), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 

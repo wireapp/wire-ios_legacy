@@ -46,8 +46,10 @@ public enum SemanticColors {
         static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
+        static let textLabelConversationSearchNoItems = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
+        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
@@ -56,7 +58,12 @@ public enum SemanticColors {
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
-
+    public enum Background {
+        static let noMessageInConversation = UIColor(light: Asset.gray20, dark: Asset.gray100)
+    }
+    public enum Button {
+        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+    }
 }
 
 extension UIColor {

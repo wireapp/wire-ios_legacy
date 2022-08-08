@@ -37,13 +37,8 @@ final class NoResultsView: UIView {
 
     var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
+            iconView.image = icon?.makeImage(size: 160, color: SemanticColors.LabelsColor.textLabelConversationSearchNoItems)
         }
-    }
-
-    var placeholderColor: UIColor {
-        let backgroundColor = UIColor.from(scheme: .background)
-        return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
     }
 
     override init(frame: CGRect) {
