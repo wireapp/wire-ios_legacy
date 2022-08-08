@@ -88,7 +88,7 @@ final class AudioMessageView: UIView, TransferView {
         self.mediaPlaybackManager = mediaPlaybackManager
 
         super.init(frame: .zero)
-        backgroundColor = .from(scheme: .placeholderBackground)
+        backgroundColor = SemanticColors.Background.collectionCell
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized

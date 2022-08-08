@@ -49,7 +49,8 @@ public enum SemanticColors {
         static let textLabelConversationSearchNoItems = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
-        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let textNoMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionHeaderView = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
@@ -60,6 +61,12 @@ public enum SemanticColors {
     }
     public enum Background {
         static let noMessageInConversation = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let collectionCell = UIColor(light: Asset.white, dark: Asset.gray95)
+    }
+    public enum Icon {
+        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let collectionHeaderViewIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let collectionCellIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum Button {
         static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)

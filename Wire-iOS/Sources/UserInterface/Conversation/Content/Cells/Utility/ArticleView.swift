@@ -24,7 +24,7 @@ import WireDataModel
 final class ArticleView: UIView {
 
     // MARK: - Styling
-    private let containerColor: UIColor = .from(scheme: .placeholderBackground)
+    private let containerColor: UIColor = SemanticColors.Background.collectionCell
     private let titleTextColor: UIColor = .from(scheme: .textForeground)
     private let titleFont: UIFont = .normalSemiboldFont
     private let authorTextColor: UIColor = .from(scheme: .textDimmed)

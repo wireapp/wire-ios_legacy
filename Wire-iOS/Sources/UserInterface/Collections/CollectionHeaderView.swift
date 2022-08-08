@@ -43,7 +43,8 @@ final class CollectionHeaderView: UICollectionReusableView {
             default: fatal("Unknown section")
             }
 
-            iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
+            iconImageView.tintColor = SemanticColors.Icon.collectionHeaderViewIcon
+            iconImageView.setTemplateIcon(icon, size: .tiny)
         }
     }
 
@@ -59,7 +60,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.LabelsColor.textCollectionHeaderView
 
         return label
     }()

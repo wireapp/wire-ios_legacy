@@ -52,7 +52,7 @@ final class FileTransferView: UIView, TransferView {
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .from(scheme: .placeholderBackground)
+        backgroundColor = SemanticColors.Background.collectionCell
 
         topLabel.numberOfLines = 1
         topLabel.lineBreakMode = .byTruncatingMiddle

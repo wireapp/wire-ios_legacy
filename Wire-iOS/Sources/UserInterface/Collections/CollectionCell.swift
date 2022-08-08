@@ -114,7 +114,7 @@ class CollectionCell: UICollectionViewCell {
 
     func loadContents() {
         self.contentView.layer.masksToBounds = true
-        self.contentView.layer.cornerRadius = 4
+        self.contentView.layer.cornerRadius = 12
 
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
 
@@ -146,7 +146,7 @@ class CollectionCell: UICollectionViewCell {
 
     let secureContentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .from(scheme: .placeholderBackground)
+        view.backgroundColor = SemanticColors.Background.collectionCell
 
         return view
     }()
