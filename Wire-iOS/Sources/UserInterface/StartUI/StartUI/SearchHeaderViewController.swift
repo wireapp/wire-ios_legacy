@@ -53,7 +53,7 @@ final class SearchHeaderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         userSelection.add(observer: self)
-        tokenField.tokenTitleColor = SemanticColors.SearchBar.textSearchBarPlaceholder
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -72,6 +72,8 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
+        clearButton.setIconColor(SemanticColors.SearchBar.clearButton, for: .normal)
+
 
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 

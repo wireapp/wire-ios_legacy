@@ -190,6 +190,7 @@ extension ShareViewController {
 
             searchIcon.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
             searchIcon.leadingAnchor.constraint(equalTo: tokenField.leadingAnchor, constant: 16),
+
             clearButton.centerYAnchor.constraint(equalTo: tokenField.centerYAnchor),
             clearButton.leadingAnchor.constraint(equalTo: tokenField.trailingAnchor, constant: -32),
 
