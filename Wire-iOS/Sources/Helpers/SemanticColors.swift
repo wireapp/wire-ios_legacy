@@ -77,8 +77,6 @@ public enum SemanticColors {
         static let foregroundCellCheckMarkIconActive = UIColor(light: Asset.white, dark: Asset.black)
     }
 
-
-
     public enum TabBar {
         static let textTabBarActive = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundSeperatorSelectedTabActive = UIColor(light: Asset.black, dark: Asset.white)

@@ -20,8 +20,6 @@ import Foundation
 import UIKit
 import WireUtilities
 
-
-
 class ClearBackgroundNavigationController: NavigationController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -74,7 +74,6 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.isHidden = true
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
-
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
