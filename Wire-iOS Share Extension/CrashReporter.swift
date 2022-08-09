@@ -29,7 +29,7 @@ private var didSetupAppCenter = false
 final class CrashReporter {
 
     static func setupAppCenterIfNeeded() {
-        guard !didSetupAppCenter, appCenterEnabled, let _ = Bundle.appCenterAppId else { return }
+        guard !didSetupAppCenter, appCenterEnabled, Bundle.appCenterAppId != nil else { return }
         didSetupAppCenter = true
 
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")

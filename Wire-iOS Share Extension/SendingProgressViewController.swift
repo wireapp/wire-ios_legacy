@@ -140,10 +140,10 @@ final class SendingProgressViewController: UIViewController {
 
     func setReachability(from reachability: ServerReachability) {
         switch reachability {
-            case .ok:
-                connectionStatusLabel.isHidden = true
-            case .unreachable:
-                connectionStatusLabel.isHidden = false
+        case .ok:
+            connectionStatusLabel.isHidden = true
+        case .unreachable:
+            connectionStatusLabel.isHidden = false
         }
     }
 
