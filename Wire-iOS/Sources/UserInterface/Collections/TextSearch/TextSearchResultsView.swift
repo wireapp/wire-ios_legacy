@@ -28,7 +28,7 @@ final class TextSearchResultsView: UIView {
         setupViews()
         createConstraints()
 
-        backgroundColor = .from(scheme: .contentBackground)
+        backgroundColor = SemanticColors.Background.collectionSearch
     }
 
     private func setupViews() {
@@ -37,6 +37,7 @@ final class TextSearchResultsView: UIView {
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .interactive
         tableView.backgroundColor = .clear
+        tableView.layer.cornerRadius = 12
         addSubview(tableView)
 
         noResultsView.label.accessibilityLabel = "no text messages"
@@ -48,10 +49,10 @@ final class TextSearchResultsView: UIView {
     private func createConstraints() {
         [tableView, noResultsView].prepareForLayout()
         NSLayoutConstraint.activate([
-          tableView.topAnchor.constraint(equalTo: topAnchor),
+          tableView.topAnchor.constraint(equalTo: topAnchor, constant: 11),
           tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          tableView.leftAnchor.constraint(equalTo: leftAnchor),
-          tableView.rightAnchor.constraint(equalTo: rightAnchor),
+          tableView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+          tableView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
 
           noResultsView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12),
           noResultsView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12),
