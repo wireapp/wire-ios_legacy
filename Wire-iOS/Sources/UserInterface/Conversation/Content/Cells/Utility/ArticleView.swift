@@ -29,7 +29,7 @@ final class ArticleView: UIView {
     private let titleFont: UIFont = .normalSemiboldFont
     private let authorTextColor: UIColor = SemanticColors.LabelsColor.textCollectionCellSecondLine
     private let authorFont: UIFont = .smallLightFont
-    private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
+    private let authorHighlightTextColor = SemanticColors.LabelsColor.textCollectionCellSecondLine
     private let authorHighlightFont = UIFont.smallSemiboldFont
 
     var imageHeight: CGFloat = 144 {

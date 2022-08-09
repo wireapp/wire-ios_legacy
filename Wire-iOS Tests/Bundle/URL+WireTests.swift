@@ -62,7 +62,6 @@ final class URL_WireTests: XCTestCase {
                        supportURL.appendingPathComponent("hc/articles/207692235-How-can-I-compare-key-fingerprints-"))
         XCTAssertEqual(URL.wr_reportAbuse,
                        supportURL.appendingPathComponent("hc/requests/new"))
-
     }
 
     func testThatAccountURLsAreLoadedCorrectly() {
