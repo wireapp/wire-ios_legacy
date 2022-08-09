@@ -146,7 +146,7 @@ final class UserNameDetailView: UIView, DynamicTypeCapable {
     // MARK: - Layout - Private Methods
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        backgroundColor = SemanticColors.View.Background.backgroundViewDefault
 
         [subtitleLabel, correlationLabel].forEach {
             $0.textAlignment = .center

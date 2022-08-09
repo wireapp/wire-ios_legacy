@@ -54,9 +54,9 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
 
         reload()
 
-        tableView.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        tableView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = SemanticColors.SeparatorColors.foregroundSeparatorCellActive
+        tableView.separatorColor = SemanticColors.View.Separator.foregroundSeparatorCellActive
 
         tableView.estimatedRowHeight = 0
         tableView.estimatedSectionHeaderHeight = 0

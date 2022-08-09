@@ -173,7 +173,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(profileFooterView)
         view.addSubview(incomingRequestFooter)
 
-        view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
 
         setupHeader()
         setupTabsController()
@@ -239,7 +239,7 @@ final class ProfileViewController: UIViewController {
         addToSelf(tabsController!)
 
         tabsController?.isTabBarHidden = viewControllers.count < 2
-        tabsController?.view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        tabsController?.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
     }
 
     // MARK: - Constraints

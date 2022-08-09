@@ -71,7 +71,7 @@ class IncomingRequestFooterView: UIView {
         ignoreButton.layer.cornerRadius = 8
 
         titleLabel.textColor = SemanticColors.Label.textDefault
-        backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        backgroundColor = SemanticColors.View.Background.backgroundViewDefault
 
         acceptButton.applyStyle(.accentColorTextButtonStyle)
 

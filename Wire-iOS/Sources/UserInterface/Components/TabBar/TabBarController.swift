@@ -73,12 +73,6 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
         }
     }
 
-    var style: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-
-        }
-    }
-
     var isEnabled = true {
         didSet {
             tabBar?.isUserInteractionEnabled = isEnabled

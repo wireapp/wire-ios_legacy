@@ -533,7 +533,7 @@ final class TokenField: UIView {
         textView.returnKeyType = .go
         textView.placeholderFont = .smallRegularFont
 
-        textView.placeholderTextColor = SemanticColors.SearchBar.textSearchBarPlaceholder
+        textView.placeholderTextColor = SemanticColors.SearchBar.textInputViewPlaceholder
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 0)
         textView.placeholderTextTransform = .upper
         textView.lineFragmentPadding = 0

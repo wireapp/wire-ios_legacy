@@ -71,7 +71,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        collectionView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         collectionView.alwaysBounceVertical = true
 
         collectionViewLayout.minimumLineSpacing = 0

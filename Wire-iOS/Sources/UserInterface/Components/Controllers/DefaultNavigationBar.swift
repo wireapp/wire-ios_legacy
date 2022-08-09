@@ -46,23 +46,23 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
     }
 
     func configure() {
-        tintColor = SemanticColors.NavigationBarColors.foregroundNavigationTintColor
+        tintColor = SemanticColors.NavigationBar.foregroundNavigationTintColor
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
         backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .red).with(insets: backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
         isTranslucent = false
-        barTintColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        barTintColor = SemanticColors.View.Background.backgroundViewDefault
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
 
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key: Any] {
         return [.font: FontSpec.smallSemiboldFont.font!,
-                .foregroundColor: SemanticColors.NavigationBarColors.foregroundNavigationTintColor,
+                .foregroundColor: SemanticColors.NavigationBar.foregroundNavigationTintColor,
                 .baselineOffset: 1.0]
     }
 
@@ -76,7 +76,7 @@ extension UIViewController {
         navigationController.setViewControllers([self], animated: false)
 
         if #available(iOS 15, *), setBackgroundColor {
-            navigationController.view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+            navigationController.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         }
 
         return navigationController

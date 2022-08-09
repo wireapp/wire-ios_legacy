@@ -71,7 +71,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        tableView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         tableView.contentInsetAdjustmentBehavior = .never
     }
 

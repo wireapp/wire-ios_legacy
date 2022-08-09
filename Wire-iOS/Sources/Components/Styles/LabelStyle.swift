@@ -36,7 +36,7 @@ public struct LabelStyle {
         textColor: SemanticColors.Label.textCellSubtitle)
     static let searchBarPlaceholder: Self  = LabelStyle(
         backgroundColor: .clear,
-        textColor: SemanticColors.SearchBar.textSearchBarPlaceholder)
+        textColor: SemanticColors.SearchBar.textInputViewPlaceholder)
 }
 
 extension UILabel: Stylable {

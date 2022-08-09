@@ -64,7 +64,7 @@ final class SearchHeaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
 
         searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
 
@@ -72,7 +72,7 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true
-        clearButton.setIconColor(SemanticColors.SearchBar.clearButton, for: .normal)
+        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
 
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)

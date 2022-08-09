@@ -37,7 +37,7 @@ final class SectionHeaderView: UIView {
     }
 
     private func setupViews() {
-        self.backgroundColor = SemanticColors.BackgroundColors.backgroundViewDefault
+        self.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.accessibilityTraits.insert(.header)

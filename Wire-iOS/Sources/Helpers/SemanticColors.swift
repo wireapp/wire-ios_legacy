@@ -51,22 +51,25 @@ public enum SemanticColors {
 
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
-        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
-        static let clearButton = UIColor(light: Asset.black, dark: Asset.white)
-        static let searchIcon = UIColor(light: Asset.black, dark: Asset.white)
+    }
+    public enum View {
+        enum Background {
+            static let backgroundViewDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+            static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+            static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        }
+
+        enum Separator {
+            static let foregroundSeparatorCellActive = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        }
     }
 
-    public enum BackgroundColors {
-        static let backgroundViewDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
-    }
-
-    public enum IconColors {
-        static let foregroundCellPlainCheckMarkIcon = UIColor(light: Asset.black, dark: Asset.white)
+    public enum Icon {
+        static let foregroundCellPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
         static let boarderCellCheckMarkActive = UIColor(light: Asset.gray80, dark: Asset.gray60)
         static let backgroundCellCheckMarkActive = UIColor(light: Asset.gray20, dark: Asset.gray90)
@@ -74,16 +77,14 @@ public enum SemanticColors {
         static let foregroundCellCheckMarkIconActive = UIColor(light: Asset.white, dark: Asset.black)
     }
 
-    public enum SeparatorColors {
-        static let foregroundSeparatorCellActive = UIColor(light: Asset.gray40, dark: Asset.gray90)
-    }
 
-    public enum TabBarColors {
+
+    public enum TabBar {
         static let textTabBarActive = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundSeperatorSelectedTabActive = UIColor(light: Asset.black, dark: Asset.white)
     }
 
-    public enum NavigationBarColors {
+    public enum NavigationBar {
         static let foregroundNavigationTintColor = UIColor(light: Asset.black, dark: Asset.white)
     }
 

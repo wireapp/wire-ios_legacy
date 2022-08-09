@@ -95,7 +95,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
     private func setUpDeviceIconView() {
         deviceTypeIconView.setTemplateIcon(.devices, size: .tiny)
-        deviceTypeIconView.tintColor = SemanticColors.IconColors.foregroundCellIconActive
+        deviceTypeIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
     }
 
     private func createConstraints() {
@@ -112,9 +112,9 @@ final class UserClientCell: SeparatorCollectionViewCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
-        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
+        backgroundColor = SemanticColors.View.Background.backgroundUserCell
         accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
-        accessoryIconView.tintColor = SemanticColors.IconColors.foregroundCellIconActive
+        accessoryIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
         titleLabel.textColor = SemanticColors.Label.textCellTitle
         subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
 

@@ -32,7 +32,7 @@ extension UIImageView {
 class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
-    typealias icon = SemanticColors.IconColors
+    typealias icon = SemanticColors.Icon
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
@@ -81,7 +81,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted : SemanticColors.BackgroundColors.backgroundUserCell
+            backgroundColor = isHighlighted ? SemanticColors.View.Background.backgroundUserCellHightLighted : SemanticColors.View.Background.backgroundUserCell
         }
     }
 
@@ -113,7 +113,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     override func setUp() {
         super.setUp()
 
-        backgroundColor = SemanticColors.BackgroundColors.backgroundUserCell
+        backgroundColor = SemanticColors.View.Background.backgroundUserCell
 
         userTypeIconView.setUpIconImageView()
         microphoneIconView.setUpIconImageView()

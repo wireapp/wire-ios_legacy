@@ -42,7 +42,7 @@ final class GroupDetailsServicesCell: GroupDetailsDisclosureOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        iconColor = SemanticColors.IconColors.foregroundCellIconActive
+        iconColor = SemanticColors.Icon.foregroundCellIconActive
         guard let iconColor = iconColor else { return }
 
         icon = StyleKitIcon.bot.makeImage(size: .tiny,
@@ -52,8 +52,8 @@ final class GroupDetailsServicesCell: GroupDetailsDisclosureOptionsCell {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
-            ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted
-            : SemanticColors.BackgroundColors.backgroundUserCell
+            ? SemanticColors.View.Background.backgroundUserCellHightLighted
+            : SemanticColors.View.Background.backgroundUserCell
         }
     }
 

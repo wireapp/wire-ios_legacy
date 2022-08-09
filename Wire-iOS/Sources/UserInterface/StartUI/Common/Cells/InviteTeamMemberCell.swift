@@ -28,7 +28,7 @@ class StartUIIconCell: UICollectionViewCell {
 
     fileprivate var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive)
+            iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive)
         }
     }
 
@@ -40,7 +40,7 @@ class StartUIIconCell: UICollectionViewCell {
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? SemanticColors.BackgroundColors.backgroundUserCellHightLighted : SemanticColors.BackgroundColors.backgroundUserCell
+            backgroundColor = isHighlighted ? SemanticColors.View.Background.backgroundUserCellHightLighted : SemanticColors.View.Background.backgroundUserCell
         }
     }
 
@@ -51,7 +51,7 @@ class StartUIIconCell: UICollectionViewCell {
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.IconColors.foregroundCellIconActive)
+        iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive)
 
     }
 
@@ -64,7 +64,7 @@ class StartUIIconCell: UICollectionViewCell {
         iconView.contentMode = .center
         titleLabel.applyStyle(.primaryCellLabel)
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
-        separator.backgroundColor = SemanticColors.SeparatorColors.foregroundSeparatorCellActive
+        separator.backgroundColor = SemanticColors.View.Separator.foregroundSeparatorCellActive
     }
 
     fileprivate func createConstraints() {
