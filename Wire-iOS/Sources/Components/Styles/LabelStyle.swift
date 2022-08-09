@@ -34,6 +34,9 @@ public struct LabelStyle {
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.LabelsColor.textLabelCellSubtitleActive)
+    static let searchBarPlaceholder: Self  = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.LabelsColor.textSearchBarPlaceholder)
 }
 
 extension UILabel: Stylable {
@@ -42,5 +45,4 @@ extension UILabel: Stylable {
         backgroundColor = style.backgroundColor
         textColor = style.textColor
     }
-
 }
