@@ -25,9 +25,9 @@ final class ArticleView: UIView {
 
     // MARK: - Styling
     private let containerColor: UIColor = SemanticColors.Background.collectionCell
-    private let titleTextColor: UIColor = .from(scheme: .textForeground)
+    private let titleTextColor: UIColor = SemanticColors.LabelsColor.textCollectionCell
     private let titleFont: UIFont = .normalSemiboldFont
-    private let authorTextColor: UIColor = .from(scheme: .textDimmed)
+    private let authorTextColor: UIColor = SemanticColors.LabelsColor.textCollectionCellSecondLine
     private let authorFont: UIFont = .smallLightFont
     private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
     private let authorHighlightFont = UIFont.smallSemiboldFont

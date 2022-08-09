@@ -104,6 +104,7 @@ final class CollectionImageCell: CollectionCell {
     }
 
     private func setup(_ view: UIView) {
+        view.layer.cornerRadius = 4
         view.clipsToBounds = true
 
         containerView.removeSubviews()

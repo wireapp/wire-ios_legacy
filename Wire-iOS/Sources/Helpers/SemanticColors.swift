@@ -50,7 +50,10 @@ public enum SemanticColors {
         static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
         static let textNoMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionCell = UIColor(light: Asset.black, dark: Asset.white)
         static let textCollectionHeaderView = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionCellHeaderDate = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textCollectionCellSecondLine = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)

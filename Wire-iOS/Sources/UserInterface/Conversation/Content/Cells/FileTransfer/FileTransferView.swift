@@ -200,6 +200,7 @@ final class FileTransferView: UIView, TransferView {
             bottomLabel.attributedText = secondLine
         }
 
+        bottomLabel.textColor = SemanticColors.LabelsColor.textCollectionCellSecondLine
         topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
         bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
     }
