@@ -16,16 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireShareEngine
 import WireDataModel
 import WireCommonComponents
 
-
-typealias DegradationStrategyChoice = (DegradationStrategy) -> ()
+typealias DegradationStrategyChoice = (DegradationStrategy) -> Void
 typealias SendingStateCallback = (_ type: SendingState) -> Void
-
 
 /// This enum specifies the current state of the sending progress and is passed
 /// as a parameter in a `Progress` closure.
@@ -49,21 +46,20 @@ enum SendingState {
 final class SendController {
     typealias SendableCompletion = (Result<[Sendable]>) -> Void
 
-    private var observer: SendableBatchObserver? = nil
+    private var observer: SendableBatchObserver?
     private var isCancelled = false
     private var unsentSendables: [UnsentSendable]
     private weak var sharingSession: SharingSession?
-    private var progress : SendingStateCallback?
-    private var timeoutWorkItem : DispatchWorkItem?
+    private var progress: SendingStateCallback?
+    private var timeoutWorkItem: DispatchWorkItem?
     private var timedOut = false
-    
+
     public var sentAllSendables = false
-    
 
     init(text: String, attachments: [NSItemProvider], conversation: WireShareEngine.Conversation, sharingSession: SharingSession) {
-        
-        var linkAttachment : NSItemProvider?
-        
+
+        var linkAttachment: NSItemProvider?
+
         var sendables: [UnsentSendable] = attachments.compactMap {
             if $0.hasGifImage {
                 return UnsentGifImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
@@ -81,32 +77,32 @@ final class SendController {
 
         self.sharingSession = sharingSession
         unsentSendables = sendables
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(SendController.networkStatusDidChange(_:)),
-                                               name:  Notification.Name.NetworkStatus,
+                                               name: Notification.Name.NetworkStatus,
                                                object: nil)
     }
-    
+
     @objc
     private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability == .ok {
             self.tryToTimeout()
         }
     }
-    
+
     /// Send (and prepare if needed) the text and attachment items passed into the initializer.
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
-        
+
         self.timedOut = false
         self.progress = progress
-        
+
         let completion: SendableCompletion  = { [weak self] sendableResult in
             guard let weakSelf = self else {
-                return                
+                return
             }
-            
+
             switch sendableResult {
             case .success(let sendables):
                 weakSelf.observer = SendableBatchObserver(sendables: sendables)
@@ -130,7 +126,7 @@ final class SendController {
             prepare(unsentSendables: unsentSendables) { [weak self] in
                 guard let `self` = self else { return }
                 guard !self.isCancelled else {
-                    return progress(.done)                    
+                    return progress(.done)
                 }
                 progress(.startingSending)
                 self.append(unsentSendables: self.unsentSendables, completion: completion)
@@ -140,25 +136,25 @@ final class SendController {
             append(unsentSendables: unsentSendables, completion: completion)
         }
     }
-    
+
     func tryToTimeout() {
         if timedOut { return }
-        
+
         cancelTimeout()
         timeoutWorkItem = DispatchWorkItem { [weak self] in
             self?.timeout()
         }
-        
+
         if let workItem = timeoutWorkItem {
             DispatchQueue.main.asyncAfter(deadline: .now() + 30.0, execute: workItem)
         }
     }
-    
+
     func cancelTimeout() {
         timeoutWorkItem?.cancel()
         timeoutWorkItem = nil
     }
-    
+
     private func timeout() {
         self.cancel { [weak self] in
             self?.cancelTimeout()
@@ -166,8 +162,7 @@ final class SendController {
             self?.progress?(.timedOut)
         }
     }
-    
-    
+
     /// Cancels the sending operation. In case the current state is preparing,
     /// a flag will be set to abort sending after the preparation is done.
     func cancel(completion: @escaping () -> Void) {
@@ -200,7 +195,7 @@ final class SendController {
         guard !isCancelled else {
             return completion(.success([]))
         }
-        
+
         let sendingGroup = DispatchGroup()
         var messages = [Sendable]()
 
@@ -216,9 +211,9 @@ final class SendController {
             sendingGroup.enter()
             $0.send(completion: appendToMessages)
         }
-        
+
         let error = unsentSendables.compactMap(\.error).first
-        
+
         sendingGroup.notify(queue: .main) {
             if let error = error {
                 completion(.failure(error))
