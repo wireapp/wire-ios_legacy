@@ -28,5 +28,5 @@ included:
 # the few violations. Repeat this until we find suitable limits.
 
 line_length:
-    warning: 250
-    error: 250
+    warning: 270
+    error: 270
