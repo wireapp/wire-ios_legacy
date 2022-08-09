@@ -16,12 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import WireUtilities
 
-
 private let zmLog = ZMSLog(tag: "share extension")
-
 
 extension Error {
 

@@ -25,7 +25,6 @@ import AppCenterDistribute
 /// Flag to determine if the App Center SDK has already been initialized
 private var didSetupAppCenter = false
 
-
 /// Helper to setup crash reporting in the share extension
 final class CrashReporter {
 
@@ -35,12 +34,11 @@ final class CrashReporter {
 
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
 
-        
-        //Enable after securing app extensions from App Center
+        // Enable after securing app extensions from App Center
         AppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashSharing)
         AppCenter.configure(withAppSecret: Bundle.appCenterAppId)
         AppCenter.start()
- 
+
     }
 
     private static var appCenterEnabled: Bool {
@@ -52,4 +50,3 @@ final class CrashReporter {
             && !settingsDisableCrashAndAnalyticsSharing
     }
 }
-
