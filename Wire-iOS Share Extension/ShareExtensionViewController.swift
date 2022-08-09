@@ -219,7 +219,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             DispatchQueue.main.async {
                 guard let url = url, !url.isFileURL else { return }
                 let separator = self.textView.text.isEmpty ? "" : "\n"
-                self.textView.text = self.textView.text + separator + url.absoluteString
+                self.textView.text += separator + url.absoluteString
                 self.textView.delegate?.textViewDidChange?(self.textView)
             }
         }
@@ -239,7 +239,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             let separator = self.textView.text.isEmpty ? "" : "\n"
 
             DispatchQueue.main.async {
-                self.textView.text = self.textView.text + separator + filename
+                self.textView.text += separator + filename
                 self.textView.delegate?.textViewDidChange?(self.textView)
             }
 
