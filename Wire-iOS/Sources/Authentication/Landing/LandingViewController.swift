@@ -212,7 +212,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
 
         configureSubviews()
         configureConstraints()
@@ -242,10 +242,6 @@ final class LandingViewController: AuthenticationStepViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .compatibleDarkContent
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

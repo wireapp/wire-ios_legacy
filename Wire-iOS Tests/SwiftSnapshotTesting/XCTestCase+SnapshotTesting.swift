@@ -569,7 +569,6 @@ extension XCTestCase {
                 container.overrideUserInterfaceStyle = .dark
             }
 
-
         verifyWithWidthInName(matching: container,
                               width: width,
                               named: name,
