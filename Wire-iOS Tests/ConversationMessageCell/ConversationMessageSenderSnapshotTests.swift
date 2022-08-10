@@ -42,9 +42,7 @@ final class ConversationMessageSenderSnapshotTests: ZMSnapshotTestCase {
         sut = SenderCellComponent(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
 
         ColorScheme.default.variant = .light
-        if #available(iOS 13.0, *) {
-            sut.overrideUserInterfaceStyle = .light
-        }
+        sut.overrideUserInterfaceStyle = .light
         sut.backgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
@@ -72,10 +70,8 @@ final class ConversationMessageSenderSnapshotTests: ZMSnapshotTestCase {
 
     func test_SenderIsExternal_OneOnOneConversation_DarkMode() {
         // GIVEN
-        if #available(iOS 13.0, *) {
-            sut.overrideUserInterfaceStyle = .dark
-        }
         ColorScheme.default.variant = .dark
+        sut.overrideUserInterfaceStyle = .dark
         sut.backgroundColor = UIColor.from(scheme: .contentBackground)
 
         mockUser.teamRole = .partner
@@ -150,10 +146,8 @@ final class ConversationMessageSenderSnapshotTests: ZMSnapshotTestCase {
 
     func test_SenderIsGuest_GroupConversation_DarkMode() {
         // GIVEN
-        if #available(iOS 13.0, *) {
-            sut.overrideUserInterfaceStyle = .dark
-        }
         ColorScheme.default.variant = .dark
+        sut.overrideUserInterfaceStyle = .dark
         sut.backgroundColor = UIColor.from(scheme: .contentBackground)
         mockUser.teamIdentifier = nil
 
