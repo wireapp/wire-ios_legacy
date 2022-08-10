@@ -76,21 +76,24 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             contentHandler(request.debugContent)
             return
         }
-
+        DebugLogger.addStep(step: "Start - push notification was received.", eventID: "!")
         self.contentHandler = contentHandler
 
         guard let accountID = request.content.accountID else {
+            DebugLogger.addStep(step: "Missing account id", eventID: "!")
             contentHandler(.debugMessageIfNeeded(message: "Missing account id."))
             return
         }
 
         guard let session = try? createSession(accountID: accountID) else {
+            DebugLogger.addStep(step: "Failed to create session.", eventID: "!")
             contentHandler(.debugMessageIfNeeded(message: "Failed to create session."))
             return
         }
 
         session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
             if !isUserAuthenticated {
+                DebugLogger.addStep(step: "User is not authenticated.", eventID: "!")
                 contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
             }
         }
@@ -101,6 +104,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
     public override func serviceExtensionTimeWillExpire() {
         guard let contentHandler = contentHandler else { return }
+        DebugLogger.addStep(step: "Extension is expiring.", eventID: "!")
         contentHandler(.debugMessageIfNeeded(message: "Extension is expiring."))
         tearDown()
     }
@@ -114,6 +118,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         guard let contentHandler = contentHandler else { return }
 
         guard let content = notification?.content else {
+            DebugLogger.addStep(step: "No notification generated.", eventID: "!")
             contentHandler(.debugMessageIfNeeded(message: "No notification generated."))
             return
         }

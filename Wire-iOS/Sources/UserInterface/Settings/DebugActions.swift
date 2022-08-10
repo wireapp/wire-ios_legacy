@@ -77,7 +77,8 @@ enum DebugActions {
 //            res += "\(i) example text for push notification logs --------===========----------======="
 //        }
 //        return res
-        guard let logs =  UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, Any> else {
+//        DebugLogger.addStep(step: "!shouldn't create notification", eventID: "11111")
+        guard let logs = UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, Any> else {
             return  "error NO LOGS DICTIONARY WERE CREATED"
         }
         var result = ""
