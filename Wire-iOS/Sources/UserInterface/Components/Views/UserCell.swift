@@ -32,7 +32,7 @@ extension UIImageView {
 class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
-    typealias icon = SemanticColors.Icon
+    typealias IconColors = SemanticColors.Icon
 
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
@@ -69,13 +69,13 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var sectionName: String?
     var cellIdentifier: String?
-    let iconColor = icon.foregroundCellIconActive
+    let iconColor = IconColors.foregroundCellIconActive
 
     override var isSelected: Bool {
         didSet {
-            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: icon.foregroundCellCheckMarkIconActive) : nil
-            checkmarkIconView.backgroundColor = isSelected ? icon.backgroundCellCheckMarkSelectedActive : icon.backgroundCellCheckMarkActive
-            checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : icon.boarderCellCheckMarkActive.cgColor
+            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCellCheckMarkIconActive) : nil
+            checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCellCheckMarkSelectedActive : IconColors.backgroundCellCheckMarkActive
+            checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.boarderCellCheckMarkActive.cgColor
         }
     }
 
@@ -97,7 +97,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             connectButton.isHidden = true
             accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
-            checkmarkIconView.layer.borderColor = icon.boarderCellCheckMarkActive.cgColor
+            checkmarkIconView.layer.borderColor = IconColors.boarderCellCheckMarkActive.cgColor
             checkmarkIconView.isHidden = true
         }
     }
@@ -107,7 +107,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         //  When you use adaptive colors with CALayers you’ll notice that these colors,
         // are not updating when switching appearance live in the app.
         // That's why we use the traitCollectionDidChange(_:) method.
-        checkmarkIconView.layer.borderColor = icon.boarderCellCheckMarkActive.cgColor
+        checkmarkIconView.layer.borderColor = IconColors.boarderCellCheckMarkActive.cgColor
     }
 
     override func setUp() {
@@ -134,7 +134,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         checkmarkIconView.layer.borderWidth = 2
         checkmarkIconView.contentMode = .center
         checkmarkIconView.layer.cornerRadius = 12
-        checkmarkIconView.backgroundColor = icon.backgroundCellCheckMarkActive
+        checkmarkIconView.backgroundColor = IconColors.backgroundCellCheckMarkActive
         checkmarkIconView.isHidden = true
 
         accessoryIconView.setUpIconImageView()
@@ -203,7 +203,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         super.applyColorScheme(colorSchemeVariant)
 
         accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
-        accessoryIconView.tintColor = icon.foregroundCellIconActive
+        accessoryIconView.tintColor = IconColors.foregroundCellIconActive
 
         updateTitleLabel()
     }

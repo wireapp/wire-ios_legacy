@@ -24,21 +24,21 @@ public struct ButtonStyle {
     private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
 
     static let secondaryTextButtonStyle = ButtonStyle(normalStateColors: (
-        background: SemanticColors.Button.backgroundSecondaryEnabled,
-        title: SemanticColors.Button.textSecondaryEnabled,
-        border: SemanticColors.Button.borderSecondaryEnabled),
+                                                        background: SemanticColors.Button.backgroundSecondaryEnabled,
+                                                        title: SemanticColors.Button.textSecondaryEnabled,
+                                                        border: SemanticColors.Button.borderSecondaryEnabled),
                                                       highlightedStateColors: (
                                                         background: SemanticColors.Button.backgroundSecondaryHighlighted,
                                                         title: SemanticColors.Button.textSecondaryEnabled,
                                                         border: SemanticColors.Button.borderSecondaryHighlighted))
 
     static let accentColorTextButtonStyle = ButtonStyle(normalStateColors: (
-        background: UIColor.accent(),
-        title: SemanticColors.Button.textPrimaryEnabled,
-        border: .clear),
+                                                         background: UIColor.accent(),
+                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         border: .clear),
                                                         highlightedStateColors: (
-                                                            background: UIColor.accentDarken,
-                                                            title: SemanticColors.Button.textPrimaryEnabled,
-                                                            border: .clear))
+                                                         background: UIColor.accentDarken,
+                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         border: .clear))
 
 }

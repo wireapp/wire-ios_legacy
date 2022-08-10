@@ -51,7 +51,7 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
         backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .red).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
