@@ -59,7 +59,8 @@ final class LandingViewController: AuthenticationStepViewController {
         let imageView = UIImageView(image: image)
         imageView.accessibilityIdentifier = "WireLogo"
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = UIColor.Team.textColor
+
+        imageView.tintColor = SemanticColors.Icon.foregroundCellIconActive
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         return imageView
@@ -67,9 +68,9 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let messageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: Landing.welcomeMessage,
-                                     fontSpec: .normalBoldFont,
-                                     color: .landingScreen,
-                                     variant: .light)
+                                     fontSpec: .normalSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
+
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -79,9 +80,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let subMessageLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: Landing.welcomeSubmessage,
-                                     fontSpec: .normalRegularFont,
-                                     color: .landingScreen,
-                                     variant: .light)
+                                     fontSpec: .mediumRegularFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
