@@ -40,7 +40,6 @@ final class CallParticipantsListHelper {
 
 }
 
-@available(iOS 13.0, *)
 final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: CallParticipantsListViewController!

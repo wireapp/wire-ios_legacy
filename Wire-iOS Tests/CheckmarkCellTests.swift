@@ -20,7 +20,6 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-@available(iOS 13.0, *)
 final class CheckmarkCellTests: XCTestCase {
 
     var cell: CheckmarkCell!
