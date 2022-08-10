@@ -27,13 +27,31 @@ public extension UIView {
         border.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: borderWidth)
         addSubview(border)
     }
-
+    
     func addBottomBorder(color: UIColor) {
         let border = UIView()
         let borderWidth: CGFloat = 1.0
         border.backgroundColor = color
         border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         border.frame = CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: borderWidth)
+        addSubview(border)
+    }
+    
+    func addBottomBorderWithInset(color: UIColor, inset: CGFloat) {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height + inset, width: frame.size.width, height: borderWidth)
+        addSubview(border)
+    }
+    
+    func addBottomBorderWithInset(color: UIColor) {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height - borderWidth, width: frame.size.width, height: borderWidth)
         addSubview(border)
     }
 }

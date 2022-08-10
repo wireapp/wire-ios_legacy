@@ -27,14 +27,12 @@ protocol ColorPickerControllerDelegate {
 }
 
 class ColorPickerController: UIViewController {
-    let overlayView = UIView()
-    let contentView = UIView()
     let tableView = UITableView()
     let headerView = UIView()
     let titleLabel = UILabel()
     let closeButton = IconButton()
 
-    static fileprivate let rowHeight: CGFloat = 44
+    static fileprivate let rowHeight: CGFloat = 56
 
     let colors: [UIColor]
     var currentColor: UIColor?
@@ -44,7 +42,7 @@ class ColorPickerController: UIViewController {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
 
-        modalPresentationStyle = .custom
+        modalPresentationStyle = .popover
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -60,11 +58,8 @@ class ColorPickerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(contentView)
-
-        contentView.layer.cornerRadius = 10
-        contentView.clipsToBounds = true
-        contentView.backgroundColor = UIColor.white
+        headerView.backgroundColor = .yellow
+        view.backgroundColor = SemanticColors.Background.settingsView
 
         closeButton.setIcon(.cross, size: .tiny, for: [])
         closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
@@ -75,37 +70,31 @@ class ColorPickerController: UIViewController {
         headerView.addSubview(titleLabel)
         headerView.addSubview(closeButton)
 
-        contentView.addSubview(tableView)
-        contentView.addSubview(headerView)
+        view.addSubview(tableView)
+        view.addSubview(headerView)
 
-        [contentView, headerView, titleLabel, closeButton, tableView].prepareForLayout()
+        [headerView, titleLabel, closeButton, tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-          headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-          headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-          headerView.heightAnchor.constraint(equalToConstant: Self.rowHeight),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: Self.rowHeight),
 
-          titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-          titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-          titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.leadingAnchor),
-          titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: closeButton.leadingAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: closeButton.leadingAnchor),
 
-          closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-          closeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-          closeButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
-          closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
+            closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            closeButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
+            closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
 
-          tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-          tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-          tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-
-          tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-
-          contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-          contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-          contentView.widthAnchor.constraint(equalToConstant: 300),
-          contentView.heightAnchor.constraint(equalTo: headerView.heightAnchor, constant: Self.rowHeight * CGFloat(colors.count))
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10),
+            tableView.heightAnchor.constraint(equalToConstant: Self.rowHeight * CGFloat(colors.count)),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
         tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
@@ -125,6 +114,12 @@ class ColorPickerController: UIViewController {
     fileprivate class PickerCell: UITableViewCell {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
+        fileprivate let colorNameLabel: UILabel = {
+            let label = UILabel()
+            label.font = .normalLightFont
+            label.textColor = SemanticColors.LabelsColor.textColorPickerCell
+            return label
+        }()
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -132,18 +127,30 @@ class ColorPickerController: UIViewController {
 
             contentView.addSubview(colorView)
             contentView.addSubview(checkmarkView)
+            contentView.addSubview(colorNameLabel)
 
-            [checkmarkView, colorView].prepareForLayout()
+            [checkmarkView, colorView, colorNameLabel].prepareForLayout()
             NSLayoutConstraint.activate([
-              colorView.topAnchor.constraint(equalTo: contentView.topAnchor),
-              colorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-              colorView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-              colorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-              checkmarkView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-              checkmarkView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+                colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                colorView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+                colorView.heightAnchor.constraint(equalToConstant: 28),
+                colorView.widthAnchor.constraint(equalToConstant: 28),
+
+                colorNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                colorNameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 64),
+
+                checkmarkView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
+                checkmarkView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
 
-            checkmarkView.setIcon(.checkmark, size: .small, color: UIColor.white)
+            backgroundColor = SemanticColors.Background.settingsTableCell
+            addBottomBorderWithInset(color: SemanticColors.Background.ColorPickerCellBorder)
+
+            colorView.layer.cornerRadius = 14
+            colorNameLabel.text = "Color Name"
+
+            checkmarkView.tintColor = SemanticColors.LabelsColor.textColorPickerCell
+            checkmarkView.setTemplateIcon(.checkmark, size: .small)
             checkmarkView.isHidden = true
         }
 
@@ -179,6 +186,7 @@ class ColorPickerController: UIViewController {
 
 extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("🔥 \(colors.count)")
         return colors.count
     }
 
@@ -197,6 +205,7 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
         if cell.isSelected {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
+        print("🔥 CELL")
         return cell
     }
 

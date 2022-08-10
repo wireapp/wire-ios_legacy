@@ -59,6 +59,7 @@ public enum SemanticColors {
         static let textEmailCellValue = UIColor(light: Asset.black, dark: Asset.white)
         static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
         static let textLinkHeaderCellSubtitle  = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textColorPickerCell = UIColor(light: Asset.black, dark: Asset.white)
     }
     public enum ButtonsColor {
         static let accountAvailabilityIcon = UIColor(light: Asset.gray90, dark: Asset.gray20)
@@ -70,6 +71,7 @@ public enum SemanticColors {
         static let deviceTableCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let settingsTableCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let settingsTableCellBorder = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let ColorPickerCellBorder = UIColor(light: Asset.gray40, dark: Asset.gray90)
     }
     public enum SearchBar {
         static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
