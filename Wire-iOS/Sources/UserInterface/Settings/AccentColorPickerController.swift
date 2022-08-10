@@ -205,6 +205,8 @@ class ColorPickerController: UIViewController {
         override func setSelected(_ selected: Bool, animated: Bool) {
             super.setSelected(selected, animated: animated)
             checkmarkView.isHidden = !selected
+            // TODO: MAKE SURE THAT THIS IS CORRECT FONT!
+            colorNameLabel.font = selected ? .normalSemiboldFont : .normalLightFont
         }
 
         override func prepareForReuse() {
