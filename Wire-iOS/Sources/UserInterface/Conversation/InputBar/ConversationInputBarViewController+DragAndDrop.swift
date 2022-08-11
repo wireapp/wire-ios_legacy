@@ -23,7 +23,7 @@ import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "Drag and drop images")
 
-extension ConversationInputBarViewController: UIDropInteractionDelegate, PerformClipboardAction {
+extension ConversationInputBarViewController: UIDropInteractionDelegate {
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
 
@@ -70,21 +70,18 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate, Perform
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        return dropProposal(isText: session.hasText(),
-                            isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
-                            canFilesBeShared: MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard)
+        return dropProposal(mediaShareRestrictionManager: MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()))
+    }
+
+    func dropProposal(mediaShareRestrictionManager: MediaShareRestrictionManager) -> UIDropProposal {
+        return mediaShareRestrictionManager.canUseClipboard
+        ? UIDropProposal(operation: .copy)
+        : UIDropProposal(operation: .forbidden)
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return true
     }
-
-    func dropProposal(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> UIDropProposal {
-      return shouldAllowPerformAction(isText: isText, isClipboardEnabled: isClipboardEnabled, canFilesBeShared: canFilesBeShared)
-        ? UIDropProposal(operation: .copy)
-        : UIDropProposal(operation: .forbidden)
-    }
-
 }
 
 private extension UIDropSession {
