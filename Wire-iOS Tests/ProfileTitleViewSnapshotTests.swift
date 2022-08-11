@@ -37,12 +37,14 @@ final class ProfileTitleViewSnapshotTests: XCTestCase {
     }
 
     func testForDarkScheme() {
-        sut.configure(with: mockUser, variant: .dark)
+        sut.overrideUserInterfaceStyle = .dark
+        sut.configure(with: mockUser)
         verify(matching: sut)
     }
 
     func testForLightScheme() {
-        sut.configure(with: mockUser, variant: .light)
+        sut.overrideUserInterfaceStyle = .light
+        sut.configure(with: mockUser)
         verify(matching: sut)
     }
 }

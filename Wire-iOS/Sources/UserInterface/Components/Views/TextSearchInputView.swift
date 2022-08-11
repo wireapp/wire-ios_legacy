@@ -58,6 +58,7 @@ final class TextSearchInputView: UIView {
         super.init(frame: frame)
 
         backgroundColor = .clear
+
         iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
 
         iconView.contentMode = .center
@@ -77,6 +78,7 @@ final class TextSearchInputView: UIView {
         clearButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         clearButton.isHidden = true
         clearButton.accessibilityIdentifier = "cancel search"
+
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
         spinner.color = UIColor.from(scheme: .textDimmed, variant: .light)

@@ -57,7 +57,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
         super.viewDidLoad()
 
         title = "group_details.notification_options_cell.title".localized(uppercased: true)
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
 
         configureSubviews()
         configureConstraints()
@@ -71,7 +71,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.from(scheme: .contentBackground)
+        collectionView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         collectionView.alwaysBounceVertical = true
 
         collectionViewLayout.minimumLineSpacing = 0

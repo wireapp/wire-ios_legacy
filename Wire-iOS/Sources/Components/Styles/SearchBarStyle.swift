@@ -32,9 +32,9 @@ public struct SearchBarStyle {
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
 
-    static let `default` = SearchBarStyle(borderColorNotSelected: SearchBarColors.borderInputView,
-                                          textColor: SearchBarColors.textInputView,
-                                          backgroundColor: SearchBarColors.backgroundInputView)
+    static let `default` = SearchBarStyle(borderColorNotSelected: SemanticColors.SearchBar.borderInputView,
+                                          textColor: SemanticColors.SearchBar.textInputView,
+                                          backgroundColor: SemanticColors.SearchBar.backgroundInputView)
 
 }
 

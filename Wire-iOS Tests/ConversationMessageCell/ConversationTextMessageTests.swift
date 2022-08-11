@@ -20,7 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ConversationTextMessageTests: XCTestCase {
+final class ConversationTextMessageTests: ZMSnapshotTestCase {
 
     var mockOtherUser: MockUserType!
 

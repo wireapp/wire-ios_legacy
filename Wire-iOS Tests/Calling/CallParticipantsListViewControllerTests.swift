@@ -77,6 +77,7 @@ final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         // Then
         verify(matching: sut.view)

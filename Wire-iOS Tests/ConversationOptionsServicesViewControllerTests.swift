@@ -82,6 +82,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
