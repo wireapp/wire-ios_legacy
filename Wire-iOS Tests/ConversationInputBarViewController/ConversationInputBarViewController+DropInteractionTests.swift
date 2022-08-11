@@ -18,40 +18,51 @@
 
 import XCTest
 @testable import Wire
-import WireCommonComponents
 
 final class ConversationInputBarViewControllerDropInteractionTests: XCTestCase {
 
-    func testThatItHandlesDroppingFilesWithFlagEnabled() {
+    func testThatItHandlesDroppingFiles_FlagEnabled() {
+        // GIVEN
         let mockConversation = MockInputBarConversationType()
         let sut = ConversationInputBarViewController(conversation: mockConversation)
-        let shareRestrictionManager = MediaShareRestrictionManagerMock(shareFlagEnabled: true)
+        let shareRestrictionManager = MediaShareRestrictionManagerMock(canFilesBeShared: true)
+
+        // WHEN
         let dropProposal = sut.dropProposal(mediaShareRestrictionManager: shareRestrictionManager)
 
+        // THEN
         XCTAssertEqual(dropProposal.operation, UIDropOperation.copy, file: #file, line: #line)
     }
 
-    func testThatItPreventsDroppingFilesWithFlagEnabled() {
+    func testThatItPreventsDroppingFiles_FlagDisabled() {
+        // GIVEN
         let mockConversation = MockInputBarConversationType()
         let sut = ConversationInputBarViewController(conversation: mockConversation)
-        let shareRestrictionManager = MediaShareRestrictionManagerMock(shareFlagEnabled: false)
+        let shareRestrictionManager = MediaShareRestrictionManagerMock(canFilesBeShared: false)
+
+        // WHEN
         let dropProposal = sut.dropProposal(mediaShareRestrictionManager: shareRestrictionManager)
 
+        // THEN
         XCTAssertEqual(dropProposal.operation, UIDropOperation.forbidden, file: #file, line: #line)
     }
+
 }
 
 // MARK: - Helpers
 
 private class MediaShareRestrictionManagerMock: MediaShareRestrictionManager {
-    let shareFlagEnabled: Bool
-    init(shareFlagEnabled: Bool) {
-        self.shareFlagEnabled = shareFlagEnabled
+
+    let canFilesBeShared: Bool
+
+    init(canFilesBeShared: Bool) {
+        self.canFilesBeShared = canFilesBeShared
+
         super.init(sessionRestriction: nil)
     }
 
-    override func isFileSharingFlagEnabled() -> Bool {
-        return shareFlagEnabled
+    override var isFileSharingFlagEnabled: Bool {
+        return canFilesBeShared
     }
 
 }

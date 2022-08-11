@@ -51,7 +51,7 @@ class MediaShareRestrictionManager {
         self.sessionRestriction = sessionRestriction
     }
 
-    func isFileSharingFlagEnabled() -> Bool {
+    var isFileSharingFlagEnabled: Bool {
         return SecurityFlags.fileSharing.isEnabled
     }
 
@@ -61,7 +61,7 @@ class MediaShareRestrictionManager {
         if let sessionRestriction = sessionRestriction, !sessionRestriction.isFileSharingEnabled {
             return .APIFlag
         }
-        return isFileSharingFlagEnabled() ? .none : .securityFlag
+        return isFileSharingFlagEnabled ? .none : .securityFlag
     }
 
     func canUploadMedia(from source: ShareableMediaSource) -> Bool {
