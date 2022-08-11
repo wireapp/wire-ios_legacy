@@ -20,6 +20,8 @@ import UIKit
 
 public struct ButtonStyle {
 
+    typealias ButtonColors = SemanticColors.Button
+
     private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor)
     private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
 
@@ -38,6 +40,15 @@ public struct ButtonStyle {
                                                          border: .clear),
                                                         highlightedStateColors: (
                                                          background: UIColor.accentDarken,
+                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         border: .clear))
+
+    static let primaryTextButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: ButtonColors.backgroundPrimaryEnabled,
+                                                         title: ButtonColors.textPrimaryEnabled,
+                                                         border: .clear),
+                                                        highlightedStateColors: (
+                                                         background: ButtonColors.backgroundPrimaryHighlighted,
                                                          title: SemanticColors.Button.textPrimaryEnabled,
                                                          border: .clear))
 

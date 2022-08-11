@@ -24,7 +24,7 @@ protocol LocationSendViewControllerDelegate: AnyObject {
 
 final class LocationSendViewController: UIViewController {
 
-    let sendButton = Button(style: .full)
+    let sendButton = Button(legacyStyle: .full)
     let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont

@@ -33,8 +33,8 @@ final class UserNameTakeOverViewController: UIViewController {
     public let suggestedHandleLabel = UILabel()
     public let subtitleTextView = WebLinkTextView()
 
-    private let chooseOwnButton = Button(style: .full)
-    private let keepSuggestedButton = Button(style: .empty, variant: .dark)
+    private let chooseOwnButton = Button(legacyStyle: .full)
+    private let keepSuggestedButton = Button(legacyStyle: .empty, variant: .dark)
     private let contentView = UIView()
     private let topContainer = UIView()
     private let suggestedHandle: String

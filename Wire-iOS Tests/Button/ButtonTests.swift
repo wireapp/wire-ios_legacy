@@ -46,7 +46,7 @@ final class ButtonTests: XCTestCase {
         sut.setTitle("Dummy button", for: .normal)
 
         // WHEN
-        sut.style = .full
+        sut.legacyStyle = .full
 
         // THEN
         verify(matching: sut)
@@ -57,8 +57,8 @@ final class ButtonTests: XCTestCase {
         sut.setTitle("Dummy button", for: .normal)
 
         // WHEN
-        sut.style = .full
-        sut.style = .empty
+        sut.legacyStyle = .full
+        sut.legacyStyle = .empty
 
         // THEN
         verify(matching: sut)

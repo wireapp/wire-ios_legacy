@@ -118,6 +118,6 @@ final class SpinnerButton: Button {
 
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
-        return SpinnerButton(style: .empty, cornerRadius: 6, fontSpec: .smallSemiboldFont)
+        return SpinnerButton(legacyStyle: .empty, cornerRadius: 6, fontSpec: .smallSemiboldFont)
     }
 }

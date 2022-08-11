@@ -102,7 +102,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginButton: Button = {
-        let button = Button(style: .full, variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -113,7 +113,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var enterpriseLoginButton: Button = {
-        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
         button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -124,7 +124,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginWithEmailButton: Button = {
-        let button = Button(style: .full, variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(legacyStyle: .full, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Login with email"
         button.setTitle("landing.login.email.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -135,7 +135,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var loginWithSSOButton: Button = {
-        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(legacyStyle: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.accessibilityIdentifier = "Log in with SSO"
         button.setTitle("landing.login.sso.button.title".localized, for: .normal)
         button.addTarget(self,
@@ -158,7 +158,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .empty, variant: .light, fontSpec: .smallSemiboldFont)
+        let button = Button(legacyStyle: .empty, variant: .light, fontSpec: .smallSemiboldFont)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
         button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
         button.accessibilityIdentifier = "Create An Account"

@@ -245,7 +245,7 @@ fileprivate extension Button {
     }
 
     convenience init(style: LegacyButtonStyle, title: String) {
-        self.init(style: style)
+        self.init(legacyStyle: style)
         setTitle(title, for: .normal)
     }
 }

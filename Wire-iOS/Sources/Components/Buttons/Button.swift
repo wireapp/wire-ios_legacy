@@ -51,11 +51,13 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    var style: LegacyButtonStyle? {
+    var legacyStyle: LegacyButtonStyle? {
         didSet {
             updateStyle(variant: variant)
         }
     }
+
+    var style: ButtonStyle?
 
     private(set) var variant: ColorSchemeVariant = ColorScheme.default.variant
 
@@ -69,13 +71,13 @@ class Button: ButtonWithLargerHitArea {
         clipsToBounds = true
     }
 
-    convenience init(style: LegacyButtonStyle,
+    convenience init(legacyStyle: LegacyButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
                      fontSpec: FontSpec = .smallLightFont) {
         self.init(fontSpec: fontSpec)
 
-        self.style = style
+        self.legacyStyle = legacyStyle
         self.variant = variant
         textTransform = .upper
         layer.cornerRadius = cornerRadius
@@ -84,8 +86,21 @@ class Button: ButtonWithLargerHitArea {
         updateStyle(variant: variant)
     }
 
+    convenience init(style: ButtonStyle,
+                     cornerRadius: CGFloat = 16,
+                     fontSpec: FontSpec = .smallLightFont) {
+        self.init(fontSpec: fontSpec)
+
+        self.style = style
+        textTransform = .upper
+        layer.cornerRadius = cornerRadius
+        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+
+        applyStyle(style)
+    }
+
     private func updateStyle(variant: ColorSchemeVariant) {
-        guard let style = style else { return }
+        guard let style = legacyStyle else { return }
 
         switch style {
         case .full:
