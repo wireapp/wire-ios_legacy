@@ -87,7 +87,7 @@ class Button: ButtonWithLargerHitArea {
     }
 
     convenience init(style: ButtonStyle,
-                     cornerRadius: CGFloat = 16,
+                     cornerRadius: CGFloat = 0,
                      fontSpec: FontSpec = .smallLightFont) {
         self.init(fontSpec: fontSpec)
 

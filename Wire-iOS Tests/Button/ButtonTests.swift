@@ -23,7 +23,7 @@ final class ButtonTests: XCTestCase {
     var sut: Wire.Button!
 
     override func setUp() {
-        sut = Button(style: .empty, fontSpec: .smallLightFont)
+        sut = Button(legacyStyle: .empty, fontSpec: .smallLightFont)
     }
 
     override func tearDown() {

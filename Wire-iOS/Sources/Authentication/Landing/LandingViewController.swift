@@ -33,6 +33,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - State
 
+    
+
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
     typealias Landing = L10n.Localizable.Landing
@@ -158,12 +160,9 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(legacyStyle: .empty, variant: .light, fontSpec: .smallSemiboldFont)
-        button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .normal)
-        button.setBorderColor(UIColor(white: 1.0, alpha: 0.0), for: .highlighted)
+        let button = Button(style: .emptyTextButtonStyle, fontSpec: .smallRegularFont)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self,
                          action: #selector(createAccountButtonTapped(_:)),
                          for: .touchUpInside)

@@ -26,21 +26,21 @@ public struct ButtonStyle {
     private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
 
     static let secondaryTextButtonStyle = ButtonStyle(normalStateColors: (
-                                                        background: SemanticColors.Button.backgroundSecondaryEnabled,
-                                                        title: SemanticColors.Button.textSecondaryEnabled,
-                                                        border: SemanticColors.Button.borderSecondaryEnabled),
+                                                        background: ButtonColors.backgroundSecondaryEnabled,
+                                                        title: ButtonColors.textSecondaryEnabled,
+                                                        border: ButtonColors.borderSecondaryEnabled),
                                                       highlightedStateColors: (
-                                                        background: SemanticColors.Button.backgroundSecondaryHighlighted,
-                                                        title: SemanticColors.Button.textSecondaryEnabled,
-                                                        border: SemanticColors.Button.borderSecondaryHighlighted))
+                                                        background: ButtonColors.backgroundSecondaryHighlighted,
+                                                        title: ButtonColors.textSecondaryEnabled,
+                                                        border: ButtonColors.borderSecondaryHighlighted))
 
     static let accentColorTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: UIColor.accent(),
-                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         title: ButtonColors.textPrimaryEnabled,
                                                          border: .clear),
                                                         highlightedStateColors: (
                                                          background: UIColor.accentDarken,
-                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         title: ButtonColors.textPrimaryEnabled,
                                                          border: .clear))
 
     static let primaryTextButtonStyle = ButtonStyle(normalStateColors: (
@@ -49,7 +49,16 @@ public struct ButtonStyle {
                                                          border: .clear),
                                                         highlightedStateColors: (
                                                          background: ButtonColors.backgroundPrimaryHighlighted,
-                                                         title: SemanticColors.Button.textPrimaryEnabled,
+                                                         title: ButtonColors.textPrimaryEnabled,
+                                                         border: .clear))
+
+    static let emptyTextButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: .clear,
+                                                         title: ButtonColors.textEmptyEnabled,
+                                                         border: .clear),
+                                                        highlightedStateColors: (
+                                                         background: .clear,
+                                                         title: ButtonColors.textEmptyEnabled,
                                                          border: .clear))
 
 }
