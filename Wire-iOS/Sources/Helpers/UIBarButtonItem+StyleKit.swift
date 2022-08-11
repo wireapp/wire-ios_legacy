@@ -37,4 +37,12 @@ extension UIBarButtonItem {
         return item
     }
 
+    static func createUpdatedCloseItem() -> UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .cross, target: nil, action: nil)
+        item.tintColor = SemanticColors.Icon.foregroundDefault
+        item.accessibilityIdentifier = "close"
+        item.accessibilityLabel = "general.close".localized
+        return item
+    }
+
 }

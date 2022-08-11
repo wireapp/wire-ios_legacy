@@ -136,7 +136,7 @@ final class ConversationCellBurstTimestampView: UIView {
     }
 
     func setupStyle() {
-        label.textColor = UIColor.from(scheme: .textForeground)
+        label.applyStyle(.dateInConversationLabel)
         separatorColor = UIColor.from(scheme: .separator)
         separatorColorExpanded = UIColor.from(scheme: .paleSeparator)
     }

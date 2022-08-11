@@ -27,7 +27,7 @@ final class TokenField: UIView {
 
     weak var delegate: TokenFieldDelegate?
 
-    let textView: TokenizedTextView = TokenizedTextView()
+    let textView = SearchTextView(style: .default)
     let accessoryButton: IconButton = IconButton()
 
     var hasAccessoryButton = false {
@@ -153,7 +153,7 @@ final class TokenField: UIView {
         inputParagraphStyle.lineSpacing = lineSpacing
 
         return [.font: font,
-                .foregroundColor: textColor,
+                .foregroundColor: textView.textColor ?? .clear,
                 .paragraphStyle: inputParagraphStyle]
     }
 
@@ -211,16 +211,6 @@ final class TokenField: UIView {
     }
 
     // MARK: - Appearance
-
-    var textColor: UIColor = .black {
-        didSet {
-            guard oldValue != textColor else {
-                return
-            }
-
-            updateTextAttributes()
-        }
-    }
 
     var lineSpacing: CGFloat = 8 {
         didSet {
@@ -444,6 +434,7 @@ final class TokenField: UIView {
         textView.textStorage.deleteCharacters(in: nsRange)
         textView.textStorage.endEditing()
         textView.insertText("")
+        textView.resignFirstResponder()
 
         invalidateIntrinsicContentSize()
         layoutIfNeeded()
@@ -517,7 +508,6 @@ final class TokenField: UIView {
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = UIColor.clear
         textView.textDragInteraction?.isEnabled = false
         addSubview(textView)
 
@@ -542,6 +532,8 @@ final class TokenField: UIView {
         textView.autocorrectionType = .no
         textView.returnKeyType = .go
         textView.placeholderFont = .smallRegularFont
+
+        textView.placeholderTextColor = SemanticColors.SearchBar.textInputViewPlaceholder
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 0)
         textView.placeholderTextTransform = .upper
         textView.lineFragmentPadding = 0

@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 open class AccessoryTextField: UITextField, DynamicTypeCapable {
+
     public func redrawFont() {
         self.font = textFieldAttributes.textFont.font
     }
@@ -126,6 +127,7 @@ extension AccessoryTextField {
 
         autocorrectionType = .no
         contentVerticalAlignment = .center
+
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             layer.cornerRadius = 4

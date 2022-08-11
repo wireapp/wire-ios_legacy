@@ -40,29 +40,65 @@ public enum SemanticColors {
         static let borderOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
-    public enum LabelsColor {
-        static let textLabelUseraname = UIColor(light: Asset.black, dark: Asset.white)
-        static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
-        static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
+    public enum Label {
+        static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
+        static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
+        static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
+        static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
-    public enum SearchBarColor {
-        public static let textSearchBarUserInput = UIColor(light: Asset.black, dark: Asset.white)
+    public enum SearchBar {
+        static let textInputView = UIColor(light: Asset.black, dark: Asset.white)
+        static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let backgroundInputView = UIColor(light: Asset.white, dark: Asset.black)
+        static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
+    }
+
+    public enum View {
+        static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+    }
+
+    public enum Icon {
+        static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
+        static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
+        static let borderCheckMark = UIColor(light: Asset.gray80, dark: Asset.gray60)
+        static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
+        static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
+    }
+
+    public enum TabBar {
+        static let backgroundSeperatorSelected = UIColor(light: Asset.black, dark: Asset.white)
+    }
+
+    public enum Button {
+        static let backgroundSecondaryEnabled = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundSecondaryHighlighted = UIColor(light: Asset.white, dark: Asset.gray80)
+        static let textSecondaryEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let borderSecondaryEnabled = UIColor(light: Asset.gray40, dark: Asset.gray80)
+        static let borderSecondaryHighlighted = UIColor(light: Asset.gray40, dark: Asset.gray60)
+
+        static let backgroundPrimaryEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
+        static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
     }
 
 }
 
 extension UIColor {
-
     convenience init(light: ColorAsset, dark: ColorAsset) {
         self.init { traits in
             return traits.userInterfaceStyle == .dark ? dark.color : light.color
         }
     }
-
 }
 
 public extension UIColor {
@@ -85,10 +121,8 @@ public extension UIColor {
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }
     }
-
     convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .blue
         self.init(for: safeAccentColor)
     }
-
 }

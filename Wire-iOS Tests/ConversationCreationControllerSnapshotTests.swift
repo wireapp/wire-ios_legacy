@@ -20,7 +20,6 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-@available(iOS 13.0, *)
 final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ConversationCreationController!

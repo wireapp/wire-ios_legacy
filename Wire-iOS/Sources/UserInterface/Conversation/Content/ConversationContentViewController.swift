@@ -15,7 +15,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 import WireDataModel
 import WireRequestStrategy
@@ -148,8 +147,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.delaysContentTouches = false
         tableView.keyboardDismissMode = AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal ? .none : .interactive
 
-        tableView.backgroundColor = UIColor.from(scheme: .contentBackground)
-        view.backgroundColor = UIColor.from(scheme: .contentBackground)
+        tableView.backgroundColor = SemanticColors.View.backgroundConversationView
+        view.backgroundColor = SemanticColors.View.backgroundConversationView
 
         setupMentionsResultsView()
 
