@@ -36,14 +36,14 @@ final class ConversationListItemView: UIView {
     var titleText: NSAttributedString? {
         didSet {
             titleField.attributedText = titleText
-            titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
+            titleField.textColor = SemanticColors.Label.textConversationListItemTitleField
         }
     }
 
     var subtitleAttributedText: NSAttributedString? {
         didSet {
             subtitleField.attributedText = subtitleAttributedText
-            subtitleField.textColor = SemanticColors.LabelsColor.textLabelConversationSubtitleField
+            subtitleField.textColor = SemanticColors.Label.textConversationListItemSubtitleField
             subtitleField.accessibilityValue = subtitleAttributedText?.string
         }
     }
@@ -155,13 +155,13 @@ final class ConversationListItemView: UIView {
     }
 
     private func setupStyle() {
-        titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
+        titleField.textColor = SemanticColors.Label.textConversationListItemTitleField
     }
 
     private func setupSubtitleField() {
         subtitleField.accessibilityIdentifier = "subtitle"
         subtitleField.numberOfLines = 1
-        subtitleField.textColor = SemanticColors.LabelsColor.textLabelConversationSubtitleField
+        subtitleField.textColor = SemanticColors.Label.textConversationListItemSubtitleField
         labelsStack.addArrangedSubview(subtitleField)
     }
 
@@ -171,7 +171,7 @@ final class ConversationListItemView: UIView {
 
     func updateAppearance() {
         titleField.attributedText = titleText
-        titleField.textColor = SemanticColors.LabelsColor.textLabelConversationTitleField
+        titleField.textColor = SemanticColors.Label.textConversationListItemTitleField
     }
 
     // MARK: - Observer

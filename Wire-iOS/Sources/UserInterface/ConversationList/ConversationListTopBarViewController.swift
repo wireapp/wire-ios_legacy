@@ -51,8 +51,8 @@ final class ConversationListTopBarViewController: UIViewController {
         }
 
         viewRespectsSystemMinimumLayoutMargins = false
-        view.backgroundColor = SemanticColors.Background.conversationList
-        view.addBottomBorderWithInset(color: SemanticColors.Background.conversationListTableCellBorder)
+        view.backgroundColor = SemanticColors.View.Background.conversationList
+        view.addBottomBorderWithInset(color: SemanticColors.View.Border.conversationListTableViewCell)
     }
 
     @available(*, unavailable)

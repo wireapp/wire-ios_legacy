@@ -61,8 +61,7 @@ final class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
-        textLabel.textColor = SemanticColors.LabelsColor.textLabelConversationListCell
-
+        textLabel.textColor = SemanticColors.Label.textConversationListCell
         transparentIconView.contentMode = .center
         transparentIconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         transparentIconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
@@ -120,8 +119,8 @@ final class ConversationListAccessoryView: UIView {
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
-        badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
-        let iconTintColor = SemanticColors.LabelsColor.conversationListTableCellBadge
+        badgeView.backgroundColor = SemanticColors.View.Background.conversationListTableViewCellBadge
+        let iconTintColor = SemanticColors.Label.conversationListTableViewCellBadge
 
         switch icon {
         case .pendingConnection:
@@ -155,10 +154,10 @@ final class ConversationListAccessoryView: UIView {
             }
             return iconView
         case .silenced:
-            tintColor = SemanticColors.LabelsColor.textLabelSettingsCellBadgeReverted
+            tintColor = SemanticColors.Label.conversationListTableViewCellBadgeReverted
             iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
-            badgeView.backgroundColor = SemanticColors.Background.conversationListTableCellBadgeReverted
-            badgeView.layer.borderColor = SemanticColors.Background.conversationListTableCellBadgeRevertedBorder.cgColor
+            badgeView.backgroundColor = SemanticColors.View.Background.conversationListTableViewCellBadgeReverted
+            badgeView.layer.borderColor = SemanticColors.View.Border.conversationListTableViewCellBadgeReverted.cgColor
             badgeView.layer.borderWidth = 1
             badgeView.layer.cornerRadius = 6
             accessibilityValue = "conversation_list.voiceover.status.silenced".localized
@@ -168,7 +167,7 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
-            textLabel.textColor = SemanticColors.LabelsColor.conversationListTableCellBadge
+            textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
             accessibilityValue = textLabel.text
             return textLabel
         case .mention:

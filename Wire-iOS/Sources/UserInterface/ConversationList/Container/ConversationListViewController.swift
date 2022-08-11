@@ -54,7 +54,7 @@ final class ConversationListViewController: UIViewController {
 
     let contentContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = SemanticColors.Background.conversationListTableCell
+        view.backgroundColor = SemanticColors.View.Background.conversationListTableViewCell
 
         return view
     }()
@@ -105,7 +105,7 @@ final class ConversationListViewController: UIViewController {
 
         /// setup UI
         view.addSubview(contentContainer)
-        self.view.backgroundColor = SemanticColors.Background.conversationList
+        self.view.backgroundColor = SemanticColors.View.Background.conversationList
 
         setupTopBar()
         setupListContentController()

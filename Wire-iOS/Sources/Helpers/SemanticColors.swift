@@ -61,30 +61,15 @@ public enum SemanticColors {
         static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textConversationListItemTitleField = UIColor(light: Asset.black, dark: Asset.white)
+        static let textConversationListCell = UIColor(light: Asset.black, dark: Asset.white)
+        static let conversationListTableViewCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.black, dark: Asset.white)
+        static let teamImageView = UIColor(light: Asset.black, dark: Asset.white)
+        static let textConversationListItemSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
-        // TODO: DELETE BELLOW
-//        static let textLabelUseraname = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-//        static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
-//        static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-//        static let textLabelConversationSearchNoItems = UIColor(light: Asset.black, dark: Asset.gray20)
-//        static let textLabelSettingsCell = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let textLabelSettingsTableViewHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
-//        static let textLabelSettingsTableViewFooter = UIColor(light: Asset.gray80, dark: Asset.gray20)
-//        static let textLabelNavigationController = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textLabelSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
-//        static let textLabelConversationTitleField = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textLabelConversationSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
-//        static let conversationListTableCellBadge = UIColor(light: Asset.white, dark: Asset.black)
-//        static let textLabelSettingsCellBadgeReverted = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textLabelConversationListCell = UIColor(light: Asset.black, dark: Asset.white)
-//        static let teamImageView = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
-//        static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
-//        static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum SearchBar {
@@ -105,6 +90,11 @@ public enum SemanticColors {
             static let settingsScreenTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
             static let settingsScreenTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
             static let deviceTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
+            static let conversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
+            static let conversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
+            static let conversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+            static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
+            static let teamImageView = UIColor(light: Asset.white, dark: Asset.black)
         }
 
         enum Separator {
@@ -113,6 +103,8 @@ public enum SemanticColors {
         
         enum Border {
             static let settingsScreenTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+            static let conversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+            static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         }
     }
 

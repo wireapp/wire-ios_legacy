@@ -74,7 +74,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let label = DynamicFontLabel(
             fontSpec: .normalRegularFont,
             color: .white)
-        label.textColor = SemanticColors.LabelsColor.textLabelConversationListCell
+        label.textColor = SemanticColors.Label.textConversationListCell
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return label
     }()
@@ -83,8 +83,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let margin: CGFloat = 12
         let roundedTextBadge = RoundedTextBadge(contentInset: UIEdgeInsets(top: 2, left: margin, bottom: 2, right: margin), font: FontSpec(.medium, .semibold).font!)
 
-        roundedTextBadge.textLabel.textColor = SemanticColors.LabelsColor.conversationListTableCellBadge
-        roundedTextBadge.backgroundColor = SemanticColors.Background.conversationListTableCellBadge
+        roundedTextBadge.textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
+        roundedTextBadge.backgroundColor = SemanticColors.View.Background.conversationListTableViewCellBadge
         roundedTextBadge.isHidden = true
 
         return roundedTextBadge
@@ -123,7 +123,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     private let arrowIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = SemanticColors.LabelsColor.textLabelConversationListCell
+        imageView.tintColor = SemanticColors.Label.textConversationListCell
         imageView.setTemplateIcon(.downArrow, size: .tiny)
         return imageView
     }()
@@ -139,8 +139,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
-        backgroundColor = SemanticColors.Background.conversationList
-        addBottomBorderWithInset(color: SemanticColors.Background.conversationListTableCellBorder)
+        backgroundColor = SemanticColors.View.Background.conversationList
+        addBottomBorderWithInset(color: SemanticColors.View.Border.conversationListTableViewCell)
     }
 
     @objc

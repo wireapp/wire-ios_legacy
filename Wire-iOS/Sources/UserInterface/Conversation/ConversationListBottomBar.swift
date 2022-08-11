@@ -79,7 +79,7 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func createViews() {
-        separator.backgroundColor = SemanticColors.Background.conversationListTableCellBorder
+        separator.backgroundColor = SemanticColors.View.Border.conversationListTableViewCell
         separator.isHidden = true
         separator.translatesAutoresizingMaskIntoConstraints = false
 
@@ -119,7 +119,7 @@ final class ConversationListBottomBarController: UIViewController {
 
         view.addSubview(buttonStackview)
         view.addSubview(separator)
-        view.backgroundColor = SemanticColors.Background.conversationList
+        view.backgroundColor = SemanticColors.View.Background.conversationList
     }
 
     private func createConstraints() {
@@ -146,7 +146,7 @@ final class ConversationListBottomBarController: UIViewController {
 
     fileprivate func updateColorScheme() {
         allButtons.forEach { button in
-            button.setIconColor(SemanticColors.LabelsColor.textLabelConversationListCell, for: .normal)
+            button.setIconColor(SemanticColors.Label.textConversationListCell, for: .normal)
             button.setIconColor(.accent(), for: .selected)
         }
     }

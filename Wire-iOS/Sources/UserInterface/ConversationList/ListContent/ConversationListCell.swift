@@ -94,8 +94,8 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         setNeedsUpdateConstraints()
 
         AVSMediaManagerClientChangeNotification.add(self)
-        backgroundColor = SemanticColors.Background.conversationListTableCell
-        addBottomBorderWithInset(color: SemanticColors.Background.conversationListTableCellBorder)
+        backgroundColor = SemanticColors.View.Background.conversationListTableViewCell
+        addBottomBorderWithInset(color: SemanticColors.View.Border.conversationListTableViewCell)
     }
 
     override func drawerScrollingEnded(withOffset offset: CGFloat) {
