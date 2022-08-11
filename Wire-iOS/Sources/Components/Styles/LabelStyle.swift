@@ -22,6 +22,7 @@ import UIKit
 public struct LabelStyle {
     var backgroundColor: UIColor
     var textColor: UIColor
+
     static let footerLabel: Self = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.Label.textSectionFooter)
@@ -34,6 +35,9 @@ public struct LabelStyle {
     static let secondaryCellLabel: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.Label.textCellSubtitle)
+    static let dateInConversationLabel: Self = LabelStyle(
+        backgroundColor: .clear,
+        textColor: SemanticColors.Label.textDefault)
     static let searchBarPlaceholder: Self  = LabelStyle(
         backgroundColor: .clear,
         textColor: SemanticColors.SearchBar.textInputViewPlaceholder)
