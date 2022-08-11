@@ -112,6 +112,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     let destinationsTableView = UITableView()
     let closeButton = IconButton(style: .default, variant: .dark)
     let sendButton = IconButton(style: .default, variant: .light)
+
     let clearButton = IconButton(style: .default)
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {

@@ -156,7 +156,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options) { [weak self] (url, error) in
             error?.log(message: "Unable to load image from attachment")
 
-            //Tries to load the content from local URL...
+            // Tries to load the content from local URL...
 
             if let cfUrl = (url as? URL) as CFURL?,
                 let imageSource = CGImageSourceCreateWithURL(cfUrl, nil) {

@@ -37,6 +37,7 @@ final class SettingsTechnicalReportViewControllerSnapshotTests: ZMSnapshotTestCa
     func testForInitState() {
         let naviViewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
         naviViewController.view.backgroundColor = .black
+        naviViewController.overrideUserInterfaceStyle = .dark
         verify(matching: naviViewController)
     }
 }

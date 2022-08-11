@@ -40,7 +40,6 @@ final class CallParticipantsListHelper {
 
 }
 
-@available(iOS 13.0, *)
 final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: CallParticipantsListViewController!
@@ -78,6 +77,7 @@ final class CallParticipantsListViewControllerTests: ZMSnapshotTestCase {
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         // Then
         verify(matching: sut.view)

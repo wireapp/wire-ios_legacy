@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireCommonComponents
 import WireUtilities
@@ -33,8 +32,7 @@ final class ExtensionBackupExcluder: BackupExcluder {
     static func exclude() {
         do {
             try ExtensionBackupExcluder.exclude(filesToExclude: filesToExclude)
-        }
-        catch (let error) {
+        } catch let error {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }

@@ -38,7 +38,7 @@ extension ConversationListViewController {
             }
         case .peoplePicker:
             let startUIViewController = createPeoplePickerController()
-            let navigationWrapper = startUIViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+            let navigationWrapper = startUIViewController.wrapInNavigationController(navigationControllerClass: NavigationController.self)
 
             show(navigationWrapper, animated: true) {
                 startUIViewController.showKeyboardIfNeeded()

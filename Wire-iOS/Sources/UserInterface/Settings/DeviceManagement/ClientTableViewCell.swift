@@ -133,7 +133,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
             verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
 
-        backgroundColor = SemanticColors.Background.deviceTableCell
+        backgroundColor = SemanticColors.View.Background.deviceTableViewCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
@@ -156,14 +156,13 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
     func setupStyle() {
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
-        let textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        let textColor = SemanticColors.Label.textSettingsCell
         verifiedLabel.textColor = textColor
         fingerprintTextColor = textColor
         nameLabel.textColor = textColor
         labelLabel.textColor = textColor
         activationLabel.textColor = textColor
-        addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
-        addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        addBottomBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
     }
 
     func updateVerifiedLabel() {

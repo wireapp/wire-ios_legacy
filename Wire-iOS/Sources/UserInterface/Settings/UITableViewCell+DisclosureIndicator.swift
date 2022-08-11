@@ -23,7 +23,7 @@ extension UITableViewCell {
         let image = UIImage(systemName: "chevron.right")
         let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
         accessory.image = image
-        accessory.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        accessory.tintColor = SemanticColors.Label.textSettingsCell
         accessoryView = accessory
     }
 

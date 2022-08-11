@@ -95,12 +95,12 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func styleViews() {
-        topContainer.backgroundColor = SemanticColors.Background.settingsTableCell
-        titleLabel.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
-        subtitleLabel.textColor = SemanticColors.LabelsColor.textConversationQuestOptionInfo
+        topContainer.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
+        titleLabel.textColor = SemanticColors.Label.textSettingsCell
+        subtitleLabel.textColor = SemanticColors.Label.textConversationQuestOptionInfo
         backgroundColor = .clear
-        topContainer.addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
-        topContainer.addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        topContainer.addTopBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
+        topContainer.addBottomBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {
@@ -121,7 +121,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         let mainColor = variant.mainColor(color: color)
 
         if let icon = icon {
-            tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+            tintColor = SemanticColors.Label.textSettingsCell
             iconImageView.setTemplateIcon(icon, size: .tiny)
             imageContainerWidthConstraint.constant = CGFloat.IconCell.IconWidth
             iconImageViewLeadingConstraint.constant = CGFloat.IconCell.IconSpacing

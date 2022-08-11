@@ -74,12 +74,9 @@ class ConversationDetailFooterView: UIView {
     private func setupViews() {
         let configureButton = { (button: IconButton) in
             self.containerView.addSubview(button)
-            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
-            button.setIconColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
-            button.setTitleColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            button.setTitleColor(UIColor.from(scheme: .textDimmed), for: .highlighted)
-            button.setTitleColor(UIColor.from(scheme: .buttonFaded), for: .disabled)
+            button.setIconColor(SemanticColors.Label.textDefault, for: .normal)
+            button.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
+
         }
 
         configureButton(leftButton)
@@ -90,7 +87,7 @@ class ConversationDetailFooterView: UIView {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
 
-        backgroundColor = UIColor.from(scheme: .barBackground)
+        backgroundColor = SemanticColors.View.Background.backgroundUserCell
         addSubview(containerView)
 
         setupButtons()

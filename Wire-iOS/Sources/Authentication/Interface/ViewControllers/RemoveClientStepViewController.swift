@@ -69,7 +69,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
     }
 
     private func configureSubviews() {
-        view.backgroundColor = SemanticColors.Background.settingsView
+        view.backgroundColor = SemanticColors.View.Background.settingsScreenView
 
         clientListController.view.backgroundColor = .clear
         clientListController.editingList = true

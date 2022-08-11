@@ -23,19 +23,19 @@ import SystemConfiguration
 import WireSystem
 import UIKit
 
-final class SendingProgressViewController : UIViewController {
+final class SendingProgressViewController: UIViewController {
 
     enum ProgressMode {
         case preparing, sending
     }
 
     var cancelHandler : (() -> Void)?
-    
+
     private var circularShadow = CircularProgressView()
     private var circularProgress = CircularProgressView()
     private var connectionStatusLabel = UILabel()
-    private let minimumProgress : Float = 0.125
-    
+    private let minimumProgress: Float = 0.125
+
     var progress: Float = 0 {
         didSet {
             mode = .sending
@@ -61,47 +61,46 @@ final class SendingProgressViewController : UIViewController {
             self.title = "share_extension.preparing.title".localized
         }
     }
-    
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
-        
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(SendingProgressViewController.networkStatusDidChange(_:)),
                                                name: Notification.Name.NetworkStatus,
                                                object: nil)
-        
+
         circularShadow.lineWidth = 2
         circularShadow.setProgress(1, animated: false)
         circularShadow.alpha = 0.2
-        
+
         circularProgress.lineWidth = 2
         circularProgress.setProgress(0, animated: false)
-        
+
         connectionStatusLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         connectionStatusLabel.textAlignment = .center
         connectionStatusLabel.isHidden = true
         connectionStatusLabel.text = "share_extension.no_internet_connection.title".localized
-        
+
         view.addSubview(circularShadow)
         view.addSubview(circularProgress)
         view.addSubview(connectionStatusLabel)
-        
+
         createConstraints()
 
         updateProgressMode()
-        
+
         let reachability = NetworkStatus.shared.reachability
         setReachability(from: reachability)
     }
@@ -126,25 +125,25 @@ final class SendingProgressViewController : UIViewController {
             connectionStatusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
-    
+
     @objc
     private func onCancelTapped() {
         cancelHandler?()
     }
-    
+
     @objc
     private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus {
             setReachability(from: status.reachability)
         }
     }
-    
-    func setReachability(from reachability: ServerReachability) {        
+
+    func setReachability(from reachability: ServerReachability) {
         switch reachability {
-            case .ok:
-                connectionStatusLabel.isHidden = true
-            case .unreachable:
-                connectionStatusLabel.isHidden = false
+        case .ok:
+            connectionStatusLabel.isHidden = true
+        case .unreachable:
+            connectionStatusLabel.isHidden = false
         }
     }
 
