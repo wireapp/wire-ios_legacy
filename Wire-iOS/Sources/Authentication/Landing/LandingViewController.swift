@@ -147,9 +147,9 @@ final class LandingViewController: AuthenticationStepViewController {
 
     private let createAccoutInfoLabel: DynamicFontLabel = {
         let label = DynamicFontLabel(text: Landing.CreateAccount.infotitle,
-                                     fontSpec: .smallRegularFont,
-                                     color: .landingScreen,
-                                     variant: .light)
+                                     fontSpec: .mediumRegularFont,
+                                     color: SemanticColors.Label.textDefault)
+
         label.textAlignment = .center
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
