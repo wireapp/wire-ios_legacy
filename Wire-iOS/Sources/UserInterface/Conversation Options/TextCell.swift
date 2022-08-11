@@ -54,7 +54,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
         guard case let .text(text) = configuration else { preconditionFailure() }
         label.attributedText = text && .lineSpacing(8)
         label.textColor = SemanticColors.Label.textDefault
-        container.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        container.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
 }

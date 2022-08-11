@@ -70,7 +70,7 @@ class MessageToolboxDataSource {
 
     // MARK: - Formatting Properties
 
-    private let statusTextColor = SemanticColors.Label.textLabelMessageDetailsActive
+    private let statusTextColor = SemanticColors.Label.textMessageDetails
     private let statusFont = FontSpec.smallRegularFont.font!
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 

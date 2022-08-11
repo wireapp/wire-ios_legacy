@@ -71,7 +71,7 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.contentInsetAdjustmentBehavior = .never
     }
 
