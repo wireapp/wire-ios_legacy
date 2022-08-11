@@ -33,6 +33,7 @@ public enum SemanticColors {
         static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
 
+
     public enum Switch {
         static let backgroundOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green700Dark)
         static let backgroundOffStateEnabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
@@ -73,6 +74,7 @@ public enum SemanticColors {
     public enum View {
         enum Background {
             static let backgroundViewDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+            static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
             static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
             static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
             static let settingsScreenView = UIColor(light: Asset.gray20, dark: Asset.gray100)
