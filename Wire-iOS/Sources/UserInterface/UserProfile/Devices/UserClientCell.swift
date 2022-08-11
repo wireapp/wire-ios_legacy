@@ -45,7 +45,8 @@ final class UserClientCell: SeparatorCollectionViewCell {
         accessibilityIdentifier = "device_cell"
         shouldGroupAccessibilityChildren = true
 
-        deviceTypeIconView.image = StyleKitIcon.devices.makeImage(size: .tiny, color: .white)
+        setUpDeviceIconView()
+
         deviceTypeIconView.translatesAutoresizingMaskIntoConstraints = false
         deviceTypeIconView.contentMode = .center
 
@@ -92,6 +93,11 @@ final class UserClientCell: SeparatorCollectionViewCell {
         createConstraints()
     }
 
+    private func setUpDeviceIconView() {
+        deviceTypeIconView.setTemplateIcon(.devices, size: .tiny)
+        deviceTypeIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+    }
+
     private func createConstraints() {
         NSLayoutConstraint.activate([
             deviceTypeIconView.widthAnchor.constraint(equalToConstant: 64),
@@ -106,12 +112,11 @@ final class UserClientCell: SeparatorCollectionViewCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let textForegroundColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
-        titleLabel.textColor = textForegroundColor
-        subtitleLabel.textColor = textForegroundColor
+        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
+        accessoryIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+        titleLabel.textColor = SemanticColors.Label.textCellTitle
+        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
 
         updateDeviceIcon()
     }
@@ -137,7 +142,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
             deviceTypeIconView.image = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: SemanticColors.LegacyColors.vividRed)
             deviceTypeIconView.accessibilityIdentifier = "img.device_class.legalhold"
         default:
-            deviceTypeIconView.setIcon(.devices, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+            setUpDeviceIconView()
             deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
         }
     }

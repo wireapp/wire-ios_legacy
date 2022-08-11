@@ -72,10 +72,11 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
 
     private func styleViews() {
-        let color = UIColor.from(scheme: .textDimmed, variant: variant)
+        let titleLabelColor = SemanticColors.Label.textDefault
+        let subtileLabelColor = SemanticColors.Label.textSectionFooter
         topSeparator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
-        titleLabel.textColor = color
-        subtitleLabel.textColor = color
+        titleLabel.textColor = titleLabelColor
+        subtitleLabel.textColor = subtileLabelColor
         backgroundColor = .clear
     }
 

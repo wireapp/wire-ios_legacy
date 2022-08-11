@@ -728,7 +728,7 @@
 
 "call.announcement.incoming" = "Eingehender Anruf von %@";
 "call.actions.label.toggle_mute_on" = "Stumm";
-"call.actions.label.toggle_mute_off" = "Benachrichtigen";
+"call.actions.label.toggle_mute_off" = "Stummschaltung aufheben";
 "call.actions.label.flip_camera" = "Kamera wechseln";
 "call.actions.label.toggle_speaker_on" = "Lautsprecher aktivieren";
 "call.actions.label.toggle_speaker_off" = "Lautsprecher deaktivieren";

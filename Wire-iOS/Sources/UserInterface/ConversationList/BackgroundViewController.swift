@@ -30,12 +30,6 @@ final class BackgroundViewController: UIViewController {
     private var userObserverToken: NSObjectProtocol! = .none
     private let user: UserType
 
-    var darkMode: Bool = false {
-        didSet {
-            darkenOverlay.isHidden = !darkMode
-        }
-    }
-
     init(user: UserType,
          userSession: ZMUserSession?) {
         self.user = user
@@ -70,7 +64,6 @@ final class BackgroundViewController: UIViewController {
         self.createConstraints()
 
         self.updateForUser()
-        self.updateForColorScheme()
     }
 
     private var child: UIViewController? {
@@ -91,7 +84,6 @@ final class BackgroundViewController: UIViewController {
         imageView.transform = CGAffineTransform(scaleX: factor, y: factor)
 
         cropView.clipsToBounds = true
-        darkenOverlay.backgroundColor = UIColor(white: 0, alpha: 0.16)
 
         [imageView, blurView, darkenOverlay].forEach(self.cropView.addSubview)
 
@@ -161,10 +153,6 @@ final class BackgroundViewController: UIViewController {
         setBackground(color: UIColor(fromZMAccentColor: user.accentColorValue))
     }
 
-    private func updateForColorScheme() {
-        darkMode = ColorScheme.default.variant == .dark
-    }
-
     func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
 
         if imageMediumDataChanged {
@@ -188,7 +176,6 @@ final class BackgroundViewController: UIViewController {
 
     @objc
     private func colorSchemeChanged() {
-        updateForColorScheme()
     }
 }
 

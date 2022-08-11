@@ -35,7 +35,7 @@ extension UIButton {
             setImage(nil, for: state)
             return
         }
-        
+
         let image = UIImage.imageForIcon(iconType, size: size.rawValue, color: .black)
         setImage(image.withRenderingMode(.alwaysTemplate), for: state)
     }
