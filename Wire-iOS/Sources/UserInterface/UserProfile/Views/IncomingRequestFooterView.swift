@@ -30,7 +30,7 @@ protocol IncomingRequestFooterViewDelegate: AnyObject {
  * A view that lets the user accept a connection request.
  */
 
-class IncomingRequestFooterView: UIView, Themeable {
+class IncomingRequestFooterView: UIView {
 
     let titleLabel = UILabel()
     let acceptButton = Button(fontSpec: .smallSemiboldFont)
@@ -40,15 +40,6 @@ class IncomingRequestFooterView: UIView, Themeable {
 
     /// The delegate of the view, that will be called when the user accepts or denies the request.
     weak var delegate: IncomingRequestFooterViewDelegate?
-
-    /// The color scheme variant.
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            if colorSchemeVariant != oldValue {
-                applyColorScheme(colorSchemeVariant)
-            }
-        }
-    }
 
     // MARK: - Initialization
 
@@ -79,6 +70,13 @@ class IncomingRequestFooterView: UIView, Themeable {
         ignoreButton.addTarget(self, action: #selector(ignoreButtonTapped), for: .touchUpInside)
         ignoreButton.layer.cornerRadius = 8
 
+        titleLabel.textColor = SemanticColors.Label.textDefault
+        backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+
+        acceptButton.applyStyle(.accentColorTextButtonStyle)
+
+        ignoreButton.applyStyle(.secondaryTextButtonStyle)
+
         let buttonsStack = UIStackView(arrangedSubviews: [ignoreButton, acceptButton])
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 16
@@ -92,8 +90,6 @@ class IncomingRequestFooterView: UIView, Themeable {
         contentStack.addArrangedSubview(buttonsStack)
         addSubview(contentStack)
 
-        colorSchemeVariant = ColorScheme.default.variant
-        applyColorScheme(colorSchemeVariant)
     }
 
     private func configureConstraints() {
@@ -110,23 +106,6 @@ class IncomingRequestFooterView: UIView, Themeable {
             contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24)
         ])
-    }
-
-    // MARK: - Theme
-
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
-
-        acceptButton.setTitleColor(.white, for: .normal)
-        acceptButton.setTitleColor(.whiteAlpha40, for: .highlighted)
-        acceptButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
-        acceptButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
-
-        ignoreButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), for: .normal)
-        ignoreButton.setTitleColor(UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant), for: .highlighted)
-        ignoreButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction, variant: colorSchemeVariant), for: .normal)
-        ignoreButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryActionDimmed, variant: colorSchemeVariant), for: .highlighted)
     }
 
     // MARK: - Events

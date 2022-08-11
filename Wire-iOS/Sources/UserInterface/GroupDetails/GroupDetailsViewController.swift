@@ -96,14 +96,14 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized(uppercased: true)
-        view.backgroundColor = UIColor.from(scheme: .contentBackground)
+        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         updateLegalHoldIndicator()
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         collectionViewController.collectionView?.reloadData()
     }
 

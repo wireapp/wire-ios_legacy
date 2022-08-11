@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireUtilities
 
@@ -33,8 +32,7 @@ public extension BackupExcluder {
                 let url = URL.directory(for: directory).appendingPathComponent(path)
                 try url.excludeFromBackupIfExists()
             }
-        }
-        catch (let error) {
+        } catch let error {
             throw error
         }
     }

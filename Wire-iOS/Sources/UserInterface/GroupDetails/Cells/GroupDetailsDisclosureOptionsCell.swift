@@ -30,7 +30,7 @@ typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & 
 class DisclosureCell: RightIconDetailsCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        accessory = StyleKitIcon.disclosureIndicator.makeImage(size: 12, color: sectionTextColor)
+        accessoryColor = SemanticColors.Icon.foregroundCellIconActive
+        accessory = StyleKitIcon.disclosureIndicator.makeImage(size: 12, color: accessoryColor).withRenderingMode(.alwaysTemplate)
     }
 }

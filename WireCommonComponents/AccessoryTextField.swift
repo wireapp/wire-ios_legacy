@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 open class AccessoryTextField: UITextField, DynamicTypeCapable {
-    
+
     public func redrawFont() {
         self.font = textFieldAttributes.textFont.font
     }
@@ -34,36 +34,30 @@ open class AccessoryTextField: UITextField, DynamicTypeCapable {
         let backgroundColor: UIColor
         let cornerRadius: CGFloat
 
-        public init(textFont: FontSpec,
-             textColor: UIColor,
-             placeholderFont: FontSpec,
-             placeholderColor: UIColor,
-             backgroundColor: UIColor,
-             cornerRadius: CGFloat = 0) {
-
-            self.textFont = textFont
-            self.textColor = textColor
-            self.placeholderFont = placeholderFont
-            self.placeholderColor = placeholderColor
-            self.backgroundColor = backgroundColor
-            self.cornerRadius = cornerRadius
+        public init(
+            textFont: FontSpec,
+            textColor: UIColor,
+            placeholderFont: FontSpec,
+            placeholderColor: UIColor,
+            backgroundColor: UIColor,
+            cornerRadius: CGFloat = 0) {
+                self.textFont = textFont
+                self.textColor = textColor
+                self.placeholderFont = placeholderFont
+                self.placeholderColor = placeholderColor
+                self.backgroundColor = backgroundColor
+                self.cornerRadius = cornerRadius
         }
     }
-    
     // MARK: - Constants
-    
     private let horizonalInset: CGFloat = 16
-    
     // MARK: - Properties
-        
     public var input: String {
         return text ?? ""
     }
-    
     public override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
-    
     public let accessoryStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -72,39 +66,30 @@ open class AccessoryTextField: UITextField, DynamicTypeCapable {
         stack.distribution = .fill
         return stack
     }()
-    
     let accessoryContainer = UIView()
-    
     public var textInsets: UIEdgeInsets
-    
     let placeholderInsets: UIEdgeInsets
     let accessoryTrailingInset: CGFloat
     let textFieldAttributes: Attributes
-    
     // MARK: - Life cycle
-    
     /// - Parameters:
     ///   - leftInset: placeholder left inset
     ///   - accessoryTrailingInset: accessory stack right inset
     ///   - textFieldAttributes: text field attributes
-    public init(leftInset: CGFloat = 8,
-         accessoryTrailingInset: CGFloat = 16,
-         textFieldAttributes: Attributes) {
-        
-        let topInset: CGFloat = 0
+    public init(
+        leftInset: CGFloat = 8,
+        accessoryTrailingInset: CGFloat = 16,
+        textFieldAttributes: Attributes) {
+            let topInset: CGFloat = 0
+            self.placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: horizonalInset)
+            self.textInsets = UIEdgeInsets(top: 0, left: horizonalInset, bottom: 0, right: horizonalInset)
+            self.accessoryTrailingInset = accessoryTrailingInset
+            self.textFieldAttributes = textFieldAttributes
+            super.init(frame: .zero)
+            setupViews()
+            setupTextField(with: textFieldAttributes)
+        }
 
-        self.placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: horizonalInset)
-        self.textInsets = UIEdgeInsets(top: 0, left: horizonalInset, bottom: 0, right: horizonalInset)
-        self.accessoryTrailingInset = accessoryTrailingInset
-        self.textFieldAttributes = textFieldAttributes
-
-        super.init(frame: .zero)
-
-        setupViews()
-        setupTextField(with: textFieldAttributes)
-    }
-
-    
     @available(*, unavailable)
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -114,18 +99,13 @@ open class AccessoryTextField: UITextField, DynamicTypeCapable {
 // MARK: - View creation
 
 extension AccessoryTextField {
-    
     private func setupViews() {
         addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-        
         accessoryContainer.addSubview(accessoryStack)
         createConstraints()
     }
-    
     private func createConstraints() {
         accessoryStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         NSLayoutConstraint.activate([
             // spacing
             accessoryStack.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
@@ -133,12 +113,10 @@ extension AccessoryTextField {
             accessoryStack.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: 0),
             accessoryStack.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: -accessoryTrailingInset)])
     }
-    
     @objc
     open func textFieldDidChange(textField: UITextField) {
         // to be overriden
     }
-    
     private func setupTextField(with textFieldAttributes: Attributes) {
         rightView = accessoryContainer
         rightViewMode = .always
@@ -149,7 +127,7 @@ extension AccessoryTextField {
 
         autocorrectionType = .no
         contentVerticalAlignment = .center
-        
+
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             layer.cornerRadius = 4
@@ -165,13 +143,11 @@ extension AccessoryTextField {
 extension AccessoryTextField {
     public override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
-        
-        return textRect.inset(by: textInsets.directionAwareInsets(view:self))
+        return textRect.inset(by: textInsets.directionAwareInsets(view: self))
     }
-    
     public override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
-        return editingRect.inset(by: textInsets.directionAwareInsets(view:self))
+        return editingRect.inset(by: textInsets.directionAwareInsets(view: self))
     }
 }
 
@@ -183,20 +159,18 @@ extension AccessoryTextField {
                                                         .font: textFieldAttributes.placeholderFont.font!]
         return placeholder && attribute
     }
-    
     public override var placeholder: String? {
+        get {
+            return super.placeholder
+        }
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
         }
-        get {
-            return super.placeholder
-        }
     }
-    
     public override func drawPlaceholder(in rect: CGRect) {
-        super.drawPlaceholder(in: rect.inset(by: placeholderInsets.directionAwareInsets(view:self)))
+        super.drawPlaceholder(in: rect.inset(by: placeholderInsets.directionAwareInsets(view: self)))
     }
 }
 
@@ -205,10 +179,8 @@ extension AccessoryTextField {
 extension AccessoryTextField {
     func rightAccessoryViewRect(forBounds bounds: CGRect, isLeftToRight: Bool) -> CGRect {
         let contentSize = accessoryContainer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        
         var rightViewRect: CGRect
         let newY = bounds.origin.y + (bounds.size.height -  contentSize.height) / 2
-        
         if isLeftToRight {
             rightViewRect = CGRect(x: CGFloat(bounds.maxX - contentSize.width), y: newY, width: contentSize.width, height: contentSize.height)
         } else {
@@ -217,16 +189,12 @@ extension AccessoryTextField {
 
         return rightViewRect
     }
-        
     public override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-                
         return isLeftToRight
             ? rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)
             : .zero
     }
-    
     public override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
-        
         return isLeftToRight
             ? .zero
             : rightAccessoryViewRect(forBounds: bounds, isLeftToRight: isLeftToRight)

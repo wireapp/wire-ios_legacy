@@ -37,12 +37,6 @@ final class TabBar: UIView {
     private lazy var lineLeadingConstraint: NSLayoutConstraint = selectionLineView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: tabInset)
     private var didUpdateInitialBarPosition = false
 
-    var style: ColorSchemeVariant {
-        didSet {
-            tabs.forEach(updateTabStyle)
-        }
-    }
-
     fileprivate(set) var selectedIndex: Int {
         didSet {
             updateButtonSelection()
@@ -61,12 +55,11 @@ final class TabBar: UIView {
 
     // MARK: - Initialization
 
-    init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
+    init(items: [UITabBarItem], selectedIndex: Int = 0) {
         precondition(!items.isEmpty, "TabBar must be initialized with at least one item")
 
         self.items = items
         self.selectedIndex = selectedIndex
-        self.style = style
 
         super.init(frame: CGRect.zero)
 
@@ -92,7 +85,7 @@ final class TabBar: UIView {
         addSubview(stackView)
 
         addSubview(selectionLineView)
-        selectionLineView.backgroundColor = style == .dark ? .white : .black
+        selectionLineView.backgroundColor = SemanticColors.TabBar.foregroundSeperatorSelectedTabActive
     }
 
     override func layoutSubviews() {
@@ -150,7 +143,7 @@ final class TabBar: UIView {
     }
 
     fileprivate func makeButtonForItem(_ index: Int, _ item: UITabBarItem) -> Tab {
-        let tab = Tab(variant: style)
+        let tab = Tab()
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
 
@@ -168,12 +161,6 @@ final class TabBar: UIView {
 
         tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
         return tab
-    }
-
-    // MARK: - Styling
-
-    fileprivate func updateTabStyle(_ tab: Tab) {
-        tab.colorSchemeVariant = style
     }
 
     // MARK: - Actions
