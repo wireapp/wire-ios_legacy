@@ -74,8 +74,6 @@
 	<string>${WIRE_BUILD_NUMBER}</string>
 	<key>CameraRollEnabled</key>
 	<string>${CAMERA_ROLL_ENABLED}</string>
-	<key>ClipboardEnabled</key>
-	<string>${CLIPBOARD_ENABLED}</string>
 	<key>MaxNumberAccounts</key>
 	<string>${MAX_NUMBER_ACCOUNTS}</string>
 	<key>FileSharingEnabled</key>
