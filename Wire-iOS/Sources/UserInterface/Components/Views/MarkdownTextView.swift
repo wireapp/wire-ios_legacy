@@ -62,13 +62,13 @@ final class MarkdownTextView: NextResponderTextView {
 
     override func canPerformAction(_ action: Selector,
                                    withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)),
-            #selector(UIResponderStandardEditActions.cut(_:)),
-            #selector(UIResponderStandardEditActions.copy(_:)):
-            guard MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canUseClipboard else { return false }
-            fallthrough
-        default:
+        if !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canUseClipboard {
+            let validActions = [
+                #selector(UIResponderStandardEditActions.select(_:)),
+                #selector(UIResponderStandardEditActions.selectAll(_:))
+            ]
+            return text.isEmpty ? false: validActions.contains(action)
+        } else {
             return super.canPerformAction(action, withSender: sender)
         }
     }
