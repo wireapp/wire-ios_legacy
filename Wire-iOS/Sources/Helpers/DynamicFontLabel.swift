@@ -43,8 +43,8 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
     }
 
     init(text: String? = nil,
-          fontSpec: FontSpec = .normalRegularFont,
-          color: UIColor
+         fontSpec: FontSpec = .normalRegularFont,
+         color: UIColor
      ) {
          self.fontSpec = fontSpec
          super.init(frame: .zero)
