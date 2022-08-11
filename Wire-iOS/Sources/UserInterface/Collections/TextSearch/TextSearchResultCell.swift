@@ -27,7 +27,7 @@ final class TextSearchResultCell: UITableViewCell {
     fileprivate let userImageView = UserImageView()
     fileprivate let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = SemanticColors.Background.searchResultCellSeparator
+        view.backgroundColor = SemanticColors.View.backgroundSearchResultCellSeparator
         return view
     }()
     fileprivate var observerToken: Any?
@@ -161,7 +161,7 @@ final class TextSearchResultCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
-        let backgroundColor = SemanticColors.Background.collectionCell
+        let backgroundColor = SemanticColors.View.backgroundCollectionCell
         let foregroundColor = UIColor.from(scheme: .textForeground)
 
         contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor

@@ -28,7 +28,7 @@ final class TextSearchResultsView: UIView {
         setupViews()
         createConstraints()
 
-        backgroundColor = SemanticColors.Background.collectionSearch
+        backgroundColor = SemanticColors.View.backgroundCollectionTextSearchResult
     }
 
     private func setupViews() {

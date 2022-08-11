@@ -37,7 +37,7 @@ final class NoResultsView: UIView {
 
     var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: 160, color: SemanticColors.LabelsColor.textLabelConversationSearchNoItems)
+            iconView.image = icon?.makeImage(size: 160, color: SemanticColors.Label.textLabelConversationSearchNoItems)
         }
     }
 

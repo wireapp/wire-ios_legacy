@@ -71,7 +71,7 @@ final class TextSearchResultFooter: UIView {
     var dateLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = SemanticColors.LabelsColor.textCollectionSearchResultCellDate
+        label.textColor = SemanticColors.Label.textCollectionSearchResultCellDate
 
         return label
     }()

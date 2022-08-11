@@ -44,7 +44,7 @@ final class FileTransferView: UIView, TransferView {
     private let actionButton = IconButton()
 
     private let labelTextColor: UIColor = .from(scheme: .textForeground)
-    private let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    private let labelTextBlendedColor = SemanticColors.Label.textCollectionCellSecondLine
     private let labelFont: UIFont = .smallLightFont
     private let labelBoldFont: UIFont = .smallSemiboldFont
 
@@ -52,7 +52,7 @@ final class FileTransferView: UIView, TransferView {
 
     required override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = SemanticColors.Background.collectionCell
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         topLabel.numberOfLines = 1
         topLabel.lineBreakMode = .byTruncatingMiddle
@@ -200,7 +200,6 @@ final class FileTransferView: UIView, TransferView {
             bottomLabel.attributedText = secondLine
         }
 
-        bottomLabel.textColor = SemanticColors.LabelsColor.textCollectionCellSecondLine
         topLabel.accessibilityValue = topLabel.attributedText?.string ?? ""
         bottomLabel.accessibilityValue = bottomLabel.attributedText?.string ?? ""
     }

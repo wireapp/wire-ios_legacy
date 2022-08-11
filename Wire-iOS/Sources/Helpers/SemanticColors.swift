@@ -48,21 +48,13 @@ public enum SemanticColors {
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
-
-//        static let textLabelUseraname = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textFooterLabelConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-//        static let textHeaderLabelConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
-//        static let textLabelCellTitleActive = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textLabelCellSubtitleActive = UIColor(light: Asset.gray90, dark: Asset.white)
-//        static let textLabelConversationSearchNoItems = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let textSearchBarPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textNoMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textCollectionCell = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textCollectionHeaderView = UIColor(light: Asset.black, dark: Asset.white)
-//        static let textCollectionCellHeaderDate = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let textCollectionSearchResultCellDate = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let textCollectionCellSecondLine = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textLabelConversationSearchNoItems = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textNoMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionCell = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionHeaderView = UIColor(light: Asset.black, dark: Asset.white)
+        static let textCollectionCellHeaderDate = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textCollectionSearchResultCellDate = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textCollectionCellSecondLine = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum SearchBar {
@@ -79,11 +71,10 @@ public enum SemanticColors {
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        
-//        static let collectionCell = UIColor(light: Asset.white, dark: Asset.gray95)
-//        static let collectionSearch = UIColor(light: Asset.gray20, dark: Asset.gray100)
-//        static let noMessageInConversation = UIColor(light: Asset.gray20, dark: Asset.gray100)
-//        static let searchResultCellSeparator = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let backgroundCollectionCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundCollectionTextSearchResult = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundCollectionsViewController = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundSearchResultCellSeparator = UIColor(light: Asset.gray40, dark: Asset.gray90)
     }
 
     public enum Icon {
@@ -93,10 +84,8 @@ public enum SemanticColors {
         static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
         static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
-        
-//        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
-//        static let collectionHeaderViewIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
-//        static let collectionCellIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let foregroundCollectionHeaderViewIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let foregroundCollectionCellIcon = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum TabBar {
@@ -109,12 +98,10 @@ public enum SemanticColors {
         static let textSecondaryEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let borderSecondaryEnabled = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let borderSecondaryHighlighted = UIColor(light: Asset.gray40, dark: Asset.gray60)
-
         static let backgroundPrimaryEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
         static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
-        
-//        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
+        static let noMessageInConversationNaviagtionBar = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 

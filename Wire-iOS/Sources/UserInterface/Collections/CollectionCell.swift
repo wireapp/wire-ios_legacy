@@ -146,7 +146,7 @@ class CollectionCell: UICollectionViewCell {
 
     let secureContentsView: UIView = {
         let view = UIView()
-        view.backgroundColor = SemanticColors.Background.collectionCell
+        view.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         return view
     }()

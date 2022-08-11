@@ -70,7 +70,7 @@ final class CollectionCellHeader: UIView {
         let label = UILabel()
         label.accessibilityLabel = "sent on"
         label.font = .smallLightFont
-        label.textColor = SemanticColors.LabelsColor.textCollectionCellHeaderDate
+        label.textColor = SemanticColors.Label.textCollectionCellHeaderDate
 
         return label
     }()

@@ -102,7 +102,7 @@ final class CollectionsViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
         collection.assetCollectionDelegate.add(self)
         deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: self)
-        view.backgroundColor = SemanticColors.Background.noMessageInConversation
+        view.backgroundColor = SemanticColors.View.backgroundCollectionsViewController
     }
 
     deinit {
@@ -171,7 +171,7 @@ final class CollectionsViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.shadowImage = UIImage()
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = SemanticColors.Background.noMessageInConversation
+        appearance.backgroundColor = SemanticColors.View.backgroundCollectionsViewController
         appearance.shadowColor = .clear
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }

@@ -37,7 +37,7 @@ final class ConversationTitleView: TitleView {
     }
 
     func configure() {
-        titleColor = SemanticColors.LabelsColor.textNoMessageInConversationNaviagtionBar
+        titleColor = SemanticColors.Label.textNoMessageInConversationNaviagtionBar
         titleColorSelected = UIColor.from(scheme: .textDimmed)
         titleFont = .mediumSemiboldFont
         accessibilityHint = "conversation_details.open_button.accessibility_hint".localized

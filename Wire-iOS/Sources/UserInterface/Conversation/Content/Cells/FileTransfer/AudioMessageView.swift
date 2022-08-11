@@ -64,7 +64,7 @@ final class AudioMessageView: UIView, TransferView {
 
     private let waveformProgressView: WaveformProgressView = {
         let waveformProgressView = WaveformProgressView()
-        waveformProgressView.backgroundColor = .from(scheme: .placeholderBackground)
+        waveformProgressView.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         return waveformProgressView
     }()
@@ -88,7 +88,7 @@ final class AudioMessageView: UIView, TransferView {
         self.mediaPlaybackManager = mediaPlaybackManager
 
         super.init(frame: .zero)
-        backgroundColor = SemanticColors.Background.collectionCell
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
