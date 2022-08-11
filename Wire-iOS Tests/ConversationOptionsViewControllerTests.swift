@@ -79,6 +79,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -98,6 +99,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -121,6 +123,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -144,6 +147,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         viewModel.copyInProgress = true
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -165,6 +169,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -188,6 +193,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -211,6 +217,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -234,6 +241,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -253,6 +261,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
         sut.overrideUserInterfaceStyle = .dark
+
         // THEN
         verify(matching: sut)
     }
@@ -312,6 +321,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationGuestOptionsViewModel(configuration: config)
         let sut = ConversationGuestOptionsViewController(viewModel: viewModel, variant: .dark)
+        sut.overrideUserInterfaceStyle = .dark
         let navigationController = sut.wrapInNavigationController()
         sut.overrideUserInterfaceStyle = .dark
         // WHEN

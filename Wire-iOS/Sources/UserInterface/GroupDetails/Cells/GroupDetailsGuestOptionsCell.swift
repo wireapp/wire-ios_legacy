@@ -41,9 +41,18 @@ final class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-
+        iconColor = SemanticColors.Icon.foregroundDefault
+        guard let iconColor = iconColor else { return }
         icon = StyleKitIcon.guest.makeImage(size: .tiny,
-                                            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+                                            color: iconColor).withRenderingMode(.alwaysTemplate)
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.View.backgroundUserCellHightLighted
+            : SemanticColors.View.backgroundUserCell
+        }
     }
 
 }
