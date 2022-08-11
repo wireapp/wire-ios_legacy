@@ -46,6 +46,7 @@ final class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysCell_WithoutTimeout_Dark() {
         updateTimeout(0)
         cell.colorSchemeVariant = .dark
+        cell.overrideUserInterfaceStyle = .dark
         verify(view: cell)
     }
 
@@ -58,6 +59,7 @@ final class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
     func testThatItDisplaysCell_WithTimeout_Dark() {
         updateTimeout(300)
         cell.colorSchemeVariant = .dark
+        cell.overrideUserInterfaceStyle = .dark
         verify(view: cell)
     }
 

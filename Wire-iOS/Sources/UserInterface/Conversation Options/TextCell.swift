@@ -52,6 +52,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .text(text) = configuration else { preconditionFailure() }
         label.attributedText = text && .lineSpacing(8)
+
         label.textColor = SemanticColors.LabelsColor.textEmailCellValue
         container.backgroundColor = SemanticColors.Background.settingsView
         backgroundColor = SemanticColors.Background.settingsView

@@ -281,7 +281,21 @@ extension XCTestCase {
                    testName: testName,
                    line: line)
         } else {
-            XCTFail("View doesn't support Themable protocol")
+            matching.overrideUserInterfaceStyle = .light
+
+            verify(matching: matching,
+                   named: "LightTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
+
+            matching.overrideUserInterfaceStyle = .dark
+
+            verify(matching: matching,
+                   named: "DarkTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
         }
     }
 

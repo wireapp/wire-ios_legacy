@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,22 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 import WireUtilities
-import WireCommonComponents
-
-class ClearBackgroundNavigationController: NavigationController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .clear
-        navigationBar.tintColor = .white
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-}
 
 class NavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
@@ -69,16 +55,11 @@ class NavigationController: UINavigationController, SpinnerCapable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = SemanticColors.Background.settingsView
+        self.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
         self.useDefaultPopGesture = false
-        self.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
-        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [
-            .font: FontSpec.smallSemiboldFont.font!,
-            .foregroundColor: SemanticColors.LabelsColor.textLabelNavigationController,
-            .baselineOffset: 1.0]
+        self.navigationBar.tintColor = SemanticColors.NavigationBar.foregroundNavigationTintColor
+
+        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
@@ -126,9 +107,6 @@ class NavigationController: UINavigationController, SpinnerCapable {
         return topViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension NavigationController: UINavigationControllerDelegate {
@@ -170,4 +148,7 @@ extension NavigationController: UIGestureRecognizerDelegate {
         return true
     }
 
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

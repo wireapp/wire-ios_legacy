@@ -27,6 +27,11 @@ class RightIconDetailsCell: DetailsCollectionViewCell {
         set { updateAccessory(newValue) }
     }
 
+    var accessoryColor: UIColor {
+        get { return accessoryIconView.tintColor }
+        set { accessoryIconView.tintColor = newValue }
+    }
+
     private func updateAccessory(_ newValue: UIImage?) {
         if let value = newValue {
             accessoryIconView.image = value
