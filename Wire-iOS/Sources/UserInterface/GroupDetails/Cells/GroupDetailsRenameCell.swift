@@ -93,9 +93,9 @@ final class GroupDetailsRenameCell: UICollectionViewCell {
     }
 
     private func configureColors() {
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
         accessoryIconView.setTemplateIcon(.pencil, size: .tiny)
-        accessoryIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+        accessoryIconView.tintColor = SemanticColors.Icon.foregroundDefault
         titleTextField.textColor = SemanticColors.Label.textDefault
     }
 

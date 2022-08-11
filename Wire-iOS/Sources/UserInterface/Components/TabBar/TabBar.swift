@@ -85,7 +85,7 @@ final class TabBar: UIView {
         addSubview(stackView)
 
         addSubview(selectionLineView)
-        selectionLineView.backgroundColor = SemanticColors.TabBar.foregroundSeperatorSelectedTabActive
+        selectionLineView.backgroundColor = SemanticColors.TabBar.backgroundSeperatorSelected
     }
 
     override func layoutSubviews() {

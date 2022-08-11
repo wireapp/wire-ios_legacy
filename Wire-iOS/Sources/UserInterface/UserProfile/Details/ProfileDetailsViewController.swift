@@ -146,8 +146,8 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
-        tableView.separatorColor = SemanticColors.View.Separator.foregroundSeparatorCellActive
+        view.backgroundColor = SemanticColors.View.backgroundDefault
+        tableView.separatorColor = SemanticColors.View.backgroundSeparatorCell
     }
 
     // MARK: - Layout

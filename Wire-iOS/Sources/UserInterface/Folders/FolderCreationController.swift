@@ -65,7 +65,7 @@ final class FolderCreationController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         title = "folder.creation.name.title".localized(uppercased: true)
 
         setupNavigationBar()
@@ -118,7 +118,7 @@ final class FolderCreationController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = SemanticColors.NavigationBar.foregroundNavigationTintColor
+        self.navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
 
         if navigationController?.viewControllers.count ?? 0 <= 1 {
