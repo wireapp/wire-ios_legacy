@@ -33,8 +33,6 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - State
 
-    
-
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
     typealias Landing = L10n.Localizable.Landing
@@ -62,7 +60,7 @@ final class LandingViewController: AuthenticationStepViewController {
         imageView.accessibilityIdentifier = "WireLogo"
         imageView.contentMode = .scaleAspectFit
 
-        imageView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+        imageView.tintColor = SemanticColors.Icon.foregroundDefault
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         return imageView
@@ -211,7 +209,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         configureSubviews()
         configureConstraints()
