@@ -26,7 +26,7 @@ final class BackupStatusCell: UITableViewCell {
         let label = DynamicFontLabel(fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        label.textColor = SemanticColors.Label.textSettingsCell
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -40,7 +40,7 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        iconView.tintColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        iconView.tintColor = SemanticColors.Label.textSettingsCell
         iconView.setTemplateIcon(.restore, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +75,7 @@ final class BackupActionCell: UITableViewCell {
                                      fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        label.textColor = SemanticColors.Label.textSettingsCell
         label.textAlignment = .left
         return label
     }()
@@ -83,7 +83,7 @@ final class BackupActionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = SemanticColors.Background.settingsTableCell
+        backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
         contentView.backgroundColor = .clear
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -32,7 +32,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.font = .smallRegularFont
-        label.textColor = SemanticColors.LabelsColor.textUserPropertyCellName
+        label.textColor = SemanticColors.Label.textUserPropertyCellName
         return label
     }()
 
@@ -77,9 +77,9 @@ final class UserPropertyCell: SeparatorTableViewCell {
         showSeparator = false
         configureSubviews()
         configureConstraints()
-        backgroundColor = SemanticColors.Background.deviceTableCell
-        addTopBorder(color: SemanticColors.Background.settingsTableCellBorder)
-        addBottomBorder(color: SemanticColors.Background.settingsTableCellBorder)
+        backgroundColor = SemanticColors.View.Background.deviceTableViewCell
+        addTopBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
+        addBottomBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
         separator.isHidden = true
         separator.backgroundColor = .clear
     }
@@ -112,8 +112,8 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
     override func applyColorScheme(_ variant: ColorSchemeVariant) {
         super.applyColorScheme(variant)
-        propertyNameLabel.textColor = SemanticColors.LabelsColor.textUserPropertyCellName
-        propertyValueLabel.textColor = SemanticColors.LabelsColor.textUserPropertyCellValue
+        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
+        propertyValueLabel.textColor = SemanticColors.Label.textUserPropertyCellValue
     }
 
 }

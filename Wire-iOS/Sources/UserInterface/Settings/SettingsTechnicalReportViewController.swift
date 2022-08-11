@@ -29,7 +29,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
 
     init() {
         sendReportCell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        sendReportCell.backgroundColor = SemanticColors.Background.settingsTableCell
+        sendReportCell.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
         sendReportCell.textLabel?.text = "self.settings.technical_report.send_report".localized
         sendReportCell.textLabel?.textColor = UIColor.accent()
         sendReportCell.backgroundView = UIView()
@@ -38,15 +38,15 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         includedVoiceLogCell = UITableViewCell(style: .default, reuseIdentifier: nil)
         includedVoiceLogCell.accessoryType = .checkmark
         includedVoiceLogCell.textLabel?.text = "self.settings.technical_report.include_log".localized
-        includedVoiceLogCell.textLabel?.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
-        includedVoiceLogCell.backgroundColor = SemanticColors.Background.settingsTableCell
+        includedVoiceLogCell.textLabel?.textColor = SemanticColors.Label.textSettingsCell
+        includedVoiceLogCell.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
 
         super.init(nibName: nil, bundle: nil)
 
         createBorders(
-            color: SemanticColors.Background.settingsTableCellBorder,
+            color: SemanticColors.View.Border.settingsScreenTableViewCell,
             elements: [sendReportCell, includedVoiceLogCell])
     }
 
@@ -121,7 +121,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "self.settings.technical_report.privacy_warning".localized
-        label.textColor = SemanticColors.LabelsColor.textFooterLabelConversationDetails
+        label.textColor = SemanticColors.Label.textFooterConversationDetails
         label.backgroundColor = .clear
         label.font = FontSpec(.small, .light).font!
 

@@ -50,18 +50,18 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         setupViews()
         createConstraints()
         viewModel.delegate = self
-        view.backgroundColor = SemanticColors.Background.settingsView
+        view.backgroundColor = SemanticColors.View.Background.settingsScreenView
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        navigationController?.navigationBar.tintColor = SemanticColors.LabelsColor.textLabelNavigationController
+        navigationController?.navigationBar.tintColor = SemanticColors.NavigationBar.textNavigationController
         if var textAttributes = navigationController?.navigationBar.titleTextAttributes {
-            textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.LabelsColor.textLabelNavigationController
+            textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.NavigationBar.textNavigationController
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
-        navigationController?.navigationBar.backgroundColor = SemanticColors.Background.settingsView
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.Background.settingsScreenView
     }
 
     @available(*, unavailable)

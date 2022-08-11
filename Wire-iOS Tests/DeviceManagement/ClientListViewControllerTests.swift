@@ -69,7 +69,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
 
         sut = ClientListViewController(clientsList: clientsList,
                                        selfClient: selfClient,
-                                        credentials: nil,
+                                       credentials: nil,
                                        detailedView: true,
                                        showTemporary: true,
                                        variant: variant)

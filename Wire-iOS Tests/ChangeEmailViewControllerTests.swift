@@ -26,14 +26,14 @@ final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
         mockUser.emailAddress = emailAddress
 
         let sut = ChangeEmailViewController(user: mockUser)
-<<<<<<< HEAD
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: NavigationController.self)
-=======
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
-        viewController.overrideUserInterfaceStyle = .dark
-        viewController.view.backgroundColor = .black
->>>>>>> develop
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: NavigationController.self)
+
+//        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
+//
+//        viewController.overrideUserInterfaceStyle = .dark
+//        viewController.view.backgroundColor = .black
+
 
         return viewController
     }

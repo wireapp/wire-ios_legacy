@@ -58,7 +58,7 @@ final class BackupPasswordViewController: UIViewController {
                                      fontSpec: .mediumRegularFont,
                                      color: .textDimmed,
                                      variant: .light)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsTableViewHeader
+        label.textColor = SemanticColors.Label.textSettingsTableViewHeader
         label.numberOfLines = 0
         return label
     }()
@@ -67,7 +67,7 @@ final class BackupPasswordViewController: UIViewController {
         let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
                                      color: .textDimmed,
                                      variant: .light)
-        label.textColor = SemanticColors.LabelsColor.textLabelSettingsTableViewHeader
+        label.textColor = SemanticColors.Label.textSettingsTableViewHeader
         label.numberOfLines = 0
         return label
     }()
@@ -99,7 +99,7 @@ final class BackupPasswordViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = SemanticColors.Background.settingsView
+        view.backgroundColor = SemanticColors.View.Background.settingsScreenView
         passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
 
         [passwordView, subtitleLabel, passwordRulesLabel].forEach {
@@ -113,9 +113,9 @@ final class BackupPasswordViewController: UIViewController {
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
         passwordView.delegate = self
-        passwordView.textColor = SemanticColors.LabelsColor.textLabelSettingsCell
-        passwordView.backgroundColor = SemanticColors.Background.settingsTableCell
-        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.LabelsColor.textLabelSettingsPasswordPlaceholder,
+        passwordView.textColor = SemanticColors.Label.textSettingsCell
+        passwordView.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
+        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.Label.textSettingsPasswordPlaceholder,
                                                         .font: FontSpec.smallRegularFont.font!]
         passwordView.updatePlaceholderAttributedText(attributes: attributes)
     }
@@ -136,8 +136,8 @@ final class BackupPasswordViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = SemanticColors.Background.settingsView
-        let navigationBarColor = SemanticColors.LabelsColor.textLabelSettingsCell
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.Background.settingsScreenView
+        let navigationBarColor = SemanticColors.Label.textSettingsCell
         navigationController?.navigationBar.tintColor = navigationBarColor
         navigationController?.navigationBar.barTintColor = navigationBarColor
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: navigationBarColor)
