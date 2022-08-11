@@ -61,6 +61,8 @@ public enum SemanticColors {
         static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
+        static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
     public enum SearchBar {
