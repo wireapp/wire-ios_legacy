@@ -19,14 +19,14 @@
 import UIKit
 
 extension UIView {
-    
+
     func addBorder(
         for anchor: Anchor,
         color: UIColor = SemanticColors.View.backgroundSeparatorCell,
         borderWidth: CGFloat = 1.0) {
             guard let frame = getFrame(anchor: anchor, width: borderWidth),
                   let autoresizingMask = getAutoresizingMask(anchor: anchor) else { return }
-            
+
             let border = UIView()
             border.backgroundColor = color
             border.autoresizingMask = autoresizingMask
