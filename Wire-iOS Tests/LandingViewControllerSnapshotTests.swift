@@ -20,7 +20,7 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class LandingViewControllerSnapshotTests: XCTestCase {
+final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: LandingViewController!
 
