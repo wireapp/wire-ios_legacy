@@ -29,12 +29,6 @@ final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
         let viewController = sut.wrapInNavigationController(navigationControllerClass: NavigationController.self)
 
-//        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
-//
-//        viewController.overrideUserInterfaceStyle = .dark
-//        viewController.view.backgroundColor = .black
-
-
         return viewController
     }
 

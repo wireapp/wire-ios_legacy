@@ -347,11 +347,7 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
             cell.selectionStyle = .none
-            let image = UIImage(systemName: "chevron.right")
-            let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-            accessory.image = image
-            accessory.tintColor = SemanticColors.Label.textDefault
-            cell.accessoryView = accessory
+            cell.showDisclosureIndicator()
             cell.showVerified = self.detailedView
             cell.variant = variant
 
