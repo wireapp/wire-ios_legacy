@@ -57,7 +57,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     private func configureViews() {
         tabBar.delegate = self
-        backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        backgroundColor = SemanticColors.View.backgroundDefault
         addSubview(tabBar)
     }
 

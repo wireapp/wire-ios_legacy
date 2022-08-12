@@ -96,7 +96,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized(uppercased: true)
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func viewWillAppear(_ animated: Bool) {

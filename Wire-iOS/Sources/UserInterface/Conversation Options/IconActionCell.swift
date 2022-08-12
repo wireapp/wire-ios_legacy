@@ -32,7 +32,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
     }
 
     private func setupViews() {
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+
         imageContainer.addSubview(iconImageView)
         label.font = FontSpec(.normal, .light).font
         [imageContainer, label].forEach(contentView.addSubview)
@@ -61,9 +61,10 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconAction(title, icon, _, _) = configuration else { preconditionFailure() }
         iconImageView.setTemplateIcon(icon, size: .tiny)
-        iconImageView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+        iconImageView.tintColor = SemanticColors.Icon.foregroundDefault
         label.textColor = SemanticColors.Label.textDefault
         label.text = title
+
     }
 
 }

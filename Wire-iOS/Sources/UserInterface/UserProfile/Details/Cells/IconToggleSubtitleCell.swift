@@ -95,9 +95,9 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func styleViews() {
-        topContainer.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCell
-        titleLabel.textColor = SemanticColors.Label.textSettingsCell
-        subtitleLabel.textColor = SemanticColors.Label.textConversationQuestOptionInfo
+        topContainer.backgroundColor = SemanticColors.View.backgroundUserCell
+        titleLabel.textColor = SemanticColors.Label.textCellTitle
+        subtitleLabel.textColor = SemanticColors.Label.textSectionFooter
         backgroundColor = .clear
         topContainer.addTopBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
         topContainer.addBottomBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)

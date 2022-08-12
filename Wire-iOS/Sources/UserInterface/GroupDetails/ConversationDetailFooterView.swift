@@ -87,7 +87,7 @@ class ConversationDetailFooterView: UIView {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
 
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
         addSubview(containerView)
 
         setupButtons()

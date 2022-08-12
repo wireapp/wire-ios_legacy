@@ -33,7 +33,7 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        iconColor = SemanticColors.Icon.foregroundCellIconActive
+        iconColor = SemanticColors.Icon.foregroundDefault
         guard let iconColor = iconColor else { return }
         icon = StyleKitIcon.eye.makeImage(
             size: .tiny,
@@ -44,8 +44,8 @@ final class GroupDetailsReceiptOptionsCell: IconToggleCell {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
-            ? SemanticColors.View.Background.backgroundUserCellHightLighted
-            : SemanticColors.View.Background.backgroundUserCell
+            ? SemanticColors.View.backgroundUserCellHightLighted
+            : SemanticColors.View.backgroundUserCell
         }
     }
 }
