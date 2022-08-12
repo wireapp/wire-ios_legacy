@@ -260,7 +260,7 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
                 cell.accessibilityIdentifier = "reset session"
-                cell.isTransparent = false
+                cell.isTransparent = (variant == .none)
                 return cell
             }
 
@@ -268,7 +268,7 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
                 cell.accessibilityIdentifier = "remove device"
-                cell.isTransparent = false
+                cell.isTransparent = (variant == .none)
                 return cell
             }
         }

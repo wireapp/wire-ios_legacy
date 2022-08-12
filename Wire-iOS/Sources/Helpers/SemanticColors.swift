@@ -53,7 +53,7 @@ public enum SemanticColors {
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
-        static let textSettingsPasswordPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let textInputViewPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
         static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
         static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)

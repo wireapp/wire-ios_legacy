@@ -43,7 +43,7 @@ struct EdgeInsets {
     }
 }
 
-enum Anchor {
+public enum Anchor {
     case top
     case bottom
     case leading

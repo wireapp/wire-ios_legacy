@@ -90,9 +90,9 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     }
 
     private func createBorders(color: UIColor, elements: [UIView]) {
-        for element in elements {
-            element.addTopBorder(color: color)
-            element.addBottomBorder(color: color)
+        elements.forEach { element in
+            element.addBorder(for: .top)
+            element.addBorder(for: .bottom)
         }
     }
 

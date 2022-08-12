@@ -19,16 +19,18 @@
 import Foundation
 import UIKit
 import WireUtilities
-import WireCommonComponents
 
 class ClearBackgroundNavigationController: NavigationController {
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = .clear
         navigationBar.tintColor = .white
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
