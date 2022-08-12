@@ -110,8 +110,8 @@ final class SettingsClientViewController: UIViewController,
     }
 
     func setupFromConversationStyle() {
-        view.backgroundColor = variant == nil ? .clear : SemanticColors.View.Background.settingsScreenView
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.NavigationBar.textNavigationController]
+        view.backgroundColor = variant == nil ? .clear : SemanticColors.View.backgroundDefault
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.Label.textDefault]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +136,7 @@ final class SettingsClientViewController: UIViewController,
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.backgroundColor = variant == nil ? .clear : SemanticColors.View.Background.settingsScreenView
+        tableView.backgroundColor = variant == nil ? .clear : SemanticColors.View.backgroundDefault
         tableView.separatorColor = separatorColor
 
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)

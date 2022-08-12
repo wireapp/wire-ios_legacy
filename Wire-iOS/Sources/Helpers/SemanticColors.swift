@@ -20,6 +20,12 @@ import UIKit
 import WireDataModel
 import WireCommonComponents
 
+/// Naming convention:
+///
+/// The names of all SemanticColors should follow the format:
+///
+///  "<usage>.<context/role>.<state?>"
+/// The last part is optional
 public enum SemanticColors {
 
     public enum LegacyColors {
@@ -47,21 +53,11 @@ public enum SemanticColors {
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
-        static let textSettingsCell = UIColor(light: Asset.black, dark: Asset.white)
-        static let textSettingsTableViewHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
-        static let textSettingsTableViewFooter = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let textSettingsPasswordPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
-        static let textEmailCellValue = UIColor(light: Asset.black, dark: Asset.white)
-        static let textSettingsTableViewCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
         static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
-        static let textLinkHeaderCellSubtitle  = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textFooterConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textHeaderConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
+        static let textLinkHeaderCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
-        static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
-        static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
@@ -80,12 +76,7 @@ public enum SemanticColors {
         static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
         static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let foregroundAccountAvailability = UIColor(light: Asset.gray90, dark: Asset.gray20)
-    }
-
-    public enum NavigationBar {
-        static let foregroundNavigationTintColor = UIColor(light: Asset.black, dark: Asset.white)
-        static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
+        static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
     }
 
     public enum View {
@@ -94,14 +85,7 @@ public enum SemanticColors {
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let settingsScreenView = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        static let settingsScreenTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        static let settingsScreenTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
-        static let deviceTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-
-        enum Border {
-            static let settingsScreenTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        }
+        static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum TabBar {

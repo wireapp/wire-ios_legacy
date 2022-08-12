@@ -77,7 +77,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = SemanticColors.View.Background.settingsScreenView
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -260,13 +260,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSettingsTableViewHeader
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionHeader
         }
     }
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSettingsTableViewFooter
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionFooter
         }
     }
 
