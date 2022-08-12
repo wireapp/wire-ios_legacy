@@ -43,11 +43,12 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
 
-        super.init(nibName: nil, bundle: nil)
+        [sendReportCell, includedVoiceLogCell].forEach { cell in
+            cell.addBorder(for: .top)
+            cell.addBorder(for: .bottom)
+        }
 
-        createBorders(
-            color: SemanticColors.View.backgroundSeparatorCell,
-            elements: [sendReportCell, includedVoiceLogCell])
+        super.init(nibName: nil, bundle: nil)
     }
 
     @available(*, unavailable)
@@ -87,13 +88,6 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         }
         mailComposeViewController.setMessageBody("Debug report", isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
-    }
-
-    private func createBorders(color: UIColor, elements: [UIView]) {
-        elements.forEach { element in
-            element.addBorder(for: .top)
-            element.addBorder(for: .bottom)
-        }
     }
 
     // MARK: - TableView Delegates

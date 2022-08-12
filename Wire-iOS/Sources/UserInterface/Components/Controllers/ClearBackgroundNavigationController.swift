@@ -23,7 +23,7 @@ import WireUtilities
 class ClearBackgroundNavigationController: NavigationController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
+        return .lightContent
     }
 
     override func viewDidLoad() {
