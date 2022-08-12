@@ -261,8 +261,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
 
         if isHighlighted && selectionStyle != .none {
-            backgroundColor = UIColor(white: 0, alpha: 0.2)
-            badge.backgroundColor = UIColor.white
+            backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
+            badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
             badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
         }
     }
