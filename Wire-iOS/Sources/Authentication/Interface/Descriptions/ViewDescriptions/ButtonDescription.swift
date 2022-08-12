@@ -34,7 +34,7 @@ final class ButtonDescription {
 extension ButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
-        let color = UIColor.Team.textColor
+        let color = SemanticColors.Label.textDefault
         button.setTitleColor(color, for: .normal)
         button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
 

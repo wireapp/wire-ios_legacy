@@ -48,6 +48,7 @@ public enum SemanticColors {
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textErrorDefault  = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
     }
 
     public enum SearchBar {

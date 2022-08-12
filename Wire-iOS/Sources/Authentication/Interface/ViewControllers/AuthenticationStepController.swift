@@ -100,7 +100,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         createViews()
         createConstraints()
@@ -138,11 +138,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     private func createViews() {
         let textPadding = UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 32)
+        let labelColor = SemanticColors.Label.textDefault
 
         headlineLabel = DynamicFontLabel(fontSpec: .largeLightWithTextStyleFont, color: .textForeground)
         headlineLabelContainer = ContentInsetView(headlineLabel, inset: textPadding)
         headlineLabel.textAlignment = .center
-        headlineLabel.textColor = UIColor.Team.textColor
+        headlineLabel.textColor = labelColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.numberOfLines = 0
@@ -155,7 +156,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
             subtextLabel.textAlignment = .center
             subtextLabel.text = stepDescription.subtext
             subtextLabel.font = AuthenticationStepController.subtextFont
-            subtextLabel.textColor = UIColor.Team.subtitleColor
+            subtextLabel.textColor = labelColor
             subtextLabel.numberOfLines = 0
             subtextLabel.lineBreakMode = .byWordWrapping
             subtextLabelContainer.isHidden = stepDescription.subtext == nil
@@ -167,6 +168,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         errorLabel.textAlignment = .left
         errorLabel.numberOfLines = 0
         errorLabel.font = AuthenticationStepController.errorMessageFont
+        errorLabel.textColor = SemanticColors.Label.textErrorDefault
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         updateValidation(initialValidation)
 

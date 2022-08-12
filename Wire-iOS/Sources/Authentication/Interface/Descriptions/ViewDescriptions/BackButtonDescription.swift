@@ -31,8 +31,7 @@ extension BackButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = IconButton()
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
-        button.setIconColor(UIColor.from(scheme: .iconNormal, variant: .light), for: .normal)
-        button.setIconColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
+        button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         let iconType: StyleKitIcon = UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow
         button.setIcon(iconType, size: .tiny, for: .normal)
         button.accessibilityIdentifier = accessibilityIdentifier
