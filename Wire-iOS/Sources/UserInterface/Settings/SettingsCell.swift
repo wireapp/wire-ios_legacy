@@ -141,6 +141,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             case .badge(let value):
                 valueLabel.text = ""
                 badgeLabel.text = "\(value)"
+                accessibilityHint = L10n.Accessibility.Settings.DeviceCount.hint("\(value)")
                 badge.isHidden = false
                 imagePreview.image = .none
                 imagePreview.backgroundColor = UIColor.clear
@@ -305,9 +306,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func setupAccessibiltyElements() {
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
-        accessibilityElements = currentElements
+        isAccessibilityElement = true
+        accessibilityTraits = .button
     }
 
     func updateBackgroundColor() {

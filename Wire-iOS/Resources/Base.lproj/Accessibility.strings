@@ -26,3 +26,5 @@
 "conversation.searchButton.description" = "Open search";
 "conversation.profileImage.description" = "Profile picture";
 "conversation.profileImage.hint" = "Double tap to open profile";
+
+"settings.deviceCount.hint" = "%@ devices in use";

@@ -27,6 +27,14 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
     }
+    internal enum Settings {
+      internal enum DeviceCount {
+        /// %@ devices in use
+        internal static func hint(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "settings.deviceCount.hint", String(describing: p1))
+        }
+      }
+    }
   }
   internal enum InfoPlist {
     /// Allow Wire to access your camera so you can place video calls and send photos.
