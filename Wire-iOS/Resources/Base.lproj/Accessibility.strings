@@ -28,3 +28,10 @@
 "conversation.profileImage.hint" = "Double tap to open profile";
 
 "settings.deviceCount.hint" = "%@ devices in use";
+"accountPage.availabilityStatus.description" = "Status";
+"accountPage.availabilityStatus.hint" = "Double tap to change status";
+"accountPage.handle.description" = "Username";
+"accountPage.name.description" = "Profile name";
+"accountPage.teamName.description" = "Team name";
+"accountPage.profilePicture.description" = "Profile picture";
+"accountPage.profilePicture.hint" = "Double tap to change your picture";
