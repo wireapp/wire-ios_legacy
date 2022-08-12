@@ -94,7 +94,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        collectionView.backgroundColor = SemanticColors.View.backgroundDefault
         collectionView.alwaysBounceVertical = true
 
         collectionViewLayout.minimumLineSpacing = 0

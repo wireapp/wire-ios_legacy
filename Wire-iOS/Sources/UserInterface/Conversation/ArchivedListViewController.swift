@@ -84,7 +84,7 @@ final class ArchivedListViewController: UIViewController {
         archivedNavigationBar.dismissButtonHandler = {
             self.delegate?.archivedListViewControllerWantsToDismiss(self)
         }
-        view.backgroundColor = SemanticColors.View.Background.conversationList
+        view.backgroundColor = SemanticColors.View.backgroundConversationList
     }
 
     private func createConstraints() {

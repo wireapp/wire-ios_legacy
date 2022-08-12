@@ -89,7 +89,7 @@ class SeparatorCollectionViewCell: UICollectionViewCell, SeparatorViewProtocol, 
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = SemanticColors.View.Separator.foregroundSeparatorCellActive
+        separator.backgroundColor = SemanticColors.View.backgroundSeparatorCell
     }
 
     final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {

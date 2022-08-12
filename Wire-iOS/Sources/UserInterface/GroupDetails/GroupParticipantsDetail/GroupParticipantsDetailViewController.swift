@@ -108,7 +108,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         collectionView.accessibilityIdentifier = "group_details.full_list"
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         title = "participants.all.title".localized(uppercased: true)
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 

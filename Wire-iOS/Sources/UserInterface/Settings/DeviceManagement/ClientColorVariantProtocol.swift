@@ -33,7 +33,7 @@ protocol ClientColorVariantProtocol {
 extension ClientColorVariantProtocol where Self: UIViewController {
 
     var headerFooterViewTextColor: UIColor {
-        return SemanticColors.Label.textSettingsTableViewFooter
+        return SemanticColors.Label.textSectionFooter
     }
 
     var separatorColor: UIColor {
@@ -46,6 +46,6 @@ extension ClientColorVariantProtocol where Self: UIViewController {
     }
 
     func setColor(for variant: ColorSchemeVariant?) {
-        view.backgroundColor = (variant == .none) ? .clear : SemanticColors.View.Background.settingsScreenView
+        view.backgroundColor = (variant == .none) ? .clear : SemanticColors.View.backgroundDefault
     }
 }

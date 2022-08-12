@@ -55,6 +55,8 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    let backgroundColor = SemanticColors.View.backgroundDefault
+
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
@@ -93,16 +95,16 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        navigationController?.navigationBar.barTintColor = SemanticColors.View.Background.backgroundViewDefault
+        navigationController?.navigationBar.barTintColor = backgroundColor
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = SemanticColors.NavigationBar.foregroundNavigationTintColor
+        navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
     }
 
     private func configGroupSelector() {
         groupSelector.translatesAutoresizingMaskIntoConstraints = false
-        groupSelector.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        groupSelector.backgroundColor = backgroundColor
     }
 
     func setupViews() {
@@ -125,7 +127,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
         searchHeader.delegate = self
         searchHeader.allowsMultipleSelection = false
-        searchHeader.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        searchHeader.view.backgroundColor = backgroundColor
 
         addToSelf(searchHeader)
 

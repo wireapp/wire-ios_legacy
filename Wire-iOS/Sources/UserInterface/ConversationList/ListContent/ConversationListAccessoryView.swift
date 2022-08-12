@@ -119,7 +119,7 @@ final class ConversationListAccessoryView: UIView {
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
-        badgeView.backgroundColor = SemanticColors.View.Background.conversationListTableViewCellBadge
+        badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
         let iconTintColor = SemanticColors.Label.conversationListTableViewCellBadge
 
         switch icon {
@@ -156,8 +156,8 @@ final class ConversationListAccessoryView: UIView {
         case .silenced:
             tintColor = SemanticColors.Label.conversationListTableViewCellBadgeReverted
             iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
-            badgeView.backgroundColor = SemanticColors.View.Background.conversationListTableViewCellBadgeReverted
-            badgeView.layer.borderColor = SemanticColors.View.Border.conversationListTableViewCellBadgeReverted.cgColor
+            badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadgeReverted
+            badgeView.layer.borderColor = SemanticColors.View.borderConversationListTableViewCellBadgeReverted.cgColor
             badgeView.layer.borderWidth = 1
             badgeView.layer.cornerRadius = 6
             accessibilityValue = "conversation_list.voiceover.status.silenced".localized

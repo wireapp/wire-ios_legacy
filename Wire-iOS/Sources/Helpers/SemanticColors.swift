@@ -20,6 +20,12 @@ import UIKit
 import WireDataModel
 import WireCommonComponents
 
+/// Naming convention:
+///
+/// The names of all SemanticColors should follow the format:
+///
+///  "<usage>.<context/role>.<state?>"
+/// The last part is optional
 public enum SemanticColors {
 
     public enum LegacyColors {
@@ -32,7 +38,6 @@ public enum SemanticColors {
         static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
         static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
-
 
     public enum Switch {
         static let backgroundOnStateEnabled = UIColor(light: Asset.green600Light, dark: Asset.green700Dark)
@@ -48,16 +53,9 @@ public enum SemanticColors {
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
-        static let textSettingsCell = UIColor(light: Asset.black, dark: Asset.white)
-        static let textSettingsTableViewHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
-        static let textSettingsTableViewFooter = UIColor(light: Asset.gray80, dark: Asset.gray20)
         static let textSettingsPasswordPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
-        static let textEmailCellValue = UIColor(light: Asset.black, dark: Asset.white)
-        static let textSettingsTableViewCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
         static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
-        static let textLinkHeaderCellSubtitle  = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textFooterConversationDetails = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        static let textHeaderConversationDetails = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
@@ -67,9 +65,10 @@ public enum SemanticColors {
         static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.black, dark: Asset.white)
         static let teamImageView = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationListItemSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
-        
+        static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
     public enum SearchBar {
@@ -79,53 +78,47 @@ public enum SemanticColors {
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
-
-    public enum View {
-        enum Background {
-            static let backgroundViewDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
-            static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
-            static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
-            static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
-            static let settingsScreenView = UIColor(light: Asset.gray20, dark: Asset.gray100)
-            static let settingsScreenTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-            static let settingsScreenTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
-            static let deviceTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-            static let conversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
-            static let conversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-            static let conversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
-            static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
-            static let teamImageView = UIColor(light: Asset.white, dark: Asset.black)
-        }
-
-        enum Separator {
-            static let foregroundSeparatorCellActive = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        }
-        
-        enum Border {
-            static let settingsScreenTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-            static let conversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-            static let conversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
-        }
+    public enum Icon {
+        static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
+        static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
+        static let borderCheckMark = UIColor(light: Asset.gray80, dark: Asset.gray60)
+        static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
+        static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
+        static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
     }
 
-    public enum Icon {
-        static let foregroundCellPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
-        static let foregroundCellIconActive = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let boarderCellCheckMarkActive = UIColor(light: Asset.gray80, dark: Asset.gray60)
-        static let backgroundCellCheckMarkActive = UIColor(light: Asset.gray20, dark: Asset.gray90)
-        static let backgroundCellCheckMarkSelectedActive = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
-        static let foregroundCellCheckMarkIconActive = UIColor(light: Asset.white, dark: Asset.black)
-        static let foregroundAccountAvailability = UIColor(light: Asset.gray90, dark: Asset.gray20)
+    public enum View {
+        static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
+        
+        
+//        static let backgroundViewDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+//        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+//        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+//        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+//        static let settingsScreenView = UIColor(light: Asset.gray20, dark: Asset.gray100)
+//        static let settingsScreenTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
+//        static let settingsScreenTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+//        static let deviceTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundConversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundConversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundConversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
+        static let backgroundConversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
+        static let backgroundTeamImageView = UIColor(light: Asset.white, dark: Asset.black)
+//        static let foregroundSeparatorCellActive = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        
+//        static let boderSettingsScreenTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
     }
 
     public enum TabBar {
-        static let textTabBarActive = UIColor(light: Asset.black, dark: Asset.white)
-        static let foregroundSeperatorSelectedTabActive = UIColor(light: Asset.black, dark: Asset.white)
-    }
-
-    public enum NavigationBar {
-        static let foregroundNavigationTintColor = UIColor(light: Asset.black, dark: Asset.white)
-        static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
+        static let backgroundSeperatorSelected = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum Button {

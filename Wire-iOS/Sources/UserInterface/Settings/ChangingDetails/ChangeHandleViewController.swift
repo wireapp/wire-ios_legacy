@@ -45,7 +45,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = SemanticColors.Label.textSettingsCell
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()
@@ -53,7 +53,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
-        textField.textColor = SemanticColors.Label.textSettingsCell
+        textField.textColor = SemanticColors.Label.textDefault
 
         return textField
     }()
@@ -251,7 +251,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = SemanticColors.View.Border.settingsScreenTableViewCell
+        tableView.separatorColor = SemanticColors.View.backgroundSeparatorCell
         footerLabel.numberOfLines = 0
         updateUI()
 
@@ -261,7 +261,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
-        navigationItem.rightBarButtonItem?.tintColor = SemanticColors.NavigationBar.textNavigationController
+        navigationItem.rightBarButtonItem?.tintColor = SemanticColors.Label.textDefault
     }
 
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
@@ -271,7 +271,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
-        let infoText = HandleChange.footer.attributedString && SemanticColors.Label.textSettingsTableViewFooter
+        let infoText = HandleChange.footer.attributedString && SemanticColors.Label.textSectionFooter
         let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.LegacyColors.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont

@@ -48,10 +48,10 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         titleLabel.text = L10n.Localizable.Self.Settings.AccountDetails.KeyFingerprint.title
         titleLabel.accessibilityIdentifier = "fingerprint title"
-        titleLabel.textColor = SemanticColors.Label.textSettingsTableViewHeader
+        titleLabel.textColor = SemanticColors.Label.textSectionHeader
         fingerprintLabel.numberOfLines = 0
         fingerprintLabel.accessibilityIdentifier = "fingerprint"
-        fingerprintLabel.textColor = SemanticColors.Label.textSettingsCell
+        fingerprintLabel.textColor = SemanticColors.Label.textDefault
         spinner.hidesWhenStopped = true
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)

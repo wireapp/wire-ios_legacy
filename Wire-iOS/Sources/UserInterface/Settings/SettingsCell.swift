@@ -38,7 +38,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.contentMode = .center
-        iconImageView.tintColor = SemanticColors.Label.textSettingsCell
+        iconImageView.tintColor = SemanticColors.Label.textDefault
         return iconImageView
     }()
 
@@ -46,7 +46,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         let label = DynamicFontLabel(
             fontSpec: .normalLightFont,
             color: .textForeground)
-        label.textColor = SemanticColors.Label.textSettingsCell
+        label.textColor = SemanticColors.Label.textDefault
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -58,7 +58,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     let valueLabel: UILabel = {
         let valueLabel = UILabel()
 
-        valueLabel.textColor = SemanticColors.Label.textSettingsCell
+        valueLabel.textColor = SemanticColors.Label.textDefault
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
 
@@ -67,7 +67,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let badge: RoundedBadge = {
         let badge = RoundedBadge(view: UIView())
-        badge.backgroundColor = SemanticColors.View.Background.settingsScreenTableViewCellBadge
+        badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
         badge.isHidden = true
 
         return badge
@@ -76,7 +76,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     private let badgeLabel: UILabel = {
         let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
         badgeLabel.textAlignment = .center
-        badgeLabel.textColor = SemanticColors.Label.textSettingsTableViewCellBadge
+        badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
 
         return badgeLabel
     }()
@@ -101,7 +101,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     var isTransparent: Bool = false {
         didSet {
-            backgroundColor = isTransparent ? .clear : SemanticColors.View.Background.settingsScreenTableViewCell
+            backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
         }
     }
 
@@ -204,7 +204,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
-        addBottomBorder(color: SemanticColors.View.Border.settingsScreenTableViewCell)
+        addBottomBorder(color: SemanticColors.View.backgroundSeparatorCell)
     }
 
     private func createConstraints() {
@@ -258,12 +258,12 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        backgroundColor = isTransparent ? .clear : SemanticColors.View.Background.settingsScreenTableViewCell
+        backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
 
         if isHighlighted && selectionStyle != .none {
-            backgroundColor = UIColor(white: 0, alpha: 0.2)
-            badge.backgroundColor = UIColor.white
-            badgeLabel.textColor = SemanticColors.Label.textSettingsTableViewCellBadge
+            backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
+            badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
+            badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
         }
     }
 }
@@ -271,7 +271,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 final class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
-        cellNameLabel.textColor = SemanticColors.Label.textSettingsCell
+        cellNameLabel.textColor = SemanticColors.Label.textDefault
     }
 }
 
@@ -288,7 +288,7 @@ final class SettingsToggleCell: SettingsTableCell {
         switchView.isAccessibilityElement = true
         accessibilityElements = [cellNameLabel, switchView]
         self.switchView = switchView
-        backgroundColor = isTransparent ? .clear : SemanticColors.View.Background.settingsScreenTableViewCell
+        backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
     }
 
     @objc
@@ -335,7 +335,7 @@ final class SettingsTextCell: SettingsTableCell,
         textInput = TailEditingTextField(frame: CGRect.zero)
         textInput.delegate = self
         textInput.textAlignment = .right
-        textInput.textColor = SemanticColors.Label.textSettingsCell
+        textInput.textColor = SemanticColors.Label.textDefault
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         textInput.isAccessibilityElement = true
 
@@ -434,7 +434,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
     private func setupViews() {
         contentView.addSubview(label)
 
-        label.textColor = SemanticColors.Label.textSettingsCell
+        label.textColor = SemanticColors.Label.textDefault
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0

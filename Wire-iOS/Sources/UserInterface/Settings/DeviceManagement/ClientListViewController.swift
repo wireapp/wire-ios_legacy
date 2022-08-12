@@ -185,7 +185,7 @@ final class ClientListViewController: UIViewController,
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)
-            clientViewController.view.backgroundColor = variant == .none ? .clear : SemanticColors.View.Background.settingsScreenView
+            clientViewController.view.backgroundColor = variant == .none ? .clear : SemanticColors.View.backgroundDefault
             navigationController.pushViewController(clientViewController, animated: true)
         }
     }
@@ -199,7 +199,7 @@ final class ClientListViewController: UIViewController,
         tableView.estimatedRowHeight = 80
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
-        tableView.backgroundColor = variant == .none ? .clear : SemanticColors.View.Background.settingsScreenView
+        tableView.backgroundColor = variant == .none ? .clear : SemanticColors.View.backgroundDefault
         tableView.separatorColor = separatorColor
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
@@ -347,11 +347,7 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
             cell.selectionStyle = .none
-            let image = UIImage(systemName: "chevron.right")
-            let accessory = UIImageView(frame: CGRect(x: 0, y: 0, width: (image?.size.width)!, height: (image?.size.height)!))
-            accessory.image = image
-            accessory.tintColor = SemanticColors.Label.textSettingsCell
-            cell.accessoryView = accessory
+            cell.showDisclosureIndicator()
             cell.showVerified = self.detailedView
             cell.variant = variant
 

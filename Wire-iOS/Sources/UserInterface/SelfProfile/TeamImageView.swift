@@ -62,7 +62,7 @@ final class TeamImageView: UIImageView {
         }
 
         initialLabel.textColor = SemanticColors.Label.teamImageView
-        backgroundColor = SemanticColors.View.Background.teamImageView
+        backgroundColor = SemanticColors.View.backgroundTeamImageView
     }
 
     private func updateRoundCorner() {

@@ -128,7 +128,7 @@ final class ConversationListContentController: UICollectionViewController, Popov
         collectionView.register(ConnectRequestsCell.self, forCellWithReuseIdentifier: CellReuseIdConnectionRequests)
         collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: CellReuseIdConversation)
 
-        collectionView.backgroundColor = SemanticColors.View.Background.conversationList
+        collectionView.backgroundColor = SemanticColors.View.backgroundConversationList
         collectionView.alwaysBounceVertical = true
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false

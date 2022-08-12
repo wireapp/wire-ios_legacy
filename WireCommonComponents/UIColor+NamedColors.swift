@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 public extension UIColor {
+
     struct Wire {
 
         public static var primaryLabel: UIColor {
@@ -28,8 +29,8 @@ public extension UIColor {
 
         public static var secondaryLabel: UIColor {
             return label.withAlphaComponent(0.7)
-
         }
+
     }
 
 }
