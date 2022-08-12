@@ -20,6 +20,33 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+class Button: LegacyButton {
+
+    var style: ButtonStyle?
+
+    convenience init(style: ButtonStyle,
+                     cornerRadius: CGFloat = 0,
+                     fontSpec: FontSpec = .smallLightFont) {
+        self.init(fontSpec: fontSpec)
+
+        self.style = style
+        textTransform = .none
+        layer.cornerRadius = cornerRadius
+        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+
+        applyStyle(style)
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            guard let style = style else { return }
+
+            applyStyle(style)
+        }
+    }
+
+}
+
 enum LegacyButtonStyle: Int {
     // background color: accent, text color: white
     case full
@@ -28,7 +55,7 @@ enum LegacyButtonStyle: Int {
     case emptyMonochrome
 }
 
-class Button: ButtonWithLargerHitArea {
+class LegacyButton: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
 
     var circular = false {
@@ -57,8 +84,6 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    var style: ButtonStyle?
-
     private(set) var variant: ColorSchemeVariant = ColorScheme.default.variant
 
     private var originalTitles: [UIControl.State: String] = [:]
@@ -84,19 +109,6 @@ class Button: ButtonWithLargerHitArea {
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 
         updateStyle(variant: variant)
-    }
-
-    convenience init(style: ButtonStyle,
-                     cornerRadius: CGFloat = 0,
-                     fontSpec: FontSpec = .smallLightFont) {
-        self.init(fontSpec: fontSpec)
-
-        self.style = style
-        textTransform = .upper
-        layer.cornerRadius = cornerRadius
-        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-
-        applyStyle(style)
     }
 
     private func updateStyle(variant: ColorSchemeVariant) {

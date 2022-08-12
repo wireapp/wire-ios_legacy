@@ -18,7 +18,7 @@
 
 import UIKit
 
-class Tab: Button {
+class Tab: LegacyButton {
 
     var title: String = "" {
         didSet {

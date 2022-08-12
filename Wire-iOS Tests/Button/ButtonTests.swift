@@ -20,7 +20,7 @@ import XCTest
 import SnapshotTesting
 
 final class ButtonTests: XCTestCase {
-    var sut: Wire.Button!
+    var sut: Wire.LegacyButton!
 
     override func setUp() {
         sut = Button(legacyStyle: .empty, fontSpec: .smallLightFont)

@@ -26,7 +26,7 @@ extension UIColor {
 }
 
 /// A button with spinner at the trailing side. Title text is non truncated.
-final class SpinnerButton: Button {
+final class SpinnerButton: LegacyButton {
 
     private lazy var spinner: Spinner = {
         let spinner = Spinner()
