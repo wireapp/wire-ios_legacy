@@ -55,7 +55,6 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     @available(*, unavailable)
@@ -85,6 +84,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
             textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.Label.textDefault
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func createConstraints() {
