@@ -24,10 +24,8 @@ protocol ClientListViewControllerDelegate: AnyObject {
 }
 
 protocol ClientColorVariantProtocol {
-    var variant: ColorSchemeVariant? { get set }
     var headerFooterViewTextColor: UIColor { get }
-    var separatorColor: UIColor { get }
-    func setColor(for variant: ColorSchemeVariant?)
+    func setColor()
 }
 
 extension ClientColorVariantProtocol where Self: UIViewController {
@@ -36,16 +34,7 @@ extension ClientColorVariantProtocol where Self: UIViewController {
         return SemanticColors.Label.textSectionFooter
     }
 
-    var separatorColor: UIColor {
-        switch variant {
-        case .none, .dark?:
-            return UIColor(white: 1, alpha: 0.1)
-        case .light?:
-            return UIColor.from(scheme: .separator, variant: .light)
-        }
-    }
-
-    func setColor(for variant: ColorSchemeVariant?) {
-        view.backgroundColor = (variant == .none) ? .clear : SemanticColors.View.backgroundDefault
+    func setColor() {
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 }

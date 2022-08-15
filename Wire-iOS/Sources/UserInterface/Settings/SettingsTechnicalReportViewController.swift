@@ -43,6 +43,11 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
 
+        [sendReportCell, includedVoiceLogCell].forEach { cell in
+            cell.addBorder(for: .top)
+            cell.addBorder(for: .bottom)
+        }
+
         super.init(nibName: nil, bundle: nil)
 
         createBorders(

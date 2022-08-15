@@ -36,12 +36,6 @@ final class ClientListViewController: UIViewController,
     let topSeparator = OverflowSeparatorView()
     weak var delegate: ClientListViewControllerDelegate?
 
-    var variant: ColorSchemeVariant? {
-        didSet {
-            setColor(for: variant)
-        }
-    }
-
     var editingList: Bool = false {
         didSet {
             guard !clients.isEmpty else {
@@ -105,9 +99,6 @@ final class ClientListViewController: UIViewController,
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
-        defer {
-            self.variant = variant
-        }
 
         clientFilter = {
             $0 != selfClient && (showTemporary || $0.type != .temporary) && (showLegalHold || $0.type != .legalHold)
@@ -162,6 +153,7 @@ final class ClientListViewController: UIViewController,
         self.createConstraints()
 
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        setColor()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -183,9 +175,9 @@ final class ClientListViewController: UIViewController,
     }
 
     func openDetailsOfClient(_ client: UserClient) {
-        if let navigationController = self.navigationController {
-            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)
-            clientViewController.view.backgroundColor = variant == .none ? .clear : SemanticColors.View.backgroundDefault
+        if let navigationController = self.navigationController {=
+            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+            clientViewController.view.backgroundColor = SemanticColors.View.backgroundDefault
             navigationController.pushViewController(clientViewController, animated: true)
         }
     }
@@ -199,8 +191,7 @@ final class ClientListViewController: UIViewController,
         tableView.estimatedRowHeight = 80
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
-        tableView.backgroundColor = variant == .none ? .clear : SemanticColors.View.backgroundDefault
-        tableView.separatorColor = separatorColor
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
@@ -349,7 +340,6 @@ final class ClientListViewController: UIViewController,
             cell.selectionStyle = .none
             cell.showDisclosureIndicator()
             cell.showVerified = self.detailedView
-            cell.variant = variant
 
             switch self.convertSection((indexPath as NSIndexPath).section) {
             case 0:

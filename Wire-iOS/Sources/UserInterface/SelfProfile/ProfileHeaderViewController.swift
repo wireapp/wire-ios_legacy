@@ -248,11 +248,8 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
         guestIndicator.tintColor = SemanticColors.Icon.foregroundDefault
         let labelColor = SemanticColors.Label.textDefault
-
-        handleLabel.textColor = labelColor
-        nameLabel.textColor = labelColor
-        teamNameLabel.textColor = labelColor
-        remainingTimeLabel.textColor = labelColor
+        [handleLabel, nameLabel, teamNameLabel, remainingTimeLabel].forEach { $0.textColor = labelColor}
+        view.backgroundColor = UIColor.clear
     }
 
     private func updateGuestIndicator() {

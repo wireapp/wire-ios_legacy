@@ -68,6 +68,9 @@ public enum SemanticColors {
         static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
+        static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
@@ -78,6 +81,7 @@ public enum SemanticColors {
         static let borderInputView = UIColor(light: Asset.gray40, dark: Asset.gray80)
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
+
     public enum Icon {
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)

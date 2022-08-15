@@ -168,8 +168,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var isFirst: Bool = false
-
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         updateBackgroundColor()
@@ -204,7 +202,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
+        <<<<<<< HEAD
         addBottomBorder(color: SemanticColors.View.backgroundSeparatorCell)
+        =======
+        addBorder(for: .bottom)
+        >>>>>>> develop
     }
 
     private func createConstraints() {
@@ -258,7 +260,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func updateBackgroundColor() {
-        backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
         if isHighlighted && selectionStyle != .none {
             backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
@@ -288,7 +290,7 @@ final class SettingsToggleCell: SettingsTableCell {
         switchView.isAccessibilityElement = true
         accessibilityElements = [cellNameLabel, switchView]
         self.switchView = switchView
-        backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
     }
 
     @objc
