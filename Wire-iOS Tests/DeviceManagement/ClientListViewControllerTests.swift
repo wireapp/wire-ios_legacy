@@ -110,12 +110,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
 
     func testForLightThemeWrappedInNavigationController() {
         prepareSut(variant: .light)
-        let mockRootViewController = UIViewController()
-        let navWrapperController = mockRootViewController.wrapInNavigationController()
+        let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
-        let editButton = sut.navigationItem.rightBarButtonItem!
-        UIApplication.shared.sendAction(editButton.action!, to: editButton.target, from: nil, for: nil)
-        navWrapperController.pushViewController(sut, animated: false)
 
         verify(matching: navWrapperController)
     }
@@ -138,12 +134,11 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
 
     func testForEditMode() {
         prepareSut(variant: .light)
-        let mockRootViewController = UIViewController()
-        let navWrapperController = mockRootViewController.wrapInNavigationController()
+        let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
         let editButton = sut.navigationItem.rightBarButtonItem!
         UIApplication.shared.sendAction(editButton.action!, to: editButton.target, from: nil, for: nil)
-        navWrapperController.pushViewController(sut, animated: false)
+
         verify(matching: navWrapperController)
     }
 }
