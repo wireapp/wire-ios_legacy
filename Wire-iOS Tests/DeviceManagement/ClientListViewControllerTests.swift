@@ -90,12 +90,6 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTe
         XCTAssertNil(clientRemovalObserver)
     }
 
-    func testForTransparentBackground() {
-        prepareSut(variant: nil)
-
-        verify(matching: sut)
-    }
-
     func testForLightTheme() {
         prepareSut(variant: .light)
         sut.overrideUserInterfaceStyle = .light
