@@ -99,12 +99,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
     }
 
-    var isTransparent: Bool = false {
-        didSet {
-            backgroundColor = isTransparent ? .clear : SemanticColors.View.backgroundUserCell
-        }
-    }
-
     var preview: SettingsCellPreview = .none {
         didSet {
             switch preview {

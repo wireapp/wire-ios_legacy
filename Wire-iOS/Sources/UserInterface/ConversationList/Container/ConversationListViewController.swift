@@ -125,7 +125,8 @@ final class ConversationListViewController: UIViewController {
     }
 
     override func loadView() {
-        view = UIView(frame: UIScreen.main.bounds)
+        view = PassthroughTouchesView(frame: UIScreen.main.bounds)
+        view.backgroundColor = .clear
     }
 
     override func viewDidLoad() {

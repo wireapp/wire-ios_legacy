@@ -48,6 +48,7 @@ public enum SemanticColors {
 
     public enum Label {
         static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
+        static let textDefaultWhite = UIColor(light: Asset.white, dark: Asset.white)
         static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
@@ -87,6 +88,7 @@ public enum SemanticColors {
         static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
         static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
+        static let backgroundJoinCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
     }
 
     public enum View {

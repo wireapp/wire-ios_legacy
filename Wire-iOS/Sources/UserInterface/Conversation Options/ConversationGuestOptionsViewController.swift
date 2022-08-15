@@ -50,7 +50,6 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         setupViews()
         createConstraints()
         viewModel.delegate = self
-        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func viewWillAppear(_ animated: Bool) {

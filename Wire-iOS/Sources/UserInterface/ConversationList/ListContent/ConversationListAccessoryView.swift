@@ -105,7 +105,7 @@ final class ConversationListAccessoryView: UIView {
             expandWidthConstraint,
             transparentIconView.topAnchor.constraint(equalTo: topAnchor),
             transparentIconView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ]
+        ]
         )
         badgeView.fitIn(view: self)
     }
@@ -133,8 +133,9 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
-            textLabel.textColor = UIColor.white
-            badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
+            textLabel.textColor = SemanticColors.Label.textDefaultWhite
+            badgeView.backgroundColor = SemanticColors.Icon.backgroundJoinCall
+
             accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
@@ -154,7 +155,7 @@ final class ConversationListAccessoryView: UIView {
             }
             return iconView
         case .silenced:
-            tintColor = SemanticColors.Label.conversationListTableViewCellBadgeReverted
+            iconView.tintColor = SemanticColors.Label.conversationListTableViewCellBadgeReverted
             iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
             badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadgeReverted
             badgeView.layer.borderColor = SemanticColors.View.borderConversationListTableViewCellBadgeReverted.cgColor
@@ -229,7 +230,7 @@ final class ConversationListAccessoryView: UIView {
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
+            self.badgeView.backgroundColor = SemanticColors.Icon.backgroundJoinCall
 
         case .typing:
             self.badgeView.isHidden = true
@@ -264,7 +265,7 @@ final class ConversationListAccessoryView: UIView {
                 view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
                 view.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 6),
                 view.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -6)
-                ])
+            ])
 
         }
     }
