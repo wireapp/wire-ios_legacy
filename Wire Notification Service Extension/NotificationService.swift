@@ -72,6 +72,11 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
+        if  DeveloperFlag.nseDebugging.isOn {
+            DebugLogger.storage = .applicationGroup
+            UserDefaults.applicationGroup.set(DeveloperFlag.nseDebugging.isOn, forKey: DebugLogger.DebugFlagIsOnKey)
+        }
+
         if DeveloperFlag.nseDebugEntryPoint.isOn {
             DebugLogger.storage = .applicationGroup
             UserDefaults.applicationGroup.set(DeveloperFlag.nseDebugging.isOn, forKey: DebugLogger.DebugFlagIsOnKey)
