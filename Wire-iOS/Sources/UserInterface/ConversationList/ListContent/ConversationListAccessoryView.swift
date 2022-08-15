@@ -238,14 +238,14 @@ final class ConversationListAccessoryView: UIView {
             self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
 
         case .unreadMessages, .mention:
-            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
-            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
+            self.textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
+            self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
         case .unreadPing,
                 .reply,
                 .missedCall:
 
-            self.badgeView.backgroundColor = .from(scheme: .textBackground, variant: .light)
+            self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
         default:
             self.transparentIconView.image = .none
