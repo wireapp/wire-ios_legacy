@@ -20,17 +20,23 @@ import UIKit
 import WireDataModel
 import WireCommonComponents
 
+/// Naming convention:
+///
+/// The names of all SemanticColors should follow the format:
+///
+///  "<usage>.<context/role>.<state?>"
+/// The last part is optional
 public enum SemanticColors {
 
     public enum LegacyColors {
         // Legacy accent colors
-        public static let strongBlue = UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
-        public static let strongLimeGreen = UIColor(red: 0, green: 0.784, blue: 0, alpha: 1)
-        public static let brightYellow = UIColor(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
-        public static let vividRed = UIColor(red: 1, green: 0.152, blue: 0, alpha: 1)
-        public static let brightOrange = UIColor(red: 1, green: 0.537, blue: 0, alpha: 1)
-        public static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
-        public static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
+        static let strongBlue = UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1)
+        static let strongLimeGreen = UIColor(red: 0, green: 0.784, blue: 0, alpha: 1)
+        static let brightYellow = UIColor(red: 0.996, green: 0.749, blue: 0.007, alpha: 1)
+        static let vividRed = UIColor(red: 1, green: 0.152, blue: 0, alpha: 1)
+        static let brightOrange = UIColor(red: 1, green: 0.537, blue: 0, alpha: 1)
+        static let softPink = UIColor(red: 0.996, green: 0.368, blue: 0.741, alpha: 1)
+        static let violet = UIColor(red: 0.615, green: 0, blue: 1, alpha: 1)
     }
 
     public enum Switch {
@@ -47,6 +53,9 @@ public enum SemanticColors {
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
         static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
+        static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
+        static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
+        static let textUserPropertyCellName = UIColor(light: Asset.gray80, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
     }
 
@@ -58,14 +67,6 @@ public enum SemanticColors {
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
 
-    public enum View {
-        static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
-        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
-        static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-    }
-
     public enum Icon {
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
@@ -73,6 +74,16 @@ public enum SemanticColors {
         static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
         static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
+    }
+
+    public enum View {
+        static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
+        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
+        static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum TabBar {
@@ -90,7 +101,6 @@ public enum SemanticColors {
         static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
         static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
     }
-
 }
 
 extension UIColor {

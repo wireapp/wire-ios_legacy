@@ -66,6 +66,12 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
                 .baselineOffset: 1.0]
     }
 
+    static func titleTextAttributes(for color: UIColor) -> [NSAttributedString.Key: Any] {
+        return [.font: FontSpec.smallSemiboldFont.font!,
+                .foregroundColor: color,
+                .baselineOffset: 1.0]
+    }
+
 }
 
 extension UIViewController {

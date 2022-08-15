@@ -223,7 +223,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     func createSettingsViewController() -> UIViewController {
         let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
-        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: NavigationController.self)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

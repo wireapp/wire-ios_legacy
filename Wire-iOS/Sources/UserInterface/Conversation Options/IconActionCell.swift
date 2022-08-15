@@ -21,7 +21,6 @@ import WireCommonComponents
 
 final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
 
-    private let separator = UIView()
     private let imageContainer = UIView()
     private let iconImageView = UIImageView()
     private let label = UILabel()
@@ -33,15 +32,14 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
     }
 
     private func setupViews() {
-        cellColor = SemanticColors.View.backgroundUserCell
+
         imageContainer.addSubview(iconImageView)
         label.font = FontSpec(.normal, .light).font
-        [imageContainer, label, separator].forEach(contentView.addSubview)
+        [imageContainer, label].forEach(contentView.addSubview)
     }
 
     private func createConstraints() {
         [label,
-         separator,
          imageContainer,
          iconImageView].prepareForLayout()
         NSLayoutConstraint.activate([
@@ -56,12 +54,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            label.heightAnchor.constraint(equalToConstant: 56),
-
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
-            separator.leadingAnchor.constraint(equalTo: label.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: label.trailingAnchor),
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            label.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
 
@@ -71,7 +64,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         iconImageView.tintColor = SemanticColors.Icon.foregroundDefault
         label.textColor = SemanticColors.Label.textDefault
         label.text = title
-        separator.backgroundColor = SemanticColors.View.backgroundSeparatorCell
+
     }
 
 }

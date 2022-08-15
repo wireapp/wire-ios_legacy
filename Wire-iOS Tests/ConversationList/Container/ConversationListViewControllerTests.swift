@@ -38,7 +38,7 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
         let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser, conversationListType: MockConversationList.self)
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
-
+        sut.overrideUserInterfaceStyle = .dark
         sut.view.backgroundColor = .black
     }
 

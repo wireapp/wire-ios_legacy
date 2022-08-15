@@ -113,7 +113,6 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         let format = "self.settings.account_section.email.change.verify.resend".localized
         let text = String(format: format, newEmail)
         cell.titleText = text
-        cell.titleColor = .white
         return cell
     }
 
