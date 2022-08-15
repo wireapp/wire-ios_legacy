@@ -202,11 +202,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
-        <<<<<<< HEAD
-        addBottomBorder(color: SemanticColors.View.backgroundSeparatorCell)
-        =======
         addBorder(for: .bottom)
-        >>>>>>> develop
     }
 
     private func createConstraints() {

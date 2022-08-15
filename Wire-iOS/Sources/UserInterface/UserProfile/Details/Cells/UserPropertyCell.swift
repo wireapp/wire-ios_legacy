@@ -78,8 +78,8 @@ final class UserPropertyCell: SeparatorTableViewCell {
         configureSubviews()
         configureConstraints()
         backgroundColor = SemanticColors.View.backgroundUserCell
-        addTopBorder(color: SemanticColors.View.backgroundSeparatorCell)
-        addBottomBorder(color: SemanticColors.View.backgroundSeparatorCell)
+        addBorder(for: .top)
+        addBorder(for: .bottom)
         separator.isHidden = true
         separator.backgroundColor = .clear
     }

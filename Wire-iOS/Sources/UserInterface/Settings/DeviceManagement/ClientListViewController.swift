@@ -175,7 +175,7 @@ final class ClientListViewController: UIViewController,
     }
 
     func openDetailsOfClient(_ client: UserClient) {
-        if let navigationController = self.navigationController {=
+        if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
             clientViewController.view.backgroundColor = SemanticColors.View.backgroundDefault
             navigationController.pushViewController(clientViewController, animated: true)
