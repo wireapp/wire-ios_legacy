@@ -72,7 +72,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     private let titleLabel: UILabel = {
         let label = DynamicFontLabel(
-            fontSpec: .normalRegularFont,
+            fontSpec: .smallRegularFont,
             color: .white)
         label.textColor = SemanticColors.Label.textConversationListCell
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -124,7 +124,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     private let arrowIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = SemanticColors.Label.textConversationListCell
-        imageView.setTemplateIcon(.downArrow, size: 10)
+        imageView.setTemplateIcon(.downArrow, size: .tiny)
         return imageView
     }()
 
