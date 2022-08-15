@@ -45,7 +45,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = UIColor.from(scheme: .textDimmed, variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()
@@ -53,7 +53,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let handleTextField: UITextField = {
         let textField = UITextField()
         textField.font = .normalFont
-        textField.textColor = .from(scheme: .textForeground, variant: .dark)
+        textField.textColor = SemanticColors.Label.textDefault
 
         return textField
     }()
@@ -61,7 +61,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
     let domainLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = UIColor.from(scheme: .textDimmed, variant: .dark)
+        label.textColor = .gray
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         return label
@@ -251,7 +251,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.08)
+        tableView.separatorColor = SemanticColors.View.backgroundSeparatorCell
         footerLabel.numberOfLines = 0
         updateUI()
 
@@ -261,7 +261,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
+        navigationItem.rightBarButtonItem?.tintColor = SemanticColors.Label.textDefault
     }
 
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
@@ -271,7 +271,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
-        let infoText = HandleChange.footer.attributedString && UIColor(white: 1, alpha: 0.4)
+        let infoText = HandleChange.footer.attributedString && SemanticColors.Label.textSectionFooter
         let alreadyTakenText = HandleChange.Footer.unavailable && SemanticColors.LegacyColors.vividRed
         let prefix = state.availability == .taken ? alreadyTakenText + "\n\n" : "\n\n".attributedString
         return (prefix + infoText) && footerFont

@@ -51,12 +51,6 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase, CoreDataFixtu
         sut.isLoadingViewVisible = false
     }
 
-    func testForTransparentBackground() {
-        prepareSut(variant: nil)
-
-        verify(matching: sut)
-    }
-
     func testForLightTheme() {
         prepareSut(variant: .light)
 

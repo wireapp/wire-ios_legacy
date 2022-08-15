@@ -26,6 +26,7 @@ final class BackupStatusCell: UITableViewCell {
         let label = DynamicFontLabel(fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -39,9 +40,8 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        let color = UIColor.from(scheme: .textForeground, variant: .dark)
-
-        iconView.setIcon(.restore, size: .large, color: color)
+        iconView.tintColor = SemanticColors.Label.textDefault
+        iconView.setTemplateIcon(.restore, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -75,6 +75,7 @@ final class BackupActionCell: UITableViewCell {
                                      fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
         label.textAlignment = .left
         return label
     }()
@@ -82,7 +83,7 @@ final class BackupActionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .clear
+        backgroundColor = SemanticColors.View.backgroundUserCell
         contentView.backgroundColor = .clear
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -134,10 +135,6 @@ final class BackupViewController: UIViewController, SpinnerCapable {
         title = L10n.Localizable.Self.Settings.HistoryBackup.title.localizedUppercase
         setupViews()
         setupLayout()
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     private func setupViews() {

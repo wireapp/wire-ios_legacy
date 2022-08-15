@@ -122,7 +122,6 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        cell.titleColor = UIColor.white
 
         if let tableCell = cell as? SettingsTableCell {
             tableCell.valueLabel.accessibilityIdentifier = title + "Field"

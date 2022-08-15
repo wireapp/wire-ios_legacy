@@ -47,7 +47,6 @@ final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescr
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        cell.cellColor = self.backgroundColor
         if let valueCell = cell as? SettingsValueCell {
             valueCell.accessoryType = self.settingsProperty.value() == self.value ? .checkmark : .none
         }

@@ -135,7 +135,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
             titleFont = .smallSemiboldFont
         }
 
-        titleColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        titleColor = SemanticColors.Label.textSectionHeader
         titleColorSelected = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
     }
 

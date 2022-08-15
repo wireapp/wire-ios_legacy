@@ -93,7 +93,9 @@ final class DeveloperOptionsController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
         button.titleLabel?.textAlignment = .right
-
+        button.setTitleColor(
+            SemanticColors.Label.textDefault,
+            for: .normal)
         if let titleLabel = button.titleLabel {
             NSLayoutConstraint.activate([
                 titleLabel.rightAnchor.constraint(equalTo: button.rightAnchor)
@@ -121,7 +123,7 @@ final class DeveloperOptionsController: UIViewController {
 
         let label = UILabel()
         label.text = labelText
-        label.textColor = .white
+        label.textColor = SemanticColors.Label.textDefault
         label.translatesAutoresizingMaskIntoConstraints = false
         [label, view].forEach {
             cell.contentView.addSubview($0)

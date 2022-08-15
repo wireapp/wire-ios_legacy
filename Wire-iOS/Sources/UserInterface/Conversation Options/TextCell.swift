@@ -26,7 +26,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        backgroundColor = SemanticColors.View.backgroundDefault
         contentView.addSubview(container)
         container.addSubview(label)
         label.font = FontSpec(.normal, .light).font

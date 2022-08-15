@@ -26,10 +26,8 @@ final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
         mockUser.emailAddress = emailAddress
 
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
-        viewController.overrideUserInterfaceStyle = .dark
-        viewController.view.backgroundColor = .black
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: NavigationController.self)
 
         return viewController
     }
@@ -37,6 +35,7 @@ final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
     func testForChangingExistingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: "user@example.com")
+        viewController.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: viewController)
@@ -45,6 +44,7 @@ final class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
     func testForAddingEmail() {
         // GIVEN & WHEN
         let viewController = createSut(emailAddress: nil)
+        viewController.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: viewController)
