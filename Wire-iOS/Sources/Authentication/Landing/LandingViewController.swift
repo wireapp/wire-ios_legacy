@@ -161,8 +161,8 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     private lazy var createAccountButton: Button = {
-        let button = Button(style: .emptyTextButtonStyle, fontSpec: .normalMediumFont)
-        button.titleLabel?.font = .systemFont(ofSize: 17)
+        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 12, fontSpec: .normalMediumFont)
+        button.titleLabel?.font = .systemFont(ofSize: 14).withWeight(.bold)
         button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
         button.addTarget(self,
@@ -382,12 +382,12 @@ final class LandingViewController: AuthenticationStepViewController {
             createAccoutInfoLabelTopConstraint, // iPad
             createAccoutInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             createAccoutInfoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-            createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor),
+            createAccoutInfoLabel.bottomAnchor.constraint(equalTo: createAccountButton.topAnchor, constant: -8),
 
             // create an button
-            createAccountButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            createAccountButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-            createAccountButton.heightAnchor.constraint(equalToConstant: 24),
+            createAccountButton.leadingAnchor.constraint(equalTo: buttonStackView.leadingAnchor),
+            createAccountButton.trailingAnchor.constraint(equalTo: buttonStackView.trailingAnchor),
+            createAccountButton.heightAnchor.constraint(equalToConstant: 32),
             createAccoutButtomBottomConstraint // iPhone
         ])
     }
