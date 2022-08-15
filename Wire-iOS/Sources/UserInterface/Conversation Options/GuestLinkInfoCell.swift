@@ -71,11 +71,12 @@ final class GuestLinkInfoCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .info(infoText) = configuration else { preconditionFailure() }
         accessibilityIdentifier = "guest_links.not_allowed.cell"
-        iconImageView.setIcon(.about, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: variant))
+        iconImageView.tintColor = SemanticColors.Label.textDefault
+        iconImageView.setTemplateIcon(.about, size: .tiny)
 
         label.configMultipleLineLabel()
         label.attributedText = .markdown(from: infoText, style: .labelStyle)
-        label.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        label.textColor = SemanticColors.Label.textDefault
     }
 }
 

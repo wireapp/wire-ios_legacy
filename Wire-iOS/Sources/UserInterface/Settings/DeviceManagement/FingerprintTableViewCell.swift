@@ -27,22 +27,6 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
 
-    var variant: ColorSchemeVariant? {
-        didSet {
-            var color = UIColor.white
-
-            switch variant {
-            case .dark?, .none:
-                color = .white
-            case .light?:
-                color = UIColor.from(scheme: .textForeground, variant: .light)
-            }
-
-            fingerprintLabel.textColor = color
-            titleLabel.textColor = color
-        }
-    }
-
     var fingerprintLabelFont: FontSpec? {
         didSet {
             updateFingerprint()
@@ -64,8 +48,10 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         titleLabel.text = L10n.Localizable.Self.Settings.AccountDetails.KeyFingerprint.title
         titleLabel.accessibilityIdentifier = "fingerprint title"
+        titleLabel.textColor = SemanticColors.Label.textSectionHeader
         fingerprintLabel.numberOfLines = 0
         fingerprintLabel.accessibilityIdentifier = "fingerprint"
+        fingerprintLabel.textColor = SemanticColors.Label.textDefault
         spinner.hidesWhenStopped = true
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)

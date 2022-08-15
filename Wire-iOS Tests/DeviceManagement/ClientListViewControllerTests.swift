@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+final class ClientListViewControllerTests: ZMSnapshotTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
 
     var sut: ClientListViewController!
@@ -90,21 +90,15 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         XCTAssertNil(clientRemovalObserver)
     }
 
-    func testForTransparentBackground() {
-        prepareSut(variant: nil)
-
-        verify(matching: sut)
-    }
-
     func testForLightTheme() {
         prepareSut(variant: .light)
-
+        sut.overrideUserInterfaceStyle = .light
         verify(matching: sut)
     }
 
     func testForDarkTheme() {
         prepareSut(variant: .dark)
-
+        sut.overrideUserInterfaceStyle = .dark
         verify(matching: sut)
     }
 

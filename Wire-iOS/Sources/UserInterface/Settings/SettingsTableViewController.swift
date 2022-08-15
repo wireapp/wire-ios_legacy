@@ -77,7 +77,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -127,10 +127,6 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             newFooter.leftAnchor.constraint(equalTo: footerContainer.leftAnchor),
             newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
         ])
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
 
@@ -237,7 +233,6 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
-            cell.isFirst = indexPath.row == 0
             return cell
         }
 
@@ -264,13 +259,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionHeader
         }
     }
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionFooter
         }
     }
 
