@@ -83,7 +83,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
         addBorder(for: .top)
         addBorder(for: .bottom)
-        
+
         separator.isHidden = true
         separator.backgroundColor = .clear
         showSeparator = false

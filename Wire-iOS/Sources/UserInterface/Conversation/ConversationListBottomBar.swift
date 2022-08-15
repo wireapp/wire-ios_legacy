@@ -120,7 +120,6 @@ final class ConversationListBottomBarController: UIViewController {
 
         view.addSubview(buttonStackview)
         view.addSubview(separator)
-
     }
 
     private func createConstraints() {

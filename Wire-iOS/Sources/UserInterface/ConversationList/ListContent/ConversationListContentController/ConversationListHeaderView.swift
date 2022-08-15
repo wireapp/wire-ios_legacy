@@ -124,7 +124,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     private let arrowIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = SemanticColors.Label.textConversationListCell
-        imageView.setTemplateIcon(.downArrow, size: .tiny)
+        imageView.setTemplateIcon(.downArrow, size: 10)
         return imageView
     }()
 

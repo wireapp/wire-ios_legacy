@@ -241,10 +241,7 @@ final class ConversationListAccessoryView: UIView {
             self.textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
             self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
-        case .unreadPing,
-                .reply,
-                .missedCall:
-
+        case .unreadPing, .reply, .missedCall:
             self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
         default:

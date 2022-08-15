@@ -157,6 +157,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
         let textColor = SemanticColors.Label.textDefault
+
         fingerprintTextColor = textColor
         [nameLabel, labelLabel, verifiedLabel, activationLabel].forEach { $0.textColor = textColor}
         addBorder(for: .bottom)
