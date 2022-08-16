@@ -71,24 +71,43 @@ enum DebugActions {
     }
 
 
-    static func getLogs() -> String {
-//        var res = ""
-//        for i in 1...1000 {
-//            res += "\(i) example text for push notification logs --------===========----------======="
+//    static func getLogs() -> String {
+////        var res = ""
+////        for i in 1...1000 {
+////            res += "\(i) example text for push notification logs --------===========----------======="
+////        }
+////        return res
+////        DebugLogger.addStep(step: "!shouldn't create notification", eventID: "11111")
+//        guard let logs = UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, Any> else {
+//            return  "error NO LOGS DICTIONARY WERE CREATED"
 //        }
-//        return res
-//        DebugLogger.addStep(step: "!shouldn't create notification", eventID: "11111")
-        guard let logs = UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, Any> else {
+//        var result = ""
+//        for  eventID in logs.keys {
+//            result += eventID as String
+//            result += "\n"
+//            guard let eventLogs = logs[eventID] as? Dictionary<String, String> else { continue }
+//            for singleLog in eventLogs.values {
+//                result += "     \(singleLog as String)\n"
+//            }
+//        }
+//        return result
+//    }
+
+    static func getLogs() -> String {
+        //        DebugLogger.addStep(step: "!shouldn't create notification", eventID: "11111")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSSSSS"
+        guard let logs = UserDefaults.applicationGroup.object(forKey: DebugLogger.PushNotificationLogsKey) as? Dictionary<String, String> else {
             return  "error NO LOGS DICTIONARY WERE CREATED"
         }
         var result = ""
-        for  eventID in logs.keys {
-            result += eventID as String
+        let keys = logs.keys.sorted(by: <)
+        for  timeStampKey in keys {
+            let eventTime = Date(timeIntervalSince1970: (timeStampKey as NSString).doubleValue)
+            result += formatter.string(from: eventTime)
+            guard let eventLogs = logs[timeStampKey] else { continue }
+            result += " | \(eventLogs)\n"
             result += "\n"
-            guard let eventLogs = logs[eventID] as? Dictionary<String, String> else { continue }
-            for singleLog in eventLogs.values {
-                result += "     \(singleLog as String)\n"
-            }
         }
         return result
     }

@@ -124,14 +124,16 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         defer { tearDown() }
 
         guard let contentHandler = contentHandler else { return }
+        DebugLogger.addStep(step: "Callback from NE", eventID: "!")
 
         guard let content = notification?.content else {
-            DebugLogger.addStep(step: "No notification generated.", eventID: "!")
+            DebugLogger.addStep(step: "! No notification generated.", eventID: "!")
             contentHandler(.debugMessageIfNeeded(message: "No notification generated."))
             return
         }
 
         guard let mutabaleContent = content as? UNMutableNotificationContent else {
+            DebugLogger.addStep(step: "! Content not mutable.", eventID: "!")
             contentHandler(.debugMessageIfNeeded(message: "Content not mutable."))
             return
         }
@@ -142,8 +144,10 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
 
         let badgeCount = totalUnreadCount(unreadConversationCount)
         mutabaleContent.badge = badgeCount
+        DebugLogger.addStep(step: "Updated badge count ", eventID: "!")
         Logging.push.safePublic("Updated badge count to \(SanitizedString(stringLiteral: String(describing: badgeCount)))")
 
+        DebugLogger.addStep(step: "Final step in UI ", eventID: "!")
         contentHandler(mutabaleContent)
     }
 
