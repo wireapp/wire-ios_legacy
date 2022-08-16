@@ -43,7 +43,8 @@ class MLSControllerSetupManager {
             let coreCrypto = try CoreCrypto(
                 path: configuration.path,
                 key: configuration.key,
-                clientId: configuration.clientId
+                clientId: configuration.clientId,
+                entropySeed: nil
             )
 
             mlsControllerInitializerHelper.initializeMLSController(coreCrypto: coreCrypto)
