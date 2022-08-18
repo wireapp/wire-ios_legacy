@@ -115,9 +115,9 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         if options.contains(.displayUserName) {
             title = user.name ?? ""
         } else if availability == .none && options.contains(.allowSettingStatus) {
-            title = "availability.message.set_status".localized(uppercased: true)
+            title = "availability.message.set_status".localized
         } else if availability != .none {
-            title = availability.localizedName.localizedUppercase
+            title = availability.localizedName.localized
         }
 
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
@@ -135,8 +135,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
             titleFont = .smallSemiboldFont
         }
 
-        titleColor = SemanticColors.Label.textSectionHeader
-        titleColorSelected = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
+        titleColor = SemanticColors.Label.textProfileSetStatus
     }
 
     // MARK: - Events

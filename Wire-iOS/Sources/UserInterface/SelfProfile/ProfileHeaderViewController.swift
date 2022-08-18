@@ -83,7 +83,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     var stackView: CustomSpacingStackView!
 
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
         label.accessibilityLabel = "profile_view.accessibility.name".localized
         label.accessibilityIdentifier = "name"
 
@@ -165,7 +165,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         let nameHandleStack = UIStackView(arrangedSubviews: [nameLabel, handleLabel])
         nameHandleStack.axis = .vertical
         nameHandleStack.alignment = .center
-        nameHandleStack.spacing = 2
+        nameHandleStack.spacing = 10
 
         teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
         teamNameLabel.accessibilityIdentifier = "team name"
@@ -207,9 +207,9 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         stackView.alignment = .center
         stackView.axis = .vertical
 
-        stackView.wr_addCustomSpacing(32, after: nameHandleStack)
-        stackView.wr_addCustomSpacing(32, after: teamNameLabel)
-        stackView.wr_addCustomSpacing(24, after: imageView)
+        stackView.wr_addCustomSpacing(20, after: nameHandleStack)
+        stackView.wr_addCustomSpacing(20, after: teamNameLabel)
+        stackView.wr_addCustomSpacing(20, after: imageView)
         stackView.wr_addCustomSpacing(20, after: guestIndicatorStack)
         stackView.wr_addCustomSpacing(20, after: externalIndicator)
         stackView.wr_addCustomSpacing(20, after: federatedIndicator)
@@ -299,7 +299,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateTeamLabel() {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
-            teamNameLabel.text = teamName.localizedUppercase
+            teamNameLabel.text = teamName.localized
             teamNameLabel.accessibilityValue = teamNameLabel.text
             teamNameLabel.isHidden = false
         } else {
