@@ -163,6 +163,24 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         callEventHandler.reportIncomingVoIPCall(payload)
     }
 
+    public func notificationSessionFailedWithError(error: NotificationSessionError) {
+        DebugLogger.addStep(step: "Notification session failed with error \(error)", eventID: "!")
+        guard let contentHandler = contentHandler else { return }
+
+        switch error {
+        case .unknownAccount:
+            contentHandler(.debugMessageIfNeeded(message: "Failed with error: unknownAccount"))
+        case .accountNotAuthenticated:
+            contentHandler(.debugMessageIfNeeded(message: "Failed with error: accountNotAuthenticated"))
+        case .noEventID:
+            contentHandler(.debugMessageIfNeeded(message: "Failed with error: noEventID"))
+        case .duplicateEvent:
+            contentHandler(.debugMessageIfNeeded(message: "Failed with error: duplicateEvent"))
+        default:
+            contentHandler(.debugMessageIfNeeded(message: "Failed with error: unknown"))
+        }
+    }
+
     // MARK: - Helpers
 
     private func tearDown() {
