@@ -46,7 +46,6 @@ public class AppRootRouter: NSObject {
     private var observerTokens: [NSObjectProtocol] = []
     private var authenticatedBlocks: [() -> Void] = []
     private let teamMetadataRefresher = TeamMetadataRefresher()
-    private let mlsControllerSetupManager: MLSControllerSetupManager
 
     // MARK: - Private Set Property
     private(set) var sessionManager: SessionManager
@@ -70,7 +69,6 @@ public class AppRootRouter: NSObject {
         self.foregroundNotificationFilter = ForegroundNotificationFilter()
         self.sessionManagerLifeCycleObserver = SessionManagerLifeCycleObserver()
 
-        mlsControllerSetupManager = MLSControllerSetupManager(sessionManager: sessionManager)
         urlActionRouter.sessionManager = sessionManager
         sessionManagerLifeCycleObserver.sessionManager = sessionManager
         foregroundNotificationFilter.sessionManager = sessionManager
@@ -407,12 +405,6 @@ extension AppRootRouter {
         appStateTransitionGroup.enter()
         configureSelfUserProviderIfNeeded(for: appState)
         configureColorScheme()
-        setUpMLSControllerIfNeeded(for: appState)
-    }
-
-    private func setUpMLSControllerIfNeeded(for appState: AppState) {
-        guard case .authenticated = appState else { return }
-        mlsControllerSetupManager.setUpMLSControllerIfNeeded()
     }
 
     private func applicationDidTransition(to appState: AppState) {
