@@ -38,13 +38,13 @@ final class AvailabilityStringBuilder: NSObject {
                 fontSize = .normal
 
                 if color == nil {
-                    color = SemanticColors.Label.textProfileStatus
+                    color = SemanticColors.Label.textDefault
                 }
             }
         case .participants:
             do {
                 title = (user.name ?? "").localizedUppercase
-                color = SemanticColors.Label.textProfileStatus
+                color = SemanticColors.Label.textDefault
             }
         case .placeholder:
             do {
