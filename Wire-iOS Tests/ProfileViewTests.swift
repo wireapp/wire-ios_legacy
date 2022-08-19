@@ -69,6 +69,7 @@ final class ProfileViewTests: ZMSnapshotTestCase {
         sut.colorSchemeVariant = .dark
         sut.view.frame.size = sut.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         verify(view: sut.view, file: file, line: line)
     }

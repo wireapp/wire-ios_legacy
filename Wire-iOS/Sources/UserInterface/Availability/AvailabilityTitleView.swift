@@ -99,7 +99,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
 
     /// Refreshes the content and appearance of the view.
-    private func updateConfiguration() {
+    func updateConfiguration() {
         updateAppearance()
         updateContent()
     }
@@ -108,7 +108,10 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     private func updateContent() {
         let availability = user.availability
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
+        let icon = AvailabilityStringBuilder.icon(
+            for: availability,
+            with: getAvailabilityIconColor(availability: availability),
+            and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
 
@@ -147,6 +150,21 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.availabilityChanged || changeInfo.nameChanged else { return }
         updateConfiguration()
+    }
+
+    private func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
+        switch availability {
+        case .none:
+            return UIColor.clear
+        case .available:
+            return SemanticColors.Icon.foregroundAvailabilityAvailable
+        case .busy:
+            return SemanticColors.Icon.foregroundAvailabilityBusy
+        case .away:
+            return SemanticColors.Icon.foregroundAvailabilityAway
+        @unknown default:
+            fatalError("Unknown case for AvailabilityKind")
+        }
     }
 
 }

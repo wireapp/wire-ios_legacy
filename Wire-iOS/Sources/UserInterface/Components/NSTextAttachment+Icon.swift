@@ -25,12 +25,17 @@ extension NSTextAttachment {
                                with color: UIColor,
                                iconSize: StyleKitIcon.Size = 10,
                                verticalCorrection: CGFloat = 0,
-                               insets: UIEdgeInsets? = nil) -> NSTextAttachment {
-        let image: UIImage
+                               insets: UIEdgeInsets? = nil,
+                               borderWidth: CGFloat? = nil) -> NSTextAttachment {
+        var image: UIImage
         if let insets = insets {
             image = icon.makeImage(size: iconSize, color: color).with(insets: insets, backgroundColor: .clear)!
         } else {
             image = icon.makeImage(size: iconSize, color: color)
+        }
+
+        if let borderWidth = borderWidth {
+            image = image.imageWithBorder(width: borderWidth, color: SemanticColors.View.borderAvailabilityIcon, iconSize: iconSize.rawValue)!
         }
 
         let attachment = NSTextAttachment()
@@ -38,5 +43,23 @@ extension NSTextAttachment {
         let ratio = image.size.width / image.size.height
         attachment.bounds = CGRect(x: 0, y: verticalCorrection, width: iconSize.rawValue * ratio, height: iconSize.rawValue)
         return attachment
+    }
+}
+
+extension UIImage {
+    func imageWithBorder(width: CGFloat, color: UIColor, iconSize: CGFloat) -> UIImage? {
+        let square = CGSize(width: min(size.width, size.height) + width, height: min(size.width, size.height) + width)
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+        imageView.contentMode = .center
+        imageView.image = self
+        imageView.layer.borderWidth = width
+        imageView.layer.borderColor = color.cgColor
+        imageView.layer.cornerRadius = iconSize / 2
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
     }
 }

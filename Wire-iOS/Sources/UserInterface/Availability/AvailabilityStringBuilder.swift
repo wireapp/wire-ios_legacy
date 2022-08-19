@@ -76,6 +76,6 @@ final class AvailabilityStringBuilder: NSObject {
             verticalCorrection = 0
         }
 
-        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 10, verticalCorrection: verticalCorrection)
+        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: verticalCorrection, borderWidth: 2)
     }
 }
