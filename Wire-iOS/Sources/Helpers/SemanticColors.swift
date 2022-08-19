@@ -70,7 +70,7 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
-        static let textProfileSetStatus = UIColor(light: Asset.black, dark: Asset.white)
+        static let textProfileStatus = UIColor(light: Asset.black, dark: Asset.white)
     }
 
     public enum SearchBar {

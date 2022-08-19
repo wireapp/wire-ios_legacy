@@ -138,7 +138,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
             titleFont = .smallSemiboldFont
         }
 
-        titleColor = SemanticColors.Label.textProfileSetStatus
+        titleColor = SemanticColors.Label.textProfileStatus
     }
 
     // MARK: - Events
