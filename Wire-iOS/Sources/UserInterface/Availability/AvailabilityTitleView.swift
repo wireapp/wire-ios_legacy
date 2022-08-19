@@ -110,7 +110,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(
             for: availability,
-            with: getAvailabilityIconColor(availability: availability),
+            with: AvailabilityColor.getAvailabilityIconColor(availability: availability),
             and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
@@ -152,7 +152,10 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         updateConfiguration()
     }
 
-    private func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
+}
+
+struct AvailabilityColor {
+    static func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
         switch availability {
         case .none:
             return UIColor.clear
@@ -166,5 +169,4 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
             fatalError("Unknown case for AvailabilityKind")
         }
     }
-
 }
