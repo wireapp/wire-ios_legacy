@@ -76,7 +76,7 @@ final class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.localizedDescription.localizedUppercase
+        self.title = userClient.deviceClass?.localizedDescription.localized
         self.credentials = credentials
     }
 
