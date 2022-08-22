@@ -326,7 +326,6 @@ final class ClientListViewController: UIViewController,
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = headerFooterViewTextColor
-            headerFooterView.textLabel?.text =  headerFooterView.textLabel?.text?.capitalized
         }
     }
 
