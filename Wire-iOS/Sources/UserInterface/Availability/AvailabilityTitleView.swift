@@ -110,7 +110,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(
             for: availability,
-            with: AvailabilityStringBuilder.getAvailabilityIconColor(availability: availability),
+            with: AvailabilityStringBuilder.color(for: availability),
             and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""

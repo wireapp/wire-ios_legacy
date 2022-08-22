@@ -26,7 +26,7 @@ extension NSTextAttachment {
                                iconSize: StyleKitIcon.Size = 10,
                                verticalCorrection: CGFloat = 0,
                                insets: UIEdgeInsets? = nil) -> NSTextAttachment {
-        var image: UIImage
+        let image: UIImage
         if let insets = insets {
             image = icon.makeImage(size: iconSize, color: color).with(insets: insets, backgroundColor: .clear)!
         } else {

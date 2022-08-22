@@ -58,7 +58,7 @@ final class AvailabilityStringBuilder: NSObject {
         }
 
         guard let textColor = color else { return nil }
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: getAvailabilityIconColor(availability: availability), and: fontSize)
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.color(for: availability), and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }
@@ -79,16 +79,17 @@ final class AvailabilityStringBuilder: NSObject {
         return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: verticalCorrection)
     }
 
-    static func color(for: AvailabilityKind) -> UIColor {
+    static func color(for availability: AvailabilityKind) -> UIColor {
+        typealias IconColors = SemanticColors.Icon
         switch availability {
         case .none:
             return UIColor.clear
         case .available:
-            return SemanticColors.Icon.foregroundAvailabilityAvailable
+            return IconColors.foregroundAvailabilityAvailable
         case .busy:
-            return SemanticColors.Icon.foregroundAvailabilityBusy
+            return IconColors.foregroundAvailabilityBusy
         case .away:
-            return SemanticColors.Icon.foregroundAvailabilityAway
+            return IconColors.foregroundAvailabilityAway
         @unknown default:
             fatalError("Unknown case for AvailabilityKind")
         }
