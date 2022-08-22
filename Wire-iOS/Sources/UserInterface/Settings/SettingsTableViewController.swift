@@ -260,6 +260,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
             headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionHeader
+            headerFooterView.textLabel?.text =  headerFooterView.textLabel?.text?.capitalized
         }
     }
 
