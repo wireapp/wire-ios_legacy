@@ -26,7 +26,7 @@ extension UIView {
         borderWidth: CGFloat = 1.0) {
 
             let border = UIView()
-            guard let constraints = getLayoutConstraint(anchor: anchor, border: border, borderWidth: borderWidth) else { return }
+            let constraints = getLayoutConstraint(anchor: anchor, border: border, borderWidth: borderWidth)
 
             border.backgroundColor = color
             border.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ extension UIView {
             NSLayoutConstraint.activate(constraints)
         }
 
-    private func getLayoutConstraint(anchor: Anchor, border: UIView, borderWidth: CGFloat) -> [NSLayoutConstraint]? {
+    private func getLayoutConstraint(anchor: Anchor, border: UIView, borderWidth: CGFloat) -> [NSLayoutConstraint] {
         switch anchor {
         case .top:
             return [
