@@ -83,7 +83,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     var stackView: CustomSpacingStackView!
 
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
+        let label = DynamicFontLabel(fontSpec: .largeRegularFont, color: .textForeground)
         label.accessibilityLabel = "profile_view.accessibility.name".localized
         label.accessibilityIdentifier = "name"
 
