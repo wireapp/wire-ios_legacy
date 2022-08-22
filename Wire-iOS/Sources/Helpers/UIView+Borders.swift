@@ -24,33 +24,32 @@ extension UIView {
         for anchor: Anchor,
         color: UIColor = SemanticColors.View.backgroundSeparatorCell,
         borderWidth: CGFloat = 1.0) {
-            guard let frame = getFrame(anchor: anchor, width: borderWidth),
-                  let autoresizingMask = getAutoresizingMask(anchor: anchor) else { return }
 
             let border = UIView()
+            guard let constraints = getLayoutConstraint(anchor: anchor, border: border, borderWidth: borderWidth) else { return }
+
             border.backgroundColor = color
-            border.autoresizingMask = autoresizingMask
-            border.frame = frame
+            border.translatesAutoresizingMaskIntoConstraints = false
             addSubview(border)
+            NSLayoutConstraint.activate(constraints)
         }
 
-    private func getAutoresizingMask(anchor: Anchor) -> UIView.AutoresizingMask? {
+    private func getLayoutConstraint(anchor: Anchor, border: UIView, borderWidth: CGFloat) -> [NSLayoutConstraint]? {
         switch anchor {
         case .top:
-            return [.flexibleWidth, .flexibleBottomMargin]
+            return [
+                border.topAnchor.constraint(equalTo: self.topAnchor),
+                border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                border.heightAnchor.constraint(equalToConstant: borderWidth)
+            ]
         case .bottom:
-            return [.flexibleWidth, .flexibleTopMargin]
-        case .leading, .trailing:
-            return nil
-        }
-    }
-
-    private func getFrame(anchor: Anchor, width: CGFloat) -> CGRect? {
-        switch anchor {
-        case .top:
-            return CGRect(x: 0, y: 0, width: frame.size.width, height: width)
-        case .bottom:
-            return CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: width)
+            return [
+                border.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+                border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                border.heightAnchor.constraint(equalToConstant: borderWidth)
+            ]
         case .leading, .trailing:
             return nil
         }
