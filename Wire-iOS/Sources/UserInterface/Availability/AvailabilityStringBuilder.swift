@@ -79,7 +79,7 @@ final class AvailabilityStringBuilder: NSObject {
         return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: verticalCorrection)
     }
 
-    static func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
+    static func color(for: AvailabilityKind) -> UIColor {
         switch availability {
         case .none:
             return UIColor.clear
