@@ -78,7 +78,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
 
-        backgroundColor = UIColor.clear
+        backgroundColor = SemanticColors.View.backgroundUserCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
