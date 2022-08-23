@@ -24,46 +24,43 @@ extension UIView {
         for anchor: Anchor,
         color: UIColor = SemanticColors.View.backgroundSeparatorCell,
         borderWidth: CGFloat = 1.0) {
-
             let border = UIView()
-            let constraints = getLayoutConstraint(anchor: anchor, border: border, borderWidth: borderWidth)
-
-            border.backgroundColor = color
-            border.translatesAutoresizingMaskIntoConstraints = false
             addSubview(border)
-            NSLayoutConstraint.activate(constraints)
+            border.setConstraints(for: anchor, with: self, borderWidth: borderWidth)
+            border.backgroundColor = color
         }
 
-    private func getLayoutConstraint(anchor: Anchor, border: UIView, borderWidth: CGFloat) -> [NSLayoutConstraint] {
+    private func setConstraints(for anchor: Anchor, with parentView: UIView, borderWidth: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
         switch anchor {
         case .top:
-            return [
-                border.topAnchor.constraint(equalTo: self.topAnchor),
-                border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                border.heightAnchor.constraint(equalToConstant: borderWidth)
-            ]
+            NSLayoutConstraint.activate([
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.heightAnchor.constraint(equalToConstant: borderWidth)
+            ])
         case .bottom:
-            return [
-                border.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                border.heightAnchor.constraint(equalToConstant: borderWidth)
-            ]
+            NSLayoutConstraint.activate([
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.heightAnchor.constraint(equalToConstant: borderWidth)
+            ])
         case .leading:
-            return [
-                border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                border.topAnchor.constraint(equalTo: self.topAnchor),
-                border.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                border.widthAnchor.constraint(equalToConstant: borderWidth)
-            ]
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.widthAnchor.constraint(equalToConstant: borderWidth)
+            ])
         case .trailing:
-            return [
-                border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                border.topAnchor.constraint(equalTo: self.topAnchor),
-                border.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                border.widthAnchor.constraint(equalToConstant: borderWidth)
-            ]
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.widthAnchor.constraint(equalToConstant: borderWidth)
+            ])
         }
     }
 
