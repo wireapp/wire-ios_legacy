@@ -153,20 +153,3 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
 
 }
-
-struct AvailabilityColor {
-    static func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
-        switch availability {
-        case .none:
-            return UIColor.clear
-        case .available:
-            return SemanticColors.Icon.foregroundAvailabilityAvailable
-        case .busy:
-            return SemanticColors.Icon.foregroundAvailabilityBusy
-        case .away:
-            return SemanticColors.Icon.foregroundAvailabilityAway
-        @unknown default:
-            fatalError("Unknown case for AvailabilityKind")
-        }
-    }
-}

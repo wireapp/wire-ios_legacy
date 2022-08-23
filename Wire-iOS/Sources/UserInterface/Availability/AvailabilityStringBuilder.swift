@@ -92,5 +92,4 @@ final class AvailabilityStringBuilder: NSObject {
             return IconColors.foregroundAvailabilityAway
         }
     }
-
 }
