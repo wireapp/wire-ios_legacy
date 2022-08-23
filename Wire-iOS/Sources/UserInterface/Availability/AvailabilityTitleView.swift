@@ -110,7 +110,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(
             for: availability,
-            with: AvailabilityColor.getAvailabilityIconColor(availability: availability),
+            with: AvailabilityStringBuilder.color(for: availability),
             and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
@@ -118,7 +118,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         if options.contains(.displayUserName) {
             title = user.name ?? ""
         } else if availability == .none && options.contains(.allowSettingStatus) {
-            title = "availability.message.set_status".localized
+            title = L10n.Localizable.Availability.Message.setStatus
         } else if availability != .none {
             title = availability.localizedName.localized
         }
@@ -133,9 +133,9 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
         if options.contains(.useLargeFont) {
-            titleFont = .normalSemiboldFont
+            titleFont = .normalRegularFont
         } else {
-            titleFont = .smallSemiboldFont
+            titleFont = .smallRegularFont
         }
 
         titleColor = SemanticColors.Label.textDefault
@@ -152,21 +152,4 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         updateConfiguration()
     }
 
-}
-
-struct AvailabilityColor {
-    static func getAvailabilityIconColor(availability: AvailabilityKind) -> UIColor {
-        switch availability {
-        case .none:
-            return UIColor.clear
-        case .available:
-            return SemanticColors.Icon.foregroundAvailabilityAvailable
-        case .busy:
-            return SemanticColors.Icon.foregroundAvailabilityBusy
-        case .away:
-            return SemanticColors.Icon.foregroundAvailabilityAway
-        @unknown default:
-            fatalError("Unknown case for AvailabilityKind")
-        }
-    }
 }

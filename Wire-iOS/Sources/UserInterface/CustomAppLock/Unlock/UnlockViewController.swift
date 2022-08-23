@@ -47,8 +47,8 @@ final class UnlockViewController: UIViewController {
 
     private let contentView: UIView = UIView()
 
-    private lazy var unlockButton: Button = {
-        let button = Button(style: .fullMonochrome, fontSpec: .smallSemiboldFont)
+    private lazy var unlockButton: LegacyButton = {
+        let button = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallSemiboldFont)
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false

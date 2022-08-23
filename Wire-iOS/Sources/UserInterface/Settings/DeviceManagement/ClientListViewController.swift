@@ -110,7 +110,7 @@ final class ClientListViewController: UIViewController,
         }
 
         super.init(nibName: nil, bundle: nil)
-        title = "registration.devices.title".localized(uppercased: true)
+        title = "registration.devices.title".localized
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() }))
         self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
@@ -415,11 +415,11 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
 
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }

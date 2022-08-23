@@ -124,6 +124,7 @@ public enum SemanticColors {
         static let backgroundPrimaryEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
         static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
+        static let textEmptyEnabled = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 
