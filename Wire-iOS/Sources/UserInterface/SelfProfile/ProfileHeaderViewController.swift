@@ -83,7 +83,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     var stackView: CustomSpacingStackView!
 
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
         label.accessibilityLabel = "profile_view.accessibility.name".localized
         label.accessibilityIdentifier = "name"
 
@@ -299,7 +299,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateTeamLabel() {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
-            teamNameLabel.text = teamName.localizedUppercase
+            teamNameLabel.text = teamName.localized
             teamNameLabel.accessibilityValue = teamNameLabel.text
             teamNameLabel.isHidden = false
         } else {
