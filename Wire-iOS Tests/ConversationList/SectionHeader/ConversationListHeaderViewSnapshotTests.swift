@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationListHeaderViewSnapshotTests: XCTestCase {
+final class ConversationListHeaderViewSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ConversationListHeaderView!
 
@@ -31,7 +31,6 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
-        sut.backgroundColor = .gray
     }
 
     override func tearDown() {

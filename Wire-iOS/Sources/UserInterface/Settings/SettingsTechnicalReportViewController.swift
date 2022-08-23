@@ -49,6 +49,11 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         }
 
         super.init(nibName: nil, bundle: nil)
+
+        [sendReportCell, includedVoiceLogCell].forEach { cell in
+            cell.addBorder(for: .top)
+            cell.addBorder(for: .bottom)
+        }
     }
 
     @available(*, unavailable)
