@@ -118,7 +118,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         if options.contains(.displayUserName) {
             title = user.name ?? ""
         } else if availability == .none && options.contains(.allowSettingStatus) {
-            title = "availability.message.set_status".localized
+            title = L10n.Localizable.Availability.Message.setStatus
         } else if availability != .none {
             title = availability.localizedName.localized
         }
