@@ -800,7 +800,7 @@
 		A90E4ABC2381B26600468F31 /* Settings+ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4ABB2381B26600468F31 /* Settings+ColorScheme.swift */; };
 		A90E4ABF2381CD0200468F31 /* AccentColorChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */; };
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
-		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
+		A90E4AC42381EFCD00468F31 /* LegacyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* LegacyButton.swift */; };
 		A90F3E08249B978400429BFE /* MessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F3E07249B978400429BFE /* MessageActionTests.swift */; };
 		A9150DB523D1B6B900844185 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9150DB423D1B6B800844185 /* Analytics.swift */; };
 		A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */; };
@@ -2685,7 +2685,7 @@
 		A90E4ABB2381B26600468F31 /* Settings+ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Settings+ColorScheme.swift"; path = "Wire-iOS/Settings+ColorScheme.swift"; sourceTree = SOURCE_ROOT; };
 		A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentColorChangeHandler.swift; sourceTree = "<group>"; };
 		A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIControlState+ExpandState.swift"; path = "Wire-iOS/UIControlState+ExpandState.swift"; sourceTree = SOURCE_ROOT; };
-		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		A90E4AC32381EFCD00468F31 /* LegacyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyButton.swift; sourceTree = "<group>"; };
 		A90F3E07249B978400429BFE /* MessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageActionTests.swift; sourceTree = "<group>"; };
 		A9150DB423D1B6B800844185 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTextAttachmentTests.swift; sourceTree = "<group>"; };
@@ -4025,7 +4025,7 @@
 			children = (
 				1E5E0CAD1B6B83C6003B0CAC /* ButtonWithLargerHitArea.swift */,
 				5EA952C622647B3100C83FDB /* IconButton.swift */,
-				A90E4AC32381EFCD00468F31 /* Button.swift */,
+				A90E4AC32381EFCD00468F31 /* LegacyButton.swift */,
 				A97017D22410016B00BE6EF7 /* SpinnerButton.swift */,
 			);
 			path = Buttons;
@@ -8919,7 +8919,7 @@
 				8775BF212008CF3500A8AD93 /* ServiceView.swift in Sources */,
 				06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */,
 				166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */,
-				A90E4AC42381EFCD00468F31 /* Button.swift in Sources */,
+				A90E4AC42381EFCD00468F31 /* LegacyButton.swift in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
 				871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */,
 				EF282B92228AF9790042D6C5 /* RequestPasswordController.swift in Sources */,

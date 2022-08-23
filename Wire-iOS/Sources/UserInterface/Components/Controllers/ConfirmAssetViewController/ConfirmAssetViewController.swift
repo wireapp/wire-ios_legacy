@@ -64,8 +64,8 @@ final class ConfirmAssetViewController: UIViewController {
     private let titleLabel: UILabel = UILabel()
     private let bottomPanel: UIView = UIView()
     private let confirmButtonsStack: UIStackView = UIStackView()
-    private let acceptImageButton: Button = Button(fontSpec: .smallSemiboldFont)
-    private let rejectImageButton: Button = Button(fontSpec: .smallSemiboldFont)
+    private let acceptImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    private let rejectImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
     private let imageToolbarSeparatorView: UIView = UIView()
 

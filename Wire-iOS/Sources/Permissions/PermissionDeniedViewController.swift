@@ -34,7 +34,7 @@ final class PermissionDeniedViewController: UIViewController {
 
     private var initialConstraintsCreated = false
     private let heroLabel: UILabel = UILabel.createHeroLabel()
-    private var settingsButton: Button!
+    private var settingsButton: LegacyButton!
     private var laterButton: UIButton!
     private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
@@ -107,7 +107,7 @@ final class PermissionDeniedViewController: UIViewController {
     }
 
     private func createSettingsButton() {
-        settingsButton = Button(style: .full, fontSpec: .smallLightFont)
+        settingsButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
 
         view.addSubview(settingsButton)

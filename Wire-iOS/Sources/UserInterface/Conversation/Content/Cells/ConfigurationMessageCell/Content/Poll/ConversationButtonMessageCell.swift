@@ -74,15 +74,15 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
         switch config.state {
         case .unselected:
-            button.style = .empty
+            button.legacyStyle = .empty
             button.isLoading = false
             button.isEnabled = true
         case .selected:
-            button.style = .empty
+            button.legacyStyle = .empty
             button.isLoading = true
             button.isEnabled = false
         case .confirmed:
-            button.style = .full
+            button.legacyStyle = .full
             button.isLoading = false
             button.isEnabled = false
         }

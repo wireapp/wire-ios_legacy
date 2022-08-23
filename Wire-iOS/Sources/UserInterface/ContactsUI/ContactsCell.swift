@@ -97,7 +97,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    let actionButton: Button = Button(style: .full, fontSpec: .smallLightFont)
+    let actionButton: LegacyButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
 
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
