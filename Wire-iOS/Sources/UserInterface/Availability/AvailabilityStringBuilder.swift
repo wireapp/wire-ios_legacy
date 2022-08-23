@@ -90,8 +90,6 @@ final class AvailabilityStringBuilder: NSObject {
             return IconColors.foregroundAvailabilityBusy
         case .away:
             return IconColors.foregroundAvailabilityAway
-        @unknown default:
-            fatalError("Unknown case for AvailabilityKind")
         }
     }
 }
