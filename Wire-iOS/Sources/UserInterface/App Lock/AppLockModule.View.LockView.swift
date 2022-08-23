@@ -58,7 +58,7 @@ extension AppLockModule.View {
             return label
         }()
 
-        private let actionButton = Button(style: .fullMonochrome, fontSpec: .smallLightFont)
+        private let actionButton = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallLightFont)
 
         private var contentWidthConstraint: NSLayoutConstraint!
         private var contentCenterConstraint: NSLayoutConstraint!

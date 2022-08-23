@@ -33,8 +33,8 @@ final class UserNameTakeOverViewController: UIViewController {
     public let suggestedHandleLabel = UILabel()
     public let subtitleTextView = WebLinkTextView()
 
-    private let chooseOwnButton = Button(style: .full)
-    private let keepSuggestedButton = Button(style: .empty, variant: .dark)
+    private let chooseOwnButton = LegacyButton(legacyStyle: .full)
+    private let keepSuggestedButton = LegacyButton(legacyStyle: .empty, variant: .dark)
     private let contentView = UIView()
     private let topContainer = UIView()
     private let suggestedHandle: String
@@ -167,12 +167,12 @@ final class UserNameTakeOverViewController: UIViewController {
             ])
     }
 
-    @objc func buttonTapped(sender: Button) {
+    @objc func buttonTapped(sender: LegacyButton) {
         guard let action = action(for: sender) else { return }
         delegate?.takeOverViewController(self, didPerformAction: action)
     }
 
-    private func action(for button: Button) -> UserNameTakeOverViewControllerAction? {
+    private func action(for button: LegacyButton) -> UserNameTakeOverViewControllerAction? {
         switch button {
         case chooseOwnButton: return .chooseOwn(suggestedHandle)
         case keepSuggestedButton: return .keepSuggestion(suggestedHandle)
