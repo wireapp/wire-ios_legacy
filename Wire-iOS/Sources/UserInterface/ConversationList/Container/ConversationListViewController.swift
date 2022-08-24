@@ -308,14 +308,10 @@ final class ConversationListViewController: UIViewController {
     }
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
+        // TODO: Delete this funciton / make sure it's not being used
         let controllerHeight = controller.view.bounds.height
         let contentHeight = controller.collectionView.contentSize.height
         let offsetY = controller.collectionView.contentOffset.y
-        let showSeparator = contentHeight - offsetY + ConversationListViewController.contentControllerBottomInset > controllerHeight
-
-        if bottomBarController.showSeparator != showSeparator {
-            bottomBarController.showSeparator = showSeparator
-        }
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

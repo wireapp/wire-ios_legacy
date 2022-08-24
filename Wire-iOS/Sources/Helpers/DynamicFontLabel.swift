@@ -52,6 +52,7 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
          self.text = text
          self.font = fontSpec.font
          self.textColor = color
+         self.translatesAutoresizingMaskIntoConstraints = false
      }
 
     required init?(coder: NSCoder) {
