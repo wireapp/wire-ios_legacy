@@ -53,12 +53,6 @@ final class SettingsClientViewController: UIViewController,
 
     var fromConversation: Bool = false
 
-    var variant: ColorSchemeVariant? {
-        didSet {
-            setColor(for: variant)
-        }
-    }
-
     var removalObserver: ClientRemovalObserver?
 
     convenience init(userClient: UserClient,
@@ -73,13 +67,9 @@ final class SettingsClientViewController: UIViewController,
                   credentials: ZMEmailCredentials? = .none,
                   variant: ColorSchemeVariant? = .none) {
         self.userClient = userClient
-        defer {
-            self.variant = variant
-        }
 
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = []
-
         self.userClientToken = UserClientChangeInfo.add(observer: self, for: userClient)
         if userClient.fingerprint == .none {
             ZMUserSession.shared()?.enqueue({ () -> Void in
@@ -108,12 +98,12 @@ final class SettingsClientViewController: UIViewController,
         if fromConversation {
             setupFromConversationStyle()
         }
+        setColor()
     }
 
     func setupFromConversationStyle() {
-        view.backgroundColor = .from(scheme: .background)
-        tableView.separatorColor = .from(scheme: .separator)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.from(scheme: .textForeground)]
+        view.backgroundColor = SemanticColors.View.backgroundDefault
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.Label.textDefault]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -138,9 +128,7 @@ final class SettingsClientViewController: UIViewController,
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = separatorColor
-
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.register(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.register(SettingsTableCell.self, forCellReuseIdentifier: type(of: self).deleteCellReuseIdentifier)
@@ -233,7 +221,6 @@ final class SettingsClientViewController: UIViewController,
                 cell.wr_editable = false
                 cell.showVerified = false
                 cell.showLabel = true
-                cell.variant = self.variant
                 return cell
             }
 
@@ -243,7 +230,6 @@ final class SettingsClientViewController: UIViewController,
 
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
-                        cell.variant = self.variant
                     return cell
                 }
             } else {
@@ -254,7 +240,6 @@ final class SettingsClientViewController: UIViewController,
                     cell.switchView.accessibilityIdentifier = "device verified"
                     cell.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
-                        cell.variant = self.variant
                     return cell
                 }
             }
@@ -263,7 +248,6 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
                 cell.accessibilityIdentifier = "reset session"
-                cell.variant = self.variant
                 return cell
             }
 
@@ -271,7 +255,6 @@ final class SettingsClientViewController: UIViewController,
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
                 cell.accessibilityIdentifier = "remove device"
-                cell.variant = self.variant
                 return cell
             }
         }

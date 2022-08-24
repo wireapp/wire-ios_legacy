@@ -163,7 +163,7 @@ public enum FontScheme {
 
     public static func configure(with contentSizeCategory: UIContentSizeCategory) {
         fontsByFontSpec = FontsByFontSpec()
-        
+
         // The ratio is following 11:12:16:24, same as default case
         let largeTitleFontSizeTuples: [FontSizeAndPoint] = [
             (size: .large, point: 40),
@@ -225,4 +225,3 @@ public enum FontScheme {
         return FontScheme.fontsByFontSpec[fontType]
     }
 }
-

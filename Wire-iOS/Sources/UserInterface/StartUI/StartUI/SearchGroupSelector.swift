@@ -31,22 +31,19 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     // MARK: - Views
 
-    let style: ColorSchemeVariant
-
     private let tabBar: TabBar
     private let groups: [SearchGroup]
 
     // MARK: - Initialization
 
-    init(style: ColorSchemeVariant) {
+    init() {
         groups = SearchGroup.all
-        self.style = style
 
         let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
             UITabBarItem(title: group.name.localizedUppercase, image: nil, tag: index)
         }
 
-        tabBar = TabBar(items: groupItems, style: style, selectedIndex: 0)
+        tabBar = TabBar(items: groupItems, selectedIndex: 0)
         super.init(frame: .zero)
 
         configureViews()
@@ -60,7 +57,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     private func configureViews() {
         tabBar.delegate = self
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: style)
+        backgroundColor = SemanticColors.View.backgroundDefault
         addSubview(tabBar)
     }
 

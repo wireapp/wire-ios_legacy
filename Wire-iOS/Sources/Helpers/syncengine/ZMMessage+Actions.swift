@@ -40,8 +40,7 @@ extension ZMConversationMessage {
         guard canBeShared else {
             return false
         }
-        return SecurityFlags.clipboard.isEnabled &&
-               MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard &&
+        return MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canUseClipboard &&
                !isEphemeral &&
                (isText || isImage || isLocation)
     }

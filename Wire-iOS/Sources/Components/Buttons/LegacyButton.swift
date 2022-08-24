@@ -20,7 +20,34 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
-enum ButtonStyle: Int {
+class Button: LegacyButton {
+
+    var style: ButtonStyle?
+
+    convenience init(style: ButtonStyle,
+                     cornerRadius: CGFloat = 0,
+                     fontSpec: FontSpec = .smallLightFont) {
+        self.init(fontSpec: fontSpec)
+
+        self.style = style
+        textTransform = .none
+        layer.cornerRadius = cornerRadius
+        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+
+        applyStyle(style)
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            guard let style = style else { return }
+
+            applyStyle(style)
+        }
+    }
+
+}
+
+enum LegacyButtonStyle: Int {
     // background color: accent, text color: white
     case full
     case empty
@@ -28,7 +55,7 @@ enum ButtonStyle: Int {
     case emptyMonochrome
 }
 
-class Button: ButtonWithLargerHitArea {
+class LegacyButton: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
 
     var circular = false {
@@ -51,7 +78,7 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    var style: ButtonStyle? {
+    var legacyStyle: LegacyButtonStyle? {
         didSet {
             updateStyle(variant: variant)
         }
@@ -69,13 +96,13 @@ class Button: ButtonWithLargerHitArea {
         clipsToBounds = true
     }
 
-    convenience init(style: ButtonStyle,
+    convenience init(legacyStyle: LegacyButtonStyle,
                      variant: ColorSchemeVariant = ColorScheme.default.variant,
                      cornerRadius: CGFloat = 4,
                      fontSpec: FontSpec = .smallLightFont) {
         self.init(fontSpec: fontSpec)
 
-        self.style = style
+        self.legacyStyle = legacyStyle
         self.variant = variant
         textTransform = .upper
         layer.cornerRadius = cornerRadius
@@ -85,7 +112,7 @@ class Button: ButtonWithLargerHitArea {
     }
 
     private func updateStyle(variant: ColorSchemeVariant) {
-        guard let style = style else { return }
+        guard let style = legacyStyle else { return }
 
         switch style {
         case .full:
@@ -136,14 +163,6 @@ class Button: ButtonWithLargerHitArea {
     override var bounds: CGRect {
         didSet {
             updateCornerRadius()
-        }
-    }
-
-    func setBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
-        if let color = color {
-            setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
-        } else {
-            setBackgroundImage(nil, for: state)
         }
     }
 

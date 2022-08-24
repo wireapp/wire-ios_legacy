@@ -29,7 +29,7 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
     }
 
-    let toggle = UISwitch(style: .default)
+    let toggle = Switch(style: .default)
     var action: ((Bool) -> Void)?
 
     override func setUp() {

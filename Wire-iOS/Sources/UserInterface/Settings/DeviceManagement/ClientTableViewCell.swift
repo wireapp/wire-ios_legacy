@@ -88,25 +88,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
 
     var wr_editable: Bool
 
-    var variant: ColorSchemeVariant? {
-        didSet {
-            switch variant {
-            case .dark?, .none:
-                verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
-                fingerprintTextColor = .white
-                nameLabel.textColor = .white
-                labelLabel.textColor = .white
-                activationLabel.textColor = .white
-            case .light?:
-                let textColor = UIColor.from(scheme: .textForeground, variant: .light)
-                verifiedLabel.textColor = textColor
-                fingerprintTextColor = textColor
-                nameLabel.textColor = textColor
-                labelLabel.textColor = textColor
-                activationLabel.textColor = textColor
-            }
-        }
-    }
+    var variant: ColorSchemeVariant?
 
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -151,7 +133,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
             verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
 
-        backgroundColor = UIColor.clear
+        backgroundColor = SemanticColors.View.backgroundUserCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
@@ -174,6 +156,11 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
     func setupStyle() {
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
+        let textColor = SemanticColors.Label.textDefault
+
+        fingerprintTextColor = textColor
+        [nameLabel, labelLabel, verifiedLabel, activationLabel].forEach { $0.textColor = textColor}
+        addBorder(for: .bottom)
     }
 
     func updateVerifiedLabel() {

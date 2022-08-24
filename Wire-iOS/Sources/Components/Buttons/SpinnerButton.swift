@@ -26,7 +26,7 @@ extension UIColor {
 }
 
 /// A button with spinner at the trailing side. Title text is non truncated.
-final class SpinnerButton: Button {
+final class SpinnerButton: LegacyButton {
 
     private lazy var spinner: Spinner = {
         let spinner = Spinner()
@@ -118,6 +118,6 @@ final class SpinnerButton: Button {
 
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
-        return SpinnerButton(style: .empty, cornerRadius: 6, fontSpec: .smallSemiboldFont)
+        return SpinnerButton(legacyStyle: .empty, cornerRadius: 6, fontSpec: .smallSemiboldFont)
     }
 }

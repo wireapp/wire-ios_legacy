@@ -18,66 +18,51 @@
 
 import XCTest
 @testable import Wire
-import WireCommonComponents
 
 final class ConversationInputBarViewControllerDropInteractionTests: XCTestCase {
 
-    func testThatItHandlesDroppingFiles() {
+    func testThatItHandlesDroppingFiles_FlagEnabled() {
+        // GIVEN
+        let mockConversation = MockInputBarConversationType()
+        let sut = ConversationInputBarViewController(conversation: mockConversation)
+        let shareRestrictionManager = MediaShareRestrictionManagerMock(canFilesBeShared: true)
 
-        // Drop text and the clipboard is enabled.
-        assert(
-            input: (isText: true, isClipboardEnabled: true, canFilesBeShared: false),
-            output: .copy
-        )
+        // WHEN
+        let dropProposal = sut.dropProposal(mediaShareRestrictionManager: shareRestrictionManager)
 
-        // Drop text and the clipboard is disabled.
-        assert(
-            input: (isText: true, isClipboardEnabled: false, canFilesBeShared: false),
-            output: .forbidden
-        )
-
-        // Drop file, the clipboard is disabled and the file sharing feature is disabled.
-        assert(
-            input: (isText: false, isClipboardEnabled: false, canFilesBeShared: false),
-            output: .forbidden
-        )
-
-        // Drop file, the clipboard is disabled and the file sharing feature is enabled.
-        assert(
-            input: (isText: false, isClipboardEnabled: false, canFilesBeShared: true),
-            output: .forbidden
-        )
-
-        // Drop file, the clipboard is enabled and the file sharing feature is disabled.
-        assert(
-            input: (isText: false, isClipboardEnabled: true, canFilesBeShared: false),
-            output: .forbidden
-        )
-
-        // Drop file when the clipboard is enabled and the file sharing feature is enabled.
-        assert(
-            input: (isText: false, isClipboardEnabled: true, canFilesBeShared: true),
-            output: .copy
-        )
-
+        // THEN
+        XCTAssertEqual(dropProposal.operation, UIDropOperation.copy, file: #file, line: #line)
     }
+
+    func testThatItPreventsDroppingFiles_FlagDisabled() {
+        // GIVEN
+        let mockConversation = MockInputBarConversationType()
+        let sut = ConversationInputBarViewController(conversation: mockConversation)
+        let shareRestrictionManager = MediaShareRestrictionManagerMock(canFilesBeShared: false)
+
+        // WHEN
+        let dropProposal = sut.dropProposal(mediaShareRestrictionManager: shareRestrictionManager)
+
+        // THEN
+        XCTAssertEqual(dropProposal.operation, UIDropOperation.forbidden, file: #file, line: #line)
+    }
+
 }
 
 // MARK: - Helpers
 
-extension ConversationInputBarViewControllerDropInteractionTests {
+private class MediaShareRestrictionManagerMock: MediaShareRestrictionManager {
 
-    typealias Input = (isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool)
-    typealias Output = UIDropOperation
+    let canFilesBeShared: Bool
 
-    private func assert(input: Input, output: Output, file: StaticString = #file, line: UInt = #line) {
-        let mockConversation = MockInputBarConversationType()
-        let sut = ConversationInputBarViewController(conversation: mockConversation)
-        let dropProposal = sut.dropProposal(isText: input.isText,
-                                            isClipboardEnabled: input.isClipboardEnabled,
-                                            canFilesBeShared: input.canFilesBeShared)
+    init(canFilesBeShared: Bool) {
+        self.canFilesBeShared = canFilesBeShared
 
-        XCTAssertEqual(dropProposal.operation, output, file: file, line: line)
+        super.init(sessionRestriction: nil)
+    }
+
+    override var isFileSharingFlagEnabled: Bool {
+        return canFilesBeShared
     }
 
 }

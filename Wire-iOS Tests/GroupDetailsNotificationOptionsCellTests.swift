@@ -56,6 +56,7 @@ class GroupDetailsNotificationOptionsCellTests: CoreDataSnapshotTestCase {
 
     func testThatItDisplaysCell_Dark() {
         cell.colorSchemeVariant = .dark
+        cell.overrideUserInterfaceStyle = .dark
         update(.all)
         verify(view: cell)
     }

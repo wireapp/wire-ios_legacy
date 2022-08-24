@@ -174,7 +174,7 @@ final class AddParticipantsViewController: UIViewController {
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: variant)
 
-        searchGroupSelector = SearchGroupSelector(style: variant)
+        searchGroupSelector = SearchGroupSelector()
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
                                                                   isAddingParticipants: true,

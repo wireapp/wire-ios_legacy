@@ -60,6 +60,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let config = MockServicesOptionsViewModelConfiguration(allowServices: false)
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .dark)
+        sut.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: sut)
@@ -80,6 +81,7 @@ final class ConversationServicesOptionsViewControllerTests: XCTestCase {
         let config = MockServicesOptionsViewModelConfiguration(allowServices: true)
         let viewModel = ConversationServicesOptionsViewModel(configuration: config)
         let sut = ConversationServicesOptionsViewController(viewModel: viewModel, variant: .dark)
+        sut.overrideUserInterfaceStyle = .dark
 
         // THEN
         verify(matching: sut)

@@ -81,7 +81,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
         collectionView.register(CollectionViewCellAdapter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewCellAdapter.zm_reuseIdentifier)
 
         view.addSubview(collectionView)
-        view.backgroundColor = UIColor.from(scheme: .contentBackground)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func createConstraints() {

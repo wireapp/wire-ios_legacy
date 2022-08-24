@@ -130,7 +130,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         emailCell.textField.kind = .email
         emailCell.textField.showConfirmButton = false
         emailCell.textField.backgroundColor = .clear
-        emailCell.textField.textColor = .white
+        emailCell.textField.textColor = SemanticColors.Label.textDefault
         emailCell.textField.accessibilityIdentifier = "EmailField"
         emailCell.textField.textFieldValidationDelegate = self
         emailCell.textField.addTarget(self, action: #selector(emailTextFieldEditingChanged), for: .editingChanged)

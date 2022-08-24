@@ -64,6 +64,8 @@ final class ConversationListTopBarViewController: UIViewController {
 
     override func viewDidLoad() {
         topBar?.splitSeparator = false
+        view.backgroundColor = SemanticColors.View.backgroundConversationList
+        view.addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
 
         availabilityViewController?.didMove(toParent: self)
 
@@ -223,7 +225,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     func createSettingsViewController() -> UIViewController {
         let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
-        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: NavigationController.self)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

@@ -16,14 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import WireSystem
 
 final public class AutomationEmailCredentials: NSObject {
     public var email: String
     public var password: String
-    
     init(email: String, password: String) {
         self.email = email
         self.password = password
@@ -35,11 +33,8 @@ final public class AutomationEmailCredentials: NSObject {
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
 public final class AutomationHelper: NSObject {
-    
     static public let sharedHelper = AutomationHelper()
-    
     private var useAppCenterLaunchOption: Bool?
-    
     /// Whether AppCenter should be used
     /// Launch option `--use-app-center` overrides user defaults setting.
     public var useAppCenter: Bool {
@@ -47,48 +42,36 @@ public final class AutomationHelper: NSObject {
         if let useAppCenterLaunchOption = useAppCenterLaunchOption {
             return useAppCenterLaunchOption
         }
-        
         if UserDefaults.standard.object(forKey: "UseAppCenter") != nil {
             return UserDefaults.standard.bool(forKey: "UseAppCenter")
         }
-
-        //when UserDefaults's useAppCenter is not set, default is true to allow app center start
+        // When UserDefaults's useAppCenter is not set, default is true to allow app center start
         return true
     }
-    
     /// Whether analytics should be used
     public var useAnalytics: Bool {
-        //TODO: get it from xcconfig?
-//        return UserDefaults.standard.bool(forKey: "UseAnalytics")
+    // TODO: get it from xcconfig?
+    // return UserDefaults.standard.bool(forKey: "UseAnalytics")
         return true
     }
-    
     /// Whether to skip the first login alert
-    public var skipFirstLoginAlerts : Bool {
+    public var skipFirstLoginAlerts: Bool {
         return self.automationEmailCredentials != nil
     }
-    
     /// The login credentials provides by command line
     public let automationEmailCredentials: AutomationEmailCredentials?
-    
     /// Whether we push notification permissions alert is disabled
-    public let disablePushNotificationAlert : Bool
-    
+    public let disablePushNotificationAlert: Bool
     /// Whether autocorrection is disabled
-    public let disableAutocorrection : Bool
-    
+    public let disableAutocorrection: Bool
     /// Whether address book upload is enabled on simulator
-    public let uploadAddressbookOnSimulator : Bool
-
+    public let uploadAddressbookOnSimulator: Bool
     /// Whether we should disable the call quality survey.
     public let disableCallQualitySurvey: Bool
-    
     /// Whether we should disable dismissing the conversation input bar keyboard by dragging it downwards.
     public let disableInteractiveKeyboardDismissal: Bool
-    
     /// Delay in address book remote search override
-    public let delayInAddressBookRemoteSearch : TimeInterval?
-    
+    public let delayInAddressBookRemoteSearch: TimeInterval?
     /// Debug data to install in the share container
     public let debugDataToInstall: URL?
 
@@ -126,17 +109,15 @@ public final class AutomationHelper: NSObject {
         }
         AutomationHelper.enableLogTags(arguments)
         if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.debugDataToInstall.rawValue),
-            FileManager.default.fileExists(atPath: debugDataPath)
-        {
+            FileManager.default.fileExists(atPath: debugDataPath) {
             self.debugDataToInstall = URL(fileURLWithPath: debugDataPath)
         } else {
             self.debugDataToInstall = nil
         }
-        
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
-    
+
     fileprivate enum AutomationKey: String {
         case email = "loginemail"
         case password = "loginpassword"
@@ -154,7 +135,6 @@ public final class AutomationHelper: NSObject {
         case useAppCenter = "use-app-center"
         case keepCallingOverlayVisible = "keep-calling-overlay-visible"
     }
-    
     /// Returns the login email and password credentials if set in the given arguments
     fileprivate static func credentials(_ arguments: ArgumentsType) -> AutomationEmailCredentials? {
         guard let email = arguments.flagValueIfPresent(AutomationKey.email.rawValue),
@@ -163,14 +143,12 @@ public final class AutomationHelper: NSObject {
         }
         return AutomationEmailCredentials(email: email, password: password)
     }
-    
     // Switches on all flags that you would like to log listed after `--debug-log=` tags should be separated by comma
     fileprivate static func enableLogTags(_ arguments: ArgumentsType) {
         guard let tagsString = arguments.flagValueIfPresent(AutomationKey.logTags.rawValue) else { return }
         let tags = tagsString.components(separatedBy: ",")
-        tags.forEach{ ZMSLog.set(level: .debug, tag: $0) }
+        tags.forEach { ZMSLog.set(level: .debug, tag: $0) }
     }
-    
     /// Returns the custom time interval for address book search delay if it set in the given arguments
     fileprivate static func addressBookSearchDelay(_ arguments: ArgumentsType) -> TimeInterval? {
         guard let delayString = arguments.flagValueIfPresent(AutomationKey.addressBookRemoteSearchDelay.rawValue),
@@ -197,7 +175,7 @@ protocol ArgumentsType {
     func flagValueIfPresent(_ commandLineArgument: String) -> String?
 }
 
-//MARK: - default implementation
+// MARK: - default implementation
 extension ArgumentsType {
 
     var flagPrefix: String { return "--" }
@@ -242,26 +220,20 @@ private struct FileArguments: ArgumentsType {
     }
 }
 
-
 // MARK: - Debug
 extension AutomationHelper {
-    
     /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
     /// in the shared folder, erasing any other file in that folder.
    public func installDebugDataIfNeeded() {
-        
         guard let packageURL = self.debugDataToInstall,
             let appGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return }
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
-        
         // DELETE
         let filesToDelete = try! FileManager.default.contentsOfDirectory(atPath: sharedContainerURL.path)
         filesToDelete.forEach {
             try! FileManager.default.removeItem(atPath: sharedContainerURL.appendingPathComponent($0).path)
         }
-        
         // COPY
         try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
     }
-    
 }

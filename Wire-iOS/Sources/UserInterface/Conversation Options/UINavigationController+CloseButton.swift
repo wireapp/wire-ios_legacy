@@ -28,6 +28,13 @@ extension UINavigationController {
         return item
     }
 
+    func updatedCloseItem() -> UIBarButtonItem {
+        let item = UIBarButtonItem.createUpdatedCloseItem()
+        item.target = self
+        item.action = #selector(closeTapped)
+        return item
+    }
+
     @objc
     private func closeTapped() {
         dismiss(animated: true)

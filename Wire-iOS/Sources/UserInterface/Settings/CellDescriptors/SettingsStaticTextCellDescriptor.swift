@@ -33,7 +33,6 @@ class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.text
-        cell.titleColor = .white
     }
 
     // MARK: - SettingsCellDescriptorType

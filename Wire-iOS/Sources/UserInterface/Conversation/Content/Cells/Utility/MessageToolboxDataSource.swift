@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 /// The different contents that can be displayed inside the message toolbox.
 enum MessageToolboxContent: Equatable {
@@ -69,8 +70,8 @@ class MessageToolboxDataSource {
 
     // MARK: - Formatting Properties
 
-    private let statusTextColor = UIColor.from(scheme: .textDimmed)
-    private let statusFont = UIFont.smallSemiboldFont
+    private let statusTextColor = SemanticColors.Label.textMessageDetails
+    private let statusFont = FontSpec.smallRegularFont.font!
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
     private var attributes: [NSAttributedString.Key: AnyObject] {

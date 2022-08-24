@@ -84,8 +84,8 @@ final class ShareContactsViewController: UIViewController {
         return heroLabel
     }()
 
-    private let shareContactsButton: Button = {
-        let shareContactsButton = Button(style: .full, fontSpec: .smallLightFont)
+    private let shareContactsButton: LegacyButton = {
+        let shareContactsButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
         shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
 
         return shareContactsButton

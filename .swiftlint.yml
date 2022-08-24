@@ -20,11 +20,13 @@ disabled_rules:
 included:
     - Wire-iOS/Sources
     - Wire-iOS Tests/
+    - WireCommonComponents
+    - Wire-iOS Share Extension
 
 # In order to deal with the huge number of violations, first set
 # very high limits then iteratively reduce the limits and resolve
 # the few violations. Repeat this until we find suitable limits.
 
 line_length:
-    warning: 250
-    error: 250
+    warning: 270
+    error: 270

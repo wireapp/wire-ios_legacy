@@ -19,7 +19,6 @@
 import Foundation
 
 enum SecurityFlags {
-    case clipboard
     case generateLinkPreviews
     case forceConstantBitRateCalls
     case customBackend
@@ -36,8 +35,6 @@ enum SecurityFlags {
         switch self {
         case .maxNumberAccounts:
             return "MaxNumberAccounts"
-        case .clipboard:
-            return "ClipboardEnabled"
         case .generateLinkPreviews:
             return "GenerateLinkPreviewEnabled"
         case .forceConstantBitRateCalls:

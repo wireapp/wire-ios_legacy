@@ -26,7 +26,7 @@ final class ConfirmEmailViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConfirmEmailViewController(newEmail: "bill@wire.com", delegate: nil)
-        sut.view.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
     }
 
     override func tearDown() {

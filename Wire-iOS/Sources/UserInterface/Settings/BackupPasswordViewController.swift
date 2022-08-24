@@ -58,6 +58,7 @@ final class BackupPasswordViewController: UIViewController {
                                      fontSpec: .mediumRegularFont,
                                      color: .textDimmed,
                                      variant: .light)
+        label.textColor = SemanticColors.Label.textSectionHeader
         label.numberOfLines = 0
         return label
     }()
@@ -66,6 +67,7 @@ final class BackupPasswordViewController: UIViewController {
         let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
                                      color: .textDimmed,
                                      variant: .light)
+        label.textColor = SemanticColors.Label.textSectionHeader
         label.numberOfLines = 0
         return label
     }()
@@ -97,7 +99,7 @@ final class BackupPasswordViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
 
         [passwordView, subtitleLabel, passwordRulesLabel].forEach {
@@ -111,6 +113,11 @@ final class BackupPasswordViewController: UIViewController {
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
         passwordView.delegate = self
+        passwordView.textColor = SemanticColors.Label.textSectionHeader
+        passwordView.backgroundColor = SemanticColors.View.backgroundUserCell
+        let attributes: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.SearchBar.textInputViewPlaceholder,
+                                                        .font: FontSpec.smallRegularFont.font!]
+        passwordView.updatePlaceholderAttributedText(attributes: attributes)
     }
 
     private func createConstraints() {
@@ -129,11 +136,11 @@ final class BackupPasswordViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = UIColor.from(scheme: .barBackground, variant: .light)
-        navigationController?.navigationBar.setBackgroundImage(.singlePixelImage(with: UIColor.from(scheme: .barBackground, variant: .light)), for: .default)
-        navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
-        navigationController?.navigationBar.barTintColor = UIColor.from(scheme: .textForeground, variant: .light)
-        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
+        let textColor = SemanticColors.Label.textDefault
+        navigationController?.navigationBar.tintColor = textColor
+        navigationController?.navigationBar.barTintColor = textColor
+        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: textColor)
 
         title = L10n.Localizable.Self.Settings.HistoryBackup.Password.title.localizedUppercase
         navigationItem.leftBarButtonItem = UIBarButtonItem(

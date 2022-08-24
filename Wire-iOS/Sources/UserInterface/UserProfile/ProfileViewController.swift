@@ -173,7 +173,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(profileFooterView)
         view.addSubview(incomingRequestFooter)
 
-        view.backgroundColor = UIColor.from(scheme: .barBackground)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         setupHeader()
         setupTabsController()
@@ -239,6 +239,7 @@ final class ProfileViewController: UIViewController {
         addToSelf(tabsController!)
 
         tabsController?.isTabBarHidden = viewControllers.count < 2
+        tabsController?.view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     // MARK: - Constraints
@@ -497,7 +498,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateTitleView() {
-        profileTitleView.configure(with: viewModel.user, variant: ColorScheme.default.variant)
+        profileTitleView.configure(with: viewModel.user)
     }
 
     func updateShowVerifiedShield() {
@@ -508,7 +509,7 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         let legalHoldItem: UIBarButtonItem? = viewModel.hasLegalHoldItem ? legalholdItem : nil
 
         if navigationController?.viewControllers.count == 1 {
-            navigationItem.rightBarButtonItem = navigationController?.closeItem()
+            navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
             navigationItem.leftBarButtonItem = legalHoldItem
         } else {
             navigationItem.rightBarButtonItem = legalHoldItem
