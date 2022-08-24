@@ -43,19 +43,19 @@ final class ConversationListBottomBarController: UIViewController {
     let archivedButton = IconButton()
 
     let startUILabel = DynamicFontLabel(
-        text: "Contacts",
+        text: L10n.Localizable.ConversationList.BottomBar.Contacts.title,
         fontSpec: .mediumRegularFont,
         color: SemanticColors.Button.textBottomBarNormal)
     let listLabel = DynamicFontLabel(
-        text: "Conversations",
+        text: L10n.Localizable.ConversationList.BottomBar.Conversations.title,
         fontSpec: .mediumRegularFont,
         color: SemanticColors.Button.textBottomBarNormal)
     let folderLabel = DynamicFontLabel(
-        text: "Folders",
+        text: L10n.Localizable.ConversationList.BottomBar.Folders.title,
         fontSpec: .mediumRegularFont,
         color: SemanticColors.Button.textBottomBarNormal)
     let archivedLabel = DynamicFontLabel(
-        text: "Archived",
+        text: L10n.Localizable.ConversationList.BottomBar.Archived.title,
         fontSpec: .mediumRegularFont,
         color: SemanticColors.Button.textBottomBarNormal)
 
