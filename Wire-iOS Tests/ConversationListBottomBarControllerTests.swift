@@ -69,21 +69,18 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheBottomBarCorrectlyInInitialState() {
-        // when
-        XCTAssertFalse(sut.showSeparator)
-
         // then
         verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testThatTheSeparatorIsNotHiddenWhen_ShowSeparator_IsSetToYes() {
-        // when
-        sut.showSeparator = true
-
-        // then
-        XCTAssertFalse(sut.separator.isHidden)
-        verifyInAllPhoneWidths(view: sut.view)
-    }
+//    func testThatTheSeparatorIsNotHiddenWhen_ShowSeparator_IsSetToYes() {
+//        // when
+//        sut.showSeparator = true
+//
+//        // then
+//        XCTAssertFalse(sut.separator.isHidden)
+//        verifyInAllPhoneWidths(view: sut.view)
+//    }
 
     func testThatItHidesTheContactsTitleAndShowsArchivedButtonWhen_ShowArchived_IsSetToYes() {
         // when

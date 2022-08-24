@@ -127,7 +127,6 @@ public enum SemanticColors {
         static let textEmptyEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textBottomBarNormal = UIColor(light: Asset.gray90, dark: Asset.gray50)
         static let textBottomBarSelected = UIColor(light: Asset.white, dark: Asset.black)
-        
     }
 }
 
