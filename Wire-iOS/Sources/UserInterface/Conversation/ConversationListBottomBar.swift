@@ -62,7 +62,7 @@ final class ConversationListBottomBarController: UIViewController {
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
     private let xInset: CGFloat = 4
-    private var currentlySelected: ConversationListButtonType? = nil
+    private var currentlySelected: ConversationListButtonType?
 
     var showArchived: Bool = false {
         didSet {
@@ -105,11 +105,6 @@ final class ConversationListBottomBarController: UIViewController {
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
-        
-//        view.backgroundColor = SemanticColors.View.backgroundConversationList
-//        separator.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCell
-//        separator.isHidden = true
-//        separator.translatesAutoresizingMaskIntoConstraints = false
 
         listButton.setIcon(.recentList, size: .tiny, for: [])
         listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
@@ -140,7 +135,6 @@ final class ConversationListBottomBarController: UIViewController {
         view.addSubview(mainStackview)
         view.backgroundColor = SemanticColors.View.backgroundConversationList
         view.addBorder(for: .top)
-//        view.addTopBorder(color: SemanticColors.Background.conversationListTableCellBorder)
     }
 
     private func createConstraints() {
@@ -267,17 +261,16 @@ final class ConversationListBottomBarController: UIViewController {
 
         switch button.tag {
         case 1:
-            currentlySelected = .startUI
+            setSelectedType(type: .startUI)
         case 2:
+            setSelectedType(type: .list)
             setActiveTab(stackView: listStackView, label: listLabel)
-            print("Pressed on LIST")
-            currentlySelected = .list
         case 3:
+            setSelectedType(type: .folder)
             setActiveTab(stackView: folderStackView, label: folderLabel)
-            currentlySelected = .folder
         case 4:
+            setSelectedType(type: .archive)
             setActiveTab(stackView: archivedStackView, label: archivedLabel)
-            currentlySelected = .archive
         default:
             return
         }
@@ -289,6 +282,23 @@ final class ConversationListBottomBarController: UIViewController {
         }
         allSubStackViews.forEach { currentStackView in
             currentStackView.backgroundColor = currentStackView.isEqual(stackView) ? .accent() : .clear
+        }
+    }
+
+    fileprivate func setSelectedType(type: ConversationListButtonType) {
+        self.currentlySelected = type
+    }
+
+    fileprivate func updateBottomBarAfterColorChange() {
+        switch currentlySelected {
+        case .list:
+            listStackView.backgroundColor = .accent()
+        case .folder:
+            folderStackView.backgroundColor = .accent()
+        case .archive:
+            archivedStackView.backgroundColor = .accent()
+        default:
+            return
         }
     }
 }
@@ -315,8 +325,10 @@ extension ConversationListBottomBarController: ConversationListViewModelRestorat
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
         if enabled {
             updateSelection(with: folderButton)
+            currentlySelected = .folder
         } else {
             updateSelection(with: listButton)
+            currentlySelected = .list
         }
     }
 }
@@ -327,5 +339,6 @@ extension ConversationListBottomBarController: ZMUserObserver {
         guard changeInfo.accentColorValueChanged else { return }
 
         updateColorScheme()
+        updateBottomBarAfterColorChange()
     }
 }
