@@ -32,8 +32,8 @@ final class ConversationListBottomBarController: UIViewController {
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let mainStackview = UIStackView(axis: .horizontal)
-    let startUIStackView  = UIStackView(axis: .vertical)
-    let listStackView   = UIStackView(axis: .vertical)
+    let startUIStackView = UIStackView(axis: .vertical)
+    let listStackView = UIStackView(axis: .vertical)
     let folderStackView = UIStackView(axis: .vertical)
     let archivedStackView = UIStackView(axis: .vertical)
 
