@@ -81,6 +81,7 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
         backgroundColor = SemanticColors.View.backgroundUserCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
+        addBorder(for: .bottom)
 
         setupStyle()
     }

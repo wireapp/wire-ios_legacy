@@ -192,6 +192,7 @@ final class ClientListViewController: UIViewController,
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
         tableView.backgroundColor = SemanticColors.View.backgroundDefault
+        tableView.separatorStyle = .none
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
