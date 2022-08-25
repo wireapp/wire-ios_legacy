@@ -104,7 +104,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheContactsButtonIsTapped() {
         // when
-        sut.startUIButton.sendActions(for: .touchUpInside)
+        sut.startBottomTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
@@ -112,7 +112,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheArchivedButtonIsTapped() {
         // when
-        sut.archivedButton.sendActions(for: .touchUpInside)
+        sut.archivedBottomTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
@@ -120,7 +120,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheListButtonIsTapped() {
         // when
-        sut.listButton.sendActions(for: .touchUpInside)
+        sut.listBottomTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.listButtonCallCount, 1)
@@ -128,7 +128,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheFolderButtonIsTapped() {
         // when
-        sut.folderButton.sendActions(for: .touchUpInside)
+        sut.folderBottomTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.folderButtonTapCount, 1)

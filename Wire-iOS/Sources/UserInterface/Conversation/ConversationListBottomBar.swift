@@ -56,10 +56,10 @@ final class ConversationListBottomBarController: UIViewController {
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let mainStackview = UIStackView(axis: .horizontal)
-    let startBarCell = BottomTabView(cellType: .startUI)
-    let listBarCell = BottomTabView(cellType: .list)
-    let folderBarCell = BottomTabView(cellType: .folder)
-    let archivedBarCell = BottomTabView(cellType: .archive)
+    let startBottomTabView = BottomTabView(cellType: .startUI)
+    let listBottomTabView = BottomTabView(cellType: .list)
+    let folderBottomTabView = BottomTabView(cellType: .folder)
+    let archivedBottomTabView = BottomTabView(cellType: .archive)
 
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
@@ -68,12 +68,12 @@ final class ConversationListBottomBarController: UIViewController {
 
     var showArchived: Bool = false {
         didSet {
-            archivedBarCell.showArchived(showArchived: self.showArchived)
+            archivedBottomTabView.showArchived(showArchived: self.showArchived)
         }
     }
 
     private var allSubStackViews: [BottomTabView] {
-        return [startBarCell, listBarCell, folderBarCell, archivedBarCell]
+        return [startBottomTabView, listBottomTabView, folderBottomTabView, archivedBottomTabView]
     }
 
     required init() {
@@ -116,50 +116,50 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func setupStackViews() {
-        startBarCell.button.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
-        listBarCell.button.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
-        folderBarCell.button.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
-        archivedBarCell.button.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
+        startBottomTabView.button.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
+        listBottomTabView.button.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
+        folderBottomTabView.button.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
+        archivedBottomTabView.button.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
 
         mainStackview.distribution = .fillEqually
         mainStackview.alignment = .fill
         mainStackview.translatesAutoresizingMaskIntoConstraints = false
-        mainStackview.addArrangedSubview(startBarCell)
-        mainStackview.addArrangedSubview(listBarCell)
-        mainStackview.addArrangedSubview(folderBarCell)
-        mainStackview.addArrangedSubview(archivedBarCell)
+        mainStackview.addArrangedSubview(startBottomTabView)
+        mainStackview.addArrangedSubview(listBottomTabView)
+        mainStackview.addArrangedSubview(folderBottomTabView)
+        mainStackview.addArrangedSubview(archivedBottomTabView)
     }
 
     private func addTargetForStackViews() {
         var stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(listStackViewTapped))
-        listBarCell.addGestureRecognizer(stackViewTapGesture)
+        listBottomTabView.addGestureRecognizer(stackViewTapGesture)
         stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(folderStackViewTapped))
-        folderBarCell.addGestureRecognizer(stackViewTapGesture)
+        folderBottomTabView.addGestureRecognizer(stackViewTapGesture)
         stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(archiveStackViewTapped))
-        archivedBarCell.addGestureRecognizer(stackViewTapGesture)
+        archivedBottomTabView.addGestureRecognizer(stackViewTapGesture)
         stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(startUIStackViewTapped))
-        startBarCell.addGestureRecognizer(stackViewTapGesture)
+        startBottomTabView.addGestureRecognizer(stackViewTapGesture)
     }
 
     // MARK: - Target Action
     @objc
     private func listStackViewTapped() {
-        listBarCell.button.sendActions(for: .touchUpInside)
+        listBottomTabView.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func folderStackViewTapped() {
-        folderBarCell.button.sendActions(for: .touchUpInside)
+        folderBottomTabView.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func archiveStackViewTapped() {
-        archivedBarCell.button.sendActions(for: .touchUpInside)
+        archivedBottomTabView.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func startUIStackViewTapped() {
-        startBarCell.button.sendActions(for: .touchUpInside)
+        startBottomTabView.button.sendActions(for: .touchUpInside)
     }
 
     @objc
@@ -201,13 +201,13 @@ final class ConversationListBottomBarController: UIViewController {
             setSelectedType(type: .startUI)
         case 2:
             setSelectedType(type: .list)
-            setActiveTab(stackView: listBarCell)
+            setActiveTab(stackView: listBottomTabView)
         case 3:
             setSelectedType(type: .folder)
-            setActiveTab(stackView: folderBarCell)
+            setActiveTab(stackView: folderBottomTabView)
         case 4:
             setSelectedType(type: .archive)
-            setActiveTab(stackView: archivedBarCell)
+            setActiveTab(stackView: archivedBottomTabView)
         default:
             return
         }
@@ -227,11 +227,11 @@ final class ConversationListBottomBarController: UIViewController {
     fileprivate func updateBottomBarAfterColorChange() {
         switch currentlySelected {
         case .list:
-            listBarCell.backgroundColor = .accent()
+            listBottomTabView.backgroundColor = .accent()
         case .folder:
-            folderBarCell.backgroundColor = .accent()
+            folderBottomTabView.backgroundColor = .accent()
         case .archive:
-            archivedBarCell.backgroundColor = .accent()
+            archivedBottomTabView.backgroundColor = .accent()
         default:
             return
         }
@@ -259,10 +259,10 @@ extension UIView {
 extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
         if enabled {
-            updateSelection(with: folderBarCell.button)
+            updateSelection(with: folderBottomTabView.button)
             currentlySelected = .folder
         } else {
-            updateSelection(with: listBarCell.button)
+            updateSelection(with: listBottomTabView.button)
             currentlySelected = .list
         }
     }

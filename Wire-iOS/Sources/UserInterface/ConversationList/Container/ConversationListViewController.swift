@@ -116,7 +116,7 @@ final class ConversationListViewController: UIViewController {
 
         createViewConstraints()
 
-        onboardingHint.arrowPointToView = bottomBarController.startBarCell.button
+        onboardingHint.arrowPointToView = bottomBarController.startBottomTabView.button
     }
 
     @available(*, unavailable)
