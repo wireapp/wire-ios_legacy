@@ -37,7 +37,8 @@ final class ConversationListOnboardingHint: UIView {
 
         super.init(frame: frame)
 
-        arrowView.setIcon(.longDownArrow, size: .large, color: SemanticColors.Label.textDefault)
+        arrowView.setTemplateIcon(.longDownArrow, size: .large)
+        arrowView.tintColor = SemanticColors.Label.textDefault
 
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .left
@@ -51,10 +52,6 @@ final class ConversationListOnboardingHint: UIView {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        arrowView.setIcon(.longDownArrow, size: .large, color: SemanticColors.Label.textDefault)
     }
 
     private func createConstraints() {
