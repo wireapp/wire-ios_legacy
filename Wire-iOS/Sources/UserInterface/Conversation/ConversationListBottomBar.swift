@@ -21,6 +21,30 @@ import WireSyncEngine
 
 enum ConversationListButtonType {
     case archive, startUI, list, folder
+    var accessibilityIdentifier: String {
+        switch self {
+        case .archive:
+            return "bottomBarArchivedButton"
+        case .startUI:
+            return "bottomBarPlusButton"
+        case .list:
+            return "bottomBarRecentListButton"
+        case .folder:
+            return "bottomBarFolderListButton"
+        }
+    }
+    var accessibilityBase: String {
+        switch self {
+        case .archive:
+            return "conversation_list.voiceover.bottom_bar.archived_button".localized
+        case .startUI:
+            return "conversation_list.voiceover.bottom_bar.contacts_button"
+        case .list:
+            return "conversation_list.voiceover.bottom_bar.recent_button"
+        case .folder:
+            return "conversation_list.voiceover.bottom_bar.folder_button"
+        }
+    }
 }
 
 protocol ConversationListBottomBarControllerDelegate: AnyObject {
@@ -32,10 +56,10 @@ final class ConversationListBottomBarController: UIViewController {
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let mainStackview = UIStackView(axis: .horizontal)
-    let startBarCell = BottomBarCell(axis: .vertical)
-    let listBarCell = BottomBarCell(axis: .vertical)
-    let folderBarCell = BottomBarCell(axis: .vertical)
-    let archivedBarCell = BottomBarCell(axis: .vertical)
+    let startBarCell = BottomTabView(cellType: .startUI)
+    let listBarCell = BottomTabView(cellType: .list)
+    let folderBarCell = BottomTabView(cellType: .folder)
+    let archivedBarCell = BottomTabView(cellType: .archive)
 
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
@@ -48,7 +72,7 @@ final class ConversationListBottomBarController: UIViewController {
         }
     }
 
-    private var allSubStackViews: [BottomBarCell] {
+    private var allSubStackViews: [BottomTabView] {
         return [startBarCell, listBarCell, folderBarCell, archivedBarCell]
     }
 
@@ -57,7 +81,6 @@ final class ConversationListBottomBarController: UIViewController {
 
         createViews()
         createConstraints()
-        updateColorScheme()
         addObservers()
     }
 
@@ -92,25 +115,11 @@ final class ConversationListBottomBarController: UIViewController {
         userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
     }
 
-    fileprivate func updateColorScheme() {
-        allSubStackViews.forEach { subStackView in
-            subStackView.cellButton.setIconColor(SemanticColors.Button.textBottomBarNormal, for: .normal)
-            subStackView.cellButton.setIconColor(SemanticColors.Button.textBottomBarSelected, for: .selected)
-        }
-    }
-
     private func setupStackViews() {
-        startBarCell.configure(cellType: .startUI)
-        startBarCell.cellButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
-
-        listBarCell.configure(cellType: .list)
-        listBarCell.cellButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
-
-        folderBarCell.configure(cellType: .folder)
-        folderBarCell.cellButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
-
-        archivedBarCell.configure(cellType: .folder)
-        archivedBarCell.cellButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
+        startBarCell.button.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
+        listBarCell.button.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
+        folderBarCell.button.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
+        archivedBarCell.button.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
 
         mainStackview.distribution = .fillEqually
         mainStackview.alignment = .fill
@@ -119,8 +128,6 @@ final class ConversationListBottomBarController: UIViewController {
         mainStackview.addArrangedSubview(listBarCell)
         mainStackview.addArrangedSubview(folderBarCell)
         mainStackview.addArrangedSubview(archivedBarCell)
-
-        print("🔥 size: \(folderBarCell.frame.height) x \(folderBarCell.frame.width)")
     }
 
     private func addTargetForStackViews() {
@@ -137,22 +144,22 @@ final class ConversationListBottomBarController: UIViewController {
     // MARK: - Target Action
     @objc
     private func listStackViewTapped() {
-        listBarCell.cellButton.sendActions(for: .touchUpInside)
+        listBarCell.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func folderStackViewTapped() {
-        folderBarCell.cellButton.sendActions(for: .touchUpInside)
+        folderBarCell.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func archiveStackViewTapped() {
-        archivedBarCell.cellButton.sendActions(for: .touchUpInside)
+        archivedBarCell.button.sendActions(for: .touchUpInside)
     }
 
     @objc
     private func startUIStackViewTapped() {
-        startBarCell.cellButton.sendActions(for: .touchUpInside)
+        startBarCell.button.sendActions(for: .touchUpInside)
     }
 
     @objc
@@ -179,8 +186,8 @@ final class ConversationListBottomBarController: UIViewController {
 
     private func updateSelection(with button: IconButton) {
         allSubStackViews.forEach { subStackView in
-            subStackView.cellButton.isSelected = subStackView.cellButton.isEqual(button)
-            updateColorForSpecifiedStackView(button: subStackView.cellButton)
+            subStackView.button.isSelected = subStackView.button.isEqual(button)
+            updateColorForSpecifiedStackView(button: subStackView.button)
         }
     }
 
@@ -194,22 +201,22 @@ final class ConversationListBottomBarController: UIViewController {
             setSelectedType(type: .startUI)
         case 2:
             setSelectedType(type: .list)
-            setActiveTab(stackView: listBarCell, label: listBarCell.cellLabel)
+            setActiveTab(stackView: listBarCell)
         case 3:
             setSelectedType(type: .folder)
-            setActiveTab(stackView: folderBarCell, label: folderBarCell.cellLabel)
+            setActiveTab(stackView: folderBarCell)
         case 4:
             setSelectedType(type: .archive)
-            setActiveTab(stackView: archivedBarCell, label: archivedBarCell.cellLabel)
+            setActiveTab(stackView: archivedBarCell)
         default:
             return
         }
     }
 
-    private func setActiveTab(stackView: UIStackView, label: UILabel) {
+    private func setActiveTab(stackView: BottomTabView) {
         allSubStackViews.forEach { subStackView in
             subStackView.backgroundColor = subStackView.isEqual(stackView) ? .accent() : .clear
-            subStackView.cellLabel.textColor = subStackView.cellLabel.isEqual(label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
+            subStackView.label.textColor = subStackView.label.isEqual(stackView.label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
         }
     }
 
@@ -252,10 +259,10 @@ extension UIView {
 extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
         if enabled {
-            updateSelection(with: folderBarCell.cellButton)
+            updateSelection(with: folderBarCell.button)
             currentlySelected = .folder
         } else {
-            updateSelection(with: listBarCell.cellButton)
+            updateSelection(with: listBarCell.button)
             currentlySelected = .list
         }
     }
@@ -266,7 +273,6 @@ extension ConversationListBottomBarController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.accentColorValueChanged else { return }
 
-        updateColorScheme()
         updateBottomBarAfterColorChange()
     }
 }
