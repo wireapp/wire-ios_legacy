@@ -22,7 +22,7 @@ import WireCommonComponents
 
 final class ConversationListOnboardingHint: UIView {
 
-    let messageLabel: UILabel = DynamicFontLabel(fontSpec: .largeLightFont, color: .iconHighlighted)
+    let messageLabel: UILabel = DynamicFontLabel(fontSpec: .largeLightFont, color: SemanticColors.Label.textDefault)
     let arrowView: UIImageView = UIImageView()
     weak var arrowPointToView: UIView? {
         didSet {
@@ -37,7 +37,8 @@ final class ConversationListOnboardingHint: UIView {
 
         super.init(frame: frame)
 
-        arrowView.setIcon(.longDownArrow, size: .large, color: UIColor.white.withAlphaComponent(0.4))
+        arrowView.setTemplateIcon(.longDownArrow, size: .large)
+        arrowView.tintColor = SemanticColors.Label.textDefault
 
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .left
