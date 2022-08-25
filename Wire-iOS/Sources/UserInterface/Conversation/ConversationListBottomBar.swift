@@ -201,15 +201,26 @@ final class ConversationListBottomBarController: UIViewController {
             setSelectedType(type: .startUI)
         case 2:
             setSelectedType(type: .list)
-            setActiveTab(stackView: listBottomTabView)
         case 3:
             setSelectedType(type: .folder)
-            setActiveTab(stackView: folderBottomTabView)
         case 4:
             setSelectedType(type: .archive)
-            setActiveTab(stackView: archivedBottomTabView)
         default:
             return
+        }
+    }
+
+    fileprivate func setSelectedType(type: ConversationListButtonType) {
+        self.currentlySelected = type
+        switch type {
+        case .archive:
+            return
+        case .startUI:
+            return
+        case .list:
+            setActiveTab(stackView: listBottomTabView)
+        case .folder:
+            setActiveTab(stackView: folderBottomTabView)
         }
     }
 
@@ -218,10 +229,6 @@ final class ConversationListBottomBarController: UIViewController {
             subStackView.backgroundColor = subStackView.isEqual(stackView) ? .accent() : .clear
             subStackView.label.textColor = subStackView.label.isEqual(stackView.label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
         }
-    }
-
-    fileprivate func setSelectedType(type: ConversationListButtonType) {
-        self.currentlySelected = type
     }
 
     fileprivate func updateBottomBarAfterColorChange() {
