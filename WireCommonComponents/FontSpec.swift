@@ -95,4 +95,8 @@ public extension FontSpec {
         return self.init(.large, .light, .largeTitle)
     }
 
+    // Navigation
+    static var customNaviationTitle17: Self {
+        return self.init(.custom17, .light)
+    }
 }

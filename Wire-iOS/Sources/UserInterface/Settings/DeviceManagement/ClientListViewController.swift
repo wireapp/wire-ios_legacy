@@ -110,7 +110,7 @@ final class ClientListViewController: UIViewController,
         }
 
         super.init(nibName: nil, bundle: nil)
-        title = "registration.devices.title".localized
+        setUpControllerTitle()
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() }))
         self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
@@ -416,14 +416,30 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            let rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
 
+            rightBarButtonItem.setTitleTextAttributes(
+                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)],
+                for: UIControl.State.normal)
+            self.navigationItem.rightBarButtonItem = rightBarButtonItem
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+            let rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+            rightBarButtonItem.setTitleTextAttributes(
+                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)],
+                for: UIControl.State.normal)
+            self.navigationItem.rightBarButtonItem = rightBarButtonItem
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
+    }
+
+    private func setUpControllerTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: "registration.devices.title".localized,
+            fontSpec: .customNaviationTitle17,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
 }
