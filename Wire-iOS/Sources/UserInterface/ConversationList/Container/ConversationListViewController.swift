@@ -68,7 +68,7 @@ final class ConversationListViewController: UIViewController {
 
     let bottomBarController: ConversationListBottomBarController = {
         let conversationListBottomBarController = ConversationListBottomBarController()
-        conversationListBottomBarController.showArchived = true
+        conversationListBottomBarController.archivedIsVisible = true
 
         return conversationListBottomBarController
     }()
@@ -116,7 +116,7 @@ final class ConversationListViewController: UIViewController {
 
         createViewConstraints()
 
-        onboardingHint.arrowPointToView = bottomBarController.startBottomTabView.button
+        onboardingHint.arrowPointToView = bottomBarController.startTabView.button
     }
 
     @available(*, unavailable)
@@ -324,12 +324,12 @@ final class ConversationListViewController: UIViewController {
     }
 
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-        if showArchived == bottomBarController.showArchived {
+        if showArchived == bottomBarController.archivedIsVisible {
             return
         }
 
         UIView.performWithoutAnimation {
-            self.bottomBarController.showArchived = showArchived
+            self.bottomBarController.archivedIsVisible = showArchived
 
             UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
                 self.bottomBarController.view.layoutIfNeeded()

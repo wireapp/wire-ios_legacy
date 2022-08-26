@@ -20,68 +20,60 @@ import UIKit
 
 class BottomTabView: UIStackView {
 
-    private let cellType: ConversationListButtonType
+    let tabType: ConversationListButtonType
     let button = IconButton()
     let label = DynamicFontLabel(
         fontSpec: .mediumRegularFont,
         color: SemanticColors.Button.textBottomBarNormal)
 
-    init(cellType: ConversationListButtonType) {
-        self.cellType = cellType
+    // MARK: - Initialization
+    
+    init(tabType: ConversationListButtonType) {
+        self.tabType = tabType
         super.init(frame: .zero)
-        self.configure(cellType: self.cellType)
+        self.configure(tabType: self.tabType)
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func showArchived(showArchived: Bool) {
-        self.isHidden = !showArchived
-        label.isHidden = !showArchived
-        button.isHidden = !showArchived
-    }
-
-    private func configure(cellType: ConversationListButtonType) {
-        setUpButton(cellType: cellType)
-        setUpLabel(cellType: cellType)
+    private func configure(tabType: ConversationListButtonType) {
+        setUpButton(tabType: tabType)
+        setUpLabel(tabType: tabType)
         configureStackView()
     }
 
-    private func setUpButton(cellType: ConversationListButtonType) {
-        switch cellType {
+    private func setUpButton(tabType: ConversationListButtonType) {
+        switch tabType {
         case .startUI:
             button.setIcon(.person, size: .tiny, for: .normal)
-            button.tag = 1
         case .list:
             button.setIcon(.recentList, size: .tiny, for: [])
-            button.tag = 2
         case .folder:
             button.setIcon(.folderList, size: .tiny, for: [])
-            button.tag = 3
         case .archive:
             button.setIcon(.archive, size: .tiny, for: [])
-            button.tag = 4
             button.isHidden = true
         }
-        button.accessibilityIdentifier = cellType.accessibilityIdentifier
-        button.accessibilityLabel = (cellType.accessibilityBase + ".label").localized
-        button.accessibilityHint = (cellType.accessibilityBase + ".hint").localized
+        button.accessibilityIdentifier = tabType.accessibilityIdentifier
+        button.accessibilityLabel = (tabType.accessibilityBase + ".label").localized
+        button.accessibilityHint = (tabType.accessibilityBase + ".hint").localized
 
         button.setIconColor(SemanticColors.Button.textBottomBarNormal, for: .normal)
         button.setIconColor(SemanticColors.Button.textBottomBarSelected, for: .selected)
     }
 
-    private func setUpLabel(cellType: ConversationListButtonType) {
-            switch cellType {
+    private func setUpLabel(tabType: ConversationListButtonType) {
+            switch tabType {
             case .archive:
                 label.text = L10n.Localizable.ConversationList.BottomBar.Archived.title
             case .startUI:
-                label.text =  L10n.Localizable.ConversationList.BottomBar.Contacts.title
+                label.text = L10n.Localizable.ConversationList.BottomBar.Contacts.title
             case .list:
-                label.text =  L10n.Localizable.ConversationList.BottomBar.Conversations.title
+                label.text = L10n.Localizable.ConversationList.BottomBar.Conversations.title
             case .folder:
-                label.text =  L10n.Localizable.ConversationList.BottomBar.Folders.title
+                label.text = L10n.Localizable.ConversationList.BottomBar.Folders.title
             }
     }
 
@@ -98,5 +90,13 @@ class BottomTabView: UIStackView {
 
         addArrangedSubview(button)
         addArrangedSubview(label)
+    }
+
+    // MARK: - Adaptive UI
+
+    func showArchivedTab(when archivedIsVisible: Bool) {
+        self.isHidden = !archivedIsVisible
+        label.isHidden = !archivedIsVisible
+        button.isHidden = !archivedIsVisible
     }
 }
