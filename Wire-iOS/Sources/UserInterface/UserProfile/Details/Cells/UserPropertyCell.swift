@@ -74,12 +74,19 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
     override func setUp() {
         super.setUp()
-        showSeparator = false
         configureSubviews()
         configureConstraints()
     }
 
     private func configureSubviews() {
+        backgroundColor = SemanticColors.View.backgroundUserCell
+
+        addBorder(for: .bottom)
+
+        separator.isHidden = true
+        separator.backgroundColor = .clear
+        showSeparator = false
+
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
         contentStack.spacing = 2
@@ -91,7 +98,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
         applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
         backgroundColor = SemanticColors.View.backgroundUserCell
-        [.top, .bottom].forEach { addBorder(for: $0) }
         separator.isHidden = true
     }
 

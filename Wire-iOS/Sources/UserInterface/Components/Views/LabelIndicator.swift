@@ -106,7 +106,7 @@ final class LabelIndicator: UIView, Themeable {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        titleLabel.text = context.title.localized(uppercased: true)
+        titleLabel.text = context.title.localized.capitalizingFirstLetter()
 
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
         indicatorIcon.setIcon(context.icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))

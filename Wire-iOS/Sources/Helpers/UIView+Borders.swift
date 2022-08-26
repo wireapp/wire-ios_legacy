@@ -24,36 +24,62 @@ extension UIView {
         for anchor: Anchor,
         color: UIColor = SemanticColors.View.backgroundSeparatorCell,
         borderWidth: CGFloat = 1.0) {
-            guard let frame = getFrame(anchor: anchor, width: borderWidth),
-                  let autoresizingMask = getAutoresizingMask(anchor: anchor) else { return }
-
             let border = UIView()
-            border.backgroundColor = color
-            border.autoresizingMask = autoresizingMask
-            border.frame = frame
             addSubview(border)
+            border.addConstraintsForBorder(for: anchor, borderWidth: borderWidth, to: self)
+            border.backgroundColor = color
         }
 
-    private func getAutoresizingMask(anchor: Anchor) -> UIView.AutoresizingMask? {
+    private func addConstraintsForBorder(for anchor: Anchor, borderWidth: CGFloat, to parentView: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
         switch anchor {
         case .top:
-            return [.flexibleWidth, .flexibleBottomMargin]
+            NSLayoutConstraint.activate([
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.heightAnchor.constraint(equalToConstant: borderWidth)
+            ])
         case .bottom:
-            return [.flexibleWidth, .flexibleTopMargin]
-        case .leading, .trailing:
-            return nil
+            NSLayoutConstraint.activate([
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.heightAnchor.constraint(equalToConstant: borderWidth)
+            ])
+        case .leading:
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor),
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.widthAnchor.constraint(equalToConstant: borderWidth)
+            ])
+        case .trailing:
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor),
+                self.topAnchor.constraint(equalTo: parentView.topAnchor),
+                self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+                self.widthAnchor.constraint(equalToConstant: borderWidth)
+            ])
         }
     }
 
-    private func getFrame(anchor: Anchor, width: CGFloat) -> CGRect? {
-        switch anchor {
-        case .top:
-            return CGRect(x: 0, y: 0, width: frame.size.width, height: width)
-        case .bottom:
-            return CGRect(x: 0, y: frame.size.height, width: frame.size.width, height: width)
-        case .leading, .trailing:
-            return nil
-        }
+    func addBottomBorderWithInset(color: UIColor, inset: CGFloat) {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height + inset, width: frame.size.width, height: borderWidth)
+        addSubview(border)
+    }
+
+    func addBottomBorderWithInset(color: UIColor) {
+        let border = UIView()
+        let borderWidth: CGFloat = 1.0
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: frame.size.height - borderWidth, width: frame.size.width, height: borderWidth)
+        addSubview(border)
     }
 
 }

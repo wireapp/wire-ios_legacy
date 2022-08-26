@@ -95,6 +95,7 @@ final class BackupActionCell: UITableViewCell {
             actionTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        addBorder(for: .bottom)
     }
 
     @available(*, unavailable)

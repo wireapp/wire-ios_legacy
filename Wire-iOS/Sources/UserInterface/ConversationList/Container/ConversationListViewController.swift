@@ -54,7 +54,7 @@ final class ConversationListViewController: UIViewController {
 
     let contentContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCell
 
         return view
     }()
@@ -105,6 +105,7 @@ final class ConversationListViewController: UIViewController {
 
         /// setup UI
         view.addSubview(contentContainer)
+        self.view.backgroundColor = SemanticColors.View.backgroundConversationList
 
         setupTopBar()
         setupListContentController()
@@ -169,10 +170,6 @@ final class ConversationListViewController: UIViewController {
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
 
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

@@ -53,6 +53,13 @@ final class AvailabilityTitleViewController: UIViewController {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            availabilityTitleView?.updateConfiguration()
+        }
+    }
+
     func presentAvailabilityPicker() {
         let alertViewController = UIAlertController.availabilityPicker { [weak self] (availability) in
             self?.didSelectAvailability(availability)

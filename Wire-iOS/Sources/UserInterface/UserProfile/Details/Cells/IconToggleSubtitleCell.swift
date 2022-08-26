@@ -99,7 +99,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.textColor = SemanticColors.Label.textCellTitle
         subtitleLabel.textColor = SemanticColors.Label.textSectionFooter
         backgroundColor = .clear
-        [.top, .bottom].forEach { topContainer.addBorder(for: $0) }
+        topContainer.addBorder(for: .bottom)
     }
 
     @objc private func toggleChanged(_ sender: UISwitch) {

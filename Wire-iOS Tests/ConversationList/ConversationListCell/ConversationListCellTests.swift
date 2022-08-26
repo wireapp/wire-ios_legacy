@@ -115,10 +115,12 @@ final class ConversationListCellTests: ZMSnapshotTestCase {
         line: UInt = #line) {
         sut.conversation = conversation
 
+        sut.overrideUserInterfaceStyle = .dark
+
         if let icon = icon {
             sut.itemView.rightAccessory.icon = icon
         }
-        sut.backgroundColor = .darkGray
+
         verify(matching: sut, file: file, testName: testName, line: line)
     }
 
