@@ -20,6 +20,24 @@ import Foundation
 import WireSyncEngine
 import AppCenterCrashes
 
+enum DebugCommand {
+
+    /// Update accessRoles for existing conversations where the team is nil and accessRoles == [.teamMember]
+    case repairInvalidAccessRoles
+
+    init?(string: String) {
+        // We may want to have commands that accept arguments, which means
+        // we'd have to do the parsing of the command here.
+        switch string {
+        case "repairInvalidAccessRoles":
+            self = .repairInvalidAccessRoles
+        default:
+            return nil
+        }
+    }
+
+}
+
 enum DebugActions {
 
     /// Shows an alert with the option to copy text to the clipboard
@@ -217,16 +235,21 @@ enum DebugActions {
 
     /// Accepts a debug command
     static func enterDebugCommand(_ type: SettingsCellDescriptorType) {
-        askString(title: "Debug command") { str in
-            if str == "432.1.0" {
-                DebugActions.updateInvalidAccessRolesForExistingConversations()
-            } else {
+        askString(title: "Debug command") { string in
+            guard let command = DebugCommand(string: string) else {
                 alert("Command not recognized")
+                return
             }
+
+            switch command {
+            case .repairInvalidAccessRoles:
+                DebugActions.updateInvalidAccessRoles()
+            }
+
         }
     }
 
-    static func updateInvalidAccessRolesForExistingConversations() {
+    static func updateInvalidAccessRoles() {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = NSPredicate(format: "team == nil AND accessRoleStringsV2 == %@",
                                     [ConversationAccessRoleV2.teamMember.rawValue])
