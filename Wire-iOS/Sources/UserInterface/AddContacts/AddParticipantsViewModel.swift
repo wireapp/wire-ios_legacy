@@ -80,6 +80,7 @@ struct AddParticipantsViewModel {
         switch context {
         case .add:
             let item = UIBarButtonItem(icon: .cross, target: target, action: action)
+            item.tintColor = SemanticColors.Icon.foregroundDefault
             item.accessibilityIdentifier = "close"
             return item
         case .create(let values):

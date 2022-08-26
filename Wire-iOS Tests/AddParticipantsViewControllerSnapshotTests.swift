@@ -48,7 +48,6 @@ final class AddParticipantsViewControllerSnapshotTests: ZMSnapshotTestCase, Core
 
     override func setUp() {
         super.setUp()
-
         coreDataFixture = CoreDataFixture()
     }
 
@@ -70,9 +69,7 @@ final class AddParticipantsViewControllerSnapshotTests: ZMSnapshotTestCase, Core
 
     func testForAddParticipantsButtonIsShown() {
         let conversation = createGroupConversation()
-
         sut = AddParticipantsViewController(context: .add(conversation), variant: .light)
-
         let user = createUser(name: "Bill")
         sut.userSelection.add(user)
         sut.userSelection(UserSelection(), didAddUser: user)

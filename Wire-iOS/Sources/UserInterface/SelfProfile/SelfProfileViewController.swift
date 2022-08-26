@@ -49,10 +49,6 @@ final class SelfProfileViewController: UIViewController {
         return [.portrait]
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private var userCanSetProfilePicture: Bool {
         return userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture)
     }
@@ -123,6 +119,7 @@ final class SelfProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
         createConstraints()
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -137,7 +134,7 @@ final class SelfProfileViewController: UIViewController {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
         } else {
-            title = "self.account".localized(uppercased: true)
+            title = L10n.Localizable.Self.account
         }
     }
 

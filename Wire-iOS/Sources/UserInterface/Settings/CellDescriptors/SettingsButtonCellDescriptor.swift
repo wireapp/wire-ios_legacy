@@ -65,7 +65,6 @@ class SettingsButtonCellDescriptor: SettingsCellDescriptorType {
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        cell.titleColor = UIColor.white
     }
 
     func select(_ value: SettingsPropertyValue?) {

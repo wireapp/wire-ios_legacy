@@ -20,7 +20,6 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-@available(iOS 13.0, *)
 class AppLockChangeWarningViewControllerTests: XCTestCase {
 
     func testWarningThatAppLockIsActive() {

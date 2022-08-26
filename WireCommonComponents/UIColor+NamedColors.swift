@@ -29,8 +29,8 @@ public extension UIColor {
 
         public static var secondaryLabel: UIColor {
             return label.withAlphaComponent(0.7)
-
         }
+
     }
 
 }

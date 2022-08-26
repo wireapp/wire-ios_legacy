@@ -19,13 +19,14 @@ import XCTest
 import SnapshotTesting
 @testable import Wire
 
-final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
+final class SettingsTechnicalReportViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: SettingsTechnicalReportViewController!
 
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
         sut = SettingsTechnicalReportViewController()
+        sut.overrideUserInterfaceStyle = .dark
     }
 
     override func tearDown() {
@@ -36,6 +37,7 @@ final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
     func testForInitState() {
         let naviViewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
         naviViewController.view.backgroundColor = .black
+        naviViewController.overrideUserInterfaceStyle = .dark
         verify(matching: naviViewController)
     }
 }

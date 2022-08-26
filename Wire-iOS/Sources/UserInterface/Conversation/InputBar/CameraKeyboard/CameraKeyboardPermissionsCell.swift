@@ -28,7 +28,7 @@ enum DeniedAuthorizationType {
 
 final class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
-    let settingsButton = Button(fontSpec: .normalSemiboldFont)
+    let settingsButton = LegacyButton(fontSpec: .normalSemiboldFont)
     let cameraIcon = IconButton()
     let descriptionLabel = UILabel()
 

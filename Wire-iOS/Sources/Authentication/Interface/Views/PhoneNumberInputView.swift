@@ -245,6 +245,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         let color = textColor
         let selectedColor = textColor.withAlphaComponent(0.4)
 
+        tintColor = color
         let icon = NSTextAttachment.downArrow(color: color)
         let selectedIcon = NSTextAttachment.downArrow(color: selectedColor)
 

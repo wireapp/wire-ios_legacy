@@ -19,7 +19,6 @@
 import XCTest
 @testable import Wire
 
-@available(iOS 13.0, *)
 final class GroupConversationCellTests: XCTestCase {
 
     var sut: GroupConversationCell!

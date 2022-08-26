@@ -93,7 +93,9 @@ final class DeveloperOptionsController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
         button.titleLabel?.textAlignment = .right
-
+        button.setTitleColor(
+            SemanticColors.Label.textDefault,
+            for: .normal)
         if let titleLabel = button.titleLabel {
             NSLayoutConstraint.activate([
                 titleLabel.rightAnchor.constraint(equalTo: button.rightAnchor)
@@ -106,7 +108,7 @@ final class DeveloperOptionsController: UIViewController {
 
     /// Creates and sets the layout of a cell with a UISwitch
     func createCellWithSwitch(labelText: String, isOn: Bool, onValueChange: @escaping (Bool) -> Void ) -> UITableViewCell {
-        let toggle = UISwitch(style: .default)
+        let toggle = Switch(style: .default)
         toggle.translatesAutoresizingMaskIntoConstraints = false
         toggle.isOn = isOn
         toggle.addTarget(self, action: #selector(DeveloperOptionsController.switchDidChange(sender:)), for: .valueChanged)
@@ -121,7 +123,7 @@ final class DeveloperOptionsController: UIViewController {
 
         let label = UILabel()
         label.text = labelText
-        label.textColor = .white
+        label.textColor = SemanticColors.Label.textDefault
         label.translatesAutoresizingMaskIntoConstraints = false
         [label, view].forEach {
             cell.contentView.addSubview($0)

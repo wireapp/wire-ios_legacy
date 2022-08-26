@@ -18,7 +18,7 @@
 
 import UIKit
 
-class Tab: Button {
+class Tab: LegacyButton {
 
     var title: String = "" {
         didSet {
@@ -27,20 +27,13 @@ class Tab: Button {
         }
     }
 
-    var colorSchemeVariant: ColorSchemeVariant {
-        didSet {
-            updateColors()
-        }
-    }
-
-    init(variant: ColorSchemeVariant) {
-        colorSchemeVariant = variant
+    init() {
         super.init(fontSpec: .smallSemiboldFont)
 
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
         isSelected = false
-
         updateColors()
+
     }
 
     override var intrinsicContentSize: CGSize {
@@ -48,8 +41,8 @@ class Tab: Button {
     }
 
     private func updateColors() {
-        setTitleColor(UIColor.from(scheme: .tabNormal, variant: colorSchemeVariant), for: .normal)
-        setTitleColor(UIColor.from(scheme: .tabSelected, variant: colorSchemeVariant), for: .selected)
-        setTitleColor(UIColor.from(scheme: .tabHighlighted, variant: colorSchemeVariant), for: .highlighted)
+        setTitleColor(SemanticColors.Label.textCellTitle, for: .normal)
+        setTitleColor(SemanticColors.Label.textCellTitle, for: .highlighted)
+
     }
 }

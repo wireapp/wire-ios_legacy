@@ -220,7 +220,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
 final class CallQualityView: UIStackView {
     let scoreLabel = UILabel()
-    let scoreButton = Button(fontSpec: .normalRegularFont)
+    let scoreButton = LegacyButton(fontSpec: .normalRegularFont)
     let callback: (Int) -> Void
     let labelText: String
     let buttonScore: Int

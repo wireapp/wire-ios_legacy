@@ -50,6 +50,11 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         set { updateIcon(newValue) }
     }
 
+    var iconColor: UIColor? {
+        get { return leftIconView.tintColor }
+        set { leftIconView.tintColor = newValue }
+    }
+
     var title: String? {
         get { return titleLabel.text }
         set { updateTitle(newValue) }
@@ -116,7 +121,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        backgroundColor = SemanticColors.View.backgroundUserCell
     }
 
     // MARK: - Layout

@@ -30,8 +30,6 @@ protocol ArchivedListViewControllerDelegate: AnyObject {
 
 final class ArchivedListViewController: UIViewController {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
-
     fileprivate var collectionView: UICollectionView!
     fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized(uppercased: true))
     fileprivate let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
@@ -86,6 +84,7 @@ final class ArchivedListViewController: UIViewController {
         archivedNavigationBar.dismissButtonHandler = {
             self.delegate?.archivedListViewControllerWantsToDismiss(self)
         }
+        view.backgroundColor = SemanticColors.View.backgroundConversationList
     }
 
     private func createConstraints() {
@@ -116,12 +115,6 @@ extension ArchivedListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let conversation = viewModel[indexPath.row] else { return }
         delegate?.archivedListViewController(self, didSelectConversation: conversation)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let showSeparator = scrollView.contentOffset.y >= 16
-        guard showSeparator != archivedNavigationBar.showSeparator else { return }
-        archivedNavigationBar.showSeparator = showSeparator
     }
 }
 

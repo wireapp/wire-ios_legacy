@@ -43,7 +43,7 @@ extension IconImageStyle {
 
 class IconImageView: UIImageView {
     private(set) var size: StyleKitIcon.Size = .tiny
-    private(set) var color: UIColor = UIColor.from(scheme: .iconGuest)
+    private(set) var color: UIColor = SemanticColors.Icon.foregroundDefault
     private(set) var style: IconImageStyle?
 
     override init(frame: CGRect) {
@@ -83,8 +83,8 @@ class IconImageView: UIImageView {
         }
 
         isHidden = false
-        let color = style.tintColor ?? self.color
-        self.setIcon(icon, size: self.size, color: color)
+        self.tintColor = style.tintColor ?? self.color
+        self.setTemplateIcon(icon, size: self.size)
         self.style = style
     }
 

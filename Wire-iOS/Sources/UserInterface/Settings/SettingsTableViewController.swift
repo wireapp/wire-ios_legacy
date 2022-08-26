@@ -77,7 +77,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -128,10 +128,6 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
         ])
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {
@@ -166,7 +162,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         self.group = group
         self.sections = group.visibleItems
         super.init(style: group.style == .plain ? .plain : .grouped)
-        self.title = group.title.localizedUppercase
+        self.title = group.title.localized
 
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
@@ -237,7 +233,6 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
-            cell.isFirst = indexPath.row == 0
             return cell
         }
 
@@ -264,13 +259,13 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionHeader
         }
     }
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionFooter
         }
     }
 

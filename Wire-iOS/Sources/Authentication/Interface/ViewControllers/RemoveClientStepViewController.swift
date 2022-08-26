@@ -62,14 +62,14 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "registration.signin.too_many_devices.manage_screen.title".localized(uppercased: true)
+        title = "registration.signin.too_many_devices.manage_screen.title".localized
         configureSubviews()
         configureConstraints()
         updateBackButton()
     }
 
     private func configureSubviews() {
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         clientListController.view.backgroundColor = .clear
         clientListController.editingList = true
