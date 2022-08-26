@@ -27,7 +27,7 @@ class BottomTabView: UIStackView {
         color: SemanticColors.Button.textBottomBarNormal)
 
     // MARK: - Initialization
-    
+
     init(tabType: ConversationListButtonType) {
         self.tabType = tabType
         super.init(frame: .zero)
