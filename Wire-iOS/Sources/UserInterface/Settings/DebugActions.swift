@@ -20,24 +20,6 @@ import Foundation
 import WireSyncEngine
 import AppCenterCrashes
 
-enum DebugCommand {
-
-    /// Update accessRoles for existing conversations where the team is nil and accessRoles == [.teamMember]
-    case repairInvalidAccessRoles
-
-    init?(string: String) {
-        // We may want to have commands that accept arguments, which means
-        // we'd have to do the parsing of the command here.
-        switch string {
-        case "repairInvalidAccessRoles":
-            self = .repairInvalidAccessRoles
-        default:
-            return nil
-        }
-    }
-
-}
-
 enum DebugActions {
 
     /// Shows an alert with the option to copy text to the clipboard
