@@ -217,8 +217,31 @@ enum DebugActions {
 
     /// Accepts a debug command
     static func enterDebugCommand(_ type: SettingsCellDescriptorType) {
-        askString(title: "Debug command") { _ in
-            alert("Command not recognized")
+        askString(title: "Debug command") { str in
+            if str == "3" {
+                DebugActions.updateInvalidAccessRolesForExistingConversations()
+            } else {
+                alert("Command not recognized")
+            }
+        }
+    }
+
+    static func updateInvalidAccessRolesForExistingConversations() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = NSPredicate(format: "team == nil AND accessRoleStringsV2 == %@",
+                                    [ConversationAccessRoleV2.teamMember.rawValue])
+        let request = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
+        request.predicate = predicate
+
+        let syncContext = userSession.syncManagedObjectContext
+        syncContext.performGroupedBlock {
+            let conversations = try? syncContext.fetch(request)
+            conversations?.forEach {
+                let action = UpdateAccessRolesAction(conversation: $0,
+                                                     accessMode: ConversationAccessMode.value(forAllowGuests: true),
+                                                     accessRoles: ConversationAccessRoleV2.fromLegacyAccessRole(.nonActivated))
+                action.send(in: syncContext.notificationContext)
+            }
         }
     }
 
