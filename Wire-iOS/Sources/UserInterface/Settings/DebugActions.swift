@@ -218,7 +218,7 @@ enum DebugActions {
     /// Accepts a debug command
     static func enterDebugCommand(_ type: SettingsCellDescriptorType) {
         askString(title: "Debug command") { str in
-            if str == "3" {
+            if str == "432.1.0" {
                 DebugActions.updateInvalidAccessRolesForExistingConversations()
             } else {
                 alert("Command not recognized")
