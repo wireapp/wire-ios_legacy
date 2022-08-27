@@ -53,7 +53,7 @@ public enum SemanticColors {
         static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
         static let textCellSubtitle = UIColor(light: Asset.gray90, dark: Asset.white)
-        static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
+//        static let textNoResults = UIColor(light: Asset.black, dark: Asset.gray20)
         static let textSettingsPasswordPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textSettingsCellBadge = UIColor(light: Asset.white, dark: Asset.black)
         static let textLinkHeaderCellTitle = UIColor(light: Asset.gray100, dark: Asset.white)
@@ -92,6 +92,7 @@ public enum SemanticColors {
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let foregroundNoMessageINConversation = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum View {

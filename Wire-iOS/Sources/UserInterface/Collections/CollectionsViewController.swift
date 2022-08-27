@@ -134,6 +134,10 @@ final class CollectionsViewController: UIViewController {
         textSearchController.delegate = self
         contentView.constrainViews(searchViewController: textSearchController)
 
+        textSearchController.searchBar.backgroundColor = .yellow
+        textSearchController.resultsView.backgroundColor = .yellow
+        contentView.backgroundColor = .yellow
+
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = self
 

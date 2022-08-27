@@ -37,7 +37,7 @@ final class NoResultsView: UIView {
 
     var icon: StyleKitIcon? {
         didSet {
-            iconView.image = icon?.makeImage(size: 160, color: placeholderColor)
+            iconView.image = icon?.makeImage(size: 160, color: .red)
         }
     }
 
@@ -52,7 +52,7 @@ final class NoResultsView: UIView {
         accessibilityElements = [label]
 
         label.numberOfLines = 0
-        label.textColor = SemanticColors.Label.textNoResults
+        label.textColor = .red
         label.textAlignment = .center
         label.font = .mediumSemiboldFont
         addSubview(label)
