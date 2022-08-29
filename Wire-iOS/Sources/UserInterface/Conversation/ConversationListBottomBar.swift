@@ -33,28 +33,30 @@ enum ConversationListButtonType {
             return "bottomBarFolderListButton"
         }
     }
-    var voiceOverLabel: String {
+    var accessibilityLabel: String {
+        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
         switch self {
         case .archive:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ArchivedButton.label
+            return bottomBarLocalizable.ArchivedButton.label
         case .startUI:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ContactsButton.label
+            return bottomBarLocalizable.ContactsButton.label
         case .list:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.RecentButton.label
+            return bottomBarLocalizable.RecentButton.label
         case .folder:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.FolderButton.label
+            return bottomBarLocalizable.FolderButton.label
         }
     }
-    var voiceOverHint: String {
+    var accessibilityHint: String {
+        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
         switch self {
         case .archive:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ArchivedButton.hint
+            return bottomBarLocalizable.ArchivedButton.hint
         case .startUI:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ContactsButton.hint
+            return bottomBarLocalizable.ContactsButton.hint
         case .list:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.RecentButton.hint
+            return bottomBarLocalizable.RecentButton.hint
         case .folder:
-            return L10n.Localizable.ConversationList.Voiceover.BottomBar.FolderButton.hint
+            return bottomBarLocalizable.FolderButton.hint
         }
     }
 }
@@ -80,10 +82,10 @@ final class ConversationListBottomBarController: UIViewController {
         return [startTabView, listTabView, folderTabView, archivedTabView]
     }
 
-    private var currentlySelectedTab: ConversationListButtonType? {
+    private var selectedTab: ConversationListButtonType? {
         didSet {
-            if let currentlySelectedTab = currentlySelectedTab {
-                switch currentlySelectedTab {
+            if let selectedTab = selectedTab {
+                switch selectedTab {
                 case .archive, .startUI:
                     return
                 case .list:
@@ -191,7 +193,7 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func updateCurrentlySelectedTab(with buttonType: ConversationListButtonType) {
-        self.currentlySelectedTab = buttonType
+        self.selectedTab = buttonType
     }
 
     private func highlightActiveTab(tabView selectedTabView: ConversationListTabView) {
@@ -225,9 +227,9 @@ extension UIView {
 extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
         if enabled {
-            currentlySelectedTab = .folder
+            selectedTab = .folder
         } else {
-            currentlySelectedTab = .list
+            selectedTab = .list
         }
     }
 }
@@ -237,7 +239,7 @@ extension ConversationListBottomBarController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.accentColorValueChanged else { return }
 
-        switch currentlySelectedTab {
+        switch selectedTab {
         case .list:
             listTabView.backgroundColor = .accent()
         case .folder:

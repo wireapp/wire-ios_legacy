@@ -18,7 +18,7 @@
 
 import UIKit
 
-class ConversationListTabView: UIStackView {
+final class ConversationListTabView: UIStackView {
 
     let tabType: ConversationListButtonType
     let button = IconButton()
@@ -39,12 +39,12 @@ class ConversationListTabView: UIStackView {
     }
 
     private func configure(tabType: ConversationListButtonType) {
-        setUpButton(tabType: tabType)
-        setUpLabel(tabType: tabType)
+        setupButton(tabType: tabType)
+        setupLabel(tabType: tabType)
         configureStackView()
     }
 
-    private func setUpButton(tabType: ConversationListButtonType) {
+    private func setupButton(tabType: ConversationListButtonType) {
         switch tabType {
         case .startUI:
             button.setIcon(.person, size: .tiny, for: .normal)
@@ -57,23 +57,24 @@ class ConversationListTabView: UIStackView {
             button.isHidden = true
         }
         button.accessibilityIdentifier = tabType.accessibilityIdentifier
-        button.accessibilityLabel = tabType.voiceOverLabel
-        button.accessibilityHint = tabType.voiceOverHint
+        button.accessibilityLabel = tabType.accessibilityLabel
+        button.accessibilityHint = tabType.accessibilityHint
 
         button.setIconColor(SemanticColors.Button.textBottomBarNormal, for: .normal)
         button.setIconColor(SemanticColors.Button.textBottomBarSelected, for: .selected)
     }
 
-    private func setUpLabel(tabType: ConversationListButtonType) {
+    private func setupLabel(tabType: ConversationListButtonType) {
+        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.BottomBar
             switch tabType {
             case .archive:
-                label.text = L10n.Localizable.ConversationList.BottomBar.Archived.title
+                label.text = bottomBarLocalizable.Archived.title
             case .startUI:
-                label.text = L10n.Localizable.ConversationList.BottomBar.Contacts.title
+                label.text = bottomBarLocalizable.Contacts.title
             case .list:
-                label.text = L10n.Localizable.ConversationList.BottomBar.Conversations.title
+                label.text = bottomBarLocalizable.Conversations.title
             case .folder:
-                label.text = L10n.Localizable.ConversationList.BottomBar.Folders.title
+                label.text = bottomBarLocalizable.Folders.title
             }
     }
 
@@ -81,7 +82,6 @@ class ConversationListTabView: UIStackView {
         axis = .vertical
         distribution = .fillEqually
         alignment = .center
-        isUserInteractionEnabled = true
         spacing = 4
         layer.cornerRadius = 6
         layer.masksToBounds = true
