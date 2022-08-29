@@ -29,21 +29,22 @@ final class CollectionHeaderView: UICollectionReusableView {
 
             switch section {
             case CollectionsSectionSet.images:
-                titleLabel.text = "collections.section.images.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.images.title".localized
                 icon = .photo
             case CollectionsSectionSet.filesAndAudio:
-                titleLabel.text = "collections.section.files.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.files.title".localized
                 icon = .document
             case CollectionsSectionSet.videos:
-                titleLabel.text = "collections.section.videos.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.videos.title".localized
                 icon = .movie
             case CollectionsSectionSet.links:
-                titleLabel.text = "collections.section.links.title".localized(uppercased: true)
+                titleLabel.text = "collections.section.links.title".localized
                 icon = .link
             default: fatal("Unknown section")
             }
 
-            iconImageView.setIcon(icon, size: .tiny, color: .lightGraphite)
+            iconImageView.setTemplateIcon(icon, size: .tiny)
+            iconImageView.tintColor = SemanticColors.Icon.foregroundConversationDefault
         }
     }
 
@@ -59,7 +60,7 @@ final class CollectionHeaderView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()

@@ -95,6 +95,10 @@ final class CollectionFileCell: CollectionCell {
             view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4),
             view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4)
         ])
+
+        secureContentsView.layer.borderColor = SemanticColors.View.borderCollectionCell.cgColor
+        secureContentsView.layer.cornerRadius = 12
+        secureContentsView.layer.borderWidth = 1
     }
 }
 

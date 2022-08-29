@@ -39,7 +39,7 @@ final class NoResultsView: UIView {
         didSet {
             if let icon = icon {
                 iconView.setTemplateIcon(icon, size: .custom(160))
-                iconView.tintColor = SemanticColors.Icon.foregroundNoItemSearchConversation
+                iconView.tintColor = SemanticColors.Icon.foregroundConversationDefault
             }
         }
     }
