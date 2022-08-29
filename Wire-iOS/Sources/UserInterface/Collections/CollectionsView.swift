@@ -34,7 +34,7 @@ final class CollectionsView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .from(scheme: .contentBackground)
+        backgroundColor = SemanticColors.View.backgroundConversationList
 
         recreateLayout()
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
@@ -56,7 +56,7 @@ final class CollectionsView: UIView {
         addSubview(collectionView)
 
         noResultsView.label.accessibilityLabel = "no items"
-        noResultsView.label.text = "collections.section.no_items".localized(uppercased: true)
+        noResultsView.label.text = "collections.section.no_items".localized
         noResultsView.icon = .library
         noResultsView.isHidden = true
         addSubview(noResultsView)

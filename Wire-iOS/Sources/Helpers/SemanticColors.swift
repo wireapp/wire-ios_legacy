@@ -70,6 +70,7 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textSettingsPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum SearchBar {
@@ -92,6 +93,7 @@ public enum SemanticColors {
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let foregroundNoItemSearchConversation = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum View {
