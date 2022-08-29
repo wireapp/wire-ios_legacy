@@ -18,7 +18,7 @@
 
 import UIKit
 
-class BottomTabView: UIStackView {
+class ConversationListTabView: UIStackView {
 
     let tabType: ConversationListButtonType
     let button = IconButton()
@@ -57,8 +57,8 @@ class BottomTabView: UIStackView {
             button.isHidden = true
         }
         button.accessibilityIdentifier = tabType.accessibilityIdentifier
-        button.accessibilityLabel = (tabType.accessibilityBase + ".label").localized
-        button.accessibilityHint = (tabType.accessibilityBase + ".hint").localized
+        button.accessibilityLabel = tabType.voiceOverLabel
+        button.accessibilityHint = tabType.voiceOverHint
 
         button.setIconColor(SemanticColors.Button.textBottomBarNormal, for: .normal)
         button.setIconColor(SemanticColors.Button.textBottomBarSelected, for: .selected)

@@ -33,16 +33,28 @@ enum ConversationListButtonType {
             return "bottomBarFolderListButton"
         }
     }
-    var accessibilityBase: String {
+    var voiceOverLabel: String {
         switch self {
         case .archive:
-            return "conversation_list.voiceover.bottom_bar.archived_button".localized
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ArchivedButton.label
         case .startUI:
-            return "conversation_list.voiceover.bottom_bar.contacts_button"
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ContactsButton.label
         case .list:
-            return "conversation_list.voiceover.bottom_bar.recent_button"
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.RecentButton.label
         case .folder:
-            return "conversation_list.voiceover.bottom_bar.folder_button"
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.FolderButton.label
+        }
+    }
+    var voiceOverHint: String {
+        switch self {
+        case .archive:
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ArchivedButton.hint
+        case .startUI:
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.ContactsButton.hint
+        case .list:
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.RecentButton.hint
+        case .folder:
+            return L10n.Localizable.ConversationList.Voiceover.BottomBar.FolderButton.hint
         }
     }
 }
@@ -56,15 +68,15 @@ final class ConversationListBottomBarController: UIViewController {
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let mainStackview = UIStackView(axis: .horizontal)
-    let startTabView = BottomTabView(tabType: .startUI)
-    let listTabView = BottomTabView(tabType: .list)
-    let folderTabView = BottomTabView(tabType: .folder)
-    let archivedTabView = BottomTabView(tabType: .archive)
+    let startTabView = ConversationListTabView(tabType: .startUI)
+    let listTabView = ConversationListTabView(tabType: .list)
+    let folderTabView = ConversationListTabView(tabType: .folder)
+    let archivedTabView = ConversationListTabView(tabType: .archive)
 
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
     private let xInset: CGFloat = 4
-    private var allSubStackViews: [BottomTabView] {
+    private var allTabs: [ConversationListTabView] {
         return [startTabView, listTabView, folderTabView, archivedTabView]
     }
 
@@ -182,8 +194,8 @@ final class ConversationListBottomBarController: UIViewController {
         self.currentlySelectedTab = buttonType
     }
 
-    private func highlightActiveTab(tabView selectedTabView: BottomTabView) {
-        allSubStackViews.forEach { subStackView in
+    private func highlightActiveTab(tabView selectedTabView: ConversationListTabView) {
+        allTabs.forEach { subStackView in
             subStackView.backgroundColor = subStackView.isEqual(selectedTabView) ? .accent() : .clear
             subStackView.label.textColor = subStackView.label.isEqual(selectedTabView.label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
             subStackView.button.isSelected = subStackView.isEqual(selectedTabView)
