@@ -233,7 +233,7 @@ enum DebugActions {
 
     static func updateInvalidAccessRoles() {
         guard let userSession = ZMUserSession.shared() else { return }
-        let predicate = NSPredicate(format: "team == nil AND accessRoleStringsV2 == %@",
+        let predicate = NSPredicate(format: "\(TeamKey) == nil AND \(AccessRoleStringsKeyV2) == %@",
                                     [ConversationAccessRoleV2.teamMember.rawValue])
         let request = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
         request.predicate = predicate
