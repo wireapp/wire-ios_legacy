@@ -99,4 +99,7 @@ public extension FontSpec {
     static var headerSemiboldFont: Self {
         return self.init(.header, .semibold)
     }
+    static var headerRegularFont: Self {
+        return self.init(.header, .regular)
+    }
 }

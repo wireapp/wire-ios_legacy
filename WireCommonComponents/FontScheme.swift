@@ -221,6 +221,7 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
 
         fontsByFontSpec[FontSpec(.header, .semibold, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.header, .regular, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .regular)
 
     }
 

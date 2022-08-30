@@ -18,6 +18,7 @@
 
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -110,7 +111,7 @@ final class ClientListViewController: UIViewController,
         }
 
         super.init(nibName: nil, bundle: nil)
-        setUpControllerTitle()
+        setupControllerTitle()
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() }))
         self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
@@ -416,22 +417,55 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            self.navigationItem.rightBarButtonItem = getRightBarButton(
+                title: "general.done".localized,
+                target: self,
+                action: #selector(ClientListViewController.endEditing(_:)),
+                font: .headerRegularFont,
+                forState: [.selected, .normal])
 
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+            self.navigationItem.rightBarButtonItem = getRightBarButton(
+                title: "general.edit".localized,
+                target: self,
+                action: #selector(ClientListViewController.startEditing(_:)),
+                font: .headerRegularFont,
+                forState: [.selected, .normal])
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
     }
 
-    private func setUpControllerTitle() {
+    private func setupControllerTitle() {
         let titleLabel = DynamicFontLabel(
             text: L10n.Localizable.Registration.Devices.title,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
+    }
+
+    private func getRightBarButton(
+        title buttonTitle: String,
+        style buttonStyle: UIBarButtonItem.Style = .plain,
+        target buttonTarget: Any?,
+        action buttonAction: Selector?,
+        font buttonFont: FontSpec,
+        forState buttonStates: [UIControl.State]) -> UIBarButtonItem {
+
+            let rightBarButtonItem = UIBarButtonItem(
+                title: buttonTitle,
+                style: buttonStyle,
+                target: buttonTarget,
+                action: buttonAction)
+            if let buttonFont = buttonFont.font {
+                buttonStates.forEach { state in
+                    rightBarButtonItem.setTitleTextAttributes(
+                        [NSAttributedString.Key.font: buttonFont],
+                        for: state)
+                }
+            }
+            return rightBarButtonItem
     }
 
 }
