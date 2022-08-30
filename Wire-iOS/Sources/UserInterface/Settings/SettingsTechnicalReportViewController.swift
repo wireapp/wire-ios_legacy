@@ -91,7 +91,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
 
     private func setupViewControllerTitle() {
         let titleLabel = DynamicFontLabel(
-            text: NSLocalizedString("self.settings.technical_report_section.title", comment: "").localized,
+            text: L10n.Localizable.`Self`.Settings.TechnicalReportSection.title,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
