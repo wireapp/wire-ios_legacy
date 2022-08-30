@@ -70,6 +70,16 @@ final class UserPropertyCell: SeparatorTableViewCell {
         }
     }
 
+    // MARK: - Configuration
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? UIColor(white: 0, alpha: 0.08)
+            : SemanticColors.View.backgroundUserCell
+        }
+    }
+
     // MARK: - Initialization
 
     override func setUp() {
@@ -110,21 +120,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
             contentStack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-    }
-
-    // MARK: - Configuration
-
-    override func applyColorScheme(_ variant: ColorSchemeVariant) {
-        super.applyColorScheme(variant)
-
-    }
-
-    override var isHighlighted: Bool {
-        didSet {
-            backgroundColor = isHighlighted
-                ? UIColor(white: 0, alpha: 0.08)
-                : SemanticColors.View.backgroundUserCell
-        }
     }
 
 }
