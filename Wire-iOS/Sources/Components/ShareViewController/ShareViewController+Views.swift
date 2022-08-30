@@ -42,8 +42,6 @@ extension ShareViewController {
 
     func createViews() {
 
-        
-
         createShareablePreview()
 
         self.tokenField.tokenTitleVerticalAdjustment = 1
