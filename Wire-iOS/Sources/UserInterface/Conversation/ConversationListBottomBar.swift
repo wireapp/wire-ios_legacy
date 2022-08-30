@@ -20,6 +20,7 @@ import UIKit
 import WireSyncEngine
 
 enum ConversationListButtonType {
+    typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
     case archive, startUI, list, folder
     var accessibilityIdentifier: String {
         switch self {
@@ -34,7 +35,6 @@ enum ConversationListButtonType {
         }
     }
     var accessibilityLabel: String {
-        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
         switch self {
         case .archive:
             return bottomBarLocalizable.ArchivedButton.label
@@ -47,7 +47,6 @@ enum ConversationListButtonType {
         }
     }
     var accessibilityHint: String {
-        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
         switch self {
         case .archive:
             return bottomBarLocalizable.ArchivedButton.hint
@@ -97,9 +96,11 @@ final class ConversationListBottomBarController: UIViewController {
         }
     }
 
-    var archivedIsVisible: Bool = false {
+    var showArchived: Bool = false {
         didSet {
-            archivedTabView.showArchivedTab(when: archivedIsVisible)
+            archivedTabView.isHidden = !showArchived
+            archivedTabView.label.isHidden = !showArchived
+            archivedTabView.button.isHidden = !showArchived
         }
     }
 

@@ -20,7 +20,6 @@ import UIKit
 
 final class ConversationListTabView: UIStackView {
 
-    let tabType: ConversationListButtonType
     let button = IconButton()
     let label = DynamicFontLabel(
         fontSpec: .mediumRegularFont,
@@ -29,19 +28,18 @@ final class ConversationListTabView: UIStackView {
     // MARK: - Initialization
 
     init(tabType: ConversationListButtonType) {
-        self.tabType = tabType
         super.init(frame: .zero)
-        self.configure(tabType: self.tabType)
+        self.configure(tabType)
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configure(tabType: ConversationListButtonType) {
+    private func configure(_ tabType: ConversationListButtonType) {
         setupButton(tabType: tabType)
         setupLabel(tabType: tabType)
-        configureStackView()
+        setupViews()
     }
 
     private func setupButton(tabType: ConversationListButtonType) {
@@ -54,7 +52,6 @@ final class ConversationListTabView: UIStackView {
             button.setIcon(.folderList, size: .tiny, for: [])
         case .archive:
             button.setIcon(.archive, size: .tiny, for: [])
-            button.isHidden = true
         }
         button.accessibilityIdentifier = tabType.accessibilityIdentifier
         button.accessibilityLabel = tabType.accessibilityLabel
@@ -78,7 +75,7 @@ final class ConversationListTabView: UIStackView {
             }
     }
 
-    private func configureStackView() {
+    private func setupViews() {
         axis = .vertical
         distribution = .fillEqually
         alignment = .center
@@ -90,13 +87,5 @@ final class ConversationListTabView: UIStackView {
 
         addArrangedSubview(button)
         addArrangedSubview(label)
-    }
-
-    // MARK: - Adaptive UI
-
-    func showArchivedTab(when archivedIsVisible: Bool) {
-        self.isHidden = !archivedIsVisible
-        label.isHidden = !archivedIsVisible
-        button.isHidden = !archivedIsVisible
     }
 }

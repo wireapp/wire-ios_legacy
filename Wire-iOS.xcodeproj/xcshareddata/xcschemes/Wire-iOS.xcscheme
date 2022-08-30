@@ -77,9 +77,6 @@
                   Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
                </Test>
                <Test
-                  Identifier = "ConversationListBottomBarControllerTests/testThatTheSeparatorIsNotHiddenWhen_ShowSeparator_IsSetToYes()">
-               </Test>
-               <Test
                   Identifier = "ConversationTextMessageTests/testMediaPreviewAttachment()">
                </Test>
                <Test
