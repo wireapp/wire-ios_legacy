@@ -79,12 +79,18 @@ final class ClientListViewController: UIViewController,
 
     var leftBarButtonItem: UIBarButtonItem? {
         if self.isIPadRegular() {
-            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+            return UIBarButtonItem.createHeaderDoneItem(
+                systemImage: true,
+                target: self,
+                action: #selector(ClientListViewController.backPressed(_:)))
         }
 
         if let rootViewController = self.navigationController?.viewControllers.first,
             self.isEqual(rootViewController) {
-            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+            return UIBarButtonItem.createHeaderDoneItem(
+                systemImage: true,
+                target: self,
+                action: #selector(ClientListViewController.backPressed(_:)))
         }
 
         return nil
@@ -417,21 +423,16 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            self.navigationItem.rightBarButtonItem = getRightBarButton(
-                title: "general.done".localized,
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createHeaderDoneItem(
+                systemImage: false,
                 target: self,
-                action: #selector(ClientListViewController.endEditing(_:)),
-                font: .headerRegularFont,
-                forState: [.selected, .normal])
+                action: #selector(ClientListViewController.endEditing(_:)))
 
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            self.navigationItem.rightBarButtonItem = getRightBarButton(
-                title: "general.edit".localized,
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createHeaderEditItem(
                 target: self,
-                action: #selector(ClientListViewController.startEditing(_:)),
-                font: .headerRegularFont,
-                forState: [.selected, .normal])
+                action: #selector(ClientListViewController.startEditing(_:)))
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
@@ -443,29 +444,6 @@ final class ClientListViewController: UIViewController,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
-    }
-
-    private func getRightBarButton(
-        title buttonTitle: String,
-        style buttonStyle: UIBarButtonItem.Style = .plain,
-        target buttonTarget: Any?,
-        action buttonAction: Selector?,
-        font buttonFont: FontSpec,
-        forState buttonStates: [UIControl.State]) -> UIBarButtonItem {
-
-            let rightBarButtonItem = UIBarButtonItem(
-                title: buttonTitle,
-                style: buttonStyle,
-                target: buttonTarget,
-                action: buttonAction)
-            if let buttonFont = buttonFont.font {
-                buttonStates.forEach { state in
-                    rightBarButtonItem.setTitleTextAttributes(
-                        [NSAttributedString.Key.font: buttonFont],
-                        for: state)
-                }
-            }
-            return rightBarButtonItem
     }
 
 }

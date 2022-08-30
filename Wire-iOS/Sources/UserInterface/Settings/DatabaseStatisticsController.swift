@@ -38,7 +38,7 @@ final class DatabaseStatisticsController: UIViewController {
 
         edgesForExtendedLayout = []
 
-        setupViewControllerTitle()
+        setupNavigationTitle()
 
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -135,9 +135,9 @@ final class DatabaseStatisticsController: UIViewController {
         }
     }
 
-    private func setupViewControllerTitle() {
+    private func setupNavigationTitle() {
         let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.`Self`.Settings.DeveloperOptions.DatabaseStatistics.title,
+            text: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel

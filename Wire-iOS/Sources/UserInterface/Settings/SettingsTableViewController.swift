@@ -162,7 +162,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         self.group = group
         self.sections = group.visibleItems
         super.init(style: group.style == .plain ? .plain : .grouped)
-        setupViewControllerTitle()
+        setupNavigationTitle()
 
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
@@ -269,7 +269,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         }
     }
 
-    private func setupViewControllerTitle() {
+    private func setupNavigationTitle() {
         let titleLabel = DynamicFontLabel(
             text: group.title.localized,
             fontSpec: .headerSemiboldFont,

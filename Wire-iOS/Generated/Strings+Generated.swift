@@ -3948,9 +3948,9 @@ internal enum L10n {
             /// Database Statistics
             internal static let title = L10n.tr("Localizable", "self.settings.developer_options.database_statistics.title")
           }
-          internal enum LogginCell {
+          internal enum Loggin {
             /// Options
-            internal static let title = L10n.tr("Localizable", "self.settings.developer_options.loggin_cell.title")
+            internal static let title = L10n.tr("Localizable", "self.settings.developer_options.loggin.title")
           }
         }
         internal enum DeviceDetails {

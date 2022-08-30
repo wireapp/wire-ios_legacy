@@ -34,7 +34,7 @@ final class DeveloperOptionsController: UIViewController {
     var mailViewController: MFMailComposeViewController?
 
     override func loadView() {
-        setupViewControllerTitle()
+        setupNavigationTitle()
         view = UIView()
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = .clear
@@ -56,9 +56,9 @@ final class DeveloperOptionsController: UIViewController {
         ])
     }
 
-    private func setupViewControllerTitle() {
+    private func setupNavigationTitle() {
         let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.`Self`.Settings.DeveloperOptions.LogginCell.title,
+            text: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel

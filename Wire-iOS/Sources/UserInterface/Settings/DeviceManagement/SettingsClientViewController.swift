@@ -76,7 +76,7 @@ final class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        setupViewControllerTitle()
+        setupNavigationTitle()
         self.credentials = credentials
     }
 
@@ -106,7 +106,7 @@ final class SettingsClientViewController: UIViewController,
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.Label.textDefault]
     }
 
-    private func setupViewControllerTitle() {
+    private func setupNavigationTitle() {
         let titleLabel = DynamicFontLabel(
             text: userClient.deviceClass?.localizedDescription.localized,
             fontSpec: .headerSemiboldFont,
