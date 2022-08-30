@@ -103,6 +103,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         //  Border colors are not dynamically updating for Dark Mode
         //  When you use adaptive colors with CALayers you’ll notice that these colors,
         // are not updating when switching appearance live in the app.
