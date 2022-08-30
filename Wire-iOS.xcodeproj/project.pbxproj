@@ -34,6 +34,7 @@
 		06717E5C2865183600AF442C /* Stylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E5B2865183600AF442C /* Stylable.swift */; };
 		06717E5E2865188000AF442C /* SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E582865178F00AF442C /* SemanticColors.swift */; };
 		067EF352288FCAB700B2659A /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 067EF350288FCAB600B2659A /* Accessibility.strings */; };
+		067F605D28B8EC8000FCC334 /* DebugCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067F605C28B8EC8000FCC334 /* DebugCommand.swift */; };
 		0685008126B35E7A00721F80 /* AudioMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */; };
 		0685008526B36BBC00721F80 /* VideoMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */; };
 		0685008926B3705100721F80 /* ImageMessageRestrictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */; };
@@ -1856,6 +1857,7 @@
 		067EF363288FCAE900B2659A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Accessibility.strings; sourceTree = "<group>"; };
 		067EF364288FCAEA00B2659A /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Accessibility.strings; sourceTree = "<group>"; };
 		067EF365288FCAEB00B2659A /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Accessibility.strings; sourceTree = "<group>"; };
+		067F605C28B8EC8000FCC334 /* DebugCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCommand.swift; sourceTree = "<group>"; };
 		0685008026B35E7A00721F80 /* AudioMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageRestrictionView.swift; sourceTree = "<group>"; };
 		0685008426B36BBC00721F80 /* VideoMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageRestrictionView.swift; sourceTree = "<group>"; };
 		0685008826B3705100721F80 /* ImageMessageRestrictionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageRestrictionView.swift; sourceTree = "<group>"; };
@@ -6174,6 +6176,7 @@
 				D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */,
 				EF2388852211A67900331C07 /* UserRight.swift */,
 				A93B528824FE98200061255E /* DebugActions.swift */,
+				067F605C28B8EC8000FCC334 /* DebugCommand.swift */,
 				E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */,
 			);
 			path = Settings;
@@ -8654,6 +8657,7 @@
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				543DF6AD25309641001F6EA6 /* AppRootRouter.swift in Sources */,
+				067F605D28B8EC8000FCC334 /* DebugCommand.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
 				5E4BC1C0218A0A4300A8682E /* UnknownMessageCellDescription.swift in Sources */,
 				A9A3B1F324D9A009001AF38E /* WipeCompletionViewController.swift in Sources */,
