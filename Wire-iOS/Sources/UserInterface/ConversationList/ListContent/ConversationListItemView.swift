@@ -166,7 +166,7 @@ final class ConversationListItemView: UIView {
     }
 
     private func configureFont() {
-        titleField.font = FontSpec(.normal, .light).font!
+        titleField.font = FontSpec(.normal, .semibold).font!
     }
 
     func updateAppearance() {
