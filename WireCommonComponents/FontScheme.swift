@@ -29,7 +29,7 @@ public enum FontSize: String {
     case normal
     case medium
     case small
-    case custom17
+    case header
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -220,7 +220,7 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.small, .regular, .none)]   = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .regular)
         fontsByFontSpec[FontSpec(.small, .light, .none)]     = .systemFont(ofSize: 11, contentSizeCategory: contentSizeCategory, weight: .light)
 
-        fontsByFontSpec[FontSpec(.custom17, .regular, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.header, .semibold, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .semibold)
 
     }
 

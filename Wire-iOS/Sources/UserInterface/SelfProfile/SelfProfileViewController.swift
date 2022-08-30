@@ -136,7 +136,7 @@ final class SelfProfileViewController: UIViewController {
         } else {
             let titleLabel = DynamicFontLabel(
                 text: L10n.Localizable.Self.account,
-                fontSpec: .customNaviationTitle17,
+                fontSpec: .headerSemiboldFont,
                 color: SemanticColors.Label.textDefault)
             navigationItem.titleView = titleLabel
         }

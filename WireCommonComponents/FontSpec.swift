@@ -96,7 +96,7 @@ public extension FontSpec {
     }
 
     // Navigation
-    static var customNaviationTitle17: Self {
-        return self.init(.custom17, .light)
+    static var headerSemiboldFont: Self {
+        return self.init(.header, .semibold)
     }
 }

@@ -1189,6 +1189,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Developer Options";
+"self.settings.developer_options.loggin_cell.title" = "Options";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options

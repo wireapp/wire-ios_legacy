@@ -437,7 +437,7 @@ final class ClientListViewController: UIViewController,
     private func setUpControllerTitle() {
         let titleLabel = DynamicFontLabel(
             text: "registration.devices.title".localized,
-            fontSpec: .customNaviationTitle17,
+            fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
     }
