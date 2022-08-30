@@ -416,19 +416,11 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            let rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
 
-            rightBarButtonItem.setTitleTextAttributes(
-                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)],
-                for: UIControl.State.normal)
-            self.navigationItem.rightBarButtonItem = rightBarButtonItem
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            let rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
-            rightBarButtonItem.setTitleTextAttributes(
-                [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)],
-                for: UIControl.State.normal)
-            self.navigationItem.rightBarButtonItem = rightBarButtonItem
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localized, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
