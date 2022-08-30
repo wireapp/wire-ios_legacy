@@ -20,7 +20,7 @@ import UIKit
 import WireSyncEngine
 
 enum ConversationListButtonType {
-    typealias bottomBarLocalizable = L10n.Localizable.ConversationList.Voiceover.BottomBar
+    typealias BottomBar = L10n.Localizable.ConversationList.Voiceover.BottomBar
     case archive, startUI, list, folder
     var accessibilityIdentifier: String {
         switch self {
@@ -34,28 +34,41 @@ enum ConversationListButtonType {
             return "bottomBarFolderListButton"
         }
     }
+    var title: String {
+        typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
+        switch self {
+        case .archive:
+            return BottomBar.Archived.title
+        case .startUI:
+            return BottomBar.Contacts.title
+        case .list:
+            return BottomBar.Conversations.title
+        case .folder:
+            return BottomBar.Folders.title
+        }
+    }
     var accessibilityLabel: String {
         switch self {
         case .archive:
-            return bottomBarLocalizable.ArchivedButton.label
+            return BottomBar.ArchivedButton.label
         case .startUI:
-            return bottomBarLocalizable.ContactsButton.label
+            return BottomBar.ContactsButton.label
         case .list:
-            return bottomBarLocalizable.RecentButton.label
+            return BottomBar.RecentButton.label
         case .folder:
-            return bottomBarLocalizable.FolderButton.label
+            return BottomBar.FolderButton.label
         }
     }
     var accessibilityHint: String {
         switch self {
         case .archive:
-            return bottomBarLocalizable.ArchivedButton.hint
+            return BottomBar.ArchivedButton.hint
         case .startUI:
-            return bottomBarLocalizable.ContactsButton.hint
+            return BottomBar.ContactsButton.hint
         case .list:
-            return bottomBarLocalizable.RecentButton.hint
+            return BottomBar.RecentButton.hint
         case .folder:
-            return bottomBarLocalizable.FolderButton.hint
+            return BottomBar.FolderButton.hint
         }
     }
 }
@@ -68,7 +81,7 @@ final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
-    let mainStackview = UIStackView(axis: .horizontal)
+    private let mainStackview = UIStackView(axis: .horizontal)
     let startTabView = ConversationListTabView(tabType: .startUI)
     let listTabView = ConversationListTabView(tabType: .list)
     let folderTabView = ConversationListTabView(tabType: .folder)
@@ -99,8 +112,6 @@ final class ConversationListBottomBarController: UIViewController {
     var showArchived: Bool = false {
         didSet {
             archivedTabView.isHidden = !showArchived
-            archivedTabView.label.isHidden = !showArchived
-            archivedTabView.button.isHidden = !showArchived
         }
     }
 
@@ -171,29 +182,29 @@ final class ConversationListBottomBarController: UIViewController {
     // MARK: - Target Action
     @objc
     private func listViewTapped() {
-        updateCurrentlySelectedTab(with: .list)
+        updateSelectedTab(with: .list)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
     }
 
     @objc
     private func folderViewTapped() {
-        updateCurrentlySelectedTab(with: .folder)
+        updateSelectedTab(with: .folder)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
     }
 
     @objc
     private func archiveViewTapped() {
-        updateCurrentlySelectedTab(with: .archive)
+        updateSelectedTab(with: .archive)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
 
     @objc
     func startUIViewTapped() {
-        updateCurrentlySelectedTab(with: .startUI)
+        updateSelectedTab(with: .startUI)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 
-    private func updateCurrentlySelectedTab(with buttonType: ConversationListButtonType) {
+    private func updateSelectedTab(with buttonType: ConversationListButtonType) {
         self.selectedTab = buttonType
     }
 
@@ -245,8 +256,6 @@ extension ConversationListBottomBarController: ZMUserObserver {
             listTabView.backgroundColor = .accent()
         case .folder:
             folderTabView.backgroundColor = .accent()
-        case .archive:
-            archivedTabView.backgroundColor = .accent()
         default:
             return
         }

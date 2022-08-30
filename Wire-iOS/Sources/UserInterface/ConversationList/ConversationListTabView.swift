@@ -62,17 +62,7 @@ final class ConversationListTabView: UIStackView {
     }
 
     private func setupLabel(tabType: ConversationListButtonType) {
-        typealias bottomBarLocalizable = L10n.Localizable.ConversationList.BottomBar
-            switch tabType {
-            case .archive:
-                label.text = bottomBarLocalizable.Archived.title
-            case .startUI:
-                label.text = bottomBarLocalizable.Contacts.title
-            case .list:
-                label.text = bottomBarLocalizable.Conversations.title
-            case .folder:
-                label.text = bottomBarLocalizable.Folders.title
-            }
+        label.text = tabType.title
     }
 
     private func setupViews() {

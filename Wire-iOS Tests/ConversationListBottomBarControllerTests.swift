@@ -75,7 +75,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItHidesTheContactsTitleAndShowsArchivedButtonWhen_ShowArchived_IsSetToYes() {
         // when
-        sut.archivedIsVisible = true
+        sut.showArchived = true
 
         // then
         verifyInAllPhoneWidths(view: sut.view)
@@ -84,10 +84,10 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
     func testThatItShowsTheContactsTitleAndHidesTheArchivedButtonWhen_ShowArchived_WasSetToYesAndIsSetToNo() {
         // given
         accentColor = .strongBlue // To make the snapshot distinguishable from the inital state
-        sut.archivedIsVisible = true
+        sut.showArchived = true
 
         // when
-        sut.archivedIsVisible = false
+        sut.showArchived = false
 
         // then
         verifyInAllPhoneWidths(view: sut.view)
