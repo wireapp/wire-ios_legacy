@@ -80,7 +80,8 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
     private func configureSubviews() {
         backgroundColor = SemanticColors.View.backgroundUserCell
-
+        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
+        propertyValueLabel.textColor = SemanticColors.Label.textDefault
         addBorder(for: .bottom)
 
         separator.isHidden = true
@@ -97,7 +98,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
         applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
-        backgroundColor = SemanticColors.View.backgroundUserCell
         separator.isHidden = true
     }
 
@@ -116,8 +116,15 @@ final class UserPropertyCell: SeparatorTableViewCell {
 
     override func applyColorScheme(_ variant: ColorSchemeVariant) {
         super.applyColorScheme(variant)
-        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
-        propertyValueLabel.textColor = SemanticColors.Label.textDefault
+
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+                ? UIColor(white: 0, alpha: 0.08)
+                : SemanticColors.View.backgroundUserCell
+        }
     }
 
 }
