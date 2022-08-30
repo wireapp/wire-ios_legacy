@@ -106,9 +106,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         contentStack.alignment = .leading
         contentView.addSubview(contentStack)
 
-        applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
-        separator.isHidden = true
     }
 
     private func configureConstraints() {
