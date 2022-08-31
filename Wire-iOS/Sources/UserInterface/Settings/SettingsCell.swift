@@ -44,7 +44,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
-            fontSpec: .normalLightFont,
+            fontSpec: .normalSemiboldFont,
             color: .textForeground)
         label.textColor = SemanticColors.Label.textDefault
         label.numberOfLines = 0

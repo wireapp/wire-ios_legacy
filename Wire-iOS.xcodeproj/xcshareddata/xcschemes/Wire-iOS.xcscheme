@@ -65,6 +65,9 @@
                   Identifier = "ArticleViewTests/testArticleViewWithPicture()">
                </Test>
                <Test
+                  Identifier = "AuthenticationInterfaceBuilderTests/testLandingScreen()">
+               </Test>
+               <Test
                   Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithImage()">
                </Test>
                <Test
@@ -90,6 +93,9 @@
                </Test>
                <Test
                   Identifier = "ImageMessageViewTests/testThatItRendersPortraitImage()">
+               </Test>
+               <Test
+                  Identifier = "LandingViewControllerSnapshotTests/testForInitState()">
                </Test>
                <Test
                   Identifier = "ProfileDetailsViewControllerTests/test_Group_BlockingConnectionRequest_MissingLegalHoldConsent1()">

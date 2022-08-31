@@ -76,7 +76,7 @@ final class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.localizedDescription.localizedUppercase
+        self.title = userClient.deviceClass?.localizedDescription.localized
         self.credentials = credentials
     }
 
@@ -129,6 +129,7 @@ final class SettingsClientViewController: UIViewController,
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = SemanticColors.View.backgroundDefault
+        tableView.separatorStyle = .none
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.register(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.register(SettingsTableCell.self, forCellReuseIdentifier: type(of: self).deleteCellReuseIdentifier)
@@ -227,8 +228,8 @@ final class SettingsClientViewController: UIViewController,
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
-
                     cell.selectionStyle = .none
+                    cell.separatorInset = .zero
                     cell.fingerprint = self.userClient.fingerprint
                     return cell
                 }

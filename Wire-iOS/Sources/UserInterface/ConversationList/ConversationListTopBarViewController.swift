@@ -93,7 +93,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
             titleLabel.text = selfUser.name
             titleLabel.font = FontSpec(.normal, .semibold).font
-            titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+            titleLabel.textColor = SemanticColors.Label.textDefault
             titleLabel.accessibilityTraits = .header
             titleLabel.accessibilityValue = selfUser.name
             titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
