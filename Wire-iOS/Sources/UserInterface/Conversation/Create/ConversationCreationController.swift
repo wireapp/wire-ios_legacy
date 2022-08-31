@@ -172,7 +172,7 @@ final class ConversationCreationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: colorSchemeVariant)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         title = "conversation.create.group_name.title".localized(uppercased: true)
 
         setupNavigationBar()
@@ -182,10 +182,6 @@ final class ConversationCreationController: UIViewController {
         if UIResponder.currentFirst != nil {
             nameSection.becomeFirstResponder()
         }
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -226,7 +222,7 @@ final class ConversationCreationController: UIViewController {
             ])
         }
 
-        navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        navBarBackgroundView.backgroundColor = SemanticColors.View.backgroundDefault
         view.addSubview(navBarBackgroundView)
 
         navBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
