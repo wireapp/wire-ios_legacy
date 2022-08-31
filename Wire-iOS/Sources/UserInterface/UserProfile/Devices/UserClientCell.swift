@@ -39,6 +39,14 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
     private weak var client: UserClientType?
 
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.View.backgroundUserCellHightLighted
+            : SemanticColors.View.backgroundUserCell
+        }
+    }
+
     override func setUp() {
         super.setUp()
 
@@ -96,14 +104,6 @@ final class UserClientCell: SeparatorCollectionViewCell {
         contentView.addSubview(contentStackView)
 
         createConstraints()
-    }
-
-    override var isHighlighted: Bool {
-        didSet {
-            backgroundColor = isHighlighted
-            ? SemanticColors.View.backgroundUserCellHightLighted
-            : SemanticColors.View.backgroundUserCell
-        }
     }
 
     private func setUpDeviceIconView() {
