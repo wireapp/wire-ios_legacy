@@ -147,7 +147,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
         view.addSubview(topBar)
         topBar.delegate = self
         topBar.needsSeparator = false
-        topBar.backgroundColor = UIColor.from(scheme: .barBackground)
+        topBar.backgroundColor = SemanticColors.View.backgroundDefault
         topBar.configure(title: dataSource.title, subtitle: nil, topAnchor: safeTopAnchor)
         reloadFooters()
 
