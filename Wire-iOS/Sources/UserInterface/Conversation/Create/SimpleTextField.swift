@@ -37,19 +37,11 @@ extension Optional where Wrapped == String {
     }
 }
 
-final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
+final class SimpleTextField: UITextField, DynamicTypeCapable {
 
     // MARK: - Properties
-    var attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+    var attribute: [NSAttributedString.Key: Any] = [.foregroundColor: SemanticColors.SearchBar.textInputViewPlaceholder,
                                                     .font: FontSpec.smallRegularFont.font!]
-
-    var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
-        didSet {
-            guard colorSchemeVariant != oldValue else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
     enum Value {
         case valid(String)
         case error(SimpleTextFieldValidator.ValidationError)
@@ -84,7 +76,6 @@ final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
         super.init(frame: .zero)
 
         setupTextFieldProperties()
-        applyColorScheme(colorSchemeVariant)
 
         tintColor = .accent()
     }
@@ -104,14 +95,13 @@ final class SimpleTextField: UITextField, Themeable, DynamicTypeCapable {
         font = ValidatedTextField.enteredTextFont.font
         delegate = textFieldValidator
         textFieldValidator.delegate = self
+
+        keyboardAppearance = .default
+        textColor = SemanticColors.SearchBar.textInputView
+        backgroundColor = SemanticColors.SearchBar.backgroundInputView
     }
 
     // MARK: - Methods
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
-        textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-    }
 
     func redrawFont() {
         font = ValidatedTextField.enteredTextFont.font
