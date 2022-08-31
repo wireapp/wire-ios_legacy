@@ -70,10 +70,13 @@ class ConversationDetailFooterView: UIView {
 
     // MARK: - Layout
     private func setupViews() {
+        let highlightedStateColor = UIColor.accent()
         let configureButton = { (button: IconButton) in
             self.containerView.addSubview(button)
             button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
             button.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
+            button.setIconColor(highlightedStateColor, for: .highlighted)
+            button.setTitleColor(highlightedStateColor, for: .highlighted)
         }
 
         configureButton(leftButton)
