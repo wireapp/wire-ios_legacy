@@ -69,19 +69,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheBottomBarCorrectlyInInitialState() {
-        // when
-        XCTAssertFalse(sut.showSeparator)
-
         // then
-        verifyInAllPhoneWidths(view: sut.view)
-    }
-
-    func testThatTheSeparatorIsNotHiddenWhen_ShowSeparator_IsSetToYes() {
-        // when
-        sut.showSeparator = true
-
-        // then
-        XCTAssertFalse(sut.separator.isHidden)
         verifyInAllPhoneWidths(view: sut.view)
     }
 
@@ -107,7 +95,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheContactsButtonIsTapped() {
         // when
-        sut.startUIButton.sendActions(for: .touchUpInside)
+        sut.startTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
@@ -115,7 +103,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheArchivedButtonIsTapped() {
         // when
-        sut.archivedButton.sendActions(for: .touchUpInside)
+        sut.archivedTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
@@ -123,7 +111,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheListButtonIsTapped() {
         // when
-        sut.listButton.sendActions(for: .touchUpInside)
+        sut.listTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.listButtonCallCount, 1)
@@ -131,7 +119,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
     func testThatItCallsTheDelegateWhenTheFolderButtonIsTapped() {
         // when
-        sut.folderButton.sendActions(for: .touchUpInside)
+        sut.folderTabView.button.sendActions(for: .touchUpInside)
 
         // then
         XCTAssertEqual(mockDelegate.folderButtonTapCount, 1)
