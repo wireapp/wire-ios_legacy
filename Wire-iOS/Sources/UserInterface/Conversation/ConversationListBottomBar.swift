@@ -14,13 +14,63 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
 import WireSyncEngine
 
 enum ConversationListButtonType {
+    typealias BottomBar = L10n.Localizable.ConversationList.Voiceover.BottomBar
     case archive, startUI, list, folder
+    var accessibilityIdentifier: String {
+        switch self {
+        case .archive:
+            return "bottomBarArchivedButton"
+        case .startUI:
+            return "bottomBarPlusButton"
+        case .list:
+            return "bottomBarRecentListButton"
+        case .folder:
+            return "bottomBarFolderListButton"
+        }
+    }
+    var title: String {
+        typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
+        switch self {
+        case .archive:
+            return BottomBar.Archived.title
+        case .startUI:
+            return BottomBar.Contacts.title
+        case .list:
+            return BottomBar.Conversations.title
+        case .folder:
+            return BottomBar.Folders.title
+        }
+    }
+    var accessibilityLabel: String {
+        switch self {
+        case .archive:
+            return BottomBar.ArchivedButton.label
+        case .startUI:
+            return BottomBar.ContactsButton.label
+        case .list:
+            return BottomBar.RecentButton.label
+        case .folder:
+            return BottomBar.FolderButton.label
+        }
+    }
+    var accessibilityHint: String {
+        switch self {
+        case .archive:
+            return BottomBar.ArchivedButton.hint
+        case .startUI:
+            return BottomBar.ContactsButton.hint
+        case .list:
+            return BottomBar.RecentButton.hint
+        case .folder:
+            return BottomBar.FolderButton.hint
+        }
+    }
 }
 
 protocol ConversationListBottomBarControllerDelegate: AnyObject {
@@ -31,45 +81,46 @@ final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
-    let buttonStackview = UIStackView(axis: .horizontal)
-
-    let startUIButton  = IconButton()
-    let listButton     = IconButton()
-    let folderButton   = IconButton()
-    let archivedButton = IconButton()
-
-    let separator = UIView()
+    private let mainStackview = UIStackView(axis: .horizontal)
+    let startTabView = ConversationListTabView(tabType: .startUI)
+    let listTabView = ConversationListTabView(tabType: .list)
+    let folderTabView = ConversationListTabView(tabType: .folder)
+    let archivedTabView = ConversationListTabView(tabType: .archive)
 
     private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
-    private let xInset: CGFloat = 16
+    private let xInset: CGFloat = 4
+    private var allTabs: [ConversationListTabView] {
+        return [startTabView, listTabView, folderTabView, archivedTabView]
+    }
+
+    private var selectedTab: ConversationListButtonType? {
+        didSet {
+            if let selectedTab = selectedTab {
+                switch selectedTab {
+                case .archive, .startUI:
+                    return
+                case .list:
+                    highlightActiveTab(tabView: listTabView)
+                case .folder:
+                    highlightActiveTab(tabView: folderTabView)
+                }
+            }
+        }
+    }
 
     var showArchived: Bool = false {
         didSet {
-            self.archivedButton.isHidden = !self.showArchived
+            archivedTabView.isHidden = !showArchived
         }
-    }
-
-    var showSeparator: Bool {
-        get {
-            return !separator.isHidden
-        }
-
-        set {
-            separator.fadeAndHide(!newValue)
-        }
-    }
-
-    private var allButtons: [IconButton] {
-        return [startUIButton, listButton, folderButton, archivedButton]
     }
 
     required init() {
         super.init(nibName: nil, bundle: nil)
 
-        createViews()
+        setupStackViews()
+        addTargetForStackViews()
         createConstraints()
-        updateColorScheme()
         addObservers()
     }
 
@@ -78,63 +129,14 @@ final class ConversationListBottomBarController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func createViews() {
-        view.backgroundColor = SemanticColors.View.backgroundConversationList
-        separator.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCell
-        separator.isHidden = true
-        separator.translatesAutoresizingMaskIntoConstraints = false
-
-        listButton.setIcon(.recentList, size: .tiny, for: [])
-        listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
-        listButton.accessibilityIdentifier = "bottomBarRecentListButton"
-        listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.recent_button.label".localized
-        listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.recent_button.hint".localized
-
-        folderButton.setIcon(.folderList, size: .tiny, for: [])
-        folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
-        folderButton.accessibilityIdentifier = "bottomBarFolderListButton"
-        folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.folder_button.label".localized
-        folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.folder_button.hint".localized
-
-        archivedButton.setIcon(.archive, size: .tiny, for: [])
-        archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
-        archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
-        archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
-        archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
-        archivedButton.isHidden = true
-
-        startUIButton.setIcon(.person, size: .tiny, for: .normal)
-        startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
-        startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
-        startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
-        startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
-
-        buttonStackview.distribution = .equalSpacing
-        buttonStackview.alignment = .center
-        buttonStackview.translatesAutoresizingMaskIntoConstraints = false
-
-        allButtons.forEach { button in
-            button.translatesAutoresizingMaskIntoConstraints = false
-            buttonStackview.addArrangedSubview(button)
-        }
-
-        view.addSubview(buttonStackview)
-        view.addSubview(separator)
-    }
-
     private func createConstraints() {
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: heightConstant),
 
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
-            separator.leftAnchor.constraint(equalTo: view.leftAnchor),
-            separator.rightAnchor.constraint(equalTo: view.rightAnchor),
-            separator.topAnchor.constraint(equalTo: view.topAnchor),
-
-            buttonStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
-            buttonStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
-            buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
-            buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            mainStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
+            mainStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
+            mainStackview.topAnchor.constraint(equalTo: view.topAnchor, constant: 2),
+            mainStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -2)
         ])
     }
 
@@ -144,40 +146,76 @@ final class ConversationListBottomBarController: UIViewController {
         userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
     }
 
-    fileprivate func updateColorScheme() {
-        allButtons.forEach { button in
-            button.setIconColor(SemanticColors.Label.textConversationListCell, for: .normal)
-            button.setIconColor(.accent(), for: .selected)
-        }
+    private func setupStackViews() {
+        mainStackview.distribution = .fillEqually
+        mainStackview.alignment = .fill
+        mainStackview.translatesAutoresizingMaskIntoConstraints = false
+        mainStackview.addArrangedSubview(startTabView)
+        mainStackview.addArrangedSubview(listTabView)
+        mainStackview.addArrangedSubview(folderTabView)
+        mainStackview.addArrangedSubview(archivedTabView)
+
+        view.addSubview(mainStackview)
+        view.backgroundColor = SemanticColors.View.backgroundConversationList
+        view.addBorder(for: .top)
+    }
+
+    private func addTargetForStackViews() {
+        var stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(listViewTapped))
+        listTabView.addGestureRecognizer(stackViewTapGesture)
+        listTabView.button.addTarget(self, action: #selector(listViewTapped), for: .touchUpInside)
+
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(folderViewTapped))
+        folderTabView.addGestureRecognizer(stackViewTapGesture)
+        folderTabView.button.addTarget(self, action: #selector(folderViewTapped), for: .touchUpInside)
+
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(archiveViewTapped))
+        archivedTabView.addGestureRecognizer(stackViewTapGesture)
+        archivedTabView.button.addTarget(self, action: #selector(archiveViewTapped), for: .touchUpInside)
+
+        stackViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(startUIViewTapped))
+        startTabView.addGestureRecognizer(stackViewTapGesture)
+        startTabView.button.addTarget(self, action: #selector(startUIViewTapped), for: .touchUpInside)
+
     }
 
     // MARK: - Target Action
-
     @objc
-    private func listButtonTapped(_ sender: IconButton) {
-        updateSelection(with: sender)
+    private func listViewTapped() {
+        updateSelectedTab(with: .list)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
     }
 
     @objc
-    private func folderButtonTapped(_ sender: IconButton) {
-        updateSelection(with: sender)
+    private func folderViewTapped() {
+        updateSelectedTab(with: .folder)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
     }
 
     @objc
-    private func archivedButtonTapped(_ sender: IconButton) {
+    private func archiveViewTapped() {
+        updateSelectedTab(with: .archive)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
 
     @objc
-    func startUIButtonTapped(_ sender: Any?) {
+    func startUIViewTapped() {
+        updateSelectedTab(with: .startUI)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 
-    private func updateSelection(with button: IconButton) {
-        allButtons.forEach({ $0.isSelected = $0 == button })
+    private func updateSelectedTab(with buttonType: ConversationListButtonType) {
+        self.selectedTab = buttonType
     }
+
+    private func highlightActiveTab(tabView selectedTabView: ConversationListTabView) {
+        allTabs.forEach { subStackView in
+            subStackView.backgroundColor = subStackView.isEqual(selectedTabView) ? .accent() : .clear
+            subStackView.label.textColor = subStackView.label.isEqual(selectedTabView.label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
+            subStackView.button.isSelected = subStackView.isEqual(selectedTabView)
+        }
+    }
+
 }
 
 // MARK: - Helper
@@ -201,9 +239,9 @@ extension UIView {
 extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
         if enabled {
-            updateSelection(with: folderButton)
+            selectedTab = .folder
         } else {
-            updateSelection(with: listButton)
+            selectedTab = .list
         }
     }
 }
@@ -213,7 +251,13 @@ extension ConversationListBottomBarController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.accentColorValueChanged else { return }
 
-        updateColorScheme()
+        switch selectedTab {
+        case .list:
+            listTabView.backgroundColor = .accent()
+        case .folder:
+            folderTabView.backgroundColor = .accent()
+        default:
+            return
+        }
     }
-
 }

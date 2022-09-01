@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Contacts";
+"conversation_list.bottom_bar.conversations.title" = "Conversations";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archived";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
 "conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
