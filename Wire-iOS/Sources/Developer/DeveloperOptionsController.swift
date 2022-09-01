@@ -34,7 +34,7 @@ final class DeveloperOptionsController: UIViewController {
     var mailViewController: MFMailComposeViewController?
 
     override func loadView() {
-        title = "OPTIONS"
+        setupNavigationTitle()
         view = UIView()
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = .clear
@@ -54,6 +54,14 @@ final class DeveloperOptionsController: UIViewController {
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     // MARK: - Cells

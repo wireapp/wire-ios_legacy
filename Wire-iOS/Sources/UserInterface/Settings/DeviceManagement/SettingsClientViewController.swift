@@ -76,7 +76,7 @@ final class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.localizedDescription.localized
+        setupNavigationTitle()
         self.credentials = credentials
     }
 
@@ -104,6 +104,14 @@ final class SettingsClientViewController: UIViewController,
     func setupFromConversationStyle() {
         view.backgroundColor = SemanticColors.View.backgroundDefault
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.Label.textDefault]
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: userClient.deviceClass?.localizedDescription.localized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     override func viewWillAppear(_ animated: Bool) {
