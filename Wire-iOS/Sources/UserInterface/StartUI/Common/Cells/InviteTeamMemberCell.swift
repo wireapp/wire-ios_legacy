@@ -29,6 +29,7 @@ class StartUIIconCell: UICollectionViewCell {
     fileprivate var icon: StyleKitIcon? {
         didSet {
             iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault)
+            iconView.tintColor = SemanticColors.Icon.foregroundDefault
         }
     }
 
