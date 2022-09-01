@@ -84,7 +84,8 @@ extension ShareViewController {
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
         if self.allowsMultipleSelection {
-            self.searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+            searchIcon.setTemplateIcon(.search, size: .tiny)
+            searchIcon.tintColor = SemanticColors.SearchBar.backgroundButton
         } else {
             self.clearButton.isHidden = true
             self.tokenField.isHidden = true

@@ -51,11 +51,6 @@ class StartUIIconCell: UICollectionViewCell {
         createConstraints()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        iconView.image = icon?.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault)
-
-    }
-
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
