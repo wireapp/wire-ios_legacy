@@ -133,7 +133,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = L10n.Localizable.Self.Settings.HistoryBackup.title.localizedUppercase
+        setupNavigationTitle()
         setupViews()
         setupLayout()
     }
@@ -162,6 +162,14 @@ final class BackupViewController: UIViewController, SpinnerCapable {
 
     private func setupLayout() {
         tableView.fitIn(view: view)
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.HistoryBackup.title.localized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     var loadingHostController: SpinnerCapableViewController {
