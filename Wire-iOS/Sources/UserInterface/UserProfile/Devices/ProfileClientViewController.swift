@@ -56,6 +56,9 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let fingerprintFont = FontSpec(.normal, .none).font!
     private let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
 
+    private let defaultTextColor = SemanticColors.Label.textDefault
+    private let defaultBackgroundColor = SemanticColors.View.backgroundDefault
+
     convenience init(client: UserClient,
                      fromConversation: Bool) {
         self.init(client: client)
@@ -90,16 +93,12 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 
     private func setupViews() {
-        view.backgroundColor = UIColor.from(scheme: .background)
+        view.backgroundColor = defaultBackgroundColor
 
         setupContentView()
         setupBackButton()
@@ -148,8 +147,8 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
-        descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
+        descriptionTextView.textColor = defaultTextColor
+        descriptionTextView.backgroundColor = defaultBackgroundColor
         descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.accent()]
 
         let descriptionTextFont = FontSpec(.normal, .light).font!
@@ -157,7 +156,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         if let user = userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
                                                     descriptionTextFont &&
-                                                    UIColor.from(scheme: .textForeground)) +
+                                                    defaultTextColor) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
                     [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
@@ -166,7 +165,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor.from(scheme: .separator)
+        separatorLineView.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         contentView.addSubview(separatorLineView)
     }
 
@@ -174,13 +173,13 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         typeLabel.text = userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor.from(scheme: .textForeground)
+        typeLabel.textColor = defaultTextColor
         contentView.addSubview(typeLabel)
     }
 
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor.from(scheme: .textForeground)
+        IDLabel.textColor = defaultTextColor
         contentView.addSubview(IDLabel)
         updateIDLabel()
     }
@@ -198,7 +197,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor.from(scheme: .textForeground)
+        fullIDLabel.textColor = defaultTextColor
         contentView.addSubview(fullIDLabel)
     }
 
@@ -232,7 +231,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
+        verifiedToggleLabel.textColor = defaultTextColor
         verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
