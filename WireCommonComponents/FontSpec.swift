@@ -95,4 +95,11 @@ public extension FontSpec {
         return self.init(.large, .light, .largeTitle)
     }
 
+    // Navigation
+    static var headerSemiboldFont: Self {
+        return self.init(.header, .semibold)
+    }
+    static var headerRegularFont: Self {
+        return self.init(.header, .regular)
+    }
 }
