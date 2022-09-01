@@ -79,7 +79,7 @@ final class ClientListViewController: UIViewController,
 
     var leftBarButtonItem: UIBarButtonItem? {
         if self.isIPadRegular() {
-            return UIBarButtonItem.createHeaderDoneItem(
+            return UIBarButtonItem.createNavigationBarButtonDoneItem(
                 systemImage: true,
                 target: self,
                 action: #selector(ClientListViewController.backPressed(_:)))
@@ -87,7 +87,7 @@ final class ClientListViewController: UIViewController,
 
         if let rootViewController = self.navigationController?.viewControllers.first,
             self.isEqual(rootViewController) {
-            return UIBarButtonItem.createHeaderDoneItem(
+            return UIBarButtonItem.createNavigationBarButtonDoneItem(
                 systemImage: true,
                 target: self,
                 action: #selector(ClientListViewController.backPressed(_:)))
@@ -423,14 +423,14 @@ final class ClientListViewController: UIViewController,
 
     func createRightBarButtonItem() {
         if self.editingList {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createHeaderDoneItem(
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createNavigationBarButtonDoneItem(
                 systemImage: false,
                 target: self,
                 action: #selector(ClientListViewController.endEditing(_:)))
 
             self.navigationItem.setLeftBarButton(nil, animated: true)
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createHeaderEditItem(
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem.createNavigationBarEditItem(
                 target: self,
                 action: #selector(ClientListViewController.startEditing(_:)))
 

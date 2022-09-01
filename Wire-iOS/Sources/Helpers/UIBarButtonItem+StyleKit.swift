@@ -45,7 +45,7 @@ extension UIBarButtonItem {
         return item
     }
 
-    static func createHeaderDoneItem(
+    static func createNavigationBarButtonDoneItem(
         systemImage: Bool,
         target buttonTarget: Any?,
         action buttonAction: Selector?,
@@ -77,7 +77,7 @@ extension UIBarButtonItem {
             return rightBarButtonItem
     }
 
-    static func createHeaderEditItem(
+    static func createNavigationBarEditItem(
         target buttonTarget: Any?,
         action buttonAction: Selector?,
         font buttonFont: FontSpec = FontSpec.headerRegularFont) -> UIBarButtonItem {
