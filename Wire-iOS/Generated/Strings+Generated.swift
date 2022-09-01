@@ -1478,7 +1478,7 @@ internal enum L10n {
     internal enum ConversationList {
       internal enum BottomBar {
         internal enum Archived {
-          /// Archived
+          /// Archive
           internal static let title = L10n.tr("Localizable", "conversation_list.bottom_bar.archived.title")
         }
         internal enum Contacts {
