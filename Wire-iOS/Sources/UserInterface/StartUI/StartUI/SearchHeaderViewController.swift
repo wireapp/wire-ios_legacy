@@ -56,17 +56,13 @@ final class SearchHeaderViewController: UIViewController {
         tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
-        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = SemanticColors.View.backgroundDefault
 
-        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
+        searchIcon.setTemplateIcon(.search, size: .tiny)
+        searchIcon.tintColor = SemanticColors.SearchBar.backgroundButton
 
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
@@ -74,9 +70,8 @@ final class SearchHeaderViewController: UIViewController {
         clearButton.isHidden = true
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
 
-        clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
-
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
+        tokenField.tokenTitleColor = SemanticColors.SearchBar.textInputView
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized(uppercased: true)
         tokenField.textView.keyboardAppearance = .default
         tokenField.textView.returnKeyType = .done
