@@ -117,7 +117,6 @@ final class ServiceDetailViewController: UIViewController {
 
             view.backgroundColor = .clear
 
-
         [detailView, actionButton].forEach(view.addSubview)
 
         createConstraints()
