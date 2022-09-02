@@ -50,17 +50,28 @@ final class NotificationsAPIClient: Loggable {
 struct NotificationByIDEndpoint: Endpoint, Loggable {
 
     // MARK: - Types
-
     typealias Output = ZMUpdateEvent
 
-    enum Failure: Error {
-
+    enum Failure: Error, Equatable {
         case invalidResponse
         case failedToDecodePayload
         case notifcationNotFound
         case incorrectEvent
         case unknownError(ErrorResponse)
 
+        static func == (lhs: NotificationByIDEndpoint.Failure, rhs: NotificationByIDEndpoint.Failure) -> Bool {
+            switch (lhs, rhs) {
+            case (invalidResponse, invalidResponse),
+                (failedToDecodePayload, failedToDecodePayload),
+                (notifcationNotFound, notifcationNotFound),
+                (incorrectEvent, incorrectEvent):
+                return true
+            case (unknownError(let lVal), unknownError(let rVal)):
+                return (lVal.code == rVal.code) && (lVal.message == rVal.message)
+            default:
+                return false
+            }
+        }
     }
 
     // MARK: - Properties
@@ -91,8 +102,10 @@ struct NotificationByIDEndpoint: Endpoint, Loggable {
             guard let payload = try? JSONSerialization.jsonObject(with: response.data, options: []) as? [AnyHashable: Any] else {
                 return .failure(.failedToDecodePayload)
             }
-
-            logger.info("received event response payload: \(payload, privacy: .public)")
+            let dat = String(data: response.data, encoding: .utf8) ?? "error"
+            print(dat )
+            logger.info("received event response payload: \(dat, privacy: .public)")
+//            logger.info("received event response payload: \(payload, privacy: .public)")
 
             guard let events = ZMUpdateEvent.eventsArray(
                 from: payload as ZMTransportData,

@@ -53,13 +53,25 @@ struct AccessTokenEndpoint: Endpoint, Loggable {
 
     typealias Output = AccessToken
 
-    enum Failure: Error {
-
+    enum Failure: Error, Equatable {
         case invalidResponse
         case failedToDecodePayload
         case authenticationError
         case unknownError(ErrorResponse)
 
+
+            static func == (lhs: AccessTokenEndpoint.Failure, rhs: AccessTokenEndpoint.Failure) -> Bool {
+                switch (lhs, rhs) {
+                case (invalidResponse, invalidResponse),
+                    (failedToDecodePayload, failedToDecodePayload),
+                    (authenticationError, authenticationError):
+                    return true
+                case (unknownError(let lVal), unknownError(let rVal)):
+                    return (lVal.code == rVal.code) && (lVal.message == rVal.message)
+                default:
+                    return false
+                }
+            }
     }
 
     // MARK: - Request

@@ -26,7 +26,7 @@ import WireSyncEngine
 import UIKit
 import CallKit
 
-protocol CallEventHandlerProtocol {
+public protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
@@ -47,7 +47,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
 
     // MARK: - Properties
 
-    var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
+    public var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?
