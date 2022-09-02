@@ -62,12 +62,8 @@ class AccentColorOption: Equatable {
     }
 }
 
-
 class ColorPickerController: UIViewController {
     let tableView = UITableView()
-    let headerView = UIView()
-    let titleLabel = UILabel()
-    let closeButton = IconButton()
 
     static fileprivate let rowHeight: CGFloat = 56
 
@@ -79,62 +75,30 @@ class ColorPickerController: UIViewController {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
 
-        modalPresentationStyle = .popover
+        modalPresentationStyle = .fullScreen
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        headerView.backgroundColor = .yellow
         view.backgroundColor = SemanticColors.Background.settingsView
-
-        closeButton.setIcon(.cross, size: .tiny, for: [])
-        closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
-        closeButton.setIconColor(UIColor.darkGray, for: .normal)
-
-        titleLabel.font = FontSpec(.small, .light).font!
-
-        headerView.addSubview(titleLabel)
-        headerView.addSubview(closeButton)
-
         view.addSubview(tableView)
-        view.addSubview(headerView)
 
-        [headerView, titleLabel, closeButton, tableView].prepareForLayout()
+        [tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: Self.rowHeight),
-
-            titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: headerView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: closeButton.leadingAnchor),
-
-            closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            closeButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            closeButton.heightAnchor.constraint(equalTo: headerView.heightAnchor),
-            closeButton.widthAnchor.constraint(equalTo: closeButton.heightAnchor),
-
-            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.heightAnchor.constraint(equalToConstant: Self.rowHeight * CGFloat(colors.count)),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
         tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
+        tableView.backgroundColor = .red
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -142,10 +106,6 @@ class ColorPickerController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return false
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     fileprivate class PickerCell: UITableViewCell {
@@ -261,7 +221,7 @@ final class AccentColorPickerController: ColorPickerController {
 
         super.init(colors: allAccentColors.map { AccentColorOption(accentColor: $0) })
 
-        title = L10n.Localizable.Self.Settings.AccountPictureGroup.color.uppercased()
+        title = L10n.Localizable.Self.Settings.AccountPictureGroup.color
 
         if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = allAccentColors.firstIndex(of: accentColor) {
             currentColor = colors[currentColorIndex].color

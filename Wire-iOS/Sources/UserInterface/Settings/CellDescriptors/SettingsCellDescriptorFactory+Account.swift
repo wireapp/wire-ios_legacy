@@ -281,7 +281,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsExternalScreenCellDescriptor(
             title: "self.settings.account_picture_group.color".localized,
             isDestructive: false,
-            presentationStyle: .modal,
+            presentationStyle: .navigation,
             presentationAction: AccentColorPickerController.init,
             previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) }
         )
