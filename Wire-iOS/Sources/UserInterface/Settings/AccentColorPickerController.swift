@@ -220,7 +220,7 @@ final class AccentColorPickerController: ColorPickerController {
 
         super.init(colors: allAccentColors.map { AccentColorOption(accentColor: $0) })
 
-        title = L10n.Localizable.Self.Settings.AccountPictureGroup.color
+        setupControllerTitle()
 
         if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = allAccentColors.firstIndex(of: accentColor) {
             currentColor = colors[currentColorIndex].color
@@ -236,6 +236,14 @@ final class AccentColorPickerController: ColorPickerController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupControllerTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.AccountPictureGroup.color,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 }
 
