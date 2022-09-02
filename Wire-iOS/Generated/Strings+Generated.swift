@@ -1476,6 +1476,24 @@ internal enum L10n {
       }
     }
     internal enum ConversationList {
+      internal enum BottomBar {
+        internal enum Archived {
+          /// Archive
+          internal static let title = L10n.tr("Localizable", "conversation_list.bottom_bar.archived.title")
+        }
+        internal enum Contacts {
+          /// Contacts
+          internal static let title = L10n.tr("Localizable", "conversation_list.bottom_bar.contacts.title")
+        }
+        internal enum Conversations {
+          /// Conversations
+          internal static let title = L10n.tr("Localizable", "conversation_list.bottom_bar.conversations.title")
+        }
+        internal enum Folders {
+          /// Folders
+          internal static let title = L10n.tr("Localizable", "conversation_list.bottom_bar.folders.title")
+        }
+      }
       internal enum DataUsagePermissionAlert {
         /// I Agree
         internal static let agree = L10n.tr("Localizable", "conversation_list.data_usage_permission_alert.agree")
@@ -3944,6 +3962,14 @@ internal enum L10n {
         internal enum DeveloperOptions {
           /// Developer Options
           internal static let title = L10n.tr("Localizable", "self.settings.developer_options.title")
+          internal enum DatabaseStatistics {
+            /// Database Statistics
+            internal static let title = L10n.tr("Localizable", "self.settings.developer_options.database_statistics.title")
+          }
+          internal enum Loggin {
+            /// Options
+            internal static let title = L10n.tr("Localizable", "self.settings.developer_options.loggin.title")
+          }
         }
         internal enum DeviceDetails {
           internal enum Fingerprint {

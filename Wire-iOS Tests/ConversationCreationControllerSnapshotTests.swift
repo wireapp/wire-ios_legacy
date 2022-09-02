@@ -58,9 +58,7 @@ final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
         createSut(isTeamMember: true)
 
         sut.overrideUserInterfaceStyle = .dark
-        ColorScheme.default.variant = .dark
 
-        sut.view.backgroundColor = .black
         verify(matching: sut)
     }
 

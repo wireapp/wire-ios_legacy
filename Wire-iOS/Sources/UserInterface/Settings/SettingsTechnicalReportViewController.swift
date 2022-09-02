@@ -58,7 +58,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "").localizedUppercase
+        setupNavigationTitle()
         tableView.backgroundColor = UIColor.clear
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
@@ -87,6 +87,14 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         }
         mailComposeViewController.setMessageBody("Debug report", isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.TechnicalReportSection.title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     // MARK: - TableView Delegates

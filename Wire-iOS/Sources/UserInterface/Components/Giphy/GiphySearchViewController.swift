@@ -65,10 +65,6 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         title = conversation.displayName.localizedUppercase
         performSearch()
     }
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        searchBar.iconView.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
-        searchBar.clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
-    }
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -156,6 +152,10 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         collectionView?.backgroundColor = UIColor.from(scheme: .background)
         noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
         noResultsLabel.font = UIFont.smallLightFont
+
+        searchBar.iconView.setTemplateIcon(.search, size: .tiny)
+        searchBar.iconView.tintColor = SemanticColors.SearchBar.backgroundButton
+        searchBar.clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)
     }
 
     // MARK: - Presentation

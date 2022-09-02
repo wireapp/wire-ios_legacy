@@ -34,7 +34,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
     private func setupViews() {
 
         imageContainer.addSubview(iconImageView)
-        label.font = FontSpec(.normal, .light).font
+        label.font = FontSpec(.normal, .semibold).font
         [imageContainer, label].forEach(contentView.addSubview)
     }
 

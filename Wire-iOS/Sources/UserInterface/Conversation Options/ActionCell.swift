@@ -38,12 +38,14 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
 
     private func setupViews() {
         let backgroundView = UIView()
-        backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
+        backgroundView.backgroundColor = SemanticColors.View.backgroundUserCell
         selectedBackgroundView = backgroundView
         imageContainer.addSubview(iconImageView)
-        iconImageView.setIcon(.link, size: .tiny, color: SemanticColors.LegacyColors.strongBlue)
-        label.textColor = SemanticColors.LegacyColors.strongBlue
-        label.font = FontSpec(.normal, .light).font
+        iconImageView.setIcon(.link, size: .tiny, color: SemanticColors.Icon.foregroundDefault)
+        iconImageView.setTemplateIcon(.link, size: .tiny)
+        iconImageView.tintColor = SemanticColors.Icon.foregroundDefault
+        label.textColor = SemanticColors.Label.textDefault
+        label.font = FontSpec(.normal, .semibold).font
         [imageContainer, label].forEach(contentView.addSubview)
     }
 
@@ -68,6 +70,6 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier
         label.text = title
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
+        backgroundColor = SemanticColors.View.backgroundUserCell
     }
 }
