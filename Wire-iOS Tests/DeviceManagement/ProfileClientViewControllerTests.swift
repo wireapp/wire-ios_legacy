@@ -27,7 +27,6 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode  = true
         user = ZMUser.insertNewObject(in: uiMOC)
         accentColor = .vividRed
 
