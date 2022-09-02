@@ -39,9 +39,9 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
     let presentationStyle: PresentationStyle
     let identifier: String?
     let icon: StyleKitIcon?
-
+  
     private let accessoryViewMode: AccessoryViewMode
-
+ 
     weak var group: SettingsGroupCellDescriptorType?
     weak var viewController: UIViewController?
 

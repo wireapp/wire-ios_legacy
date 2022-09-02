@@ -75,7 +75,6 @@ class ColorPickerController: UIViewController {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
 
-        modalPresentationStyle = .fullScreen
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -98,7 +97,7 @@ class ColorPickerController: UIViewController {
         ])
 
         tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
-        tableView.backgroundColor = .red
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
