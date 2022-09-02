@@ -27,6 +27,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        recordMode  = true
         user = ZMUser.insertNewObject(in: uiMOC)
         accentColor = .vividRed
 
@@ -55,13 +56,21 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view, tolerance: 0.1)
     }
 
+    func verifyInDarkMode() {
+        sut = ProfileClientViewController(client: client)
+        sut.overrideUserInterfaceStyle = .dark
+        sut.spinner.stopAnimating()
+        sut.spinner.isHidden = true
+        sut.showBackButton = false
+
+        verify(view: sut.view, tolerance: 0.1)
+    }
+
     func testTestForLightTheme() {
-        ColorScheme.default.variant = .light
         verify()
     }
 
     func testTestForDarkTheme() {
-        ColorScheme.default.variant = .dark
-        verify()
+        verifyInDarkMode()
     }
 }

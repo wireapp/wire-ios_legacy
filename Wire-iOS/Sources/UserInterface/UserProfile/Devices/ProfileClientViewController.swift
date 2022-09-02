@@ -6,7 +6,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -24,7 +24,7 @@ import WireCommonComponents
 final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     // MARK: Properties
-    
+
     private let userClient: UserClient
     private let contentView = UIView()
     private let backButton = IconButton(style: .circular)
@@ -57,7 +57,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
     private let fingerprintFont = FontSpec(.normal, .none).font!
     private let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
-    
+
     private let defaultTextColor = SemanticColors.Label.textDefault
     private let defaultBackgroundColor = SemanticColors.View.backgroundDefault
 
@@ -68,10 +68,10 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         self.init(client: client)
         self.fromConversation = fromConversation
     }
-    
+
     required init(client: UserClient) {
         userClient = client
-        
+
         super.init(nibName: nil, bundle: nil)
 
         userClientToken = UserClientChangeInfo.add(observer: self, for: client)
@@ -237,7 +237,6 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         contentView.addSubview(verifiedToggle)
     }
-
 
     private func updateIDLabel() {
         let fingerprintSmallMonospaceFont = fingerprintSmallFont.monospaced()
