@@ -30,7 +30,7 @@ final class BrowserViewController: SFSafariViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        preferredControlTintColor = UIColor.from(scheme: .textForeground, variant: .light)
+        preferredControlTintColor = SemanticColors.Label.textDefault
         delegate = self
     }
 
