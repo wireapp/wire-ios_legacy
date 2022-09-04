@@ -139,7 +139,7 @@
 "conversation_list.bottom_bar.contacts.title" = "Contacts";
 "conversation_list.bottom_bar.conversations.title" = "Conversations";
 "conversation_list.bottom_bar.folders.title" = "Folders";
-"conversation_list.bottom_bar.archived.title" = "Archived";
+"conversation_list.bottom_bar.archived.title" = "Archive";
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
