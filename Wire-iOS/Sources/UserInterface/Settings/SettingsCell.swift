@@ -81,7 +81,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return badgeLabel
     }()
 
-    private let imagePreview: UIImageView = {
+    fileprivate let imagePreview: UIImageView = {
         let imagePreview = UIImageView()
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -258,6 +258,111 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
         }
     }
+}
+
+class SettingsTableProfileCell: SettingsTableCell {
+    override var preview: SettingsCellPreview {
+        didSet {
+            switch preview {
+            case .color(let color):
+                colorNameLabel.text = getColorName(for: color)
+                badge.isHidden = true
+                cellNameLabel.isHidden = true
+                valueLabel.isHidden = true
+                imagePreview.isHidden = true
+                colorView.image = .none
+                colorView.backgroundColor = color
+                colorView.accessibilityValue = "color"
+                colorView.isAccessibilityElement = true
+            default:
+                return
+            }
+        }
+    }
+
+    override var titleText: String {
+        didSet {
+            profileCellNameLabel.text = titleText
+        }
+    }
+
+    let profileCellNameLabel: UILabel = {
+        let label = DynamicFontLabel(
+            fontSpec: .normalSemiboldFont,
+            color: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
+        label.numberOfLines = 0
+        return label
+    }()
+
+    let colorNameLabel: UILabel = {
+        let valueLabel = UILabel()
+        valueLabel.textColor = SemanticColors.Label.textDefault
+        valueLabel.font = UIFont.systemFont(ofSize: 12)
+        valueLabel.textAlignment = .right
+        return valueLabel
+    }()
+
+    let colorView: UIImageView = {
+        let colorView = UIImageView()
+        colorView.clipsToBounds = true
+        colorView.layer.cornerRadius = 15
+        colorView.contentMode = .scaleAspectFill
+        colorView.accessibilityIdentifier = "colorView"
+
+        return colorView
+    }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        [profileCellNameLabel, colorNameLabel, colorView].forEach {
+            contentView.addSubview($0)
+        }
+
+        [profileCellNameLabel, colorNameLabel, colorView].prepareForLayout()
+
+        NSLayoutConstraint.activate([
+            profileCellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            profileCellNameLabel.leadingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: 22),
+
+            colorNameLabel.topAnchor.constraint(equalTo: profileCellNameLabel.bottomAnchor),
+            colorNameLabel.leadingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: 22),
+
+            colorView.widthAnchor.constraint(equalTo: colorView.heightAnchor),
+            colorView.heightAnchor.constraint(equalToConstant: 30),
+            colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
+        ])
+    }
+
+    private func getColorName(for color: UIColor) -> String {
+        let accentColors: [AccentColor] = AccentColor.allSelectable()
+        var colorName: String = "No name"
+        accentColors.forEach { accentColor in
+            if hexStringFromColor(color: UIColor(for: accentColor)) == hexStringFromColor(color: color) {
+                colorName = accentColor.colorName
+            }
+        }
+        return colorName
+    }
+
+    private func hexStringFromColor(color: UIColor) -> String {
+        let components = color.cgColor.components
+        let r: CGFloat = components?[0] ?? 0.0
+        let g: CGFloat = components?[1] ?? 0.0
+        let b: CGFloat = components?[2] ?? 0.0
+
+        let hexString = String.init(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
+        print(hexString)
+        return hexString
+     }
 }
 
 final class SettingsButtonCell: SettingsTableCell {

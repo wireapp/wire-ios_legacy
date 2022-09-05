@@ -278,7 +278,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func colorElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
+        return SettingsExternalScreenColorCellDescriptor(
             title: "self.settings.account_picture_group.color".localized,
             isDestructive: false,
             presentationStyle: .navigation,

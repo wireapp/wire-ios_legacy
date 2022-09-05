@@ -42,6 +42,25 @@ public enum AccentColor: Int16, CaseIterable {
         return ZMAccentColor(rawValue: self.rawValue)!
     }
 
+    public var colorName: String {
+        switch self {
+        case .blue:
+            return "Blue"
+        case .green:
+            return "Green"
+        case .yellow:
+            return "Yellow"
+        case .red:
+            return "Red"
+        case .amber:
+            return "Amber"
+        case .petrol:
+            return "Petrol"
+        case .purple:
+            return "Purple"
+        }
+    }
+
     public static func allSelectable() -> [AccentColor] {
         return [.blue,
                 .green,

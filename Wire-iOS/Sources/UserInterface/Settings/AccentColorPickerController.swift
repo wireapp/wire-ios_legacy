@@ -39,26 +39,7 @@ class AccentColorOption: Equatable {
     init(accentColor: AccentColor) {
         self.accentColor = accentColor
         self.color = UIColor(for: self.accentColor)
-        self.colorName = getColorName(accentColor: self.accentColor)
-    }
-
-    private func getColorName(accentColor: AccentColor) -> String {
-        switch accentColor {
-        case .blue:
-            return "Blue"
-        case .green:
-            return "Green"
-        case .yellow:
-            return "Yellow"
-        case .red:
-            return "Red"
-        case .amber:
-            return "Amber"
-        case .petrol:
-            return "Petrol"
-        case .purple:
-            return "Purple"
-        }
+        self.colorName = accentColor.colorName
     }
 }
 

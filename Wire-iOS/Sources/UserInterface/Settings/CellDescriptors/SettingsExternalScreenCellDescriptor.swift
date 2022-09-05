@@ -153,3 +153,126 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
         return self.presentationAction()
     }
 }
+
+class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
+    static let cellType: SettingsTableCell.Type = SettingsTableProfileCell.self
+    var visible: Bool = true
+    let title: String
+    let destructive: Bool
+    let presentationStyle: PresentationStyle
+    let identifier: String?
+    let icon: StyleKitIcon?
+
+    private let accessoryViewMode: AccessoryViewMode
+
+    weak var group: SettingsGroupCellDescriptorType?
+    weak var viewController: UIViewController?
+
+    let previewGenerator: PreviewGeneratorType?
+
+    let presentationAction: () -> (UIViewController?)
+
+    convenience init(title: String, presentationAction: @escaping () -> (UIViewController?)) {
+        self.init(
+            title: title,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            identifier: nil,
+            presentationAction: presentationAction,
+            previewGenerator: nil,
+            icon: .none
+        )
+    }
+
+    convenience init(title: String,
+                     isDestructive: Bool,
+                     presentationStyle: PresentationStyle,
+                     presentationAction: @escaping () -> (UIViewController?),
+                     previewGenerator: PreviewGeneratorType? = .none,
+                     icon: StyleKitIcon? = nil,
+                     accessoryViewMode: AccessoryViewMode = .default) {
+        self.init(
+            title: title,
+            isDestructive: isDestructive,
+            presentationStyle: presentationStyle,
+            identifier: nil,
+            presentationAction: presentationAction,
+            previewGenerator: previewGenerator,
+            icon: icon,
+            accessoryViewMode: accessoryViewMode
+        )
+    }
+
+    init(title: String,
+         isDestructive: Bool,
+         presentationStyle: PresentationStyle,
+         identifier: String?,
+         presentationAction: @escaping () -> (UIViewController?),
+         previewGenerator: PreviewGeneratorType? = .none,
+         icon: StyleKitIcon? = nil,
+         accessoryViewMode: AccessoryViewMode = .default) {
+
+        self.title = title
+        self.destructive = isDestructive
+        self.presentationStyle = presentationStyle
+        self.presentationAction = presentationAction
+        self.identifier = identifier
+        self.previewGenerator = previewGenerator
+        self.icon = icon
+        self.accessoryViewMode = accessoryViewMode
+    }
+
+    func select(_ value: SettingsPropertyValue?) {
+        guard let controllerToShow = self.generateViewController() else {
+            return
+        }
+
+        switch self.presentationStyle {
+        case .modal:
+            if controllerToShow.modalPresentationStyle == .popover,
+                let sourceView = self.viewController?.view,
+                let popoverPresentation = controllerToShow.popoverPresentationController {
+                popoverPresentation.sourceView = sourceView
+                popoverPresentation.sourceRect = sourceView.bounds
+            }
+
+            controllerToShow.modalPresentationCapturesStatusBarAppearance = true
+            self.viewController?.present(controllerToShow, animated: true, completion: .none)
+        case .navigation:
+            viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
+        }
+    }
+
+    func featureCell(_ cell: SettingsCellType) {
+        cell.titleText = self.title
+
+        if let tableCell = cell as? SettingsTableCell {
+            tableCell.valueLabel.accessibilityIdentifier = title + "Field"
+            tableCell.valueLabel.isAccessibilityElement = true
+        }
+
+        if let previewGenerator = self.previewGenerator {
+            let preview = previewGenerator(self)
+            cell.preview = preview
+        }
+        cell.icon = self.icon
+        if let groupCell = cell as? SettingsTableCell {
+            switch accessoryViewMode {
+            case .default:
+                if self.presentationStyle == .modal {
+                    groupCell.hideDisclosureIndicator()
+                } else {
+                    groupCell.showDisclosureIndicator()
+                }
+            case .alwaysHide:
+                groupCell.hideDisclosureIndicator()
+            case .alwaysShow:
+                groupCell.showDisclosureIndicator()
+            }
+        }
+    }
+
+    func generateViewController() -> UIViewController? {
+        return self.presentationAction()
+    }
+}
