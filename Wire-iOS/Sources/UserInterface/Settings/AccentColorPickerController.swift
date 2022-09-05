@@ -101,6 +101,7 @@ class ColorPickerController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     override var prefersStatusBarHidden: Bool {
