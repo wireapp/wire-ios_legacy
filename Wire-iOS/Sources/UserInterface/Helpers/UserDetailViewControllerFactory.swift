@@ -34,8 +34,8 @@ final class UserDetailViewControllerFactory {
                                                profileViewControllerDelegate: ProfileViewControllerDelegate,
                                                viewControllerDismisser: ViewControllerDismisser) -> UIViewController {
         if user.isServiceUser, let serviceUser = user as? ServiceUser {
-            let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
-            let serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(conversation), variant: variant, completion: nil)
+
+            let serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser, actionType: .removeService(conversation), completion: nil)
             serviceDetailViewController.viewControllerDismisser = viewControllerDismisser
             return serviceDetailViewController
         } else {
