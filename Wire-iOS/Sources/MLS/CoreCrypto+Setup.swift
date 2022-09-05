@@ -25,7 +25,8 @@ extension CoreCrypto {
         return try .init(
             path: configuration.path,
             key: configuration.key,
-            clientId: configuration.clientId
+            clientId: configuration.clientId,
+            entropySeed: nil
         )
     }
 }
