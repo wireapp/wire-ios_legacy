@@ -89,11 +89,7 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
             return
         }
 
-        session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
-            if !isUserAuthenticated {
-                contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
-            }
-        }
+        session.processPushNotification(with: request.content.userInfo)
 
         // Retain the session otherwise it will tear down.
         self.session = session
@@ -144,6 +140,25 @@ public class NotificationService: UNNotificationServiceExtension, NotificationSe
         }
 
         callEventHandler.reportIncomingVoIPCall(payload)
+    }
+
+    public func notificationSessionDidFailWithError(error: NotificationSessionError) {
+        switch error {
+        case .accountNotAuthenticated:
+            contentHandler?(.debugMessageIfNeeded(message: "user is not authenticated"))
+
+        case .noEventID:
+            contentHandler?(.debugMessageIfNeeded(message: "no event id in push payload"))
+
+        case .invalidEventID:
+            contentHandler?(.debugMessageIfNeeded(message: "event id is invalid"))
+
+        case .alreadyFetchedEvent:
+            contentHandler?(.debugMessageIfNeeded(message: "already fetched event"))
+
+        case .unknown:
+            contentHandler?(.debugMessageIfNeeded(message: "unknown error"))
+        }
     }
 
     // MARK: - Helpers

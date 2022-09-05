@@ -54,28 +54,12 @@ enum LabelIndicatorContext {
     }
 }
 
-final class LabelIndicator: UIView, Themeable {
+final class LabelIndicator: UIView {
 
     private let indicatorIcon = UIImageView()
     private let titleLabel = DynamicFontLabel(fontSpec: .mediumSemiboldInputText, color: .textForeground)
     private let containerView = UIView()
     private let context: LabelIndicatorContext
-
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorSchemeOnSubviews(colorSchemeVariant)
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-
-        indicatorIcon.setIcon(context.icon,
-                              size: .nano,
-                              color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-    }
 
     init(context: LabelIndicatorContext) {
         self.context = context
@@ -102,14 +86,17 @@ final class LabelIndicator: UIView, Themeable {
         case .federated:
             accessibilityString = "federated"
         }
+
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        titleLabel.text = context.title.localized(uppercased: true)
+        titleLabel.textColor = SemanticColors.Label.textDefault
+        titleLabel.text = context.title.localized.capitalizingFirstLetter()
 
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
-        indicatorIcon.setIcon(context.icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+
+        indicatorIcon.setTemplateIcon(context.icon, size: .nano)
+        indicatorIcon.tintColor = SemanticColors.Icon.foregroundDefault
 
         containerView.addSubview(titleLabel)
         containerView.addSubview(indicatorIcon)
@@ -141,6 +128,6 @@ final class LabelIndicator: UIView, Themeable {
             titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: indicatorIcon.trailingAnchor, constant: 6)
-            ])
+        ])
     }
 }

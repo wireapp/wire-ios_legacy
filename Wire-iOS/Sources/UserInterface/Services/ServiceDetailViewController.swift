@@ -73,7 +73,7 @@ final class ServiceDetailViewController: UIViewController {
     weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
-    private let actionButton: Button
+    private let actionButton: LegacyButton
     private let actionType: ActionType
     private let selfUser: UserType
 
@@ -99,13 +99,13 @@ final class ServiceDetailViewController: UIViewController {
 
         switch actionType {
         case let .addService(conversation):
-            actionButton = Button.createAddServiceButton()
+            actionButton = LegacyButton.createAddServiceButton()
             actionButton.isHidden = !selfUser.canAddService(to: conversation)
         case let .removeService(conversation):
-            actionButton = Button.createDestructiveServiceButton()
+            actionButton = LegacyButton.createDestructiveServiceButton()
             actionButton.isHidden = !selfUser.canRemoveService(from: conversation)
         case .openConversation:
-            actionButton = Button.openServiceConversationButton()
+            actionButton = LegacyButton.openServiceConversationButton()
             actionButton.isHidden = !selfUser.canCreateService
         }
 
@@ -186,7 +186,7 @@ final class ServiceDetailViewController: UIViewController {
         })
     }
 
-    func callback(for type: ActionType, completion: Completion?) -> Callback<Button> {
+    func callback(for type: ActionType, completion: Completion?) -> Callback<LegacyButton> {
         return { [weak self] _ in
             guard let `self` = self, let userSession = ZMUserSession.shared() else {
                 return
@@ -228,24 +228,24 @@ final class ServiceDetailViewController: UIViewController {
     }
 }
 
-fileprivate extension Button {
+fileprivate extension LegacyButton {
 
-    static func openServiceConversationButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+    static func openServiceConversationButton() -> LegacyButton {
+        return LegacyButton(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
     }
 
-    static func createAddServiceButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
+    static func createAddServiceButton() -> LegacyButton {
+        return LegacyButton(style: .full, title: "peoplepicker.services.add_service.button".localized)
     }
 
-    static func createDestructiveServiceButton() -> Button {
-        let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
+    static func createDestructiveServiceButton() -> LegacyButton {
+        let button = LegacyButton(style: .full, title: "participants.services.remove_integration.button".localized)
         button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
         return button
     }
 
     convenience init(style: LegacyButtonStyle, title: String) {
-        self.init(style: style)
+        self.init(legacyStyle: style)
         setTitle(title, for: .normal)
     }
 }

@@ -70,16 +70,34 @@ final class UserPropertyCell: SeparatorTableViewCell {
         }
     }
 
+    // MARK: - Configuration
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? UIColor(white: 0, alpha: 0.08)
+            : SemanticColors.View.backgroundUserCell
+        }
+    }
+
     // MARK: - Initialization
 
     override func setUp() {
         super.setUp()
-        showSeparator = false
         configureSubviews()
         configureConstraints()
     }
 
     private func configureSubviews() {
+        backgroundColor = SemanticColors.View.backgroundUserCell
+        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
+        propertyValueLabel.textColor = SemanticColors.Label.textDefault
+        addBorder(for: .bottom)
+
+        separator.isHidden = true
+        separator.backgroundColor = .clear
+        showSeparator = false
+
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
         contentStack.spacing = 2
@@ -88,11 +106,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         contentStack.alignment = .leading
         contentView.addSubview(contentStack)
 
-        applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
-        backgroundColor = SemanticColors.View.backgroundUserCell
-        [.top, .bottom].forEach { addBorder(for: $0) }
-        separator.isHidden = true
     }
 
     private func configureConstraints() {
@@ -104,14 +118,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
             contentStack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-    }
-
-    // MARK: - Configuration
-
-    override func applyColorScheme(_ variant: ColorSchemeVariant) {
-        super.applyColorScheme(variant)
-        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
-        propertyValueLabel.textColor = SemanticColors.Label.textDefault
     }
 
 }

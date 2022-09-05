@@ -27,7 +27,6 @@ typealias ResultHandler = (_ succeeded: Bool) -> Void
 protocol ConversationListContainerViewModelDelegate: AnyObject {
     init(viewModel: ConversationListViewController.ViewModel)
 
-    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,

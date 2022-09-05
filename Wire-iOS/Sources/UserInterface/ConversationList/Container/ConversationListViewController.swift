@@ -54,7 +54,7 @@ final class ConversationListViewController: UIViewController {
 
     let contentContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCell
 
         return view
     }()
@@ -105,6 +105,7 @@ final class ConversationListViewController: UIViewController {
 
         /// setup UI
         view.addSubview(contentContainer)
+        self.view.backgroundColor = SemanticColors.View.backgroundConversationList
 
         setupTopBar()
         setupListContentController()
@@ -115,7 +116,7 @@ final class ConversationListViewController: UIViewController {
 
         createViewConstraints()
 
-        onboardingHint.arrowPointToView = bottomBarController.startUIButton
+        onboardingHint.arrowPointToView = bottomBarController.startTabView
     }
 
     @available(*, unavailable)
@@ -155,7 +156,6 @@ final class ConversationListViewController: UIViewController {
 
         state = .conversationList
 
-        updateBottomBarSeparatorVisibility(with: listContentController)
         closePushPermissionDialogIfNotNeeded()
 
         shouldAnimateNetworkStatusView = true
@@ -169,10 +169,6 @@ final class ConversationListViewController: UIViewController {
             ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
 
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -308,17 +304,6 @@ final class ConversationListViewController: UIViewController {
             self.noConversationLabel.alpha = 0.0
             self.onboardingHint.alpha = 0.0
         })
-    }
-
-    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
-        let controllerHeight = controller.view.bounds.height
-        let contentHeight = controller.collectionView.contentSize.height
-        let offsetY = controller.collectionView.contentOffset.y
-        let showSeparator = contentHeight - offsetY + ConversationListViewController.contentControllerBottomInset > controllerHeight
-
-        if bottomBarController.showSeparator != showSeparator {
-            bottomBarController.showSeparator = showSeparator
-        }
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

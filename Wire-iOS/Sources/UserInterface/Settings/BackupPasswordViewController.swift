@@ -107,7 +107,6 @@ final class BackupPasswordViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        passwordView.colorSchemeVariant = .light
         passwordView.placeholder = L10n.Localizable.Self.Settings.HistoryBackup.Password.placeholder.localizedUppercase
         passwordView.accessibilityIdentifier = "password input"
         passwordView.returnKeyType = .done

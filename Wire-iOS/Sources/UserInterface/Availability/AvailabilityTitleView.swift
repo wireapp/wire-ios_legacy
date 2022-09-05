@@ -99,7 +99,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     }
 
     /// Refreshes the content and appearance of the view.
-    private func updateConfiguration() {
+    func updateConfiguration() {
         updateAppearance()
         updateContent()
     }
@@ -110,7 +110,10 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
         let availability = user.availability
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
+        let icon = AvailabilityStringBuilder.icon(
+            for: availability,
+            with: AvailabilityStringBuilder.color(for: availability),
+            and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
 
@@ -118,10 +121,10 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
             title = user.name ?? ""
             accessibilityLabel = title
         } else if availability == .none && options.contains(.allowSettingStatus) {
-            title = "availability.message.set_status".localized(uppercased: true)
+            title = L10n.Localizable.Availability.Message.setStatus
             accessibilityLabel = title
         } else if availability != .none {
-            title = availability.localizedName.localizedUppercase
+            title = availability.localizedName.localized
             accessibilityLabel = AvailabilityStatusStrings.description
         }
 
@@ -138,13 +141,12 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
         if options.contains(.useLargeFont) {
-            titleFont = .normalSemiboldFont
+            titleFont = .normalRegularFont
         } else {
-            titleFont = .smallSemiboldFont
+            titleFont = .smallRegularFont
         }
 
-        titleColor = SemanticColors.Label.textSectionHeader
-        titleColorSelected = UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant)
+        titleColor = SemanticColors.Label.textDefault
     }
 
     // MARK: - Events

@@ -20,18 +20,13 @@ import UIKit
 
 final class ArchivedNavigationBar: UIView {
 
-    let separatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
-
-        return view
-    }()
     let titleLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .mediumSemiboldFont,
             color: .textBackground,
             variant: .dark
         )
+        label.textColor = SemanticColors.Label.textNavigationController
         return label
     }()
     let dismissButton = IconButton()
@@ -39,12 +34,6 @@ final class ArchivedNavigationBar: UIView {
     private let statusbarHeight: CGFloat = 20
 
     var dismissButtonHandler: (() -> Void)? = .none
-
-    var showSeparator: Bool = false {
-        didSet {
-            separatorView.fadeAndHide(!showSeparator)
-        }
-    }
 
     init(title: String) {
         super.init(frame: CGRect.zero)
@@ -60,22 +49,18 @@ final class ArchivedNavigationBar: UIView {
 
     func createViews() {
         titleLabel.accessibilityTraits.insert(.header)
-        separatorView.isHidden = true
         dismissButton.setIcon(.cross, size: .tiny, for: [])
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
         dismissButton.accessibilityLabel = "general.close".localized
-        dismissButton.setIconColor(.from(scheme: .textForeground, variant: .dark), for: .normal)
-        [titleLabel, dismissButton, separatorView].forEach(addSubview)
+        dismissButton.setIconColor(SemanticColors.Label.textNavigationController, for: .normal)
+        [titleLabel, dismissButton].forEach(addSubview)
+        addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
     }
 
     private func createConstraints() {
-        [separatorView, titleLabel, dismissButton].prepareForLayout()
+        [titleLabel, dismissButton].prepareForLayout()
         NSLayoutConstraint.activate([
-          separatorView.heightAnchor.constraint(equalToConstant: .hairline),
-          separatorView.leftAnchor.constraint(equalTo: leftAnchor),
-          separatorView.rightAnchor.constraint(equalTo: rightAnchor),
-          separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
           titleLabel
             .centerXAnchor.constraint(equalTo: centerXAnchor),

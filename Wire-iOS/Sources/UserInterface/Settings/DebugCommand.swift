@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,27 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class ArchivedNavigationBarTests: ZMSnapshotTestCase {
+enum DebugCommand {
 
-    var sut: ArchivedNavigationBar!
+    /// Update accessRoles for existing conversations where the team is nil and accessRoles == [.teamMember]
+    case repairInvalidAccessRoles
 
-    override func setUp() {
-        super.setUp()
-
-        accentColor = .violet
-        snapshotBackgroundColor = UIColor(white: 0.2, alpha: 1)
-        sut = ArchivedNavigationBar(title: "ARCHIVE")
+    init?(string: String) {
+        // We may want to have commands that accept arguments, which means
+        // we'd have to do the parsing of the command here.
+        switch string {
+        case "repairInvalidAccessRoles":
+            self = .repairInvalidAccessRoles
+        default:
+            return nil
+        }
     }
 
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testThatItRendersTheNavigationBarCorrectInitially() {
-        verifyInAllPhoneWidths(view: sut)
-    }
 }

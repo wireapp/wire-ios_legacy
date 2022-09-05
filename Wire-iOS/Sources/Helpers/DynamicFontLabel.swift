@@ -42,6 +42,18 @@ class DynamicFontLabel: UILabel, DynamicTypeCapable {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    init(text: String? = nil,
+         fontSpec: FontSpec = .normalRegularFont,
+         color: UIColor
+     ) {
+         self.fontSpec = fontSpec
+         super.init(frame: .zero)
+
+         self.text = text
+         self.font = fontSpec.font
+         self.textColor = color
+     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

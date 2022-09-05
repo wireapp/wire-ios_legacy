@@ -85,7 +85,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     typealias AccountPageStrings = L10n.Accessibility.AccountPage
 
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
         label.accessibilityLabel = AccountPageStrings.Name.description
         label.accessibilityIdentifier = "name"
 
@@ -226,6 +226,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         if let team = (user as? ZMUser)?.team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
         }
+        view.backgroundColor = UIColor.clear
     }
 
     private func configureConstraints() {
@@ -300,7 +301,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateTeamLabel() {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
-            teamNameLabel.text = teamName.localizedUppercase
+            teamNameLabel.text = teamName.localized
             teamNameLabel.accessibilityValue = teamNameLabel.text
             teamNameLabel.isHidden = false
         } else {
