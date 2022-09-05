@@ -539,6 +539,12 @@ final class TokenField: UIView {
         textView.lineFragmentPadding = 0
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+        updateTokenAttachments()
+    }
+
     // MARK: - Utility
 
     func updateTokenAttachments() {

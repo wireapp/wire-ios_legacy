@@ -41,11 +41,6 @@ extension Service {
     }
 }
 
-struct ServiceDetailVariant {
-    let colorScheme: ColorSchemeVariant
-    let opaque: Bool
-}
-
 final class ServiceDetailViewController: UIViewController {
 
     typealias Completion = (AddBotResult?) -> Void
@@ -64,16 +59,11 @@ final class ServiceDetailViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     let completion: Completion?
-    let variant: ServiceDetailVariant
     weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
-    private let actionButton: LegacyButton
+    private let actionButton: Button
     private let actionType: ActionType
     private let selfUser: UserType
 
@@ -88,28 +78,26 @@ final class ServiceDetailViewController: UIViewController {
     ///   - completion: completion handler
     init(serviceUser: ServiceUser,
          actionType: ActionType,
-         variant: ServiceDetailVariant,
          selfUser: UserType = ZMUser.selfUser(),
          completion: Completion? = nil) {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
         self.selfUser = selfUser
 
-        detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
+        detailView = ServiceDetailView(service: service)
 
         switch actionType {
         case let .addService(conversation):
-            actionButton = LegacyButton.createAddServiceButton()
+            actionButton = Button.createAddServiceButton()
             actionButton.isHidden = !selfUser.canAddService(to: conversation)
         case let .removeService(conversation):
-            actionButton = LegacyButton.createDestructiveServiceButton()
+            actionButton = Button.createDestructiveServiceButton()
             actionButton.isHidden = !selfUser.canRemoveService(from: conversation)
         case .openConversation:
-            actionButton = LegacyButton.openServiceConversationButton()
+            actionButton = Button.openServiceConversationButton()
             actionButton.isHidden = !selfUser.canCreateService
         }
 
-        self.variant = variant
         self.actionType = actionType
 
         super.init(nibName: nil, bundle: nil)
@@ -127,11 +115,7 @@ final class ServiceDetailViewController: UIViewController {
     private func setupViews() {
         actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
-        if variant.opaque {
-            view.backgroundColor = UIColor.from(scheme: .background, variant: self.variant.colorScheme)
-        } else {
             view.backgroundColor = .clear
-        }
 
         [detailView, actionButton].forEach(view.addSubview)
 
@@ -228,24 +212,23 @@ final class ServiceDetailViewController: UIViewController {
     }
 }
 
-fileprivate extension LegacyButton {
+fileprivate extension Button {
 
-    static func openServiceConversationButton() -> LegacyButton {
-        return LegacyButton(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+    static func openServiceConversationButton() -> Button {
+        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.open_conversation.item".localized)
     }
 
-    static func createAddServiceButton() -> LegacyButton {
-        return LegacyButton(style: .full, title: "peoplepicker.services.add_service.button".localized)
+    static func createAddServiceButton() -> Button {
+        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.add_service.button".localized)
     }
 
-    static func createDestructiveServiceButton() -> LegacyButton {
-        let button = LegacyButton(style: .full, title: "participants.services.remove_integration.button".localized)
-        button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
+    static func createDestructiveServiceButton() -> Button {
+        let button = Button(style: .accentColorTextButtonStyle, title: "participants.services.remove_integration.button".localized)
         return button
     }
 
-    convenience init(style: LegacyButtonStyle, title: String) {
-        self.init(legacyStyle: style)
-        setTitle(title, for: .normal)
+    convenience init(style: ButtonStyle, title: String) {
+        self.init(style: style, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+        self.setTitle(title, for: .normal)
     }
 }
