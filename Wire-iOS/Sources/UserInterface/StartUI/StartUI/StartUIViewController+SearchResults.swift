@@ -79,8 +79,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                      didTapOnSeviceUser user: ServiceUser) {
 
         let detail = ServiceDetailViewController(serviceUser: user,
-                                                 actionType: .openConversation,
-                                                 variant: ServiceDetailVariant(colorScheme: .dark, opaque: false)) { [weak self] result in
+                                                 actionType: .openConversation) { [weak self] result in
             guard let weakSelf = self else { return }
 
             if let result = result {
