@@ -109,8 +109,8 @@ class SettingsTableColorCell: SettingsTableCell {
     private func setColorName(for selectedColor: UIColor) {
         let accentColors: [AccentColor] = AccentColor.allSelectable()
         accentColors.forEach { accentColor in
-            let accentColorHex = UIColor.hexValue(color: UIColor(for: accentColor))
-            let selectedColorHex = UIColor.hexValue(color: selectedColor)
+            let accentColorHex = UIColor(for: accentColor).hexValue()
+            let selectedColorHex = selectedColor.hexValue()
             if accentColorHex == selectedColorHex {
                 colorNameLabel.text = accentColor.name
             }
@@ -119,8 +119,8 @@ class SettingsTableColorCell: SettingsTableCell {
 }
 
 extension UIColor {
-    static func hexValue(color: UIColor) -> String {
-        let components = color.cgColor.components
+    func hexValue() -> String {
+        let components = self.cgColor.components
         let r: CGFloat = components?[0] ?? 0.0
         let g: CGFloat = components?[1] ?? 0.0
         let b: CGFloat = components?[2] ?? 0.0
