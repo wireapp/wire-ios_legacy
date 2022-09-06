@@ -32,14 +32,10 @@ class AccentColorOption: Equatable {
     }
 
     let accentColor: AccentColor
-    let color: UIColor
-    var colorName: String = "No Color Name"
     var isSelected: Bool = false
 
     init(accentColor: AccentColor) {
         self.accentColor = accentColor
-        self.color = UIColor(for: self.accentColor)
-        self.colorName = accentColor.colorName
     }
 }
 
@@ -49,7 +45,7 @@ class ColorPickerController: UIViewController {
     static fileprivate let rowHeight: CGFloat = 56
 
     let colors: [AccentColorOption]
-    var currentColor: UIColor?
+    var selectedColor: AccentColor?
     var delegate: ColorPickerControllerDelegate?
 
     init(colors: [AccentColorOption]) {
@@ -64,10 +60,22 @@ class ColorPickerController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+        addConstraints()
+    }
 
+    private func setupViews() {
         view.backgroundColor = SemanticColors.View.backgroundDefault
         view.addSubview(tableView)
 
+        tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
+    }
+
+    private func addConstraints() {
         [tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
@@ -76,13 +84,6 @@ class ColorPickerController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-
-        tableView.register(PickerCell.self, forCellReuseIdentifier: PickerCell.reuseIdentifier)
-
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -101,12 +102,51 @@ class ColorPickerController: UIViewController {
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
+            setupCellViews()
+            addCellConstraints()
+        }
+
+        @available(*, unavailable)
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        var color: AccentColor? {
+            didSet {
+                if let color = color {
+                    colorView.backgroundColor = UIColor(for: color)
+                }
+            }
+        }
+
+        override func setSelected(_ selected: Bool, animated: Bool) {
+            super.setSelected(selected, animated: animated)
+            checkmarkView.isHidden = !selected
+            colorNameLabel.font = selected ? .normalSemiboldFont : .normalLightFont
+        }
+
+        override func prepareForReuse() {
+            super.prepareForReuse()
+            colorView.backgroundColor = UIColor.clear
+            checkmarkView.isHidden = true
+        }
+
+        private func setupCellViews() {
             selectionStyle = .none
 
             contentView.addSubview(colorView)
             contentView.addSubview(checkmarkView)
             contentView.addSubview(colorNameLabel)
 
+            backgroundColor = SemanticColors.View.backgroundUserCell
+            addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+            colorView.layer.cornerRadius = 14
+            checkmarkView.tintColor = SemanticColors.Label.textDefault
+            checkmarkView.setTemplateIcon(.checkmark, size: .small)
+            checkmarkView.isHidden = true
+        }
+
+        private func addCellConstraints() {
             [checkmarkView, colorView, colorNameLabel].prepareForLayout()
             NSLayoutConstraint.activate([
                 colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -120,40 +160,6 @@ class ColorPickerController: UIViewController {
                 checkmarkView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
                 checkmarkView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
-
-            backgroundColor = SemanticColors.View.backgroundUserCell
-            addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
-
-            colorView.layer.cornerRadius = 14
-            colorNameLabel.text = "Color Name"
-
-            checkmarkView.tintColor = SemanticColors.Label.textDefault
-            checkmarkView.setTemplateIcon(.checkmark, size: .small)
-            checkmarkView.isHidden = true
-        }
-
-        @available(*, unavailable)
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-
-        var color: UIColor? {
-            didSet {
-                colorView.backgroundColor = color
-            }
-        }
-
-        override func setSelected(_ selected: Bool, animated: Bool) {
-            super.setSelected(selected, animated: animated)
-            checkmarkView.isHidden = !selected
-            // TODO: MAKE SURE THAT THIS IS CORRECT FONT!
-            colorNameLabel.font = selected ? .normalSemiboldFont : .normalLightFont
-        }
-
-        override func prepareForReuse() {
-            super.prepareForReuse()
-            colorView.backgroundColor = UIColor.clear
-            checkmarkView.isHidden = true
         }
 
     }
@@ -179,9 +185,9 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
             fatal("Cannot create cell")
         }
 
-        cell.color = colors[indexPath.row].color
-        cell.colorNameLabel.text = colors[indexPath.row].colorName
-        cell.isSelected = cell.color == currentColor
+        cell.color = colors[indexPath.row].accentColor
+        cell.colorNameLabel.text = colors[indexPath.row].accentColor.name
+        cell.isSelected = cell.color == selectedColor
         if cell.isSelected {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
@@ -190,7 +196,7 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.colorPicker(self, didSelectColor: colors[indexPath.row])
-        currentColor = colors[indexPath.row].color
+        selectedColor = colors[indexPath.row].accentColor
     }
 }
 
@@ -205,7 +211,7 @@ final class AccentColorPickerController: ColorPickerController {
         setupControllerTitle()
 
         if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = allAccentColors.firstIndex(of: accentColor) {
-            currentColor = colors[currentColorIndex].color
+            selectedColor = colors[currentColorIndex].accentColor
         }
         delegate = self
     }
@@ -242,5 +248,26 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
 
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController) {
         dismiss(animated: true, completion: .none)
+    }
+}
+
+extension AccentColor {
+    public var name: String {
+        switch self {
+        case .blue:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.blue
+        case .green:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.green
+        case .yellow:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.yellow
+        case .red:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.red
+        case .amber:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.amber
+        case .petrol:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.petrol
+        case .purple:
+            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.purple
+        }
     }
 }

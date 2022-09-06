@@ -155,7 +155,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 }
 
 class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType: SettingsTableCell.Type = SettingsTableProfileCell.self
+    static let cellType: SettingsTableCell.Type = SettingsTableColorCell.self
     var visible: Bool = true
     let title: String
     let destructive: Bool
@@ -171,18 +171,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
     let previewGenerator: PreviewGeneratorType?
 
     let presentationAction: () -> (UIViewController?)
-
-    convenience init(title: String, presentationAction: @escaping () -> (UIViewController?)) {
-        self.init(
-            title: title,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            identifier: nil,
-            presentationAction: presentationAction,
-            previewGenerator: nil,
-            icon: .none
-        )
-    }
 
     convenience init(title: String,
                      isDestructive: Bool,
