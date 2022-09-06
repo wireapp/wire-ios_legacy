@@ -404,6 +404,8 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
         super.setup()
         cellNameLabel.numberOfLines = 0
         cellNameLabel.textAlignment = .justified
+        backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
+        removeBorder()
     }
 
 }
@@ -430,11 +432,13 @@ final class SettingsProfileLinkCell: SettingsTableCell {
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
+        backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
+        removeBorder()
     }
 
     private func createConstraints() {
         [label].prepareForLayout()
-        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
+        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 0, left: 16, bottom: 11, right: 16))
     }
 
 }

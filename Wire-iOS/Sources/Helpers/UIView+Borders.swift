@@ -19,12 +19,18 @@
 import UIKit
 
 extension UIView {
+    public func removeBorder() {
+        for subview in self.subviews where subview.accessibilityIdentifier == "border" {
+            subview.removeFromSuperview()
+        }
+    }
 
     func addBorder(
         for anchor: Anchor,
         color: UIColor = SemanticColors.View.backgroundSeparatorCell,
         borderWidth: CGFloat = 1.0) {
             let border = UIView()
+            border.accessibilityIdentifier = "border"
             addSubview(border)
             border.addConstraintsForBorder(for: anchor, borderWidth: borderWidth, to: self)
             border.backgroundColor = color
