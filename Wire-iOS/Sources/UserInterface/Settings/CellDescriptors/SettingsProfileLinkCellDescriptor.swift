@@ -24,12 +24,7 @@ class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
     // MARK: - Configuration
 
     func featureCell(_ cell: SettingsCellType) {
-        let attributedText = NSMutableAttributedString(
-            string: title,
-            attributes: [
-                NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
-
-        (cell as! SettingsProfileLinkCell).label.attributedText = attributedText
+        (cell as! SettingsProfileLinkCell).label.attributedText = title && .lineSpacing(8)
     }
 
     // MARK: - SettingsCellDescriptorType

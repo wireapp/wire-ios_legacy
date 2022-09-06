@@ -438,7 +438,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
 
     private func createConstraints() {
         [label].prepareForLayout()
-        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 0, left: 16, bottom: 11, right: 16))
+        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
     }
 
 }
