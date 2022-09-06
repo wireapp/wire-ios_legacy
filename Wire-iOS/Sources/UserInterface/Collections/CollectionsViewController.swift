@@ -426,7 +426,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
     }
 
     fileprivate func maxOverviewElementsInGrid(in section: CollectionsSectionSet) -> Int {
-        return 10
+        return elementsPerLine(in: section) * 2 // 2 lines of elements
     }
 
     fileprivate var maxOverviewElementsInTable: Int {
@@ -438,13 +438,15 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             fatal("Unknown section")
         }
 
+        let gridElementSize = self.gridElementSize(in: section)
+
         var desiredWidth: CGFloat?
         var desiredHeight: CGFloat?
 
         switch section {
         case CollectionsSectionSet.images, CollectionsSectionSet.videos:
-            desiredWidth = 60
-            desiredHeight = 60
+            desiredWidth = gridElementSize.width
+            desiredHeight = gridElementSize.height
 
         case CollectionsSectionSet.filesAndAudio:
             desiredWidth = contentView.collectionView.bounds.size.width - horizontalInset(in: section)

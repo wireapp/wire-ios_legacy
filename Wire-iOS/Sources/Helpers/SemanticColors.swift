@@ -70,7 +70,6 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
-        static let textSettingsPlaceholder = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let textCollectionSecondary = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
@@ -115,9 +114,6 @@ public enum SemanticColors {
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         static let backgroundCollectionCell = UIColor(light: Asset.white, dark: Asset.gray90)
         static let borderCollectionCell = UIColor(light: Asset.gray30, dark: Asset.gray80)
-        static let backgroundCollectionTextSearchResult = UIColor(light: Asset.amber500Dark, dark: Asset.amber400Dark)
-        static let backgroundCollectionsViewController = UIColor(light: Asset.blue500Dark, dark: Asset.blue500Dark)
-        static let backgroundSearchResultCellSeparator = UIColor(light: Asset.green500Light, dark: Asset.green500Light)
     }
 
     public enum TabBar {

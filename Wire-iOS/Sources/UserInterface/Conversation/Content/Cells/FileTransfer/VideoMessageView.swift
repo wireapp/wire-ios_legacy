@@ -104,7 +104,7 @@ final class VideoMessageView: UIView, TransferView {
          timeLabel,
          loadingView].prepareForLayout()
 
-        let sizeConstraint = widthAnchor.constraint(equalToConstant: 60)
+        let sizeConstraint = widthAnchor.constraint(equalTo: heightAnchor, constant: 4/3)
 
         sizeConstraint.priority = UILayoutPriority(750)
 
@@ -117,7 +117,7 @@ final class VideoMessageView: UIView, TransferView {
 
              playButton.centerXAnchor.constraint(equalTo: previewImageView.centerXAnchor),
              playButton.centerYAnchor.constraint(equalTo: previewImageView.centerYAnchor),
-             playButton.widthAnchor.constraint(equalToConstant: 40),
+             playButton.widthAnchor.constraint(equalToConstant: 56),
              playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor),
 
              progressView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor),
@@ -129,7 +129,7 @@ final class VideoMessageView: UIView, TransferView {
              bottomGradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
              bottomGradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
              bottomGradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
-             bottomGradientView.heightAnchor.constraint(equalToConstant: 60),
+             bottomGradientView.heightAnchor.constraint(equalToConstant: 56),
 
              timeLabel.rightAnchor.constraint(equalTo: bottomGradientView.rightAnchor, constant: -16),
              timeLabel.bottomAnchor.constraint(equalTo: bottomGradientView.bottomAnchor, constant: -16),
@@ -164,7 +164,7 @@ final class VideoMessageView: UIView, TransferView {
         }
 
         if let viewsState = state.viewsStateForVideo() {
-            self.playButton.setIcon(viewsState.playButtonIcon, size: 20, for: .normal)
+            self.playButton.setIcon(viewsState.playButtonIcon, size: 28, for: .normal)
             self.playButton.backgroundColor = SemanticColors.Icon.foregroundConversationDefault
         }
 

@@ -65,8 +65,8 @@ final class CollectionsView: UIView {
     private func recreateLayout() {
         let layout = CollectionViewLeftAlignedFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 4
-        layout.minimumInteritemSpacing = 4
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
         if CollectionsView.useAutolayout {
             layout.estimatedItemSize = CGSize(width: 64, height: 64)

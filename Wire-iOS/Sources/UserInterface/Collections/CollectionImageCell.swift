@@ -26,7 +26,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 final class CollectionImageCell: CollectionCell {
 
-    static let maxCellSize: CGFloat = 60
+    static let maxCellSize: CGFloat = 100
 
     override var message: ZMConversationMessage? {
         didSet {

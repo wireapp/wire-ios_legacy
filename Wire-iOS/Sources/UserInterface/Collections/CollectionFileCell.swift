@@ -82,9 +82,6 @@ final class CollectionFileCell: CollectionCell {
     }
 
     private func setup(_ view: UIView) {
-        view.layer.cornerRadius = 4
-        view.clipsToBounds = true
-
         containerView.removeSubviews()
         containerView.addSubview(view)
 
@@ -99,6 +96,9 @@ final class CollectionFileCell: CollectionCell {
         secureContentsView.layer.borderColor = SemanticColors.View.borderCollectionCell.cgColor
         secureContentsView.layer.cornerRadius = 12
         secureContentsView.layer.borderWidth = 1
+        obfuscationView.layer.borderColor = SemanticColors.View.borderCollectionCell.cgColor
+        obfuscationView.layer.cornerRadius = 12
+        obfuscationView.layer.borderWidth = 1
     }
 }
 
