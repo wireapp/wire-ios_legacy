@@ -26,17 +26,17 @@ class AccessTokenEndpointTests: XCTestCase {
         {
             "access_token": "testToken",
             "token_type": "type",
-            "expires_in": 1662065289
+            "expires_in": 3600
         }
         """
         let successResponse = SuccessResponse(status: 200, data: JSON.data(using: .utf8)!)
         let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
         let result = endpoint.parseResponse(.success(successResponse))
         guard case .success(let token) = result else {
-            XCTFail()
+            XCTFail("endpoint failed")
             return
         }
-//        XCTAssertEqual(token.expirationDate, Date(timeIntervalSince1970: 1662065289)) TODO: check why fails
+        XCTAssertEqual(token.expirationDate.timeIntervalSince1970, (Date().timeIntervalSince1970 + 3600), accuracy: 1.0)
         XCTAssertEqual(token.token, "testToken")
     }
 
@@ -64,4 +64,3 @@ class AccessTokenEndpointTests: XCTestCase {
         XCTAssertEqual(result, .failure(.unknownError(failureResponse)))
     }
 }
-

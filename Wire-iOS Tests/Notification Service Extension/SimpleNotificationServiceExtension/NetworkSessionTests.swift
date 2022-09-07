@@ -82,8 +82,8 @@ class NetworkSessionTests: XCTestCase {
         reqestable.mockedResponse = reqestable.failureResponse
         let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
         let result = try await sut.send(request: networkRequestMock)
-        guard case .failure(_) = result else {
-            XCTFail()
+        guard case .failure = result else {
+            XCTFail("unexpected success")
             return
         }
     }
@@ -93,8 +93,8 @@ class NetworkSessionTests: XCTestCase {
         reqestable.mockedResponse = reqestable.successResponse
         let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
         let result = try await sut.send(request: networkRequestMock)
-        guard case .success(_) = result else {
-            XCTFail()
+        guard case .success = result else {
+            XCTFail("request failed")
             return
         }
     }
@@ -103,24 +103,19 @@ class NetworkSessionTests: XCTestCase {
         let request = NetworkRequest(path: "test", httpMethod: .get, contentType: .json, acceptType: .json)
         let requestable = URLSessionMock()
         requestable.mockedResponse = requestable.successResponse
-        do {
-            let sut = try NetworkSession(userID: UUID(), urlRequestable: requestable)
-            sut.accessToken =  AccessToken(token: "1234", type: "type1", expiresInSeconds: 123456789)
-            _ = try await sut.send(request: request)
-            guard let urlRequest = requestable.calledRequest else {
-                XCTFail()
-                return
-            }
-
-            XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Content-Type"], "application/json")
-            XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Accept"], "application/json")
-            XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Authorization"], "type1 1234")
-        } catch {
-            XCTAssertNil(error, "Unexpected error \(error)")
+        let sut = try NetworkSession(userID: UUID(), urlRequestable: requestable)
+        sut.accessToken =  AccessToken(token: "1234", type: "type1", expiresInSeconds: 123456789)
+        _ = try await sut.send(request: request)
+        guard let urlRequest = requestable.calledRequest else {
+            XCTFail("unable to get URLRequest")
+            return
         }
+
+        XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Content-Type"], "application/json")
+        XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Accept"], "application/json")
+        XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Authorization"], "type1 1234")
     }
 }
-
 
 class CookieStorageMock: CookieProvider {
     func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest) {
@@ -151,14 +146,13 @@ class URLSessionMock: URLRequestable {
                                         headerFields: ["Content-Type": "application/json"])!
         return (JSON.data(using: .utf8)!, response)
     }
-    var successResponse: (Data, URLResponse)  {
-        let JSON = """
-        """
+
+    var successResponse: (Data, URLResponse) {
         let response =  HTTPURLResponse(url: URL(string: "wire.com")!,
                                         statusCode: 200,
                                         httpVersion: "",
                                         headerFields: ["Content-Type": "application/json"])!
-        return (JSON.data(using: .utf8)!, response)
+        return ("".data(using: .utf8)!, response)
     }
 
 }

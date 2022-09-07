@@ -105,7 +105,6 @@ struct NotificationByIDEndpoint: Endpoint, Loggable {
             let dat = String(data: response.data, encoding: .utf8) ?? "error"
             print(dat )
             logger.info("received event response payload: \(dat, privacy: .public)")
-//            logger.info("received event response payload: \(payload, privacy: .public)")
 
             guard let events = ZMUpdateEvent.eventsArray(
                 from: payload as ZMTransportData,
