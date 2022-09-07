@@ -1112,15 +1112,15 @@ internal enum L10n {
         internal static func arePresent(_ p1: Any) -> String {
           return L10n.tr("Localizable", "conversation.banner.are_present", String(describing: p1))
         }
-        /// **Externals**
+        /// Externals
         internal static let externals = L10n.tr("Localizable", "conversation.banner.externals")
-        /// **Guests**
+        /// Guests
         internal static let guests = L10n.tr("Localizable", "conversation.banner.guests")
-        /// **Federated users**
+        /// Federated users
         internal static let remotes = L10n.tr("Localizable", "conversation.banner.remotes")
         ///  and 
         internal static let separator = L10n.tr("Localizable", "conversation.banner.separator")
-        /// **Services**
+        /// Services
         internal static let services = L10n.tr("Localizable", "conversation.banner.services")
       }
       internal enum Call {
