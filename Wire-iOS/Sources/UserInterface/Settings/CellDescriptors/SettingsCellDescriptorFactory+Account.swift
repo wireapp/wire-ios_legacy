@@ -280,7 +280,6 @@ extension SettingsCellDescriptorFactory {
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsExternalScreenColorCellDescriptor(
             title: "self.settings.account_picture_group.color".localized,
-            isDestructive: false,
             identifier: nil,
             presentationAction: AccentColorPickerController.init,
             previewGenerator: { _ in .accentColor(ZMUser.selfUser().accentColor) }

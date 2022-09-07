@@ -23,8 +23,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
     static let cellType: SettingsTableCell.Type = SettingsTableColorCell.self
     var visible: Bool = true
     let title: String
-    let destructive: Bool
-    let presentationStyle = PresentationStyle.navigation
     let identifier: String?
     let icon: StyleKitIcon?
 
@@ -38,7 +36,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
     let presentationAction: () -> (UIViewController?)
 
     init(title: String,
-         isDestructive: Bool,
          identifier: String?,
          presentationAction: @escaping () -> (UIViewController?),
          previewGenerator: PreviewGeneratorType? = .none,
@@ -46,7 +43,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
          accessoryViewMode: AccessoryViewMode = .default) {
 
         self.title = title
-        self.destructive = isDestructive
         self.presentationAction = presentationAction
         self.identifier = identifier
         self.previewGenerator = previewGenerator
