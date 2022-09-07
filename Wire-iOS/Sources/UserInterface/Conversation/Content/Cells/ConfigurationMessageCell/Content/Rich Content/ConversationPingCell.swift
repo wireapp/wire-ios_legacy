@@ -155,7 +155,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
             .foregroundColor: UIColor.from(scheme: .textForeground)
             ]).adding(font: .mediumSemiboldFont, to: senderText)
 
-        let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
+        let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.color
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text, message: message)
         actionController = nil
     }

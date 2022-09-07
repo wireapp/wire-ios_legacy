@@ -24,7 +24,7 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
     var visible: Bool = true
     let title: String
     let destructive: Bool
-    let presentationStyle: PresentationStyle
+    let presentationStyle = PresentationStyle.navigation
     let identifier: String?
     let icon: StyleKitIcon?
 
@@ -39,7 +39,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
 
     init(title: String,
          isDestructive: Bool,
-         presentationStyle: PresentationStyle,
          identifier: String?,
          presentationAction: @escaping () -> (UIViewController?),
          previewGenerator: PreviewGeneratorType? = .none,
@@ -48,7 +47,6 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
 
         self.title = title
         self.destructive = isDestructive
-        self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
         self.identifier = identifier
         self.previewGenerator = previewGenerator
@@ -60,21 +58,7 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
         guard let controllerToShow = self.generateViewController() else {
             return
         }
-
-        switch self.presentationStyle {
-        case .modal:
-            if controllerToShow.modalPresentationStyle == .popover,
-                let sourceView = self.viewController?.view,
-                let popoverPresentation = controllerToShow.popoverPresentationController {
-                popoverPresentation.sourceView = sourceView
-                popoverPresentation.sourceRect = sourceView.bounds
-            }
-
-            controllerToShow.modalPresentationCapturesStatusBarAppearance = true
-            self.viewController?.present(controllerToShow, animated: true, completion: .none)
-        case .navigation:
-            viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
-        }
+        viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
     }
 
     func featureCell(_ cell: SettingsCellType) {
@@ -91,18 +75,7 @@ class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescr
         }
         cell.icon = self.icon
         if let groupCell = cell as? SettingsTableCell {
-            switch accessoryViewMode {
-            case .default:
-                if self.presentationStyle == .modal {
-                    groupCell.hideDisclosureIndicator()
-                } else {
-                    groupCell.showDisclosureIndicator()
-                }
-            case .alwaysHide:
-                groupCell.hideDisclosureIndicator()
-            case .alwaysShow:
-                groupCell.showDisclosureIndicator()
-            }
+            groupCell.showDisclosureIndicator()
         }
     }
 

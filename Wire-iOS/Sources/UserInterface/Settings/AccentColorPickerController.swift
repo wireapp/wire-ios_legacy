@@ -61,7 +61,7 @@ class ColorPickerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        addConstraints()
+        createConstraints()
     }
 
     private func setupViews() {
@@ -75,7 +75,7 @@ class ColorPickerController: UIViewController {
         self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
-    private func addConstraints() {
+    private func createConstraints() {
         [tableView].prepareForLayout()
 
         NSLayoutConstraint.activate([
@@ -103,7 +103,7 @@ class ColorPickerController: UIViewController {
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             setupCellViews()
-            addCellConstraints()
+            createCellConstraints()
         }
 
         @available(*, unavailable)
@@ -146,7 +146,7 @@ class ColorPickerController: UIViewController {
             checkmarkView.isHidden = true
         }
 
-        private func addCellConstraints() {
+        private func createCellConstraints() {
             [checkmarkView, colorView, colorNameLabel].prepareForLayout()
             NSLayoutConstraint.activate([
                 colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -253,21 +253,22 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
 
 extension AccentColor {
     public var name: String {
+        typealias AccentColor = L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor
         switch self {
         case .blue:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.blue
+            return AccentColor.blue
         case .green:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.green
+            return AccentColor.green
         case .yellow:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.yellow
+            return AccentColor.yellow
         case .red:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.red
+            return AccentColor.red
         case .amber:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.amber
+            return AccentColor.amber
         case .petrol:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.petrol
+            return AccentColor.petrol
         case .purple:
-            return L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor.purple
+            return AccentColor.purple
         }
     }
 }

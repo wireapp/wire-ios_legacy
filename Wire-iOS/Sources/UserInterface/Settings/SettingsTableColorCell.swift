@@ -23,10 +23,10 @@ class SettingsTableColorCell: SettingsTableCell {
     override var preview: SettingsCellPreview {
         didSet {
             switch preview {
-            case .color(let color):
-                setColorName(for: color)
+            case .accentColor(let accentColor):
+                colorNameLabel.text = accentColor.name
                 colorView.image = .none
-                colorView.backgroundColor = color
+                colorView.backgroundColor = UIColor(for: accentColor)
                 colorView.accessibilityValue = "color"
                 colorView.isAccessibilityElement = true
             default:
@@ -104,16 +104,5 @@ class SettingsTableColorCell: SettingsTableCell {
         cellNameLabel.isHidden = true
         valueLabel.isHidden = true
         imagePreview.isHidden = true
-    }
-
-    private func setColorName(for selectedColor: UIColor) {
-        let accentColors: [AccentColor] = AccentColor.allSelectable()
-        accentColors.forEach { accentColor in
-            let accentColorHex = UIColor(for: accentColor).hexValue()
-            let selectedColorHex = selectedColor.hexValue()
-            if accentColorHex == selectedColorHex {
-                colorNameLabel.text = accentColor.name
-            }
-        }
     }
 }

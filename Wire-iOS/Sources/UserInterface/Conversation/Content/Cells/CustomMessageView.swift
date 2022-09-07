@@ -43,7 +43,7 @@ class CustomMessageView: UIView {
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
         messageLabel.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
-                                       NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor]
+                                       NSAttributedString.Key.foregroundColor: ZMUser.selfUser().color]
 
         super.init(frame: frame)
         addSubview(messageLabel)
