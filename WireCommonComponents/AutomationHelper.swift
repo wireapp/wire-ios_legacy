@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSystem
+import WireDataModel
 
 final public class AutomationEmailCredentials: NSObject {
     public var email: String
@@ -115,6 +116,14 @@ public final class AutomationHelper: NSObject {
             self.debugDataToInstall = nil
         }
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
+
+        if
+            let value = arguments.flagValueIfPresent(AutomationKey.preferredAPIversion.rawValue),
+            let apiVersion = Int32(value)
+        {
+            APIVersion.preferredVersion = APIVersion(rawValue: apiVersion)
+        }
+
         super.init()
     }
 
@@ -134,6 +143,7 @@ public final class AutomationHelper: NSObject {
         case disableInteractiveKeyboardDismissal = "disable-interactive-keyboard-dismissal"
         case useAppCenter = "use-app-center"
         case keepCallingOverlayVisible = "keep-calling-overlay-visible"
+        case preferredAPIversion = "preferred-api-version"
     }
     /// Returns the login email and password credentials if set in the given arguments
     fileprivate static func credentials(_ arguments: ArgumentsType) -> AutomationEmailCredentials? {
