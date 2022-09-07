@@ -37,6 +37,12 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "accountPage.teamName.description")
       }
     }
+    internal enum ClientList {
+      internal enum DeviceDetails {
+        /// Double tap to open device details
+        internal static let hint = L10n.tr("Accessibility", "clientList.deviceDetails.hint")
+      }
+    }
     internal enum Conversation {
       internal enum BackButton {
         /// Go back to conversation list
@@ -53,7 +59,23 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
     }
+    internal enum Options {
+      internal enum SoundButton {
+        /// Double tap to change setting
+        internal static let hint = L10n.tr("Accessibility", "options.soundButton.hint")
+      }
+    }
     internal enum Settings {
+      internal enum BackButton {
+        /// Go back to %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "settings.backButton.description", String(describing: p1))
+        }
+      }
+      internal enum CloseButton {
+        /// Close settings
+        internal static let description = L10n.tr("Accessibility", "settings.closeButton.description")
+      }
       internal enum DeviceCount {
         /// %@ devices in use
         internal static func hint(_ p1: Any) -> String {
