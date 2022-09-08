@@ -86,10 +86,6 @@ class ColorPickerController: UIViewController {
         ])
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     fileprivate class PickerCell: UITableViewCell {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
@@ -102,7 +98,7 @@ class ColorPickerController: UIViewController {
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            setupCellViews()
+            setupViews()
             createCellConstraints()
         }
 
@@ -131,7 +127,7 @@ class ColorPickerController: UIViewController {
             checkmarkView.isHidden = true
         }
 
-        private func setupCellViews() {
+        private func setupViews() {
             selectionStyle = .none
 
             contentView.addSubview(colorView)

@@ -81,7 +81,6 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
     }
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-
         guard case let .appearance(title) = configuration else { preconditionFailure() }
         titleLabel.text = title
         subtitleLabel.text = AccentColor.current.name

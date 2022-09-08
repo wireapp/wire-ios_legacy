@@ -145,7 +145,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
             return user.isServiceUser ? .white : .clear
         case .text?:
             if user.isConnected || user.isSelfUser || user.isTeamMember || user.isWirelessUser {
-                return user.color
+                return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)
             }
@@ -244,7 +244,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Updates the color of the badge indicator.
     private func updateIndicatorColor() {
-        self.badgeIndicator.backgroundColor = user?.color
+        self.badgeIndicator.backgroundColor = user?.accentColor
     }
 
     /// Updates the interface to reflect if the user is a service user or not.

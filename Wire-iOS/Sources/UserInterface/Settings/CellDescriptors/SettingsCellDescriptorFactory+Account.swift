@@ -279,7 +279,7 @@ extension SettingsCellDescriptorFactory {
 
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsAppearanceCellDescriptor(
-            text: "self.settings.account_picture_group.color".localized,
+            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
             appearanceType: .color,
             presentationAction: AccentColorPickerController.init)
     }

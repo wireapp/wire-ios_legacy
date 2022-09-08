@@ -25,7 +25,6 @@ enum SettingsCellPreview {
     case badge(Int)
     case image(UIImage)
     case color(UIColor)
-    case accentColor(AccentColor)
 }
 
 protocol SettingsCellType: AnyObject {
@@ -82,7 +81,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return badgeLabel
     }()
 
-    let imagePreview: UIImageView = {
+    private let imagePreview: UIImageView = {
         let imagePreview = UIImageView()
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 12
@@ -147,14 +146,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
-            case .accentColor(let accentColor):
-                valueLabel.text = ""
-                badgeLabel.text = ""
-                badge.isHidden = true
-                imagePreview.image = .none
-                imagePreview.backgroundColor = UIColor(for: accentColor)
-                imagePreview.accessibilityValue = "color"
-                imagePreview.isAccessibilityElement = true
             }
         }
     }

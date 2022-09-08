@@ -27,7 +27,7 @@ final class TextSearchResultFooter: UIView {
                 return
             }
 
-            nameLabel.textColor = sender.color
+            nameLabel.textColor = sender.accentColor
             nameLabel.text = sender.name
             nameLabel.accessibilityValue = nameLabel.text
 

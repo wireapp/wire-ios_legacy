@@ -22,14 +22,9 @@ import WireCommonComponents
 
 extension UserType {
 
-    /// Returns the current color created of accent color from  the user.
-    var color: UIColor {
-        return UIColor(fromZMAccentColor: accentColorValue)
-    }
-
     /// Returns the current accent color of the user.
-    var accentColor: AccentColor {
-        return AccentColor(ZMAccentColor: accentColorValue) ?? .blue
+        var accentColor: UIColor {
+        return UIColor(fromZMAccentColor: accentColorValue)
     }
 
 }

@@ -47,7 +47,7 @@ final class AccentColorChangeHandler: NSObject, ZMUserObserver {
 
     func userDidChange(_ change: UserChangeInfo) {
         if change.accentColorValueChanged {
-            handlerBlock?(change.user.color, observer)
+            handlerBlock?(change.user.accentColor, observer)
         }
     }
 }

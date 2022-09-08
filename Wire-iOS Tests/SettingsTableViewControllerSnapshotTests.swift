@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SettingsTableViewControllerSnapshotTests: XCTestCase {
+final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: SettingsTableViewController!
 	var settingsCellDescriptorFactory: SettingsCellDescriptorFactory!
     var settingsPropertyFactory: SettingsPropertyFactory!
@@ -29,6 +29,7 @@ final class SettingsTableViewControllerSnapshotTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 
+        accentColor = .strongBlue
         userSessionMock = MockZMUserSession()
         selfUser = MockZMEditableUser()
         selfUser.teamName = "Wire"
