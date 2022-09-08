@@ -278,12 +278,10 @@ extension SettingsCellDescriptorFactory {
     }
 
     func colorElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenColorCellDescriptor(
-            title: "self.settings.account_picture_group.color".localized,
-            identifier: nil,
-            presentationAction: AccentColorPickerController.init,
-            previewGenerator: { _ in .accentColor(ZMUser.selfUser().accentColor) }
-        )
+        return SettingsAppearanceCellDescriptor(
+            text: "self.settings.account_picture_group.color".localized,
+            appearanceType: .color,
+            presentationAction: AccentColorPickerController.init)
     }
 
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {

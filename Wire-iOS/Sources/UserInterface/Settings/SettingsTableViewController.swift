@@ -203,7 +203,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             SettingsStaticTextTableCell.self,
             IconActionCell.self,
             SettingsProfileLinkCell.self,
-            SettingsTableColorCell.self
+            SettingsAppearanceCell.self
         ]
 
         for aClass in allCellTypes {

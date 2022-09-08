@@ -19,29 +19,8 @@
 import UIKit
 import WireCommonComponents
 
-class SettingsTableColorCell: SettingsTableCell {
-    override var preview: SettingsCellPreview {
-        didSet {
-            switch preview {
-            case .accentColor(let accentColor):
-                colorNameLabel.text = accentColor.name
-                colorView.image = .none
-                colorView.backgroundColor = UIColor(for: accentColor)
-                colorView.accessibilityValue = "color"
-                colorView.isAccessibilityElement = true
-            default:
-                return
-            }
-        }
-    }
-
-    override var titleText: String {
-        didSet {
-            profileCellNameLabel.text = titleText
-        }
-    }
-
-    let profileCellNameLabel: UILabel = {
+class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
+    let titleLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
             color: .textForeground)
@@ -49,8 +28,7 @@ class SettingsTableColorCell: SettingsTableCell {
         label.numberOfLines = 0
         return label
     }()
-
-    let colorNameLabel: UILabel = {
+    let subtitleLabel: UILabel = {
         let valueLabel = DynamicFontLabel(
             fontSpec: .mediumRegularFont,
             color: .textForeground)
@@ -59,14 +37,14 @@ class SettingsTableColorCell: SettingsTableCell {
         return valueLabel
     }()
 
-    let colorView: UIImageView = {
-        let colorView = UIImageView()
-        colorView.clipsToBounds = true
-        colorView.layer.cornerRadius = 15
-        colorView.contentMode = .scaleAspectFill
-        colorView.accessibilityIdentifier = "colorView"
+    let iconImageView: UIImageView = {
+        let iconView = UIImageView()
+        iconView.clipsToBounds = true
+        iconView.layer.cornerRadius = 15
+        iconView.contentMode = .scaleAspectFill
+        iconView.accessibilityIdentifier = "iconView"
 
-        return colorView
+        return iconView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -77,32 +55,42 @@ class SettingsTableColorCell: SettingsTableCell {
     }
 
     private func createConstraints() {
-        [profileCellNameLabel, colorNameLabel, colorView].prepareForLayout()
+        [titleLabel, subtitleLabel, iconImageView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-            profileCellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            profileCellNameLabel.leadingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: 22),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),
 
-            colorNameLabel.topAnchor.constraint(equalTo: profileCellNameLabel.bottomAnchor),
-            colorNameLabel.leadingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: 22),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            subtitleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),
 
-            colorView.widthAnchor.constraint(equalTo: colorView.heightAnchor),
-            colorView.heightAnchor.constraint(equalToConstant: 30),
-            colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),
+            iconImageView.heightAnchor.constraint(equalToConstant: 30),
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
     }
 
     private func setupView() {
-        [profileCellNameLabel, colorNameLabel, colorView].forEach {
+        [titleLabel, subtitleLabel, iconImageView].forEach {
             contentView.addSubview($0)
         }
 
-        badge.isHidden = true
-        cellNameLabel.isHidden = true
-        valueLabel.isHidden = true
-        imagePreview.isHidden = true
+    }
+
+    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+
+        guard case let .appearance(title) = configuration else { preconditionFailure() }
+        titleLabel.text = title
+        subtitleLabel.text = AccentColor.current.name
+        iconImageView.backgroundColor = .accent()
+    }
+}
+
+private extension AccentColor {
+    static var current: AccentColor {
+        return AccentColor(ZMAccentColor: UIColor.indexedAccentColor()) ?? .blue
     }
 }

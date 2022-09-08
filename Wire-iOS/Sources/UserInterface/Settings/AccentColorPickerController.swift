@@ -250,25 +250,3 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         dismiss(animated: true, completion: .none)
     }
 }
-
-extension AccentColor {
-    public var name: String {
-        typealias AccentColor = L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor
-        switch self {
-        case .blue:
-            return AccentColor.blue
-        case .green:
-            return AccentColor.green
-        case .yellow:
-            return AccentColor.yellow
-        case .red:
-            return AccentColor.red
-        case .amber:
-            return AccentColor.amber
-        case .petrol:
-            return AccentColor.petrol
-        case .purple:
-            return AccentColor.purple
-        }
-    }
-}

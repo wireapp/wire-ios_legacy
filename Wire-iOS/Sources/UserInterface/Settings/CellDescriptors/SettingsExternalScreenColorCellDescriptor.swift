@@ -20,7 +20,7 @@ import UIKit
 import WireCommonComponents
 
 class SettingsExternalScreenColorCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType: SettingsTableCell.Type = SettingsTableColorCell.self
+    static let cellType: SettingsTableCell.Type = SettingsAppearanceCell.self
     var visible: Bool = true
     let title: String
     let identifier: String?
