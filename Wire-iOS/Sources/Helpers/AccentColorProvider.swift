@@ -23,7 +23,7 @@ import WireCommonComponents
 extension UserType {
 
     /// Returns the current accent color of the user.
-        var accentColor: UIColor {
+    var accentColor: UIColor {
         return UIColor(fromZMAccentColor: accentColorValue)
     }
 
