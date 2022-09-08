@@ -99,7 +99,7 @@ class ColorPickerController: UIViewController {
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             setupViews()
-            createCellConstraints()
+            createConstraints()
         }
 
         @available(*, unavailable)
@@ -142,7 +142,7 @@ class ColorPickerController: UIViewController {
             checkmarkView.isHidden = true
         }
 
-        private func createCellConstraints() {
+        private func createConstraints() {
             [checkmarkView, colorView, colorNameLabel].prepareForLayout()
             NSLayoutConstraint.activate([
                 colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

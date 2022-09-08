@@ -29,7 +29,6 @@ final class SettingsTableViewControllerSnapshotTests: ZMSnapshotTestCase {
 	override func setUp() {
 		super.setUp()
 
-        accentColor = .strongBlue
         userSessionMock = MockZMUserSession()
         selfUser = MockZMEditableUser()
         selfUser.teamName = "Wire"
