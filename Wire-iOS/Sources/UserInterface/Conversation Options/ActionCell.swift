@@ -71,5 +71,6 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         accessibilityIdentifier = identifier
         label.text = title
         backgroundColor = SemanticColors.View.backgroundUserCell
+        addBorder(for: .bottom)
     }
 }

@@ -64,7 +64,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         iconImageView.tintColor = SemanticColors.Icon.foregroundDefault
         label.textColor = SemanticColors.Label.textDefault
         label.text = title
-
+        addBorder(for: .bottom)
     }
 
 }

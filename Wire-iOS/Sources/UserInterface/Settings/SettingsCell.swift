@@ -196,7 +196,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         }
 
         createConstraints()
-        addBorder(for: .bottom)
     }
 
     private func createConstraints() {
@@ -405,7 +404,6 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
         cellNameLabel.numberOfLines = 0
         cellNameLabel.textAlignment = .justified
         backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
-        removeBorder()
     }
 
 }
@@ -433,7 +431,6 @@ final class SettingsProfileLinkCell: SettingsTableCell {
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
         backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
-        removeBorder()
     }
 
     private func createConstraints() {

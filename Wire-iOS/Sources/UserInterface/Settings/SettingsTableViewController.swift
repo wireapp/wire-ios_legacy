@@ -233,9 +233,9 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
+            addBorderFor(for: cell, descriptor: cellDescriptor)
             return cell
         }
-
         fatalError("Cannot dequeue cell for index path \(indexPath) and cellDescriptor \(cellDescriptor)")
     }
 
@@ -275,6 +275,12 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
+    }
+
+    private func addBorderFor(for cell: SettingsTableCell, descriptor cellDescriptor: SettingsCellDescriptorType) {
+        if  type(of: cellDescriptor).cellType.reuseIdentifier == SettingsStaticTextTableCell.reuseIdentifier ||
+            type(of: cellDescriptor).cellType.reuseIdentifier == SettingsProfileLinkCell.reuseIdentifier { return }
+        else { cell.addBorder(for: .bottom)}
     }
 
 }
