@@ -518,7 +518,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
                 .adding(font: .mediumSemiboldFont, to: timerString)
         }
 
-        let icon = StyleKitIcon.hourglass.makeImage(size: 16, color:  SemanticColors.Icon.backgroundIconDefaultConversationView)
+        let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: SemanticColors.Icon.backgroundIconDefaultConversationView)
         configuration = View.Configuration(icon: icon, attributedText: updateText, showLine: false)
         actionController = nil
     }

@@ -108,7 +108,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         self.message = message
 
         var icon: UIImage?
-        let iconColor = UIColor.from(scheme: .iconNormal)
+        let iconColor = SemanticColors.Icon.foregroundDefault
 
         if message.isDeletion {
             icon = StyleKitIcon.trash.makeImage(size: 8, color: iconColor)
