@@ -57,7 +57,7 @@ class MediaShareRestrictionManager {
 
     // MARK: - Public Properties
 
-    var mediaShareRestrictionLevel: MediaShareRestrictionLevel {
+    var level: MediaShareRestrictionLevel {
         if let sessionRestriction = sessionRestriction, !sessionRestriction.isFileSharingEnabled {
             return .APIFlag
         }
@@ -65,7 +65,7 @@ class MediaShareRestrictionManager {
     }
 
     func canUploadMedia(from source: ShareableMediaSource) -> Bool {
-        switch mediaShareRestrictionLevel {
+        switch level {
         case .none:
             return true
         case .securityFlag:
@@ -76,7 +76,7 @@ class MediaShareRestrictionManager {
     }
 
     var canDownloadMedia: Bool {
-        switch mediaShareRestrictionLevel {
+        switch level {
         case .none:
             return true
         case .APIFlag, .securityFlag:
@@ -89,7 +89,7 @@ class MediaShareRestrictionManager {
     }
 
     var hasAccessToCameraRoll: Bool {
-        switch mediaShareRestrictionLevel {
+        switch level {
         case .none:
             return true
         case .APIFlag, .securityFlag:
