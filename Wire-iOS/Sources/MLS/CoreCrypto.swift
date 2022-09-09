@@ -20,14 +20,28 @@ import Foundation
 import WireDataModel
 import WireCoreCrypto
 
+class CoreCryptoCallbacksWrapper: WireCoreCrypto.CoreCryptoCallbacks {
+
+    let callbacks: WireDataModel.CoreCryptoCallbacks
+
+    init(callbacks: WireDataModel.CoreCryptoCallbacks) {
+        self.callbacks = callbacks
+    }
+
+    func authorize(conversationId: [UInt8], clientId: String) -> Bool {
+        return callbacks.authorize(conversationId: conversationId, clientId: clientId)
+    }
+
+    func isUserInGroup(identity: [UInt8], otherClients: [[UInt8]]) -> Bool {
+        return callbacks.isUserInGroup(identity: identity, otherClients: otherClients)
+    }
+
+}
+
 extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
 
     public func wire_setCallbacks(callbacks: WireDataModel.CoreCryptoCallbacks) throws {
-        guard let callbacks = callbacks as? WireCoreCrypto.CoreCryptoCallbacks else {
-            fatalError("`callbacks` does not conform to `WireCoreCrypto.CoreCryptoCallbacks`")
-        }
-
-        try setCallbacks(callbacks: callbacks)
+        try setCallbacks(callbacks: CoreCryptoCallbacksWrapper(callbacks: callbacks))
     }
 
     public func wire_clientPublicKey() throws -> [UInt8] {
