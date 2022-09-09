@@ -81,6 +81,7 @@ public enum SemanticColors {
     }
 
     public enum Icon {
+        static let backgroundIconDefaultConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
         static let borderCheckMark = UIColor(light: Asset.gray80, dark: Asset.gray60)
@@ -109,6 +110,7 @@ public enum SemanticColors {
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
     }
 
     public enum TabBar {
@@ -118,6 +120,7 @@ public enum SemanticColors {
     public enum Button {
         static let backgroundBarItem = UIColor(light: Asset.white, dark: Asset.gray90)
         static let backgroundSecondaryEnabled = UIColor(light: Asset.white, dark: Asset.gray95)
+        static let backgroundSecondaryInConversationViewEnabled = UIColor(light: Asset.white, dark: Asset.gray100)
         static let backgroundSecondaryHighlighted = UIColor(light: Asset.white, dark: Asset.gray80)
         static let textSecondaryEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let borderSecondaryEnabled = UIColor(light: Asset.gray40, dark: Asset.gray80)
