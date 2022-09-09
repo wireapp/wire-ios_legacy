@@ -105,7 +105,7 @@ class ParticipantsConversationSystemMessageCell: ConversationIconBasedCell, Conv
         warningLabel.numberOfLines = 0
         warningLabel.isAccessibilityElement = true
         warningLabel.font = FontSpec(.small, .regular).font
-        warningLabel.textColor = SemanticColors.LegacyColors.vividRed
+        warningLabel.textColor = SemanticColors.Label.textWarning
         bottomContentView.addSubview(warningLabel)
     }
 
@@ -402,7 +402,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
         let color = SemanticColors.Icon.backgroundIconDefaultConversationView
         let textColor = SemanticColors.Label.textDefault
 
-        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: textColor, iconColor: color, message: message)
+        let model = ParticipantsCellViewModel(font: .mediumFont, largeFont: .largeSemiboldFont, textColor: textColor, iconColor: color, message: message)
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
     }
@@ -431,7 +431,6 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
 
         let title = NSAttributedString(string: titleString, attributes: [.font: UIFont.mediumFont, .foregroundColor: SemanticColors.Label.textDefault])
-            .adding(font: .mediumSemiboldFont, to: senderText)
 
         let conversationName = NSAttributedString(string: newName, attributes: [.font: UIFont.normalSemiboldFont, .foregroundColor: SemanticColors.Label.textDefault])
         configuration = View.Configuration(attributedText: title, newConversationName: conversationName)
@@ -508,13 +507,10 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
 
         if timeoutValue == .none {
             updateText = NSAttributedString(string: "content.system.message_timer_off".localized(pov: sender.pov, args: senderText), attributes: baseAttributes)
-                .adding(font: .mediumSemiboldFont, to: senderText)
 
         } else if let displayString = timeoutValue.displayString {
             let timerString = displayString.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
             updateText = NSAttributedString(string: "content.system.message_timer_changes".localized(pov: sender.pov, args: senderText, timerString), attributes: baseAttributes)
-                .adding(font: .mediumSemiboldFont, to: senderText)
-                .adding(font: .mediumSemiboldFont, to: timerString)
         }
 
         let icon = StyleKitIcon.hourglass.makeImage(size: 16, color: SemanticColors.Icon.backgroundIconDefaultConversationView)
@@ -575,7 +571,7 @@ final class ConversationStartedSystemMessageCellDescription: NSObject, Conversat
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = SemanticColors.Label.textDefault
         let iconColor = SemanticColors.Icon.backgroundIconDefaultConversationView
-        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: iconColor, message: message)
+        let model = ParticipantsCellViewModel(font: .mediumFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: iconColor, message: message)
 
         actionController = nil
         configuration =  View.Configuration(title: model.attributedHeading(),
@@ -624,7 +620,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let title = ConversationMissingMessagesSystemMessageCellDescription.makeAttributedString(systemMessageData: data)
         configuration =  View.Configuration(icon: StyleKitIcon.exclamationMark.makeImage(size: .tiny,
-                                                                                         color: SemanticColors.LegacyColors.vividRed),
+                                                                                         color: SemanticColors.Icon.backgroundMissedPhoneCall),
                                             attributedText: title,
                                             showLine: true)
         actionController = nil
@@ -640,7 +636,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
             let userNames = users.compactMap { ($0 as? UserType)?.name }.joined(separator: ", ")
             let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
-            return string.addAttributes([.font: boldFont], toSubstring: userNames)
+            return string
         }
 
         var title = "content.system.missing_messages.title".localized && font && color
