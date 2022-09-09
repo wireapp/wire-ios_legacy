@@ -155,8 +155,10 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: subviews
     lazy var inputBar: InputBar = {
         let inputBar = InputBar(buttons: inputBarButtons)
-        if !mediaShareRestrictionManager.canUseClipboard {
+        if !mediaShareRestrictionManager.canUseSpellChecking {
             inputBar.textView.spellCheckingType = .no
+        }
+        if !mediaShareRestrictionManager.canUseAutoCorrect {
             inputBar.textView.autocorrectionType = .no
         }
         return inputBar

@@ -88,6 +88,14 @@ class MediaShareRestrictionManager {
         return canUploadMedia(from: .clipboard)
     }
 
+    var canUseSpellChecking: Bool {
+        return canUploadMedia(from: .clipboard)
+    }
+
+    var canUseAutoCorrect: Bool {
+        return canUploadMedia(from: .clipboard)
+    }
+
     var hasAccessToCameraRoll: Bool {
         switch level {
         case .none:
