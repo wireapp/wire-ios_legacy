@@ -68,7 +68,7 @@ struct ReadReceiptViewModel {
 
 extension ConversationSystemMessageCell {
     static var baseAttributes: [NSAttributedString.Key: AnyObject] {
-        return [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textForeground)]
+        return [.font: UIFont.mediumFont, .foregroundColor: SemanticColors.Label.textDefault]
     }
 }
 
@@ -93,7 +93,7 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     init(sender: UserType,
          systemMessageType: ZMSystemMessageType) {
         let viewModel = ReadReceiptViewModel(icon: .eye,
-                                             iconColor: UIColor.from(scheme: .textDimmed),
+                                             iconColor: SemanticColors.Icon.backgroundIconDefaultConversationView,
                                              systemMessageType: systemMessageType, sender: sender)
 
         configuration = View.Configuration(icon: viewModel.image(),
