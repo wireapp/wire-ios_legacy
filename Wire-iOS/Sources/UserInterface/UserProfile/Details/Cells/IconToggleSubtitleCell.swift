@@ -54,22 +54,20 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
 
     private func setupViews() {
-        [imageContainer, titleLabel].forEach(topContainer.addSubview)
+        [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
         imageContainer.addSubview(iconImageView)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         titleLabel.font = FontSpec(.normal, .light).font
-
-        isAccessibilityElement = true
-        shouldGroupAccessibilityChildren = false
-        accessoryView = toggle
+        accessibilityElements = [titleLabel, toggle]
     }
 
     private func createConstraints() {
         [topContainer,
          titleLabel,
+         toggle,
          iconImageView,
          imageContainer,
          subtitleLabel].prepareForLayout()
@@ -79,6 +77,9 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             iconImageView.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: CGFloat.IconCell.IconSpacing),
             iconImageViewLeadingConstraint,
+
+            toggle.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
+            toggle.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -CGFloat.IconCell.IconSpacing),
 
             titleLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
 

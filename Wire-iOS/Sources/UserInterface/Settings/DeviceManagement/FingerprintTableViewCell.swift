@@ -116,11 +116,14 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     }
 
     private func setupAccessibility() {
+        guard let titleText = titleLabel.text,
+              let fingerprintText = fingerprintLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+
         accessibilityElements = [titleLabel, fingerprintLabel]
         isAccessibilityElement = true
-
-        let titleText = titleLabel.text ?? ""
-        let fingerprintText = fingerprintLabel.text ?? ""
         accessibilityLabel = "\(titleText), \(fingerprintText)"
     }
 
