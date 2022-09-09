@@ -120,8 +120,20 @@ final class ConversationCreationController: UIViewController {
         guestsSection,
         servicesSection,
         receiptsSection,
-        selfUser.canCreateMLSGroups || DeveloperFlag.showCreateMLSGroupToggle.isOn ? encryptionProtocolSection : nil
+        shouldIncludeEncryptionProtocolSection ? encryptionProtocolSection : nil
     ].compactMap(\.self)
+
+    private var shouldIncludeEncryptionProtocolSection: Bool {
+        if DeveloperFlag.showCreateMLSGroupToggle.isOn {
+            return true
+        }
+
+        if AutomationHelper.sharedHelper.allowMLSGroupCreation == true {
+            return true
+        }
+
+        return selfUser.canCreateMLSGroups
+    }
 
     private lazy var guestsSection: ConversationCreateGuestsSectionController = {
         let section = ConversationCreateGuestsSectionController(values: values)

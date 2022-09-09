@@ -201,6 +201,10 @@ final class APIVersionOperation: LaunchSequenceOperation {
 
     func execute() {
         APIVersion.storage = .applicationGroup
+
+        if let preferredVersion = AutomationHelper.sharedHelper.preferredAPIversion {
+            APIVersion.preferredVersion = preferredVersion
+        }
     }
 
 }
