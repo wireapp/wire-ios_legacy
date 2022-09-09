@@ -80,7 +80,6 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
             toggle.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
             toggle.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -CGFloat.IconCell.IconSpacing),
-
             titleLabel.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor),
 
             topContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
