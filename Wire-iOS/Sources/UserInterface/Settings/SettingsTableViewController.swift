@@ -188,12 +188,12 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupTableView()
 
-        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupTableView()
+        setupNavigationBar()
     }
 
-    func setupTableView() {
+    private func setupTableView() {
         let allCellTypes: [SettingsTableCell.Type] = [
             SettingsTableCell.self,
             SettingsButtonCell.self,
@@ -208,6 +208,18 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Accessibility = L10n.Accessibility.Settings
+
+        navigationItem.rightBarButtonItem?.accessibilityLabel = Accessibility.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = Accessibility.BackButton.description(group.title)
     }
 
     func refreshData() {

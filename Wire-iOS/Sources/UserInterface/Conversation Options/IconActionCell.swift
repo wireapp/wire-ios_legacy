@@ -36,6 +36,7 @@ final class IconActionCell: SettingsTableCell, CellConfigurationConfigurable {
         imageContainer.addSubview(iconImageView)
         label.font = FontSpec(.normal, .semibold).font
         [imageContainer, label].forEach(contentView.addSubview)
+        accessibilityTraits = .button
     }
 
     private func createConstraints() {
