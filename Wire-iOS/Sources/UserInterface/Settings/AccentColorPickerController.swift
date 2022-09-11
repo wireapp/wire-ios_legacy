@@ -22,21 +22,8 @@ import WireSyncEngine
 import WireCommonComponents
 
 protocol ColorPickerControllerDelegate {
-    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: AccentColorOption)
+    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: AccentColor)
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
-}
-
-class AccentColorOption: Equatable {
-    static func == (lhs: AccentColorOption, rhs: AccentColorOption) -> Bool {
-        return lhs.accentColor == rhs.accentColor
-    }
-
-    let accentColor: AccentColor
-    var isSelected: Bool = false
-
-    init(accentColor: AccentColor) {
-        self.accentColor = accentColor
-    }
 }
 
 class ColorPickerController: UIViewController {
@@ -44,11 +31,11 @@ class ColorPickerController: UIViewController {
 
     static fileprivate let rowHeight: CGFloat = 56
 
-    let colors: [AccentColorOption]
+    let colors: [AccentColor]
     var selectedColor: AccentColor?
     var delegate: ColorPickerControllerDelegate?
 
-    init(colors: [AccentColorOption]) {
+    init(colors: [AccentColor]) {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
 
@@ -181,8 +168,8 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
             fatal("Cannot create cell")
         }
 
-        cell.color = colors[indexPath.row].accentColor
-        cell.colorNameLabel.text = colors[indexPath.row].accentColor.name
+        cell.color = colors[indexPath.row]
+        cell.colorNameLabel.text = colors[indexPath.row].name
         cell.isSelected = cell.color == selectedColor
         if cell.isSelected {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -192,7 +179,7 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.colorPicker(self, didSelectColor: colors[indexPath.row])
-        selectedColor = colors[indexPath.row].accentColor
+        selectedColor = colors[indexPath.row]
     }
 }
 
@@ -202,12 +189,12 @@ final class AccentColorPickerController: ColorPickerController {
     init() {
         allAccentColors = AccentColor.allSelectable()
 
-        super.init(colors: allAccentColors.map { AccentColorOption(accentColor: $0) })
+        super.init(colors: allAccentColors)
 
         setupControllerTitle()
 
         if let accentColor = AccentColor(ZMAccentColor: ZMUser.selfUser().accentColorValue), let currentColorIndex = allAccentColors.firstIndex(of: accentColor) {
-            selectedColor = colors[currentColorIndex].accentColor
+            selectedColor = colors[currentColorIndex]
         }
         delegate = self
     }
@@ -232,7 +219,7 @@ final class AccentColorPickerController: ColorPickerController {
 }
 
 extension AccentColorPickerController: ColorPickerControllerDelegate {
-    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: AccentColorOption) {
+    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: AccentColor) {
         guard let colorIndex = colors.firstIndex(of: color) else {
             return
         }
