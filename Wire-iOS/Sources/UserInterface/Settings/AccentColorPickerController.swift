@@ -130,9 +130,9 @@ class ColorPickerController: UIViewController {
         private func setupViews() {
             selectionStyle = .none
 
-            contentView.addSubview(colorView)
-            contentView.addSubview(checkmarkView)
-            contentView.addSubview(colorNameLabel)
+            [colorView, checkmarkView, colorNameLabel].forEach {
+                            contentView.addSubview($0)
+            }
 
             backgroundColor = SemanticColors.View.backgroundUserCell
             addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)

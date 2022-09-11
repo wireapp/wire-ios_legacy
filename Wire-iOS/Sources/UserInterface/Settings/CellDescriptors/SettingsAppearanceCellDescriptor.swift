@@ -21,8 +21,8 @@ import UIKit
 class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExternalScreenCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsAppearanceCell.self
 
-    var text: String
-    let appearanceType: AppearanceType
+    private var text: String
+    private let appearanceType: AppearanceType
     weak var viewController: UIViewController?
     let presentationAction: () -> (UIViewController?)
 

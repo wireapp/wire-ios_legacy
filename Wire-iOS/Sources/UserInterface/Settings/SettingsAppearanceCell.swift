@@ -28,6 +28,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         label.numberOfLines = 0
         return label
     }()
+
     let subtitleLabel: UILabel = {
         let valueLabel = DynamicFontLabel(
             fontSpec: .mediumRegularFont,
