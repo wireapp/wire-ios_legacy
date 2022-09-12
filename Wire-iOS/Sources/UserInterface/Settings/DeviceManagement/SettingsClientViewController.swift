@@ -230,6 +230,8 @@ final class SettingsClientViewController: UIViewController,
                 cell.wr_editable = false
                 cell.showVerified = false
                 cell.showLabel = true
+                cell.accessibilityTraits = .none
+                cell.accessibilityHint = ""
                 return cell
             }
 
