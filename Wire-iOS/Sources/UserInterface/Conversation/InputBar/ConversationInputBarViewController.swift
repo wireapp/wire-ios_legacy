@@ -36,6 +36,8 @@ final class ConversationInputBarViewController: UIViewController,
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
+    typealias ButtonColors = SemanticColors.Button
+
     let conversation: InputBarConversationType
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
@@ -116,7 +118,15 @@ final class ConversationInputBarViewController: UIViewController,
     }()
 
     let markdownButton: IconButton = {
-        let button = IconButton(style: .circular)
+        let button = IconButton()
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+        button.setBorderColor(ButtonColors.borderSecondaryEnabled, for: .normal)
+        button.setBorderColor(ButtonColors.borderSecondaryHighlighted, for: .highlighted)
+
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.applyStyle(.secondaryTextButtonStyleInConversationView)
         return button
     }()
     let mentionButton: IconButton = IconButton()
@@ -929,8 +939,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
         bottomConstraint.priority = .defaultLow
 
-        let senderDiameter: CGFloat = 28
-
         let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
 
         NSLayoutConstraint.activate([
@@ -952,8 +960,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
             markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
             markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
-            markdownButton.widthAnchor.constraint(equalToConstant: senderDiameter),
-            markdownButton.heightAnchor.constraint(equalToConstant: senderDiameter),
+            markdownButton.widthAnchor.constraint(equalToConstant: 40),
+            markdownButton.heightAnchor.constraint(equalToConstant: 32),
 
             hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
             hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),

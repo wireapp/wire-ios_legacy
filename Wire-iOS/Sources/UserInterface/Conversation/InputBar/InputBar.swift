@@ -134,14 +134,14 @@ final class InputBar: UIView {
     let markdownView = MarkdownBarView()
 
     var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
-    var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
-    var writingSeparatorColor: UIColor? = .from(scheme: .separator)
+    var barBackgroundColor: UIColor?  = SemanticColors.SearchBar.backgroundInputView
+    var writingSeparatorColor: UIColor?  = SemanticColors.View.backgroundSeparatorCell
     var ephemeralColor: UIColor {
         return .accent()
     }
 
-    var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
-    var textColor: UIColor? = .from(scheme: .textForeground)
+    var placeholderColor: UIColor = SemanticColors.SearchBar.textInputViewPlaceholder
+    var textColor: UIColor? = SemanticColors.SearchBar.textInputView
 
     private lazy var rowTopInsetConstraint: NSLayoutConstraint = buttonInnerContainer.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -constants.buttonsBarHeight)
 
@@ -247,7 +247,7 @@ final class InputBar: UIView {
         textView.textContainerInset = UIEdgeInsets(top: inputBarVerticalInset / 2, left: 0, bottom: inputBarVerticalInset / 2, right: 4)
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
-        textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        textView.keyboardAppearance = .default
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
         textView.font = .normalLightFont
@@ -255,7 +255,7 @@ final class InputBar: UIView {
         textView.backgroundColor = .clear
 
         markdownView.delegate = textView
-
+        self.addBorder(for: .top)
         updateReturnKey()
 
         updateInputBar(withState: inputBarState, animated: false)
