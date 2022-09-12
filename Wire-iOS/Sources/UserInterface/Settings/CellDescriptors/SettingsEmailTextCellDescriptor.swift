@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 
 import UIKit
 
-class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCellProtocol.Type = SettingsStaticTextTableCell.self
+class SettingsEmailTextCellDescriptor: SettingsCellDescriptorType {
+    static let cellType: SettingsTableCellProtocol.Type = SettingsEmailTableCell.self
 
     var text: String
 
@@ -54,3 +54,4 @@ class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
     }
 
 }
+

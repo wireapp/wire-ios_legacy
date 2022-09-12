@@ -34,7 +34,9 @@ protocol SettingsCellType: AnyObject {
     var icon: StyleKitIcon? {get set}
 }
 
-class SettingsTableCell: UITableViewCell, SettingsCellType {
+typealias SettingsTableCellProtocol = UITableViewCell & SettingsCellType
+
+class SettingsTableCell: SettingsTableCellProtocol {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.contentMode = .center
