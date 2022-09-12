@@ -31,9 +31,9 @@ class ColorPickerController: UIViewController {
 
     static fileprivate let rowHeight: CGFloat = 56
 
-    let colors: [AccentColor]
-    var selectedColor: AccentColor?
-    var delegate: ColorPickerControllerDelegate?
+    fileprivate let colors: [AccentColor]
+    fileprivate var selectedColor: AccentColor?
+    fileprivate var delegate: ColorPickerControllerDelegate?
 
     init(colors: [AccentColor]) {
         self.colors = colors

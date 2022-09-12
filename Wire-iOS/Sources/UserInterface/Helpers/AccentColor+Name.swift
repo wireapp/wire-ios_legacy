@@ -20,7 +20,7 @@ import Foundation
 import WireCommonComponents
 
 extension AccentColor {
-    public var name: String {
+    var name: String {
         typealias AccentColor = L10n.Localizable.Self.Settings.AccountPictureGroup.AccentColor
         switch self {
         case .blue:
