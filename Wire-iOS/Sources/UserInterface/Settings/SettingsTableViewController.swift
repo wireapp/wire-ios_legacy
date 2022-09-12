@@ -204,7 +204,8 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             SettingsEmailTableCell.self,
             SettingsEmailCopyableLabelTableCell.self,
             IconActionCell.self,
-            SettingsProfileLinkCell.self
+            SettingsProfileLinkCell.self,
+            SettingsAppearanceCell.self
         ]
 
         for aClass in allCellTypes {
