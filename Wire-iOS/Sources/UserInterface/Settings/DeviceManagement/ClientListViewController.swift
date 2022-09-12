@@ -361,6 +361,9 @@ final class ClientListViewController: UIViewController,
                 cell.userClient = nil
             }
 
+            cell.accessibilityTraits = .button
+            cell.accessibilityHint = L10n.Accessibility.ClientList.DeviceDetails.hint
+
             return cell
         } else {
             return UITableViewCell()

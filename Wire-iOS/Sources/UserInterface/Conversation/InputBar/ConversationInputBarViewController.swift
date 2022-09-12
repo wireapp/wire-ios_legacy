@@ -32,6 +32,9 @@ enum ConversationInputBarViewControllerMode {
 final class ConversationInputBarViewController: UIViewController,
                                                 UIPopoverPresentationControllerDelegate,
                                                 PopoverPresenter {
+
+    let mediaShareRestrictionManager = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
+
     // MARK: PopoverPresenter    
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
@@ -151,7 +154,14 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: subviews
     lazy var inputBar: InputBar = {
-        return InputBar(buttons: inputBarButtons)
+        let inputBar = InputBar(buttons: inputBarButtons)
+        if !mediaShareRestrictionManager.canUseSpellChecking {
+            inputBar.textView.spellCheckingType = .no
+        }
+        if !mediaShareRestrictionManager.canUseAutoCorrect {
+            inputBar.textView.autocorrectionType = .no
+        }
+        return inputBar
     }()
 
     lazy var typingIndicatorView: TypingIndicatorView = {
@@ -199,7 +209,7 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        switch MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).mediaShareRestrictionLevel {
+        switch mediaShareRestrictionManager.level {
 
         case .none:
             return [
@@ -760,7 +770,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             if let image = image,
                let jpegData = image.jpegData(compressionQuality: 0.9) {
                 if picker.sourceType == UIImagePickerController.SourceType.camera {
-                    if MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).hasAccessToCameraRoll {
+                    if mediaShareRestrictionManager.hasAccessToCameraRoll {
                         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
                     }
                     // In case of picking from the camera, the iOS controller is showing it's own confirmation screen.
