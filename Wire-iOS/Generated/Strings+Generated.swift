@@ -3791,6 +3791,22 @@ internal enum L10n {
           internal static let picture = L10n.tr("Localizable", "self.settings.account_picture_group.picture")
           /// Theme
           internal static let theme = L10n.tr("Localizable", "self.settings.account_picture_group.theme")
+          internal enum AccentColor {
+            /// Amber
+            internal static let amber = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.amber")
+            /// Blue
+            internal static let blue = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.blue")
+            /// Green
+            internal static let green = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.green")
+            /// Petrol
+            internal static let petrol = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.petrol")
+            /// Purple
+            internal static let purple = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.purple")
+            /// Red
+            internal static let red = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.red")
+            /// Yellow
+            internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
+          }
         }
         internal enum AccountSection {
           internal enum AddHandle {
