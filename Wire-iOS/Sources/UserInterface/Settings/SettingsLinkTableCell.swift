@@ -97,7 +97,7 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
 
         NSLayoutConstraint.activate([
             leadingConstraint,
-            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             cellNameLabel.heightAnchor.constraint(equalToConstant: 32),
 
