@@ -629,7 +629,7 @@ extension DownStyle {
     static var systemMessage: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.medium, .none).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
         style.listItemPrefixSpacing = 8
