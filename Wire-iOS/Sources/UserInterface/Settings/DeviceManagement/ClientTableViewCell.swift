@@ -93,17 +93,45 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         wr_editable = true
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        createConstraints()
+        setupStyle()
+    }
+
+    @available(*, unavailable)
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Override method
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        if wr_editable {
+            super.setEditing(editing, animated: animated)
+        }
+    }
+
+    // MARK: - Methods
+    func setupStyle() {
         nameLabel.accessibilityIdentifier = "device name"
         labelLabel.accessibilityIdentifier = "device label"
         activationLabel.accessibilityIdentifier = "device activation date"
         fingerprintLabel.accessibilityIdentifier = "device fingerprint"
         verifiedLabel.accessibilityIdentifier = "device verification status"
-        verifiedLabel.isAccessibilityElement = true
 
         activationLabel.numberOfLines = 0
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
+        fingerprintLabelFont = .smallLightFont
+        fingerprintLabelBoldFont = .smallSemiboldFont
+        let textColor = SemanticColors.Label.textDefault
+
+        fingerprintTextColor = textColor
+        [nameLabel, labelLabel, verifiedLabel, activationLabel].forEach { $0.textColor = textColor}
+        addBorder(for: .bottom)
+    }
+
+    private func createConstraints() {
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].forEach(contentView.addSubview)
 
         [nameLabel, labelLabel, activationLabel, fingerprintLabel, verifiedLabel].prepareForLayout()
@@ -132,38 +160,9 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
             verifiedLabel.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: -16),
             verifiedLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-
-        backgroundColor = SemanticColors.View.backgroundUserCell
-        backgroundView = UIView()
-        selectedBackgroundView = UIView()
-
-        setupStyle()
     }
 
-    @available(*, unavailable)
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Override method
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        if wr_editable {
-            super.setEditing(editing, animated: animated)
-        }
-    }
-
-    // MARK: - Methods
-    func setupStyle() {
-        fingerprintLabelFont = .smallLightFont
-        fingerprintLabelBoldFont = .smallSemiboldFont
-        let textColor = SemanticColors.Label.textDefault
-
-        fingerprintTextColor = textColor
-        [nameLabel, labelLabel, verifiedLabel, activationLabel].forEach { $0.textColor = textColor}
-        addBorder(for: .bottom)
-    }
-
-    func updateVerifiedLabel() {
+    private func updateVerifiedLabel() {
         if let userClient = userClient,
            showVerified {
 
@@ -177,7 +176,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         }
     }
 
-    func updateFingerprint() {
+    private func updateFingerprint() {
         if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.font?.monospaced(),
            let fingerprintLabelMonoFont = fingerprintLabelFont?.font?.monospaced(),
            let fingerprintLabelTextColor = fingerprintTextColor,
@@ -191,7 +190,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         }
     }
 
-    func updateLabel() {
+    private func updateLabel() {
         if let userClientLabel = userClient?.label, showLabel {
             labelLabel.text = userClientLabel
         } else {
