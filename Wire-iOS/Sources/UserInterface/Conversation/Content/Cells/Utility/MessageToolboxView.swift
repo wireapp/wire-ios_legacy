@@ -59,6 +59,8 @@ final class MessageToolboxView: UIView {
     /// The timer for ephemeral messages.
     private var timestampTimer: Timer?
 
+    typealias MessageActionsColor = SemanticColors.Label
+
     private let contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -84,7 +86,7 @@ final class MessageToolboxView: UIView {
     private let resendButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
-                                                 attributes: [.foregroundColor: SemanticColors.LegacyColors.vividRed,
+                                                 attributes: [.foregroundColor: MessageActionsColor.textWarning,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
 
@@ -98,7 +100,7 @@ final class MessageToolboxView: UIView {
     private let deleteButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
-                                                 attributes: [.foregroundColor: SemanticColors.LegacyColors.vividRed,
+                                                 attributes: [.foregroundColor: MessageActionsColor.textWarning,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
 
