@@ -474,7 +474,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     func updateRightAccessoryView() {
-        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+       updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
@@ -487,8 +487,7 @@ final class ConversationInputBarViewController: UIViewController,
                                isEphemeralSendingDisabled: conversation.isSelfDeletingMessageSendingDisabled,
                                isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
-        sendButton.isHidden = sendButtonState.sendButtonHidden
-        hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
+        sendButton.isEnabled = sendButtonState.sendButtonEnabled
         ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
         ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
 
@@ -574,6 +573,7 @@ final class ConversationInputBarViewController: UIViewController,
         gifButton.setIcon(.gif, size: .tiny, for: .normal)
         mentionButton.setIcon(.mention, size: .tiny, for: .normal)
         sendButton.setIcon(.send, size: .tiny, for: .normal)
+        sendButton.setIcon(.send, size: .tiny, for: .disabled)
     }
 
     func selectInputControllerButton(_ button: IconButton?) {
@@ -898,9 +898,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         setupInputBar()
 
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
-        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.leftAccessoryView.addSubview(markdownButton)
-        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
+        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.addSubview(typingIndicatorView)
 
         view.addSubview(securityLevelView)
