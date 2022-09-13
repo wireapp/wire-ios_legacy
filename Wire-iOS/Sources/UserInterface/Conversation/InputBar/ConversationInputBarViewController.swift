@@ -122,11 +122,8 @@ final class ConversationInputBarViewController: UIViewController,
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
-        button.setBorderColor(ButtonColors.borderSecondaryEnabled, for: .normal)
-        button.setBorderColor(ButtonColors.borderSecondaryHighlighted, for: .highlighted)
 
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-        button.applyStyle(.secondaryTextButtonStyleInConversationView)
         return button
     }()
     let mentionButton: IconButton = IconButton()
