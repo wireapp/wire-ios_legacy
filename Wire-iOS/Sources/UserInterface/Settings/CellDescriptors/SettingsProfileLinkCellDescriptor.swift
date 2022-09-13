@@ -19,12 +19,16 @@
 import UIKit
 
 class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCellProtocol.Type = SettingsLinkCopyableLabelTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsLinkTableCell.self
 
     // MARK: - Configuration
 
     func featureCell(_ cell: SettingsCellType) {
-        (cell as! SettingsLinkCopyableLabelTableCell).label.attributedText = title && .lineSpacing(8)
+        guard let linkCell = cell as? SettingsLinkTableCell else { return }
+        typealias Account = L10n.Localizable.Self.Settings.AccountSection
+
+        linkCell.cellCopyablelabel.attributedText = title && .lineSpacing(8)
+        linkCell.cellNameLabel.text = Account.ProfileLink.title
     }
 
     // MARK: - SettingsCellDescriptorType

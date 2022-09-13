@@ -202,7 +202,6 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
             SettingsTextCell.self,
             SettingsStaticTextTableCell.self,
             SettingsLinkTableCell.self,
-            SettingsLinkCopyableLabelTableCell.self,
             IconActionCell.self,
             SettingsProfileLinkCell.self,
             SettingsAppearanceCell.self

@@ -23,6 +23,8 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
 
     // MARK: - Properties
 
+    var cellCopyablelabel = CopyableLabel()
+
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
@@ -37,19 +39,13 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
         return label
     }()
 
-    var titleText: String = "" {
-        didSet {
-            cellNameLabel.text = titleText
-        }
-    }
+    var titleText: String = ""
 
     var preview: SettingsCellPreview = .none
 
     var icon: StyleKitIcon?
 
     var descriptor: SettingsCellDescriptorType?
-
-    // MARK: - Functions
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -75,31 +71,42 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
-        [cellNameLabel].forEach {
+        [cellNameLabel, cellCopyablelabel].forEach {
             contentView.addSubview($0)
         }
 
+        cellNameLabel.numberOfLines = 0
+        accessibilityTraits = .staticText
+
+        cellCopyablelabel.textColor = SemanticColors.Label.textDefault
+        cellCopyablelabel.font = FontSpec(.normal, .light).font
+        cellCopyablelabel.lineBreakMode = .byClipping
+        cellCopyablelabel.numberOfLines = 0
+        accessibilityTraits = .staticText
+
         createConstraints()
         setupAccessibility()
-        backgroundView?.backgroundColor =  SemanticColors.View.backgroundDefault
-
-        cellNameLabel.numberOfLines = 0
-        cellNameLabel.textAlignment = .justified
-        accessibilityTraits = .staticText
+        backgroundView?.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     private func createConstraints() {
         let leadingConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         leadingConstraint.priority = .defaultHigh
 
-        [cellNameLabel].prepareForLayout()
+        [cellNameLabel, cellCopyablelabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             leadingConstraint,
-            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            cellNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            cellNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            cellNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            cellNameLabel.heightAnchor.constraint(equalToConstant: 32),
 
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
+            cellCopyablelabel.topAnchor.constraint(equalTo: cellNameLabel.bottomAnchor, constant: 11),
+            cellCopyablelabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            cellCopyablelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            cellCopyablelabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -11),
+
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 112)
         ])
     }
 
@@ -115,59 +122,51 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
             backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
         }
     }
-}
-
-class SettingsLinkCopyableLabelTableCell: SettingsLinkTableCell {
-
-    // MARK: - Properties
-
-    var label = CopyableLabel()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        preview = .none
-    }
-
-    // MARK: - Functions
-
-    override func setup() {
-        backgroundView = UIView()
-        selectedBackgroundView = UIView()
-
-        cellNameLabel.isHidden = true
-
-        [label].forEach { subview in
-            contentView.addSubview(subview)
-        }
-
-        label.textColor = SemanticColors.Label.textDefault
-        label.font = FontSpec(.normal, .light).font
-        label.lineBreakMode = .byClipping
-        label.numberOfLines = 0
-        accessibilityTraits = .staticText
-        backgroundView?.backgroundColor =  SemanticColors.View.backgroundDefault
-
-        createConstraints()
-        setupAccessibility()
-    }
-
-    private func createConstraints() {
-        [label].prepareForLayout()
-
-        NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
-        ])
-
-        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
-    }
+//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        setup()
+//    }
+//
+//    @available(*, unavailable)
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init?(coder aDecoder: NSCoder) is not implemented")
+//    }
+//
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        preview = .none
+//    }
+//
+//    // MARK: - Functions
+//
+//    override func setup() {
+//        backgroundView = UIView()
+//        selectedBackgroundView = UIView()
+//
+//        cellNameLabel.isHidden = true
+//
+//        [label].forEach { subview in
+//            contentView.addSubview(subview)
+//        }
+//
+//        label.textColor = SemanticColors.Label.textDefault
+//        label.font = FontSpec(.normal, .light).font
+//        label.lineBreakMode = .byClipping
+//        label.numberOfLines = 0
+//        accessibilityTraits = .staticText
+//        backgroundView?.backgroundColor =  SemanticColors.View.backgroundDefault
+//
+//        createConstraints()
+//        setupAccessibility()
+//    }
+//
+//    private func createConstraints() {
+//        [label].prepareForLayout()
+//
+//        NSLayoutConstraint.activate([
+//            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
+//        ])
+//
+//        label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
+//    }
 }
