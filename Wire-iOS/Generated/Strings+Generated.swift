@@ -3798,12 +3798,12 @@ internal enum L10n {
             internal static let blue = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.blue")
             /// Green
             internal static let green = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.green")
-            /// Petrol
-            internal static let petrol = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.petrol")
             /// Purple
             internal static let purple = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.purple")
             /// Red
             internal static let red = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.red")
+            /// Turquoise
+            internal static let turquoise = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.turquoise")
             /// Yellow
             internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
           }
