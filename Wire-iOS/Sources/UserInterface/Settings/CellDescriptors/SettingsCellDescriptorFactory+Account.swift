@@ -251,7 +251,7 @@ extension SettingsCellDescriptorFactory {
     func profileLinkTitle() -> SettingsCellDescriptorType {
         typealias Account = L10n.Localizable.Self.Settings.AccountSection
 
-        return SettingsEmailTextCellDescriptor(text: Account.ProfileLink.title)
+        return SettingsLinkCellDescriptor(text: Account.ProfileLink.title)
     }
 
     func profileLinkElement() -> SettingsCellDescriptorType {

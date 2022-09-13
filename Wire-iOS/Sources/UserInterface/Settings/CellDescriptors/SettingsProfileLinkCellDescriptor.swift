@@ -19,12 +19,12 @@
 import UIKit
 
 class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCellProtocol.Type = SettingsEmailCopyableLabelTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsLinkCopyableLabelTableCell.self
 
     // MARK: - Configuration
 
     func featureCell(_ cell: SettingsCellType) {
-        (cell as! SettingsEmailCopyableLabelTableCell).label.attributedText = title && .lineSpacing(8)
+        (cell as! SettingsLinkCopyableLabelTableCell).label.attributedText = title && .lineSpacing(8)
     }
 
     // MARK: - SettingsCellDescriptorType

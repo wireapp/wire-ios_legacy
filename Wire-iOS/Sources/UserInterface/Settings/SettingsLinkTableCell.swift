@@ -19,10 +19,10 @@
 import UIKit
 import WireCommonComponents
 
-class SettingsEmailTableCell: SettingsTableCellProtocol {
+class SettingsLinkTableCell: SettingsTableCellProtocol {
 
     // MARK: - Properties
-    
+
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
@@ -50,7 +50,7 @@ class SettingsEmailTableCell: SettingsTableCellProtocol {
     var descriptor: SettingsCellDescriptorType?
 
     // MARK: - Functions
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -71,7 +71,7 @@ class SettingsEmailTableCell: SettingsTableCellProtocol {
         preview = .none
     }
 
-    func setup() {
+    fileprivate func setup() {
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
@@ -103,12 +103,12 @@ class SettingsEmailTableCell: SettingsTableCellProtocol {
         ])
     }
 
-    func setupAccessibility() {
+    fileprivate func setupAccessibility() {
         isAccessibilityElement = true
         accessibilityTraits = .button
     }
 
-    func updateBackgroundColor() {
+    private func updateBackgroundColor() {
         backgroundColor = SemanticColors.View.backgroundUserCell
 
         if isHighlighted && selectionStyle != .none {
@@ -117,7 +117,7 @@ class SettingsEmailTableCell: SettingsTableCellProtocol {
     }
 }
 
-class SettingsEmailCopyableLabelTableCell: SettingsEmailTableCell {
+class SettingsLinkCopyableLabelTableCell: SettingsLinkTableCell {
 
     // MARK: - Properties
 
@@ -168,7 +168,6 @@ class SettingsEmailCopyableLabelTableCell: SettingsEmailTableCell {
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
 
-        [label].prepareForLayout()
         label.fitIn(view: contentView, insets: UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16))
     }
 }

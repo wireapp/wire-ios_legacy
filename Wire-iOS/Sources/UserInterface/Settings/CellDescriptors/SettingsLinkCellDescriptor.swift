@@ -18,8 +18,8 @@
 
 import UIKit
 
-class SettingsEmailTextCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCellProtocol.Type = SettingsEmailTableCell.self
+class SettingsLinkCellDescriptor: SettingsCellDescriptorType {
+    static let cellType: SettingsTableCellProtocol.Type = SettingsLinkTableCell.self
 
     var text: String
 
