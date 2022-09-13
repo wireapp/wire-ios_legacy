@@ -104,7 +104,7 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
             cellCopyablelabel.topAnchor.constraint(equalTo: cellNameLabel.bottomAnchor, constant: 11),
             cellCopyablelabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             cellCopyablelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            cellCopyablelabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -11),
+            cellCopyablelabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
 
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 112)
         ])
