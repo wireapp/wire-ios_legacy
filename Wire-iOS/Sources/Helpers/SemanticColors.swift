@@ -153,7 +153,7 @@ public extension UIColor {
         case .amber:
             self.init(light: Asset.amber500Light, dark: Asset.amber500Dark)
         case .turquoise:
-            self.init(light: Asset.petrol500Light, dark: Asset.petrol500Dark)
+            self.init(light: Asset.turquoise500Light, dark: Asset.turquoise500Dark)
         case .purple:
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }
