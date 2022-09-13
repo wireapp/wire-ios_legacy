@@ -27,7 +27,7 @@ class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
         guard let linkCell = cell as? SettingsLinkTableCell else { return }
         typealias Account = L10n.Localizable.Self.Settings.AccountSection
 
-        linkCell.cellCopyablelabel.attributedText = title && .lineSpacing(8)
+        linkCell.cellLinkLabel.attributedText = title && .lineSpacing(8)
         linkCell.cellNameLabel.text = Account.ProfileLink.title
     }
 
