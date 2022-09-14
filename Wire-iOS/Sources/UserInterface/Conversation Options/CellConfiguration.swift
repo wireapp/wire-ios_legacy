@@ -35,6 +35,7 @@ enum CellConfiguration {
                     icon: StyleKitIcon,
                     color: UIColor?,
                     action: Action)
+    case appearance(title: String)
 
     /// For toggle without icon, leave icon and color nil
     case iconToggle(title: String,
@@ -56,6 +57,7 @@ enum CellConfiguration {
         case .text: return TextCell.self
         case .info: return GuestLinkInfoCell.self
         case .iconAction: return IconActionCell.self
+        case .appearance: return SettingsAppearanceCell.self
         }
     }
 
@@ -65,7 +67,8 @@ enum CellConfiguration {
              .linkHeader,
              .loading,
              .text,
-             .info: return nil
+             .info,
+             .appearance: return nil
         case let .leadingButton(_, _, action: action): return action
         case let .iconAction(_, _, _, action: action): return action
         }
@@ -81,7 +84,8 @@ enum CellConfiguration {
             LoadingIndicatorCell.self,
             TextCell.self,
             GuestLinkInfoCell.self,
-            IconActionCell.self
+            IconActionCell.self,
+            SettingsAppearanceCell.self
         ]
     }
 

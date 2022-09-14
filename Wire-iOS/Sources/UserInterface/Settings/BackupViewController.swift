@@ -84,6 +84,7 @@ final class BackupActionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = SemanticColors.View.backgroundUserCell
+        accessibilityTraits = .button
         contentView.backgroundColor = .clear
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
