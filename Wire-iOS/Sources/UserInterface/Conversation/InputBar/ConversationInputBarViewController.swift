@@ -210,8 +210,8 @@ final class ConversationInputBarViewController: UIViewController,
 
         case .none:
             return [
-                photoButton,
                 mentionButton,
+                photoButton,
                 sketchButton,
                 gifButton,
                 audioButton,
@@ -532,7 +532,7 @@ final class ConversationInputBarViewController: UIViewController,
     @objc func updateInputBarButtons() {
         inputBar.buttonsView.buttons = inputBarButtons
         inputBarButtons.forEach {
-            $0.setIconColor(.from(scheme: .iconNormal), for: .normal)
+            $0.setIconColor(SemanticColors.Icon.foregroundDefaultBlack, for: .normal)
         }
         inputBar.buttonsView.setNeedsLayout()
     }

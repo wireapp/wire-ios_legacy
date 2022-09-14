@@ -48,6 +48,11 @@ extension ConversationInputBarViewController {
         markdownButton.setIconColor(color, for: .normal)
         markdownButton.setBorderColor(borderColor, for: .normal)
         markdownButton.setBackgroundImageColor(backgroundColor, for: .normal)
+
+        markdownButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
+        markdownButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+        markdownButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
+        
         markdownButton.isEnabled = !inputBar.isEditing
     }
 
