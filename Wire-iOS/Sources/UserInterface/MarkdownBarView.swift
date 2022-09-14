@@ -84,26 +84,20 @@ final class MarkdownBarView: UIView {
         codeButton.setIcon(.markdownCode, size: .tiny, for: .normal)
 
         for button in buttons {
-            guard let firstButton = buttons.first,
-                  let lastButton = buttons.last else { return }
-            let previous: IconButton = firstButton
-            let last: IconButton = lastButton
-
-            let isFirstButton = previous == buttons.first
-            let isLastButton = last == buttons.last
-
-            if isFirstButton {
-                previous.layer.cornerRadius = 12
-                previous.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+            // We apply the corner radius only for the first and the last button
+            if button == buttons.first {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
             }
 
-            if isLastButton {
-                last.layer.cornerRadius = 12
-                last.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+            if button == buttons.last {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
             }
 
             button.contentEdgeInsets = UIEdgeInsets(top: 9, left: 20, bottom: 9, right: 20)
             button.layer.borderWidth = 1
+            button.clipsToBounds = true
 
             button.setIconColor(enabledStateIconColor, for: .normal)
             button.setBorderColor(enabledStateBorderColor, for: .normal)
@@ -112,7 +106,7 @@ final class MarkdownBarView: UIView {
             button.setIconColor(highlightedStateIconColor, for: .highlighted)
             button.setBorderColor(highlightedStateBorderColor, for: .highlighted)
             button.setBackgroundImageColor(highlightedStateBackgroundColor, for: .highlighted)
-            
+
             button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }

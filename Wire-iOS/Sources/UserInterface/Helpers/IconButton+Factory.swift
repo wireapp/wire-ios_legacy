@@ -73,6 +73,7 @@ extension IconButton {
     ) {
         self.init(fontSpec: .smallLightFont)
         circular = true
+        setIcon(icon, size: size, for: .normal)
         accessibilityIdentifier = accessibilityId
         translatesAutoresizingMaskIntoConstraints = false
 
