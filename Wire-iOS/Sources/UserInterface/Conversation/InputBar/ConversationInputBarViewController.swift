@@ -220,6 +220,7 @@ final class ConversationInputBarViewController: UIViewController,
 
         case .none:
             return [
+                hourglassButton,
                 mentionButton,
                 photoButton,
                 sketchButton,
@@ -465,11 +466,11 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: - setup
     private func setupStyle() {
         ephemeralIndicatorButton.borderWidth = 0
-        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
-        hourglassButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
-        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .selected)
+        hourglassButton.layer.borderWidth = 1
+        hourglassButton.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
+        hourglassButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
+        hourglassButton.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
 
-        hourglassButton.setBackgroundImageColor(.clear, for: .selected)
     }
 
     private func setupSingleTapGestureRecognizer() {
@@ -940,7 +941,7 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     }
 
     private func createConstraints() {
-        [securityLevelView, inputBar, markdownButton, hourglassButton, typingIndicatorView].prepareForLayout()
+        [securityLevelView, inputBar, markdownButton, typingIndicatorView].prepareForLayout()
 
         let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
         bottomConstraint.priority = .defaultLow
@@ -968,9 +969,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
             markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
             markdownButton.widthAnchor.constraint(equalToConstant: 40),
             markdownButton.heightAnchor.constraint(equalToConstant: 32),
-
-            hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
-            hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
 
             typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
             typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
