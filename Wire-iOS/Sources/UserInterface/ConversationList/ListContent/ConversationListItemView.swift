@@ -238,7 +238,6 @@ final class ConversationListItemView: UIView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-        
         labelsStack.accessibilityLabel = title?.string
     }
 
