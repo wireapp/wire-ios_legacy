@@ -189,7 +189,7 @@ internal enum L10n {
     internal static let nsMicrophoneUsageDescription = L10n.tr("InfoPlist", "NSMicrophoneUsageDescription")
     /// Allow Wire to store pictures you take in the photo library.
     internal static let nsPhotoLibraryAddUsageDescription = L10n.tr("InfoPlist", "NSPhotoLibraryAddUsageDescription")
-    /// Allow Wire to access pictures stored in photo library.
+    /// Allow Wire to access pictures stored in photo library so you can send pictures and videos to others.
     internal static let nsPhotoLibraryUsageDescription = L10n.tr("InfoPlist", "NSPhotoLibraryUsageDescription")
   }
   internal enum Localizable {
@@ -3883,6 +3883,22 @@ internal enum L10n {
           internal static let picture = L10n.tr("Localizable", "self.settings.account_picture_group.picture")
           /// Theme
           internal static let theme = L10n.tr("Localizable", "self.settings.account_picture_group.theme")
+          internal enum AccentColor {
+            /// Amber
+            internal static let amber = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.amber")
+            /// Blue
+            internal static let blue = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.blue")
+            /// Green
+            internal static let green = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.green")
+            /// Purple
+            internal static let purple = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.purple")
+            /// Red
+            internal static let red = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.red")
+            /// Turquoise
+            internal static let turquoise = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.turquoise")
+            /// Yellow
+            internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
+          }
         }
         internal enum AccountSection {
           internal enum AddHandle {
