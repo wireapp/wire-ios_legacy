@@ -86,7 +86,7 @@ protocol SettingsInternalGroupCellDescriptorType: SettingsGroupCellDescriptorTyp
     var items: [SettingsSectionDescriptorType] {get}
     var visibleItems: [SettingsSectionDescriptorType] {get}
     var style: InternalScreenStyle {get}
-    var accesibilityBackButtonText: String {get}
+    var accessibilityBackButtonText: String {get}
 }
 
 extension SettingsInternalGroupCellDescriptorType {
@@ -149,7 +149,7 @@ final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType
     static let cellType = SettingsTableCell.self
     var visible: Bool = true
     let title: String
-    let accesibilityBackButtonText: String
+    let accessibilityBackButtonText: String
     let style: InternalScreenStyle
     let items: [SettingsSectionDescriptorType]
     let identifier: String?
@@ -167,14 +167,14 @@ final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType
 
     weak var viewController: UIViewController?
 
-    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accesibilityBackButtonText: String) {
+    init(items: [SettingsSectionDescriptorType], title: String, style: InternalScreenStyle = .grouped, identifier: String? = .none, previewGenerator: PreviewGeneratorType? = .none, icon: StyleKitIcon? = nil, accessibilityBackButtonText: String) {
         self.items = items
         self.title = title
         self.style = style
         self.identifier = identifier
         self.previewGenerator = previewGenerator
         self.icon = icon
-        self.accesibilityBackButtonText = accesibilityBackButtonText
+        self.accessibilityBackButtonText = accessibilityBackButtonText
     }
 
     func featureCell(_ cell: SettingsCellType) {

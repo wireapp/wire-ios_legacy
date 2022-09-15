@@ -50,7 +50,7 @@ class SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(items: [topSection],
                                            title: L10n.Localizable.Self.profile,
                                            style: .plain,
-                                           accesibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
     }
 
     func manageTeamCell() -> SettingsCellDescriptorType {
@@ -114,7 +114,7 @@ class SettingsCellDescriptorFactory {
                                            style: .plain,
                                            previewGenerator: .none,
                                            icon: .gear,
-                                           accesibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
     }
 
     func devicesCell() -> SettingsCellDescriptorType {
@@ -173,7 +173,7 @@ class SettingsCellDescriptorFactory {
                                            title: title,
                                            identifier: .none,
                                            previewGenerator: previewGenerator,
-                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func developerGroup() -> SettingsCellDescriptorType {
@@ -287,7 +287,7 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],
                                            title: L10n.Localizable.`Self`.Settings.DeveloperOptions.title,
-                                           icon: .robot, accesibilityBackButtonText: L10n.Accessibility.DeveloperOptionsSettings.BackButton.description)
+                                           icon: .robot, accessibilityBackButtonText: L10n.Accessibility.DeveloperOptionsSettings.BackButton.description)
     }
 
     func helpSection() -> SettingsCellDescriptorType {
@@ -313,7 +313,7 @@ class SettingsCellDescriptorFactory {
                                            style: .grouped, identifier: .none,
                                            previewGenerator: .none,
                                            icon: .settingsSupport,
-                                           accesibilityBackButtonText: L10n.Accessibility.SupportSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.SupportSettings.BackButton.description)
     }
 
     func aboutSection() -> SettingsCellDescriptorType {
@@ -356,7 +356,7 @@ class SettingsCellDescriptorFactory {
             identifier: .none,
             previewGenerator: .none,
             icon: .about,
-            accesibilityBackButtonText: L10n.Accessibility.AboutSettings.BackButton.description
+            accessibilityBackButtonText: L10n.Accessibility.AboutSettings.BackButton.description
         )
     }
 
@@ -377,14 +377,14 @@ class SettingsCellDescriptorFactory {
             return SettingsGroupCellDescriptor(items: [detailsSection, licenseSection],
                                                title: item.name,
                                                style: .grouped,
-                                               accesibilityBackButtonText: L10n.Accessibility.LicenseDetailsSettings.BackButton.description)
+                                               accessibilityBackButtonText: L10n.Accessibility.LicenseDetailsSettings.BackButton.description)
         }
 
         let licensesSection = SettingsSectionDescriptor(cellDescriptors: childItems)
         return SettingsGroupCellDescriptor(items: [licensesSection],
                                            title: L10n.Localizable.About.License.title,
                                            style: .plain,
-                                           accesibilityBackButtonText: L10n.Accessibility.LicenseInformationSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.LicenseInformationSettings.BackButton.description)
 
     }
 

@@ -65,7 +65,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(items: sections,
                                            title: L10n.Localizable.Self.Settings.accountSection,
                                            icon: .personalProfile,
-                                           accesibilityBackButtonText: L10n.Accessibility.AccountSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.AccountSettings.BackButton.description)
     }
 
     // MARK: - Sections

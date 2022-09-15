@@ -220,7 +220,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         typealias Accessibility = L10n.Accessibility.Settings
 
         navigationItem.rightBarButtonItem?.accessibilityLabel = Accessibility.CloseButton.description
-        navigationItem.backBarButtonItem?.accessibilityLabel = group.accesibilityBackButtonText
+        navigationItem.backBarButtonItem?.accessibilityLabel = group.accessibilityBackButtonText
     }
 
     func refreshData() {

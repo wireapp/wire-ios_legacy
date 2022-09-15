@@ -42,7 +42,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(
             items: items,
             title: L10n.Localizable.Self.Settings.Account.DataUsagePermissions.title ,
-            accesibilityBackButtonText: L10n.Accessibility.AccountSettings.BackButton.description
+            accessibilityBackButtonText: L10n.Accessibility.AccountSettings.BackButton.description
         )
     }
 }

@@ -47,7 +47,7 @@ extension SettingsCellDescriptorFactory {
             items: descriptors,
             title: "self.settings.options_menu.title".localized,
             icon: .settingsOptions,
-            accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description
+            accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description
         )
     }
 
@@ -283,7 +283,7 @@ extension SettingsCellDescriptorFactory {
                                            title: property.propertyName.settingsPropertyLabelText,
                                            identifier: nil,
                                            previewGenerator: preview,
-                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -306,7 +306,7 @@ extension SettingsCellDescriptorFactory {
                                            title: property.propertyName.settingsPropertyLabelText,
                                            identifier: nil,
                                            previewGenerator: preview,
-                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func mapsOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -329,7 +329,7 @@ extension SettingsCellDescriptorFactory {
                                            title: property.propertyName.settingsPropertyLabelText,
                                            identifier: nil,
                                            previewGenerator: preview,
-                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func browserOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -352,7 +352,7 @@ extension SettingsCellDescriptorFactory {
                                            title: property.propertyName.settingsPropertyLabelText,
                                            identifier: nil,
                                            previewGenerator: preview,
-                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     static var appLockFormatter: DateComponentsFormatter {

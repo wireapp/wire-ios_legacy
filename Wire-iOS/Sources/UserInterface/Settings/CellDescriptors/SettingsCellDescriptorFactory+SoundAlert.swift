@@ -27,7 +27,7 @@ extension SettingsCellDescriptorFactory {
             title: title,
             identifier: .none,
             previewGenerator: alertPreviewGenerator,
-            accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description
+            accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description
         )
     }
 
