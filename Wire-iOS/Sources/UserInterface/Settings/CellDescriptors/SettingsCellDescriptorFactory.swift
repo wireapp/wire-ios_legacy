@@ -287,7 +287,8 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],
                                            title: L10n.Localizable.`Self`.Settings.DeveloperOptions.title,
-                                           icon: .robot, accessibilityBackButtonText: L10n.Accessibility.DeveloperOptionsSettings.BackButton.description)
+                                           icon: .robot,
+                                           accessibilityBackButtonText: L10n.Accessibility.DeveloperOptionsSettings.BackButton.description)
     }
 
     func helpSection() -> SettingsCellDescriptorType {
