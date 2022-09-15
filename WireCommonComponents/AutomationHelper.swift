@@ -88,6 +88,9 @@ public final class AutomationHelper: NSObject {
     public var preferredAPIversion: APIVersion?
     public var allowMLSGroupCreation: Bool?
 
+    /// The target number of key packages the client should upload in the context of MLS
+    public var targetKeyPackagesCount: Int?
+
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
@@ -99,35 +102,19 @@ public final class AutomationHelper: NSObject {
         shouldPersistBackendType = arguments.hasFlag(AutomationKey.persistBackendType)
         disableInteractiveKeyboardDismissal = arguments.hasFlag(AutomationKey.disableInteractiveKeyboardDismissal)
         keepCallingOverlayVisible = arguments.hasFlag(AutomationKey.keepCallingOverlayVisible)
+        allowMLSGroupCreation = arguments.hasFlag(AutomationKey.allowMLSGroupCreation.rawValue)
 
         if let value = arguments.flagValueIfPresent(AutomationKey.useAppCenter.rawValue) {
             useAppCenterLaunchOption = (value != "0")
         }
 
-        automationEmailCredentials = AutomationHelper.credentials(arguments)
-        if arguments.hasFlag(AutomationKey.logNetwork) {
-            ZMSLog.set(level: .debug, tag: "Network")
-        }
-        if arguments.hasFlag(AutomationKey.logCalling) {
-            ZMSLog.set(level: .debug, tag: "calling")
-        }
-        AutomationHelper.enableLogTags(arguments)
-        if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.debugDataToInstall.rawValue),
-            FileManager.default.fileExists(atPath: debugDataPath) {
-            self.debugDataToInstall = URL(fileURLWithPath: debugDataPath)
-        } else {
-            self.debugDataToInstall = nil
-        }
-        self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
+        Self.enableLogTags(arguments)
 
-        if
-            let value = arguments.flagValueIfPresent(AutomationKey.preferredAPIversion.rawValue),
-            let apiVersion = Int32(value)
-        {
-            preferredAPIversion = APIVersion(rawValue: apiVersion)
-        }
-
-        allowMLSGroupCreation = arguments.hasFlag(AutomationKey.allowMLSGroupCreation.rawValue)
+        automationEmailCredentials = Self.credentials(arguments)
+        debugDataToInstall = Self.debugDataToInstall(arguments)
+        delayInAddressBookRemoteSearch = Self.addressBookSearchDelay(arguments)
+        preferredAPIversion = Self.preferredApiVersion(arguments)
+        targetKeyPackagesCount = Self.targetKeyPackageCount(arguments)
 
         super.init()
     }
@@ -150,6 +137,7 @@ public final class AutomationHelper: NSObject {
         case keepCallingOverlayVisible = "keep-calling-overlay-visible"
         case preferredAPIversion = "preferred-api-version"
         case allowMLSGroupCreation = "allow-mls-group-creation"
+        case targetKeyPackagesCount = "target-key-packages-count"
     }
     /// Returns the login email and password credentials if set in the given arguments
     fileprivate static func credentials(_ arguments: ArgumentsType) -> AutomationEmailCredentials? {
@@ -159,12 +147,23 @@ public final class AutomationHelper: NSObject {
         }
         return AutomationEmailCredentials(email: email, password: password)
     }
+
     // Switches on all flags that you would like to log listed after `--debug-log=` tags should be separated by comma
     fileprivate static func enableLogTags(_ arguments: ArgumentsType) {
+        if arguments.hasFlag(AutomationKey.logNetwork) {
+            ZMSLog.set(level: .debug, tag: "Network")
+        }
+
+        if arguments.hasFlag(AutomationKey.logCalling) {
+            ZMSLog.set(level: .debug, tag: "calling")
+        }
+
         guard let tagsString = arguments.flagValueIfPresent(AutomationKey.logTags.rawValue) else { return }
+
         let tags = tagsString.components(separatedBy: ",")
         tags.forEach { ZMSLog.set(level: .debug, tag: $0) }
     }
+
     /// Returns the custom time interval for address book search delay if it set in the given arguments
     fileprivate static func addressBookSearchDelay(_ arguments: ArgumentsType) -> TimeInterval? {
         guard let delayString = arguments.flagValueIfPresent(AutomationKey.addressBookRemoteSearchDelay.rawValue),
@@ -172,6 +171,39 @@ public final class AutomationHelper: NSObject {
                 return nil
         }
         return TimeInterval(delay)
+    }
+
+    private static func targetKeyPackageCount(_ arguments: ArgumentsType) -> Int? {
+        guard
+            let value = arguments.flagValueIfPresent(AutomationKey.targetKeyPackagesCount.rawValue),
+            let count = Int(value)
+        else {
+            return nil
+        }
+
+        return count
+    }
+
+    private static func preferredApiVersion(_ arguments: ArgumentsType) -> APIVersion? {
+        guard
+            let value = arguments.flagValueIfPresent(AutomationKey.preferredAPIversion.rawValue),
+            let apiVersion = Int32(value)
+        else {
+            return nil
+        }
+
+        return APIVersion(rawValue: apiVersion)
+    }
+
+    private static func debugDataToInstall(_ arguments: ArgumentsType) -> URL? {
+        guard
+            let debugDataPath = arguments.flagValueIfPresent(AutomationKey.debugDataToInstall.rawValue),
+            FileManager.default.fileExists(atPath: debugDataPath)
+        else {
+            return nil
+        }
+
+        return URL(fileURLWithPath: debugDataPath)
     }
 }
 

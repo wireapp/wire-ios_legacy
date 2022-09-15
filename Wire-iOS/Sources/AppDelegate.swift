@@ -276,8 +276,19 @@ private extension AppDelegate {
             configuration: configuration,
             detector: jailbreakDetector,
             requiredPushTokenType: requiredPushTokenType,
-            coreCryptoSetup: CoreCrypto.setup
+            coreCryptoSetup: CoreCrypto.setup,
+            mlsControllerDebugConfiguration: mlsControllerDebugConfiguration
         )
+    }
+
+    private var mlsControllerDebugConfiguration: MLSController.DebugConfiguration? {
+        guard let targetKeyPackageCount = AutomationHelper.sharedHelper.targetKeyPackagesCount else {
+            return nil
+        }
+
+        let debugConfiguration = MLSController.DebugConfiguration()
+        debugConfiguration.targetUnclaimedKeyPackageCount = targetKeyPackageCount
+        return debugConfiguration
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
