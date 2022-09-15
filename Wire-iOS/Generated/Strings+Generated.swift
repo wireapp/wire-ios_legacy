@@ -97,7 +97,7 @@ internal enum L10n {
     internal static let nsMicrophoneUsageDescription = L10n.tr("InfoPlist", "NSMicrophoneUsageDescription")
     /// Allow Wire to store pictures you take in the photo library.
     internal static let nsPhotoLibraryAddUsageDescription = L10n.tr("InfoPlist", "NSPhotoLibraryAddUsageDescription")
-    /// Allow Wire to access pictures stored in photo library.
+    /// Allow Wire to access pictures stored in photo library so you can send pictures and videos to others.
     internal static let nsPhotoLibraryUsageDescription = L10n.tr("InfoPlist", "NSPhotoLibraryUsageDescription")
   }
   internal enum Localizable {

@@ -137,9 +137,8 @@ final class BadgeUserImageView: UserImageView {
             }
 
             let changeImage = {
-                self.badgeImageView.setIcon(icon,
-                                                    size: self.badgeIconSize,
-                                                    color: self.badgeColor)
+                self.badgeImageView.setTemplateIcon(icon, size: self.badgeIconSize)
+                self.badgeImageView.tintColor = SemanticColors.Label.conversationListTableViewCellBadge
             }
 
             let showBadge = {
@@ -148,7 +147,7 @@ final class BadgeUserImageView: UserImageView {
             }
 
             let showShadow = {
-                self.badgeShadow.backgroundColor = UIColor(white: 0, alpha: 0.5)
+                self.badgeShadow.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
             }
 
             if animated {
