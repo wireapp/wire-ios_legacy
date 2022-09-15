@@ -472,12 +472,35 @@ final class InputBar: UIView {
         buttons.append(self.buttonsView.expandRowButton)
 
         buttons.forEach { button in
-            guard let button = button as? IconButton else {
-                return
+            guard let button = button as? IconButton else { return }
+
+            // We apply the corner radius only for the first and the last button
+            if button == buttons.first {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
             }
 
-            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
+            if button == buttons.last {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+            }
+
+            //button.contentEdgeInsets = UIEdgeInsets(top: 9, left: 18, bottom: 9, right: 18)
+            button.layer.borderWidth = 1
+            button.clipsToBounds = true
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .selected)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .selected)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
+
         }
     }
 
