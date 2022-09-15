@@ -128,6 +128,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         setupDebugMenuButton()
         createConstraints()
         updateFingerprintLabel()
+        setupAccessibility()
     }
 
     private func setupContentView() {
@@ -233,7 +234,6 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupVerifiedToggle() {
         verifiedToggle.isOn = userClient.verified
-        verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
         contentView.addSubview(verifiedToggle)
     }
@@ -263,6 +263,28 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
             fullIDLabel.attributedText = NSAttributedString(string: "")
             spinner.startAnimating()
         }
+    }
+
+    private func setupAccessibility() {
+        typealias ClientList = L10n.Accessibility.ClientList
+        typealias DeviceDetails = L10n.Accessibility.DeviceDetails
+
+        if let deviceName = typeLabel.text {
+            typeLabel.accessibilityLabel = "\(ClientList.DeviceName.description), \(deviceName)"
+        }
+        if let deviceId = IDLabel.text {
+            IDLabel.accessibilityLabel = "\(ClientList.DeviceId.description), \(deviceId)"
+        }
+        if let keyFingerprint = IDLabel.text {
+            fullIDLabel.accessibilityLabel = "\(ClientList.KeyFingerprint.description), + \(keyFingerprint)"
+        }
+
+        descriptionTextView.isAccessibilityElement = true
+        descriptionTextView.accessibilityTraits = .link
+        descriptionTextView.accessibilityAttributedHint = NSAttributedString(string: DeviceDetails.HowToVerifyFingerprint.hint)
+
+        verifiedToggle.accessibilityLabel = DeviceDetails.Verified.description
+        verifiedToggleLabel.isAccessibilityElement = false
     }
 
     // MARK: Setup Constraints

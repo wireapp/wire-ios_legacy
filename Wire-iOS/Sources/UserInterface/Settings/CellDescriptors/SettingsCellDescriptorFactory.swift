@@ -47,7 +47,10 @@ class SettingsCellDescriptorFactory {
         #endif
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
 
-        return SettingsGroupCellDescriptor(items: [topSection], title: "self.profile".localized, style: .plain)
+        return SettingsGroupCellDescriptor(items: [topSection],
+                                           title: L10n.Localizable.Self.profile,
+                                           style: .plain,
+                                           accesibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
     }
 
     func manageTeamCell() -> SettingsCellDescriptorType {
@@ -106,7 +109,12 @@ class SettingsCellDescriptorFactory {
 
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
 
-        return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain, previewGenerator: .none, icon: .gear)
+        return SettingsGroupCellDescriptor(items: [topSection],
+                                           title: L10n.Localizable.Self.settings,
+                                           style: .plain,
+                                           previewGenerator: .none,
+                                           icon: .gear,
+                                           accesibilityBackButtonText: L10n.Accessibility.Settings.BackButton.description)
     }
 
     func devicesCell() -> SettingsCellDescriptorType {
@@ -161,7 +169,11 @@ class SettingsCellDescriptorFactory {
             }
         }
 
-        return SettingsGroupCellDescriptor(items: [section], title: title, identifier: .none, previewGenerator: previewGenerator)
+        return SettingsGroupCellDescriptor(items: [section],
+                                           title: title,
+                                           identifier: .none,
+                                           previewGenerator: previewGenerator,
+                                           accesibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func developerGroup() -> SettingsCellDescriptorType {
@@ -275,7 +287,7 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors: developerCellDescriptors)],
                                            title: L10n.Localizable.`Self`.Settings.DeveloperOptions.title,
-                                           icon: .robot)
+                                           icon: .robot, accesibilityBackButtonText: L10n.Accessibility.DeveloperOptionsSettings.BackButton.description)
     }
 
     func helpSection() -> SettingsCellDescriptorType {
@@ -296,7 +308,12 @@ class SettingsCellDescriptorFactory {
 
         let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
 
-        return SettingsGroupCellDescriptor(items: [helpSection, reportSection], title: "self.help_center".localized, style: .grouped, identifier: .none, previewGenerator: .none, icon: .settingsSupport)
+        return SettingsGroupCellDescriptor(items: [helpSection, reportSection],
+                                           title: L10n.Localizable.Self.helpCenter,
+                                           style: .grouped, identifier: .none,
+                                           previewGenerator: .none,
+                                           icon: .settingsSupport,
+                                           accesibilityBackButtonText: L10n.Accessibility.SupportSettings.BackButton.description)
     }
 
     func aboutSection() -> SettingsCellDescriptorType {
@@ -334,11 +351,12 @@ class SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(
             items: [websiteSection, linksSection],
-            title: "self.about".localized,
+            title: L10n.Localizable.Self.about,
             style: .grouped,
             identifier: .none,
             previewGenerator: .none,
-            icon: .about
+            icon: .about,
+            accesibilityBackButtonText: L10n.Accessibility.AboutSettings.BackButton.description
         )
     }
 
@@ -356,11 +374,17 @@ class SettingsCellDescriptorFactory {
             let licenseCell = SettingsStaticTextCellDescriptor(text: item.licenseText)
             let licenseSection = SettingsSectionDescriptor(cellDescriptors: [licenseCell], header: "about.license.license_header".localized, footer: nil)
 
-            return SettingsGroupCellDescriptor(items: [detailsSection, licenseSection], title: item.name, style: .grouped)
+            return SettingsGroupCellDescriptor(items: [detailsSection, licenseSection],
+                                               title: item.name,
+                                               style: .grouped,
+                                               accesibilityBackButtonText: L10n.Accessibility.LicenseDetailsSettings.BackButton.description)
         }
 
         let licensesSection = SettingsSectionDescriptor(cellDescriptors: childItems)
-        return SettingsGroupCellDescriptor(items: [licensesSection], title: "about.license.title".localized, style: .plain)
+        return SettingsGroupCellDescriptor(items: [licensesSection],
+                                           title: L10n.Localizable.About.License.title,
+                                           style: .plain,
+                                           accesibilityBackButtonText: L10n.Accessibility.LicenseInformationSettings.BackButton.description)
 
     }
 

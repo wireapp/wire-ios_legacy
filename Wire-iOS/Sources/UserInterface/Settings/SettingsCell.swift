@@ -110,7 +110,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
-                accessibilityHint = L10n.Accessibility.Options.SoundButton.hint
 
             case .badge(let value):
                 valueLabel.text = ""
