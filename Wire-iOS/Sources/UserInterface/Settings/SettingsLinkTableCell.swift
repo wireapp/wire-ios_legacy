@@ -19,13 +19,13 @@
 import UIKit
 import WireCommonComponents
 
-class SettingsLinkTableCell: SettingsTableCellProtocol {
+final class SettingsLinkTableCell: SettingsTableCellProtocol {
 
     // MARK: - Properties
 
-    var cellLinkLabel = CopyableLabel()
+    private let cellLinkLabel = CopyableLabel()
 
-    let cellNameLabel: UILabel = {
+    private let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
             color: .textForeground)
@@ -39,7 +39,17 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
         return label
     }()
 
-    var titleText: String = ""
+    var titleText: String = "" {
+        didSet {
+            cellNameLabel.text = titleText
+        }
+    }
+
+    var linkText: NSAttributedString? {
+        didSet {
+            cellLinkLabel.attributedText = linkText
+        }
+    }
 
     var preview: SettingsCellPreview = .none
 
@@ -57,11 +67,6 @@ class SettingsLinkTableCell: SettingsTableCellProtocol {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        preview = .none
     }
 
     private func setup() {

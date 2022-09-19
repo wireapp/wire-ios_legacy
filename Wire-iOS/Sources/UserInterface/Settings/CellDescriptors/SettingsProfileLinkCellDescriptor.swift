@@ -27,8 +27,8 @@ class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
         guard let linkCell = cell as? SettingsLinkTableCell else { return }
         typealias Account = L10n.Localizable.Self.Settings.AccountSection
 
-        linkCell.cellLinkLabel.attributedText = title && .lineSpacing(8)
-        linkCell.cellNameLabel.text = Account.ProfileLink.title
+        linkCell.linkText = self.link && .lineSpacing(8)
+        linkCell.titleText = self.title
     }
 
     // MARK: - SettingsCellDescriptorType
@@ -38,6 +38,10 @@ class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
     }
 
     var title: String {
+        return L10n.Localizable.Self.Settings.AccountSection.ProfileLink.title
+    }
+
+    private var link: String {
         return URL.selfUserProfileLink?.absoluteString.removingPercentEncoding ?? ""
     }
 
