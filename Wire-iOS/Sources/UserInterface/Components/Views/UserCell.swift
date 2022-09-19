@@ -201,6 +201,38 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         ])
     }
 
+    private func setupAccessibility() {
+        typealias ContactsList = L10n.Accessibility.ContactsList
+        typealias ServicesList = L10n.Accessibility.ServicesList
+        typealias ClientList = L10n.Accessibility.ClientList
+
+        guard let title = titleLabel.text,
+              let subtitle = subtitleLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        var content = "\(title), \(subtitle)"
+        if let userType = userTypeIconView.accessibilityLabel,
+           !userTypeIconView.isHidden {
+            content += ", \(userType)"
+        }
+
+        if !verifiedIconView.isHidden {
+            content += ", " + ClientList.DeviceVerified.description
+        }
+
+        accessibilityLabel = content
+
+        guard let user = user, !user.isServiceUser else {
+            accessibilityHint = ServicesList.ServiceCell.hint
+            return
+        }
+        accessibilityHint = ContactsList.UserCell.hint
+    }
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
@@ -254,6 +286,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         } else {
             subtitleLabel.isHidden = true
         }
+        setupAccessibility()
     }
 
 }

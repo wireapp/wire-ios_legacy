@@ -23,6 +23,7 @@ protocol IconImageStyle {
     var icon: StyleKitIcon? { get }
     var tintColor: UIColor? { get }
     var accessibilityIdentifier: String { get }
+    var accessibilityLabel: String { get }
     var accessibilityPrefix: String { get }
     var accessibilitySuffix: String { get }
 }
@@ -62,6 +63,15 @@ class IconImageView: UIImageView {
     override var accessibilityIdentifier: String? {
         get {
             return style?.accessibilityIdentifier
+        }
+        set {
+            // no-op
+        }
+    }
+
+    override var accessibilityLabel: String? {
+        get {
+            return style?.accessibilityLabel
         }
         set {
             // no-op

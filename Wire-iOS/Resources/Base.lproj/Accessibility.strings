@@ -58,6 +58,7 @@
 "deviceDetails.backButton.description" = "Go back to device overview";
 
 "profile.backButton.description" = "Go back to conversation details";
+"profile.closeButton.description" = "Close profile";
 
 "accountPage.availabilityStatus.description" = "Status";
 "accountPage.availabilityStatus.hint" = "Double tap to change status";
@@ -68,3 +69,21 @@
 "accountPage.profilePicture.hint" = "Double tap to change your picture";
 "accountPage.closeButton.description" = "Close account overview";
 "accountPage.backButton.description" = "Go back to account overview";
+
+"contactsList.guestIcon.description" = "Guest";
+"contactsList.externalIcon.description" = "External";
+"contactsList.federatedIcon.description" = "Federated";
+"contactsList.memberIcon.description" = "Member";
+"contactsList.userCell.hint" = "Double tap to open conversation";
+"contactsList.pendingConnection.hint" = "Double tap to open profile";
+"contactsList.closeButton.description" = "Close contact list";
+
+"servicesList.serviceCell.hint" = "Double tap to open service details";
+
+"serviceDetails.closeButton.description" = "Close service details";
+"serviceDetails.backButton.description" = "Go back to services list";
+
+"searchView.clearButton.description" = "Clear";
+
+"conversationListHeader.collapsedButton.description" = "Collapsed";
+"conversationListHeader.expandedButton.description" = "Expanded";

@@ -89,6 +89,36 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "clientList.keyFingerprint.description")
       }
     }
+    internal enum ContactsList {
+      internal enum CloseButton {
+        /// Close contact list
+        internal static let description = L10n.tr("Accessibility", "contactsList.closeButton.description")
+      }
+      internal enum ExternalIcon {
+        /// External
+        internal static let description = L10n.tr("Accessibility", "contactsList.externalIcon.description")
+      }
+      internal enum FederatedIcon {
+        /// Federated
+        internal static let description = L10n.tr("Accessibility", "contactsList.federatedIcon.description")
+      }
+      internal enum GuestIcon {
+        /// Guest
+        internal static let description = L10n.tr("Accessibility", "contactsList.guestIcon.description")
+      }
+      internal enum MemberIcon {
+        /// Member
+        internal static let description = L10n.tr("Accessibility", "contactsList.memberIcon.description")
+      }
+      internal enum PendingConnection {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "contactsList.pendingConnection.hint")
+      }
+      internal enum UserCell {
+        /// Double tap to open conversation
+        internal static let hint = L10n.tr("Accessibility", "contactsList.userCell.hint")
+      }
+    }
     internal enum Conversation {
       internal enum BackButton {
         /// Go back to conversation list
@@ -103,6 +133,16 @@ internal enum L10n {
       internal enum SearchButton {
         /// Open search
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
+      }
+    }
+    internal enum ConversationListHeader {
+      internal enum CollapsedButton {
+        /// Collapsed
+        internal static let description = L10n.tr("Accessibility", "conversationListHeader.collapsedButton.description")
+      }
+      internal enum ExpandedButton {
+        /// Expanded
+        internal static let description = L10n.tr("Accessibility", "conversationListHeader.expandedButton.description")
       }
     }
     internal enum DeveloperOptionsSettings {
@@ -151,6 +191,32 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to conversation details
         internal static let description = L10n.tr("Accessibility", "profile.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close profile
+        internal static let description = L10n.tr("Accessibility", "profile.closeButton.description")
+      }
+    }
+    internal enum SearchView {
+      internal enum ClearButton {
+        /// Clear
+        internal static let description = L10n.tr("Accessibility", "searchView.clearButton.description")
+      }
+    }
+    internal enum ServiceDetails {
+      internal enum BackButton {
+        /// Go back to services list
+        internal static let description = L10n.tr("Accessibility", "serviceDetails.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close service details
+        internal static let description = L10n.tr("Accessibility", "serviceDetails.closeButton.description")
+      }
+    }
+    internal enum ServicesList {
+      internal enum ServiceCell {
+        /// Double tap to open service details
+        internal static let hint = L10n.tr("Accessibility", "servicesList.serviceCell.hint")
       }
     }
     internal enum Settings {
