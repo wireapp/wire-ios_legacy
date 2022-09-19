@@ -309,7 +309,7 @@ final class InputBar: UIView {
             buttonsView.trailingAnchor.constraint(lessThanOrEqualTo: buttonInnerContainer.trailingAnchor),
             buttonsView.bottomAnchor.constraint(equalTo: buttonInnerContainer.bottomAnchor),
 
-            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor),
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor, constant: -24 ),
             buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor),
             buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor),
             buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
