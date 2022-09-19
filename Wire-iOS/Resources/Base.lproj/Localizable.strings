@@ -920,7 +920,7 @@
 "device.type.unknown" = "Unknown";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
