@@ -943,6 +943,10 @@
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
+"group_details.message_protocol.section_tile" = "Protocol details (beta)";
+"group_details.message_protocol.title" = "Protocol";
+"group_details.message_protocol.cipher_suite" = "Cipher Suite";
+
 "group_details.conversation_admins_header.title" = "Group admins";
 "group_details.conversation_members_header.title" = "Group members";
 

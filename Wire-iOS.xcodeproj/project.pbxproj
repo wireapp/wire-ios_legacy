@@ -1349,6 +1349,7 @@
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
+		EEF6E3C428D86408001C1799 /* MessageProtocolSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF6E3C328D86408001C1799 /* MessageProtocolSectionController.swift */; };
 		EEF71F6321B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */; };
 		EEF71F6521B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */; };
 		EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */; };
@@ -3280,6 +3281,7 @@
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
+		EEF6E3C328D86408001C1799 /* MessageProtocolSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProtocolSectionController.swift; sourceTree = "<group>"; };
 		EEF71F6221B1973D00F0FB30 /* ConversationCreateReceiptsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateReceiptsCell.swift; sourceTree = "<group>"; };
 		EEF71F6421B19F5300F0FB30 /* ConversationCreateReceiptsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateReceiptsSectionController.swift; sourceTree = "<group>"; };
 		EEFF3E7921B67990000834A6 /* ConversationCreateOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateOptionsCell.swift; sourceTree = "<group>"; };
@@ -3891,6 +3893,7 @@
 				1682AEBC20483DA5003A052A /* ServicesSectionController.swift */,
 				1682AEBE20483F73003A052A /* ParticipantsSectionController.swift */,
 				1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */,
+				EEF6E3C328D86408001C1799 /* MessageProtocolSectionController.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -8192,6 +8195,7 @@
 				639A8F2D26DE41ED0080B8FE /* CallStatusViewInputType.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				EF58B557218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift in Sources */,
+				EEF6E3C428D86408001C1799 /* MessageProtocolSectionController.swift in Sources */,
 				5E8DA76A211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift in Sources */,
 				A9CBBEBE24CF09ED006543D4 /* PasscodeSetupInteractor.swift in Sources */,
 				1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */,

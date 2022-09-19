@@ -65,6 +65,12 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         set { updateStatus(newValue) }
     }
 
+    var allowMultilineStatus: Bool = false {
+        didSet {
+            statusLabel.numberOfLines = allowMultilineStatus ? 0 : 1
+        }
+    }
+
     var disabled: Bool = false {
         didSet { }
     }
@@ -114,8 +120,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
         contentLeadingConstraint = contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         contentLeadingConstraint.isActive = true
 
-        contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
     }
 

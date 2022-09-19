@@ -98,6 +98,8 @@ protocol GroupDetailsConversation {
     var teamRemoteIdentifier: UUID? { get }
 
     var syncedMessageDestructionTimeout: TimeInterval { get }
+
+    var messageProtocol: MessageProtocol { get }
 }
 
 typealias GroupDetailsConversationType = GroupDetailsConversation & Conversation

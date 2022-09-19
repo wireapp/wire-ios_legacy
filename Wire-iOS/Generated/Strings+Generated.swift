@@ -2083,6 +2083,14 @@ internal enum L10n {
         /// Guests
         internal static let title = L10n.tr("Localizable", "group_details.guest_options_cell.title")
       }
+      internal enum MessageProtocol {
+        /// Cipher Suite
+        internal static let cipherSuite = L10n.tr("Localizable", "group_details.message_protocol.cipher_suite")
+        /// Protocol details (beta)
+        internal static let sectionTile = L10n.tr("Localizable", "group_details.message_protocol.section_tile")
+        /// Protocol
+        internal static let title = L10n.tr("Localizable", "group_details.message_protocol.title")
+      }
       internal enum NotificationOptionsCell {
         /// You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.
         internal static let description = L10n.tr("Localizable", "group_details.notification_options_cell.description")
