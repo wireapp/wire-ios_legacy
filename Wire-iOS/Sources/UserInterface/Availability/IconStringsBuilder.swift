@@ -45,7 +45,7 @@ public class IconStringsBuilder {
         if interactive {
             if let titleFont = titleFont {
                 let iconImage: UIImage = StyleKitIcon.downArrow.makeImage(
-                    size: .custom(17),
+                    size: .custom(15),
                     color: SemanticColors.Icon.foregroundPlainDownArrow).withRenderingMode(.alwaysTemplate)
 
                 let icon = NSTextAttachment()

@@ -96,10 +96,10 @@ public extension FontSpec {
     }
 
     // Account
-    static var accounName: Self {
+    static var accountName: Self {
         return self.init(.accountName, .semibold)
     }
-    static var accounTeam: Self {
+    static var accountTeam: Self {
         return self.init(.accountTeam, .regular)
     }
 

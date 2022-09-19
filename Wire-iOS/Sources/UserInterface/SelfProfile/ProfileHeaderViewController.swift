@@ -85,7 +85,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     typealias AccountPageStrings = L10n.Accessibility.AccountPage
 
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .accounName, color: .textForeground)
+        let label = DynamicFontLabel(fontSpec: .accountName, color: .textForeground)
         label.accessibilityLabel = AccountPageStrings.Name.description
         label.accessibilityIdentifier = "name"
 
@@ -104,7 +104,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     }()
     let handleLabel = DynamicFontLabel(fontSpec: .mediumRegularFont, color: .textForeground)
     let teamNameLabel = DynamicFontLabel(
-        fontSpec: .accounTeam,
+        fontSpec: .accountTeam,
         color: .textForeground)
     let imageView =  UserImageView(size: .big)
     let availabilityTitleViewController: AvailabilityTitleViewController
