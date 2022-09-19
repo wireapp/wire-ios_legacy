@@ -113,7 +113,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     override var accessibilityValue: String? {
         get {
-            typealias ConversationListHeader = L10n.Accessibility.ConversationListHeader
+            typealias ConversationListHeader = L10n.Accessibility.ConversationsListHeader
 
             let state = collapsed
                         ? ConversationListHeader.CollapsedButton.description

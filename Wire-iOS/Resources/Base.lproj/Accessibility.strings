@@ -26,6 +26,10 @@
 "conversation.searchButton.description" = "Open search";
 "conversation.profileImage.description" = "Profile picture";
 "conversation.profileImage.hint" = "Double tap to open profile";
+"conversation.titleViewForGroup.hint" = "Double tap to open conversation details";
+"conversation.titleViewForOneToOne.hint" = "Double tap to open profile";
+"conversation.legalHoldIcon.description" = "Legal hold";
+"conversation.verifiedIcon.description" = "Verified";
 
 "settings.deviceCount.hint" = "%@ devices in use";
 "settings.closeButton.description" = "Close settings";
@@ -85,5 +89,5 @@
 
 "searchView.clearButton.description" = "Clear";
 
-"conversationListHeader.collapsedButton.description" = "Collapsed";
-"conversationListHeader.expandedButton.description" = "Expanded";
+"conversationsListHeader.collapsedButton.description" = "Collapsed";
+"conversationsListHeader.expandedButton.description" = "Expanded";

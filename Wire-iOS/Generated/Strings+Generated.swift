@@ -124,6 +124,10 @@ internal enum L10n {
         /// Go back to conversation list
         internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
       }
+      internal enum LegalHoldIcon {
+        /// Legal hold
+        internal static let description = L10n.tr("Accessibility", "conversation.legalHoldIcon.description")
+      }
       internal enum ProfileImage {
         /// Profile picture
         internal static let description = L10n.tr("Accessibility", "conversation.profileImage.description")
@@ -134,15 +138,27 @@ internal enum L10n {
         /// Open search
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
+      internal enum TitleViewForGroup {
+        /// Double tap to open conversation details
+        internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForGroup.hint")
+      }
+      internal enum TitleViewForOneToOne {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForOneToOne.hint")
+      }
+      internal enum VerifiedIcon {
+        /// Verified
+        internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
+      }
     }
-    internal enum ConversationListHeader {
+    internal enum ConversationsListHeader {
       internal enum CollapsedButton {
         /// Collapsed
-        internal static let description = L10n.tr("Accessibility", "conversationListHeader.collapsedButton.description")
+        internal static let description = L10n.tr("Accessibility", "conversationsListHeader.collapsedButton.description")
       }
       internal enum ExpandedButton {
         /// Expanded
-        internal static let description = L10n.tr("Accessibility", "conversationListHeader.expandedButton.description")
+        internal static let description = L10n.tr("Accessibility", "conversationsListHeader.expandedButton.description")
       }
     }
     internal enum DeveloperOptionsSettings {
@@ -1665,22 +1681,12 @@ internal enum L10n {
         }
       }
       internal enum Voiceover {
-        /// legal hold
-        internal static let legalhold = L10n.tr("Localizable", "conversation.voiceover.legalhold")
-        /// verified
-        internal static let verified = L10n.tr("Localizable", "conversation.voiceover.verified")
         internal enum Value {
           /// active
           internal static let active = L10n.tr("Localizable", "conversation.voiceover.value.active")
           /// disabled
           internal static let disabled = L10n.tr("Localizable", "conversation.voiceover.value.disabled")
         }
-      }
-    }
-    internal enum ConversationDetails {
-      internal enum OpenButton {
-        /// Double tap to view the details of the conversation.
-        internal static let accessibilityHint = L10n.tr("Localizable", "conversation_details.open_button.accessibility_hint")
       }
     }
     internal enum ConversationList {
