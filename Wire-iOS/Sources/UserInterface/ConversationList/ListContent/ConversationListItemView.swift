@@ -156,6 +156,8 @@ final class ConversationListItemView: UIView {
 
     private func setupStyle() {
         titleField.textColor = SemanticColors.Label.textConversationListItemTitleField
+        backgroundColor = SemanticColors.View.backgroundUserCell
+        addBorder(for: .bottom)
     }
 
     private func setupSubtitleField() {
@@ -236,7 +238,6 @@ final class ConversationListItemView: UIView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-
         labelsStack.accessibilityLabel = title?.string
     }
 
