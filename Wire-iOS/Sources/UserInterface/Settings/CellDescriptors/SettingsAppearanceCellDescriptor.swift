@@ -19,7 +19,7 @@
 import UIKit
 
 class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExternalScreenCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsAppearanceCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsAppearanceCell.self
 
     private var text: String
     private let appearanceType: AppearanceType
