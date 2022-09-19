@@ -25,10 +25,9 @@ class SettingsProfileLinkCellDescriptor: SettingsCellDescriptorType {
 
     func featureCell(_ cell: SettingsCellType) {
         guard let linkCell = cell as? SettingsLinkTableCell else { return }
-        typealias Account = L10n.Localizable.Self.Settings.AccountSection
 
-        linkCell.linkText = self.link && .lineSpacing(8)
-        linkCell.titleText = self.title
+        linkCell.linkText = link && .lineSpacing(8)
+        linkCell.titleText = title
     }
 
     // MARK: - SettingsCellDescriptorType
