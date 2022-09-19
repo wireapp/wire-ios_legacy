@@ -77,7 +77,7 @@ class TitleView: UIView, DynamicTypeCapable {
 
         guard let font = titleFont, let color = titleColor else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
-        let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
+        let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color, titleFont: titleFont?.font)
 
         titleButton.titleLabel!.font = font.font
         titleButton.setAttributedTitle(normalLabel, for: [])
