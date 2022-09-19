@@ -95,6 +95,14 @@ public extension FontSpec {
         return self.init(.large, .light, .largeTitle)
     }
 
+    // Account
+    static var accounName: Self {
+        return self.init(.accountName, .semibold)
+    }
+    static var accounTeam: Self {
+        return self.init(.accountTeam, .regular)
+    }
+
     // Navigation
     static var headerSemiboldFont: Self {
         return self.init(.header, .semibold)

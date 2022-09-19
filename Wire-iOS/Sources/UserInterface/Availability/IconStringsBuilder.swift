@@ -42,7 +42,7 @@ public class IconStringsBuilder {
 
         // Adds the down arrow if the view is interactive
         if interactive {
-            components.append(NSAttributedString(attachment: .downArrow(color: color)))
+            components.append(NSAttributedString(attachment: .downArrow(color: color, size: .custom(17))))
         }
 
         // Mirror elements if in a RTL layout
