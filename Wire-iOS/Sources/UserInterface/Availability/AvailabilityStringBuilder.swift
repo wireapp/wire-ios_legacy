@@ -67,7 +67,16 @@ final class AvailabilityStringBuilder: NSObject {
         guard availability != .none, let iconType = availability.iconType
             else { return nil }
 
-        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: 0)
+        let verticalCorrection: CGFloat
+
+        switch size {
+        case .small:
+            verticalCorrection = -1
+        default:
+            verticalCorrection = 0
+        }
+
+        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: verticalCorrection)
     }
 
     static func color(for availability: AvailabilityKind) -> UIColor {
