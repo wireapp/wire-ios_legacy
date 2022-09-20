@@ -68,6 +68,8 @@ final class TeamAccountView: AccountView {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
             team.requestImage()
         }
+        layer.cornerRadius = 12
+        imageViewContainer.layer.cornerRadius = 12
     }
 
     private func createConstraints() {
@@ -78,7 +80,13 @@ final class TeamAccountView: AccountView {
             imageView.heightAnchor.constraint(equalToConstant: 32),
             imageView.widthAnchor.constraint(equalToConstant: 40),
             imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
-            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor)
+            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
+
+            imageViewContainer.heightAnchor.constraint(equalToConstant: 32),
+            imageViewContainer.widthAnchor.constraint(equalToConstant: 40),
+
+            heightAnchor.constraint(equalToConstant: 32),
+            widthAnchor.constraint(equalToConstant: 40)
 //            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
 //            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
 //            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
