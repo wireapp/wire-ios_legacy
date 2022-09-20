@@ -294,7 +294,7 @@ final class InputBar: UIView {
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
             textView.heightAnchor.constraint(lessThanOrEqualToConstant: 120),
 
-            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -8),
+            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
             buttonRowSeparator.leadingAnchor.constraint(equalTo: buttonRowSeparator.superview!.leadingAnchor, constant: 16),
             buttonRowSeparator.trailingAnchor.constraint(equalTo: buttonRowSeparator.superview!.trailingAnchor, constant: -16),
             buttonRowSeparator.heightAnchor.constraint(equalToConstant: .hairline),
@@ -309,10 +309,10 @@ final class InputBar: UIView {
             buttonsView.trailingAnchor.constraint(lessThanOrEqualTo: buttonInnerContainer.trailingAnchor),
             buttonsView.bottomAnchor.constraint(equalTo: buttonInnerContainer.bottomAnchor),
 
-            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor, constant: -8),
-            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor, constant: 12),
-            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor, constant: -12),
-            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight - 24),
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor),
+            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor),
+            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor),
+            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
 
             buttonInnerContainer.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
             buttonInnerContainer.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),
@@ -474,20 +474,7 @@ final class InputBar: UIView {
         buttons.forEach { button in
             guard let button = button as? IconButton else { return }
 
-            // We apply the corner radius only for the first and the last button
-            if button == buttons.first {
-                button.layer.cornerRadius = 12
-                button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
-            }
-
-            if button == buttons.last {
-                button.layer.cornerRadius = 12
-                button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
-            }
-
-            //button.contentEdgeInsets = UIEdgeInsets(top: 9, left: 18, bottom: 9, right: 18)
             button.layer.borderWidth = 1
-            button.clipsToBounds = true
 
             button.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
             button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
