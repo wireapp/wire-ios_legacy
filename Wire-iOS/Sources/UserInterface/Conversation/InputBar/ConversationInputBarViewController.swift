@@ -947,7 +947,7 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
         let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
         let widthOfSendButton: CGFloat = 42
-        let heightOfSendButton: CGFloat = 30
+        let heightOfSendButton: CGFloat = 32
 
         NSLayoutConstraint.activate([
             securityLevelView.topAnchor.constraint(equalTo: view.topAnchor),
