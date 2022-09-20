@@ -30,7 +30,7 @@ extension UIButton {
     func roundCorners(edge: Edge, radius: CGFloat) {
         layer.cornerRadius = radius
         clipsToBounds = true
-        
+
         switch edge {
         case .leading:
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
