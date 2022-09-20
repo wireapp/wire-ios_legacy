@@ -66,7 +66,7 @@ final class TeamImageView: UIImageView {
     }
 
     private func updateRoundCorner() {
-        layer.cornerRadius = 4
+        layer.cornerRadius = 12
         clipsToBounds = true
     }
 

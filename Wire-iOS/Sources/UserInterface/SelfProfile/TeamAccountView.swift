@@ -71,14 +71,18 @@ final class TeamAccountView: AccountView {
     }
 
     private func createConstraints() {
-        let inset: CGFloat = CGFloat.TeamAccountView.imageInset
+//        let inset: CGFloat = CGFloat.TeamAccountView.imageInset
         [imageView, imageViewContainer].prepareForLayout()
 
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
-            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
-            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
-            imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
+            imageView.heightAnchor.constraint(equalToConstant: 32),
+            imageView.widthAnchor.constraint(equalToConstant: 40),
+            imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor)
+//            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
+//            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
+//            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
+//            imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
             ])
     }
 
