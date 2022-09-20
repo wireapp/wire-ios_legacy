@@ -946,6 +946,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         bottomConstraint.priority = .defaultLow
 
         let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
+        let widthOfSendButton: CGFloat = 42
+        let heightOfSendButton: CGFloat = 30
 
         NSLayoutConstraint.activate([
             securityLevelView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -966,8 +968,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
             markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
             markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
-            markdownButton.widthAnchor.constraint(equalToConstant: 40),
-            markdownButton.heightAnchor.constraint(equalToConstant: 32),
+            markdownButton.widthAnchor.constraint(equalToConstant: widthOfSendButton),
+            markdownButton.heightAnchor.constraint(equalToConstant: heightOfSendButton),
 
             hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
             hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
