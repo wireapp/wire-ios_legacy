@@ -294,7 +294,7 @@ final class InputBar: UIView {
             textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56),
             textView.heightAnchor.constraint(lessThanOrEqualToConstant: 120),
 
-            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
+            buttonRowSeparator.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -8),
             buttonRowSeparator.leadingAnchor.constraint(equalTo: buttonRowSeparator.superview!.leadingAnchor, constant: 16),
             buttonRowSeparator.trailingAnchor.constraint(equalTo: buttonRowSeparator.superview!.trailingAnchor, constant: -16),
             buttonRowSeparator.heightAnchor.constraint(equalToConstant: .hairline),
@@ -309,10 +309,10 @@ final class InputBar: UIView {
             buttonsView.trailingAnchor.constraint(lessThanOrEqualTo: buttonInnerContainer.trailingAnchor),
             buttonsView.bottomAnchor.constraint(equalTo: buttonInnerContainer.bottomAnchor),
 
-            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor, constant: -24 ),
-            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor),
-            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor),
-            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight),
+            buttonContainer.bottomAnchor.constraint(equalTo: buttonContainer.superview!.bottomAnchor, constant: -8),
+            buttonContainer.leadingAnchor.constraint(equalTo: buttonContainer.superview!.leadingAnchor, constant: 12),
+            buttonContainer.trailingAnchor.constraint(equalTo: buttonContainer.superview!.trailingAnchor, constant: -12),
+            buttonContainer.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight - 24),
 
             buttonInnerContainer.leadingAnchor.constraint(equalTo: buttonContainer.leadingAnchor),
             buttonInnerContainer.trailingAnchor.constraint(equalTo: buttonContainer.trailingAnchor),

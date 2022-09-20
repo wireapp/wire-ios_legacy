@@ -204,14 +204,14 @@ final class InputBarButtonsView: UIView {
             if button == expandRowButton {
                 constraints.append(contentsOf: [
                     button.topAnchor.constraint(equalTo: topAnchor),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight - 24)
                 ])
             } else {
                 buttonInnerContainer.translatesAutoresizingMaskIntoConstraints = false
 
                 constraints.append(contentsOf: [
                     button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight - 24)
                 ])
             }
         }
