@@ -44,6 +44,10 @@ class CallEventHandler: CallEventHandlerProtocol {
 }
 
 public class LegacyNotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
+    public func notificationSessionDidFailWithError(error: NotificationSessionError) {
+        // TODO: implement
+    }
+
 
     // MARK: - Properties
 
@@ -88,12 +92,12 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
             contentHandler(.debugMessageIfNeeded(message: "Failed to create session."))
             return
         }
-
-        session.processPushNotification(with: request.content.userInfo) { isUserAuthenticated in
+        
+        session.processPushNotification(with: request.content.userInfo) /*{ isUserAuthenticated in
             if !isUserAuthenticated {
                 contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
             }
-        }
+        }*/
 
         // Retain the session otherwise it will tear down.
         self.session = session

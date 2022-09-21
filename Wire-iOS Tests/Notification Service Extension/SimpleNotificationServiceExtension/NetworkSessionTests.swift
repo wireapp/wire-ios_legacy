@@ -47,8 +47,10 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testErrorWhenInvalidResponse() async {
+        let reqestable = URLSessionMock()
+        reqestable.mockedResponse = reqestable.invalidResponse
         do {
-            let sut = try NetworkSession(userID: UUID(), urlRequestable: URLSessionMock())
+            let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
             _ = try await sut.send(request: networkRequestMock)
         } catch NetworkSession.NetworkError.invalidResponse {
             return
@@ -130,6 +132,11 @@ class URLSessionMock: URLRequestable {
     func data(for request: URLRequest, delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
         calledRequest = request
         return mockedResponse
+    }
+
+
+    var invalidResponse: (Data, URLResponse)  {
+        return (Data(), URLResponse())
     }
 
     var failureResponse: (Data, URLResponse)  {

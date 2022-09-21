@@ -102,9 +102,8 @@ struct NotificationByIDEndpoint: Endpoint, Loggable {
             guard let payload = try? JSONSerialization.jsonObject(with: response.data, options: []) as? [AnyHashable: Any] else {
                 return .failure(.failedToDecodePayload)
             }
-            let dat = String(data: response.data, encoding: .utf8) ?? "error"
-            print(dat )
-            logger.info("received event response payload: \(dat, privacy: .public)")
+            let payloadString = String(data: response.data, encoding: .utf8) ?? "N/A"
+            logger.info("received event response payload: \(payloadString, privacy: .public)")
 
             guard let events = ZMUpdateEvent.eventsArray(
                 from: payload as ZMTransportData,
