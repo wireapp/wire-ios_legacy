@@ -20,7 +20,9 @@ import XCTest
 @testable import Wire_Notification_Service_Extension
 
 class NotificationByIDEndpointTests: XCTestCase {
-    // swiftlint:disable:next line_length
+
+    // swiftlint:disable line_length
+
     private let exampleEventJSON = """
         {"id":"96188b94-2a8e-11ed-8002-124b5cbe3b2d","payload":[{"conversation":"d7174dca-488b-463b-bb64-2c2bec442deb","data":{"data":"","recipient":"fd27d34a62e5980","sender":"b7d8296a54a59151","text":"owABAaEAWCC4Yoo+oc7/JLSHCih1oLjWah7e/A2amSVaeCX+Om4cngJYbwGlAFC/I/Rp7dx7VX5rGMfnxKV2AQACAQOhAFggxRJFDfIG6ds7GC90UZKoaBVgJrRQvqHGqh2xqS8eHeMEWC/W/eip/c2hCxfsF/Re5luDuINPLPEG+ErdhPFlQTjJFoDTtXutaXwkr8qVa+XeVQ=="},"from":"16b0c8ed-2026-4643-8c6e-4b7b7160890b","qualified_conversation":{"domain":"wire.com","id":"d7174dca-488b-463b-bb64-2c2bec442deb"},"qualified_from":{"domain":"wire.com","id":"16b0c8ed-2026-4643-8c6e-4b7b7160890b"},"time":"2022-09-02T07:12:21.023Z","type":"conversation.otr-message-add"}]}
         """
