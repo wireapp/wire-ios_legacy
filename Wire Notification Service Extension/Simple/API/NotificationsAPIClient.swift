@@ -19,16 +19,22 @@
 import Foundation
 import WireTransport
 
+protocol NotificationsAPIClientProtocol {
+
+    func fetchEvent(eventID: UUID) async throws -> ZMUpdateEvent
+
+}
+
 @available(iOS 15, *)
-final class NotificationsAPIClient: Loggable {
+final class NotificationsAPIClient: NotificationsAPIClientProtocol, Loggable {
 
     // MARK: - Properties
 
-    private let networkSession: NetworkSession
+    private let networkSession: NetworkSessionProtocol
 
     // MARK: - Life cycle
 
-    init(networkSession: NetworkSession) {
+    init(networkSession: NetworkSessionProtocol) {
         self.networkSession = networkSession
     }
 

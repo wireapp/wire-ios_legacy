@@ -42,18 +42,27 @@ final class Job: NSObject, Loggable {
     private let eventID: UUID
 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
-    private let networkSession: NetworkSession
-    private let accessAPIClient: AccessAPIClient
-    private let notificationsAPIClient: NotificationsAPIClient
+    private let networkSession: NetworkSessionProtocol
+    private let accessAPIClient: AccessAPIClientProtocol
+    private let notificationsAPIClient: NotificationsAPIClientProtocol
 
     // MARK: - Life cycle
 
-    init(request: UNNotificationRequest) throws {
+    init(
+        request: UNNotificationRequest,
+        networkSession: NetworkSessionProtocol? = nil,
+        accessAPIClient: AccessAPIClientProtocol? = nil,
+        notificationsAPIClient: NotificationsAPIClientProtocol? = nil
+    ) throws {
         self.request = request
-        (userID, eventID) = try Self.pushPayload(from: request)
-        networkSession = try NetworkSession(userID: userID)
-        accessAPIClient = AccessAPIClient(networkSession: networkSession)
-        notificationsAPIClient = NotificationsAPIClient(networkSession: networkSession)
+        let (userID, eventID) = try Self.pushPayload(from: request)
+        self.userID = userID
+        self.eventID = eventID
+
+        let session = try networkSession ?? NetworkSession(userID: userID)
+        self.networkSession = session
+        self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
+        self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
         super.init()
     }
 

@@ -19,16 +19,22 @@
 import Foundation
 import WireTransport
 
+protocol AccessAPIClientProtocol {
+
+    func fetchAccessToken() async throws -> AccessToken
+
+}
+
 @available(iOS 15, *)
-final class AccessAPIClient: Loggable {
+final class AccessAPIClient: AccessAPIClientProtocol, Loggable {
 
     // MARK: - Properties
 
-    private let networkSession: NetworkSession
+    private let networkSession: NetworkSessionProtocol
 
     // MARK: - Life cycle
 
-    init(networkSession: NetworkSession) {
+    init(networkSession: NetworkSessionProtocol) {
         self.networkSession = networkSession
     }
 
