@@ -21,111 +21,172 @@ import WireTransport
 
 @available(iOS 15, *)
 class NetworkSessionTests: XCTestCase {
-    var networkRequestMock: NetworkRequest!
+
+    var mockURLSession: URLSessionMock!
+    var mockNetworkRequest: NetworkRequest!
 
     override func setUp() {
-        networkRequestMock = NetworkRequest(path: "test", httpMethod: .get, contentType: .json, acceptType: .json)
         super.setUp()
+
+        mockURLSession = URLSessionMock()
+
+        mockNetworkRequest = NetworkRequest(
+            path: "test",
+            httpMethod: .get,
+            contentType: .json,
+            acceptType: .json
+        )
     }
 
     override func tearDown() {
-        networkRequestMock = nil
+        mockURLSession = nil
+        mockNetworkRequest = nil
         super.tearDown()
     }
 
-    func testErrorWhenIncorrectPath() async {
-        // given
-        let request = NetworkRequest(path: "", httpMethod: .get, contentType: .json, acceptType: .json)
+    func assertThrows<E: Error & Equatable>(
+        expectedError: E,
+        when: @escaping () async throws -> Void
+    ) async {
         do {
-            let sut = try NetworkSession(userID: UUID())
-            // when
-            _ = try await sut.send(request: request)
-            // then
-        } catch NetworkSession.NetworkError.invalidRequestURL {
-            return
+            try await when()
+            XCTFail("expected an error")
         } catch {
-            XCTAssertNil(error, "Unexpected error \(error)")
+            if let error = error as? E {
+                XCTAssertEqual(error, expectedError)
+            } else {
+                XCTFail("unexpected error: \(String(describing: error))")
+            }
         }
-        XCTFail("Request passed with incorrect URL")
     }
 
-    func testErrorWhenInvalidResponse() async {
-        // given
-        let reqestable = URLSessionMock()
-        reqestable.mockedResponse = reqestable.invalidResponse
-        do {
-            let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
-            // when
-            _ = try await sut.send(request: networkRequestMock)
-            // then
-        } catch NetworkSession.NetworkError.invalidResponse {
+    // MARK: - Send request
+
+    var invalidResponse: (Data, URLResponse) {
+        return (Data(), URLResponse())
+    }
+
+    var failureResponse: (Data, URLResponse) {
+        let JSON = """
+        {
+            "code": 500,
+            "label": "error",
+            "message": "server error"
+        }
+        """
+
+        let response = HTTPURLResponse(
+            url: URL(string: "wire.com")!,
+            statusCode: 500,
+            httpVersion: "",
+            headerFields: ["Content-Type": "application/json"]
+        )!
+
+        return (JSON.data(using: .utf8)!, response)
+    }
+
+    var successResponse: (Data, URLResponse) {
+        let response =  HTTPURLResponse(
+            url: URL(string: "wire.com")!,
+            statusCode: 200,
+            httpVersion: "",
+            headerFields: ["Content-Type": "application/json"]
+        )!
+
+        return (Data([1, 2, 3]), response)
+    }
+
+    func test_SendRequest_InvalidRequestURL() async throws {
+        // Given
+        let sut = try NetworkSession(userID: UUID())
+
+        let invalidRequest = NetworkRequest(
+            path: "",
+            httpMethod: .get,
+            contentType: .json,
+            acceptType: .json
+        )
+
+        // When
+        await assertThrows(expectedError: NetworkSession.NetworkError.invalidRequestURL) {
+            _ = try await sut.send(request: invalidRequest)
+        }
+    }
+
+    func test_SendRequest_InvalidResponse() async throws {
+        // Given
+        let sut = try NetworkSession(userID: UUID.create(), urlRequestable: mockURLSession)
+        mockURLSession.mockedResponse = invalidResponse
+
+        // When
+        await assertThrows(expectedError: NetworkSession.NetworkError.invalidResponse) {
+            _ = try await sut.send(request: self.mockNetworkRequest)
+        }
+    }
+
+    func test_SendRequest_InvalidResponseContentType() async throws {
+        // Given
+        let sut = try NetworkSession(userID: UUID.create(), urlRequestable: mockURLSession)
+
+        let plainTextResponse = HTTPURLResponse(
+            url: URL(string: "wire.com")!,
+            statusCode: 200,
+            httpVersion: "",
+            headerFields: ["Content-Type": "Text/plain"]
+        )!
+
+        mockURLSession.mockedResponse = (Data(), plainTextResponse)
+
+        // When
+        await assertThrows(expectedError: NetworkSession.NetworkError.invalidResponse) {
+            _ = try await sut.send(request: self.mockNetworkRequest)
+        }
+    }
+
+    func test_SendRequest_ErrorResponse() async throws {
+        // Given
+        let sut = try NetworkSession(userID: UUID.create(), urlRequestable: mockURLSession)
+        mockURLSession.mockedResponse = failureResponse
+
+        // When
+        let result = try await sut.send(request: mockNetworkRequest)
+
+        // Then
+        guard case .failure(let response) = result else {
+            XCTFail("expected failure")
             return
-        } catch {
-            XCTAssertNil(error, "Unexpected error \(error)")
         }
-        XCTFail("Request passed with incorrect Response")
+
+        XCTAssertEqual(response.code, 500)
+        XCTAssertEqual(response.label, "error")
+        XCTAssertEqual(response.message, "server error")
     }
 
-    func testErrorWhenIncorrectResponseContent() async throws {
-        // given
-        let reqestable = URLSessionMock()
-        let response = HTTPURLResponse(url: URL(string: "wire.com")!,
-                                       statusCode: 200,
-                                       httpVersion: "",
-                                       headerFields: ["Content-Type": "Text/plain"])!
-        reqestable.mockedResponse = (Data(), response)
-        do {
-            let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
-            // when
-            _ = try await sut.send(request: networkRequestMock)
-            // then
-        } catch NetworkSession.NetworkError.invalidResponse {
-            return
-        } catch {
-            XCTAssertNil(error, "Unexpected error \(error)")
-        }
-        XCTFail("Request passed with incorrect content-type")
-    }
+    func test_SendRequest_SuccessResponse() async throws {
+        // Given
+        let sut = try NetworkSession(userID: UUID(), urlRequestable: mockURLSession)
 
-    func testFailureWhenErrorResponse() async throws {
-        // given
-        let reqestable = URLSessionMock()
-        reqestable.mockedResponse = reqestable.failureResponse
-        let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
-        // when
-        let result = try await sut.send(request: networkRequestMock)
-        // then
-        guard case .failure = result else {
-            XCTFail("unexpected success")
+        sut.accessToken = AccessToken(
+            token: "1234",
+            type: "type1",
+            expiresInSeconds: 10
+        )
+
+        mockURLSession.mockedResponse = successResponse
+
+        // When
+        let result = try await sut.send(request: mockNetworkRequest)
+
+        // Then
+        guard case .success(let response) = result else {
+            XCTFail("expected success")
             return
         }
-    }
 
-    func testSuccessResponse() async throws {
-        // given
-        let reqestable = URLSessionMock()
-        reqestable.mockedResponse = reqestable.successResponse
-        let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
-        // when
-        let result = try await sut.send(request: networkRequestMock)
-        // then
-        guard case .success = result else {
-            XCTFail("request failed")
-            return
-        }
-    }
+        XCTAssertEqual(response.status, 200)
+        XCTAssertEqual(response.data, Data([1, 2, 3]))
 
-    func testRequestHeaders() async throws {
-        // given
-        let request = NetworkRequest(path: "test", httpMethod: .get, contentType: .json, acceptType: .json)
-        let requestable = URLSessionMock()
-        requestable.mockedResponse = requestable.successResponse
-        let sut = try NetworkSession(userID: UUID(), urlRequestable: requestable)
-        sut.accessToken =  AccessToken(token: "1234", type: "type1", expiresInSeconds: 123456789)
-        // when
-        _ = try await sut.send(request: request)
-        // then
-        guard let urlRequest = requestable.calledRequest else {
+        guard let urlRequest = mockURLSession.calledRequest else {
             XCTFail("unable to get URLRequest")
             return
         }
@@ -134,47 +195,29 @@ class NetworkSessionTests: XCTestCase {
         XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Accept"], "application/json")
         XCTAssertEqual(urlRequest.allHTTPHeaderFields?["Authorization"], "type1 1234")
     }
+
 }
 
-class CookieStorageMock: CookieProvider {
-    func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest) {}
+class MockCookieStorage: CookieProvider {
+
     var isAuthenticated: Bool = true
+
+    func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest) {}
+
 }
 
 class URLSessionMock: URLRequestable {
-    var mockedResponse: (Data, URLResponse) = (Data(), URLResponse())
+
+    var mockedResponse = (Data(), URLResponse())
+
     private(set) var calledRequest: URLRequest?
-    func data(for request: URLRequest, delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
+
+    func data(
+        for request: URLRequest,
+        delegate: URLSessionTaskDelegate?
+    ) async throws -> (Data, URLResponse) {
         calledRequest = request
         return mockedResponse
-    }
-
-
-    var invalidResponse: (Data, URLResponse)  {
-        return (Data(), URLResponse())
-    }
-
-    var failureResponse: (Data, URLResponse)  {
-        let JSON = """
-        {
-            "code": 500,
-            "label": "error",
-            "message": "server error"
-        }
-        """
-        let response =  HTTPURLResponse(url: URL(string: "wire.com")!,
-                                        statusCode: 500,
-                                        httpVersion: "",
-                                        headerFields: ["Content-Type": "application/json"])!
-        return (JSON.data(using: .utf8)!, response)
-    }
-
-    var successResponse: (Data, URLResponse) {
-        let response =  HTTPURLResponse(url: URL(string: "wire.com")!,
-                                        statusCode: 200,
-                                        httpVersion: "",
-                                        headerFields: ["Content-Type": "application/json"])!
-        return ("".data(using: .utf8)!, response)
     }
 
 }

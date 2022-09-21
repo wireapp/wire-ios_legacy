@@ -22,7 +22,6 @@ import WireTransport
 protocol NetworkSessionProtocol: AnyObject {
 
     var accessToken: AccessToken? { get set }
-
     var isAuthenticated: Bool { get }
 
     func execute<E: Endpoint>(endpoint: E) async throws -> E.Result
@@ -35,8 +34,10 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
     // MARK: - Types
 
     enum NetworkError: Error {
+
         case invalidResponse
         case invalidRequestURL
+
     }
 
     // MARK: - Properties
@@ -49,11 +50,14 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
 
     // MARK: - Life cycle
 
-    init(userID: UUID,
-         cookieProvider: CookieProvider? = nil,
-         urlRequestable: URLRequestable? = nil,
-         environment: BackendEnvironmentProvider? = nil) throws {
+    init(
+        userID: UUID,
+        cookieProvider: CookieProvider? = nil,
+        urlRequestable: URLRequestable? = nil,
+        environment: BackendEnvironmentProvider? = nil
+    ) throws {
         self.environment = environment ?? BackendEnvironment.shared
+
         guard let serverName = self.environment.backendURL.host else {
             throw NotificationServiceError.invalidEnvironment
         }
@@ -62,6 +66,7 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
             forServerName: serverName,
             userIdentifier: userID
         )
+
         self.urlSession = urlRequestable ?? URLSession(configuration: .ephemeral)
 
         super.init()
@@ -81,6 +86,7 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
 
     func send(request: NetworkRequest) async throws -> NetworkResponse {
         logger.trace("sending request: \(String(describing: request), privacy: .public)")
+
         guard let url = URL(string: request.path, relativeTo: environment.backendURL) else {
             throw NetworkError.invalidRequestURL
         }
@@ -118,12 +124,14 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
             guard httpResponse.value(forHTTPHeaderField: "Content-Type") == request.acceptType.rawValue else {
                 throw NetworkError.invalidResponse
             }
+
             let successResponse = SuccessResponse(
                 status: httpResponse.statusCode,
                 data: data
             )
 
             logger.info("received success response: \(String(describing: successResponse), privacy: .public)")
+
             return .success(successResponse)
         }
     }
