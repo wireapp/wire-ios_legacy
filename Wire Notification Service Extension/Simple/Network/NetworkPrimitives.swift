@@ -74,7 +74,7 @@ struct SuccessResponse: CustomStringConvertible {
 
 }
 
-struct ErrorResponse: Codable, CustomStringConvertible {
+struct ErrorResponse: Codable, Equatable, CustomStringConvertible {
 
     let code: Int
     let label: String
