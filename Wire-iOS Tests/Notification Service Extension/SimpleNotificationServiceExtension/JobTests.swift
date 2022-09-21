@@ -19,51 +19,108 @@
 import XCTest
 @testable import Wire_Notification_Service_Extension
 
+@available(iOS 15, *)
 class JobTests: XCTestCase {
 
-    // Need to mock:
-    // - network session
-    // - accessAPIClient
-    // - notificationsAPIClient
-
-    // MARK: - Execute
-
-    // if user is not authenticated, it throws `userNotAuthenticated` error
-    func test_Execute_NotAuthenticated() async throws {
-        // Given
+    var notificationRequest: UNNotificationRequest {
         let userID = UUID.create()
         let eventID = UUID.create()
 
         let content = UNMutableNotificationContent()
         content.userInfo["data"] = [
             "user": userID.uuidString,
-            "data": eventID.uuidString
+            "data": ["id": eventID.uuidString]
         ]
 
-        let request = UNNotificationRequest(
+        return UNNotificationRequest(
             identifier: "request",
             content: content,
             trigger: nil
         )
-        
-        // create sut with mocks
-
-        // not authenticated
-
-        // When
-        // execute
-
-        // Then
-        // throws "userNotAuthenticated" error
     }
 
-    // if we failed to fetch the access token, it throws an error.
+    // MARK: - Execute
 
-    // if we failed to fetch an event, it throws 'noEvent' error
+    func test_Execute_NotAuthenticated() async throws {
+        // Given
+        let networkSessionMock = MockNetworkSession()
+        networkSessionMock.isAuthenticated = false
+        let sut = try Job(request: notificationRequest, networkSession: networkSessionMock, accessAPIClient: nil, notificationsAPIClient: nil)
+        do {
 
-    // if the event type is `.conversationOtrMessageAdd`, it creates notification content
+            // When
+            _ = try await sut.execute()
 
-    // if the event type is something else, it returns empty content.
+            // Then
+        } catch NotificationServiceError.userNotAuthenticated {
+            return
+        }
+        XCTFail("Incorrect error thrown")
+    }
+
+    func test_Execute_NoAccessToken() async throws {
+        // Given
+        let networkSessionMock = MockNetworkSession()
+
+        let mockAccessClient = MockAccessAPIClient()
+        mockAccessClient.mockFetchAccessToken = nil
+        let sut = try Job(request: notificationRequest, networkSession: networkSessionMock, accessAPIClient: mockAccessClient, notificationsAPIClient: nil)
+        do {
+
+            // When
+            _ = try await sut.execute()
+
+            // Then
+        } catch MockAccessAPIClient.MockAccessAPIClientError.noToken {
+            return
+        }
+        XCTFail("Incorrect error thrown")
+    }
+
+    func test_Execute_Event_Message_Added() async throws {
+        // Given
+        let networkSessionMock = MockNetworkSession()
+        let mockAccessClient = MockAccessAPIClient()
+        mockAccessClient.mockFetchAccessToken = { return AccessToken(token: "token", type: "type", expiresInSeconds: 1000) }
+        let mockNotificationsAPIClient = MockNotificationsAPIClient()
+        mockNotificationsAPIClient.mockFetchEvent = { _ in
+            let payload: [String : Any] = ["id":"cf51e6b1-39a6-11ed-8005-520924331b82","payload":["conversation":"c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"],"time":"2022-09-21T12:13:32.173Z","type":"conversation.otr-message-add"]
+            return ZMUpdateEvent(uuid: UUID.create(), payload: payload, transient: false, decrypted: false, source: .pushNotification)!
+        }
+        let sut = try Job(request: notificationRequest,
+                          networkSession: networkSessionMock,
+                          accessAPIClient: mockAccessClient,
+                          notificationsAPIClient: mockNotificationsAPIClient)
+
+        // When
+        let result = try await sut.execute()
+
+        // Then
+        XCTAssertEqual(result.body, "You received a new message")
+    }
+
+    func test_Execute_Event_Other() async throws {
+        // Given
+        let networkSessionMock = MockNetworkSession()
+        let mockAccessClient = MockAccessAPIClient()
+        mockAccessClient.mockFetchAccessToken = { return AccessToken(token: "token", type: "type", expiresInSeconds: 1000) }
+        let mockNotificationsAPIClient = MockNotificationsAPIClient()
+        mockNotificationsAPIClient.mockFetchEvent = { _ in
+            let payload: [String : Any] = ["id":"cf51e6b1-39a6-11ed-8005-520924331b82","payload":["conversation":"c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"],"time":"2022-09-21T12:13:32.173Z","type":"conversation.member-join"]
+            return ZMUpdateEvent(uuid: UUID(uuidString: "cf51e6b1-39a6-11ed-8005-520924331b82"), payload: payload, transient: false, decrypted: false, source: .pushNotification)!
+        }
+
+        let sut = try Job(request: notificationRequest,
+                          networkSession: networkSessionMock,
+                          accessAPIClient: mockAccessClient,
+                          notificationsAPIClient: mockNotificationsAPIClient)
+
+        // When
+        let result = try await sut.execute()
+        
+        // Then
+        XCTAssertEqual(result, .empty)
+    }
 
 }
 
@@ -99,12 +156,15 @@ class MockNetworkSession: NetworkSessionProtocol {
 }
 
 class MockAccessAPIClient: AccessAPIClientProtocol {
+    enum MockAccessAPIClientError: Error {
+        case noToken
+    }
 
     var mockFetchAccessToken: (() async throws -> AccessToken)?
 
     func fetchAccessToken() async throws -> AccessToken {
         guard let mock = mockFetchAccessToken else {
-            fatalError("no mock for `fetchAccessToken")
+            throw MockAccessAPIClientError.noToken
         }
 
         return try await mock()
