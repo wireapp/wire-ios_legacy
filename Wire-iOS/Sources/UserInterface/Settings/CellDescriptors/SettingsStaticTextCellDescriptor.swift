@@ -19,7 +19,7 @@
 import UIKit
 
 class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsStaticTextTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsStaticTextTableCell.self
 
     var text: String
 

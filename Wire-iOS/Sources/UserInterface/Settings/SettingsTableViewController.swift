@@ -194,13 +194,14 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     }
 
     private func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [
+        let allCellTypes: [SettingsTableCellProtocol.Type] = [
             SettingsTableCell.self,
             SettingsButtonCell.self,
             SettingsToggleCell.self,
             SettingsValueCell.self,
             SettingsTextCell.self,
             SettingsStaticTextTableCell.self,
+            SettingsLinkTableCell.self,
             IconActionCell.self,
             SettingsProfileLinkCell.self,
             SettingsAppearanceCell.self
@@ -243,7 +244,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         let sectionDescriptor = sections[(indexPath as NSIndexPath).section]
         let cellDescriptor = sectionDescriptor.visibleCellDescriptors[(indexPath as NSIndexPath).row]
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCellProtocol {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
             return cell
