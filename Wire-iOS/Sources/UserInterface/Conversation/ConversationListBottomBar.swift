@@ -21,7 +21,7 @@ import WireSyncEngine
 
 enum ConversationListButtonType {
     typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
-    typealias BottomBarAccessibility = L10n.Accessibility.ConversationsList
+    typealias ConversationsList = L10n.Accessibility.ConversationsList
 
     case archive, startUI, list, folder
     var accessibilityIdentifier: String {
@@ -51,25 +51,25 @@ enum ConversationListButtonType {
     var accessibilityLabel: String {
         switch self {
         case .startUI:
-            return BottomBarAccessibility.ContactsBottomBar.description
+            return ConversationsList.ContactsBottomBar.description
         case .list:
-            return BottomBarAccessibility.RecentBottomBar.description
+            return ConversationsList.RecentBottomBar.description
         case .folder:
-            return BottomBarAccessibility.FolderBottomBar.description
+            return ConversationsList.FolderBottomBar.description
         case .archive:
-            return BottomBarAccessibility.ArchiveBottomBar.description
+            return ConversationsList.ArchiveBottomBar.description
         }
     }
     var accessibilityHint: String {
         switch self {
         case .startUI:
-            return BottomBarAccessibility.ContactsBottomBar.hint
+            return ConversationsList.ContactsBottomBar.hint
         case .list:
-            return BottomBarAccessibility.RecentBottomBar.hint
+            return ConversationsList.RecentBottomBar.hint
         case .folder:
-            return BottomBarAccessibility.FolderBottomBar.hint
+            return ConversationsList.FolderBottomBar.hint
         case .archive:
-            return BottomBarAccessibility.ArchiveBottomBar.hint
+            return ConversationsList.ArchiveBottomBar.hint
         }
     }
 }
