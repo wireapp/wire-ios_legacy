@@ -17,15 +17,24 @@
 //
 
 import Foundation
+import XCTest
 
-enum NotificationServiceError: Error, Equatable {
+extension XCTestCase {
 
-    case invalidEnvironment
-    case malformedPushPayload
-    case userNotAuthenticated
-    case failedToFetchAccessToken
-    case notImplemented(String)
-    case noAppGroupID
-    case noAccount
+    func assertThrows<E: Error & Equatable>(
+        expectedError: E,
+        when: @escaping () async throws -> Void
+    ) async {
+        do {
+            try await when()
+            XCTFail("expected an error")
+        } catch {
+            if let error = error as? E {
+                XCTAssertEqual(error, expectedError)
+            } else {
+                XCTFail("unexpected error: \(String(describing: error))")
+            }
+        }
+    }
 
 }

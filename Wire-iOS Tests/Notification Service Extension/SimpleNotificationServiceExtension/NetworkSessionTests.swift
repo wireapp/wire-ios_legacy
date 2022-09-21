@@ -44,22 +44,6 @@ class NetworkSessionTests: XCTestCase {
         super.tearDown()
     }
 
-    func assertThrows<E: Error & Equatable>(
-        expectedError: E,
-        when: @escaping () async throws -> Void
-    ) async {
-        do {
-            try await when()
-            XCTFail("expected an error")
-        } catch {
-            if let error = error as? E {
-                XCTAssertEqual(error, expectedError)
-            } else {
-                XCTFail("unexpected error: \(String(describing: error))")
-            }
-        }
-    }
-
     // MARK: - Send request
 
     var invalidResponse: (Data, URLResponse) {
