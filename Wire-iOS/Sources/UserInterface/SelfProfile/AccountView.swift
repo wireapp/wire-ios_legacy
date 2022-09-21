@@ -169,7 +169,7 @@ class BaseAccountView: UIView {
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
-        selectionView.hostedLayer.lineWidth = 1.5
+        selectionView.hostedLayer.lineWidth = 1.78
 
         [imageViewContainer, outlineView, selectionView, dotView].forEach(addSubview)
 
@@ -190,7 +190,7 @@ class BaseAccountView: UIView {
 
         NSLayoutConstraint.activate(
             dotConstraints +
-            selectionView.fitInConstraints(view: imageViewContainer, inset: -1) +
+            selectionView.fitInConstraints(view: imageViewContainer, inset: -1.86) +
             [
           imageViewContainer.topAnchor.constraint(equalTo: topAnchor, constant: containerInset),
           imageViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),

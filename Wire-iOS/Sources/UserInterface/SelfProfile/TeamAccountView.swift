@@ -49,7 +49,7 @@ final class TeamAccountView: AccountView {
         imageViewContainer.addSubview(imageView)
 
         selectionView.pathGenerator = { size in
-            let radius = 6
+            let radius = 5.33
             let radii = CGSize(width: radius, height: radius)
             let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
                                     byRoundingCorners: UIRectCorner.allCorners,
@@ -68,29 +68,17 @@ final class TeamAccountView: AccountView {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
             team.requestImage()
         }
-        layer.cornerRadius = 12
-        imageViewContainer.layer.cornerRadius = 12
     }
 
     private func createConstraints() {
-//        let inset: CGFloat = CGFloat.TeamAccountView.imageInset
+        let inset: CGFloat = CGFloat.TeamAccountView.imageInset
         [imageView, imageViewContainer].prepareForLayout()
 
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 32),
-            imageView.widthAnchor.constraint(equalToConstant: 40),
-            imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
-            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
-
-            imageViewContainer.heightAnchor.constraint(equalToConstant: 32),
-            imageViewContainer.widthAnchor.constraint(equalToConstant: 40),
-
-            heightAnchor.constraint(equalToConstant: 32),
-            widthAnchor.constraint(equalToConstant: 40)
-//            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
-//            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
-//            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
-//            imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
+            imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
+            imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
+            imageView.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -inset),
+            imageView.bottomAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: -inset)
             ])
     }
 
