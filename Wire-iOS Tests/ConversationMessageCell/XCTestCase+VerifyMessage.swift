@@ -102,7 +102,7 @@ extension XCTestCase {
                                    named: name,
                                    file: file,
                                    testName: testName,
-                                   line: line)
+                                   line: line, hasMaskedCorners: false)
         } else {
             verifyInWidths(createSut: createSut,
                            widths: [smallestWidth],
@@ -110,7 +110,7 @@ extension XCTestCase {
                            named: name,
                            file: file,
                            testName: testName,
-                           line: line)
+                           line: line, hasMaskedCorners: false)
         }
     }
 

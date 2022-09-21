@@ -124,7 +124,7 @@ extension XCTestCase {
                                   named: name,
                                   file: file,
                                   testName: testName,
-                                  line: line)
+                                  line: line, hasMaskedCorners: false)
         }
     }
 
@@ -133,7 +133,8 @@ extension XCTestCase {
                                        named name: String? = nil,
                                        file: StaticString = #file,
                                        testName: String = #function,
-                                       line: UInt = #line) {
+                                       line: UInt = #line,
+                                       hasMaskedCorners: Bool) {
         let nameWithProperty: String
         if let name = name {
             nameWithProperty = "\(name)-\(width)"
@@ -145,7 +146,8 @@ extension XCTestCase {
                named: nameWithProperty,
                file: file,
                testName: testName,
-               line: line)
+               line: line,
+               hasMaskedCorners: hasMaskedCorners)
     }
 
     func verifyInAllPhoneWidths(matching value: UIViewController,
@@ -363,17 +365,30 @@ extension XCTestCase {
                 named name: String? = nil,
                 file: StaticString = #file,
                 testName: String = #function,
-                line: UInt = #line) {
+                line: UInt = #line,
+                hasMaskedCorners: Bool = false) {
+        if hasMaskedCorners {
+            let failure = verifySnapshot(matching: value,
+                                         as: Snapshotting.image(drawHierarchyInKeyWindow: true),
+                                         named: name,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
 
-        let failure = verifySnapshot(matching: value,
-                                     as: .image,
-                                     named: name,
-                                     snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file,
-                                     testName: testName,
-                                     line: line)
+            XCTAssertNil(failure, file: file, line: line)
+        } else {
+            let failure = verifySnapshot(matching: value,
+                                         as: .image,
+                                         named: name,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
 
-        XCTAssertNil(failure, file: file, line: line)
+            XCTAssertNil(failure, file: file, line: line)
+        }
+
     }
 
     func verify(matching value: UIImage,
@@ -488,14 +503,15 @@ extension XCTestCase {
                                 named name: String? = nil,
                                 file: StaticString = #file,
                                 testName: String = #function,
-                                line: UInt = #line) {
+                                line: UInt = #line,
+                                hasMaskedCorners: Bool) {
         verifyInWidths(createSut: createSut,
                        widths: phoneWidths(),
                        snapshotBackgroundColor: snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black),
                        named: name,
                        file: file,
                        testName: testName,
-                       line: line)
+                       line: line, hasMaskedCorners: hasMaskedCorners)
     }
 
     func verifyInAllPhoneWidths(createSut: () -> UIViewController,
@@ -503,14 +519,15 @@ extension XCTestCase {
                                 named name: String? = nil,
                                 file: StaticString = #file,
                                 testName: String = #function,
-                                line: UInt = #line) {
+                                line: UInt = #line,
+                                hasMaskedCorners: Bool) {
         verifyInWidths(createSut: createSut,
                        widths: phoneWidths(),
                        snapshotBackgroundColor: snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black),
                        named: name,
                        file: file,
                        testName: testName,
-                       line: line)
+                       line: line, hasMaskedCorners: hasMaskedCorners)
     }
 
     func verifyInWidths(createSut: () -> UIView,
@@ -519,7 +536,8 @@ extension XCTestCase {
                         named name: String? = nil,
                         file: StaticString = #file,
                         testName: String = #function,
-                        line: UInt = #line) {
+                        line: UInt = #line,
+                        hasMaskedCorners: Bool) {
 
         for width in widths {
             verifyInWidth(createSut: createSut,
@@ -528,7 +546,8 @@ extension XCTestCase {
                           named: name,
                           file: file,
                           testName: testName,
-                          line: line)
+                          line: line,
+                          hasMaskedCorners: hasMaskedCorners)
         }
     }
 
@@ -538,7 +557,8 @@ extension XCTestCase {
                         named name: String? = nil,
                         file: StaticString = #file,
                         testName: String = #function,
-                        line: UInt = #line) {
+                        line: UInt = #line,
+                        hasMaskedCorners: Bool) {
 
         for width in widths {
             verifyInWidth(createSut: createSut,
@@ -547,7 +567,8 @@ extension XCTestCase {
                           named: name,
                           file: file,
                           testName: testName,
-                          line: line)
+                          line: line,
+                          hasMaskedCorners: hasMaskedCorners)
         }
     }
 
@@ -557,7 +578,8 @@ extension XCTestCase {
                        named name: String? = nil,
                        file: StaticString = #file,
                        testName: String = #function,
-                       line: UInt = #line) {
+                       line: UInt = #line,
+                       hasMaskedCorners: Bool) {
         let sut = createSut()
         let container = containerView(with: sut,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
@@ -574,7 +596,7 @@ extension XCTestCase {
                               named: name,
                               file: file,
                               testName: testName,
-                              line: line)
+                              line: line, hasMaskedCorners: hasMaskedCorners)
     }
 
     func verifyInWidth(createSut: () -> UIViewController,
@@ -583,7 +605,8 @@ extension XCTestCase {
                        named name: String? = nil,
                        file: StaticString = #file,
                        testName: String = #function,
-                       line: UInt = #line) {
+                       line: UInt = #line,
+                       hasMaskedCorners: Bool) {
         verifyInWidth(createSut: {
             createSut().view
         },
@@ -592,6 +615,7 @@ extension XCTestCase {
                       named: name,
                       file: file,
                       testName: testName,
-                      line: line)
+                      line: line,
+                      hasMaskedCorners: hasMaskedCorners)
     }
 }

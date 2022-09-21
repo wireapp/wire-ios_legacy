@@ -43,12 +43,12 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
     func testNormalState() {
         verifyInAllPhoneWidths(createSut: {
             return ConversationInputBarViewController(conversation: mockConversation)
-        })
+        }, hasMaskedCorners: true)
         verifyInWidths(createSut: {
                 return ConversationInputBarViewController(conversation: mockConversation)
             },
             widths: tabletWidths(),
-            snapshotBackgroundColor: .white)
+                       snapshotBackgroundColor: .white, hasMaskedCorners: true)
 
     }
 
@@ -67,7 +67,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             return sut
         }
 
-        verifyInAllPhoneWidths(createSut: createSut)
+        verifyInAllPhoneWidths(createSut: createSut, hasMaskedCorners: true)
     }
 
     // MARK: - Ephemeral indicator button
@@ -83,7 +83,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             return sut
         }
 
-        verifyInAllPhoneWidths(createSut: createSut)
+        verifyInAllPhoneWidths(createSut: createSut, hasMaskedCorners: true)
     }
 
     func testEphemeralTimeNone() {
@@ -98,7 +98,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             return sut
         }
 
-        verifyInAllPhoneWidths(createSut: createSut)
+        verifyInAllPhoneWidths(createSut: createSut, hasMaskedCorners: true)
     }
 
     private func setMessageDestructionTimeout(timeInterval: TimeInterval) {
@@ -117,7 +117,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralTime5Minutes() {
@@ -133,7 +133,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralTime2Hours() {
@@ -149,7 +149,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralTime3Days() {
@@ -165,7 +165,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralTime4Weeks() {
@@ -181,7 +181,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralModeWhenTyping() {
@@ -199,7 +199,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.textView.text = shortText
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralDisabled() {
@@ -213,7 +213,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.mode = .timeoutConfguration
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testEphemeralWithForcedTimeout() {
@@ -230,7 +230,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
             return sut
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     // MARK: - file action sheet
@@ -250,7 +250,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             self.mockClassificationProvider.returnClassification = .classified
 
             return ConversationInputBarViewController(conversation: self.mockConversation, classificationProvider: self.mockClassificationProvider)
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testNotClassifiedNormalState() {
@@ -258,7 +258,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             self.mockClassificationProvider.returnClassification = .notClassified
 
             return ConversationInputBarViewController(conversation: self.mockConversation, classificationProvider: self.mockClassificationProvider)
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
     func testNoClassificationNormalState() {
@@ -266,7 +266,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
             self.mockClassificationProvider.returnClassification = .none
 
             return ConversationInputBarViewController(conversation: self.mockConversation, classificationProvider: self.mockClassificationProvider)
-        } as () -> UIViewController)
+        } as () -> UIViewController, hasMaskedCorners: true)
     }
 
 }
