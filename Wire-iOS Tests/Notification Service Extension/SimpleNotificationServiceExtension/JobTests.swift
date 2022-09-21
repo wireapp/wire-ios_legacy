@@ -41,15 +41,16 @@ class JobTests: XCTestCase {
 
     // MARK: - Execute
 
-    // if user is not authenticated, it throws `userNotAuthenticated` error
     func test_Execute_NotAuthenticated() async throws {
         // Given
         let networkSessionMock = MockNetworkSession()
         networkSessionMock.isAuthenticated = false
         let sut = try Job(request: notificationRequest, networkSession: networkSessionMock, accessAPIClient: nil, notificationsAPIClient: nil)
         do {
+
             // When
             _ = try await sut.execute()
+
             // Then
         } catch NotificationServiceError.userNotAuthenticated {
             return
@@ -65,8 +66,10 @@ class JobTests: XCTestCase {
         mockAccessClient.mockFetchAccessToken = nil
         let sut = try Job(request: notificationRequest, networkSession: networkSessionMock, accessAPIClient: mockAccessClient, notificationsAPIClient: nil)
         do {
+
             // When
             _ = try await sut.execute()
+
             // Then
         } catch MockAccessAPIClient.MockAccessAPIClientError.noToken {
             return
@@ -84,13 +87,14 @@ class JobTests: XCTestCase {
             let payload: [String : Any] = ["id":"cf51e6b1-39a6-11ed-8005-520924331b82","payload":["conversation":"c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"],"time":"2022-09-21T12:13:32.173Z","type":"conversation.otr-message-add"]
             return ZMUpdateEvent(uuid: UUID.create(), payload: payload, transient: false, decrypted: false, source: .pushNotification)!
         }
-
         let sut = try Job(request: notificationRequest,
                           networkSession: networkSessionMock,
                           accessAPIClient: mockAccessClient,
                           notificationsAPIClient: mockNotificationsAPIClient)
+
         // When
         let result = try await sut.execute()
+
         // Then
         XCTAssertEqual(result.body, "You received a new message")
     }
@@ -110,8 +114,10 @@ class JobTests: XCTestCase {
                           networkSession: networkSessionMock,
                           accessAPIClient: mockAccessClient,
                           notificationsAPIClient: mockNotificationsAPIClient)
+
         // When
         let result = try await sut.execute()
+        
         // Then
         XCTAssertEqual(result, .empty)
     }
