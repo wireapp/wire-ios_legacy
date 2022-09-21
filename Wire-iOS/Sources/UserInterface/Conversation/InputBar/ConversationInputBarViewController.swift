@@ -39,6 +39,8 @@ final class ConversationInputBarViewController: UIViewController,
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
+    typealias ButtonColors = SemanticColors.Button
+
     let conversation: InputBarConversationType
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
@@ -119,7 +121,12 @@ final class ConversationInputBarViewController: UIViewController,
     }()
 
     let markdownButton: IconButton = {
-        let button = IconButton(style: .circular)
+        let button = IconButton()
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
+
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         return button
     }()
     let mentionButton: IconButton = IconButton()
@@ -213,8 +220,8 @@ final class ConversationInputBarViewController: UIViewController,
 
         case .none:
             return [
-                photoButton,
                 mentionButton,
+                photoButton,
                 sketchButton,
                 gifButton,
                 audioButton,
@@ -474,7 +481,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     func updateRightAccessoryView() {
-        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+       updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
@@ -487,8 +494,7 @@ final class ConversationInputBarViewController: UIViewController,
                                isEphemeralSendingDisabled: conversation.isSelfDeletingMessageSendingDisabled,
                                isEphemeralTimeoutForced: conversation.isSelfDeletingMessageTimeoutForced)
 
-        sendButton.isHidden = sendButtonState.sendButtonHidden
-        hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
+        sendButton.isEnabled = sendButtonState.sendButtonEnabled
         ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
         ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
 
@@ -536,7 +542,7 @@ final class ConversationInputBarViewController: UIViewController,
     @objc func updateInputBarButtons() {
         inputBar.buttonsView.buttons = inputBarButtons
         inputBarButtons.forEach {
-            $0.setIconColor(.from(scheme: .iconNormal), for: .normal)
+            $0.setIconColor(SemanticColors.Icon.foregroundDefaultBlack, for: .normal)
         }
         inputBar.buttonsView.setNeedsLayout()
     }
@@ -574,6 +580,7 @@ final class ConversationInputBarViewController: UIViewController,
         gifButton.setIcon(.gif, size: .tiny, for: .normal)
         mentionButton.setIcon(.mention, size: .tiny, for: .normal)
         sendButton.setIcon(.send, size: .tiny, for: .normal)
+        sendButton.setIcon(.send, size: .tiny, for: .disabled)
     }
 
     func selectInputControllerButton(_ button: IconButton?) {
@@ -898,9 +905,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         setupInputBar()
 
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
-        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.leftAccessoryView.addSubview(markdownButton)
-        inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
+        inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.addSubview(typingIndicatorView)
 
         view.addSubview(securityLevelView)
@@ -939,9 +945,9 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         let bottomConstraint = inputBar.bottomAnchor.constraint(equalTo: inputBar.superview!.bottomAnchor)
         bottomConstraint.priority = .defaultLow
 
-        let senderDiameter: CGFloat = 28
-
         let securityBannerHeight: CGFloat = securityLevelView.isHidden ? 0 : 24
+        let widthOfSendButton: CGFloat = 42
+        let heightOfSendButton: CGFloat = 32
 
         NSLayoutConstraint.activate([
             securityLevelView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -962,8 +968,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
 
             markdownButton.centerXAnchor.constraint(equalTo: markdownButton.superview!.centerXAnchor),
             markdownButton.bottomAnchor.constraint(equalTo: markdownButton.superview!.bottomAnchor, constant: -14),
-            markdownButton.widthAnchor.constraint(equalToConstant: senderDiameter),
-            markdownButton.heightAnchor.constraint(equalToConstant: senderDiameter),
+            markdownButton.widthAnchor.constraint(equalToConstant: widthOfSendButton),
+            markdownButton.heightAnchor.constraint(equalToConstant: heightOfSendButton),
 
             hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
             hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),

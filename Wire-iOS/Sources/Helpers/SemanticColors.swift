@@ -89,6 +89,8 @@ public enum SemanticColors {
         static let backgroundCheckMark = UIColor(light: Asset.gray20, dark: Asset.gray90)
         static let backgroundCheckMarkSelected = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
+        static let foregroundDefaultBlack = UIColor(light: Asset.black, dark: Asset.white)
+        static let foregroundDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
         static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let backgroundJoinCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
@@ -114,6 +116,7 @@ public enum SemanticColors {
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let borderInputBar = UIColor(light: Asset.gray40, dark: Asset.gray100)
     }
 
     public enum TabBar {
@@ -137,6 +140,14 @@ public enum SemanticColors {
         static let borderBarItem = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let backgroundLikeEnabled = UIColor(light: Asset.gray70, dark: Asset.gray60)
         static let backgroundLikeHighlighted = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let backgroundSendDisabled = UIColor(light: Asset.gray70, dark: Asset.gray70)
+        static let backgroundInputBarItemEnabled = UIColor(light: Asset.white, dark: Asset.gray90)
+        static let backgroundInputBarItemHighlighted = UIColor(light: Asset.blue50Light, dark: Asset.blue800Dark)
+        static let borderInputBarItemEnabled = UIColor(light: Asset.gray40, dark: Asset.gray100)
+        static let borderInputBarItemHighlighted = UIColor(light: Asset.blue300Light, dark: Asset.blue700Dark)
+        static let textInputBarItemEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let textInputBarItemHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.white)
+
     }
 }
 

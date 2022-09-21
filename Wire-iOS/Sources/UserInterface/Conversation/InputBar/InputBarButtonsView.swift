@@ -83,7 +83,7 @@ final class InputBarButtonsView: UIView {
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
-        self.backgroundColor = UIColor.from(scheme: .barBackground)
+        self.backgroundColor = SemanticColors.SearchBar.backgroundInputView
     }
 
     private func createConstraints() {
