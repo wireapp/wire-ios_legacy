@@ -362,7 +362,7 @@ final class ClientListViewController: UIViewController,
             }
 
             cell.accessibilityTraits = .button
-            cell.accessibilityHint = L10n.Accessibility.ClientList.DeviceDetails.hint
+            cell.accessibilityHint = L10n.Accessibility.ClientsList.DeviceDetails.hint
 
             return cell
         } else {

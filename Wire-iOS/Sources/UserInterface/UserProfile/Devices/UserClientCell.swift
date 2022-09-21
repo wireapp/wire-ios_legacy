@@ -149,7 +149,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
     }
 
     private func setupAccessibility(isDeviceVerified: Bool) {
-        typealias ClientListStrings = L10n.Accessibility.ClientList
+        typealias ClientListStrings = L10n.Accessibility.ClientsList
 
         guard let deviceName = titleLabel.text,
               let deviceId = subtitleLabel.text else {

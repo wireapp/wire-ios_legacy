@@ -51,12 +51,12 @@
 
 "developerOptionsSettings.backButton.description" = "Go back to Developer options";
 
-"clientList.deviceDetails.hint" = "Double tap to open device details";
-"clientList.deviceId.description" = "Device ID";
-"clientList.deviceName.description" = "Device name";
-"clientList.keyFingerprint.description" = "Key fingerprint";
-"clientList.deviceVerified.description" = "Verified";
-"clientList.deviceNotVerified.description" = "Not Verified";
+"clientsList.deviceDetails.hint" = "Double tap to open device details";
+"clientsList.deviceId.description" = "Device ID";
+"clientsList.deviceName.description" = "Device name";
+"clientsList.keyFingerprint.description" = "Key fingerprint";
+"clientsList.deviceVerified.description" = "Verified";
+"clientsList.deviceNotVerified.description" = "Not Verified";
 
 "deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
 "deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";

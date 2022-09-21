@@ -63,30 +63,30 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "advancedSettings.backButton.description")
       }
     }
-    internal enum ClientList {
+    internal enum ClientsList {
       internal enum DeviceDetails {
         /// Double tap to open device details
-        internal static let hint = L10n.tr("Accessibility", "clientList.deviceDetails.hint")
+        internal static let hint = L10n.tr("Accessibility", "clientsList.deviceDetails.hint")
       }
       internal enum DeviceId {
         /// Device ID
-        internal static let description = L10n.tr("Accessibility", "clientList.deviceId.description")
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceId.description")
       }
       internal enum DeviceName {
         /// Device name
-        internal static let description = L10n.tr("Accessibility", "clientList.deviceName.description")
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceName.description")
       }
       internal enum DeviceNotVerified {
         /// Not Verified
-        internal static let description = L10n.tr("Accessibility", "clientList.deviceNotVerified.description")
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceNotVerified.description")
       }
       internal enum DeviceVerified {
         /// Verified
-        internal static let description = L10n.tr("Accessibility", "clientList.deviceVerified.description")
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceVerified.description")
       }
       internal enum KeyFingerprint {
         /// Key fingerprint
-        internal static let description = L10n.tr("Accessibility", "clientList.keyFingerprint.description")
+        internal static let description = L10n.tr("Accessibility", "clientsList.keyFingerprint.description")
       }
     }
     internal enum ContactsList {

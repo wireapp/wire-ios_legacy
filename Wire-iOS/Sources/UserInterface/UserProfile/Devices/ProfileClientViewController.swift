@@ -266,7 +266,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupAccessibility() {
-        typealias ClientList = L10n.Accessibility.ClientList
+        typealias ClientList = L10n.Accessibility.ClientsList
         typealias DeviceDetails = L10n.Accessibility.DeviceDetails
 
         if let deviceName = typeLabel.text {
