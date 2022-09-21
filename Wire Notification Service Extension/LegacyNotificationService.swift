@@ -44,10 +44,6 @@ class CallEventHandler: CallEventHandlerProtocol {
 }
 
 public class LegacyNotificationService: UNNotificationServiceExtension, NotificationSessionDelegate {
-    public func notificationSessionDidFailWithError(error: NotificationSessionError) {
-        // TODO: implement
-    }
-
 
     // MARK: - Properties
 
