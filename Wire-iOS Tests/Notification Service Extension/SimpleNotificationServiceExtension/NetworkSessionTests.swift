@@ -34,10 +34,13 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testErrorWhenIncorrectPath() async {
+        // given
         let request = NetworkRequest(path: "", httpMethod: .get, contentType: .json, acceptType: .json)
         do {
             let sut = try NetworkSession(userID: UUID())
+            // when
             _ = try await sut.send(request: request)
+            // then
         } catch NetworkSession.NetworkError.invalidRequestURL {
             return
         } catch {
@@ -47,11 +50,14 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testErrorWhenInvalidResponse() async {
+        // given
         let reqestable = URLSessionMock()
         reqestable.mockedResponse = reqestable.invalidResponse
         do {
             let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
+            // when
             _ = try await sut.send(request: networkRequestMock)
+            // then
         } catch NetworkSession.NetworkError.invalidResponse {
             return
         } catch {
@@ -61,16 +67,18 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testErrorWhenIncorrectResponseContent() async throws {
+        // given
         let reqestable = URLSessionMock()
         let response = HTTPURLResponse(url: URL(string: "wire.com")!,
                                        statusCode: 200,
                                        httpVersion: "",
                                        headerFields: ["Content-Type": "Text/plain"])!
         reqestable.mockedResponse = (Data(), response)
-
         do {
             let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
+            // when
             _ = try await sut.send(request: networkRequestMock)
+            // then
         } catch NetworkSession.NetworkError.invalidResponse {
             return
         } catch {
@@ -80,10 +88,13 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testFailureWhenErrorResponse() async throws {
+        // given
         let reqestable = URLSessionMock()
         reqestable.mockedResponse = reqestable.failureResponse
         let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
+        // when
         let result = try await sut.send(request: networkRequestMock)
+        // then
         guard case .failure = result else {
             XCTFail("unexpected success")
             return
@@ -91,10 +102,13 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testSuccessResponse() async throws {
+        // given
         let reqestable = URLSessionMock()
         reqestable.mockedResponse = reqestable.successResponse
         let sut = try NetworkSession(userID: UUID(), urlRequestable: reqestable)
+        // when
         let result = try await sut.send(request: networkRequestMock)
+        // then
         guard case .success = result else {
             XCTFail("request failed")
             return
@@ -102,12 +116,15 @@ class NetworkSessionTests: XCTestCase {
     }
 
     func testRequestHeaders() async throws {
+        // given
         let request = NetworkRequest(path: "test", httpMethod: .get, contentType: .json, acceptType: .json)
         let requestable = URLSessionMock()
         requestable.mockedResponse = requestable.successResponse
         let sut = try NetworkSession(userID: UUID(), urlRequestable: requestable)
         sut.accessToken =  AccessToken(token: "1234", type: "type1", expiresInSeconds: 123456789)
+        // when
         _ = try await sut.send(request: request)
+        // then
         guard let urlRequest = requestable.calledRequest else {
             XCTFail("unable to get URLRequest")
             return
@@ -120,9 +137,7 @@ class NetworkSessionTests: XCTestCase {
 }
 
 class CookieStorageMock: CookieProvider {
-    func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest) {
-    }
-
+    func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest) {}
     var isAuthenticated: Bool = true
 }
 

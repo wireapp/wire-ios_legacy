@@ -28,18 +28,22 @@ class NotificationByIDEndpointTests: XCTestCase {
         """
 
     func testRequestCorrectPath() {
+        // given
         let endpoint = NotificationByIDEndpoint(eventID: UUID(uuidString: "16B0C8ed-2026-4643-8c6e-4b7b7160890b")!)
+        // when
         let request = endpoint.request
-
+        // then
         XCTAssertEqual(request.path, "/notifications/16b0c8ed-2026-4643-8c6e-4b7b7160890b")
 
     }
 
     func testParseResponseSuccess() {
+        // given
         let successResponse = SuccessResponse(status: 200, data: exampleEventJSON.data(using: .utf8)!)
         let endpoint = NotificationByIDEndpoint(eventID: UUID(uuidString: "96188b94-2a8e-11ed-8002-124b5cbe3b2d")!)
+        // when
         let result = endpoint.parseResponse(.success(successResponse))
-
+        // then
         guard case .success(let notification) = result else {
             XCTFail("endpoint failed")
             return
@@ -48,34 +52,42 @@ class NotificationByIDEndpointTests: XCTestCase {
     }
 
     func testIncorrectEventFailure() {
+        // given
         let successResponse = SuccessResponse(status: 200, data: exampleEventJSON.data(using: .utf8)!)
         let endpoint = NotificationByIDEndpoint(eventID: UUID())
+        // when
         let result = endpoint.parseResponse(.success(successResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.incorrectEvent))
     }
 
     func testParsingErrorFailure() {
+        // given
         let successResponse = SuccessResponse(status: 200, data: "".data(using: .utf8)!)
         let endpoint = NotificationByIDEndpoint(eventID: UUID())
+        // when
         let result = endpoint.parseResponse(.success(successResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.failedToDecodePayload))
     }
 
     func testEventNotFoundFailure() {
+        // given
         let failureResponse = ErrorResponse(code: 404, label: "not-found", message: "error")
         let endpoint = NotificationByIDEndpoint(eventID: UUID())
+        // when
         let result = endpoint.parseResponse(.failure(failureResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.notifcationNotFound))
     }
 
     func testUnknownErrorFailure() {
+        // given
         let failureResponse = ErrorResponse(code: 500, label: "server-error", message: "error")
         let endpoint = NotificationByIDEndpoint(eventID: UUID())
+        // when
         let result = endpoint.parseResponse(.failure(failureResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.unknownError(failureResponse)))
     }
 }

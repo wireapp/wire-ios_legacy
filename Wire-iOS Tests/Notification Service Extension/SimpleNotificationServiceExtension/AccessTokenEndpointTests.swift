@@ -22,6 +22,7 @@ import XCTest
 class AccessTokenEndpointTests: XCTestCase {
 
     func testParseResponseSuccess() {
+        // given
         let JSON = """
         {
             "access_token": "testToken",
@@ -30,8 +31,10 @@ class AccessTokenEndpointTests: XCTestCase {
         }
         """
         let successResponse = SuccessResponse(status: 200, data: JSON.data(using: .utf8)!)
+        // when
         let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
         let result = endpoint.parseResponse(.success(successResponse))
+        // then
         guard case .success(let token) = result else {
             XCTFail("endpoint failed")
             return
@@ -41,26 +44,32 @@ class AccessTokenEndpointTests: XCTestCase {
     }
 
     func testParsingErrorFailure() {
+        // given
         let successResponse = SuccessResponse(status: 200, data: "".data(using: .utf8)!)
+        // when
         let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
         let result = endpoint.parseResponse(.success(successResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.failedToDecodePayload))
     }
 
     func testInvalidCredentialsFailure() {
+        // given
         let failureResponse = ErrorResponse(code: 403, label: "invalid-credentials", message: "error")
+        // when
         let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
         let result = endpoint.parseResponse(.failure(failureResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.authenticationError))
     }
 
     func testUnknownErrorFailure() {
+        // given
         let failureResponse = ErrorResponse(code: 500, label: "server-error", message: "error")
+        // when
         let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
         let result = endpoint.parseResponse(.failure(failureResponse))
-
+        // then
         XCTAssertEqual(result, .failure(.unknownError(failureResponse)))
     }
 }
