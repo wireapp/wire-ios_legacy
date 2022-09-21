@@ -204,7 +204,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     private func setupAccessibility() {
         typealias ContactsList = L10n.Accessibility.ContactsList
         typealias ServicesList = L10n.Accessibility.ServicesList
-        typealias ClientList = L10n.Accessibility.ClientList
+        typealias ClientsList = L10n.Accessibility.ClientsList
 
         guard let title = titleLabel.text,
               let subtitle = subtitleLabel.text else {
@@ -221,7 +221,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         }
 
         if !verifiedIconView.isHidden {
-            content += ", " + ClientList.DeviceVerified.description
+            content += ", " + ClientsList.DeviceVerified.description
         }
 
         accessibilityLabel = content
