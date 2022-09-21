@@ -31,8 +31,9 @@ final class ConversationCreateServicesCell: IconToggleCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let color = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        icon = StyleKitIcon.bot.makeImage(size: .tiny, color: color)
+        let color = SemanticColors.Icon.foregroundDefault
+        icon = StyleKitIcon.bot.makeImage(size: .tiny, color: color).withRenderingMode(.alwaysTemplate)
+        iconColor = color
     }
 }
 

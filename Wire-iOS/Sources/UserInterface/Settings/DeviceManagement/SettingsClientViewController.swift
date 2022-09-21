@@ -76,7 +76,7 @@ final class SettingsClientViewController: UIViewController,
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.localizedDescription.localizedUppercase
+        setupNavigationTitle()
         self.credentials = credentials
     }
 
@@ -106,6 +106,14 @@ final class SettingsClientViewController: UIViewController,
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: SemanticColors.Label.textDefault]
     }
 
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: userClient.deviceClass?.localizedDescription.localized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -129,6 +137,7 @@ final class SettingsClientViewController: UIViewController,
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = SemanticColors.View.backgroundDefault
+        tableView.separatorStyle = .none
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.register(FingerprintTableViewCell.self, forCellReuseIdentifier: FingerprintTableViewCell.zm_reuseIdentifier)
         tableView.register(SettingsTableCell.self, forCellReuseIdentifier: type(of: self).deleteCellReuseIdentifier)
@@ -221,14 +230,16 @@ final class SettingsClientViewController: UIViewController,
                 cell.wr_editable = false
                 cell.showVerified = false
                 cell.showLabel = true
+                cell.accessibilityTraits = .none
+                cell.accessibilityHint = ""
                 return cell
             }
 
         case .fingerprintAndVerify:
             if (indexPath as NSIndexPath).row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: FingerprintTableViewCell.zm_reuseIdentifier, for: indexPath) as? FingerprintTableViewCell {
-
                     cell.selectionStyle = .none
+                    cell.separatorInset = .zero
                     cell.fingerprint = self.userClient.fingerprint
                     return cell
                 }

@@ -22,7 +22,7 @@ import WireCommonComponents
 class TitleView: UIView, DynamicTypeCapable {
 
     // MARK: - Properties
-    var titleColor, titleColorSelected: UIColor?
+    var titleColor: UIColor?
     var titleFont: FontSpec?
     var tapHandler: ((UIButton) -> Void)?
 
@@ -31,14 +31,13 @@ class TitleView: UIView, DynamicTypeCapable {
     private let subtitleLabel = UILabel()
 
     // MARK: - Initialization
-    init(color: UIColor? = nil, selectedColor: UIColor? = nil, fontSpec: FontSpec? = nil) {
+    init(color: UIColor? = nil, fontSpec: FontSpec? = nil) {
         super.init(frame: CGRect.zero)
         isAccessibilityElement = true
         accessibilityIdentifier = "Name"
 
-        if let color = color, let selectedColor = selectedColor, let font = fontSpec {
+        if let color = color, let font = fontSpec {
             titleColor = color
-            titleColorSelected = selectedColor
             titleFont = font
         }
 
@@ -76,22 +75,18 @@ class TitleView: UIView, DynamicTypeCapable {
 
     func configure(icons: [NSTextAttachment], title: String, subtitle: String? = nil, interactive: Bool, showInteractiveIcon: Bool = true) {
 
-        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
+        guard let font = titleFont, let color = titleColor else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon
         let normalLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: color)
-        let selectedLabel = IconStringsBuilder.iconString(with: icons, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
 
         titleButton.titleLabel!.font = font.font
         titleButton.setAttributedTitle(normalLabel, for: [])
-        titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
-        accessibilityLabel = titleButton.titleLabel?.text
 
         subtitleLabel.isHidden = subtitle == nil
         subtitleLabel.text = subtitle
         subtitleLabel.font = .smallLightFont
-        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed)
 
         createConstraints()
     }

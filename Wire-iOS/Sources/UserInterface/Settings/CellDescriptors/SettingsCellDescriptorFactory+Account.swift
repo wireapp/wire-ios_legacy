@@ -96,7 +96,6 @@ extension SettingsCellDescriptorFactory {
         }
 
         if URL.selfUserProfileLink != nil {
-            cellDescriptors.append(profileLinkTitle())
             cellDescriptors.append(profileLinkElement())
             cellDescriptors.append(profileLinkButton())
         }
@@ -248,12 +247,6 @@ extension SettingsCellDescriptorFactory {
         return textValueCellDescriptor(propertyName: .domain, enabled: false)
     }
 
-    func profileLinkTitle() -> SettingsCellDescriptorType {
-        typealias Account = L10n.Localizable.Self.Settings.AccountSection
-
-        return SettingsStaticTextCellDescriptor(text: Account.ProfileLink.title)
-    }
-
     func profileLinkElement() -> SettingsCellDescriptorType {
         return SettingsProfileLinkCellDescriptor()
     }
@@ -278,13 +271,10 @@ extension SettingsCellDescriptorFactory {
     }
 
     func colorElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_picture_group.color".localized,
-            isDestructive: false,
-            presentationStyle: .modal,
-            presentationAction: AccentColorPickerController.init,
-            previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) }
-        )
+        return SettingsAppearanceCellDescriptor(
+            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
+            appearanceType: .color,
+            presentationAction: AccentColorPickerController.init)
     }
 
     func readReceiptsEnabledElement() -> SettingsCellDescriptorType {

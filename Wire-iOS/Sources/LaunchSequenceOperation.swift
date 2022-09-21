@@ -220,3 +220,25 @@ final class VoIPPushHelperOperation: LaunchSequenceOperation {
     }
 
 }
+
+/// This operation cleans up any state that may have been set in debug builds so that
+/// release builds don't exhibit any debugging behaviour.
+///
+/// This is a safety precaution: users of release builds likely won't ever run a debug
+/// build, but it's better to be sure.
+
+final class CleanUpDebugStateOperation: LaunchSequenceOperation {
+
+    func execute() {
+        guard !Bundle.developerModeEnabled else { return }
+
+        // Clearing this ensures that the api version is negotiated with the backend
+        // and not set explicitly.
+        APIVersion.preferredVersion = nil
+
+        // Clearing all developer flags ensures that no custom behavior is
+        // present in the app.
+        DeveloperFlag.clearAllFlags()
+    }
+
+}

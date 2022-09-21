@@ -41,11 +41,6 @@ extension Service {
     }
 }
 
-struct ServiceDetailVariant {
-    let colorScheme: ColorSchemeVariant
-    let opaque: Bool
-}
-
 final class ServiceDetailViewController: UIViewController {
 
     typealias Completion = (AddBotResult?) -> Void
@@ -64,12 +59,7 @@ final class ServiceDetailViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     let completion: Completion?
-    let variant: ServiceDetailVariant
     weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
@@ -88,14 +78,13 @@ final class ServiceDetailViewController: UIViewController {
     ///   - completion: completion handler
     init(serviceUser: ServiceUser,
          actionType: ActionType,
-         variant: ServiceDetailVariant,
          selfUser: UserType = ZMUser.selfUser(),
          completion: Completion? = nil) {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
         self.selfUser = selfUser
 
-        detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
+        detailView = ServiceDetailView(service: service)
 
         switch actionType {
         case let .addService(conversation):
@@ -109,7 +98,6 @@ final class ServiceDetailViewController: UIViewController {
             actionButton.isHidden = !selfUser.canCreateService
         }
 
-        self.variant = variant
         self.actionType = actionType
 
         super.init(nibName: nil, bundle: nil)
@@ -127,11 +115,7 @@ final class ServiceDetailViewController: UIViewController {
     private func setupViews() {
         actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
-        if variant.opaque {
-            view.backgroundColor = UIColor.from(scheme: .background, variant: self.variant.colorScheme)
-        } else {
             view.backgroundColor = .clear
-        }
 
         [detailView, actionButton].forEach(view.addSubview)
 
@@ -186,7 +170,7 @@ final class ServiceDetailViewController: UIViewController {
         })
     }
 
-    func callback(for type: ActionType, completion: Completion?) -> Callback<Button> {
+    func callback(for type: ActionType, completion: Completion?) -> Callback<LegacyButton> {
         return { [weak self] _ in
             guard let `self` = self, let userSession = ZMUserSession.shared() else {
                 return
@@ -231,21 +215,20 @@ final class ServiceDetailViewController: UIViewController {
 fileprivate extension Button {
 
     static func openServiceConversationButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.open_conversation.item".localized)
     }
 
     static func createAddServiceButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
+        return Button(style: .accentColorTextButtonStyle, title: "peoplepicker.services.add_service.button".localized)
     }
 
     static func createDestructiveServiceButton() -> Button {
-        let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
-        button.setBackgroundImageColor(SemanticColors.LegacyColors.vividRed, for: .normal)
+        let button = Button(style: .accentColorTextButtonStyle, title: "participants.services.remove_integration.button".localized)
         return button
     }
 
-    convenience init(style: LegacyButtonStyle, title: String) {
-        self.init(style: style)
-        setTitle(title, for: .normal)
+    convenience init(style: ButtonStyle, title: String) {
+        self.init(style: style, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+        self.setTitle(title, for: .normal)
     }
 }

@@ -43,11 +43,9 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func createSut() {
-        let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
 
         sut = ServiceDetailViewController(serviceUser: serviceUser,
                                           actionType: .removeService(groupConversation),
-                                          variant: variant,
                                           selfUser: mockSelfUser)
     }
 

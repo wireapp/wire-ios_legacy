@@ -89,6 +89,9 @@ public enum SemanticColors {
         static let foregroundDefault = UIColor(light: Asset.gray90, dark: Asset.white)
         static let foregroundPlainDownArrow = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let backgroundJoinCall = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
+        static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
+        static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
+        static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
     }
 
     public enum View {
@@ -103,6 +106,7 @@ public enum SemanticColors {
         static let backgroundConversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let backgroundConversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundTeamImageView = UIColor(light: Asset.white, dark: Asset.black)
+        static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
     }
@@ -120,6 +124,9 @@ public enum SemanticColors {
         static let backgroundPrimaryEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
         static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
         static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
+        static let textEmptyEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let textBottomBarNormal = UIColor(light: Asset.gray90, dark: Asset.gray50)
+        static let textBottomBarSelected = UIColor(light: Asset.white, dark: Asset.black)
     }
 }
 
@@ -145,8 +152,8 @@ public extension UIColor {
             self.init(light: Asset.red500Light, dark: Asset.red500Dark)
         case .amber:
             self.init(light: Asset.amber500Light, dark: Asset.amber500Dark)
-        case .petrol:
-            self.init(light: Asset.petrol500Light, dark: Asset.petrol500Dark)
+        case .turquoise:
+            self.init(light: Asset.turquoise500Light, dark: Asset.turquoise500Dark)
         case .purple:
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }

@@ -1,20 +1,20 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import Foundation
 import UIKit
@@ -22,6 +22,8 @@ import WireSyncEngine
 import WireCommonComponents
 
 final class ProfileClientViewController: UIViewController, SpinnerCapable {
+
+    // MARK: Properties
 
     private let userClient: UserClient
     private let contentView = UIView()
@@ -55,6 +57,11 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
     private let fingerprintFont = FontSpec(.normal, .none).font!
     private let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
+
+    private let defaultTextColor = SemanticColors.Label.textDefault
+    private let defaultBackgroundColor = SemanticColors.View.backgroundDefault
+
+    // MARK: Initilization
 
     convenience init(client: UserClient,
                      fromConversation: Bool) {
@@ -90,16 +97,21 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
+    // MARK: Override methods
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = ""
+    }
+
+    // MARK: Setup UI
+
     private func setupViews() {
-        view.backgroundColor = UIColor.from(scheme: .background)
+        view.backgroundColor = defaultBackgroundColor
 
         setupContentView()
         setupBackButton()
@@ -116,11 +128,6 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         setupDebugMenuButton()
         createConstraints()
         updateFingerprintLabel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        title = ""
     }
 
     private func setupContentView() {
@@ -148,25 +155,25 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor.from(scheme: .textForeground)
-        descriptionTextView.backgroundColor = UIColor.from(scheme: .textBackground)
+        descriptionTextView.textColor = defaultTextColor
+        descriptionTextView.backgroundColor = defaultBackgroundColor
         descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.accent()]
 
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
-                                                    descriptionTextFont &&
-                                                    UIColor.from(scheme: .textForeground)) +
-                "\n" +
-                ("profile.devices.detail.verify_message.link".localized &&
-                    [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
+                                                  descriptionTextFont &&
+                                                  defaultTextColor) +
+            "\n" +
+            ("profile.devices.detail.verify_message.link".localized &&
+             [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         contentView.addSubview(descriptionTextView)
     }
 
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor.from(scheme: .separator)
+        separatorLineView.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         contentView.addSubview(separatorLineView)
     }
 
@@ -174,31 +181,20 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         typeLabel.text = userClient.deviceClass?.localizedDescription.localizedUppercase
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor.from(scheme: .textForeground)
+        typeLabel.textColor = defaultTextColor
         contentView.addSubview(typeLabel)
     }
 
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor.from(scheme: .textForeground)
+        IDLabel.textColor = defaultTextColor
         contentView.addSubview(IDLabel)
         updateIDLabel()
     }
 
-    private func updateIDLabel() {
-        let fingerprintSmallMonospaceFont = fingerprintSmallFont.monospaced()
-        let fingerprintSmallBoldMonospaceFont = fingerprintSmallBoldFont.monospaced()
-
-        IDLabel.attributedText = userClient.attributedRemoteIdentifier(
-            [.font: fingerprintSmallMonospaceFont],
-            boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
-            uppercase: true
-        )
-    }
-
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor.from(scheme: .textForeground)
+        fullIDLabel.textColor = defaultTextColor
         contentView.addSubview(fullIDLabel)
     }
 
@@ -207,32 +203,9 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         contentView.addSubview(spinner)
     }
 
-    private func updateFingerprintLabel() {
-        let fingerprintMonospaceFont = fingerprintFont.monospaced()
-        let fingerprintBoldMonospaceFont = fingerprintBoldFont.monospaced()
-
-        if let attributedFingerprint = userClient.fingerprint?.attributedFingerprint(
-            attributes: [.font: fingerprintMonospaceFont],
-            boldAttributes: [.font: fingerprintBoldMonospaceFont],
-            uppercase: false) {
-            fullIDLabel.attributedText = attributedFingerprint
-            spinner.stopAnimating()
-        } else {
-            fullIDLabel.attributedText = NSAttributedString(string: "")
-            spinner.startAnimating()
-        }
-    }
-
-    private func setupVerifiedToggle() {
-        verifiedToggle.isOn = userClient.verified
-        verifiedToggle.accessibilityLabel = "device verified"
-        verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
-        contentView.addSubview(verifiedToggle)
-    }
-
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor.from(scheme: .textForeground)
+        verifiedToggleLabel.textColor = defaultTextColor
         verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
@@ -257,6 +230,42 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         contentView.addSubview(debugButton)
         debugMenuButton = debugButton
     }
+
+    private func setupVerifiedToggle() {
+        verifiedToggle.isOn = userClient.verified
+        verifiedToggle.accessibilityLabel = "device verified"
+        verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
+        contentView.addSubview(verifiedToggle)
+    }
+
+    private func updateIDLabel() {
+        let fingerprintSmallMonospaceFont = fingerprintSmallFont.monospaced()
+        let fingerprintSmallBoldMonospaceFont = fingerprintSmallBoldFont.monospaced()
+
+        IDLabel.attributedText = userClient.attributedRemoteIdentifier(
+            [.font: fingerprintSmallMonospaceFont],
+            boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
+            uppercase: true
+        )
+    }
+
+    private func updateFingerprintLabel() {
+        let fingerprintMonospaceFont = fingerprintFont.monospaced()
+        let fingerprintBoldMonospaceFont = fingerprintBoldFont.monospaced()
+
+        if let attributedFingerprint = userClient.fingerprint?.attributedFingerprint(
+            attributes: [.font: fingerprintMonospaceFont],
+            boldAttributes: [.font: fingerprintBoldMonospaceFont],
+            uppercase: false) {
+            fullIDLabel.attributedText = attributedFingerprint
+            spinner.stopAnimating()
+        } else {
+            fullIDLabel.attributedText = NSAttributedString(string: "")
+            spinner.startAnimating()
+        }
+    }
+
+    // MARK: Setup Constraints
 
     private func createConstraints() {
         let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0

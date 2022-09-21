@@ -33,8 +33,8 @@ final class UserNameTakeOverViewController: UIViewController {
     public let suggestedHandleLabel = UILabel()
     public let subtitleTextView = WebLinkTextView()
 
-    private let chooseOwnButton = Button(style: .full)
-    private let keepSuggestedButton = Button(style: .empty, variant: .dark)
+    private let chooseOwnButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+    private let keepSuggestedButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
     private let contentView = UIView()
     private let topContainer = UIView()
     private let suggestedHandle: String
@@ -63,18 +63,18 @@ final class UserNameTakeOverViewController: UIViewController {
     }
 
     func setupViews() {
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
 
         displayNameLabel.font = FontSpec(.large, .thin).font!
-        displayNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
+        displayNameLabel.textColor = SemanticColors.Label.textMessageDetails
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
 
         suggestedHandleLabel.font = FontSpec(.large, .none).font!
-        suggestedHandleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        suggestedHandleLabel.textColor = SemanticColors.Label.textDefault
         suggestedHandleLabel.text = "@" + suggestedHandle
         suggestedHandleLabel.textAlignment = .center
 
@@ -94,7 +94,7 @@ final class UserNameTakeOverViewController: UIViewController {
 
         let font = FontSpec(.large, .thin).font!
         let linkFont = FontSpec(.large, .none).font!
-        let color = UIColor.from(scheme: .textForeground, variant: .dark)
+        let color = SemanticColors.Label.textDefault
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
         let linkAttributes: [NSAttributedString.Key: Any] = [
@@ -167,12 +167,12 @@ final class UserNameTakeOverViewController: UIViewController {
             ])
     }
 
-    @objc func buttonTapped(sender: Button) {
+    @objc func buttonTapped(sender: LegacyButton) {
         guard let action = action(for: sender) else { return }
         delegate?.takeOverViewController(self, didPerformAction: action)
     }
 
-    private func action(for button: Button) -> UserNameTakeOverViewControllerAction? {
+    private func action(for button: LegacyButton) -> UserNameTakeOverViewControllerAction? {
         switch button {
         case chooseOwnButton: return .chooseOwn(suggestedHandle)
         case keepSuggestedButton: return .keepSuggestion(suggestedHandle)

@@ -23,7 +23,7 @@ final class StartUIInviteActionBar: UIView {
     var backgroundView: UIVisualEffectView?
     var bottomEdgeConstraint: NSLayoutConstraint!
 
-    private(set) var inviteButton: Button!
+    private(set) var inviteButton: LegacyButton!
 
     private let padding: CGFloat = 12
 
@@ -43,7 +43,7 @@ final class StartUIInviteActionBar: UIView {
     }
 
     private func createInviteButton() {
-        inviteButton = Button(style: LegacyButtonStyle.empty, variant: .dark)
+        inviteButton = Button(style: .accentColorTextButtonStyle)
         inviteButton.titleEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 3, right: 8)
         addSubview(inviteButton)
         inviteButton.setTitle("peoplepicker.invite_more_people".localized, for: .normal)

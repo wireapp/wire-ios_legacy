@@ -38,13 +38,13 @@ final class AvailabilityStringBuilder: NSObject {
                 fontSize = .normal
 
                 if color == nil {
-                    color = UIColor.from(scheme: .textForeground, variant: .dark)
+                    color = SemanticColors.Label.textDefault
                 }
             }
         case .participants:
             do {
                 title = (user.name ?? "").localizedUppercase
-                color = UIColor.from(scheme: .textForeground)
+                color = SemanticColors.Label.textDefault
             }
         case .placeholder:
             do {
@@ -58,7 +58,7 @@ final class AvailabilityStringBuilder: NSObject {
         }
 
         guard let textColor = color else { return nil }
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.color(for: availability), and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }
@@ -72,10 +72,24 @@ final class AvailabilityStringBuilder: NSObject {
         switch size {
         case .small:
             verticalCorrection = -1
-        case .medium, .large, .normal:
+        case .medium, .large, .normal, .header:
             verticalCorrection = 0
         }
 
-        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 10, verticalCorrection: verticalCorrection)
+        return NSTextAttachment.textAttachment(for: iconType, with: color, iconSize: 12, verticalCorrection: verticalCorrection)
+    }
+
+    static func color(for availability: AvailabilityKind) -> UIColor {
+        typealias IconColors = SemanticColors.Icon
+        switch availability {
+        case .none:
+            return UIColor.clear
+        case .available:
+            return IconColors.foregroundAvailabilityAvailable
+        case .busy:
+            return IconColors.foregroundAvailabilityBusy
+        case .away:
+            return IconColors.foregroundAvailabilityAway
+        }
     }
 }

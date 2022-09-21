@@ -81,22 +81,22 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
             return
         }
 
-        self.contentHandler = contentHandler
+      self.contentHandler = contentHandler
 
-        guard let accountID = request.content.accountID else {
-            contentHandler(.debugMessageIfNeeded(message: "Missing account id."))
-            return
-        }
+      guard let accountID = request.content.accountID else {
+          contentHandler(.debugMessageIfNeeded(message: "Missing account id."))
+          return
+      }
 
-        guard let session = try? createSession(accountID: accountID) else {
-            contentHandler(.debugMessageIfNeeded(message: "Failed to create session."))
-            return
-        }
-        
-        session.processPushNotification(with: request.content.userInfo)
+      guard let session = try? createSession(accountID: accountID) else {
+          contentHandler(.debugMessageIfNeeded(message: "Failed to create session."))
+          return
+      }
 
-        // Retain the session otherwise it will tear down.
-        self.session = session
+      session.processPushNotification(with: request.content.userInfo)
+
+      // Retain the session otherwise it will tear down.
+      self.session = session
     }
 
     public override func serviceExtensionTimeWillExpire() {
@@ -143,41 +143,60 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
             return
         }
 
-        callEventHandler.reportIncomingVoIPCall(payload)
-    }
+      callEventHandler.reportIncomingVoIPCall(payload)
+  }
 
-    // MARK: - Helpers
+  public func notificationSessionDidFailWithError(error: NotificationSessionError) {
+      switch error {
+      case .accountNotAuthenticated:
+          contentHandler?(.debugMessageIfNeeded(message: "user is not authenticated"))
 
-    private func tearDown() {
-        // Content and handler should only be consumed once.
-        contentHandler = nil
+      case .noEventID:
+          contentHandler?(.debugMessageIfNeeded(message: "no event id in push payload"))
 
-        // Let the session deinit so it can tear down.
-        session = nil
-    }
+      case .invalidEventID:
+          contentHandler?(.debugMessageIfNeeded(message: "event id is invalid"))
 
-    private func createSession(accountID: UUID) throws -> NotificationSession {
-        let session = try NotificationSession(
-            applicationGroupIdentifier: appGroupID,
-            accountIdentifier: accountID,
-            environment: BackendEnvironment.shared,
-            analytics: nil
-        )
+      case .alreadyFetchedEvent:
+          contentHandler?(.debugMessageIfNeeded(message: "already fetched event"))
 
-        session.delegate = self
-        return session
-    }
+      case .unknown:
+          contentHandler?(.debugMessageIfNeeded(message: "unknown error"))
+      }
+  }
 
-    private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
-        guard let session = session else {
-            return nil
-        }
-        let account = self.accountManager.account(with: session.accountIdentifier)
-        account?.unreadConversationCount = unreadConversationCount
-        let totalUnreadCount = self.accountManager.totalUnreadCount
+  // MARK: - Helpers
 
-        return NSNumber(value: totalUnreadCount)
-    }
+  private func tearDown() {
+      // Content and handler should only be consumed once.
+      contentHandler = nil
+
+      // Let the session deinit so it can tear down.
+      session = nil
+  }
+
+  private func createSession(accountID: UUID) throws -> NotificationSession {
+      let session = try NotificationSession(
+          applicationGroupIdentifier: appGroupID,
+          accountIdentifier: accountID,
+          environment: BackendEnvironment.shared,
+          analytics: nil
+      )
+
+      session.delegate = self
+      return session
+  }
+
+  private func totalUnreadCount(_ unreadConversationCount: Int) -> NSNumber? {
+      guard let session = session else {
+          return nil
+      }
+      let account = self.accountManager.account(with: session.accountIdentifier)
+      account?.unreadConversationCount = unreadConversationCount
+      let totalUnreadCount = self.accountManager.totalUnreadCount
+
+      return NSNumber(value: totalUnreadCount)
+  }
 
 }
 
@@ -185,62 +204,62 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
 
 extension UNNotificationRequest {
 
-    var mutableContent: UNMutableNotificationContent? {
-        return content.mutableCopy() as? UNMutableNotificationContent
-    }
+  var mutableContent: UNMutableNotificationContent? {
+      return content.mutableCopy() as? UNMutableNotificationContent
+  }
 
-    var debugContent: UNNotificationContent {
-        let content = UNMutableNotificationContent()
-        content.title = "DEBUG 👀"
+  var debugContent: UNNotificationContent {
+      let content = UNMutableNotificationContent()
+      content.title = "DEBUG 👀"
 
-        guard
-            let notificationData = self.content.userInfo["data"] as? [String: Any],
-            let userID = notificationData["user"] as? String,
-            let data = notificationData["data"] as? [String: Any],
-            let eventID = data["id"] as? String
-        else {
-            content.body = "Received a push"
-            return content
-        }
+      guard
+          let notificationData = self.content.userInfo["data"] as? [String: Any],
+          let userID = notificationData["user"] as? String,
+          let data = notificationData["data"] as? [String: Any],
+          let eventID = data["id"] as? String
+      else {
+          content.body = "Received a push"
+          return content
+      }
 
-        content.body = "USER: \(userID), EVENT: \(eventID)"
-        return content
-    }
+      content.body = "USER: \(userID), EVENT: \(eventID)"
+      return content
+  }
 
 }
 
 extension UNNotificationContent {
 
-    // With the "filtering" entitlement, we can tell iOS to not display a user notification by
-    // passing empty content to the content handler.
-    // See https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_usernotifications_filtering
+  // With the "filtering" entitlement, we can tell iOS to not display a user notification by
+  // passing empty content to the content handler.
+  // See https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_usernotifications_filtering
 
-    static var empty: Self {
-        return Self()
-    }
+  static var empty: Self {
+      return Self()
+  }
 
-    static func debugMessageIfNeeded(message: String) -> UNNotificationContent {
-        guard DeveloperFlag.nseDebugging.isOn else { return .empty }
-        return debug(message: message)
-    }
+  static func debugMessageIfNeeded(message: String) -> UNNotificationContent {
+      guard DeveloperFlag.nseDebugging.isOn else { return .empty }
+      return debug(message: message)
+  }
 
-    static func debug(message: String) -> UNNotificationContent {
-        let content = UNMutableNotificationContent()
-        content.title = "DEBUG 👀"
-        content.body = message
-        return content
-    }
+  static func debug(message: String) -> UNNotificationContent {
+      let content = UNMutableNotificationContent()
+      content.title = "DEBUG 👀"
+      content.body = message
+      return content
+  }
 
-    var accountID: UUID? {
-        guard
-            let data = userInfo["data"] as? [String: Any],
-            let userIDString = data["user"] as? String,
-            let userID = UUID(uuidString: userIDString)
-        else {
-            return nil
-        }
+  var accountID: UUID? {
+      guard
+          let data = userInfo["data"] as? [String: Any],
+          let userIDString = data["user"] as? String,
+          let userID = UUID(uuidString: userIDString)
+      else {
+          return nil
+      }
 
-        return userID
-    }
+      return userID
+  }
 
 }

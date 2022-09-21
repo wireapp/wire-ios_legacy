@@ -52,4 +52,10 @@ public enum DeveloperFlag: String, CaseIterable {
         set { Self.storage.set(newValue, forKey: rawValue) }
     }
 
+    static public func clearAllFlags() {
+        allCases.forEach {
+            storage.set(nil, forKey: $0.rawValue)
+        }
+    }
+
 }

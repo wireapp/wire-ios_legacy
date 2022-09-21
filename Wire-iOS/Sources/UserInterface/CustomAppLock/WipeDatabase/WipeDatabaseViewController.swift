@@ -75,15 +75,15 @@ final class WipeDatabaseViewController: UIViewController {
         return label
     }()
 
-    private lazy var confirmButton: Button = {
-        let button: Button
+    private lazy var confirmButton: LegacyButton = {
+        let button: LegacyButton
 
         switch ColorScheme.default.variant {
         case .light:
-            button = Button(style: .full, fontSpec: .smallSemiboldFont)
+            button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
             button.setBackgroundImageColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         case .dark:
-            button = Button(style: .fullMonochrome, fontSpec: .smallSemiboldFont)
+            button = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallSemiboldFont)
             button.setTitleColor(UIColor.WipeDatabase.buttonRed, for: .normal)
         }
 
@@ -95,7 +95,7 @@ final class WipeDatabaseViewController: UIViewController {
     }()
 
     @objc
-    private func onConfirmButtonPressed(sender: Button?) {
+    private func onConfirmButtonPressed(sender: LegacyButton?) {
         presentConfirmAlert()
     }
 

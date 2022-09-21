@@ -33,8 +33,8 @@ protocol IncomingRequestFooterViewDelegate: AnyObject {
 class IncomingRequestFooterView: UIView {
 
     let titleLabel = UILabel()
-    let acceptButton = Button(fontSpec: .smallSemiboldFont)
-    let ignoreButton = Button(fontSpec: .smallSemiboldFont)
+    let acceptButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    let ignoreButton = LegacyButton(fontSpec: .smallSemiboldFont)
 
     let contentStack = UIStackView()
 
