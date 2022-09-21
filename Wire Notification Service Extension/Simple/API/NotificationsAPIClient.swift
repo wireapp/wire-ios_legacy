@@ -42,6 +42,7 @@ final class NotificationsAPIClient: NotificationsAPIClientProtocol, Loggable {
 
     func fetchEvent(eventID: UUID) async throws -> ZMUpdateEvent {
         logger.trace("fetching event with eventID (\(eventID, privacy: .public))")
+
         switch try await networkSession.execute(endpoint: API.fetchNotification(eventID: eventID)) {
         case .success(let event):
             return event
@@ -56,28 +57,17 @@ final class NotificationsAPIClient: NotificationsAPIClientProtocol, Loggable {
 struct NotificationByIDEndpoint: Endpoint, Loggable {
 
     // MARK: - Types
+
     typealias Output = ZMUpdateEvent
 
     enum Failure: Error, Equatable {
+
         case invalidResponse
         case failedToDecodePayload
         case notifcationNotFound
         case incorrectEvent
         case unknownError(ErrorResponse)
 
-        static func == (lhs: NotificationByIDEndpoint.Failure, rhs: NotificationByIDEndpoint.Failure) -> Bool {
-            switch (lhs, rhs) {
-            case (invalidResponse, invalidResponse),
-                (failedToDecodePayload, failedToDecodePayload),
-                (notifcationNotFound, notifcationNotFound),
-                (incorrectEvent, incorrectEvent):
-                return true
-            case (unknownError(let lVal), unknownError(let rVal)):
-                return (lVal.code == rVal.code) && (lVal.message == rVal.message)
-            default:
-                return false
-            }
-        }
     }
 
     // MARK: - Properties
@@ -102,12 +92,15 @@ struct NotificationByIDEndpoint: Endpoint, Loggable {
 
     func parseResponse(_ response: NetworkResponse) -> Swift.Result<Output, Failure> {
         logger.trace("parsing response: \(response, privacy: .public)")
+
         switch response {
         case .success(let response) where response.status == 200:
             logger.trace("decoding response payload")
+
             guard let payload = try? JSONSerialization.jsonObject(with: response.data, options: []) as? [AnyHashable: Any] else {
                 return .failure(.failedToDecodePayload)
             }
+
             let payloadString = String(data: response.data, encoding: .utf8) ?? "N/A"
             logger.info("received event response payload: \(payloadString, privacy: .public)")
 
@@ -123,6 +116,7 @@ struct NotificationByIDEndpoint: Endpoint, Loggable {
             guard let event = events.first else {
                 return .failure(.notifcationNotFound)
             }
+
             guard event.uuid == eventID else {
                 return .failure(.incorrectEvent)
             }

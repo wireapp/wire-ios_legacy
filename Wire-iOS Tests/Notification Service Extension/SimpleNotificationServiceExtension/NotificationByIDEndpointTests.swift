@@ -21,73 +21,168 @@ import XCTest
 
 class NotificationByIDEndpointTests: XCTestCase {
 
-    // swiftlint:disable line_length
+    // MARK: - Request generation
 
-    private let exampleEventJSON = """
-        {"id":"96188b94-2a8e-11ed-8002-124b5cbe3b2d","payload":[{"conversation":"d7174dca-488b-463b-bb64-2c2bec442deb","data":{"data":"","recipient":"fd27d34a62e5980","sender":"b7d8296a54a59151","text":"owABAaEAWCC4Yoo+oc7/JLSHCih1oLjWah7e/A2amSVaeCX+Om4cngJYbwGlAFC/I/Rp7dx7VX5rGMfnxKV2AQACAQOhAFggxRJFDfIG6ds7GC90UZKoaBVgJrRQvqHGqh2xqS8eHeMEWC/W/eip/c2hCxfsF/Re5luDuINPLPEG+ErdhPFlQTjJFoDTtXutaXwkr8qVa+XeVQ=="},"from":"16b0c8ed-2026-4643-8c6e-4b7b7160890b","qualified_conversation":{"domain":"wire.com","id":"d7174dca-488b-463b-bb64-2c2bec442deb"},"qualified_from":{"domain":"wire.com","id":"16b0c8ed-2026-4643-8c6e-4b7b7160890b"},"time":"2022-09-02T07:12:21.023Z","type":"conversation.otr-message-add"}]}
-        """
+    func test_RequestGeneration() {
+        // Given
+        let eventID = UUID.create()
+        let sut = NotificationByIDEndpoint(eventID: eventID)
 
-    func testRequestCorrectPath() {
-        // given
-        let endpoint = NotificationByIDEndpoint(eventID: UUID(uuidString: "16B0C8ed-2026-4643-8c6e-4b7b7160890b")!)
-        // when
-        let request = endpoint.request
-        // then
-        XCTAssertEqual(request.path, "/notifications/16b0c8ed-2026-4643-8c6e-4b7b7160890b")
+        // When
+        let request = sut.request
 
+        // Then
+        XCTAssertEqual(request.path, "/notifications/\(eventID.uuidString.lowercased())")
+        XCTAssertEqual(request.httpMethod, .get)
+        XCTAssertEqual(request.contentType, .json)
+        XCTAssertEqual(request.acceptType, .json)
     }
 
-    func testParseResponseSuccess() {
-        // given
-        let successResponse = SuccessResponse(status: 200, data: exampleEventJSON.data(using: .utf8)!)
-        let endpoint = NotificationByIDEndpoint(eventID: UUID(uuidString: "96188b94-2a8e-11ed-8002-124b5cbe3b2d")!)
-        // when
-        let result = endpoint.parseResponse(.success(successResponse))
-        // then
-        guard case .success(let notification) = result else {
-            XCTFail("endpoint failed")
+    // MARK: - Response parsing
+
+    let eventID = UUID.create()
+    let senderID = UUID.create()
+    let senderDomain = "foo.com"
+    let conversationID = UUID.create()
+    let conversationDomain = "bar.com"
+    let senderClientID = "fd27a34a42e5980"
+    let recipientClientID = "b7d8296a54c49151"
+
+    lazy var validPayload = """
+        {
+            "id": "\(eventID.uuidString.lowercased())",
+            "payload": [
+                {
+                    "type": "conversation.otr-message-add",
+                    "time": "2022-09-02T07:12:21.023Z",
+                    "from": "\(senderID.uuidString.lowercased())",
+                    "qualified_from": {
+                        "id": "\(senderID.uuidString.lowercased())",
+                        "domain": "\(senderDomain)"
+                    },
+                    "conversation": "\(conversationID.uuidString.lowercased())",
+                    "qualified_conversation": {
+                        "id": "\(conversationID.uuidString.lowercased())",
+                        "domain": "\(conversationDomain)"
+                    },
+                    "data": {
+                        "data": "",
+                        "recipient": "\(recipientClientID)",
+                        "sender": "\(senderClientID)",
+                        "text": "some encrypted data"
+                    }
+                }
+            ]
+        }
+        """.data(using: .utf8)!
+
+    lazy var validPayloadNoEvents = """
+        {
+            "id": "\(eventID.uuidString.lowercased())",
+            "payload": []
+        }
+        """.data(using: .utf8)!
+
+    let invalidPayload = """
+        {
+            "foo": "bar"
+        }
+        """.data(using: .utf8)!
+
+    func test_ParseSuccessResponse() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = SuccessResponse(status: 200, data: validPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
+        guard case .success(let event) = result else {
+            XCTFail("expected success result")
             return
         }
-        XCTAssertEqual(notification.conversationUUID, UUID(uuidString: "d7174dca-488b-463b-bb64-2c2bec442deb"))
+
+        XCTAssertEqual(event.uuid, eventID)
+        XCTAssertEqual(event.type, .conversationOtrMessageAdd)
+        XCTAssertEqual(event.senderUUID, senderID)
+        XCTAssertEqual(event.senderDomain, senderDomain)
+        XCTAssertEqual(event.conversationUUID, conversationID)
+        XCTAssertEqual(event.conversationDomain, conversationDomain)
+        XCTAssertEqual(event.recipientClientID, recipientClientID)
+        XCTAssertEqual(event.senderClientID, senderClientID)
     }
 
-    func testIncorrectEventFailure() {
-        // given
-        let successResponse = SuccessResponse(status: 200, data: exampleEventJSON.data(using: .utf8)!)
-        let endpoint = NotificationByIDEndpoint(eventID: UUID())
-        // when
-        let result = endpoint.parseResponse(.success(successResponse))
-        // then
-        XCTAssertEqual(result, .failure(.incorrectEvent))
-    }
+    func test_ParseSuccess_FailedToDecodeError() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = SuccessResponse(status: 200, data: invalidPayload)
 
-    func testParsingErrorFailure() {
-        // given
-        let successResponse = SuccessResponse(status: 200, data: "".data(using: .utf8)!)
-        let endpoint = NotificationByIDEndpoint(eventID: UUID())
-        // when
-        let result = endpoint.parseResponse(.success(successResponse))
-        // then
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
         XCTAssertEqual(result, .failure(.failedToDecodePayload))
     }
 
-    func testEventNotFoundFailure() {
-        // given
-        let failureResponse = ErrorResponse(code: 404, label: "not-found", message: "error")
-        let endpoint = NotificationByIDEndpoint(eventID: UUID())
-        // when
-        let result = endpoint.parseResponse(.failure(failureResponse))
-        // then
+    func test_ParseSuccess_NotificationNotFound() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = SuccessResponse(status: 200, data: validPayloadNoEvents)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
         XCTAssertEqual(result, .failure(.notifcationNotFound))
     }
 
-    func testUnknownErrorFailure() {
-        // given
-        let failureResponse = ErrorResponse(code: 500, label: "server-error", message: "error")
-        let endpoint = NotificationByIDEndpoint(eventID: UUID())
-        // when
-        let result = endpoint.parseResponse(.failure(failureResponse))
-        // then
-        XCTAssertEqual(result, .failure(.unknownError(failureResponse)))
+    func test_ParseSuccess_IncorrectEvent() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: .create())
+        let response = SuccessResponse(status: 200, data: validPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.incorrectEvent))
     }
+
+    func test_ParseSuccess_InvalidResponse() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = SuccessResponse(status: 222, data: validPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.invalidResponse))
+    }
+
+    func test_ParseError_NotificationNotFound() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = ErrorResponse(code: 404, label: "not-found", message: "error")
+
+        // When
+        let result = sut.parseResponse(.failure(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.notifcationNotFound))
+    }
+
+    func test_ParseError_UnknownError() {
+        // Given
+        let sut = NotificationByIDEndpoint(eventID: eventID)
+        let response = ErrorResponse(code: 500, label: "server-error", message: "error")
+
+        // When
+        let result = sut.parseResponse(.failure(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.unknownError(response)))
+    }
+
 }
