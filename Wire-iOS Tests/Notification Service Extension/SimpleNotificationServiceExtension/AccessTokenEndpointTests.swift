@@ -21,55 +21,103 @@ import XCTest
 
 class AccessTokenEndpointTests: XCTestCase {
 
-    func testParseResponseSuccess() {
-        // given
-        let JSON = """
+    // MARK: - Request generation
+
+    func test_RequestGeneration() {
+        // Given
+        let sut = AccessTokenEndpoint()
+
+        // When
+        let request = sut.request
+
+        // Then
+        XCTAssertEqual(request.path, "/access")
+        XCTAssertEqual(request.httpMethod, .post)
+        XCTAssertEqual(request.contentType, .json)
+        XCTAssertEqual(request.acceptType, .json)
+    }
+
+    // MARK: - Response parsing
+
+    let validPayload = """
         {
             "access_token": "testToken",
             "token_type": "type",
             "expires_in": 3600
         }
-        """
-        let successResponse = SuccessResponse(status: 200, data: JSON.data(using: .utf8)!)
-        // when
-        let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
-        let result = endpoint.parseResponse(.success(successResponse))
-        // then
+        """.data(using: .utf8)!
+
+    let invalidPayload = """
+        {
+            "foo": "bar"
+        }
+        """.data(using: .utf8)!
+
+    func test_ParseSuccessResponse() {
+        // Given
+        let sut = AccessTokenEndpoint()
+        let response = SuccessResponse(status: 200, data: validPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
         guard case .success(let token) = result else {
-            XCTFail("endpoint failed")
+            XCTFail("expected success result")
             return
         }
-        XCTAssertEqual(token.expirationDate.timeIntervalSince1970, (Date().timeIntervalSince1970 + 3600), accuracy: 1.0)
+
         XCTAssertEqual(token.token, "testToken")
+        XCTAssertEqual(token.type, "type")
+        XCTAssertEqual(token.expirationDate.timeIntervalSinceNow, 3600, accuracy: 0.1)
     }
 
-    func testParsingErrorFailure() {
-        // given
-        let successResponse = SuccessResponse(status: 200, data: "".data(using: .utf8)!)
-        // when
-        let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
-        let result = endpoint.parseResponse(.success(successResponse))
-        // then
+    func test_ParseSuccess_FailedToDecodeError() {
+        // Given
+        let sut = AccessTokenEndpoint()
+        let response = SuccessResponse(status: 200, data: invalidPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
         XCTAssertEqual(result, .failure(.failedToDecodePayload))
     }
 
-    func testInvalidCredentialsFailure() {
-        // given
-        let failureResponse = ErrorResponse(code: 403, label: "invalid-credentials", message: "error")
-        // when
-        let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
-        let result = endpoint.parseResponse(.failure(failureResponse))
-        // then
+    func test_ParseSuccess_InvalidResponse() {
+        // Given
+        let sut = AccessTokenEndpoint()
+        let response = SuccessResponse(status: 222, data: validPayload)
+
+        // When
+        let result = sut.parseResponse(.success(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.invalidResponse))
+    }
+
+    func test_ParseError_AuthenticationError() {
+        // Given
+        let sut = AccessTokenEndpoint()
+        let response = ErrorResponse(code: 403, label: "invalid-credentials", message: "error")
+
+        // When
+        let result = sut.parseResponse(.failure(response))
+
+        // Then
         XCTAssertEqual(result, .failure(.authenticationError))
     }
 
-    func testUnknownErrorFailure() {
-        // given
-        let failureResponse = ErrorResponse(code: 500, label: "server-error", message: "error")
-        // when
-        let endpoint: AccessTokenEndpoint = AccessTokenEndpoint()
-        let result = endpoint.parseResponse(.failure(failureResponse))
-        // then
-        XCTAssertEqual(result, .failure(.unknownError(failureResponse)))
+    func test_ParseError_UnknownError() {
+        // Given
+        let sut = AccessTokenEndpoint()
+        let response = ErrorResponse(code: 500, label: "server-error", message: "error")
+
+        // When
+        let result = sut.parseResponse(.failure(response))
+
+        // Then
+        XCTAssertEqual(result, .failure(.unknownError(response)))
     }
+
 }
