@@ -23,7 +23,6 @@ enum NotificationServiceError: Error {
     case invalidEnvironment
     case malformedPushPayload
     case userNotAuthenticated
-    case noEvent
     case failedToFetchAccessToken
     case notImplemented(String)
     case noAppGroupID

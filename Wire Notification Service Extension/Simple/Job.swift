@@ -78,9 +78,7 @@ final class Job: NSObject, Loggable {
 
         networkSession.accessToken = try await fetchAccessToken()
 
-        guard let event = try await fetchEvent(eventID: eventID) else {
-            throw NotificationServiceError.noEvent
-        }
+        let event = try await fetchEvent(eventID: eventID)
 
         switch event.type {
         case .conversationOtrMessageAdd:
@@ -119,7 +117,7 @@ final class Job: NSObject, Loggable {
         return try await accessAPIClient.fetchAccessToken()
     }
 
-    private func fetchEvent(eventID: UUID) async throws -> ZMUpdateEvent? {
+    private func fetchEvent(eventID: UUID) async throws -> ZMUpdateEvent {
         logger.trace("\(self.request.identifier, privacy: .public): fetching event (\(eventID, privacy: .public))")
         return try await notificationsAPIClient.fetchEvent(eventID: eventID)
     }
