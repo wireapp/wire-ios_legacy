@@ -93,11 +93,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
             return
         }
         
-        session.processPushNotification(with: request.content.userInfo) /*{ isUserAuthenticated in
-            if !isUserAuthenticated {
-                contentHandler(.debugMessageIfNeeded(message: "User is not authenticated."))
-            }
-        }*/
+        session.processPushNotification(with: request.content.userInfo)
 
         // Retain the session otherwise it will tear down.
         self.session = session
