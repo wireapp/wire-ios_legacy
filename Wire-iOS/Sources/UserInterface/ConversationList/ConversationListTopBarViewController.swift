@@ -163,7 +163,7 @@ final class ConversationListTopBarViewController: UIViewController {
         let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
 
         accountView.unreadCountStyle = .others
-        accountView.selected = false
+//        accountView.selected = true
         accountView.autoUpdateSelection = false
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
