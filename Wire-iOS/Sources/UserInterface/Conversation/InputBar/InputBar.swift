@@ -134,8 +134,10 @@ final class InputBar: UIView {
     let markdownView = MarkdownBarView()
 
     var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
-    var barBackgroundColor: UIColor?  = SemanticColors.SearchBar.backgroundInputView
-    var writingSeparatorColor: UIColor?  = SemanticColors.View.backgroundSeparatorCell
+
+    var barBackgroundColor: UIColor? = SemanticColors.SearchBar.backgroundInputView
+    var writingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorCell
+    
     var ephemeralColor: UIColor {
         return .accent()
     }

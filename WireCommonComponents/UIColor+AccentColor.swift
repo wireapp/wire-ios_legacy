@@ -26,7 +26,7 @@ public enum AccentColor: Int16, CaseIterable {
     case yellow // Deprecated
     case red
     case amber
-    case petrol
+    case turquoise
     case purple
 
     /// Returns a random accent color.
@@ -47,7 +47,7 @@ public enum AccentColor: Int16, CaseIterable {
                 .green,
                 .red,
                 .amber,
-                .petrol,
+                .turquoise,
                 .purple]
     }
 

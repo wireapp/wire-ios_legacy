@@ -23,6 +23,6 @@
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
 "NSPhotoLibraryAddUsageDescription" = "Suteikite „Wire“ galimybę išsaugoti padarytas nuotraukas paveikslėlių bibliotekoje.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Suteikite „Wire“ galimybę prisijungti prie paveikslėlių saugomų bibliotekoje.";
+"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library so you can send pictures and videos to others.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
 "NSFaceIDUsageDescription" = "Norėdami nustatyti tapatybę programėlėje leiskite „Wire“ naudoti „Face ID“ galimybę.";

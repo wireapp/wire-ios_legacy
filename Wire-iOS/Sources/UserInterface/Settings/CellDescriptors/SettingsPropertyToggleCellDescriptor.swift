@@ -27,7 +27,7 @@ private let zmLog = ZMSLog(tag: "UI")
  */
 
 final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsToggleCell.self
     let inverse: Bool
     var title: String {
         return settingsProperty.propertyName.settingsPropertyLabelText
