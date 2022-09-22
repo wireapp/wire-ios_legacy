@@ -33,6 +33,8 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
     private var currentTasks: [String : Task<(), Never>] = [:]
     private var latestContentHandler: ContentHandler?
 
+//    private var
+
     // MARK: - Life cycle
 
     override init() {

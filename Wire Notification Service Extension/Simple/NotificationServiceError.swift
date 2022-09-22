@@ -27,5 +27,7 @@ enum NotificationServiceError: Error, Equatable {
     case notImplemented(String)
     case noAppGroupID
     case noAccount
+    case decryptionError
+    case incorrectContent
 
 }

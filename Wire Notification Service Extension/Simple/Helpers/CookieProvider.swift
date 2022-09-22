@@ -20,8 +20,13 @@ import Foundation
 import WireTransport
 
 protocol CookieProvider {
-    var isAuthenticated: Bool { get }
+    var isUserAuthenticated: Bool { get }
     func setRequestHeaderFieldsOn(_ request: NSMutableURLRequest)
 }
 
-extension ZMPersistentCookieStorage: CookieProvider {}
+extension ZMPersistentCookieStorage: CookieProvider {
+
+    var isUserAuthenticated: Bool {
+        return true // isAuthenticated TODO: 
+    }
+}

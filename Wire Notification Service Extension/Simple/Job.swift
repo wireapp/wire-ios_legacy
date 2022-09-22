@@ -21,6 +21,7 @@ import UserNotifications
 import WireTransport
 import WireSyncEngine
 import WireCommonComponents
+import WireRequestStrategy
 
 @available(iOS 15, *)
 final class Job: NSObject, Loggable {
@@ -82,15 +83,44 @@ final class Job: NSObject, Loggable {
 
         switch event.type {
         case .conversationOtrMessageAdd:
+
+            guard let accountID = request.content.accountID else { throw NotificationServiceError.noAccount }
+            let messageContent = try await decryptAndStoreEvent(event: event, accountIdentifier: accountID)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
             let content = UNMutableNotificationContent()
-            content.body = "You received a new message"
+            content.body = messageContent
             return content
 
         default:
             logger.trace("\(self.request.identifier, privacy: .public): ignoring event of type: \(String(describing: event.type), privacy: .public)")
             return .empty
         }
+    }
+
+    private func decryptAndStoreEvent(event: ZMUpdateEvent, accountIdentifier: UUID) async throws -> String {
+           guard let groupID = Bundle.main.applicationGroupIdentifier else {
+               throw NotificationServiceError.noAppGroupID
+           }
+
+           let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
+           let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
+           guard let account = accountManager.account(with: accountIdentifier) else {
+               throw NotificationServiceError.noAccount
+           }
+           let coreDataStack = CoreDataStack(
+               account: account,
+               applicationContainer: sharedContainerURL
+           )
+
+        try await coreDataStack.loadStores()
+        let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
+//            logger.trace("decode")
+        let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
+        guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.decryptionError }
+        guard let message = GenericMessage(from: updatedEvent) else { throw NotificationServiceError.decryptionError }
+        guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
+        return text.content
+
     }
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
@@ -122,4 +152,31 @@ final class Job: NSObject, Loggable {
         return try await notificationsAPIClient.fetchEvent(eventID: eventID)
     }
 
+}
+
+extension CoreDataStack {
+
+    func loadStores() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            loadStores {
+                if let error = $0 {
+                    continuation.resume(with: .failure(error))
+                } else {
+                    continuation.resume(with: .success(()))
+                }
+            }
+        }
+    }
+
+}
+
+extension EventDecoder {
+
+    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
+        return await withCheckedContinuation { continuation in
+            decryptAndStoreEvents(events) { decryptedEvents in
+                continuation.resume(with: .success(decryptedEvents))
+            }
+        }
+    }
 }

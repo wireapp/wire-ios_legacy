@@ -75,7 +75,7 @@ final class NetworkSession: NSObject, NetworkSessionProtocol, URLSessionTaskDele
     // MARK: - Methods
 
     var isAuthenticated: Bool {
-        return cookieProvider.isAuthenticated
+        return cookieProvider.isUserAuthenticated
     }
 
     func execute<E: Endpoint>(endpoint: E) async throws -> E.Result {
