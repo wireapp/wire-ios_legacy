@@ -38,7 +38,7 @@ import UIKit
  * should be updated from the cell.
  */
 protocol SettingsCellDescriptorType: AnyObject {
-    static var cellType: SettingsTableCell.Type {get}
+    static var cellType: SettingsTableCellProtocol.Type {get}
     var visible: Bool {get}
     var title: String {get}
     var identifier: String? {get}
@@ -145,7 +145,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
 }
 
 final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType = SettingsTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsTableCell.self
     var visible: Bool = true
     let title: String
     let style: InternalScreenStyle
