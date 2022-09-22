@@ -55,7 +55,7 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     }
 
     func testForInitState() {
-        verify(matching: sut)
+        verify(matching: sut, hasMaskedCorners: true)
     }
 }
 
@@ -102,7 +102,7 @@ extension ConversationViewControllerSnapshotTests {
         sut.updateGuestsBarVisibility()
 
         // then
-        verify(matching: sut)
+        verify(matching: sut, hasMaskedCorners: true)
     }
 
     func testThatGuestsBarControllerIsVisibleIfServicesArePresent() {
@@ -116,7 +116,7 @@ extension ConversationViewControllerSnapshotTests {
         sut.updateGuestsBarVisibility()
 
         // then
-        verify(matching: sut)
+        verify(matching: sut, hasMaskedCorners: true)
     }
 
     func testThatGuestsBarControllerIsVisibleIfExternalsAndServicesArePresent() {
@@ -135,7 +135,7 @@ extension ConversationViewControllerSnapshotTests {
         sut.updateGuestsBarVisibility()
 
         // then
-        verify(matching: sut)
+        verify(matching: sut, hasMaskedCorners: true)
     }
 
 }

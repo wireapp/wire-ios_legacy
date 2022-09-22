@@ -180,20 +180,20 @@ extension XCTestCase {
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
-		verifyInDarkScheme(createSut: createSut,
-						   name: "DarkTheme",
-						   file: file,
-						   testName: testName,
-						   line: line)
+        verifyInDarkScheme(createSut: createSut,
+                           name: "DarkTheme",
+                           file: file,
+                           testName: testName,
+                           line: line)
 
-		ColorScheme.default.variant = .light
+        ColorScheme.default.variant = .light
 
-		verify(matching: createSut(),
-			   named: "LightTheme",
-			   file: file,
-			   testName: testName,
-			   line: line)
-	}
+        verify(matching: createSut(),
+               named: "LightTheme",
+               file: file,
+               testName: testName,
+               line: line)
+    }
 
     func verifyInAllColorSchemes(createSut: () -> UIViewController,
                                  file: StaticString = #file,
@@ -218,14 +218,14 @@ extension XCTestCase {
                             file: StaticString = #file,
                             testName: String = #function,
                             line: UInt = #line) {
-		ColorScheme.default.variant = .dark
+        ColorScheme.default.variant = .dark
 
-		verify(matching: createSut(),
-			   named: name,
-			   file: file,
-			   testName: testName,
-			   line: line)
-	}
+        verify(matching: createSut(),
+               named: name,
+               file: file,
+               testName: testName,
+               line: line)
+    }
 
     func verifyInDarkScheme(createSut: () -> UIViewController,
                             name: String? = nil,
@@ -347,18 +347,33 @@ extension XCTestCase {
                 record recording: Bool = false,
                 file: StaticString = #file,
                 testName: String = #function,
-                line: UInt = #line) {
+                line: UInt = #line,
+                hasMaskedCorners: Bool = false) {
 
-        let failure = verifySnapshot(matching: value,
-                                     as: customSize == nil ? .image : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
-                                     named: name,
-                                     record: recording,
-                                     snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file,
-                                     testName: testName,
-                                     line: line)
+        if hasMaskedCorners {
+            let failure = verifySnapshot(matching: value,
+                                         as: customSize == nil ? Snapshotting.image(drawHierarchyInKeyWindow: true) : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
+                                         named: name,
+                                         record: recording,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
 
-        XCTAssertNil(failure, file: file, line: line)
+            XCTAssertNil(failure, file: file, line: line)
+        } else {
+            let failure = verifySnapshot(matching: value,
+                                         as: customSize == nil ? .image : .image(on: ViewImageConfig(safeArea: UIEdgeInsets.zero, size: customSize!, traits: UITraitCollection())),
+                                         named: name,
+                                         record: recording,
+                                         snapshotDirectory: snapshotDirectory(file: file),
+                                         file: file,
+                                         testName: testName,
+                                         line: line)
+
+            XCTAssertNil(failure, file: file, line: line)
+        }
+
     }
 
     func verify(matching value: UIView,
@@ -585,12 +600,12 @@ extension XCTestCase {
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         _ = container.addWidthConstraint(width: width)
 
-            if ColorScheme.default.variant == .light {
-                container.overrideUserInterfaceStyle = .light
-            } else {
-                container.overrideUserInterfaceStyle = .dark
-            }
-
+        if ColorScheme.default.variant == .light {
+            container.overrideUserInterfaceStyle = .light
+        } else {
+            container.overrideUserInterfaceStyle = .dark
+        }
+        
         verifyWithWidthInName(matching: container,
                               width: width,
                               named: name,
