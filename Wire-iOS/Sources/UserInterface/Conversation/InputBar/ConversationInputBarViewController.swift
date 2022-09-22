@@ -973,9 +973,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
             markdownButton.widthAnchor.constraint(equalToConstant: widthOfSendButton),
             markdownButton.heightAnchor.constraint(equalToConstant: heightOfSendButton),
 
-            hourglassButton.widthAnchor.constraint(equalToConstant: InputBar.rightIconSize),
-            hourglassButton.heightAnchor.constraint(equalToConstant: InputBar.rightIconSize),
-
             typingIndicatorView.centerYAnchor.constraint(equalTo: inputBar.topAnchor),
             typingIndicatorView.centerXAnchor.constraint(equalTo: typingIndicatorView.superview!.centerXAnchor),
             typingIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: typingIndicatorView.superview!.leftAnchor, constant: 48),
