@@ -55,7 +55,7 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
     }
 
     func testForInitState() {
-        verify(matching: sut, hasMaskedCorners: true)
+        verify(matching: sut, hasMaskedCorners: false)
     }
 }
 
