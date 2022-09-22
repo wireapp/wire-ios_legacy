@@ -216,6 +216,12 @@ class BaseAccountView: UIView {
         updateAppearance()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
