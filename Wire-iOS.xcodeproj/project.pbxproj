@@ -1218,13 +1218,17 @@
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		E5085E6F28CA26E1009A5971 /* SettingsAppearanceCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5085E6E28CA26E1009A5971 /* SettingsAppearanceCellDescriptor.swift */; };
+		E5085E7328CA27D4009A5971 /* AccentColor+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5085E7228CA27D4009A5971 /* AccentColor+Name.swift */; };
 		E514F2AB287DA58000D1A8AB /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514F2AA287DA58000D1A8AB /* SearchTextView.swift */; };
 		E52D5A7B2858C18600D0494E /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		E52F448B2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */; };
+		E5337CF128CF48DE00C3F8A3 /* SettingsLinkTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */; };
 		E5443393286192CF00F2E0ED /* SwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5443392286192CF00F2E0ED /* SwitchStyle.swift */; };
 		E56CA37528588C4F00CD2045 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56CA37428588C4F00CD2045 /* Colors.xcassets */; };
 		E57333CD2859CF840039EE02 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		E57917B128999A240063339D /* UIView+Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57917B028999A240063339D /* UIView+Borders.swift */; };
+		E591D01128C7220800C1469C /* SettingsAppearanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E591D01028C7220800C1469C /* SettingsAppearanceCell.swift */; };
 		E5C1707228B78241006C7AF3 /* ConversationListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C1707128B78241006C7AF3 /* ConversationListTabView.swift */; };
 		E5CCE4E7287C31C000B36B52 /* SearchBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCE4E6287C31C000B36B52 /* SearchBarStyle.swift */; };
 		E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */; };
@@ -3151,12 +3155,16 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
+		E5085E6E28CA26E1009A5971 /* SettingsAppearanceCellDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppearanceCellDescriptor.swift; sourceTree = "<group>"; };
+		E5085E7228CA27D4009A5971 /* AccentColor+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccentColor+Name.swift"; sourceTree = "<group>"; };
 		E514F2AA287DA58000D1A8AB /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
 		E52D5A7A2858C18600D0494E /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+DisclosureIndicator.swift"; sourceTree = "<group>"; };
+		E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLinkTableCell.swift; sourceTree = "<group>"; };
 		E5443392286192CF00F2E0ED /* SwitchStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchStyle.swift; sourceTree = "<group>"; };
 		E56CA37428588C4F00CD2045 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E57917B028999A240063339D /* UIView+Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Borders.swift"; sourceTree = "<group>"; };
+		E591D01028C7220800C1469C /* SettingsAppearanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAppearanceCell.swift; sourceTree = "<group>"; };
 		E5C1707128B78241006C7AF3 /* ConversationListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListTabView.swift; sourceTree = "<group>"; };
 		E5CCE4E6287C31C000B36B52 /* SearchBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarStyle.swift; sourceTree = "<group>"; };
 		E90553CA27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailVerificationRequiredErrorHandler.swift; sourceTree = "<group>"; };
@@ -4914,6 +4922,7 @@
 				8710673A1C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift */,
 				8710673B1C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift */,
 				871067421C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift */,
+				E5085E6E28CA26E1009A5971 /* SettingsAppearanceCellDescriptor.swift */,
 				5EDD25402140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift */,
 				061EF88C27971EC000584C53 /* SettingsProfileLinkCellDescriptor.swift */,
 				061EF88E2797F74800584C53 /* SettingsCopyButtonCellDescriptor.swift */,
@@ -5177,6 +5186,7 @@
 				A949418C23E180FF001B0373 /* Bundle+config.swift */,
 				A9C80F8324A629C2004D248F /* UIView+Menu.swift */,
 				638332E9250282D200D18F42 /* OrientationDelta.swift */,
+				E5085E7228CA27D4009A5971 /* AccentColor+Name.swift */,
 				E96C8830281706640003245E /* UIViewController+DynamicType.swift */,
 			);
 			path = Helpers;
@@ -6198,6 +6208,8 @@
 				873C5FE21C10426A00D5132A /* DeviceManagement */,
 				871067351C0DC5570035603B /* CellDescriptors */,
 				870815851BF4E76A00D321BC /* SettingsCell.swift */,
+				E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */,
+				E591D01028C7220800C1469C /* SettingsAppearanceCell.swift */,
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */,
 				87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */,
@@ -8557,6 +8569,7 @@
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
 				5EF7BA63221ADF5500815625 /* ProfileDetailsViewController.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
+				E591D01128C7220800C1469C /* SettingsAppearanceCell.swift in Sources */,
 				E90553CB27D612370006EB47 /* AuthenticationEmailVerificationRequiredErrorHandler.swift in Sources */,
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				A9DC33EB2506865B00AB09DF /* WipeDatabasePresenter.swift in Sources */,
@@ -8673,6 +8686,7 @@
 				F15650E621DD14B300210504 /* TransformLabel.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
 				87AC33CB2181C6FB00069C79 /* ClientRemovalObserver.swift in Sources */,
+				E5085E6F28CA26E1009A5971 /* SettingsAppearanceCellDescriptor.swift in Sources */,
 				EE378E2C24BDE5D50014118A /* Stream.swift in Sources */,
 				5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */,
 				D550F5772044532D009E09DD /* ConversationAction.swift in Sources */,
@@ -8907,6 +8921,7 @@
 				1633875B1F065A960015034C /* SessionManager+Convenience.swift in Sources */,
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */,
+				E5085E7328CA27D4009A5971 /* AccentColor+Name.swift in Sources */,
 				A97CC15224DC6D1800A6328C /* PasscodeSetupViewControllerDelegate.swift in Sources */,
 				EEE81E9423E0467F00A1D035 /* TopPeopleLineCollectionViewController.swift in Sources */,
 				BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */,
@@ -8997,6 +9012,7 @@
 				635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
+				E5337CF128CF48DE00C3F8A3 /* SettingsLinkTableCell.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
 				5EA73D8820D901000001D106 /* DetailsCollectionViewCell.swift in Sources */,
 				A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */,

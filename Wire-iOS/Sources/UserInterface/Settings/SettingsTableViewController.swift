@@ -188,26 +188,40 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupTableView()
 
-        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupTableView()
+        setupNavigationBar()
     }
 
-    func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [
+    private func setupTableView() {
+        let allCellTypes: [SettingsTableCellProtocol.Type] = [
             SettingsTableCell.self,
             SettingsButtonCell.self,
             SettingsToggleCell.self,
             SettingsValueCell.self,
             SettingsTextCell.self,
             SettingsStaticTextTableCell.self,
+            SettingsLinkTableCell.self,
             IconActionCell.self,
-            SettingsProfileLinkCell.self
+            SettingsProfileLinkCell.self,
+            SettingsAppearanceCell.self
         ]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Accessibility = L10n.Accessibility.Settings
+
+        navigationItem.rightBarButtonItem?.accessibilityLabel = Accessibility.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = Accessibility.BackButton.description(group.title)
     }
 
     func refreshData() {
@@ -230,7 +244,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         let sectionDescriptor = sections[(indexPath as NSIndexPath).section]
         let cellDescriptor = sectionDescriptor.visibleCellDescriptors[(indexPath as NSIndexPath).row]
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCellProtocol {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
             return cell

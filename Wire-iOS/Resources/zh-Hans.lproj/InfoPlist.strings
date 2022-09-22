@@ -23,6 +23,6 @@
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
 "NSPhotoLibraryAddUsageDescription" = "允许Wire存储图片到照片库。";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "允许Wire访问存储照片库。";
+"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library so you can send pictures and videos to others.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
 "NSFaceIDUsageDescription" = "为了进行身份验证, 允许Wire访问 \"Face ID\" 功能。";

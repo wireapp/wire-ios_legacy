@@ -34,7 +34,9 @@ protocol SettingsCellType: AnyObject {
     var icon: StyleKitIcon? {get set}
 }
 
-class SettingsTableCell: UITableViewCell, SettingsCellType {
+typealias SettingsTableCellProtocol = UITableViewCell & SettingsCellType
+
+class SettingsTableCell: SettingsTableCellProtocol {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.contentMode = .center
@@ -110,6 +112,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.backgroundColor = UIColor.clear
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
+                accessibilityHint = L10n.Accessibility.Options.SoundButton.hint
 
             case .badge(let value):
                 valueLabel.text = ""
@@ -147,6 +150,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
             }
+            setupAccessibility()
         }
     }
 
@@ -172,7 +176,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
-        setupAccessibiltyElements()
     }
 
     @available(*, unavailable)
@@ -197,6 +200,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
         createConstraints()
         addBorder(for: .bottom)
+        setupAccessibility()
     }
 
     private func createConstraints() {
@@ -243,10 +247,11 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         ])
     }
 
-    func setupAccessibiltyElements() {
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
-        accessibilityElements = currentElements
+    func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        let badgeValue = badgeLabel.text ?? ""
+        accessibilityHint = badgeValue.isEmpty ? "" : L10n.Accessibility.Settings.DeviceCount.hint("\(badgeValue)")
     }
 
     func updateBackgroundColor() {
@@ -279,6 +284,7 @@ final class SettingsToggleCell: SettingsTableCell {
         accessoryView = switchView
         switchView.isAccessibilityElement = true
         accessibilityElements = [cellNameLabel, switchView]
+        accessibilityTraits = .button
         self.switchView = switchView
         backgroundColor = SemanticColors.View.backgroundUserCell
     }
@@ -359,8 +365,8 @@ final class SettingsTextCell: SettingsTableCell,
 
     }
 
-    override func setupAccessibiltyElements() {
-        super.setupAccessibiltyElements()
+    override func setupAccessibility() {
+        super.setupAccessibility()
 
         var currentElements = accessibilityElements ?? []
         if let textInput = textInput {
@@ -404,6 +410,7 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
         super.setup()
         cellNameLabel.numberOfLines = 0
         cellNameLabel.textAlignment = .justified
+        accessibilityTraits = .staticText
     }
 
 }
@@ -430,6 +437,7 @@ final class SettingsProfileLinkCell: SettingsTableCell {
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
+        accessibilityTraits = .staticText
     }
 
     private func createConstraints() {
