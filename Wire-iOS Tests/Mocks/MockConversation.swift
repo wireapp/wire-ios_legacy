@@ -80,6 +80,8 @@ final class MockGroupDetailsConversation: SwiftMockConversation, GroupDetailsCon
     var hasReadReceiptsEnabled: Bool = false
 
     var syncedMessageDestructionTimeout: TimeInterval = 0
+
+    var messageProtocol: MessageProtocol = .proteus
 }
 
 final class MockInputBarConversationType: SwiftMockConversation, InputBarConversation, TypingStatusProvider {

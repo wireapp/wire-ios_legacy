@@ -45,6 +45,8 @@ private final class MockConversation: MockStableRandomParticipantsConversation, 
     var freeParticipantSlots: Int = 1
 
     var syncedMessageDestructionTimeout: TimeInterval = 0
+
+    var messageProtocol: MessageProtocol = .proteus
 }
 
 final class GroupParticipantsDetailViewControllerTests: ZMSnapshotTestCase {
