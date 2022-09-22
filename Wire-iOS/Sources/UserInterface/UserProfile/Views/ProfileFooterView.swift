@@ -47,7 +47,10 @@ final class ProfileFooterView: ConversationDetailFooterView {
 
     override func setupButtons() {
         leftButton.accessibilityIdentifier = "left_button"
+        leftButton.setIconColor(UIColor.red, for: .highlighted)
+
         rightButton.accessibilityIdentifier = "right_button"
+        rightButton.setIconColor(UIColor.red, for: .highlighted)
         rightButton.accessibilityLabel = "meta.menu.accessibility_more_options_button".localized
     }
 
