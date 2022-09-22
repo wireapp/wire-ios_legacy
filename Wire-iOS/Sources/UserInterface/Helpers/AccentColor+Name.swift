@@ -33,8 +33,8 @@ extension AccentColor {
             return AccentColor.red
         case .amber:
             return AccentColor.amber
-        case .petrol:
-            return AccentColor.petrol
+        case .turquoise:
+            return AccentColor.turquoise
         case .purple:
             return AccentColor.purple
         }

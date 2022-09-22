@@ -1221,6 +1221,7 @@
 		E514F2AB287DA58000D1A8AB /* SearchTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514F2AA287DA58000D1A8AB /* SearchTextView.swift */; };
 		E52D5A7B2858C18600D0494E /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		E52F448B2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */; };
+		E5337CF128CF48DE00C3F8A3 /* SettingsLinkTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */; };
 		E5443393286192CF00F2E0ED /* SwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5443392286192CF00F2E0ED /* SwitchStyle.swift */; };
 		E56CA37528588C4F00CD2045 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E56CA37428588C4F00CD2045 /* Colors.xcassets */; };
 		E57333CD2859CF840039EE02 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
@@ -3136,6 +3137,7 @@
 		E514F2AA287DA58000D1A8AB /* SearchTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextView.swift; sourceTree = "<group>"; };
 		E52D5A7A2858C18600D0494E /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
 		E52F448A2844E916008E11CB /* UITableViewCell+DisclosureIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+DisclosureIndicator.swift"; sourceTree = "<group>"; };
+		E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLinkTableCell.swift; sourceTree = "<group>"; };
 		E5443392286192CF00F2E0ED /* SwitchStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchStyle.swift; sourceTree = "<group>"; };
 		E56CA37428588C4F00CD2045 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E57917B028999A240063339D /* UIView+Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Borders.swift"; sourceTree = "<group>"; };
@@ -6174,6 +6176,7 @@
 				873C5FE21C10426A00D5132A /* DeviceManagement */,
 				871067351C0DC5570035603B /* CellDescriptors */,
 				870815851BF4E76A00D321BC /* SettingsCell.swift */,
+				E5337CF028CF48DE00C3F8A3 /* SettingsLinkTableCell.swift */,
 				E591D01028C7220800C1469C /* SettingsAppearanceCell.swift */,
 				870815871BF4EAD100D321BC /* SettingsTableViewController.swift */,
 				87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */,
@@ -8929,6 +8932,7 @@
 				635BAFE6262DB34400B986A4 /* Array+CallParticipant.swift in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
+				E5337CF128CF48DE00C3F8A3 /* SettingsLinkTableCell.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
 				5EA73D8820D901000001D106 /* DetailsCollectionViewCell.swift in Sources */,
 				A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */,

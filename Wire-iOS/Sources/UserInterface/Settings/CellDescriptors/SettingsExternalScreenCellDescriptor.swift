@@ -32,7 +32,7 @@ enum AccessoryViewMode: Int {
 }
 
 class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType = SettingsTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsTableCell.self
     var visible: Bool = true
     let title: String
     let destructive: Bool

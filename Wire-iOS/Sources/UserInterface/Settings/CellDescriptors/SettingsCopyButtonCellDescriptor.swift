@@ -23,7 +23,7 @@ protocol IconActionCellDelegate: AnyObject {
 }
 
 class SettingsCopyButtonCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = IconActionCell.self
+    static let cellType: SettingsTableCellProtocol.Type = IconActionCell.self
 
     weak var delegate: IconActionCellDelegate?
 
