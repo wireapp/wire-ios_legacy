@@ -47,10 +47,6 @@ class AuthenticationStepController: AuthenticationStepViewController {
 
     // MARK: - Views
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .compatibleDarkContent
-    }
-
     private var contentStack: CustomSpacingStackView!
 
     private var headlineLabel: DynamicFontLabel!
