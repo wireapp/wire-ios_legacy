@@ -21,15 +21,15 @@
 "general.next" = "Dalej";
 "general.cancel" = "Anuluj";
 "general.close" = "Zamknij";
-"general.back" = "Z powrotem";
+"general.back" = "Powrót";
 "general.open_settings" = "Otwórz ustawienia Wire";
 "general.edit" = "Edycja";
-"general.done" = "Zakończono";
+"general.done" = "Gotowe";
 "general.confirm" = "OK";
 "general.later" = "Później";
 "general.skip" = "Nie teraz";
-"general.accept" = "Odbierz";
-"general.decline" = "Nie, dziękuję";
+"general.accept" = "Akceptuj";
+"general.decline" = "Nie, dzięki!";
 "general.failure" = "Coś poszło nie tak";
 "general.failure.try_again" = "Proszę spróbować ponownie.";
 "general.service" = "Usługa";
@@ -64,16 +64,16 @@
 "peoplepicker.group.title.singular" = "Dodaj uczestników";
 "peoplepicker.group.title.plural" = "Dodaj uczestników (%d)";
 "peoplepicker.group.skip" = "Pomiń";
-"peoplepicker.group.done" = "Zakończono";
+"peoplepicker.group.done" = "Gotowe";
 "peoplepicker.group.create" = "Utwórz";
 
-"peoplepicker.header.people" = "Kontakty";
+"peoplepicker.header.people" = "Osoby";
 "peoplepicker.header.services" = "Usługi";
 "peoplepicker.services.open_conversation.item" = "Otwórz konwersację";
 "peoplepicker.services.add_service.button" = "Dodaj usługę";
 "peoplepicker.services.add_service.error.title" = "Usługa nie może zostać dodana";
 "peoplepicker.services.add_service.error.default" = "W tej chwili usługa jest niedostępna";
-"peoplepicker.services.add_service.error.full" = "Nie można dodać więcej uczestników";
+"peoplepicker.services.add_service.error.full" = "Ta rozmowa jest przepełniona";
 
 "peoplepicker.title.create_conversation" = "Załóż grupę";
 "peoplepicker.title.add_to_conversation" = "Dodaj uczestników";
@@ -134,6 +134,12 @@
 "conversation_list.header.self_team.accessibility_value.inactive" = "Dotknij, aby aktywować.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktywuj teraz.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ma nowe wiadomości.";
+
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontakty";
+"conversation_list.bottom_bar.conversations.title" = "Konwersacje";
+"conversation_list.bottom_bar.folders.title" = "Foldery";
+"conversation_list.bottom_bar.archived.title" = "Archiwum";
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Pomóż nam ulepszyć Wire";
@@ -321,8 +327,8 @@
 "conversation.create.guidance.toolong" = "Zbyt wiele znaków";
 "conversation.create.options.title" = "Opcje rozmów";
 "conversation.create.options.subtitle" = "Guests: %@, Services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Allow guests";
-"conversation.create.guests.subtitle" = "Open this conversation to people outside your team.";
+"conversation.create.guests.title" = "Zezwalaj na gości";
+"conversation.create.guests.subtitle" = "Wyraź zgodę na dołączenie do rozmowy osób spoza twojej drużyny.";
 "conversation.create.services.title" = "Allow services";
 "conversation.create.services.subtitle" = "Open this conversation to services.";
 "conversation.create.receipts.title" = "Potwierdzenie odczytu";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "Ten użytkownik jest zablokowany z powodu statusu prawnego. [DOWIEDZ SIĘ WIĘCEJ](%@)";
 
-"profile_view.accessibility.handle" = "Nazwa użytkownika";
-"profile_view.accessibility.name" = "Nazwa wyświetlana";
-"profile_view.accessibility.team_name" = "Nazwa zespołu";
-
 // Device list
 "profile.devices.title" = "Urządzenia";
 "profile.devices.fingerprint_message_unencrypted" = "%@ używa starszej wersji Wire. Brak urządzeń do wyświetlenia.";
@@ -918,10 +920,10 @@
 "device.type.unknown" = "Nieznane";
 
 // Bot
-"participants.services.remove_integration.button" = "usuń integrację";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Goście";
 "group_details.guest_options_cell.enabled" = "Włączone";
 "group_details.guest_options_cell.disabled" = "Wyłączony";
 "group_details.services_options_cell.title" = "Usługi";
@@ -965,9 +967,6 @@
 
 "self.add_email_password" = "Dodaj adres e-mail i hasło";
 
-"self.accessibility.profile_photo_image" = "Zdjęcie profilowe";
-"self.accessibility.profile_photo_edit_button" = "Zmień zdjęcie profilowe";
-
 // About screen
 "about.tos.title" = "Zasady korzystania z usługi";
 "about.privacy.title" = "Polityka prywatności";
@@ -1008,7 +1007,7 @@
 // Settings - Account details
 "self.settings.account_section" = "Konto";
 
-"self.settings.account_details_group.info.title" = "Informacja";
+"self.settings.account_details_group.info.title" = "Informacje";
 "self.settings.account_details_group.personal.title" = "Prywatnie";
 
 "self.settings.account_section.name.title" = "Imię";
@@ -1016,11 +1015,11 @@
 "self.settings.account_section.phone.title" = "Numer telefonu";
 "self.settings.account_section.handle.title" = "Login";
 "self.settings.account_section.add_handle.title" = "Dodaj nazwę użytkownika";
-"self.settings.account_section.team.title" = "Drużyna";
+"self.settings.account_section.team.title" = "Zespół";
 "self.settings.account_section.domain.title" = "Domena";
-"self.settings.account_section.profile_link.title" = "Profile link";
-"self.settings.account_section.profile_link.actions.copy_link" = "Copy Profile Link";
-"self.settings.account_section.profile_link.actions.copied_link" = "Profile Link Copied!";
+"self.settings.account_section.profile_link.title" = "Link do profilu";
+"self.settings.account_section.profile_link.actions.copy_link" = "Kopiuj link profilu";
+"self.settings.account_section.profile_link.actions.copied_link" = "Link do profilu skopiowany!";
 
 "self.settings.account_details_group.info.footer" = "Dzięki tych informacjom inni mogą cię znaleźć.";
 "self.settings.account_details_group.personal.footer" = "Informacje nie są dostępne.";
@@ -1031,7 +1030,7 @@
 "self.settings.account_details.remove_device.password" = "Hasło";
 "self.settings.account_details.remove_device.password.error" = "Hasło nieprawidłowe";
 
-"self.settings.account_appearance_group.title" = "Zachowanie";
+"self.settings.account_appearance_group.title" = "Wygląd";
 
 "self.settings.privacy_section_group.title" = "Prywatność";
 "self.settings.enable_read_receipts.title" = "Wyświetlaj potwierdzenie przeczytania";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Zdjęcie profilowe";
 "self.settings.account_picture_group.color" = "Kolor";
+"self.settings.account_picture_group.accent_color.blue" = "Niebieski";
+"self.settings.account_picture_group.accent_color.green" = "Zielony";
+"self.settings.account_picture_group.accent_color.yellow" = "Żółty";
+"self.settings.account_picture_group.accent_color.red" = "Czerwony";
+"self.settings.account_picture_group.accent_color.amber" = "Bursztynowy";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turkusowy";
+"self.settings.account_picture_group.accent_color.purple" = "Fioletowy";
 
 "self.settings.account_personal_information_group.title" = "Twoje dane";
 
@@ -1139,8 +1145,8 @@
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Pokaż połączenia Wire na ekranie blokady i w historii połączeń iOS. Jeśli iCloud jest aktywny, historia połączeń zostanie udostępniona Apple.";
 
-"self.settings.mute_other_call.caption" = "Silence other calls";
-"self.settings.mute_other_call.description" = "Enable to silence incoming calls when you are already in an ongoing call.";
+"self.settings.mute_other_call.caption" = "Wycisz inne połączenia";
+"self.settings.mute_other_call.description" = "Pozwól na wyciszenie przychodzących połączeń gdy jesteś w trakcie trwającej rozmowy.";
 
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "To sprawia, że połączenia audio używają mniej danych i działają lepiej w wolniejszych sieciach. Wyłącz aby używać kodowania stałej przepływności (CBR). To ustawienie dotyczy tylko połączeń 1:1; połączenia konferencyjne zawsze używają kodowania CBR.";
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Opcje programistyczne";
+"self.settings.developer_options.loggin.title" = "Opcje";
+"self.settings.developer_options.database_statistics.title" = "Statystyki bazy danych";
 "self.settings.apns_logging.title" = "Rejestrowanie usługi APNS";
 
 // Privacy (visibility) options
@@ -1334,9 +1342,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Zezwalaj na gości";
+"guest_room.allow_guests.subtitle" = "Wyraź zgodę na dołączenie do rozmowy osób spoza twojej drużyny.";
+"guest_room.remove_guests.message" = "Obecni goście i usługi zostaną usunięte z konwersacji. Nowi goście i usługi nie będą dozwolone.";
 "guest_room.remove_guests.action" = "Usuń";
 "guest_room.revoke_link.message" = "Nowi goście nie będą mogli dołączyć z tego linku. Obecni goście nadal będą mieli dostęp.";
 "guest_room.revoke_link.action" = "Odwołaj link";
@@ -1347,7 +1355,7 @@
 "guest_room.link.header.title" = "Linki dla gości";
 "guest_room.link.header.subtitle" = "Zaproś innych linkiem do tej rozmowy. Każdy z linkiem może dołączyć do rozmowy, nawet jeśli nie ma Wire.";
 "guest_room.link.not_allowed.for_self_team.explanation" = "Generowanie linków do gości nie jest dozwolone w twoim zespole.";
-"guest_room.link.not_allowed.for_other_team.explanation" = "You can't generate a guest link in this conversation, as it has been created by someone from another team and this team is not allowed to use guest links.";
+"guest_room.link.not_allowed.for_other_team.explanation" = "Nie możesz wygenerować linku dla gościa w tej rozmowie, ponieważ został utworzony przez kogoś z innego zespołu, a ten zespół nie akceptuje linków gości.";
 "guest_room.link.disabled.for_other_team.explanation" = "You can't disable the guest option in this conversation, as it has been created by someone from another team.";
 
 "guest_room.link.button.title" = "Utwórz link";
@@ -1515,7 +1523,7 @@
 
 "registration.devices.title" = "Urządzenia";
 "registration.devices.active_list_header" = "Aktywne";
-"registration.devices.current_list_header" = "Aktualny";
+"registration.devices.current_list_header" = "Aktualne urządzenie";
 "registration.devices.active_list_subtitle" = "Jeśli nie rozpoznajesz urządzenia poniżej, usuń je i zresetuj hasło.";
 "registration.devices.activated" = "Aktywowano %@";
 "registration.devices.id" = "ID:";
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Anuluj";
 "availability.message.set_status" = "Ustaw status";
-"availability.accessibility_label.change_status" = "Zmień status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Żaden";
 "availability.available" = "Dostępny";
@@ -1793,7 +1799,7 @@
 "url_action.join_conversation.error.alert.title" = "Nie możesz dołączyć do rozmowy";
 "url_action.join_conversation.error.alert.converation_is_full.message" = "Nie można dodać więcej uczestników.";
 "url_action.join_conversation.error.alert.link_is_invalid.message" = "Link do rozmowy jest nieprawidłowy.";
-"url_action.join_conversation.error.alert.learn_more.action" = "Learn more about guest links";
+"url_action.join_conversation.error.alert.learn_more.action" = "Dowiedz się więcej o linkach dla gości";
 
 // Deep Link
 "url_action.invalid_user.title" = "Wire nie może znaleźć tej osoby.";
@@ -1940,6 +1946,6 @@
 "keyboardshortcut.openPeople" = "Kontakty";
 
 // MARK: - Security classification
-"security_classification.security_level" = "SECURITY LEVEL:";
+"security_classification.security_level" = "POZIOM BEZPIECZEŃSTWA:";
 "security_classification.level.bund" = "VS-NfD";
 "security_classification.level.not_classified" = "UNCLASSIFIED";
