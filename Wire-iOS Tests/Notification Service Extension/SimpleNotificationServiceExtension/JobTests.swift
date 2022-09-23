@@ -125,6 +125,7 @@ class JobTests: XCTestCase {
             _ = try await self.sut.execute()
         }
     }
+    
     // TODO: need to mock CoreDataStack to return correct message and check it
     func test_Execute_NewMessageEvent_Content() async throws {
         // Given
