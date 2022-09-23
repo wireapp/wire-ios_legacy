@@ -192,7 +192,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
             XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
             return self.sut
-        } as () -> UIView, hasMaskedCorners: false)
+        } as () -> UIView)
     }
 
     func testArticleViewWithPictureStillDownloading() {
@@ -274,6 +274,6 @@ final class ArticleViewTests: ZMSnapshotTestCase {
             } as () -> UIView,
                                file: file,
                                testName: testName,
-                               line: line, hasMaskedCorners: false)
+                               line: line)
     }
 }
