@@ -26,3 +26,16 @@
 "conversation.searchButton.description" = "Открыть поиск";
 "conversation.profileImage.description" = "Изображение профиля";
 "conversation.profileImage.hint" = "Нажмите дважды для открытия профиля";
+
+"settings.deviceCount.hint" = "Используемые устройства %@";
+"settings.closeButton.description" = "Закрыть настройки";
+"settings.backButton.description" = "Вернуться к %@";
+"options.soundButton.hint" = "Нажмите дважды, чтобы изменить настройку";
+"clientList.deviceDetails.hint" = "Нажмите дважды, чтобы открыть сведения об устройстве";
+"accountPage.availabilityStatus.description" = "Статус";
+"accountPage.availabilityStatus.hint" = "Нажмите дважды, чтобы изменить статус";
+"accountPage.handle.description" = "Псевдоним";
+"accountPage.name.description" = "Название профиля";
+"accountPage.teamName.description" = "Название команды";
+"accountPage.profilePicture.description" = "Изображение профиля";
+"accountPage.profilePicture.hint" = "Для изменения вашего изображения нажмите дважды";

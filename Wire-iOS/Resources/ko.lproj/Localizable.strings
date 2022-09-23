@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "현재 연락 가능합니다";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "새 메시지가 있습니다";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "연락처";
+"conversation_list.bottom_bar.conversations.title" = "대화 목록";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archive";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "더 나은 서비스를 제공할 수 있도록 도와주십시오";
 "conversation_list.data_usage_permission_alert.message" = "Wire 앱의 성능 향상을 위해 익명화된 사용 데이터와 오류 보고를 만드는 것에 동의합니다. 이 동의는 언제든 철회될 수 있습니다.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Username";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
-
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Unknown";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_email_password" = "Add email address and password";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Terms of Use";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Developer Options";
+"self.settings.developer_options.loggin.title" = "Options";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "취소";
 "availability.message.set_status" = "Set a status";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "None";
 "availability.available" = "Available";

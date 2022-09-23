@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Most aktív.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Új üzenetek érkeztek.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Névjegyek";
+"conversation_list.bottom_bar.conversations.title" = "Beszélgetések";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archiválás";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Segíts nekünk jobbá tenni a Wire-t";
 "conversation_list.data_usage_permission_alert.message" = "Segíts jobbá tenni termékeinket és szolgáltatásainkat azzal, hogy névtelen használati és hibajelentéseket küldesz. Ezeket az információkat semmi másra nem használjuk.";
@@ -303,7 +309,7 @@
 "conversation.call.many_participants_confirmation.message" = "%d partnert fogsz felhívni";
 "conversation.call.many_participants_confirmation.call" = "Hívás";
 
-"conversation.connection_view.in_address_book" = "Névjegyzékben";
+"conversation.connection_view.in_address_book" = "Szerepel a Névjegyzékedben is";
 
 "conversation.input_bar.shortcut.send" = "Üzenet küldése";
 "conversation.input_bar.shortcut.newline" = "Insert Line Break";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Felhasználónév";
-"profile_view.accessibility.name" = "Megjelenített név";
-"profile_view.accessibility.team_name" = "Csapat neve";
-
 // Device list
 "profile.devices.title" = "Eszközök";
 "profile.devices.fingerprint_message_unencrypted" = "%@ a Wire egy régebbi verzióját használja. Eszközei nem jeleníthetőek meg itt.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Ismeretlen";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, új eszközök hozzáadva";
 
 "self.add_email_password" = "E-mail cím és jelszó hozzáadása";
-
-"self.accessibility.profile_photo_image" = "Profilkép";
-"self.accessibility.profile_photo_edit_button" = "Profilkép megváltoztatása";
 
 // About screen
 "about.tos.title" = "Felhasználási feltételek";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Kép";
 "self.settings.account_picture_group.color" = "Szín";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Személyes információk";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Fejlesztői Lehetőségek";
+"self.settings.developer_options.loggin.title" = "Beállítások";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS naplózás";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Mégsem";
 "availability.message.set_status" = "Állapot beállítása";
-"availability.accessibility_label.change_status" = "Állapot Módosítása";
-"availability.accessibility_label.status" = "Állapot";
 
 "availability.none" = "Nincs hangjelzés";
 "availability.available" = "Elérhető";

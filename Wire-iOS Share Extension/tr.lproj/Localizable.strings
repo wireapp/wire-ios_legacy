@@ -37,7 +37,7 @@
 "share_extension.unlock.title_label" = "Enter passcode to unlock Wire";
 "share_extension.unlock.submit_button.title" = "kilidi aç";
 "share_extension.unlock.textfield.placeholder" = "Parolanızı girin";
-"share_extension.unlock.hint_label" = "Şifre";
+"share_extension.unlock.hint_label" = "Parola";
 "share_extension.unlock.error_label" = "Yanlış Şifre";
 "share_extension.unlock.alert.message" = "Open Wire to create a passcode";
 "share_extension.unlock.reveal_passcode" = "Reveal passcode";
@@ -61,5 +61,5 @@
 "meta.degraded.send_anyway_button" = "Yine de gönder";
 
 //Feature flag - File sharing
-"feature.flag.file_sharing.alert.title" = "File sharing restrictions";
-"feature.flag.file_sharing.alert.message" = "You can not share this file because this feature is disabled.";
+"feature.flag.file_sharing.alert.title" = "Dosya paylaşım kısıtlamaları";
+"feature.flag.file_sharing.alert.message" = "Bu özellik devre dışı bırakıldığı için bu dosyayı paylaşamazsınız.";
