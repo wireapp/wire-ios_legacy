@@ -81,17 +81,6 @@ public enum SemanticColors {
         static let backgroundButton = UIColor(light: Asset.black, dark: Asset.white)
     }
 
-    public enum View {
-        static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
-        static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
-        static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
-        static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
-        static let borderCharacterInputField = UIColor(light: Asset.gray80, dark: Asset.gray40)
-        static let borderCharacterInputFieldEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
-    }
-
     public enum Icon {
         static let foregroundPlainCheckMark = UIColor(light: Asset.black, dark: Asset.white)
         static let foregroundCheckMarkSelected = UIColor(light: Asset.white, dark: Asset.black)
@@ -121,6 +110,8 @@ public enum SemanticColors {
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
         static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let borderCharacterInputField = UIColor(light: Asset.gray80, dark: Asset.gray40)
+        static let borderCharacterInputFieldEnabled = UIColor(light: Asset.blue500Light, dark: Asset.blue500Dark)
     }
 
     public enum TabBar {
