@@ -89,6 +89,7 @@ class ConversationDetailFooterView: UIView {
 
         backgroundColor = SemanticColors.View.backgroundUserCell
         addSubview(containerView)
+        addBorder(for: .top)
 
         setupButtons()
     }
