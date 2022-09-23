@@ -52,7 +52,7 @@ final class Job: NSObject, Loggable {
 
     init(
         request: UNNotificationRequest,
-        coreDataStack: CoreDataStack?,
+        coreDataStack: CoreDataStack,
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil
@@ -81,13 +81,11 @@ final class Job: NSObject, Loggable {
         }
 
         networkSession.accessToken = try await fetchAccessToken()
-
         let event = try await fetchEvent(eventID: eventID)
-        if event.senderUUID?.uuidString == self.request.content.accountID?.uuidString { return .empty }
 
         switch event.type {
         case .conversationOtrMessageAdd:
-            let messageContent = try await decryptAndStoreEvent(event: event)
+            let messageContent = try await extractMessageContent(from: event)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
             let content = UNMutableNotificationContent()
             content.body = messageContent
@@ -99,19 +97,15 @@ final class Job: NSObject, Loggable {
         }
     }
 
-    private func decryptAndStoreEvent(event: ZMUpdateEvent) async throws -> String {
+    private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
         guard let coreDataStack = coreDataStack else { throw NotificationServiceError.noAccount }
 
         try await coreDataStack.loadStores()
         let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
 
-        guard let updatedEvent = updatedEvents.first,
-              let message = GenericMessage(from: updatedEvent) else {
-                  throw NotificationServiceError.decryptionError
-              }
-        if message.hasCalling { return "Call" }
-        if message.hasAsset { return "Received media"}
+        guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
+        guard let message = GenericMessage(from: updatedEvent) else { throw NotificationServiceError.noGenericMessage }
         guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
 
         return text.content

@@ -33,7 +33,7 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
     private var currentTasks: [String : Task<(), Never>] = [:]
     private var latestContentHandler: ContentHandler?
-    private var coreDataStacksDictionary: [String: CoreDataStack] = [:]
+    private var coreDataStacksByAccountID: [String: CoreDataStack] = [:]
 
 //    private var
 
@@ -60,7 +60,8 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
         let task = Task { [weak self] in
             do {
                 logger.trace("\(request.identifier, privacy: .public): initializing job")
-                let coreDataStack = dataStackForAccount(accountID: request.content.accountID)
+                guard let accountID = request.content.accountID else { throw NotificationServiceError.incorrectContent }
+                let coreDataStack = try await dataStackForAccount(accountID: accountID)
                 let job = try Job(request: request, coreDataStack: coreDataStack)
                 let content = try await job.execute()
                 logger.trace("\(request.identifier, privacy: .public): showing notification")
@@ -88,26 +89,25 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
 
 private extension SimpleNotificationService {
 
-    func dataStackForAccount(accountID: UUID?) -> CoreDataStack? {
-        guard let accountID = accountID,
-              let groupID = Bundle.main.applicationGroupIdentifier else {
-            return nil
+    func dataStackForAccount(accountID: UUID) async throws -> CoreDataStack {
+        guard let groupID = Bundle.main.applicationGroupIdentifier else {
+            throw NotificationServiceError.noAppGroupID
         }
-        if let stack = coreDataStacksDictionary[accountID.uuidString] {
+        if let stack = coreDataStacksByAccountID[accountID.uuidString] {
             return stack
         }
 
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
         let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
         guard let account = accountManager.account(with: accountID) else {
-                  return nil
+            throw NotificationServiceError.noAccount
         }
         let coreDataStack = CoreDataStack(
             account: account,
             applicationContainer: sharedContainerURL
         )
-        coreDataStacksDictionary[accountID.uuidString] = coreDataStack
-
+        coreDataStacksByAccountID[accountID.uuidString] = coreDataStack
+        try await coreDataStack.loadStores()
         return coreDataStack
     }
 }
