@@ -330,9 +330,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .displayInlineError(let error):
                 currentViewController?.displayError(error)
 
-            case .assignRandomProfileImage:
-                assignRandomProfileImage()
-
             case .continueFlowWithLoginCode(let code):
                 continueFlow(withVerificationCode: code)
 
@@ -617,22 +614,6 @@ extension AuthenticationCoordinator {
         // Marketing consent
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
         userSession.submitMarketingConsent(with: fields.marketingConsent)
-    }
-
-    /// Auto-assigns a random profile image to the user.
-    private func assignRandomProfileImage() {
-        guard let userSession = statusProvider.sharedUserSession else {
-            log.error("Not assigning a random profile picture, because the user session does not exist.")
-            return
-        }
-
-        URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
-            if let data = data, error == nil {
-                DispatchQueue.main.async {
-                    userSession.userProfileImage?.updateImage(imageData: data)
-                }
-            }
-        }.resume()
     }
 
     // MARK: - Login

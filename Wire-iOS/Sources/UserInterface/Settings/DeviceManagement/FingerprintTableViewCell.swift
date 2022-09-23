@@ -92,12 +92,12 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     }
 
     // MARK: - Methods
-    func setupStyle() {
+    private func setupStyle() {
         fingerprintLabelFont = .normalLightFont
         fingerprintLabelBoldFont = .normalSemiboldFont
     }
 
-    func updateFingerprint() {
+    private func updateFingerprint() {
         if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.font?.monospaced(),
            let fingerprintLabelMonoFont = fingerprintLabelFont?.font?.monospaced(),
             let attributedFingerprint = fingerprint?.attributedFingerprint(
@@ -111,7 +111,20 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
             fingerprintLabel.attributedText = .none
             spinner.startAnimating()
         }
+        setupAccessibility()
         layoutIfNeeded()
+    }
+
+    private func setupAccessibility() {
+        guard let titleText = titleLabel.text,
+              let fingerprintText = fingerprintLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+
+        accessibilityElements = [titleLabel, fingerprintLabel]
+        isAccessibilityElement = true
+        accessibilityLabel = "\(titleText), \(fingerprintText)"
     }
 
     func redrawFont() {

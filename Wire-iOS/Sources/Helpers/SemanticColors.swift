@@ -128,6 +128,8 @@ public enum SemanticColors {
         static let backgroundPrimaryHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.blue400Light)
         static let textPrimaryEnabled = UIColor(light: Asset.white, dark: Asset.black)
         static let textEmptyEnabled = UIColor(light: Asset.black, dark: Asset.white)
+        static let textBottomBarNormal = UIColor(light: Asset.gray90, dark: Asset.gray50)
+        static let textBottomBarSelected = UIColor(light: Asset.white, dark: Asset.black)
     }
 }
 
@@ -153,8 +155,8 @@ public extension UIColor {
             self.init(light: Asset.red500Light, dark: Asset.red500Dark)
         case .amber:
             self.init(light: Asset.amber500Light, dark: Asset.amber500Dark)
-        case .petrol:
-            self.init(light: Asset.petrol500Light, dark: Asset.petrol500Dark)
+        case .turquoise:
+            self.init(light: Asset.turquoise500Light, dark: Asset.turquoise500Dark)
         case .purple:
             self.init(light: Asset.purple500Light, dark: Asset.purple500Dark)
         }

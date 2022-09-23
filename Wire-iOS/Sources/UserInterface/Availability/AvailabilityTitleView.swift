@@ -106,6 +106,8 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
     /// Refreshes the content of the view, based on the user data and the options.
     private func updateContent() {
+        typealias AvailabilityStatusStrings = L10n.Accessibility.AccountPage.AvailabilityStatus
+
         let availability = user.availability
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(
@@ -117,23 +119,29 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
         if options.contains(.displayUserName) {
             title = user.name ?? ""
+            accessibilityLabel = title
         } else if availability == .none && options.contains(.allowSettingStatus) {
             title = L10n.Localizable.Availability.Message.setStatus
+            accessibilityLabel = title
         } else if availability != .none {
             title = availability.localizedName.localized
+            accessibilityLabel = AvailabilityStatusStrings.description
         }
 
         let showInteractiveIcon = isInteractive && !options.contains(.hideActionHint)
         super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
 
-        accessibilityLabel = options.contains(.allowSettingStatus) ? "availability.accessibility_label.change_status".localized : "availability.accessibility_label.status".localized
-        accessibilityValue = availability.localizedName
+        accessibilityValue = availability != .none ? availability.localizedName : ""
+        if options.contains(.allowSettingStatus) {
+            accessibilityTraits = .button
+            accessibilityHint = AvailabilityStatusStrings.hint
+        }
     }
 
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
         if options.contains(.useLargeFont) {
-            titleFont = .normalRegularFont
+            titleFont = .headerSemiboldFont
         } else {
             titleFont = .smallRegularFont
         }

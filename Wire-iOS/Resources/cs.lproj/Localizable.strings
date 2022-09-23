@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Právě teď aktivní.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Má nové zprávy.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontakty";
+"conversation_list.bottom_bar.conversations.title" = "Konverzace";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archivovat";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Pomozte nám Wire vylepšit";
 "conversation_list.data_usage_permission_alert.message" = "Souhlasím s tím, že Wire může vytvářet a používat anonymní uživatelská a chybová hlášení pro zlepšení aplikace Wire. Tento souhlas mohu kdykoliv odvolat.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Uživatelské jméno";
-"profile_view.accessibility.name" = "Zobrazované jméno";
-"profile_view.accessibility.team_name" = "Název týmu";
-
 // Device list
 "profile.devices.title" = "Přístroje";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Neznámé";
 
 // Bot
-"participants.services.remove_integration.button" = "odstranění integrace";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, nová zařízení přídána";
 
 "self.add_email_password" = "Přidat emailovou adresu a heslo";
-
-"self.accessibility.profile_photo_image" = "Profilový obrázek";
-"self.accessibility.profile_photo_edit_button" = "Změnit profilový obrázek";
 
 // About screen
 "about.tos.title" = "Podmínky používání";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Obrázek";
 "self.settings.account_picture_group.color" = "Barva";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Osobní údaje";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Možnosti pro vývojáře";
+"self.settings.developer_options.loggin.title" = "Nastavení";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS protokolování";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Zrušit";
 "availability.message.set_status" = "Set a status";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Žádné";
 "availability.available" = "Dostupný";

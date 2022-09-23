@@ -56,7 +56,7 @@ final class ConversationListItemView: UIView {
 
     var selected = false {
         didSet {
-            backgroundColor = selected ? UIColor.accent() : .clear
+            backgroundColor = .clear
         }
     }
 
@@ -156,6 +156,8 @@ final class ConversationListItemView: UIView {
 
     private func setupStyle() {
         titleField.textColor = SemanticColors.Label.textConversationListItemTitleField
+        backgroundColor = SemanticColors.View.backgroundUserCell
+        addBorder(for: .bottom)
     }
 
     private func setupSubtitleField() {
@@ -166,7 +168,7 @@ final class ConversationListItemView: UIView {
     }
 
     private func configureFont() {
-        titleField.font = FontSpec(.normal, .light).font!
+        titleField.font = FontSpec(.normal, .semibold).font!
     }
 
     func updateAppearance() {
@@ -236,7 +238,6 @@ final class ConversationListItemView: UIView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-
         labelsStack.accessibilityLabel = title?.string
     }
 

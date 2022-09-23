@@ -23,13 +23,6 @@ class ConversationCreateNameCell: UICollectionViewCell {
 
     let textField = SimpleTextField()
 
-    var variant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != variant else { return }
-            configureColors()
-        }
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -49,11 +42,5 @@ class ConversationCreateNameCell: UICollectionViewCell {
         contentView.addSubview(textField)
         textField.fitIn(view: contentView)
 
-        configureColors()
-    }
-
-    private func configureColors() {
-        backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
-        textField.applyColorScheme(variant)
     }
 }

@@ -36,16 +36,17 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        backgroundColor = .from(scheme: .sectionBackgroundHighlighted, variant: colorSchemeVariant)
 
-        let color = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        let image = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color)
+        let color = SemanticColors.Icon.foregroundPlainDownArrow
+        let image = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color).withRenderingMode(.alwaysTemplate)
 
         // flip upside down if necessary
         if let cgImage = image.cgImage, expanded {
-            accessory = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored)
+            accessory = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
+            accessoryColor = color
         } else {
-            accessory = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color)
+            accessory = StyleKitIcon.downArrow.makeImage(size: .tiny, color: color).withRenderingMode(.alwaysTemplate)
+            accessoryColor = color
         }
     }
 }

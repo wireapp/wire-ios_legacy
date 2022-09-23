@@ -145,9 +145,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     }
 
     // MARK: - Actions
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        searchIcon.setIcon(.search, size: .tiny, color: SemanticColors.SearchBar.backgroundButton)
-    }
 
     @objc
     func onCloseButtonPressed(sender: AnyObject?) {

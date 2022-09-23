@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "立即啟用。";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新訊息。";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "連絡人";
+"conversation_list.bottom_bar.conversations.title" = "對話";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "封存";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "幫助我們改善Wire";
 "conversation_list.data_usage_permission_alert.message" = "我同意Wire可以創建並使用匿名使用及錯誤報告以改進軟體品質。 我可以隨時撤銷此授權。";
@@ -303,7 +309,7 @@
 "conversation.call.many_participants_confirmation.message" = "這將會致電給%d位聯絡人";
 "conversation.call.many_participants_confirmation.call" = "通話";
 
-"conversation.connection_view.in_address_book" = "在連絡人中";
+"conversation.connection_view.in_address_book" = "在聯絡人中";
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
 "conversation.input_bar.shortcut.newline" = "換行";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "聯邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "使用者名稱";
-"profile_view.accessibility.name" = "暱稱";
-"profile_view.accessibility.team_name" = "團隊名稱";
-
 // Device list
 "profile.devices.title" = "設備";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用舊版本的Wire，無法顯示設備。";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "未知";
 
 // Bot
-"participants.services.remove_integration.button" = "移除服務";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "訪客";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
 "self.add_email_password" = "新增電子郵件信箱和密碼";
-
-"self.accessibility.profile_photo_image" = "個人頭像";
-"self.accessibility.profile_photo_edit_button" = "更改個人頭像";
 
 // About screen
 "about.tos.title" = "使用條款";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "大頭照";
 "self.settings.account_picture_group.color" = "主色調";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "個人資訊";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "開發人員設定";
+"self.settings.developer_options.loggin.title" = "選項";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APN 日誌記錄";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "設定狀態";
-"availability.accessibility_label.change_status" = "更改狀態";
-"availability.accessibility_label.status" = "狀態";
 
 "availability.none" = "沒有狀態";
 "availability.available" = "在線";
