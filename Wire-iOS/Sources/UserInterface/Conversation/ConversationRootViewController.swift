@@ -112,6 +112,7 @@ final class ConversationRootViewController: UIViewController {
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
         navBarContainer.navigationBar.accessibilityElementsHidden = false
+        conversationViewController.view.accessibilityElementsHidden = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -124,6 +125,7 @@ final class ConversationRootViewController: UIViewController {
         super.viewDidAppear(animated)
 
         navBarContainer.navigationBar.accessibilityElementsHidden = true
+        conversationViewController?.view.accessibilityElementsHidden = true
     }
 
     private var child: UIViewController? {

@@ -235,6 +235,32 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationsListHeader.expandedButton.description")
       }
     }
+    internal enum CreateConversation {
+      internal enum BackButton {
+        /// Go back to contact list
+        internal static let description = L10n.tr("Accessibility", "createConversation.backButton.description")
+      }
+      internal enum HideSettings {
+        /// Double tap to hide settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.hideSettings.hint")
+      }
+      internal enum OpenSettings {
+        /// Double tap to open settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.openSettings.hint")
+      }
+      internal enum SearchView {
+        /// Type group name
+        internal static let description = L10n.tr("Accessibility", "createConversation.searchView.description")
+      }
+      internal enum SelectedUser {
+        /// Double tap to deselect
+        internal static let hint = L10n.tr("Accessibility", "createConversation.selectedUser.hint")
+      }
+      internal enum UnselectedUser {
+        /// Double tap to select
+        internal static let hint = L10n.tr("Accessibility", "createConversation.unselectedUser.hint")
+      }
+    }
     internal enum DeveloperOptionsSettings {
       internal enum BackButton {
         /// Go back to Developer options
