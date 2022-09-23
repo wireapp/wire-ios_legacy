@@ -134,8 +134,10 @@ final class InputBar: UIView {
     let markdownView = MarkdownBarView()
 
     var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
+
     var barBackgroundColor: UIColor? = SemanticColors.SearchBar.backgroundInputView
     var writingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorCell
+
     var ephemeralColor: UIColor {
         return .accent()
     }
@@ -472,12 +474,22 @@ final class InputBar: UIView {
         buttons.append(self.buttonsView.expandRowButton)
 
         buttons.forEach { button in
-            guard let button = button as? IconButton else {
-                return
-            }
+            guard let button = button as? IconButton else { return }
 
-            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
+            button.layer.borderWidth = 1
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .selected)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .selected)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
+
         }
     }
 
