@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Kích hoạt ngay.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Có tin nhắn mới.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Danh bạ";
+"conversation_list.bottom_bar.conversations.title" = "Các cuộc hội thoại";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Lưu trữ";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Giúp chúng tôi làm cho Wire tốt hơn";
 "conversation_list.data_usage_permission_alert.message" = "Tôi đồng ý rằng Wire có thể tạo và sử dụng các dữ liệu ẩn danh và báo cáo lỗi để cải thiện Ứng dụng Wire. Tôi có thể thu hồi sự đồng tình này bất cứ lúc nào.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Tên người dùng";
-"profile_view.accessibility.name" = "Hiển thị tên";
-"profile_view.accessibility.team_name" = "Tên nhóm";
-
 // Device list
 "profile.devices.title" = "Thiết bị";
 "profile.devices.fingerprint_message_unencrypted" = "%@ đang dùng phiên bản cũ của Wire. Không có thiết bị được hiển thị tại đây.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Unknown";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Hồ sơ, thiết bị mới đã thêm";
 
 "self.add_email_password" = "Thêm địa chỉ email và mật khẩu";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Điều khoản Sử dụng";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Ảnh";
 "self.settings.account_picture_group.color" = "Màu sắc";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Tuỳ chọn Nhà phát triển";
+"self.settings.developer_options.loggin.title" = "Tuỳ chọn";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "Đăng nhập APNS";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Huỷ";
 "availability.message.set_status" = "Đặt trạng thái";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Không có";
 "availability.available" = "Rỗi";

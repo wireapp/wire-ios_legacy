@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Praegu aktiivne.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontaktid";
+"conversation_list.bottom_bar.conversations.title" = "Vestlused";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Arhiveeri";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Aita meil Wire'i paremaks muuta";
 "conversation_list.data_usage_permission_alert.message" = "Nõustun, et Wire võib luua ja kasutada anonüümseid kasutus- ja veateateid, parandamaks Wire'i rakendust. Ma saan selle nõusoleku igal ajal tühistada.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Kasutajanimi";
-"profile_view.accessibility.name" = "Kuvatav nimi";
-"profile_view.accessibility.team_name" = "Tiimi nimi";
-
 // Device list
 "profile.devices.title" = "Seadmed";
 "profile.devices.fingerprint_message_unencrypted" = "%@ kasutab vana Wire versioon. Seadmete kohta puudub info.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Teadmata";
 
 // Bot
-"participants.services.remove_integration.button" = "eemalda integratsioon";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Külalised";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profiil, lisatud uus seade";
 
 "self.add_email_password" = "Lisa meiliaadress ja parool";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Kasutustingimused";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Profiilipilt";
 "self.settings.account_picture_group.color" = "Värv";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Isikuandmed";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Arendaja Valikud";
+"self.settings.developer_options.loggin.title" = "Seaded";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS logimine";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Tühista";
 "availability.message.set_status" = "Määra staatus";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Puudub";
 "availability.available" = "Saadaval";

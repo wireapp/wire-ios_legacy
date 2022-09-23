@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "立即激活";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "联络人";
+"conversation_list.bottom_bar.conversations.title" = "会话";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "归档";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "帮助我们改善Wire";
 "conversation_list.data_usage_permission_alert.message" = "我同意，Wire可以创建和使用匿名的使用和错误报告来改进Wire应用。我随时可以撤销此授权。";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "联邦";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "用户名";
-"profile_view.accessibility.name" = "昵称";
-"profile_view.accessibility.team_name" = "团队名称";
-
 // Device list
 "profile.devices.title" = "设备";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用旧版本的Wire，无法显示设备。";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "未知";
 
 // Bot
-"participants.services.remove_integration.button" = "移除服务";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "已添加资料及新设备";
 
 "self.add_email_password" = "新增邮箱地址和密码";
-
-"self.accessibility.profile_photo_image" = "个人图像";
-"self.accessibility.profile_photo_edit_button" = "更改用户头像";
 
 // About screen
 "about.tos.title" = "使用条款";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "个人资料";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "开发人员选项";
+"self.settings.developer_options.loggin.title" = "选项";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS记录";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "设置状态";
-"availability.accessibility_label.change_status" = "更改状态";
-"availability.accessibility_label.status" = "状态";
 
 "availability.none" = "无";
 "availability.available" = "在线";

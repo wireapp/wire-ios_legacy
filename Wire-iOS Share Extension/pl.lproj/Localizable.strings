@@ -39,10 +39,10 @@
 "share_extension.unlock.textfield.placeholder" = "Wprowadź kod dostępu";
 "share_extension.unlock.hint_label" = "Kod dostępu";
 "share_extension.unlock.error_label" = "Nieprawidłowy kod dostępu";
-"share_extension.unlock.alert.message" = "Otwórz Wire aby utworzyć hasło";
-"share_extension.unlock.reveal_passcode" = "Odkryj hasło";
+"share_extension.unlock.alert.message" = "Otwórz Wire aby utworzyć kod dostępu";
+"share_extension.unlock.reveal_passcode" = "Odkryj kod dostępu";
 
-"share_extension.timeout.title" = "Przekroczono limit czasu połączenia.";
+"share_extension.timeout.title" = "Przekroczono czas oczekiwania dla połączenia.";
 "share_extension.timeout.message" = "Sprawdź swoje połączenie internetowe i spróbuj ponownie. Załączniki zostały zapisane w konwersacji.";
 
 "content.file.too_big" = "Możesz wysyłać pliki do %@";
