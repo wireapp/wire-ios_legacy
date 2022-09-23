@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Actif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Nouveaux messages.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Contacts";
+"conversation_list.bottom_bar.conversations.title" = "Conversations";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archiver";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Aidez-nous à améliorer Wire";
 "conversation_list.data_usage_permission_alert.message" = "Wire peut créer et utiliser des rapports d'utilisation et d'erreurs anonymes afin d'améliorer l'application. Vous pouvez révoquer votre autorisation à tout moment.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Fédéré";
 "profile.details.blocking_reason" = "Cet utilisateur est bloqué en raison de la conservation à des fins juridiques. [PLUS D'INFOS](%@)";
 
-"profile_view.accessibility.handle" = "Nom d'utilisateur";
-"profile_view.accessibility.name" = "Nom affiché";
-"profile_view.accessibility.team_name" = "Nom d'équipe";
-
 // Device list
 "profile.devices.title" = "Appareils";
 "profile.devices.fingerprint_message_unencrypted" = "%@ utilise une ancienne version de Wire. Aucun appareil n’est affiché ici.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Inconnu";
 
 // Bot
-"participants.services.remove_integration.button" = "supprimer le service";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Invités";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, de nouveaux appareils ont été ajoutés";
 
 "self.add_email_password" = "Ajouter une adresse e-mail et un mot de passe";
-
-"self.accessibility.profile_photo_image" = "Photo de profil";
-"self.accessibility.profile_photo_edit_button" = "Changez votre photo de profil";
 
 // About screen
 "about.tos.title" = "Conditions d'utilisation";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Image";
 "self.settings.account_picture_group.color" = "Couleur";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Données Personnelles";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Options du développeur";
+"self.settings.developer_options.loggin.title" = "Options";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "Enregistrement des APNS";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Annuler";
 "availability.message.set_status" = "Définir un statut";
-"availability.accessibility_label.change_status" = "Changer votre statut";
-"availability.accessibility_label.status" = "Statut";
 
 "availability.none" = "Aucun";
 "availability.available" = "Disponible";
