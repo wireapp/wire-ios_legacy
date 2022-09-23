@@ -42,7 +42,7 @@ extension SolidButtonDescription: ViewDescriptor {
         let button = IconButton(fontSpec: .normalSemiboldFont)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
-        button.applyStyle(.primaryTextButtonStyle)
+        button.applyStyle(.accentColorTextButtonStyle)
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
