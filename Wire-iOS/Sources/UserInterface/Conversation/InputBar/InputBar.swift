@@ -137,7 +137,7 @@ final class InputBar: UIView {
 
     var barBackgroundColor: UIColor? = SemanticColors.SearchBar.backgroundInputView
     var writingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorCell
-    
+
     var ephemeralColor: UIColor {
         return .accent()
     }
