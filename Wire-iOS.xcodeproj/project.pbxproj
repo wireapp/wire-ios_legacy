@@ -8058,6 +8058,7 @@
 				5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */,
 				06F9864625CC146B005572C5 /* UIView+ConstraintFactory.swift in Sources */,
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
+				E57917B228999A240063339D /* UIView+Borders.swift in Sources */,
 				543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */,
 				BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */,
 				06F9864225CBEEE6005572C5 /* StyleKitIcon+Const.swift in Sources */,
