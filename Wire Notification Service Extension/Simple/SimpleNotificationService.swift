@@ -20,6 +20,7 @@ import Foundation
 import UserNotifications
 import WireTransport
 import WireCommonComponents
+import WireDataModel
 
 final class SimpleNotificationService: UNNotificationServiceExtension, Loggable {
 
@@ -32,6 +33,7 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
     private var currentTasks: [String : Task<(), Never>] = [:]
     private var latestContentHandler: ContentHandler?
+    private var coreDataStacksDictionary: [String: CoreDataStack] = [:]
 
 //    private var
 
@@ -58,7 +60,8 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
         let task = Task { [weak self] in
             do {
                 logger.trace("\(request.identifier, privacy: .public): initializing job")
-                let job = try Job(request: request)
+                let coreDataStack = dataStackForAccount(accountID: request.content.accountID)
+                let job = try Job(request: request, coreDataStack: coreDataStack)
                 let content = try await job.execute()
                 logger.trace("\(request.identifier, privacy: .public): showing notification")
                 contentHandler(content)
@@ -81,5 +84,30 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
         currentTasks = [:]
         latestContentHandler?(.debugMessageIfNeeded(message: "extension (\(String(describing: self)) is expiring"))
     }
+}
 
+private extension SimpleNotificationService {
+
+    func dataStackForAccount(accountID: UUID?) -> CoreDataStack? {
+        guard let accountID = accountID,
+              let groupID = Bundle.main.applicationGroupIdentifier else {
+            return nil
+        }
+        if let stack = coreDataStacksDictionary[accountID.uuidString] {
+            return stack
+        }
+
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
+        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
+        guard let account = accountManager.account(with: accountID) else {
+                  return nil
+        }
+        let coreDataStack = CoreDataStack(
+            account: account,
+            applicationContainer: sharedContainerURL
+        )
+        coreDataStacksDictionary[accountID.uuidString] = coreDataStack
+
+        return coreDataStack
+    }
 }

@@ -41,6 +41,7 @@ final class Job: NSObject, Loggable {
     private let request: UNNotificationRequest
     private let userID: UUID
     private let eventID: UUID
+    private let coreDataStack: CoreDataStack?
 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
     private let networkSession: NetworkSessionProtocol
@@ -51,6 +52,7 @@ final class Job: NSObject, Loggable {
 
     init(
         request: UNNotificationRequest,
+        coreDataStack: CoreDataStack?,
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil
@@ -59,6 +61,7 @@ final class Job: NSObject, Loggable {
         let (userID, eventID) = try Self.pushPayload(from: request)
         self.userID = userID
         self.eventID = eventID
+        self.coreDataStack = coreDataStack
 
         let session = try networkSession ?? NetworkSession(userID: userID)
         self.networkSession = session
@@ -80,12 +83,11 @@ final class Job: NSObject, Loggable {
         networkSession.accessToken = try await fetchAccessToken()
 
         let event = try await fetchEvent(eventID: eventID)
+        if event.senderUUID?.uuidString == self.request.content.accountID?.uuidString { return .empty }
 
         switch event.type {
         case .conversationOtrMessageAdd:
-
-            guard let accountID = request.content.accountID else { throw NotificationServiceError.noAccount }
-            let messageContent = try await decryptAndStoreEvent(event: event, accountIdentifier: accountID)
+            let messageContent = try await decryptAndStoreEvent(event: event)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
             let content = UNMutableNotificationContent()
             content.body = messageContent
@@ -97,30 +99,22 @@ final class Job: NSObject, Loggable {
         }
     }
 
-    private func decryptAndStoreEvent(event: ZMUpdateEvent, accountIdentifier: UUID) async throws -> String {
-           guard let groupID = Bundle.main.applicationGroupIdentifier else {
-               throw NotificationServiceError.noAppGroupID
-           }
-
-           let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
-           let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
-           guard let account = accountManager.account(with: accountIdentifier) else {
-               throw NotificationServiceError.noAccount
-           }
-           let coreDataStack = CoreDataStack(
-               account: account,
-               applicationContainer: sharedContainerURL
-           )
+    private func decryptAndStoreEvent(event: ZMUpdateEvent) async throws -> String {
+        guard let coreDataStack = coreDataStack else { throw NotificationServiceError.noAccount }
 
         try await coreDataStack.loadStores()
         let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
-//            logger.trace("decode")
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
-        guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.decryptionError }
-        guard let message = GenericMessage(from: updatedEvent) else { throw NotificationServiceError.decryptionError }
-        guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
-        return text.content
 
+        guard let updatedEvent = updatedEvents.first,
+              let message = GenericMessage(from: updatedEvent) else {
+                  throw NotificationServiceError.decryptionError
+              }
+        if message.hasCalling { return "Call" }
+        if message.hasAsset { return "Received media"}
+        guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
+
+        return text.content
     }
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {

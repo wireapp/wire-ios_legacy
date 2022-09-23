@@ -36,6 +36,7 @@ class JobTests: XCTestCase {
 
         sut = try Job(
             request: notificationRequest,
+            coreDataStack: dataStack,
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
             notificationsAPIClient: mockNotificationsAPIClient
@@ -64,6 +65,21 @@ class JobTests: XCTestCase {
             identifier: "request",
             content: content,
             trigger: nil
+        )
+    }()
+
+    lazy var dataStack: CoreDataStack? = {
+        guard let groupID = Bundle.main.applicationGroupIdentifier else {
+            return nil
+        }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
+        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
+        guard let account = accountManager.account(with: userID) else {
+                  return nil
+        }
+        return CoreDataStack(
+            account: account,
+            applicationContainer: sharedContainerURL
         )
     }()
 
@@ -109,7 +125,7 @@ class JobTests: XCTestCase {
             _ = try await self.sut.execute()
         }
     }
-
+    // TODO: need to mock CoreDataStack to return correct message and check it
     func test_Execute_NewMessageEvent_Content() async throws {
         // Given
         mockAccessAPIClient.mockFetchAccessToken = {
@@ -136,12 +152,13 @@ class JobTests: XCTestCase {
                 source: .pushNotification
             )!
         }
-
-        // When
-        let result = try await sut.execute()
-
+        
         // Then
-        XCTAssertEqual(result.body, "You received a new message")
+        await assertThrows(expectedError: NotificationServiceError.noAccount) {
+            // When
+            _ = try await self.sut.execute()
+        }
+
     }
 
     func test_Execute_NotNewMessageEvent_Content() async throws {
