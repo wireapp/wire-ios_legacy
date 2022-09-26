@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-
 import UIKit
 import WireCommonComponents
 
@@ -105,7 +104,7 @@ extension NSTextAttachment {
     static func downArrow(color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
         attachment.image = StyleKitIcon.downArrow.makeImage(
-            size: 14,
+            size: 8,
             color: SemanticColors.Icon.foregroundPlainDownArrow).withRenderingMode(.alwaysTemplate)
         return attachment
     }
