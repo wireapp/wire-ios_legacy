@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "تماس‌ها";
+"conversation_list.bottom_bar.conversations.title" = "گفتگو";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "بایگانی";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "به ما برای بهتر شدن Wire کمک کنید";
 "conversation_list.data_usage_permission_alert.message" = "من قبول میکنم که Wire شاید گزارش های ارور و استفاده را به صورت ناشناس برای بهتر کردن نرم افزار Wire ایجاد و استفاده کند. من می‌توانم این اجازه را در هر زمانی لغو کنم.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "ارتباط میان‌سروری";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "نام کاربری";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "نام تیم";
-
 // Device list
 "profile.devices.title" = "دستگاه‌ها";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "ناشناخته";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_email_password" = "ایمیل آدرس خود و رمز عبور جدیدی را وارد کنید";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "شرایط و مقررات استفاده";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "نمایه";
 "self.settings.account_picture_group.color" = "رنگ";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Developer Options";
+"self.settings.developer_options.loggin.title" = "گزینه‌ها";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "انصراف";
 "availability.message.set_status" = "وضعیت را تنظیم کنید";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "هیچ‌کدام";
 "availability.available" = "در دسترس";
