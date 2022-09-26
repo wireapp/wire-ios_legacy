@@ -71,7 +71,7 @@ struct AddParticipantsViewModel {
             if conversation.conversationType == .oneOnOne {
                 return "peoplepicker.button.create_conversation".localized(uppercased: true)
             } else {
-                return "peoplepicker.button.add_to_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Group.Title.singular.localized
             }
         }
     }

@@ -30,6 +30,7 @@ public enum FontSize: String {
     case medium
     case small
     case header
+    case largeButton
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -222,6 +223,8 @@ public enum FontScheme {
 
         fontsByFontSpec[FontSpec(.header, .semibold, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .semibold)
         fontsByFontSpec[FontSpec(.header, .regular, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .regular)
+        
+        fontsByFontSpec[FontSpec(.largeButton, .semibold, .none)] = .systemFont(ofSize: 20, contentSizeCategory: contentSizeCategory, weight: .semibold)
 
     }
 
