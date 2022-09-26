@@ -71,8 +71,6 @@ class JobTests: XCTestCase {
     lazy var dataStack: CoreDataStack = {
         let groupID = Bundle.main.applicationGroupIdentifier!
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
-//        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
-//        let account = accountManager.account(with: userID)!
 
         let account = Account(userName: "", userIdentifier: userID)
         return CoreDataStack(
@@ -123,7 +121,7 @@ class JobTests: XCTestCase {
             _ = try await self.sut.execute()
         }
     }
-    
+
     // TODO: need to mock CoreDataStack to return correct message and check it
 //    func test_Execute_NewMessageEvent_Content() async throws {
 //        // Given

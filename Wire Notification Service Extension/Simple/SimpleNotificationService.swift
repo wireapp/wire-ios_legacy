@@ -111,3 +111,19 @@ private extension SimpleNotificationService {
         return coreDataStack
     }
 }
+
+extension CoreDataStack {
+
+    func loadStores() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            loadStores {
+                if let error = $0 {
+                    continuation.resume(with: .failure(error))
+                } else {
+                    continuation.resume(with: .success(()))
+                }
+            }
+        }
+    }
+
+}

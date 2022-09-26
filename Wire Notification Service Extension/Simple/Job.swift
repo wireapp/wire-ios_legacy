@@ -100,7 +100,6 @@ final class Job: NSObject, Loggable {
     private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
         guard let coreDataStack = coreDataStack else { throw NotificationServiceError.noAccount }
 
-        try await coreDataStack.loadStores()
         let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
 
@@ -142,21 +141,6 @@ final class Job: NSObject, Loggable {
 
 }
 
-extension CoreDataStack {
-
-    func loadStores() async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            loadStores {
-                if let error = $0 {
-                    continuation.resume(with: .failure(error))
-                } else {
-                    continuation.resume(with: .success(()))
-                }
-            }
-        }
-    }
-
-}
 
 extension EventDecoder {
 
