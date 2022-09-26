@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Aktyvi dabar.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Turi naujų žinučių.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontaktai";
+"conversation_list.bottom_bar.conversations.title" = "Susirašinėjimai";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archyvuoti";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Padėkite mums pagerinti \"Wire\"";
 "conversation_list.data_usage_permission_alert.message" = "Sutinku, kad \"Wire\" galėtų sukurti ir naudoti anoniminę vartojimo ir klaidų ataskaitą \"Wire\" aplikacijos tobulinimui. Aš galėsiu atšaukti sutikimą bet kada vėliau.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Naudotojo vardas";
-"profile_view.accessibility.name" = "Vardas pavardė";
-"profile_view.accessibility.team_name" = "Komandos pavadinimas";
-
 // Device list
 "profile.devices.title" = "Įrenginiai";
 "profile.devices.fingerprint_message_unencrypted" = "%@ naudoja seną „Wire“ versiją. Čia įrenginiai nerodomi.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Nežinoma";
 
 // Bot
-"participants.services.remove_integration.button" = "pašalinti integraciją";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Svečių";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profilis, pridėtas naujas įrenginys";
 
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
-
-"self.accessibility.profile_photo_image" = "Profilio nuotrauka";
-"self.accessibility.profile_photo_edit_button" = "Keisti profilio nuotrauką";
 
 // About screen
 "about.tos.title" = "Naudojimosi sąlygos";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Paveikslas";
 "self.settings.account_picture_group.color" = "Spalva";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Asmeninė informacija";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Kūrėjo nustatymai";
+"self.settings.developer_options.loggin.title" = "Parinktys";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "„APNS“ registravimas";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Atsisakyti";
 "availability.message.set_status" = "Nurodykite būseną";
-"availability.accessibility_label.change_status" = "Keisti būseną";
-"availability.accessibility_label.status" = "Būsena";
 
 "availability.none" = "Jokių";
 "availability.available" = "Prisijungęs";

@@ -23,6 +23,6 @@
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
 "NSPhotoLibraryAddUsageDescription" = "Wire 앱이 사용자 사진 앨범에 사진을 저장하도록 허용합니다.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Wire 앱이 사용자 사진 앨범에 접근하도록 허용합니다.";
+"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library so you can send pictures and videos to others.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
 "NSFaceIDUsageDescription" = "Wire 앱이 인증을 진행할 수 있도록 Face ID 기능을 사용하게 허용합니다.";

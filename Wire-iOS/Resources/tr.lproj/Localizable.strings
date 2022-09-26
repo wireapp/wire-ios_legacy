@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Şu an aktif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Yeni mesaj var.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kişiler";
+"conversation_list.bottom_bar.conversations.title" = "Konuşmalar";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Arşivle";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Wire'ı daha iyi hale getirmemize yardımcı olun";
 "conversation_list.data_usage_permission_alert.message" = "Wire'in, Wire App'ı geliştirmek için isimsiz kullanım ve hata raporları oluşturup kullanabileceğini kabul ediyorum. Bu izni herhangi bir zamanda iptal edebilirim.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federe";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Kullanıcı Adı";
-"profile_view.accessibility.name" = "Görünen İsim";
-"profile_view.accessibility.team_name" = "Takım Adı";
-
 // Device list
 "profile.devices.title" = "Cihazlar";
 "profile.devices.fingerprint_message_unencrypted" = "%@, Wire'ın eski bir versiyonunu kullanıyor. Hiçbir cihaz burada gösterilmiyor.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Bilinmiyor";
 
 // Bot
-"participants.services.remove_integration.button" = "entegrasyonu kaldır";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, yeni cihazlar eklendi";
 
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
-
-"self.accessibility.profile_photo_image" = "Profil resmi";
-"self.accessibility.profile_photo_edit_button" = "Profil resmini değiştir";
 
 // About screen
 "about.tos.title" = "Kullanım Şartları";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Resim";
 "self.settings.account_picture_group.color" = "Renk";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Kişisel Bilgiler";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Geliştiri Seçenekleri";
+"self.settings.developer_options.loggin.title" = "Seçenekler";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Günlüğü";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "İptal";
 "availability.message.set_status" = "Bir durum ayarlayın";
-"availability.accessibility_label.change_status" = "Durumu Değiştir";
-"availability.accessibility_label.status" = "Durum";
 
 "availability.none" = "Hiçbiri";
 "availability.available" = "Alınabilir";

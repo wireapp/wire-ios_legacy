@@ -26,3 +26,16 @@
 "conversation.searchButton.description" = "Open search";
 "conversation.profileImage.description" = "Profil resmi";
 "conversation.profileImage.hint" = "Double tap to open profile";
+
+"settings.deviceCount.hint" = "%@ devices in use";
+"settings.closeButton.description" = "Close settings";
+"settings.backButton.description" = "Go back to %@";
+"options.soundButton.hint" = "Double tap to change setting";
+"clientList.deviceDetails.hint" = "Double tap to open device details";
+"accountPage.availabilityStatus.description" = "Status";
+"accountPage.availabilityStatus.hint" = "Double tap to change status";
+"accountPage.handle.description" = "Kullanıcı Adı";
+"accountPage.name.description" = "Profile name";
+"accountPage.teamName.description" = "Team name";
+"accountPage.profilePicture.description" = "Profil resmi";
+"accountPage.profilePicture.hint" = "Double tap to change your picture";

@@ -22,7 +22,20 @@
 ///  "<screen>.<component>.<usage>"
 
 
-"conversation.backButton.description" = "Go back to conversation list";
-"conversation.searchButton.description" = "Open search";
+"conversation.backButton.description" = "Wróć do listy konwersacji";
+"conversation.searchButton.description" = "Otwórz wyszukiwanie";
 "conversation.profileImage.description" = "Zdjęcie profilowe";
-"conversation.profileImage.hint" = "Double tap to open profile";
+"conversation.profileImage.hint" = "Dotknij dwukrotnie, aby otworzyć profil";
+
+"settings.deviceCount.hint" = "%@ urządzenia w użyciu";
+"settings.closeButton.description" = "Zamknij ustawienia";
+"settings.backButton.description" = "Wróć do ";
+"options.soundButton.hint" = "Dotknij dwukrotnie, aby zmienić ustawienie";
+"clientList.deviceDetails.hint" = "Dotknij dwukrotnie, aby otworzyć szczegóły urządzenia";
+"accountPage.availabilityStatus.description" = "Status";
+"accountPage.availabilityStatus.hint" = "Dotknij dwukrotnie, aby zmienić status";
+"accountPage.handle.description" = "Login";
+"accountPage.name.description" = "Profile name";
+"accountPage.teamName.description" = "Nazwa zespołu";
+"accountPage.profilePicture.description" = "Zdjęcie profilowe";
+"accountPage.profilePicture.hint" = "Dotknij podwójnie, aby zmienić swoje zdjęcie";

@@ -42,10 +42,6 @@ final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEvent
         // Build the list of actions
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        if isRegistered {
-            actions.append(.assignRandomProfileImage)
-        }
-
         if let nextStep = nextRegistrationStep {
             actions.append(.transition(nextStep, mode: .reset))
         } else {
