@@ -145,6 +145,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         } else {
             titleFont = .smallRegularFont
         }
+
         titleColor = SemanticColors.Label.textDefault
     }
 
