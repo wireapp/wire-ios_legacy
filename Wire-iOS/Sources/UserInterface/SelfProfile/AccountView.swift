@@ -128,7 +128,7 @@ class BaseAccountView: UIView {
         case .current:
             return account.unreadConversationCount > 0
         case .others:
-            return (SessionManager.shared?.accountManager.totalUnreadCount ?? 0) > 0
+            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
         }
     }
 
