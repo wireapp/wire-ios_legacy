@@ -40,7 +40,7 @@ class LoginSecondaryView: AuthenticationSecondaryViewDescription {
     weak var actioner: AuthenticationActioner?
 
     init() {
-        let resetPasswordButton = ButtonDescription(title: "signin.forgot_password".localized(uppercased: false), accessibilityIdentifier: "forgot_password")
+        let resetPasswordButton = UnderlineButtonDescription(title: "signin.forgot_password".localized(uppercased: false), accessibilityIdentifier: "forgot_password")
         views = [resetPasswordButton]
 
         resetPasswordButton.buttonTapped = { [weak self] in

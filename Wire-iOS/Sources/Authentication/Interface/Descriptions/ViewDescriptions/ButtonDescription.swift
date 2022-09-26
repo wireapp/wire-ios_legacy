@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class ButtonDescription {
 
@@ -28,6 +29,43 @@ final class ButtonDescription {
     init(title: String, accessibilityIdentifier: String) {
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
+    }
+}
+
+final class UnderlineButtonDescription {
+
+    var buttonTapped: (() -> Void)?
+    let title: String
+    let accessibilityIdentifier: String
+
+    init(title: String, accessibilityIdentifier: String) {
+        self.title = title
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+}
+
+extension UnderlineButtonDescription: ViewDescriptor {
+    func create() -> UIView {
+        let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
+        let yourAttributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.smallSemiboldFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+          ]
+
+        let attributeString = NSMutableAttributedString(
+                string: title,
+                attributes: yourAttributes
+             )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(attributeString, for: .normal)
+        button.accessibilityIdentifier = self.accessibilityIdentifier
+        button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+
+    @objc dynamic func buttonTapped(_ sender: UIButton) {
+        buttonTapped?()
     }
 }
 
