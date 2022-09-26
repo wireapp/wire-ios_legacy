@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "تفعيل الآن.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "لديه رسائل جديدة.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "جهات الاتصال";
+"conversation_list.bottom_bar.conversations.title" = "المحادثات";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "حفظ في الأرشيف";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "ساعدنا لجعل Wire أفضل";
 "conversation_list.data_usage_permission_alert.message" = "يساعدنا إرسال تقارير الاستخدام و تقارير التعطيل للبرنامج المجهولة على تحسين منتجاتنا وخدماتنا. نحن لا نستخدم هذه المعلومات لأي غرض آخر.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "مُعرّف";
-"profile_view.accessibility.name" = "اسم العرض";
-"profile_view.accessibility.team_name" = "اسم الفريق";
-
 // Device list
 "profile.devices.title" = "الأجهزة";
 "profile.devices.fingerprint_message_unencrypted" = "يستخدم %@ نسخة قديمة من Wire. لا توجد أجهزة معروضة هنا.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "غير معروف";
 
 // Bot
-"participants.services.remove_integration.button" = "إلغاء التكامل";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "شروط الاستخدام";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "الصورة";
 "self.settings.account_picture_group.color" = "اللون";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "معلومات شخصية";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "خيارات مطور البرامج";
+"self.settings.developer_options.loggin.title" = "الخيارات";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "إلغاء";
 "availability.message.set_status" = "عيّن حالة";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "لا شيء";
 "availability.available" = "متاح";

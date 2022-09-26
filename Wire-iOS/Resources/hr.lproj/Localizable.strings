@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Trenutno aktivan.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ima nove poruke.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontakti";
+"conversation_list.bottom_bar.conversations.title" = "Razgovori";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Arhiva";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Pomozite nam učiniti Wire boljim";
 "conversation_list.data_usage_permission_alert.message" = "Slažem se da Wire može stvoriti i upotrijebiti anonimne izvještaje o uporabi i greškama, kako bi unaprijedio Wire aplikaciju. Mogu promijeniti ovo u bilo koje vrijeme.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Korisničko Ime";
-"profile_view.accessibility.name" = "Zaslonsko ime";
-"profile_view.accessibility.team_name" = "Naziv tima";
-
 // Device list
 "profile.devices.title" = "Uređaji";
 "profile.devices.fingerprint_message_unencrypted" = "%@ upotrebljava staru verziju Wirea. Ne vide se uređaji.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Nepoznato";
 
 // Bot
-"participants.services.remove_integration.button" = "ukloni integraciju";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guests";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, novi uređaji su dodani";
 
 "self.add_email_password" = "Dodajte adresu e-pošte i lozinku";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Uvjeti korištenja";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Slika";
 "self.settings.account_picture_group.color" = "Boja";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Osobne informacije";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Opcije za razvojne programere";
+"self.settings.developer_options.loggin.title" = "Opcije";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS Logging";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Odustani";
 "availability.message.set_status" = "Postavi status";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Ništa";
 "availability.available" = "Dostupno";
