@@ -45,7 +45,6 @@ enum AuthenticationCoordinatorAction {
     case openURL(URL)
     case repeatAction
     case displayInlineError(NSError)
-    case assignRandomProfileImage
     case continueFlowWithLoginCode(String)
     case switchCredentialsType(AuthenticationCredentialsType)
     case startRegistrationFlow(UnverifiedCredentials)

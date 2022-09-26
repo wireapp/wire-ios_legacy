@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Activar ahora.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tiene mensajes nuevos.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Contactos";
+"conversation_list.bottom_bar.conversations.title" = "Chats";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archivar";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "¡Ayúdanos a mejorar!";
 "conversation_list.data_usage_permission_alert.message" = "El envío anónimo de informes de uso y fallos nos ayuda a mejorar nuestros productos y servicios. No usamos esta información para nada más.";
@@ -303,7 +309,7 @@
 "conversation.call.many_participants_confirmation.message" = "Llamarás a %d contactos";
 "conversation.call.many_participants_confirmation.call" = "Llamar";
 
-"conversation.connection_view.in_address_book" = "En contactos";
+"conversation.connection_view.in_address_book" = "en contactos";
 
 "conversation.input_bar.shortcut.send" = "Envía Mensaje";
 "conversation.input_bar.shortcut.newline" = "Insert Line Break";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Nombre de usuario";
-"profile_view.accessibility.name" = "Nombre a mostrar";
-"profile_view.accessibility.team_name" = "Nombre del equipo";
-
 // Device list
 "profile.devices.title" = "Dispositivos";
 "profile.devices.fingerprint_message_unencrypted" = "%@ está utilizando una versión antigua de Wire. Sus dispositivos no se muestran aquí.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Desconocido";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Invitados";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Perfil, nuevos dispositivos añadidos";
 
 "self.add_email_password" = "Añadir email y contraseña";
-
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
 "about.tos.title" = "Términos de uso";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Imagen";
 "self.settings.account_picture_group.color" = "Color";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Información Personal";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Opciones para desarrolladores";
+"self.settings.developer_options.loggin.title" = "Opciones";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "Registro de APNS";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Cancelar";
 "availability.message.set_status" = "Establecer estado";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Ninguno";
 "availability.available" = "Disponible";

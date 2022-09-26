@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "有効";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "連絡先";
+"conversation_list.bottom_bar.conversations.title" = "会話";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "アーカイブ";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Wire の改善にご協力を";
 "conversation_list.data_usage_permission_alert.message" = "私はWireに対して、匿名の利用状況およびアプリを改善するためのエラーレポートを提供することに同意します。私はこの同意をいつでも取り消すことができます。";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "ユーザーネーム";
-"profile_view.accessibility.name" = "表示名";
-"profile_view.accessibility.team_name" = "チーム名";
-
 // Device list
 "profile.devices.title" = "デバイス";
 "profile.devices.fingerprint_message_unencrypted" = "%@は古いバージョンのWireを使用しています。端末は表示されません。";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "不明";
 
 // Bot
-"participants.services.remove_integration.button" = "連携を削除する";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "ゲスト";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
 "self.add_email_password" = "メールアドレスとパスワードを追加";
-
-"self.accessibility.profile_photo_image" = "プロフィール画像";
-"self.accessibility.profile_photo_edit_button" = "プロフィール画像を変更";
 
 // About screen
 "about.tos.title" = "利用規約";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "写真";
 "self.settings.account_picture_group.color" = "色";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "個人情報";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "開発者向けオプション";
+"self.settings.developer_options.loggin.title" = "オプション";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS ログ";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "キャンセル";
 "availability.message.set_status" = "ステータスを設定";
-"availability.accessibility_label.change_status" = "ステータス変更";
-"availability.accessibility_label.status" = "ステータス";
 
 "availability.none" = "なし";
 "availability.available" = "利用できます";
