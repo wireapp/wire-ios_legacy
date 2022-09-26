@@ -57,7 +57,7 @@ class ConversationDetailFooterView: UIView {
 
     // MARK: - Initialization
     init() {
-        self.leftButton = IconButton(fontSpec: .smallRegularFont)
+        self.leftButton = IconButton(fontSpec: .normalSemiboldFont)
         super.init(frame: .zero)
         setupViews()
         createConstraints()
@@ -89,6 +89,7 @@ class ConversationDetailFooterView: UIView {
 
         backgroundColor = SemanticColors.View.backgroundUserCell
         addSubview(containerView)
+        addBorder(for: .top)
 
         setupButtons()
     }
