@@ -33,7 +33,11 @@ public class NotificationService: UNNotificationServiceExtension{
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        if DeveloperFlag.useSimpleNSE.isOn {
+        if DeveloperFlag.breakMyNotifications.isOn {
+            // By doing nothing, we hope to get in a state where iOS will no
+            // longer deliver pushes to us.
+            return
+        } else if DeveloperFlag.useSimpleNSE.isOn {
             simpleService.didReceive(
                 request,
                 withContentHandler: contentHandler
@@ -47,7 +51,11 @@ public class NotificationService: UNNotificationServiceExtension{
     }
 
     public override func serviceExtensionTimeWillExpire() {
-        if DeveloperFlag.useSimpleNSE.isOn {
+        if DeveloperFlag.breakMyNotifications.isOn {
+            // By doing nothing, we hope to get in a state where iOS will no
+            // longer deliver pushes to us.
+            return
+        } else if DeveloperFlag.useSimpleNSE.isOn {
             simpleService.serviceExtensionTimeWillExpire()
         } else {
             legacyService.serviceExtensionTimeWillExpire()
