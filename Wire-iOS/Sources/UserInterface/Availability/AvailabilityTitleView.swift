@@ -112,8 +112,8 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         let fontStyle: FontSize = options.contains(.useLargeFont) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(
             for: availability,
-            with: AvailabilityStringBuilder.color(for: availability),
-            and: fontStyle)
+               with: AvailabilityStringBuilder.color(for: availability),
+               and: fontStyle)
         let isInteractive = options.contains(.allowSettingStatus)
         var title = ""
 
@@ -140,7 +140,12 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
     /// Sets the titleFont and titleColor for the view.
     private func updateAppearance() {
-        titleFont = .normalRegularFont
+        if options.contains(.useLargeFont) {
+            titleFont = .headerSemiboldFont
+        } else {
+            titleFont = .smallRegularFont
+        }
+
         titleColor = SemanticColors.Label.textDefault
     }
 
