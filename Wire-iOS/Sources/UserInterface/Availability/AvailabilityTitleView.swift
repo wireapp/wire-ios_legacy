@@ -140,7 +140,12 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
 
     /// Refreshes the appearance of the view, based on the options.
     private func updateAppearance() {
-        titleFont = .headerRegularFont
+        if options.contains(.useLargeFont) {
+            titleFont = .headerSemiboldFont
+        } else {
+            titleFont = .headerRegularFont
+        }
+
         titleColor = SemanticColors.Label.textDefault
     }
 
