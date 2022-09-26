@@ -162,8 +162,7 @@ final class ConversationListTopBarViewController: UIViewController {
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
         let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
 
-        accountView.unreadCountStyle = .others
-        accountView.selected = false
+        accountView.unreadCountStyle = .current
         accountView.autoUpdateSelection = false
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
