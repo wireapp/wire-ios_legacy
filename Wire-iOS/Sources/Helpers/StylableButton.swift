@@ -36,8 +36,15 @@ class StylableButton: UIButton, Stylable {
         setBackgroundImageColor(style.normalStateColors.background, for: .normal)
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
 
+        setBorder(for: style)
+    }
+
+    private func setBorder(for style: ButtonStyle) {
+        guard style.highlightedStateColors.border != nil || style.normalStateColors.border != nil else { return }
+        let normalStateColor = style.normalStateColors.border?.cgColor ?? UIColor.clear.cgColor
+        let highlightedStateColor = style.highlightedStateColors.border?.cgColor ?? UIColor.clear.cgColor
         self.layer.borderWidth = 1
-        self.layer.borderColor = isHighlighted ? style.normalStateColors.border.cgColor : style.highlightedStateColors.border.cgColor
+        self.layer.borderColor = isHighlighted ? normalStateColor : highlightedStateColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -292,7 +292,12 @@ final class AddParticipantsViewController: UIViewController {
     }
 
     private func updateValues() {
-        confirmButton.setTitle(viewModel.confirmButtonTitle, for: .normal)
+        if let buttonTitle = viewModel.confirmButtonTitle {
+            confirmButton.isHidden = false
+            confirmButton.setTitle(buttonTitle, for: .normal)
+        } else {
+            confirmButton.isHidden = true
+        }
         updateTitle()
         navigationItem.rightBarButtonItem = viewModel.rightNavigationItem(target: self, action: #selector(rightNavigationItemTapped))
     }
