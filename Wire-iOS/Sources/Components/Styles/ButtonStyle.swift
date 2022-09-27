@@ -43,6 +43,24 @@ public struct ButtonStyle {
                                                          title: ButtonColors.textPrimaryEnabled,
                                                          border: .clear))
 
+    static let addParticipantsButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: UIColor.accent(),
+                                                         title: SemanticColors.Label.textDefaultWhite,
+                                                         border: .clear),
+                                                        highlightedStateColors: (
+                                                         background: UIColor.accentDarken,
+                                                         title: SemanticColors.Label.textDefaultWhite,
+                                                         border: .clear))
+
+    static let addParticipantsDisabledButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: SemanticColors.Button.backgroundAddParticipants,
+                                                         title: SemanticColors.Button.textDisabledAddParticipants,
+                                                         border: .clear),
+                                                        highlightedStateColors: (
+                                                         background: SemanticColors.Button.backgroundAddParticipants,
+                                                         title: SemanticColors.Button.textDisabledAddParticipants,
+                                                         border: .clear))
+
     static let primaryTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: ButtonColors.backgroundPrimaryEnabled,
                                                          title: ButtonColors.textPrimaryEnabled,

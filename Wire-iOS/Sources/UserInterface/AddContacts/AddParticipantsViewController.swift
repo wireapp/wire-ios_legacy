@@ -162,16 +162,12 @@ final class AddParticipantsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
 
         confirmButton = IconButton()
-        confirmButton.setIconColor(UIColor.from(scheme: .iconNormal, variant: .dark), for: .normal)
-        confirmButton.setIconColor(UIColor.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
-        confirmButton.setTitleColor(SemanticColors.Label.textDefaultWhite, for: .normal)
-        confirmButton.setTitleColor(SemanticColors.Label.textDefaultWhite, for: .highlighted)
-        confirmButton.setTitleColor(SemanticColors.Button.textDisabledAddParticipants, for: .disabled)
         confirmButton.titleLabel?.font = .largeButtonSemiboldFont
-        confirmButton.backgroundColor = .gray
+        confirmButton.applyStyle(.addParticipantsDisabledButtonStyle)
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.layer.cornerRadius = 16
+        confirmButton.layer.masksToBounds = true
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: variant)
 
@@ -313,7 +309,7 @@ final class AddParticipantsViewController: UIViewController {
         }
 
         // Enable button & collection view content inset
-        updateButtonBackground(isEnabled: !userSelection.users.isEmpty)
+        updateConfirmButtonState(state: !userSelection.users.isEmpty)
 
         let bottomInset = confirmButton.isHidden ? bottomMargin : confirmButtonHeight + 16 + bottomMargin
         searchResultsViewController.searchResultsView.collectionView.contentInset.bottom = bottomInset
@@ -324,9 +320,9 @@ final class AddParticipantsViewController: UIViewController {
         conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users))
     }
 
-    private func updateButtonBackground(isEnabled: Bool) {
-        confirmButton.isEnabled = isEnabled
-        confirmButton.backgroundColor = isEnabled ? .accent() : SemanticColors.Button.backgroundAddParticipants
+    private func updateConfirmButtonState(state: Bool) {
+        confirmButton.isEnabled = state
+        confirmButton.applyStyle(state ? .addParticipantsButtonStyle : .addParticipantsDisabledButtonStyle)
     }
 
     private func updateTitle() {
