@@ -100,7 +100,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
             return
         }
 
-        let button = AuthenticationNavigationBar.makeLegacyBackButton()
+        let button = AuthenticationNavigationBar.makeBackButton()
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }

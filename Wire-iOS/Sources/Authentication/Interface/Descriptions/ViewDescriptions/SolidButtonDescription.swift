@@ -48,7 +48,7 @@ extension SolidButtonDescription: ViewDescriptor {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title.localizedUppercase, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
-        button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(SolidButtonDescription.buttonTapped(_:)), for: .touchUpInside)
 
         let buttonContainer = UIView()
         buttonContainer.addSubview(button)
