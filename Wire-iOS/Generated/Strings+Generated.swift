@@ -1666,7 +1666,7 @@ internal enum L10n {
       /// Create a passcode
       internal static let titleLabel = L10n.tr("Localizable", "create_passcode.title_label")
       internal enum CreateButton {
-        /// create passcode
+        /// Create Passcode
         internal static let title = L10n.tr("Localizable", "create_passcode.create_button.title")
       }
       internal enum Textfield {
@@ -4800,7 +4800,7 @@ internal enum L10n {
         internal static let placeholder = L10n.tr("Localizable", "wipe_database.alert.placeholder")
       }
       internal enum Button {
-        /// I want to delete the database
+        /// I Want To Delete The Database
         internal static let title = L10n.tr("Localizable", "wipe_database.button.title")
       }
       internal enum InfoLabel {

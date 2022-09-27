@@ -47,8 +47,10 @@ final class UnlockViewController: UIViewController {
 
     private let contentView: UIView = UIView()
 
-    private lazy var unlockButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallSemiboldFont)
+    private static let errorFont = FontSpec.smallLightFont.font!
+
+    private lazy var unlockButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
@@ -68,7 +70,9 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel(key: "unlock.title_label".localized, size: FontSize.large, weight: .semibold, color: .textForeground, variant: .dark)
+        let label = DynamicFontLabel(text: "unlock.title_label".localized,
+                                     fontSpec: .largeSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
 
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -94,9 +98,8 @@ final class UnlockViewController: UIViewController {
     }()
 
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.medium, .regular).font!
-        label.textColor = ColorScheme.default.color(named: .textForeground, variant: .dark)
+        let label = DynamicFontLabel(fontSpec: .mediumRegularFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
@@ -104,20 +107,18 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private static let errorFont = FontSpec(.small, .light).font!.withSize(10)
     private let errorLabel: UILabel = {
-        let label = UILabel()
+        let label = DynamicFontLabel(fontSpec: .smallLightFont,
+                                     color: SemanticColors.Label.textWarning)
         label.text = " "
-        label.font = errorFont
-        label.textColor = UIColor.PasscodeUnlock.error
 
         return label
     }()
 
     private lazy var wipeButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = FontSpec(.medium, .medium).font!.withSize(14)
-        button.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+        let button = StylableButton()
+        button.applyStyle(.primaryTextButtonStyle)
+        button.titleLabel?.font = FontSpec.mediumRegularFont.font!
 
         button.setTitle("unlock.wipe_button".localized, for: .normal)
 
@@ -154,7 +155,7 @@ final class UnlockViewController: UIViewController {
 
         [accountIndicator,
          titleLabel,
-         UILabel.createHintLabel(variant: .dark),
+         UILabel.createHintLabel(),
          validatedTextField,
          errorLabel,
          wipeButton].forEach(upperStackView.addArrangedSubview)
@@ -166,11 +167,6 @@ final class UnlockViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - status bar
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -258,8 +254,9 @@ final class UnlockViewController: UIViewController {
     }
 
     func showWrongPasscodeMessage() {
+
         let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle,
-                                                             with: UIColor.PasscodeUnlock.error,
+                                                                with: SemanticColors.Label.textWarning,
                                                              iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize,
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))

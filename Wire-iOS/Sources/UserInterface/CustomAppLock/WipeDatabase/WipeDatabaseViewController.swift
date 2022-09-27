@@ -53,7 +53,7 @@ final class WipeDatabaseViewController: UIViewController {
         let label = UILabel()
         label.configMultipleLineLabel()
 
-        let textColor = UIColor.from(scheme: .textForeground)
+        let textColor = SemanticColors.Label.textDefault
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -66,7 +66,7 @@ final class WipeDatabaseViewController: UIViewController {
                                 UIFont.normalRegularFont &&
                                 baseAttributes
         let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) &&
-                                FontSpec(.normal, .bold).font! &&
+                                FontSpec.normalBoldFont.font! &&
                                 baseAttributes
 
         label.text = " "
@@ -75,19 +75,10 @@ final class WipeDatabaseViewController: UIViewController {
         return label
     }()
 
-    private lazy var confirmButton: LegacyButton = {
-        let button: LegacyButton
+    private lazy var confirmButton: Button = {
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
 
-        switch ColorScheme.default.variant {
-        case .light:
-            button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
-            button.setBackgroundImageColor(UIColor.WipeDatabase.buttonRed, for: .normal)
-        case .dark:
-            button = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallSemiboldFont)
-            button.setTitleColor(UIColor.WipeDatabase.buttonRed, for: .normal)
-        }
-
-        button.setTitle("wipe_database.button.title".localized(uppercased: true), for: .normal)
+        button.setTitle("wipe_database.button.title".localized, for: .normal)
 
         button.addTarget(self, action: #selector(onConfirmButtonPressed(sender:)), for: .touchUpInside)
 
@@ -102,7 +93,7 @@ final class WipeDatabaseViewController: UIViewController {
     convenience init() {
         self.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = UIColor.from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         [stackView,
          confirmButton].forEach {

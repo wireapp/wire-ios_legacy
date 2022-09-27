@@ -1887,7 +1887,7 @@
 "create_passcode.title_label" = "Create a passcode";
 "create_passcode.info_label" = "It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**";
 "create_passcode.info_label_forced_applock" = "Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**";
-"create_passcode.create_button.title" = "create passcode";
+"create_passcode.create_button.title" = "Create Passcode";
 
 // Custom app lock - create passcode validation
 "create_passcode.validation.too_short" = "At least eight characters long";
@@ -1915,7 +1915,7 @@
 "wipe_database.info_label" = "The data stored on this device can only be accessed with your passcode.\n\nIf you have forgotten your passcode, you can delete the database to log in again as a new device.\n\nBy deleting the database, ";
 "wipe_database.info_label.highlighted" = "all local data and messages for this account will be permanently deleted.";
 
-"wipe_database.button.title" = "I want to delete the database";
+"wipe_database.button.title" = "I Want To Delete The Database";
 
 // Wipe database alert
 
