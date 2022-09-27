@@ -166,6 +166,7 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.setIconColor(UIColor.from(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.setTitleColor(SemanticColors.Label.textDefaultWhite, for: .normal)
         confirmButton.setTitleColor(SemanticColors.Label.textDefaultWhite, for: .highlighted)
+        confirmButton.setTitleColor(SemanticColors.Button.textDisabledAddParticipants, for: .disabled)
         confirmButton.titleLabel?.font = .largeButtonSemiboldFont
         confirmButton.backgroundColor = .gray
         confirmButton.contentHorizontalAlignment = .center
