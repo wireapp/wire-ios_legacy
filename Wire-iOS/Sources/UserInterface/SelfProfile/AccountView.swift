@@ -109,7 +109,7 @@ class BaseAccountView: UIView {
         }
     }
 
-    var selected: Bool = false {
+    var selected: Bool = true {
         didSet {
             updateAppearance()
         }
@@ -214,6 +214,14 @@ class BaseAccountView: UIView {
         }
 
         updateAppearance()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+
+        selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
 
     required init?(coder aDecoder: NSCoder) {
