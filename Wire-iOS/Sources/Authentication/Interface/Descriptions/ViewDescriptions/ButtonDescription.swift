@@ -44,6 +44,18 @@ final class UnderlineButtonDescription {
     }
 }
 
+final class SecondaryButtonDescription {
+
+    var buttonTapped: (() -> Void)?
+    let title: String
+    let accessibilityIdentifier: String
+
+    init(title: String, accessibilityIdentifier: String) {
+        self.title = title
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+}
+
 extension UnderlineButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
@@ -60,10 +72,28 @@ extension UnderlineButtonDescription: ViewDescriptor {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(attributeString, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
-        button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(UnderlineButtonDescription.buttonTapped(_:)), for: .touchUpInside)
         return button
     }
 
+    @objc dynamic func buttonTapped(_ sender: UIButton) {
+        buttonTapped?()
+    }
+}
+
+extension SecondaryButtonDescription: ViewDescriptor {
+    func create() -> UIView {
+        let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
+        button.applyStyle(.secondaryTextButtonStyle)
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
+        button.layer.cornerRadius = 12
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.accessibilityIdentifier = self.accessibilityIdentifier
+        button.addTarget(self, action: #selector(SecondaryButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        return button
+
+    }
     @objc dynamic func buttonTapped(_ sender: UIButton) {
         buttonTapped?()
     }

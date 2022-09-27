@@ -28,7 +28,7 @@ class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDesc
     weak var actioner: AuthenticationActioner?
 
     init() {
-        let restoreButton = ButtonDescription(title: "registration.no_history.restore_backup".localized(uppercased: true), accessibilityIdentifier: "restore_backup")
+        let restoreButton = SecondaryButtonDescription(title: "registration.no_history.restore_backup".localized, accessibilityIdentifier: "restore_backup")
         views = [restoreButton]
 
         restoreButton.buttonTapped = { [weak self] in
@@ -65,6 +65,7 @@ class BackupRestoreStepDescription: AuthenticationStepDescription {
             secondaryView = nil
             return
         }
+
         secondaryView = BackupRestoreStepDescriptionSecondaryView()
     }
 
