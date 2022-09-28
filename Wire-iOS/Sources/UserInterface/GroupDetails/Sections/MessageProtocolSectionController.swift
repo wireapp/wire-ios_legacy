@@ -114,6 +114,13 @@ final class MessageProtocolSectionController: GroupDetailsSectionController {
         return size
     }
 
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        return
+    }
+
 }
 
 private extension MessageProtocol {
