@@ -31,6 +31,7 @@ private extension UIImage {
 
 class ImagePickerManager: NSObject {
 
+    // MARK: - Properties
     private var currentVC: UIViewController?
     private var sourceType: UIImagePickerController.SourceType?
     private var completion: ((UIImage) -> Void)?
@@ -38,11 +39,17 @@ class ImagePickerManager: NSObject {
     /// We need to store this reference to close the UIImagePickerController
     weak var presentingPickerController: UIImagePickerController?
 
+    // MARK: - Methods
     func showActionSheet(vc: UIViewController?,
                          completion: @escaping (UIImage) -> Void) {
         self.currentVC = vc
         self.completion = completion
 
+        let actionSheet = imagePickerAlert()
+        currentVC?.present(actionSheet, animated: true)
+    }
+
+    private func imagePickerAlert() -> UIAlertController{
         typealias Alert = L10n.Localizable.Self.Settings.AccountPictureGroup.Alert
         let actionSheet = UIAlertController(title: Alert.title,
                                             message: nil,
@@ -65,7 +72,7 @@ class ImagePickerManager: NSObject {
         // Cancel
         actionSheet.addAction(.cancel())
 
-        currentVC?.present(actionSheet, animated: true)
+        return actionSheet
     }
 
     private func getImage(fromSourceType sourceType: UIImagePickerController.SourceType) {
