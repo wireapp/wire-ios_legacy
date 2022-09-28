@@ -41,7 +41,7 @@ final class Job: NSObject, Loggable {
     private let request: UNNotificationRequest
     private let userID: UUID
     private let eventID: UUID
-    private let coreDataStack: CoreDataStack?
+    private let eventDecoder: EventDecodingProtocol
 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
     private let networkSession: NetworkSessionProtocol
@@ -52,7 +52,7 @@ final class Job: NSObject, Loggable {
 
     init(
         request: UNNotificationRequest,
-        coreDataStack: CoreDataStack,
+        eventDecoder: EventDecodingProtocol,
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil
@@ -61,7 +61,7 @@ final class Job: NSObject, Loggable {
         let (userID, eventID) = try Self.pushPayload(from: request)
         self.userID = userID
         self.eventID = eventID
-        self.coreDataStack = coreDataStack
+        self.eventDecoder = eventDecoder
 
         let session = try networkSession ?? NetworkSession(userID: userID)
         self.networkSession = session
@@ -98,12 +98,11 @@ final class Job: NSObject, Loggable {
     }
 
     private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
-        guard let coreDataStack = coreDataStack else { throw NotificationServiceError.noAccount }
-
-        let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
-
         guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
+        
+        logger.trace("\(updatedEvent.payload.debugDescription ?? "", privacy: .public): payload")
+        logger.trace("\(updatedEvent.payload.optionalString(forKey: "external") ?? "", privacy: .public): payload external")
         guard let message = GenericMessage(from: updatedEvent) else { throw NotificationServiceError.noGenericMessage }
         guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
 
@@ -139,16 +138,4 @@ final class Job: NSObject, Loggable {
         return try await notificationsAPIClient.fetchEvent(eventID: eventID)
     }
 
-}
-
-
-extension EventDecoder {
-
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
-        return await withCheckedContinuation { continuation in
-            decryptAndStoreEvents(events) { decryptedEvents in
-                continuation.resume(with: .success(decryptedEvents))
-            }
-        }
-    }
 }

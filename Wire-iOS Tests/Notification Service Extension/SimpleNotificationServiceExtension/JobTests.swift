@@ -36,7 +36,7 @@ class JobTests: XCTestCase {
 
         sut = try Job(
             request: notificationRequest,
-            coreDataStack: dataStack,
+            eventDecoder: eventDecoder,
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
             notificationsAPIClient: mockNotificationsAPIClient
@@ -68,15 +68,27 @@ class JobTests: XCTestCase {
         )
     }()
 
-    lazy var dataStack: CoreDataStack = {
-        let groupID = Bundle.main.applicationGroupIdentifier!
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
+    lazy var eventDecoder: MockEventDecoder = {
+        let decoder = MockEventDecoder()
+        decoder.mockDecodeEvent = {
+            let payload: [String: Any] = [
+                            "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
+                            "time": "2022-09-21T12:13:32.173Z",
+                            "type": "conversation.otr-message-add",
+                            "payload": [
+                                "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
+                            ]
+                        ]
 
-        let account = Account(userName: "", userIdentifier: userID)
-        return CoreDataStack(
-            account: account,
-            applicationContainer: sharedContainerURL
-        )
+                        return [ZMUpdateEvent(
+                            uuid: self.eventID,
+                            payload: payload,
+                            transient: false,
+                            decrypted: true,
+                            source: .pushNotification
+                        )!]
+        }
+        return decoder
     }()
 
     // MARK: - Execute
@@ -122,41 +134,40 @@ class JobTests: XCTestCase {
         }
     }
 
-    // TODO: need to mock CoreDataStack to return correct message and check it
-//    func test_Execute_NewMessageEvent_Content() async throws {
-//        // Given
-//        mockAccessAPIClient.mockFetchAccessToken = {
-//            AccessToken(token: "12345", type: "Bearer", expiresInSeconds: 10)
-//        }
-//
-//        mockNotificationsAPIClient.mockFetchEvent = { eventID in
-//            XCTAssertEqual(eventID, self.eventID)
-//
-//            let payload: [String: Any] = [
-//                "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
-//                "time": "2022-09-21T12:13:32.173Z",
-//                "type": "conversation.otr-message-add",
-//                "payload": [
-//                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
-//                ]
-//            ]
-//
-//            return ZMUpdateEvent(
-//                uuid: eventID,
-//                payload: payload,
-//                transient: false,
-//                decrypted: false,
-//                source: .pushNotification
-//            )!
-//        }
-//        
-//        // Then
-//        await assertThrows(expectedError: NotificationServiceError.noAccount) {
-//            // When
-//            _ = try await self.sut.execute()
-//        }
-//
-//    }
+    func test_Execute_NewMessageEvent_Content() async throws {
+        // Given
+        mockAccessAPIClient.mockFetchAccessToken = {
+            AccessToken(token: "12345", type: "Bearer", expiresInSeconds: 10)
+        }
+
+        mockNotificationsAPIClient.mockFetchEvent = { eventID in
+            XCTAssertEqual(eventID, self.eventID)
+
+            let payload: [String: Any] = [
+                "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
+                "time": "2022-09-21T12:13:32.173Z",
+                "type": "conversation.otr-message-add",
+                "payload": [
+                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
+                ]
+            ]
+
+            return ZMUpdateEvent(
+                uuid: eventID,
+                payload: payload,
+                transient: false,
+                decrypted: false,
+                source: .pushNotification
+            )!
+        }
+
+        // Then
+        await assertThrows(expectedError: NotificationServiceError.noAccount) {
+            // When
+            _ = try await self.sut.execute()
+        }
+
+    }
 
     func test_Execute_NotNewMessageEvent_Content() async throws {
         // Given
@@ -192,6 +203,17 @@ class JobTests: XCTestCase {
         XCTAssertEqual(result, .empty)
     }
 
+}
+
+class MockEventDecoder: EventDecodingProtocol {
+    var mockDecodeEvent: (() async -> [ZMUpdateEvent])?
+
+    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
+        guard let mock = mockDecodeEvent else {
+            fatalError("no mock for `decodeEvent`")
+        }
+        return await mock()
+    }
 }
 
 class MockNetworkSession: NetworkSessionProtocol {
