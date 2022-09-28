@@ -255,21 +255,6 @@ extension SettingsCellDescriptorFactory {
         return SettingsCopyButtonCellDescriptor()
     }
 
-//    func pictureElement1() -> SettingsCellDescriptorType {
-//        let previewGenerator: PreviewGeneratorType = { _ in
-//            guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
-//            return .image(image)
-//        }
-//
-//        return SettingsExternalScreenCellDescriptor(
-//            title: "self.settings.account_picture_group.picture".localized,
-//            isDestructive: false,
-//            presentationStyle: .modal,
-//            presentationAction: ProfileSelfPictureViewController.init,
-//            previewGenerator: previewGenerator
-//        )
-//    }
-
     func pictureElement() -> SettingsCellDescriptorType {
         let appearancePreview: AppearancePreviewType = { _ in
             guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
