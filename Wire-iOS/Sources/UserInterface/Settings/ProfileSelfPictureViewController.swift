@@ -39,6 +39,7 @@ final class ProfileSelfPictureViewController: UIViewController {
 
         imagePickerConfirmationController.imagePickedBlock = { [weak self] imageData in
             self?.dismiss(animated: true)
+            print(self)
             self?.setSelfImageTo(imageData)
         }
 
@@ -68,6 +69,7 @@ final class ProfileSelfPictureViewController: UIViewController {
     // MARK: - Button Handling
     @objc
     private func closeButtonTapped(_ sender: Any?) {
+        print(presentingViewController)
         presentingViewController?.dismiss(animated: true)
     }
 

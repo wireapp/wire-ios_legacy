@@ -20,6 +20,7 @@ import UIKit
 import WireCommonComponents
 
 class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
+
     let titleLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
@@ -43,10 +44,42 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         iconView.clipsToBounds = true
         iconView.layer.cornerRadius = 15
         iconView.contentMode = .scaleAspectFill
-        iconView.accessibilityIdentifier = "iconView"
 
         return iconView
     }()
+
+    let accessoryIconView: UIImageView = {
+        let iconView = UIImageView()
+        iconView.clipsToBounds = true
+        iconView.contentMode = .scaleAspectFill
+        iconView.setTemplateIcon(.pencil, size: .tiny)
+        iconView.tintColor = SemanticColors.Icon.foregroundDefault
+
+        return iconView
+    }()
+
+    var type: AppearanceType = .none {
+        didSet {
+            switch type {
+            case .image(let image):
+                iconImageView.image = image
+                iconImageView.backgroundColor = UIColor.clear
+                subtitleLabel.text = nil
+                accessoryIconView.isHidden = false
+            case .color(let color):
+                iconImageView.backgroundColor = color
+                iconImageView.image = .none
+                subtitleLabel.text = AccentColor.current.name
+                accessoryIconView.isHidden = true
+            case .none:
+                subtitleLabel.text = nil
+                iconImageView.backgroundColor = UIColor.clear
+                iconImageView.image = .none
+                accessoryIconView.isHidden = true
+            }
+            layoutIfNeeded()
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,13 +89,18 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
     }
 
     private func createConstraints() {
-        [titleLabel, subtitleLabel, iconImageView].prepareForLayout()
+        [titleLabel, subtitleLabel, iconImageView, accessoryIconView].prepareForLayout()
+
+        let centerConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        centerConstraint.priority = .defaultLow
+
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            centerConstraint,
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),
 
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             subtitleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),
 
             iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),
@@ -70,23 +108,26 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
+            accessoryIconView.widthAnchor.constraint(equalTo: accessoryIconView.heightAnchor),
+            accessoryIconView.heightAnchor.constraint(equalToConstant: 16),
+            accessoryIconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            accessoryIconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
     }
 
     private func setupView() {
-        [titleLabel, subtitleLabel, iconImageView].forEach {
+        [titleLabel, subtitleLabel, iconImageView, accessoryIconView].forEach {
             contentView.addSubview($0)
         }
-
     }
 
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .appearance(title) = configuration else { preconditionFailure() }
         titleLabel.text = title
-        subtitleLabel.text = AccentColor.current.name
-        iconImageView.backgroundColor = .accent()
     }
+
 }
 
 private extension AccentColor {

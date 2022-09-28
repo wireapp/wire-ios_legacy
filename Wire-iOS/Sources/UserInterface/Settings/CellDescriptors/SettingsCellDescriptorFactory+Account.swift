@@ -255,25 +255,38 @@ extension SettingsCellDescriptorFactory {
         return SettingsCopyButtonCellDescriptor()
     }
 
+//    func pictureElement1() -> SettingsCellDescriptorType {
+//        let previewGenerator: PreviewGeneratorType = { _ in
+//            guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
+//            return .image(image)
+//        }
+//
+//        return SettingsExternalScreenCellDescriptor(
+//            title: "self.settings.account_picture_group.picture".localized,
+//            isDestructive: false,
+//            presentationStyle: .modal,
+//            presentationAction: ProfileSelfPictureViewController.init,
+//            previewGenerator: previewGenerator
+//        )
+//    }
+
     func pictureElement() -> SettingsCellDescriptorType {
-        let previewGenerator: PreviewGeneratorType = { _ in
+        let appearancePreview: AppearancePreviewType = { _ in
             guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
             return .image(image)
         }
-
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.account_picture_group.picture".localized,
-            isDestructive: false,
+        return SettingsAppearanceCellDescriptor(
+            text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture,
+            appearancePreview: appearancePreview,
             presentationStyle: .modal,
-            presentationAction: ProfileSelfPictureViewController.init,
-            previewGenerator: previewGenerator
-        )
+            presentationAction: AccentColorPickerController.init)
     }
 
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsAppearanceCellDescriptor(
             text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
-            appearanceType: .color,
+            appearancePreview: { _ in .color(ZMUser.selfUser().accentColor) },
+            presentationStyle: .navigation,
             presentationAction: AccentColorPickerController.init)
     }
 

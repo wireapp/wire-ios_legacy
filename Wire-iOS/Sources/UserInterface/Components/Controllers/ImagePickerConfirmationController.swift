@@ -56,6 +56,7 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
              .savedPhotosAlbum:
 
             let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
+                picker.dismiss(animated: true)
                 self?.imagePickedBlock?((editedImage ?? image).pngData())
             }
 
