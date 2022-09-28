@@ -312,7 +312,7 @@ extension SettingsTableViewController: ZMUserObserver {
             note.user.fetchProfileImage(session: userSession,
                                         imageCache: UIImage.defaultUserImageCache,
                                         sizeLimit: nil,
-                                        isDesaturated: false) { [weak self] (image, _) in
+                                        isDesaturated: false) { [weak self] (_, _) in
                 self?.refreshData()
             }
         }

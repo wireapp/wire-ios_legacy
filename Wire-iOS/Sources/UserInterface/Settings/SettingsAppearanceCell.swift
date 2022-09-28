@@ -94,7 +94,6 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         let centerConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         centerConstraint.priority = .defaultLow
 
-
         NSLayoutConstraint.activate([
             centerConstraint,
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),

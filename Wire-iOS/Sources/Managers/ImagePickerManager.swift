@@ -49,21 +49,21 @@ class ImagePickerManager: NSObject {
         currentVC?.present(actionSheet, animated: true)
     }
 
-    private func imagePickerAlert() -> UIAlertController{
+    private func imagePickerAlert() -> UIAlertController {
         typealias Alert = L10n.Localizable.Self.Settings.AccountPictureGroup.Alert
         let actionSheet = UIAlertController(title: Alert.title,
                                             message: nil,
                                             preferredStyle: .actionSheet)
 
         // Choose from gallery
-        let galleryAction = UIAlertAction(title: Alert.choosePicture, style: .default) { [weak self] action -> Void in
+        let galleryAction = UIAlertAction(title: Alert.choosePicture, style: .default) { [weak self] _ -> Void in
             self?.sourceType = .photoLibrary
             self?.getImage(fromSourceType: .photoLibrary)
         }
         actionSheet.addAction(galleryAction)
 
         // Take photo
-        let cameraAction = UIAlertAction(title: Alert.takePicture, style: .default) { [weak self] action -> Void in
+        let cameraAction = UIAlertAction(title: Alert.takePicture, style: .default) { [weak self] _ -> Void in
             self?.sourceType = .camera
             self?.getImage(fromSourceType: .camera)
         }
@@ -108,8 +108,7 @@ class ImagePickerManager: NSObject {
 
  extension ImagePickerManager: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-     public func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
         presentingPickerController = picker
         guard let imageFromInfo = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
