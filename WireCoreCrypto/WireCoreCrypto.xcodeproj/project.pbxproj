@@ -12,8 +12,8 @@
 		EE212A7E283E5BC000AB1040 /* WireCoreCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A7D283E5BC000AB1040 /* WireCoreCryptoTests.swift */; };
 		EE212A7F283E5BC000AB1040 /* WireCoreCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = EE212A71283E5BC000AB1040 /* WireCoreCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE212A8A283E5DE700AB1040 /* CoreCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE212A89283E5DE700AB1040 /* CoreCryptoSwift.swift */; };
-		EE51AB6428DC51B300BB7E55 /* libcore_crypto_ffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE51AB6328DC51B300BB7E55 /* libcore_crypto_ffi.a */; };
 		EE59EBB2287F01F10080A36C /* core_cryptoFFI.h in Headers */ = {isa = PBXBuildFile; fileRef = EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		EE62F9EA28E4414500A61770 /* libcore_crypto_ffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE62F9E928E4414500A61770 /* libcore_crypto_ffi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +35,8 @@
 		EE212A89283E5DE700AB1040 /* CoreCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreCryptoSwift.swift; sourceTree = "<group>"; };
 		EE212A8C283E5F2600AB1040 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcore_crypto_ffi.a; path = CoreCryptoRust/libcore_crypto_ffi.a; sourceTree = "<group>"; };
 		EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = WireCoreCrypto.modulemap; sourceTree = "<group>"; };
-		EE51AB6328DC51B300BB7E55 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi.a; sourceTree = "<group>"; };
 		EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_cryptoFFI.h; sourceTree = "<group>"; };
+		EE62F9E928E4414500A61770 /* libcore_crypto_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcore_crypto_ffi.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE51AB6428DC51B300BB7E55 /* libcore_crypto_ffi.a in Frameworks */,
+				EE62F9EA28E4414500A61770 /* libcore_crypto_ffi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +64,7 @@
 			children = (
 				EE212A9C283E609A00AB1040 /* WireCoreCrypto.modulemap */,
 				EE59EBB1287F01F10080A36C /* core_cryptoFFI.h */,
-				EE51AB6328DC51B300BB7E55 /* libcore_crypto_ffi.a */,
+				EE62F9E928E4414500A61770 /* libcore_crypto_ffi.a */,
 				EE212A70283E5BC000AB1040 /* WireCoreCrypto */,
 				EE212A7C283E5BC000AB1040 /* WireCoreCryptoTests */,
 				EE212A6F283E5BC000AB1040 /* Products */,

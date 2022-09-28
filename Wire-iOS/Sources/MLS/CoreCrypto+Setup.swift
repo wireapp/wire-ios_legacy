@@ -22,11 +22,15 @@ import WireSyncEngine
 
 extension CoreCrypto {
     static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCrypto {
-        return try .init(
+        let coreCrypto =  try CoreCrypto(
             path: configuration.path,
             key: configuration.key,
             clientId: configuration.clientId,
             entropySeed: nil
         )
+
+        Logging.mls.info("Instantiated CoreCrypto (\(version()))")
+
+        return coreCrypto
     }
 }
