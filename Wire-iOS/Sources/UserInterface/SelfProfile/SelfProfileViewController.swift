@@ -179,19 +179,13 @@ final class SelfProfileViewController: UIViewController {
         guard userCanSetProfilePicture else { return }
         imagePickerManager.showActionSheet(vc: self) { [weak self] image in
             self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
-            self?.setSelfImageTo(image.pngData())
+            guard let selfImageData = image.pngData(), let jpegData = selfImageData.jpegData else {
+                return
+            }
+            ZMUserSession.shared()?.enqueue({
+                ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
+            })
         }
-    }
-
-    /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
-    private func setSelfImageTo(_ selfImageData: Data?) {
-        // iOS11 uses HEIF image format, but BE expects JPEG
-        guard let selfImageData = selfImageData,
-              let jpegData: Data = selfImageData.isJPEG ? selfImageData : UIImage(data: selfImageData)?.jpegData(compressionQuality: 1.0) else { return }
-
-        ZMUserSession.shared()?.enqueue({
-            ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
-        })
     }
 
     override func accessibilityPerformEscape() -> Bool {
