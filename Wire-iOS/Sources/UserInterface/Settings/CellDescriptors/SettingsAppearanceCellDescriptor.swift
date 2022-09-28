@@ -28,8 +28,7 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
     private var text: String
     private let appearancePreview: AppearancePreviewType?
     private let presentationStyle: PresentationStyle
-    private let imagePickerConfirmationController = ImagePickerConfirmationController()
-    private let imagePickerController = UIImagePickerController()
+    private let imagePickerManager = ImagePickerManager()
 
     weak var viewController: UIViewController?
     let presentationAction: () -> (UIViewController?)
@@ -54,17 +53,6 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         self.appearancePreview = appearancePreview
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
-
-        imagePickerConfirmationController.imagePickedBlock = { [weak self] imageData in
-//            print(self?.viewController)
-//            print(self?.viewController?.presentedViewController)
-//            print(self?.viewController?.presentationController)
-//            print(self?.viewController?.presentingViewController)
-//            print(self?.viewController?.parent)
-            self?.imagePickerController.dismiss(animated: true) {
-                self?.setSelfImageTo(imageData)
-            }
-        }
 
     }
 
@@ -93,61 +81,13 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
 
         switch self.presentationStyle {
         case .modal:
-            UIAlertController.presentProfilePicturePicker()
+            imagePickerManager.showActionSheet(vc: viewController) { [weak self] image in
+                self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
+                self?.setSelfImageTo(image.pngData())
+            }
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         }
-    }
-
-    func presentProfilePicturePicker1() {
-        typealias Alert = L10n.Localizable.Self.Settings.AccountPictureGroup.Alert
-
-        let actionSheet = UIAlertController(title: Alert.title,
-                                            message: nil,
-                                            preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: Alert.choosePicture, style: .default, handler: { [weak self] (_) in
-            self?.chooseFromLibraryAction()
-        }))
-
-        actionSheet.addAction(UIAlertAction(title: Alert.takePicture, style: .default, handler: { [weak self] (_) in
-            self?.takePhotoAction1()
-        }))
-        actionSheet.addAction(.cancel())
-
-        viewController?.present(actionSheet, animated: true)
-    }
-
-    @objc
-    private func chooseFromLibraryAction() {
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.mediaTypes = [kUTTypeImage as String]
-        imagePickerController.delegate = imagePickerConfirmationController
-
-        if let viewController = viewController, viewController.isIPadRegular() {
-            imagePickerController.modalPresentationStyle = .popover
-            let popover: UIPopoverPresentationController? = imagePickerController.popoverPresentationController
-
-            popover?.backgroundColor = UIColor.white
-        }
-
-        viewController?.present(imagePickerController, animated: true)
-    }
-
-    @objc
-    private func takePhotoAction1() {
-        if !UIImagePickerController.isSourceTypeAvailable(.camera) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
-            return
-        }
-
-        let picker = UIImagePickerController()
-
-        picker.sourceType = .camera
-        picker.delegate = imagePickerConfirmationController
-        picker.allowsEditing = true
-        picker.cameraDevice = .front
-        picker.mediaTypes = [kUTTypeImage as String]
-        picker.modalTransitionStyle = .coverVertical
-        viewController?.present(picker, animated: true)
     }
 
     /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
