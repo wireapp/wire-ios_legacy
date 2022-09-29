@@ -47,7 +47,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         }
 
         set {
-            // no-op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -57,7 +57,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         }
 
         set {
-            // no-op
+            super.accessibilityValue = newValue
         }
     }
 
@@ -66,7 +66,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             return toggle.accessibilityTraits
         }
         set {
-            // no-op
+            super.accessibilityTraits = newValue
         }
     }
 

@@ -31,7 +31,7 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         }
 
         set {
-            // no-op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -41,7 +41,7 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         }
 
         set {
-            // no-op
+            super.accessibilityValue = newValue
         }
     }
 
@@ -52,7 +52,7 @@ final class ConversationCreateOptionsCell: RightIconDetailsCell {
         }
 
         set {
-            // no-op
+            super.accessibilityHint = newValue
         }
     }
 

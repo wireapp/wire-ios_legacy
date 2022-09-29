@@ -35,7 +35,7 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
 
         set {
-            // no-op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -45,7 +45,7 @@ class IconToggleCell: DetailsCollectionViewCell {
         }
 
         set {
-            // no-op
+            super.accessibilityValue = newValue
         }
     }
 
@@ -54,7 +54,7 @@ class IconToggleCell: DetailsCollectionViewCell {
             return toggle.accessibilityTraits
         }
         set {
-            // no-op
+            super.accessibilityTraits = newValue
         }
     }
 
