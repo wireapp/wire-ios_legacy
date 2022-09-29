@@ -26,7 +26,7 @@ extension ValidatedTextField {
         let textField = ValidatedTextField(kind: kind,
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
-                                           cornerRadius: 4,
+                                           cornerRadius: 16,
                                            setNewColors: setNewColors)
 
         textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
