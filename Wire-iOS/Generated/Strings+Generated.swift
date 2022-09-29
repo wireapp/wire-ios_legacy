@@ -1659,14 +1659,14 @@ internal enum L10n {
       }
     }
     internal enum CreatePasscode {
-      /// It will be used to unlock Wire. If you forget this passcode **it can not be recovered.**
+      /// The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.
       internal static let infoLabel = L10n.tr("Localizable", "create_passcode.info_label")
-      /// Create a passcode to unlock Wire. Please remember it, as **it can not be recovered.**
+      /// The app will lock itself after a certain time of inactivity. To unlock the app you need to enter this passcode. Make sure to remember it as there is no way to recover.
       internal static let infoLabelForcedApplock = L10n.tr("Localizable", "create_passcode.info_label_forced_applock")
-      /// Create a passcode
+      /// Set a passcode
       internal static let titleLabel = L10n.tr("Localizable", "create_passcode.title_label")
       internal enum CreateButton {
-        /// Create Passcode
+        /// Set a Passcode
         internal static let title = L10n.tr("Localizable", "create_passcode.create_button.title")
       }
       internal enum Textfield {
