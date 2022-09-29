@@ -1901,7 +1901,7 @@
 "unlock.title_label" = "Enter passcode to unlock Wire";
 "unlock.wipe_button" = "Forgot your app lock passcode?";
 "unlock.error_label" = "Wrong passcode";
-"unlock.submit_button.title" = "unlock";
+"unlock.submit_button.title" = "Unlock";
 
 // Custom app lock - warning screen
 "warning_screen.title_label" = "There was a change in Wire";

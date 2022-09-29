@@ -4516,7 +4516,7 @@ internal enum L10n {
       /// Forgot your app lock passcode?
       internal static let wipeButton = L10n.tr("Localizable", "unlock.wipe_button")
       internal enum SubmitButton {
-        /// unlock
+        /// Unlock
         internal static let title = L10n.tr("Localizable", "unlock.submit_button.title")
       }
       internal enum Textfield {

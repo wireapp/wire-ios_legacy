@@ -39,9 +39,6 @@ final class UnlockViewController: UIViewController {
     private let selfUser: UserType
     private var userSession: Session?
 
-    private let shieldView = UIView.shieldView()
-    private let blurView: UIVisualEffectView = UIVisualEffectView.blurView()
-
     private let stackView: UIStackView = UIStackView.verticalStackView()
     private let upperStackView = UIStackView.verticalStackView()
 
@@ -115,10 +112,8 @@ final class UnlockViewController: UIViewController {
         return label
     }()
 
-    private lazy var wipeButton: UIButton = {
-        let button = StylableButton()
-        button.applyStyle(.primaryTextButtonStyle)
-        button.titleLabel?.font = FontSpec.mediumRegularFont.font!
+    private lazy var wipeButton: Button = {
+        let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumRegularFont)
 
         button.setTitle("unlock.wipe_button".localized, for: .normal)
 
@@ -133,9 +128,9 @@ final class UnlockViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = .black
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
-        [shieldView, blurView, contentView].forEach {
+        [contentView].forEach {
             view.addSubview($0)
         }
 
@@ -179,8 +174,6 @@ final class UnlockViewController: UIViewController {
 
         [userImageView,
          nameLabel,
-         shieldView,
-         blurView,
          contentView,
          upperStackView,
          stackView].prepareForLayout()
@@ -190,18 +183,6 @@ final class UnlockViewController: UIViewController {
         let contentPadding: CGFloat = 24
 
         NSLayoutConstraint.activate([
-            // nibView
-            shieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            shieldView.topAnchor.constraint(equalTo: view.topAnchor),
-            shieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            shieldView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            // blurView
-            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: view.topAnchor),
-            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
             // content view
             widthConstraint,
             contentView.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat.iPhone4_7Inch.width),
@@ -256,7 +237,7 @@ final class UnlockViewController: UIViewController {
     func showWrongPasscodeMessage() {
 
         let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle,
-                                                                with: SemanticColors.Label.textWarning,
+                                                             with: SemanticColors.Label.textWarning,
                                                              iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize,
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
