@@ -56,7 +56,7 @@ extension AppLockModule.View {
             return label
         }()
 
-        private let actionButton = Button(style: .primaryTextButtonStyle, fontSpec: .mediumSemiboldFont)
+        private let actionButton = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
         private var contentWidthConstraint: NSLayoutConstraint!
         private var contentCenterConstraint: NSLayoutConstraint!

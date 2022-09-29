@@ -161,7 +161,7 @@ internal enum L10n {
     }
     internal enum AppLockModule {
       internal enum GoToSettingsButton {
-        /// Go to settings
+        /// Go to Settings
         internal static let title = L10n.tr("Localizable", "appLockModule.goToSettingsButton.title")
       }
       internal enum Message {
