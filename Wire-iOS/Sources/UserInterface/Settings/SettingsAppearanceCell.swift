@@ -58,6 +58,8 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         return iconView
     }()
 
+    private lazy var titleLabelToIconInset: NSLayoutConstraint = titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22)
+
     var type: AppearanceType = .none {
         didSet {
             switch type {
@@ -66,16 +68,19 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
                 iconImageView.backgroundColor = UIColor.clear
                 subtitleLabel.text = nil
                 accessoryIconView.isHidden = false
+                titleLabelToIconInset.isActive = true
             case .color(let color):
                 iconImageView.backgroundColor = color
                 iconImageView.image = .none
                 subtitleLabel.text = AccentColor.current.name
                 accessoryIconView.isHidden = true
+                titleLabelToIconInset.isActive = true
             case .none:
                 subtitleLabel.text = nil
                 iconImageView.backgroundColor = UIColor.clear
                 iconImageView.image = .none
                 accessoryIconView.isHidden = true
+                titleLabelToIconInset.isActive = false
             }
             layoutIfNeeded()
         }
@@ -94,9 +99,11 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         let centerConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         centerConstraint.priority = .defaultLow
 
+        let leadingConstraint = titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12)
+        leadingConstraint.priority = .defaultHigh
+
         NSLayoutConstraint.activate([
             centerConstraint,
-            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22),
 
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
@@ -107,6 +114,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
+            leadingConstraint,
             accessoryIconView.widthAnchor.constraint(equalTo: accessoryIconView.heightAnchor),
             accessoryIconView.heightAnchor.constraint(equalToConstant: 16),
             accessoryIconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),

@@ -19,14 +19,15 @@
 import UIKit
 import MobileCoreServices
 
-private extension UIImage {
+extension UIImage {
 
-    var flattened: UIImage {
-        if imageOrientation == .up { return self }
-
-        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { _ in draw(at: .zero) }
+    var jpegData: Data? {
+        guard let imageData = self.pngData() else {
+            return nil
+        }
+        return imageData.isJPEG ? imageData : UIImage(data: imageData)?.jpegData(compressionQuality: 1.0)
     }
-
+    
 }
 
 class ImagePickerManager: NSObject {

@@ -179,7 +179,7 @@ final class SelfProfileViewController: UIViewController {
         guard userCanSetProfilePicture else { return }
         imagePickerManager.showActionSheet(vc: self) { [weak self] image in
             self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
-            guard let selfImageData = image.pngData(), let jpegData = selfImageData.jpegData else {
+            guard let jpegData = image.jpegData else {
                 return
             }
             ZMUserSession.shared()?.enqueue({

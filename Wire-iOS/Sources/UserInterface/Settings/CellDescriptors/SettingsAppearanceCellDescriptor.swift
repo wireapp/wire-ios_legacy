@@ -83,7 +83,7 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         case .modal:
             imagePickerManager.showActionSheet(vc: viewController) { [weak self] image in
                 self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
-                guard let selfImageData = image.pngData(), let jpegData = selfImageData.jpegData else {
+                guard let jpegData = image.jpegData else {
                     return
                 }
                 ZMUserSession.shared()?.enqueue({

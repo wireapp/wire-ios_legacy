@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 import Foundation
 
 extension Data {
@@ -27,9 +26,5 @@ extension Data {
 
         let JPEGHeader: [UInt8] = [0xFF, 0xD8, 0xFF]
         return Array(array.prefix(JPEGHeader.count)) == JPEGHeader
-    }
-
-    var jpegData: Data? {
-        return self.isJPEG ? self : UIImage(data: self)?.jpegData(compressionQuality: 1.0)
     }
 }
