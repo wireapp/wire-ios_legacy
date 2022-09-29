@@ -20,14 +20,12 @@ import UIKit
 import MobileCoreServices
 
 extension UIImage {
-
     var jpegData: Data? {
         guard let imageData = self.pngData() else {
             return nil
         }
         return imageData.isJPEG ? imageData : UIImage(data: imageData)?.jpegData(compressionQuality: 1.0)
     }
-    
 }
 
 class ImagePickerManager: NSObject {
