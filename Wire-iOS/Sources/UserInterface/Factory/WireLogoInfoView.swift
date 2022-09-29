@@ -47,21 +47,19 @@ final class WireLogoInfoView: UIView {
     }()
 
     let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec.largeSemiboldFont.font!
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.accessibilityValue = label.text
-        label.textColor = SemanticColors.Label.textDefault
         return label
     }()
 
     let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec.normalRegularFont.font!
+        let label = DynamicFontLabel(fontSpec: .normalRegularFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.accessibilityValue = label.text
-        label.textColor = SemanticColors.Label.textDefault
         return label
     }()
 

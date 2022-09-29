@@ -52,12 +52,11 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     }()
 
     let informationLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontSpec(.normal, .semibold).font!
+        let label = DynamicFontLabel(text: "login.sso.backend_switch.information".localized,
+                                     fontSpec: .normalSemiboldFont,
+                                     color: SemanticColors.Label.textDefault)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = .black
-        label.text = "login.sso.backend_switch.information".localized
         label.accessibilityValue = label.text
         return label
     }()
@@ -65,7 +64,7 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         navigationController?.navigationBar.barStyle = .black
 
         configureSubviews()
