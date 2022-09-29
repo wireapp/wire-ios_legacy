@@ -61,7 +61,7 @@ final class UnlockViewController: UIViewController {
     }()
 
     lazy var validatedTextField: ValidatedTextField = {
-        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self)
+        let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self, setNewColors: true)
         textField.placeholder = "unlock.textfield.placeholder".localized
         textField.delegate = self
         textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
