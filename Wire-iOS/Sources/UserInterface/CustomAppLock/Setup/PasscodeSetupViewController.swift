@@ -159,7 +159,7 @@ final class PasscodeSetupViewController: UIViewController {
         PasscodeError.allCases.forEach {
             if let label = validationLabels[$0] {
                 label.font = FontSpec.smallSemiboldFont.font!
-                label.textColor = SemanticColors.Label.textDefault
+                label.textColor = SemanticColors.Label.textPasswordRulesCheck
                 label.numberOfLines = 0
                 label.attributedText = $0.descriptionWithInvalidIcon
                 label.isEnabled = false
