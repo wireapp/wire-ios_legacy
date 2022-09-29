@@ -24,7 +24,7 @@ final class WireLogoInfoView: UIView {
 
     let headerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = SemanticColors.View.backgroundDefault
         return view
     }()
 
@@ -48,20 +48,20 @@ final class WireLogoInfoView: UIView {
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontSpec(.large, .semibold).font!
+        label.font = FontSpec.largeSemiboldFont.font!
         label.textAlignment = .center
         label.accessibilityValue = label.text
-        label.textColor = .black
+        label.textColor = SemanticColors.Label.textDefault
         return label
     }()
 
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontSpec(.normal, .regular).font!
+        label.font = FontSpec.normalRegularFont.font!
         label.textAlignment = .center
         label.numberOfLines = 0
         label.accessibilityValue = label.text
-        label.textColor = .black
+        label.textColor = SemanticColors.Label.textDefault
         return label
     }()
 
