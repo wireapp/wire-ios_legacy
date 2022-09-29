@@ -34,7 +34,7 @@ final class WipeCompletionViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         configureSubviews()
         createConstraints()
