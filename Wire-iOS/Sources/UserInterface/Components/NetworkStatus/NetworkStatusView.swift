@@ -121,7 +121,7 @@ final class NetworkStatusView: UIView {
         }
 
         state = .online
-
+        backgroundColor = SemanticColors.View.backgroundDefault
         createConstraints()
     }
 
