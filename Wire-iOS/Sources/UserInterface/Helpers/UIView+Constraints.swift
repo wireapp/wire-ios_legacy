@@ -94,10 +94,6 @@ extension UIView {
         NSLayoutConstraint.activate(fitInConstraints(view: view, insets: insets))
     }
 
-    func fitInSafeArea(view: UIView) {
-        NSLayoutConstraint.activate(createSafeAreaConstraints(view: view))
-    }
-
     func fitInConstraints(view: UIView, inset: CGFloat) -> [NSLayoutConstraint] {
         return fitInConstraints(view: view, insets: UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset))
     }
@@ -109,15 +105,6 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -insets.trailing),
             topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom)
-        ]
-    }
-
-    func createSafeAreaConstraints(view: UIView) -> [NSLayoutConstraint] {
-        return [
-            leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
     }
 }
