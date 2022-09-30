@@ -145,190 +145,185 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         textFieldValidator = TextFieldValidator()
         self.kind = kind
 
+        var textFieldAttributes: Attributes
+
         if setNewColors == false {
-            let textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
-                                                                    textColor: UIColor.Team.textColor,
-                                                                    placeholderFont: ValidatedTextField.placeholderFont,
-                                                                    placeholderColor: UIColor.Team.placeholderColor,
-                                                                    backgroundColor: UIColor.Team.textfieldColor,
-                                                                    cornerRadius: cornerRadius ?? 0)
-            super.init(leftInset: leftInset,
-                       accessoryTrailingInset: accessoryTrailingInset,
-                       textFieldAttributes: textFieldAttributes)
-            self.setupTextFieldProperties()
-
-            setup()
-            setupTextFieldProperties()
-            updateButtonIcon()
-            applyColorScheme(colorSchemeVariant)
+            textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
+                                                                textColor: UIColor.Team.textColor,
+                                                                placeholderFont: ValidatedTextField.placeholderFont,
+                                                                placeholderColor: UIColor.Team.placeholderColor,
+                                                                backgroundColor: UIColor.Team.textfieldColor,
+                                                                cornerRadius: cornerRadius ?? 0)
         } else {
-            let textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
-                                                                    textColor: TextFieldColors.textInputView,
-                                                                    placeholderFont: ValidatedTextField.placeholderFont,
-                                                                    placeholderColor: TextFieldColors.textInputViewPlaceholder,
-                                                                    backgroundColor: TextFieldColors.backgroundInputView,
-                                                                    cornerRadius: cornerRadius ?? 0)
-            super.init(leftInset: leftInset,
-                       accessoryTrailingInset: accessoryTrailingInset,
-                       textFieldAttributes: textFieldAttributes)
-            self.setupTextFieldProperties()
-
-            setup()
-            setupTextFieldProperties()
-            updateButtonIcon()
-            applyColorScheme(colorSchemeVariant)
+            textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
+                                                                textColor: TextFieldColors.textInputView,
+                                                                placeholderFont: ValidatedTextField.placeholderFont,
+                                                                placeholderColor: TextFieldColors.textInputViewPlaceholder,
+                                                                backgroundColor: TextFieldColors.backgroundInputView,
+                                                                cornerRadius: cornerRadius ?? 0)
         }
 
+        super.init(leftInset: leftInset,
+                   accessoryTrailingInset: accessoryTrailingInset,
+                   textFieldAttributes: textFieldAttributes)
+        self.setupTextFieldProperties()
+
+        setup()
+        setupTextFieldProperties()
+        updateButtonIcon()
+        applyColorScheme(colorSchemeVariant)
     }
 
-    private func setupTextFieldProperties() {
-        returnKeyType = .next
+}
+
+private func setupTextFieldProperties() {
+    returnKeyType = .next
+
+    switch kind {
+    case .email:
+        keyboardType = .emailAddress
+        autocorrectionType = .no
+        autocapitalizationType = .none
+        accessibilityIdentifier = "EmailField"
+        textContentType = .emailAddress
+    case .password(let isNew):
+        isSecureTextEntry = true
+        accessibilityIdentifier = "PasswordField"
+        autocapitalizationType = .none
+        textContentType = isNew ? .newPassword : .password
+        passwordRules = textFieldValidator.passwordRules
+    case .name(let isTeam):
+        autocapitalizationType = .words
+        accessibilityIdentifier = "NameField"
+        textContentType = isTeam ? .organizationName : .name
+    case .phoneNumber:
+        textContentType = .telephoneNumber
+        keyboardType = .numberPad
+        accessibilityIdentifier = "PhoneNumberField"
+    case .unknown:
+        keyboardType = .asciiCapable
+        textContentType = nil
+    case .passcode(let isNew):
+        keyboardType = .asciiCapable
+        isSecureTextEntry = true
+        accessibilityIdentifier = "PasscodeField"
+        autocapitalizationType = .none
+        returnKeyType = isNew ? .default : .continue
+        // Hack: disable auto fill passcode
+        textContentType = .oneTimeCode
+        passwordRules = textFieldValidator.passwordRules
+    }
+}
+
+func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    guidanceDot.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
+}
+
+private func updateLoadingState() {
+    updateButtonIcon()
+    let animationKey = "rotation_animation"
+    if isLoading {
+        let animation = CABasicAnimation(rotationSpeed: 1.4, beginTime: 0)
+        confirmButton.layer.add(animation, forKey: animationKey)
+    } else {
+        confirmButton.layer.removeAnimation(forKey: animationKey)
+    }
+}
+
+private var buttonIcon: StyleKitIcon {
+    return isLoading
+    ? .spinner
+    : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
+}
+
+private var iconSize: StyleKitIcon.Size {
+    return isLoading ? .medium : .tiny
+}
+
+private func updateButtonIcon() {
+    confirmButton.setIcon(buttonIcon, size: iconSize, for: .normal)
+
+    if isLoading {
+        confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)
+        confirmButton.setBackgroundImageColor(.clear, for: .normal)
+        confirmButton.setBackgroundImageColor(.clear, for: .disabled)
+    } else {
 
         switch kind {
-        case .email:
-            keyboardType = .emailAddress
-            autocorrectionType = .no
-            autocapitalizationType = .none
-            accessibilityIdentifier = "EmailField"
-            textContentType = .emailAddress
-        case .password(let isNew):
-            isSecureTextEntry = true
-            accessibilityIdentifier = "PasswordField"
-            autocapitalizationType = .none
-            textContentType = isNew ? .newPassword : .password
-            passwordRules = textFieldValidator.passwordRules
-        case .name(let isTeam):
-            autocapitalizationType = .words
-            accessibilityIdentifier = "NameField"
-            textContentType = isTeam ? .organizationName : .name
-        case .phoneNumber:
-            textContentType = .telephoneNumber
-            keyboardType = .numberPad
-            accessibilityIdentifier = "PhoneNumberField"
-        case .unknown:
-            keyboardType = .asciiCapable
-            textContentType = nil
-        case .passcode(let isNew):
-            keyboardType = .asciiCapable
-            isSecureTextEntry = true
-            accessibilityIdentifier = "PasscodeField"
-            autocapitalizationType = .none
-            returnKeyType = isNew ? .default : .continue
-            // Hack: disable auto fill passcode
-            textContentType = .oneTimeCode
-            passwordRules = textFieldValidator.passwordRules
-        }
-    }
-
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        guidanceDot.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
-    }
-
-    private func updateLoadingState() {
-        updateButtonIcon()
-        let animationKey = "rotation_animation"
-        if isLoading {
-            let animation = CABasicAnimation(rotationSpeed: 1.4, beginTime: 0)
-            confirmButton.layer.add(animation, forKey: animationKey)
-        } else {
-            confirmButton.layer.removeAnimation(forKey: animationKey)
-        }
-    }
-
-    private var buttonIcon: StyleKitIcon {
-        return isLoading
-        ? .spinner
-        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
-    }
-
-    private var iconSize: StyleKitIcon.Size {
-        return isLoading ? .medium : .tiny
-    }
-
-    private func updateButtonIcon() {
-        confirmButton.setIcon(buttonIcon, size: iconSize, for: .normal)
-
-        if isLoading {
-            confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)
+        case .passcode:
+            confirmButton.setIconColor(UIColor.Team.textColor, for: .normal)
+            confirmButton.setIconColor(UIColor.Team.textColor, for: .disabled)
             confirmButton.setBackgroundImageColor(.clear, for: .normal)
             confirmButton.setBackgroundImageColor(.clear, for: .disabled)
-        } else {
-
-            switch kind {
-            case .passcode:
-                confirmButton.setIconColor(UIColor.Team.textColor, for: .normal)
-                confirmButton.setIconColor(UIColor.Team.textColor, for: .disabled)
-                confirmButton.setBackgroundImageColor(.clear, for: .normal)
-                confirmButton.setBackgroundImageColor(.clear, for: .disabled)
-            default:
-                confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
-                confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-                confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
-                confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
-            }
-        }
-
-        confirmButton.adjustsImageWhenDisabled = false
-    }
-
-    private func setup() {
-        accessoryStack.addArrangedSubview(guidanceDot)
-        accessoryStack.addArrangedSubview(confirmButton)
-
-        confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
-        addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-
-        NSLayoutConstraint.activate([
-            confirmButton.widthAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
-            confirmButton.heightAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
-            guidanceDot.widthAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth),
-            guidanceDot.heightAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth)
-        ])
-    }
-
-    @objc
-    override func textFieldDidChange(textField: UITextField) {
-        updateText(input)
-    }
-
-    /// Whether the input is valid.
-    var isInputValid: Bool {
-        return enableConfirmButton?() ?? !input.isEmpty
-    }
-
-    func updateText(_ text: String) {
-        self.text = text
-        validateInput()
-        boundTextField?.validateInput()
-    }
-
-    private func updateConfirmButton() {
-        if let boundTextField = boundTextField {
-            confirmButton.isEnabled = boundTextField.isInputValid && self.isInputValid
-        } else {
-            confirmButton.isEnabled = isInputValid
+        default:
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
+            confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+            confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
         }
     }
 
-    // MARK: - text validation
+    confirmButton.adjustsImageWhenDisabled = false
+}
 
-    @objc
-    private func confirmButtonTapped(button: UIButton) {
-        validatedTextFieldDelegate?.buttonPressed(button)
-        validateInput()
-    }
+private func setup() {
+    accessoryStack.addArrangedSubview(guidanceDot)
+    accessoryStack.addArrangedSubview(confirmButton)
 
-    func validateInput() {
-        let error = textFieldValidator.validate(text: text, kind: kind)
-        textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
-        updateConfirmButton()
-    }
+    confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
+    addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 
-    func showGuidanceDot() {
-        guidanceDot.isHidden = false
-    }
+    NSLayoutConstraint.activate([
+        confirmButton.widthAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
+        confirmButton.heightAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
+        guidanceDot.widthAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth),
+        guidanceDot.heightAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth)
+    ])
+}
 
-    func hideGuidanceDot() {
-        guidanceDot.isHidden = true
+@objc
+override func textFieldDidChange(textField: UITextField) {
+    updateText(input)
+}
+
+/// Whether the input is valid.
+var isInputValid: Bool {
+    return enableConfirmButton?() ?? !input.isEmpty
+}
+
+func updateText(_ text: String) {
+    self.text = text
+    validateInput()
+    boundTextField?.validateInput()
+}
+
+private func updateConfirmButton() {
+    if let boundTextField = boundTextField {
+        confirmButton.isEnabled = boundTextField.isInputValid && self.isInputValid
+    } else {
+        confirmButton.isEnabled = isInputValid
     }
+}
+
+// MARK: - text validation
+
+@objc
+private func confirmButtonTapped(button: UIButton) {
+    validatedTextFieldDelegate?.buttonPressed(button)
+    validateInput()
+}
+
+func validateInput() {
+    let error = textFieldValidator.validate(text: text, kind: kind)
+    textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
+    updateConfirmButton()
+}
+
+func showGuidanceDot() {
+    guidanceDot.isHidden = false
+}
+
+func hideGuidanceDot() {
+    guidanceDot.isHidden = true
+}
 }
