@@ -61,17 +61,18 @@ final class ConfirmAssetViewController: UIViewController {
     private var imageToolbarView: ImageToolbarView?
 
     private let topPanel: UIView = UIView()
-    private let titleLabel: UILabel = UILabel()
+    private let titleLabel: DynamicFontLabel = DynamicFontLabel(fontSpec: .mediumSemiboldFont,
+                                                                color: SemanticColors.Label.textDefault)
     private let bottomPanel: UIView = UIView()
     private let confirmButtonsStack: UIStackView = UIStackView()
-    private let acceptImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
-    private let rejectImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    private let acceptImageButton: Button = Button(style: .accentColorTextButtonStyle,
+                                                   cornerRadius: 16,
+                                                   fontSpec: .smallSemiboldFont)
+    private let rejectImageButton: Button = Button(style: .secondaryTextButtonStyle,
+                                                   cornerRadius: 16,
+                                                   fontSpec: .smallSemiboldFont)
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
     private let imageToolbarSeparatorView: UIView = UIView()
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -123,34 +124,15 @@ final class ConfirmAssetViewController: UIViewController {
     }
 
     private func setupStyle() {
-        applyColorScheme(ColorScheme.default.variant)
 
-        titleLabel.font = UIFont.mediumSemiboldFont
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
 
-        acceptImageButton.layer.cornerRadius = 8
-
-        rejectImageButton.layer.cornerRadius = 8
+        view.backgroundColor = SemanticColors.View.backgroundDefault
+        imageToolbarSeparatorView.backgroundColor = SemanticColors.View.backgroundSeparatorCell
+        topPanel.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        view.backgroundColor = UIColor.from(scheme: .background)
-        imageToolbarSeparatorView.backgroundColor = UIColor.from(scheme: .separator)
-        topPanel.backgroundColor = UIColor.from(scheme: .background)
-
-        titleLabel.textColor = UIColor.from(scheme: .textForeground)
-
-        acceptImageButton.setTitleColor(.white, for: .normal)
-        acceptImageButton.setTitleColor(.whiteAlpha40, for: .highlighted)
-        acceptImageButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
-        acceptImageButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
-
-        rejectImageButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), for: .normal)
-        rejectImageButton.setTitleColor(UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant), for: .highlighted)
-        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction, variant: colorSchemeVariant), for: .normal)
-        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryActionDimmed, variant: colorSchemeVariant), for: .highlighted)
-    }
 
     /// Show editing options only if the image is not animated
     var showEditingOptions: Bool {
@@ -177,7 +159,7 @@ final class ConfirmAssetViewController: UIViewController {
         playerViewController.player = AVPlayer(url: videoURL)
         playerViewController.player?.play()
         playerViewController.showsPlaybackControls = true
-        playerViewController.view.backgroundColor = UIColor.from(scheme: .textBackground)
+        playerViewController.view.backgroundColor = SemanticColors.View.backgroundUserCell
 
         view.addSubview(playerViewController.view)
 
