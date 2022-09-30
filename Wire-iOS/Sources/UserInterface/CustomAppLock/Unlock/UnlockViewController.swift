@@ -33,6 +33,7 @@ protocol UnlockViewControllerDelegate: AnyObject {
 final class UnlockViewController: UIViewController {
 
     typealias Session = ZMUserSessionInterface & UserSessionAppLockInterface
+    typealias Unlock = L10n.Localizable.Unlock
 
     weak var delegate: UnlockViewControllerDelegate?
 
@@ -49,7 +50,7 @@ final class UnlockViewController: UIViewController {
     private lazy var unlockButton: Button = {
         let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
-        button.setTitle("unlock.submit_button.title".localized, for: .normal)
+        button.setTitle(Unlock.SubmitButton.title, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(onUnlockButtonPressed(sender:)), for: .touchUpInside)
         button.accessibilityIdentifier = "unlock_screen.button.unlock"
@@ -59,7 +60,7 @@ final class UnlockViewController: UIViewController {
 
     lazy var validatedTextField: ValidatedTextField = {
         let textField = ValidatedTextField.createPasscodeTextField(kind: .passcode(isNew: false), delegate: self, setNewColors: true)
-        textField.placeholder = "unlock.textfield.placeholder".localized
+        textField.placeholder = Unlock.Textfield.placeholder
         textField.delegate = self
         textField.accessibilityIdentifier = "unlock_screen.text_field.enter_passcode"
 
@@ -67,7 +68,7 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = DynamicFontLabel(text: L10n.Localizable.Unlock.titleLabel,
+        let label = DynamicFontLabel(text: Unlock.titleLabel,
                                      fontSpec: .largeSemiboldFont,
                                      color: SemanticColors.Label.textDefault)
 
@@ -115,7 +116,7 @@ final class UnlockViewController: UIViewController {
     private lazy var wipeButton: Button = {
         let button = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumRegularFont)
 
-        button.setTitle("unlock.wipe_button".localized, for: .normal)
+        button.setTitle(Unlock.wipeButton, for: .normal)
 
         button.addTarget(self, action: #selector(onWipeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -138,13 +139,6 @@ final class UnlockViewController: UIViewController {
 
         // stackview for horizonal spacing except unlockButton
         upperStackView.distribution = .fillProportionally
-
-        upperStackView.isLayoutMarginsRelativeArrangement = true
-
-        upperStackView.layoutMargins = UIEdgeInsets(top: 0,
-                                                    left: 0,
-                                                    bottom: 0,
-                                                    right: 0)
 
         contentView.addSubview(stackView)
 
@@ -242,7 +236,7 @@ final class UnlockViewController: UIViewController {
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))
 
-        let attributedString = NSAttributedString(string: "unlock.error_label".localized) && UnlockViewController.errorFont
+        let attributedString = NSAttributedString(string: Unlock.errorLabel) && UnlockViewController.errorFont
 
         errorLabel.attributedText = NSAttributedString(attachment: textAttachment) + attributedString
         unlockButton.isEnabled = false
