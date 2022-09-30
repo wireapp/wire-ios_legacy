@@ -142,9 +142,9 @@ final class UnlockViewController: UIViewController {
         upperStackView.isLayoutMarginsRelativeArrangement = true
 
         upperStackView.layoutMargins = UIEdgeInsets(top: 0,
-                                                    left: CGFloat.PasscodeUnlock.textFieldPadding,
+                                                    left: 0,
                                                     bottom: 0,
-                                                    right: CGFloat.PasscodeUnlock.textFieldPadding)
+                                                    right: 0)
 
         contentView.addSubview(stackView)
 
