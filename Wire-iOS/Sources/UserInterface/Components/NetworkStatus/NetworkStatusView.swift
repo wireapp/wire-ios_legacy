@@ -123,6 +123,7 @@ final class NetworkStatusView: UIView {
         state = .online
 
         createConstraints()
+        backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     @available(*, unavailable)
