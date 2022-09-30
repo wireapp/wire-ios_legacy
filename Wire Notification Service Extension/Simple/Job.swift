@@ -47,6 +47,7 @@ final class Job: NSObject, Loggable {
     private let networkSession: NetworkSessionProtocol
     private let accessAPIClient: AccessAPIClientProtocol
     private let notificationsAPIClient: NotificationsAPIClientProtocol
+    private let messageExtractor: EventMessageExtractor
 
     // MARK: - Life cycle
 
@@ -55,7 +56,8 @@ final class Job: NSObject, Loggable {
         eventDecoder: EventDecodingProtocol,
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
-        notificationsAPIClient: NotificationsAPIClientProtocol? = nil
+        notificationsAPIClient: NotificationsAPIClientProtocol? = nil,
+        eventMessageExtractor: EventMessageExtractor? = nil
     ) throws {
         self.request = request
         let (userID, eventID) = try Self.pushPayload(from: request)
@@ -67,6 +69,7 @@ final class Job: NSObject, Loggable {
         self.networkSession = session
         self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
         self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
+        self.messageExtractor = eventMessageExtractor ?? EventMessageExtractor()
         super.init()
     }
 
@@ -100,14 +103,10 @@ final class Job: NSObject, Loggable {
     private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
         guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
-        
-        logger.trace("\(updatedEvent.payload.debugDescription ?? "", privacy: .public): payload")
-        logger.trace("\(updatedEvent.payload.optionalString(forKey: "external") ?? "", privacy: .public): payload external")
-        guard let message = GenericMessage(from: updatedEvent) else { throw NotificationServiceError.noGenericMessage }
-        guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
-
-        return text.content
+        return try messageExtractor.extractMessage(fromDecodedEvent: updatedEvent)
     }
+
+
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
         guard

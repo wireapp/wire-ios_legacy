@@ -19,6 +19,8 @@
 import XCTest
 @testable import Wire_Notification_Service_Extension
 
+import WireDataModel
+
 @available(iOS 15, *)
 class JobTests: XCTestCase {
 
@@ -39,7 +41,8 @@ class JobTests: XCTestCase {
             eventDecoder: eventDecoder,
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
-            notificationsAPIClient: mockNotificationsAPIClient
+            notificationsAPIClient: mockNotificationsAPIClient,
+            eventMessageExtractor: messageExtractor
         )
     }
 
@@ -76,7 +79,10 @@ class JobTests: XCTestCase {
                             "time": "2022-09-21T12:13:32.173Z",
                             "type": "conversation.otr-message-add",
                             "payload": [
-                                "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
+                                "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
+                                "data": [
+                                    "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
+                                ]
                             ]
                         ]
 
@@ -90,6 +96,8 @@ class JobTests: XCTestCase {
         }
         return decoder
     }()
+
+    var messageExtractor: MockEventMessageExtractor = MockEventMessageExtractor()
 
     // MARK: - Execute
 
@@ -148,9 +156,32 @@ class JobTests: XCTestCase {
                 "time": "2022-09-21T12:13:32.173Z",
                 "type": "conversation.otr-message-add",
                 "payload": [
-                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
+                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
+                    "data": [
+                        "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
+                    ]
                 ]
             ]
+//            let payload: [String: Any] = ["from": "16b0c8ed-2026-4643-8c6e-4b7b7160890b",
+//                                          "type": "conversation.otr-message-add",
+//                                          "qualified_from": [
+//                                            "domain": "wire.com",
+//                                            "id": "16b0c8ed-2026-4643-8c6e-4b7b7160890b"
+//                                          ],
+//                                          "qualified_conversation": [
+//                                            "domain": "wire.com",
+//                                            "id": "d7174dca-488b-463b-bb64-2c2bec442deb"
+//                                          ],
+//                                          "conversation": "d7174dca-488b-463b-bb64-2c2bec442deb",
+//                                          "time": "2022-09-29T09:14:42.428Z",
+//                                          "data": [
+//                                            "data": "",
+//                                            "recipient": "ec9d18bc7d0909b0",
+//                                            "sender": "b7d8296a54a59151",
+//                                            "text": "CiRkY2JhMzA0OS05NzgxLTQzNjktYTQxMi1mMzZjNDhkZDRmMjQSCQoDWXl5MAA4AQ=="
+//                                          ],
+//                                          "external": ""]
+
 
             return ZMUpdateEvent(
                 uuid: eventID,
@@ -160,12 +191,12 @@ class JobTests: XCTestCase {
                 source: .pushNotification
             )!
         }
+        messageExtractor.returnedMessage = "test123"
 
+        // When
+        let result = try await self.sut.execute()
         // Then
-        await assertThrows(expectedError: NotificationServiceError.noAccount) {
-            // When
-            _ = try await self.sut.execute()
-        }
+        XCTAssertEqual(result.body, "test123")
 
     }
 
@@ -203,6 +234,13 @@ class JobTests: XCTestCase {
         XCTAssertEqual(result, .empty)
     }
 
+}
+
+class MockEventMessageExtractor: EventMessageExtractor {
+    var returnedMessage = ""
+    override func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> String {
+        return returnedMessage
+    }
 }
 
 class MockEventDecoder: EventDecodingProtocol {

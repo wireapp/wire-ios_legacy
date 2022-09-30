@@ -16,20 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 import WireDataModel
-import WireSyncEngine
 
-protocol EventDecodingProtocol {
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent]
-}
-
-extension EventDecoder: EventDecodingProtocol {
-
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
-        return await withCheckedContinuation { continuation in
-            decryptAndStoreEvents(events) { decryptedEvents in
-                continuation.resume(with: .success(decryptedEvents))
-            }
-        }
+class EventMessageExtractor {
+    func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> String {
+        guard let message = GenericMessage(from: event) else { throw NotificationServiceError.noGenericMessage }
+        guard let messageContent = message.textData?.content else { throw NotificationServiceError.incorrectContent }
+        return messageContent
     }
 }
