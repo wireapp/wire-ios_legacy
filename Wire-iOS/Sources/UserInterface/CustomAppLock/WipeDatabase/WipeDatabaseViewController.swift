@@ -76,7 +76,7 @@ final class WipeDatabaseViewController: UIViewController {
     }()
 
     private lazy var confirmButton: Button = {
-        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
         button.setTitle("wipe_database.button.title".localized, for: .normal)
 

@@ -47,7 +47,7 @@ final class UnlockViewController: UIViewController {
     private static let errorFont = FontSpec.smallLightFont.font!
 
     private lazy var unlockButton: Button = {
-        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
+        let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
         button.setTitle("unlock.submit_button.title".localized, for: .normal)
         button.isEnabled = false
