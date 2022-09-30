@@ -281,6 +281,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
         descriptionTextView.isAccessibilityElement = true
         descriptionTextView.accessibilityTraits = .link
+        descriptionTextView.accessibilityIdentifier = "description text"
         descriptionTextView.accessibilityAttributedHint = NSAttributedString(string: DeviceDetails.HowToVerifyFingerprint.hint)
 
         verifiedToggle.accessibilityLabel = DeviceDetails.Verified.description

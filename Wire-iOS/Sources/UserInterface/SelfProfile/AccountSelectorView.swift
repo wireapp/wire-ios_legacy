@@ -38,7 +38,7 @@ final class AccountSelectorView: UIView {
             accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0, displayContext: .accountSelector) }) ?? []
 
             accountViews.forEach { (accountView) in
-                accountView.unreadCountStyle = accountView.account.isActive ? .none : .current
+                accountView.unreadCountStyle = .current
                 accountView.onTap = { [weak self] account in
                     guard let account = account else { return }
                     self?.delegate?.accountSelectorDidSelect(account: account)

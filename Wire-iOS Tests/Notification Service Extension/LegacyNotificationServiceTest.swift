@@ -18,10 +18,11 @@
 
 import Foundation
 import XCTest
+import Wire_Notification_Service_Extension
 
-final class NotificationServiceTests: XCTestCase {
+final class LegacyNotificationServiceTests: XCTestCase {
 
-    var sut: NotificationService!
+    var sut: LegacyNotificationService!
     var request: UNNotificationRequest!
     var notificationContent: UNNotificationContent!
     var contentResult: UNNotificationContent?
@@ -47,7 +48,7 @@ final class NotificationServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = NotificationService()
+        sut = LegacyNotificationService()
         callEventHandlerMock = CallEventHandlerMock()
         currentUserIdentifier = UUID.create()
         notificationContent = createNotificationContent()
@@ -132,7 +133,7 @@ final class NotificationServiceTests: XCTestCase {
 
 // MARK: - Helpers
 
-extension NotificationServiceTests {
+extension LegacyNotificationServiceTests {
 
     private func createAccount(with id: UUID) {
         guard let sharedContainer = Bundle.main.appGroupIdentifier.map(FileManager.sharedContainerDirectory) else {
