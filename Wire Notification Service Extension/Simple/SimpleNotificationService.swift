@@ -61,7 +61,7 @@ final class SimpleNotificationService: UNNotificationServiceExtension, Loggable 
         let task = Task { [weak self] in
             do {
                 logger.trace("\(request.identifier, privacy: .public): initializing job")
-                guard let accountID = request.content.accountID else { throw NotificationServiceError.incorrectContent }
+                guard let accountID = request.content.accountID else { throw NotificationServiceError.noAccount }
                 let coreDataStack = try await dataStackForAccount(accountID: accountID)
                 let eventDecoder =   EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
                 let job = try Job(request: request, eventDecoder: eventDecoder)

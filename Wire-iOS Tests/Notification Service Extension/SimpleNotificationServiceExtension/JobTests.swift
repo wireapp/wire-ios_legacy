@@ -162,27 +162,6 @@ class JobTests: XCTestCase {
                     ]
                 ]
             ]
-//            let payload: [String: Any] = ["from": "16b0c8ed-2026-4643-8c6e-4b7b7160890b",
-//                                          "type": "conversation.otr-message-add",
-//                                          "qualified_from": [
-//                                            "domain": "wire.com",
-//                                            "id": "16b0c8ed-2026-4643-8c6e-4b7b7160890b"
-//                                          ],
-//                                          "qualified_conversation": [
-//                                            "domain": "wire.com",
-//                                            "id": "d7174dca-488b-463b-bb64-2c2bec442deb"
-//                                          ],
-//                                          "conversation": "d7174dca-488b-463b-bb64-2c2bec442deb",
-//                                          "time": "2022-09-29T09:14:42.428Z",
-//                                          "data": [
-//                                            "data": "",
-//                                            "recipient": "ec9d18bc7d0909b0",
-//                                            "sender": "b7d8296a54a59151",
-//                                            "text": "CiRkY2JhMzA0OS05NzgxLTQzNjktYTQxMi1mMzZjNDhkZDRmMjQSCQoDWXl5MAA4AQ=="
-//                                          ],
-//                                          "external": ""]
-
-
             return ZMUpdateEvent(
                 uuid: eventID,
                 payload: payload,
