@@ -53,12 +53,12 @@ public struct ButtonStyle {
                                                          border: nil))
 
     static let addParticipantsDisabledButtonStyle = ButtonStyle(normalStateColors: (
-                                                         background: SemanticColors.Button.backgroundAddParticipants,
-                                                         title: SemanticColors.Button.textDisabledAddParticipants,
+                                                         background: SemanticColors.Button.backgroundPrimaryDisabled,
+                                                         title: SemanticColors.Button.textPrimaryDisabled,
                                                          border: nil),
                                                         highlightedStateColors: (
-                                                         background: SemanticColors.Button.backgroundAddParticipants,
-                                                         title: SemanticColors.Button.textDisabledAddParticipants,
+                                                         background: SemanticColors.Button.backgroundPrimaryDisabled,
+                                                         title: SemanticColors.Button.textPrimaryDisabled,
                                                          border: nil))
 
     static let primaryTextButtonStyle = ButtonStyle(normalStateColors: (
