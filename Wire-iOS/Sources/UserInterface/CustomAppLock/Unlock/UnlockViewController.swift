@@ -67,7 +67,7 @@ final class UnlockViewController: UIViewController {
     }()
 
     private let titleLabel: UILabel = {
-        let label = DynamicFontLabel(text: "unlock.title_label".localized,
+        let label = DynamicFontLabel(text: L10n.Localizable.Unlock.titleLabel,
                                      fontSpec: .largeSemiboldFont,
                                      color: SemanticColors.Label.textDefault)
 
