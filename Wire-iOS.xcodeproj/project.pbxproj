@@ -10156,7 +10156,6 @@
 					"@executable_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE_SPECIFIER = "Wire iOS Development Debug";
 			};
 			name = Debug;
 		};
