@@ -162,7 +162,7 @@ final class AddParticipantsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
 
         confirmButton = IconButton()
-        confirmButton.titleLabel?.font = .largeButtonSemiboldFont
+        confirmButton.titleLabel?.font = .mediumSemiboldFont
         confirmButton.applyStyle(.addParticipantsDisabledButtonStyle)
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
