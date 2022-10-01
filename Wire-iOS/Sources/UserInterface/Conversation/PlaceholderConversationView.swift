@@ -22,7 +22,9 @@ import WireCommonComponents
 
 final class PlaceholderConversationView: UIView {
 
+    // MARK: - Properties
     var shieldImageView: UIImageView!
+    let imageColor = SemanticColors.Label.textDefault
 
     // MARK: - Initialization
 
@@ -37,13 +39,14 @@ final class PlaceholderConversationView: UIView {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
+    // MARK: Configure Subviews and layout
     private func configureSubviews() {
         backgroundColor = SemanticColors.View.backgroundDefault
-        let image = WireStyleKit.imageOfShield(color: SemanticColors.Label.textDefault).withRenderingMode(.alwaysTemplate)
+        let image = WireStyleKit.imageOfShield(color: imageColor).withRenderingMode(.alwaysTemplate)
 
         shieldImageView = UIImageView(image: image)
         shieldImageView.alpha = 0.24
-        shieldImageView.tintColor = SemanticColors.Label.textDefault
+        shieldImageView.tintColor = imageColor
         addSubview(shieldImageView)
     }
 
