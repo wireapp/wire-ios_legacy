@@ -30,8 +30,6 @@ final class PlaceholderConversationView: UIView {
         super.init(frame: frame)
         configureSubviews()
         configureConstraints()
-        configureObservers()
-        applyColorScheme(ColorScheme.default.variant)
     }
 
     @available(*, unavailable)
@@ -40,13 +38,13 @@ final class PlaceholderConversationView: UIView {
     }
 
     private func configureSubviews() {
-        let image = WireStyleKit.imageOfShield(color: UIColor(rgb: 0xbac8d1, alpha: 0.24))
-        shieldImageView = UIImageView(image: image)
-        addSubview(shieldImageView)
-    }
+        backgroundColor = SemanticColors.View.backgroundDefault
+        let image = WireStyleKit.imageOfShield(color: SemanticColors.Label.textDefault).withRenderingMode(.alwaysTemplate)
 
-    private func configureObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateForColorSchemeVariant), name: .SettingsColorSchemeChanged, object: nil)
+        shieldImageView = UIImageView(image: image)
+        shieldImageView.alpha = 0.24
+        shieldImageView.tintColor = SemanticColors.Label.textDefault
+        addSubview(shieldImageView)
     }
 
     private func configureConstraints() {
@@ -56,17 +54,6 @@ final class PlaceholderConversationView: UIView {
             shieldImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             shieldImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-    }
-
-    // MARK: - Colors
-
-    @objc
-    private func updateForColorSchemeVariant() {
-        applyColorScheme(ColorScheme.default.variant)
-    }
-
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        backgroundColor = UIColor.from(scheme: .background, variant: colorSchemeVariant)
     }
 
 }
