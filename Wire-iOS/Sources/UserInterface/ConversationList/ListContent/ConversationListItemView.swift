@@ -150,6 +150,7 @@ final class ConversationListItemView: UIView {
     }
 
     private func setupTitleField() {
+        titleField.isAccessibilityElement = true
         titleField.numberOfLines = 1
         titleField.lineBreakMode = .byTruncatingTail
         labelsStack.addArrangedSubview(titleField)
