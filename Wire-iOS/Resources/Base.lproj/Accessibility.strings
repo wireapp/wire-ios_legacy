@@ -29,9 +29,36 @@
 
 "settings.deviceCount.hint" = "%@ devices in use";
 "settings.closeButton.description" = "Close settings";
-"settings.backButton.description" = "Go back to %@";
-"options.soundButton.hint" = "Double tap to change setting";
-"clientList.deviceDetails.hint" = "Double tap to open device details";
+"settings.backButton.description" = "Go back to Setting";
+
+"accountSettings.backButton.description" = "Go back to Account";
+
+"optionsSettings.backButton.description" = "Go back to Options";
+
+"advancedSettings.backButton.description" = "Go back to Advanced";
+
+"supportSettings.backButton.description" = "Go back to Support";
+
+"aboutSettings.backButton.description" = "Go back to About";
+"licenseInformationSettings.backButton.description" = "Go back to License information";
+"licenseDetailsSettings.backButton.description" = "Go back to License details";
+
+"developerOptionsSettings.backButton.description" = "Go back to Developer options";
+
+"clientsList.deviceDetails.hint" = "Double tap to open device details";
+"clientsList.deviceId.description" = "Device ID";
+"clientsList.deviceName.description" = "Device name";
+"clientsList.keyFingerprint.description" = "Key fingerprint";
+"clientsList.deviceVerified.description" = "Verified";
+"clientsList.deviceNotVerified.description" = "Not Verified";
+
+"deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
+"deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";
+"deviceDetails.verified.description" = "Device verified";
+"deviceDetails.backButton.description" = "Go back to device overview";
+
+"profile.backButton.description" = "Go back to conversation details";
+
 "accountPage.availabilityStatus.description" = "Status";
 "accountPage.availabilityStatus.hint" = "Double tap to change status";
 "accountPage.handle.description" = "Username";
@@ -39,3 +66,5 @@
 "accountPage.teamName.description" = "Team name";
 "accountPage.profilePicture.description" = "Profile picture";
 "accountPage.profilePicture.hint" = "Double tap to change your picture";
+"accountPage.closeButton.description" = "Close account overview";
+"accountPage.backButton.description" = "Go back to account overview";
