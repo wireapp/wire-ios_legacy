@@ -84,7 +84,7 @@ final class ProfileTitleView: UIView {
 
     private func setupAccessibility() {
         isAccessibilityElement = true
-        accessibilityTraits.insert(.header)
+        accessibilityTraits = .header
         accessibilityLabel = titleLabel.text
     }
 

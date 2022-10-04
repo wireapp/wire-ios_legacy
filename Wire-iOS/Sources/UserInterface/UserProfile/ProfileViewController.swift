@@ -508,6 +508,7 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         } else {
             navigationItem.rightBarButtonItem = legalHoldItem
         }
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.Profile.CloseButton.description
         navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.DeviceDetails.BackButton.description
     }
 
