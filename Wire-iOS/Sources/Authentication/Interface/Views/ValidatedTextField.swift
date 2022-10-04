@@ -55,6 +55,8 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     static let ConfirmButtonWidth: CGFloat = 32
     static let GuidanceDotWidth: CGFloat = 8
 
+    typealias TextFieldColors = SemanticColors.SearchBar
+
     var isLoading = false {
         didSet {
             updateLoadingState()
@@ -137,17 +139,30 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     init(kind: Kind = .unknown,
          leftInset: CGFloat = 8,
          accessoryTrailingInset: CGFloat = 16,
-         cornerRadius: CGFloat? = nil) {
+         cornerRadius: CGFloat? = nil,
+         setNewColors: Bool = false) {
 
         textFieldValidator = TextFieldValidator()
         self.kind = kind
 
-        let textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
-                                                                    textColor: UIColor.Team.textColor,
-                                                                    placeholderFont: ValidatedTextField.placeholderFont,
-                                                                    placeholderColor: UIColor.Team.placeholderColor,
-                                                                    backgroundColor: UIColor.Team.textfieldColor,
-                                                                    cornerRadius: cornerRadius ?? 0)
+        var textFieldAttributes: Attributes
+
+        if setNewColors == false {
+            textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
+                                                                textColor: UIColor.Team.textColor,
+                                                                placeholderFont: ValidatedTextField.placeholderFont,
+                                                                placeholderColor: UIColor.Team.placeholderColor,
+                                                                backgroundColor: UIColor.Team.textfieldColor,
+                                                                cornerRadius: cornerRadius ?? 0)
+        } else {
+            textFieldAttributes = AccessoryTextField.Attributes(textFont: ValidatedTextField.enteredTextFont,
+                                                                textColor: TextFieldColors.textInputView,
+                                                                placeholderFont: ValidatedTextField.placeholderFont,
+                                                                placeholderColor: TextFieldColors.textInputViewPlaceholder,
+                                                                backgroundColor: TextFieldColors.backgroundInputView,
+                                                                cornerRadius: cornerRadius ?? 0)
+        }
+
         super.init(leftInset: leftInset,
                    accessoryTrailingInset: accessoryTrailingInset,
                    textFieldAttributes: textFieldAttributes)
@@ -215,8 +230,8 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
 
     private var buttonIcon: StyleKitIcon {
         return isLoading
-            ? .spinner
-            : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
+        ? .spinner
+        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .forwardArrow : .backArrow)
     }
 
     private var iconSize: StyleKitIcon.Size {
@@ -309,4 +324,5 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     func hideGuidanceDot() {
         guidanceDot.isHidden = true
     }
+
 }

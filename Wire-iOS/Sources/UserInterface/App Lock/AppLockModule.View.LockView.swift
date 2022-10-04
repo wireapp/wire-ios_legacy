@@ -52,13 +52,11 @@ extension AppLockModule.View {
         private let blurView = UIVisualEffectView.blurView()
 
         private let messageLabel: UILabel = {
-            let label = UILabel()
-            label.font = .largeThinFont
-            label.textColor = .from(scheme: .textForeground, variant: .dark)
+            let label = DynamicFontLabel(fontSpec: .largeRegularFont, color: SemanticColors.Label.textWhite)
             return label
         }()
 
-        private let actionButton = LegacyButton(legacyStyle: .fullMonochrome, fontSpec: .smallLightFont)
+        private let actionButton = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
         private var contentWidthConstraint: NSLayoutConstraint!
         private var contentCenterConstraint: NSLayoutConstraint!

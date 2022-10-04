@@ -21,12 +21,10 @@ import UIKit
 final class WipeCompletionViewController: UIViewController {
     let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)
 
-    private lazy var loginButton: LegacyButton = {
-        let button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
+    private lazy var loginButton: Button = {
+        let button = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
 
-        button.setBackgroundImageColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
-
-        button.setTitle("signin.confirm".localized(uppercased: true), for: .normal)
+        button.setTitle("signin.confirm".localized, for: .normal)
 
         button.addTarget(self, action: #selector(onLoginCodeButtonPressed(sender:)), for: .touchUpInside)
 
@@ -36,7 +34,7 @@ final class WipeCompletionViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         configureSubviews()
         createConstraints()

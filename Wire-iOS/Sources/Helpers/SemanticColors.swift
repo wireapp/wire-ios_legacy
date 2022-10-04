@@ -49,6 +49,7 @@ public enum SemanticColors {
     public enum Label {
         static let textDefault = UIColor(light: Asset.black, dark: Asset.white)
         static let textDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
+        static let textWhite = UIColor(light: Asset.white, dark: Asset.white)
         static let textSectionFooter = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textSectionHeader = UIColor(light: Asset.gray70, dark: Asset.gray50)
         static let textCellTitle = UIColor(light: Asset.black, dark: Asset.white)
@@ -70,6 +71,9 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
+        static let textWarning = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let textPasswordRulesCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
+
     }
 
     public enum SearchBar {
@@ -92,6 +96,7 @@ public enum SemanticColors {
         static let foregroundAvailabilityAvailable = UIColor(light: Asset.green500Light, dark: Asset.green500Dark)
         static let foregroundAvailabilityBusy = UIColor(light: Asset.amber500Light, dark: Asset.amber500Dark)
         static let foregroundAvailabilityAway = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let backgroundPasswordRuleCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
     }
 
     public enum View {
