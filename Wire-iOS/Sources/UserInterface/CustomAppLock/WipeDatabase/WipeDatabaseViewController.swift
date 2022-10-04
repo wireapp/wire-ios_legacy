@@ -42,9 +42,11 @@ final class WipeDatabaseViewController: UIViewController {
 
     private let stackView: UIStackView = UIStackView.verticalStackView()
 
+    typealias WipeDatabase = L10n.Localizable.WipeDatabase
+
     private let titleLabel: UILabel = {
         let label = UILabel.createMultiLineCenterdLabel()
-        label.text = "wipe_database.title_label".localized
+        label.text = L10n.Localizable.WipeDatabase.titleLabel
 
         return label
     }()
@@ -62,10 +64,10 @@ final class WipeDatabaseViewController: UIViewController {
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textColor]
 
-        let headingText =  NSAttributedString(string: "wipe_database.info_label".localized) &&
+        let headingText =  NSAttributedString(string: WipeDatabase.infoLabel) &&
                                 UIFont.normalRegularFont &&
                                 baseAttributes
-        let highlightText = NSAttributedString(string: "wipe_database.info_label.highlighted".localized) &&
+        let highlightText = NSAttributedString(string: WipeDatabase.InfoLabel.highlighted) &&
                                 FontSpec.normalBoldFont.font! &&
                                 baseAttributes
 
@@ -78,7 +80,7 @@ final class WipeDatabaseViewController: UIViewController {
     private lazy var confirmButton: Button = {
         let button = Button(style: .primaryTextButtonStyle, cornerRadius: 16, fontSpec: .mediumSemiboldFont)
 
-        button.setTitle("wipe_database.button.title".localized, for: .normal)
+        button.setTitle(WipeDatabase.Button.title, for: .normal)
 
         button.addTarget(self, action: #selector(onConfirmButtonPressed(sender:)), for: .touchUpInside)
 
