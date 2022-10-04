@@ -4381,7 +4381,7 @@ internal enum L10n {
     internal enum Signin {
       /// Log In
       internal static let confirm = L10n.tr("Localizable", "signin.confirm")
-      /// Forgot password?
+      /// Forgot Password?
       internal static let forgotPassword = L10n.tr("Localizable", "signin.forgot_password")
       internal enum CompanyIdp {
         internal enum Button {

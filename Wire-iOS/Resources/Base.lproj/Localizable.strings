@@ -1530,7 +1530,7 @@
 
 "signin.use_email.label" = "Login with Email";
 "signin.use_phone.label" = "Login with Phone";
-"signin.forgot_password" = "Forgot password?";
+"signin.forgot_password" = "Forgot Password?";
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log In";
