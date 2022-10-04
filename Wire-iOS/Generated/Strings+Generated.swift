@@ -89,10 +89,44 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "clientsList.keyFingerprint.description")
       }
     }
+    internal enum ContactsList {
+      internal enum CloseButton {
+        /// Close contact list
+        internal static let description = L10n.tr("Accessibility", "contactsList.closeButton.description")
+      }
+      internal enum ExternalIcon {
+        /// External
+        internal static let description = L10n.tr("Accessibility", "contactsList.externalIcon.description")
+      }
+      internal enum FederatedIcon {
+        /// Federated
+        internal static let description = L10n.tr("Accessibility", "contactsList.federatedIcon.description")
+      }
+      internal enum GuestIcon {
+        /// Guest
+        internal static let description = L10n.tr("Accessibility", "contactsList.guestIcon.description")
+      }
+      internal enum MemberIcon {
+        /// Member
+        internal static let description = L10n.tr("Accessibility", "contactsList.memberIcon.description")
+      }
+      internal enum PendingConnection {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "contactsList.pendingConnection.hint")
+      }
+      internal enum UserCell {
+        /// Double tap to open conversation
+        internal static let hint = L10n.tr("Accessibility", "contactsList.userCell.hint")
+      }
+    }
     internal enum Conversation {
       internal enum BackButton {
         /// Go back to conversation list
         internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
+      }
+      internal enum LegalHoldIcon {
+        /// Legal hold
+        internal static let description = L10n.tr("Accessibility", "conversation.legalHoldIcon.description")
       }
       internal enum ProfileImage {
         /// Profile picture
@@ -103,6 +137,102 @@ internal enum L10n {
       internal enum SearchButton {
         /// Open search
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
+      }
+      internal enum TitleViewForGroup {
+        /// Double tap to open conversation details
+        internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForGroup.hint")
+      }
+      internal enum TitleViewForOneToOne {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForOneToOne.hint")
+      }
+      internal enum VerifiedIcon {
+        /// Verified
+        internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
+      }
+    }
+    internal enum ConversationDetails {
+      internal enum MessageTimeoutState {
+        /// Selected
+        internal static let description = L10n.tr("Accessibility", "conversationDetails.messageTimeoutState.description")
+      }
+    }
+    internal enum ConversationsList {
+      internal enum AccountButton {
+        /// Double tap to open profile and settings
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.accountButton.hint")
+      }
+      internal enum ArchiveBottomBar {
+        /// Archive
+        internal static let description = L10n.tr("Accessibility", "conversationsList.archiveBottomBar.description")
+        /// Double tap to open list of archived conversations
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.archiveBottomBar.hint")
+      }
+      internal enum BadgeView {
+        /// New messages: %d
+        internal static func value(_ p1: Int) -> String {
+          return L10n.tr("Accessibility", "conversationsList.badgeView.value", p1)
+        }
+      }
+      internal enum BottomBar {
+        /// Selected
+        internal static let value = L10n.tr("Accessibility", "conversationsList.bottomBar.value")
+      }
+      internal enum ConnectionRequest {
+        /// Pending approval of connection request
+        internal static let description = L10n.tr("Accessibility", "conversationsList.connectionRequest.description")
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.connectionRequest.hint")
+      }
+      internal enum ContactsBottomBar {
+        /// Contacts
+        internal static let description = L10n.tr("Accessibility", "conversationsList.contactsBottomBar.description")
+        /// Double tap to search for people and open contact list
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.contactsBottomBar.hint")
+      }
+      internal enum FolderBottomBar {
+        /// Folders
+        internal static let description = L10n.tr("Accessibility", "conversationsList.folderBottomBar.description")
+        /// Double tap to open list of conversations organized in folders
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.folderBottomBar.hint")
+      }
+      internal enum ItemCell {
+        /// Double tap to open conversation
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.itemCell.hint")
+      }
+      internal enum JoinButton {
+        /// Join
+        internal static let description = L10n.tr("Accessibility", "conversationsList.joinButton.description")
+        /// Double tab to join the call
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.joinButton.hint")
+      }
+      internal enum MentionStatus {
+        /// You are mentioned
+        internal static let value = L10n.tr("Accessibility", "conversationsList.mentionStatus.value")
+      }
+      internal enum RecentBottomBar {
+        /// Conversations
+        internal static let description = L10n.tr("Accessibility", "conversationsList.recentBottomBar.description")
+        /// Double tap to open list of recent conversations
+        internal static let hint = L10n.tr("Accessibility", "conversationsList.recentBottomBar.hint")
+      }
+      internal enum ReplyStatus {
+        /// Reply
+        internal static let value = L10n.tr("Accessibility", "conversationsList.replyStatus.value")
+      }
+      internal enum SilencedStatus {
+        /// Silenced
+        internal static let value = L10n.tr("Accessibility", "conversationsList.silencedStatus.value")
+      }
+    }
+    internal enum ConversationsListHeader {
+      internal enum CollapsedButton {
+        /// Collapsed
+        internal static let description = L10n.tr("Accessibility", "conversationsListHeader.collapsedButton.description")
+      }
+      internal enum ExpandedButton {
+        /// Expanded
+        internal static let description = L10n.tr("Accessibility", "conversationsListHeader.expandedButton.description")
       }
     }
     internal enum DeveloperOptionsSettings {
@@ -151,6 +281,32 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to conversation details
         internal static let description = L10n.tr("Accessibility", "profile.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close profile
+        internal static let description = L10n.tr("Accessibility", "profile.closeButton.description")
+      }
+    }
+    internal enum SearchView {
+      internal enum ClearButton {
+        /// Clear
+        internal static let description = L10n.tr("Accessibility", "searchView.clearButton.description")
+      }
+    }
+    internal enum ServiceDetails {
+      internal enum BackButton {
+        /// Go back to services list
+        internal static let description = L10n.tr("Accessibility", "serviceDetails.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close service details
+        internal static let description = L10n.tr("Accessibility", "serviceDetails.closeButton.description")
+      }
+    }
+    internal enum ServicesList {
+      internal enum ServiceCell {
+        /// Double tap to open service details
+        internal static let hint = L10n.tr("Accessibility", "servicesList.serviceCell.hint")
       }
     }
     internal enum Settings {
@@ -1599,22 +1755,12 @@ internal enum L10n {
         }
       }
       internal enum Voiceover {
-        /// legal hold
-        internal static let legalhold = L10n.tr("Localizable", "conversation.voiceover.legalhold")
-        /// verified
-        internal static let verified = L10n.tr("Localizable", "conversation.voiceover.verified")
         internal enum Value {
           /// active
           internal static let active = L10n.tr("Localizable", "conversation.voiceover.value.active")
           /// disabled
           internal static let disabled = L10n.tr("Localizable", "conversation.voiceover.value.disabled")
         }
-      }
-    }
-    internal enum ConversationDetails {
-      internal enum OpenButton {
-        /// Double tap to view the details of the conversation.
-        internal static let accessibilityHint = L10n.tr("Localizable", "conversation_details.open_button.accessibility_hint")
       }
     }
     internal enum ConversationList {
@@ -1681,12 +1827,6 @@ internal enum L10n {
       }
       internal enum Voiceover {
         internal enum BottomBar {
-          internal enum ArchivedButton {
-            /// list of archived conversations
-            internal static let hint = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.archived_button.hint")
-            /// archived
-            internal static let label = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.archived_button.label")
-          }
           internal enum CameraButton {
             /// take picture and send quickly
             internal static let hint = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.camera_button.hint")
@@ -1699,24 +1839,6 @@ internal enum L10n {
             /// compose
             internal static let label = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.compose_button.label")
           }
-          internal enum ContactsButton {
-            /// search for people on Wire
-            internal static let hint = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.contacts_button.hint")
-            /// contacts
-            internal static let label = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.contacts_button.label")
-          }
-          internal enum FolderButton {
-            /// list of conversations organized in folders
-            internal static let hint = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.folder_button.hint")
-            /// folders
-            internal static let label = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.folder_button.label")
-          }
-          internal enum RecentButton {
-            /// list of recent conversations
-            internal static let hint = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.recent_button.hint")
-            /// recent
-            internal static let label = L10n.tr("Localizable", "conversation_list.voiceover.bottom_bar.recent_button.label")
-          }
         }
         internal enum OpenConversation {
           /// Open conversation
@@ -1725,8 +1847,6 @@ internal enum L10n {
         internal enum Status {
           /// active call
           internal static let activeCall = L10n.tr("Localizable", "conversation_list.voiceover.status.active_call")
-          /// you are mentioned
-          internal static let mention = L10n.tr("Localizable", "conversation_list.voiceover.status.mention")
           /// missed call
           internal static let missedCall = L10n.tr("Localizable", "conversation_list.voiceover.status.missed_call")
           /// pause media
@@ -1737,10 +1857,6 @@ internal enum L10n {
           internal static let ping = L10n.tr("Localizable", "conversation_list.voiceover.status.ping")
           /// play media
           internal static let playMedia = L10n.tr("Localizable", "conversation_list.voiceover.status.play_media")
-          /// reply
-          internal static let reply = L10n.tr("Localizable", "conversation_list.voiceover.status.reply")
-          /// silenced
-          internal static let silenced = L10n.tr("Localizable", "conversation_list.voiceover.status.silenced")
           /// typing
           internal static let typing = L10n.tr("Localizable", "conversation_list.voiceover.status.typing")
         }
@@ -4420,12 +4536,6 @@ internal enum L10n {
           /// Variable Bit Rate Encoding
           internal static let title = L10n.tr("Localizable", "self.settings.vbr.title")
         }
-      }
-      internal enum Voiceover {
-        /// Open profile and settings
-        internal static let hint = L10n.tr("Localizable", "self.voiceover.hint")
-        /// Profile
-        internal static let label = L10n.tr("Localizable", "self.voiceover.label")
       }
     }
     internal enum SendInvitation {
