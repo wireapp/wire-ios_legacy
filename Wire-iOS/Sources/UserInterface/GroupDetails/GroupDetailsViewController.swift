@@ -104,6 +104,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         updateLegalHoldIndicator()
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.Profile.BackButton.description
         collectionViewController.collectionView?.reloadData()
     }
 

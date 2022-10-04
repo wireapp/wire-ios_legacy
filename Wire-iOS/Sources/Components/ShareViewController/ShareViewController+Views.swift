@@ -54,7 +54,7 @@ extension ShareViewController {
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 40)
         self.tokenField.delegate = self
 
-        clearButton.accessibilityLabel = "clear"
+        clearButton.accessibilityLabel = L10n.Accessibility.SearchView.ClearButton.description
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.setIconColor(SemanticColors.SearchBar.backgroundButton, for: .normal)

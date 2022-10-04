@@ -36,13 +36,16 @@ final class ConversationListTabView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Methods
+
     private func configure(_ tabType: ConversationListButtonType) {
-        setupButton(tabType: tabType)
-        setupLabel(tabType: tabType)
+        setupButton(tabType)
+        setupLabel(tabType)
+        setupAccessibility(tabType)
         setupViews()
     }
 
-    private func setupButton(tabType: ConversationListButtonType) {
+    private func setupButton(_ tabType: ConversationListButtonType) {
         switch tabType {
         case .startUI:
             button.setIcon(.person, size: .tiny, for: .normal)
@@ -53,15 +56,12 @@ final class ConversationListTabView: UIStackView {
         case .archive:
             button.setIcon(.archive, size: .tiny, for: [])
         }
-        button.accessibilityIdentifier = tabType.accessibilityIdentifier
-        button.accessibilityLabel = tabType.accessibilityLabel
-        button.accessibilityHint = tabType.accessibilityHint
 
         button.setIconColor(SemanticColors.Button.textBottomBarNormal, for: .normal)
         button.setIconColor(SemanticColors.Button.textBottomBarSelected, for: .selected)
     }
 
-    private func setupLabel(tabType: ConversationListButtonType) {
+    private func setupLabel(_ tabType: ConversationListButtonType) {
         label.text = tabType.title
     }
 
@@ -78,4 +78,13 @@ final class ConversationListTabView: UIStackView {
         addArrangedSubview(button)
         addArrangedSubview(label)
     }
+
+    private func setupAccessibility(_ tabType: ConversationListButtonType) {
+        isAccessibilityElement = true
+        accessibilityIdentifier = tabType.accessibilityIdentifier
+        accessibilityTraits = .button
+        accessibilityLabel = tabType.accessibilityLabel
+        accessibilityHint = tabType.accessibilityHint
+    }
+
 }
