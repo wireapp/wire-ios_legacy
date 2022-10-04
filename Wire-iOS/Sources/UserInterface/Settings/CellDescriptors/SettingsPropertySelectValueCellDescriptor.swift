@@ -23,7 +23,7 @@ import UIKit
 private let zmLog = ZMSLog(tag: "UI")
 
 final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsValueCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsValueCell.self
     let value: SettingsPropertyValue
     let title: String
     let identifier: String?

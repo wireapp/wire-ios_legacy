@@ -31,7 +31,7 @@ final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
         // portrait, downscale
         ColorTile(color: .yellow, size: CGSize(width: 1000, height: 1500)),
         // landscape, upscale
-        ColorTile(color: .petrol, size: CGSize(width: 15, height: 10)),
+        ColorTile(color: .turquoise, size: CGSize(width: 15, height: 10)),
         // landscape, downscale
         ColorTile(color: .blue, size: CGSize(width: 1500, height: 1000)),
         // portrait, upscale

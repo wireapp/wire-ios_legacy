@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Kontakte";
+"conversation_list.bottom_bar.conversations.title" = "Unterhaltungen";
+"conversation_list.bottom_bar.folders.title" = "Ordner";
+"conversation_list.bottom_bar.archived.title" = "Archiv";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Helfen Sie uns, Wire zu verbessern";
 "conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
@@ -539,7 +545,7 @@
 "content.system.unverified_self_devices" = "**Sie** haben eines [Ihrer Geräte](%@) nicht überprüft";
 "content.system.unverified_other_devices" = "**Sie** haben eines von [%1$@s Geräten](%2$@) nicht überprüft";
 
-"content.system.missing_messages.title" = "Sie haben Wire eine Weile nicht benutzt. Einige ältere Nachrichten könnten nicht angezeigt werden.";
+"content.system.missing_messages.title" = "Sie haben das Gerät eine Weile nicht benutzt. Einige Nachrichten werden hier eventuell nicht angezeigt.";
 "content.system.missing_messages.subtitle_start" = "In der Zwischenzeit";
 
 "content.system.cannot_decrypt.self" = "Eine Nachricht von **Ihnen** konnte nicht entschlüsselt werden.";
@@ -766,7 +772,7 @@
 "meta.menu.accessibility_more_options_button" = "Weitere Aktionen";
 "meta.menu.rename" = "Umbenennen";
 "meta.menu.leave" = "Gruppe verlassen…";
-"meta.menu.archive" = "Archivieren";
+"meta.menu.archive" = "Archiv";
 "meta.menu.unarchive" = "Reaktivieren";
 "meta.menu.delete" = "Gruppe löschen…";
 "meta.menu.clear_content" = "Verlauf löschen…";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Föderiert";
 "profile.details.blocking_reason" = "Dieser Nutzer ist aufgrund der gesetzlichen Aufbewahrung gesperrt. [MEHR ERFAHREN](%@)";
 
-"profile_view.accessibility.handle" = "Benutzername";
-"profile_view.accessibility.name" = "Angezeigter Name";
-"profile_view.accessibility.team_name" = "Name des Teams";
-
 // Device list
 "profile.devices.title" = "Geräte";
 "profile.devices.fingerprint_message_unencrypted" = "%@ benutzt eine ältere Version von Wire. Es werden keine Geräte angezeigt.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Unbekannt";
 
 // Bot
-"participants.services.remove_integration.button" = "Integration entfernen";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Gäste";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profil, neue Geräte hinzugefügt";
 
 "self.add_email_password" = "E-Mail-Adresse und Passwort hinzufügen";
-
-"self.accessibility.profile_photo_image" = "Profilbild";
-"self.accessibility.profile_photo_edit_button" = "Profilbild ändern";
 
 // About screen
 "about.tos.title" = "Nutzungsbedingungen";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Bild";
 "self.settings.account_picture_group.color" = "Farbe";
+"self.settings.account_picture_group.accent_color.blue" = "Blau";
+"self.settings.account_picture_group.accent_color.green" = "Grün";
+"self.settings.account_picture_group.accent_color.yellow" = "Gelb";
+"self.settings.account_picture_group.accent_color.red" = "Rot";
+"self.settings.account_picture_group.accent_color.amber" = "Bernstein";
+"self.settings.account_picture_group.accent_color.turquoise" = "Türkis";
+"self.settings.account_picture_group.accent_color.purple" = "Lila";
 
 "self.settings.account_personal_information_group.title" = "Persönliche Informationen";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Entwickleroptionen";
+"self.settings.developer_options.loggin.title" = "Optionen";
+"self.settings.developer_options.database_statistics.title" = "Datenbank-Statistiken";
 "self.settings.apns_logging.title" = "APNS Protokollierung";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Abbrechen";
 "availability.message.set_status" = "Einen Status wählen";
-"availability.accessibility_label.change_status" = "Status Ändern";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Kein Status";
 "availability.available" = "Verfügbar";
