@@ -18,7 +18,7 @@
 
 import Foundation
 
-class VerifyEmailStepSecondaryView: AuthenticationSecondaryViewDescription {
+class VerifyEmailStepSecondaryView: AuthenticationFooterViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
@@ -54,6 +54,7 @@ final class VerifyEmailStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(email: String, canChangeEmail: Bool = true) {
         self.email = email
@@ -61,7 +62,8 @@ final class VerifyEmailStepDescription: AuthenticationStepDescription {
         mainView = VerificationCodeFieldDescription()
         headline = "team.activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: email)
-        secondaryView = VerifyEmailStepSecondaryView(canChangeEmail: canChangeEmail)
+        secondaryView = nil
+        footerView = VerifyEmailStepSecondaryView(canChangeEmail: canChangeEmail)
     }
 
     func shouldSkipFromNavigation() -> Bool {

@@ -58,8 +58,10 @@ class AuthenticationStepController: AuthenticationStepViewController {
     fileprivate var errorLabelContainer: ContentInsetView!
 
     fileprivate var secondaryViews: [UIView] = []
+    fileprivate var footerViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
     fileprivate var secondaryViewsStackView: UIStackView!
+    fileprivate var footerViewStackView: UIStackView!
 
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
@@ -174,10 +176,20 @@ class AuthenticationStepController: AuthenticationStepViewController {
             secondaryViews = secondaryView.views.map { $0.create() }
         }
 
+        if let footerView = stepDescription.footerView {
+            footerViews = footerView.views.map { $0.create() }
+        }
+
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
         secondaryViewsStackView.distribution = .equalCentering
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        footerViewStackView = UIStackView(arrangedSubviews: footerViews)
+        footerViewStackView.distribution = .equalCentering
+        footerViewStackView.axis = .vertical
+        footerViewStackView.spacing = 26
+        footerViewStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let subviews = [headlineLabelContainer, subtextLabelContainer, mainView, errorLabelContainer, secondaryViewsStackView].compactMap { $0 }
 
@@ -187,6 +199,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         contentStack.alignment = .fill
 
         view.addSubview(contentStack)
+        view.addSubview(footerViewStackView)
     }
 
     func setSecondaryViewHidden(_ isHidden: Bool) {
@@ -248,6 +261,14 @@ class AuthenticationStepController: AuthenticationStepViewController {
             secondaryViewsStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 13),
             errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19)
         ])
+
+        if stepDescription.footerView != nil {
+            NSLayoutConstraint.activate([
+                footerViewStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
+                footerViewStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -31),
+                footerViewStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            ])
+        }
 
         // Adaptive Constraints
         mainViewWidthRegular = mainView.widthAnchor.constraint(equalToConstant: 375)

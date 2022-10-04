@@ -26,13 +26,15 @@ final class EmailLinkVerificationStepDescription: AuthenticationStepDescription 
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(emailAddress: String) {
         backButton = BackButtonDescription()
         mainView = EmailLinkVerificationMainView()
         headline = "team.activation_code.headline".localized
         subtext = "registration.verify_email.instructions".localized(args: emailAddress)
-        secondaryView = VerifyEmailStepSecondaryView(canResend: false)
+        secondaryView = nil
+        footerView = VerifyEmailStepSecondaryView(canResend: false)
     }
 
 }

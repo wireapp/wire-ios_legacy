@@ -3381,7 +3381,7 @@ internal enum L10n {
         internal static let gotIt = L10n.tr("Localizable", "registration.no_history.got_it")
         /// It’s the first time you’re using Wire on this device.
         internal static let hero = L10n.tr("Localizable", "registration.no_history.hero")
-        /// Restore from backup
+        /// Restore From Backup
         internal static let restoreBackup = L10n.tr("Localizable", "registration.no_history.restore_backup")
         /// For privacy reasons, your conversation history will not appear here.
         internal static let subtitle = L10n.tr("Localizable", "registration.no_history.subtitle")

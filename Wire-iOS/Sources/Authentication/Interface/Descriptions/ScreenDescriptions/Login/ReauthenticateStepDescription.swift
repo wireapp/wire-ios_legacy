@@ -29,6 +29,7 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(prefilledCredentials: AuthenticationPrefilledCredentials?) {
         backButton = BackButtonDescription()
@@ -53,6 +54,7 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
         }
 
         secondaryView = LoginSecondaryView()
+        footerView = nil
     }
 
 }

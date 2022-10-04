@@ -63,12 +63,12 @@ extension UnderlineButtonDescription: ViewDescriptor {
             .font: FontSpec.smallSemiboldFont.font!,
             .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
             .underlineStyle: NSUnderlineStyle.single.rawValue
-          ]
+        ]
 
         let attributeString = NSMutableAttributedString(
-                string: title,
-                attributes: yourAttributes
-             )
+            string: title,
+            attributes: yourAttributes
+        )
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(attributeString, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
@@ -87,13 +87,20 @@ extension SecondaryButtonDescription: ViewDescriptor {
         button.applyStyle(.secondaryTextButtonStyle)
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.layer.cornerRadius = 12
+        button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
         button.addTarget(self, action: #selector(SecondaryButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+
+        NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(equalToConstant: 32)
+        ])
+
         return button
 
     }
+    
     @objc dynamic func buttonTapped(_ sender: UIButton) {
         buttonTapped?()
     }

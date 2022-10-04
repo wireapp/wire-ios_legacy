@@ -44,6 +44,7 @@ final class VerifyPhoneStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(phoneNumber: String, allowChange: Bool) {
         self.phoneNumber = phoneNumber
@@ -52,6 +53,7 @@ final class VerifyPhoneStepDescription: AuthenticationStepDescription {
         headline = "team.phone_activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: phoneNumber)
         secondaryView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber, allowChange: allowChange)
+        footerView = nil
     }
 
     func shouldSkipFromNavigation() -> Bool {

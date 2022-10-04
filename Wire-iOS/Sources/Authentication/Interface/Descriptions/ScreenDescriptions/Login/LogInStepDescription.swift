@@ -61,6 +61,7 @@ class LogInStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -68,6 +69,7 @@ class LogInStepDescription: AuthenticationStepDescription {
         headline = "registration.signin.title".localized
         subtext = nil
         secondaryView = LoginSecondaryView()
+        footerView = nil
     }
 
 }

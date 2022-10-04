@@ -27,6 +27,7 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
     let initialValidation: ValueValidation
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -35,6 +36,7 @@ class AddEmailPasswordStepDescription: DefaultValidatingStepDescription {
         subtext = "registration.add_email_password.hero.paragraph".localized
         initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
         secondaryView = nil
+        footerView = nil
     }
 
 }

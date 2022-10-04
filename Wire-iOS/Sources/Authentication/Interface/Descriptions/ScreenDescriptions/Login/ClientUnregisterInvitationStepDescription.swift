@@ -29,6 +29,7 @@ class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -37,6 +38,7 @@ class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
 
         mainView = SolidButtonDescription(title: "registration.signin.too_many_devices.manage_button.title".localized, accessibilityIdentifier: "manage_devices")
         secondaryView = nil
+        footerView = nil
     }
 
 }
