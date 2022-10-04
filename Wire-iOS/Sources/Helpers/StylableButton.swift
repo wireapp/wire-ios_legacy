@@ -37,7 +37,7 @@ class StylableButton: UIButton, Stylable {
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
 
         self.layer.borderWidth = 1
-        self.layer.borderColor = isHighlighted ? style.normalStateColors.border.cgColor : style.highlightedStateColors.border.cgColor
+        self.layer.borderColor = isHighlighted ? style.highlightedStateColors.border.cgColor : style.normalStateColors.border.cgColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

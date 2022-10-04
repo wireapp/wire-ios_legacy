@@ -99,7 +99,7 @@ final class ParticipantsStringFormatter {
     }
 
     private let message: ZMConversationMessage
-    private let font, boldFont, largeFont: UIFont
+    private let font, largeFont: UIFont
     private let textColor: UIColor
 
     private var normalAttributes: Attributes {
@@ -107,7 +107,7 @@ final class ParticipantsStringFormatter {
     }
 
     private var boldAttributes: Attributes {
-        return [.font: boldFont, .foregroundColor: textColor]
+        return [.font: font, .foregroundColor: textColor]
     }
 
     private var largeAttributes: Attributes {
@@ -118,10 +118,9 @@ final class ParticipantsStringFormatter {
         return [.link: ParticipantsCellViewModel.showMoreLinkURL]
     }
 
-    init(message: ZMConversationMessage, font: UIFont = .mediumFont, boldFont: UIFont = .mediumSemiboldFont, largeFont: UIFont = .largeSemiboldFont, textColor: UIColor = .from(scheme: .textForeground)) {
+    init(message: ZMConversationMessage, font: UIFont = .mediumFont, largeFont: UIFont = .largeSemiboldFont, textColor: UIColor = .from(scheme: .textForeground)) {
         self.message = message
         self.font = font
-        self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
     }
@@ -130,8 +129,8 @@ final class ParticipantsStringFormatter {
     func heading(senderName: String, senderIsSelf: Bool, convName: String) -> NSAttributedString {
         // "You/Bob started the conversation"
         let key = senderIsSelf ? Key.youStartedTheConversation : Key.xStartedTheConversation
-        var text = key.localized(args: senderName) && font
-        text = senderIsSelf ? text : text.adding(font: boldFont, to: senderName)
+        let text = key.localized(args: senderName) && font
+
         // "Italy Trip"
         let title = convName.attributedString && largeFont
         return [text, title].joined(separator: "\n".attributedString) && textColor && .lineSpacing(4)
@@ -146,7 +145,7 @@ final class ParticipantsStringFormatter {
         case .left, .teamMemberLeave, .added(herself: true):
             let formatKey = message.actionType.formatKey
             let title = formatKey(senderIsSelf).localized(args: senderName) && font && textColor
-            return senderIsSelf ? title : title.adding(font: boldFont, to: senderName)
+            return title
 
         default:
             return nil
@@ -171,7 +170,7 @@ final class ParticipantsStringFormatter {
             }
             let formatString = "content.system.conversation.\(senderPath).removed.legalhold"
             result = formatString.localized(args: nameSequence.string) && font && textColor
-            result = result.adding(font: boldFont, to: nameSequence.string)
+
             let learnMore = NSAttributedString(string: L10n.Localizable.Content.System.MessageLegalHold.learnMore.uppercased(),
                                                attributes: [.font: font,
                                                             .link: URL.wr_legalHoldLearnMore.absoluteString as AnyObject,
@@ -180,7 +179,6 @@ final class ParticipantsStringFormatter {
 
         case .removed, .added(herself: false), .started(withName: .none):
             result = formatKey(senderIsSelf).localized(args: senderName, nameSequence.string) && font && textColor
-            if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
 
         case .started(withName: .some):
             result = "\(Key.with.localized) \(nameSequence.string)" && font && textColor

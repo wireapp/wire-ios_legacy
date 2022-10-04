@@ -225,11 +225,17 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     private func setupScrollView() {
+        let inputBarButtonViewHeight: CGFloat = 56.0
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
 
-        scrollView.fitIn(view: view)
-
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -inputBarButtonViewHeight)
+        ])
         scrollView.contentInsetAdjustmentBehavior = .never
 
         scrollView.delegate = self
@@ -795,8 +801,8 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
         let imageWidth: CGFloat = imageView?.image?.size.width ?? 0
         let imageHeight: CGFloat = imageView?.image?.size.height ?? 0
 
-        let viewWidth = view.bounds.size.width
-        let viewHeight = view.bounds.size.height
+        let viewWidth = scrollView.bounds.size.width
+        let viewHeight = scrollView.bounds.size.height
 
         var horizontalInset: CGFloat = (viewWidth - scrollView.zoomScale * imageWidth) / 2
         horizontalInset = max(0, horizontalInset)

@@ -23,6 +23,7 @@ import WireCommonComponents
 
 final class GuestsAllowedCellDescription: ConversationMessageCellDescription {
 
+    // MARK: Properties
     typealias View = GuestsAllowedCell
     let configuration: View.Configuration
 
@@ -40,6 +41,7 @@ final class GuestsAllowedCellDescription: ConversationMessageCellDescription {
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
+    // MARK: initialization
     init() {
         configuration = View.Configuration()
         actionController = nil
@@ -51,8 +53,10 @@ final class GuestsAllowedCellDescription: ConversationMessageCellDescription {
 
 }
 
+// MARK: GuestAllowedCell
 final class GuestsAllowedCell: UIView, ConversationMessageCell {
 
+    // MARK: Properties
     struct GuestsAllowedCellConfiguration { }
 
     typealias Configuration = GuestsAllowedCellConfiguration
@@ -65,6 +69,7 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
     let inviteButton = InviteButton()
     var isSelected: Bool = false
 
+    // MARK: initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -76,6 +81,7 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Setup UI
     private func setupViews() {
         stackView.axis = .vertical
         stackView.spacing = 16
@@ -84,8 +90,8 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
         titleLabel.numberOfLines = 0
         titleLabel.text = L10n.Localizable.Content.System.Conversation.Invite.title
-        titleLabel.textColor = UIColor.from(scheme: .textForeground)
-        titleLabel.font = FontSpec(.medium, .none).font
+        titleLabel.textColor = SemanticColors.Label.textDefault
+        titleLabel.font = FontSpec.mediumFont.font!
 
         inviteButton.setTitle(L10n.Localizable.Content.System.Conversation.Invite.button, for: .normal)
         inviteButton.addTarget(self, action: #selector(inviteButtonTapped), for: .touchUpInside)
@@ -98,9 +104,10 @@ final class GuestsAllowedCell: UIView, ConversationMessageCell {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ])
+        ])
     }
 
+    // MARK: Configuration and actions
     func configure(with object: GuestsAllowedCellConfiguration, animated: Bool) {
 
     }
