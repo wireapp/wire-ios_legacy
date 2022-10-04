@@ -38,6 +38,6 @@ final class ConversationListHeaderViewTests: XCTestCase {
         sut.collapsed = true
         sut.folderBadge = 999
 
-        XCTAssertEqual(sut.accessibilityValue, "collapsed 999")
+        XCTAssertEqual(sut.accessibilityValue, "Collapsed 999")
     }
 }

@@ -91,7 +91,7 @@ class ConversationIconBasedCell: UIView {
             NSAttributedString.Key.foregroundColor: SelfUser.provider?.selfUser.accentColor ?? UIColor.accent()
         ]
 
-        lineView.backgroundColor = .from(scheme: .separator)
+        lineView.backgroundColor = SemanticColors.View.backgroundSeparatorConversationView
 
         imageContainer.addSubview(imageView)
         addSubview(imageContainer)

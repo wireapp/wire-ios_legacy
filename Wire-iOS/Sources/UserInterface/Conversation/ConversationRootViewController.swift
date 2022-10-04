@@ -50,9 +50,9 @@ final class ConversationRootViewController: UIViewController {
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.barTintColor = UIColor.from(scheme: .barBackground)
-        navbar.tintColor = UIColor.from(scheme: .textForeground)
-        navbar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
+        navbar.barTintColor = SemanticColors.View.backgroundDefault
+        navbar.tintColor = SemanticColors.Label.textDefault
+        navbar.barStyle = .default
 
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -79,7 +79,7 @@ final class ConversationRootViewController: UIViewController {
             return
         }
 
-        self.view.backgroundColor = UIColor.from(scheme: .barBackground)
+        self.view.backgroundColor = SemanticColors.View.backgroundDefault
 
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
@@ -111,12 +111,19 @@ final class ConversationRootViewController: UIViewController {
         ])
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
+        navBarContainer.navigationBar.accessibilityElementsHidden = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         shouldAnimateNetworkStatusView = true
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        navBarContainer.navigationBar.accessibilityElementsHidden = true
     }
 
     private var child: UIViewController? {

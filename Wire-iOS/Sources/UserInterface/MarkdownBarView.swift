@@ -30,8 +30,15 @@ final class MarkdownBarView: UIView {
     weak var delegate: MarkdownBarViewDelegate?
 
     private let stackView =  UIStackView()
-    private let accentColor: UIColor = UIColor.accent()
-    private let normalColor = UIColor.from(scheme: .iconNormal)
+
+    private let enabledStateIconColor = SemanticColors.Button.textInputBarItemEnabled
+    private let highlightedStateIconColor = SemanticColors.Button.textInputBarItemHighlighted
+
+    private let enabledStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemEnabled
+    private let highlightedStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemHighlighted
+
+    private let enabledStateBorderColor = SemanticColors.Button.borderInputBarItemEnabled
+    private let highlightedStateBorderColor = SemanticColors.Button.borderInputBarItemHighlighted
 
     let headerButton         = PopUpIconButton()
     let boldButton           = IconButton()
@@ -41,7 +48,6 @@ final class MarkdownBarView: UIView {
     let codeButton           = IconButton()
 
     let buttons: [IconButton]
-    var activeModes = [Markdown]()
 
     private var buttonMargin: CGFloat {
         return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
@@ -78,7 +84,29 @@ final class MarkdownBarView: UIView {
         codeButton.setIcon(.markdownCode, size: .tiny, for: .normal)
 
         for button in buttons {
-            button.setIconColor(normalColor, for: .normal)
+            // We apply the corner radius only for the first and the last button
+            if button == buttons.first {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+            }
+
+            if button == buttons.last {
+                button.layer.cornerRadius = 12
+                button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+            }
+
+            button.contentEdgeInsets = UIEdgeInsets(top: 9, left: 20, bottom: 9, right: 20)
+            button.layer.borderWidth = 1
+            button.clipsToBounds = true
+
+            button.setIconColor(enabledStateIconColor, for: .normal)
+            button.setBorderColor(enabledStateBorderColor, for: .normal)
+            button.setBackgroundImageColor(enabledStateBackgroundColor, for: .normal)
+
+            button.setIconColor(highlightedStateIconColor, for: .highlighted)
+            button.setBorderColor(highlightedStateBorderColor, for: .highlighted)
+            button.setBackgroundImageColor(highlightedStateBackgroundColor, for: .highlighted)
+
             button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }
@@ -109,7 +137,7 @@ final class MarkdownBarView: UIView {
 
         guard let markdown = markdown(for: sender) else { return }
 
-        if sender.iconColor(for: .normal) != normalColor {
+        if sender.iconColor(for: .normal) != enabledStateIconColor {
             delegate?.markdownBarView(self, didDeselectMarkdown: markdown, with: sender)
         } else {
             delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: sender)
@@ -138,13 +166,21 @@ final class MarkdownBarView: UIView {
 
         for button in buttons {
             guard let buttonMarkdown = self.markdown(for: button) else { continue }
-            let color = markdown.contains(buttonMarkdown) ? accentColor : normalColor
-            button.setIconColor(color, for: .normal)
+            let iconColor = markdown.contains(buttonMarkdown) ? highlightedStateIconColor : enabledStateIconColor
+            let backgroundColor = markdown.contains(buttonMarkdown) ? highlightedStateBackgroundColor : enabledStateBackgroundColor
+            let borderColor = markdown.contains(buttonMarkdown) ? highlightedStateBorderColor : enabledStateBorderColor
+            button.setIconColor(iconColor, for: .normal)
+            button.setBorderColor(borderColor, for: .normal)
+            button.setBackgroundImageColor(backgroundColor, for: .normal)
         }
     }
 
     @objc func resetIcons() {
-        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
+        buttons.forEach {
+            $0.setIconColor(enabledStateIconColor, for: .normal)
+            $0.setBorderColor(enabledStateBorderColor, for: .normal)
+            $0.setBackgroundImageColor(enabledStateBackgroundColor, for: .normal)
+        }
     }
 }
 

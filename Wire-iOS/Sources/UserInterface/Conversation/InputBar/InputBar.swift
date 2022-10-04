@@ -134,14 +134,16 @@ final class InputBar: UIView {
     let markdownView = MarkdownBarView()
 
     var editingBackgroundColor = SemanticColors.LegacyColors.brightYellow
-    var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
-    var writingSeparatorColor: UIColor? = .from(scheme: .separator)
+
+    var barBackgroundColor: UIColor? = SemanticColors.SearchBar.backgroundInputView
+    var writingSeparatorColor: UIColor? = SemanticColors.View.backgroundSeparatorCell
+
     var ephemeralColor: UIColor {
         return .accent()
     }
 
-    var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
-    var textColor: UIColor? = .from(scheme: .textForeground)
+    var placeholderColor: UIColor = SemanticColors.SearchBar.textInputViewPlaceholder
+    var textColor: UIColor? = SemanticColors.SearchBar.textInputView
 
     private lazy var rowTopInsetConstraint: NSLayoutConstraint = buttonInnerContainer.topAnchor.constraint(equalTo: buttonContainer.topAnchor, constant: -constants.buttonsBarHeight)
 
@@ -247,7 +249,7 @@ final class InputBar: UIView {
         textView.textContainerInset = UIEdgeInsets(top: inputBarVerticalInset / 2, left: 0, bottom: inputBarVerticalInset / 2, right: 4)
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
-        textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        textView.keyboardAppearance = .default
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
         textView.font = .normalLightFont
@@ -255,7 +257,7 @@ final class InputBar: UIView {
         textView.backgroundColor = .clear
 
         markdownView.delegate = textView
-
+        self.addBorder(for: .top)
         updateReturnKey()
 
         updateInputBar(withState: inputBarState, animated: false)
@@ -472,12 +474,22 @@ final class InputBar: UIView {
         buttons.append(self.buttonsView.expandRowButton)
 
         buttons.forEach { button in
-            guard let button = button as? IconButton else {
-                return
-            }
+            guard let button = button as? IconButton else { return }
 
-            button.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            button.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
+            button.layer.borderWidth = 1
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemEnabled, for: .normal)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemEnabled, for: .normal)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+
+            button.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .selected)
+            button.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .selected)
+            button.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .selected)
+
         }
     }
 

@@ -73,7 +73,7 @@ class ParticipantsCellViewModel {
     private typealias NameList = ParticipantsStringFormatter.NameList
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
 
-    let font, boldFont, largeFont: UIFont?
+    let font, largeFont: UIFont?
     let textColor, iconColor: UIColor
     let message: ZMConversationMessage
 
@@ -155,14 +155,12 @@ class ParticipantsCellViewModel {
 
     init(
         font: UIFont?,
-        boldFont: UIFont?,
         largeFont: UIFont?,
         textColor: UIColor,
         iconColor: UIColor,
         message: ZMConversationMessage
         ) {
         self.font = font
-        self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
         self.iconColor = iconColor
@@ -246,10 +244,10 @@ class ParticipantsCellViewModel {
     }
 
     private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {
-        guard let font = font, let boldFont = boldFont, let largeFont = largeFont else { return nil }
+        guard let font = font, let largeFont = largeFont else { return nil }
 
         return ParticipantsStringFormatter(
-            message: message, font: font, boldFont: boldFont,
+            message: message, font: font,
             largeFont: largeFont, textColor: textColor
         )
     }

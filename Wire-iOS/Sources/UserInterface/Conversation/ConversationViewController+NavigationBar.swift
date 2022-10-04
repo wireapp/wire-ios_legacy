@@ -1,20 +1,20 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 import UIKit
 import WireSyncEngine
@@ -23,24 +23,57 @@ import WireCommonComponents
 // MARK: - Update left navigator bar item when size class changes
 extension ConversationViewController {
 
+    typealias IconColors = SemanticColors.Icon
+    typealias ButtonColors = SemanticColors.Button
+
     func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
 
     var audioCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .phone, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
+        let button = IconButton()
+        button.setIcon(.phone, size: .tiny, for: .normal)
+        button.setIconColor(IconColors.foregroundDefault, for: .normal)
+
         button.accessibilityIdentifier = "audioCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_audio_call".localized
-        return button
+
+        button.addTarget(self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)), for: .touchUpInside)
+
+        button.backgroundColor = ButtonColors.backgroundBarItem
+        button.layer.borderWidth = 1
+        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.layer.cornerRadius = 12
+        button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
+
+        return UIBarButtonItem(customView: button)
     }
 
     var videoCallButton: UIBarButtonItem {
-        let button = UIBarButtonItem(icon: .camera, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
+        let button = IconButton()
+        button.setIcon(.camera, size: .tiny, for: .normal)
+        button.setIconColor(IconColors.foregroundDefault, for: .normal)
+
         button.accessibilityIdentifier = "videoCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_video_call".localized
-        return button
+
+        button.addTarget(self, action: #selector(ConversationViewController.videoCallItemTapped(_:)), for: .touchUpInside)
+
+        button.backgroundColor = ButtonColors.backgroundBarItem
+        button.layer.borderWidth = 1
+        button.setBorderColor(ButtonColors.borderBarItem, for: .normal)
+        button.layer.cornerRadius = 12
+        button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
+
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
+
+        return UIBarButtonItem(customView: button)
     }
 
     var joinCallButton: UIBarButtonItem {
@@ -61,8 +94,8 @@ extension ConversationViewController {
     var backButton: UIBarButtonItem {
         let hasUnreadInOtherConversations = self.conversation.hasUnreadMessagesInOtherConversations
         let arrowIcon: StyleKitIcon = view.isRightToLeft
-            ? (hasUnreadInOtherConversations ? .forwardArrowWithDot : .forwardArrow)
-            : (hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow)
+        ? (hasUnreadInOtherConversations ? .forwardArrowWithDot : .forwardArrow)
+        : (hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow)
 
         let icon: StyleKitIcon = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
@@ -90,7 +123,7 @@ extension ConversationViewController {
         case .group: return true
         case .oneOnOne:
             if let connection = conversation.connection,
-                connection.status != .pending && connection.status != .sent {
+               connection.status != .pending && connection.status != .sent {
                 return true
             } else {
                 return nil != conversation.teamRemoteIdentifier
@@ -121,7 +154,7 @@ extension ConversationViewController {
         }
 
         if shouldShowCollectionsButton {
-            items.append(collectionsBarButtonItem)
+            items.append(searchBarButtonItem)
         }
 
         return items

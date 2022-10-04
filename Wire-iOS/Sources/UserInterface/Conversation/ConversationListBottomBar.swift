@@ -20,7 +20,9 @@ import UIKit
 import WireSyncEngine
 
 enum ConversationListButtonType {
-    typealias BottomBar = L10n.Localizable.ConversationList.Voiceover.BottomBar
+    typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
+    typealias ConversationsList = L10n.Accessibility.ConversationsList
+
     case archive, startUI, list, folder
     var accessibilityIdentifier: String {
         switch self {
@@ -35,7 +37,6 @@ enum ConversationListButtonType {
         }
     }
     var title: String {
-        typealias BottomBar = L10n.Localizable.ConversationList.BottomBar
         switch self {
         case .archive:
             return BottomBar.Archived.title
@@ -49,26 +50,26 @@ enum ConversationListButtonType {
     }
     var accessibilityLabel: String {
         switch self {
-        case .archive:
-            return BottomBar.ArchivedButton.label
         case .startUI:
-            return BottomBar.ContactsButton.label
+            return ConversationsList.ContactsBottomBar.description
         case .list:
-            return BottomBar.RecentButton.label
+            return ConversationsList.RecentBottomBar.description
         case .folder:
-            return BottomBar.FolderButton.label
+            return ConversationsList.FolderBottomBar.description
+        case .archive:
+            return ConversationsList.ArchiveBottomBar.description
         }
     }
     var accessibilityHint: String {
         switch self {
-        case .archive:
-            return BottomBar.ArchivedButton.hint
         case .startUI:
-            return BottomBar.ContactsButton.hint
+            return ConversationsList.ContactsBottomBar.hint
         case .list:
-            return BottomBar.RecentButton.hint
+            return ConversationsList.RecentBottomBar.hint
         case .folder:
-            return BottomBar.FolderButton.hint
+            return ConversationsList.FolderBottomBar.hint
+        case .archive:
+            return ConversationsList.ArchiveBottomBar.hint
         }
     }
 }
@@ -210,9 +211,16 @@ final class ConversationListBottomBarController: UIViewController {
 
     private func highlightActiveTab(tabView selectedTabView: ConversationListTabView) {
         allTabs.forEach { subStackView in
-            subStackView.backgroundColor = subStackView.isEqual(selectedTabView) ? .accent() : .clear
-            subStackView.label.textColor = subStackView.label.isEqual(selectedTabView.label) ? SemanticColors.Button.textBottomBarSelected : SemanticColors.Button.textBottomBarNormal
+            subStackView.backgroundColor = subStackView.isEqual(selectedTabView)
+                                            ? .accent()
+                                            : .clear
+            subStackView.label.textColor = subStackView.label.isEqual(selectedTabView.label)
+                                            ? SemanticColors.Button.textBottomBarSelected
+                                            : SemanticColors.Button.textBottomBarNormal
             subStackView.button.isSelected = subStackView.isEqual(selectedTabView)
+            subStackView.accessibilityValue = subStackView.isEqual(selectedTabView)
+                                                ? L10n.Accessibility.ConversationsList.BottomBar.value
+                                                : nil
         }
     }
 
