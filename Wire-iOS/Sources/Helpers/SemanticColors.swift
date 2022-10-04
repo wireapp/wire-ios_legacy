@@ -71,7 +71,7 @@ public enum SemanticColors {
         static let textLabelMessageActive = UIColor(light: Asset.black, dark: Asset.white)
         static let textLabelMessageDetailsActive = UIColor(light: Asset.gray70, dark: Asset.gray40)
         static let textMessageDetails = UIColor(light: Asset.gray70, dark: Asset.gray40)
-        static let textErrorDefault  = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
+        static let textErrorDefault = UIColor(light: Asset.red500Light, dark: Asset.red500Dark)
         static let textPasswordRulesCheck = UIColor(light: Asset.gray80, dark: Asset.gray20)
 
     }
