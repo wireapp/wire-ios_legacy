@@ -47,21 +47,18 @@ extension IconButton {
 
     static func sendButton() -> IconButton {
 
-        let sendButtonIconColor = UIColor.from(scheme: .background, variant: .light)
+        let sendButtonIconColor = SemanticColors.Icon.foregroundDefaultWhite
 
         let sendButton = IconButton(
             icon: .send,
             accessibilityId: "sendButton",
             backgroundColor: [.normal: UIColor.accent(),
-                              .highlighted: UIColor.accentDarken],
+                              .highlighted: UIColor.accentDarken,
+                              .disabled: SemanticColors.Button.backgroundSendDisabled],
             iconColor: [.normal: sendButtonIconColor,
                         .highlighted: sendButtonIconColor,
-                        .disabled: sendButtonIconColor,
-                        .selected: sendButtonIconColor]
+                        .disabled: sendButtonIconColor]
         )
-
-        sendButton.adjustsImageWhenHighlighted = false
-        sendButton.adjustBackgroundImageWhenHighlighted = true
 
         return sendButton
     }

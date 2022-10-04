@@ -36,7 +36,8 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(
             items: items,
             title: "self.settings.advanced.title".localized,
-            icon: .settingsAdvanced
+            icon: .settingsAdvanced,
+            accessibilityBackButtonText: L10n.Accessibility.AdvancedSettings.BackButton.description
         )
     }
 
@@ -107,7 +108,8 @@ extension SettingsCellDescriptorFactory {
         // Inner group
         let debuggingToolsGroup = SettingsGroupCellDescriptor(
             items: [findUnreadConversationSection],
-            title: "self.settings.advanced.debugging_tools.title".localized
+            title: L10n.Localizable.Self.Settings.Advanced.DebuggingTools.title ,
+            accessibilityBackButtonText: L10n.Accessibility.AdvancedSettings.BackButton.description
         )
 
         // Section
