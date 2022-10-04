@@ -11,12 +11,26 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum Accessibility {
+    internal enum AboutSettings {
+      internal enum BackButton {
+        /// Go back to About
+        internal static let description = L10n.tr("Accessibility", "aboutSettings.backButton.description")
+      }
+    }
     internal enum AccountPage {
       internal enum AvailabilityStatus {
         /// Status
         internal static let description = L10n.tr("Accessibility", "accountPage.availabilityStatus.description")
         /// Double tap to change status
         internal static let hint = L10n.tr("Accessibility", "accountPage.availabilityStatus.hint")
+      }
+      internal enum BackButton {
+        /// Go back to account overview
+        internal static let description = L10n.tr("Accessibility", "accountPage.backButton.description")
+      }
+      internal enum CloseButton {
+        /// Close account overview
+        internal static let description = L10n.tr("Accessibility", "accountPage.closeButton.description")
       }
       internal enum Handle {
         /// Username
@@ -37,10 +51,42 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "accountPage.teamName.description")
       }
     }
-    internal enum ClientList {
+    internal enum AccountSettings {
+      internal enum BackButton {
+        /// Go back to Account
+        internal static let description = L10n.tr("Accessibility", "accountSettings.backButton.description")
+      }
+    }
+    internal enum AdvancedSettings {
+      internal enum BackButton {
+        /// Go back to Advanced
+        internal static let description = L10n.tr("Accessibility", "advancedSettings.backButton.description")
+      }
+    }
+    internal enum ClientsList {
       internal enum DeviceDetails {
         /// Double tap to open device details
-        internal static let hint = L10n.tr("Accessibility", "clientList.deviceDetails.hint")
+        internal static let hint = L10n.tr("Accessibility", "clientsList.deviceDetails.hint")
+      }
+      internal enum DeviceId {
+        /// Device ID
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceId.description")
+      }
+      internal enum DeviceName {
+        /// Device name
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceName.description")
+      }
+      internal enum DeviceNotVerified {
+        /// Not Verified
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceNotVerified.description")
+      }
+      internal enum DeviceVerified {
+        /// Verified
+        internal static let description = L10n.tr("Accessibility", "clientsList.deviceVerified.description")
+      }
+      internal enum KeyFingerprint {
+        /// Key fingerprint
+        internal static let description = L10n.tr("Accessibility", "clientsList.keyFingerprint.description")
       }
     }
     internal enum Conversation {
@@ -59,18 +105,58 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
     }
-    internal enum Options {
-      internal enum SoundButton {
-        /// Double tap to change setting
-        internal static let hint = L10n.tr("Accessibility", "options.soundButton.hint")
+    internal enum DeveloperOptionsSettings {
+      internal enum BackButton {
+        /// Go back to Developer options
+        internal static let description = L10n.tr("Accessibility", "developerOptionsSettings.backButton.description")
+      }
+    }
+    internal enum DeviceDetails {
+      internal enum BackButton {
+        /// Go back to device overview
+        internal static let description = L10n.tr("Accessibility", "deviceDetails.backButton.description")
+      }
+      internal enum HowToVerifyFingerprint {
+        /// Learn more about fingerprint verification
+        internal static let hint = L10n.tr("Accessibility", "deviceDetails.howToVerifyFingerprint.hint")
+      }
+      internal enum Verified {
+        /// Device verified
+        internal static let description = L10n.tr("Accessibility", "deviceDetails.verified.description")
+      }
+      internal enum WhyVerifyFingerprint {
+        /// Double tap to learn more about verifications
+        internal static let hint = L10n.tr("Accessibility", "deviceDetails.whyVerifyFingerprint.hint")
+      }
+    }
+    internal enum LicenseDetailsSettings {
+      internal enum BackButton {
+        /// Go back to License details
+        internal static let description = L10n.tr("Accessibility", "licenseDetailsSettings.backButton.description")
+      }
+    }
+    internal enum LicenseInformationSettings {
+      internal enum BackButton {
+        /// Go back to License information
+        internal static let description = L10n.tr("Accessibility", "licenseInformationSettings.backButton.description")
+      }
+    }
+    internal enum OptionsSettings {
+      internal enum BackButton {
+        /// Go back to Options
+        internal static let description = L10n.tr("Accessibility", "optionsSettings.backButton.description")
+      }
+    }
+    internal enum Profile {
+      internal enum BackButton {
+        /// Go back to conversation details
+        internal static let description = L10n.tr("Accessibility", "profile.backButton.description")
       }
     }
     internal enum Settings {
       internal enum BackButton {
-        /// Go back to %@
-        internal static func description(_ p1: Any) -> String {
-          return L10n.tr("Accessibility", "settings.backButton.description", String(describing: p1))
-        }
+        /// Go back to Setting
+        internal static let description = L10n.tr("Accessibility", "settings.backButton.description")
       }
       internal enum CloseButton {
         /// Close settings
@@ -81,6 +167,12 @@ internal enum L10n {
         internal static func hint(_ p1: Any) -> String {
           return L10n.tr("Accessibility", "settings.deviceCount.hint", String(describing: p1))
         }
+      }
+    }
+    internal enum SupportSettings {
+      internal enum BackButton {
+        /// Go back to Support
+        internal static let description = L10n.tr("Accessibility", "supportSettings.backButton.description")
       }
     }
   }
