@@ -32,6 +32,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     weak var authenticationCoordinator: AuthenticationCoordinator? {
         didSet {
             stepDescription.secondaryView?.actioner = authenticationCoordinator
+            stepDescription.footerView?.actioner = authenticationCoordinator
         }
     }
 
