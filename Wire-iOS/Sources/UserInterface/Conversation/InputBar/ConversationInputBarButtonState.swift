@@ -22,9 +22,9 @@ import WireSyncEngine
 
 final class ConversationInputBarButtonState {
 
-    var sendButtonHidden: Bool {
+    var sendButtonEnabled: Bool {
         let disableSendButton: Bool? = Settings.shared[.sendButtonDisabled]
-        return !hasText || editing || (disableSendButton == true && !markingDown)
+        return hasText || (disableSendButton == false && !markingDown)
     }
 
     var hourglassButtonHidden: Bool {

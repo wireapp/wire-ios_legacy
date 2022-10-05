@@ -1120,19 +1120,19 @@ internal enum L10n {
         internal static func reactivatedDevice(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.reactivated_device", String(describing: p1))
         }
-        /// **You** started using [a new device](%@)
+        /// You started using [a new device](%@)
         internal static func selfUserNewClient(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.self_user_new_client", String(describing: p1))
         }
-        /// **You** started using [this device](%@)
+        /// You started using [this device](%@)
         internal static func selfUserNewSelfClient(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.self_user_new_self_client", String(describing: p1))
         }
-        /// **You** unverified one of [%1$@’s devices](%2$@)
+        /// You unverified one of [%1$@’s devices](%2$@)
         internal static func unverifiedOtherDevices(_ p1: Any, _ p2: Any) -> String {
           return L10n.tr("Localizable", "content.system.unverified_other_devices", String(describing: p1), String(describing: p2))
         }
-        /// **You** unverified one of [your devices](%@)
+        /// You unverified one of [your devices](%@)
         internal static func unverifiedSelfDevices(_ p1: Any) -> String {
           return L10n.tr("Localizable", "content.system.unverified_self_devices", String(describing: p1))
         }
@@ -1203,29 +1203,29 @@ internal enum L10n {
           internal static func errorDetails(_ p1: Int, _ p2: Any) -> String {
             return L10n.tr("Localizable", "content.system.cannot_decrypt.error_details", p1, String(describing: p2))
           }
-          /// A message from **%@** could not be decrypted.
+          /// A message from %@ could not be decrypted.
           internal static func other(_ p1: Any) -> String {
             return L10n.tr("Localizable", "content.system.cannot_decrypt.other", String(describing: p1))
           }
           /// Fix future messages
           internal static let resetSession = L10n.tr("Localizable", "content.system.cannot_decrypt.reset_session")
-          /// A message from **you** could not be decrypted.
+          /// A message from you could not be decrypted.
           internal static let `self` = L10n.tr("Localizable", "content.system.cannot_decrypt.self")
         }
         internal enum CannotDecryptIdentityChanged {
-          /// **%@’s** device identity changed. Undelivered message.
+          /// %@’s device identity changed. Undelivered message.
           internal static func other(_ p1: Any) -> String {
             return L10n.tr("Localizable", "content.system.cannot_decrypt_identity_changed.other", String(describing: p1))
           }
-          /// **Your** device identity changed. Undelivered message.
+          /// Your device identity changed. Undelivered message.
           internal static let `self` = L10n.tr("Localizable", "content.system.cannot_decrypt_identity_changed.self")
         }
         internal enum CannotDecryptResolved {
-          /// You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**
+          /// You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.
           internal static func other(_ p1: Any) -> String {
             return L10n.tr("Localizable", "content.system.cannot_decrypt_resolved.other", String(describing: p1))
           }
-          /// You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**
+          /// You can now decrypt messages from yourself. To recover lost messages, you need to resend them.
           internal static let `self` = L10n.tr("Localizable", "content.system.cannot_decrypt_resolved.self")
         }
         internal enum Conversation {
@@ -1359,11 +1359,11 @@ internal enum L10n {
           internal static let warning = L10n.tr("Localizable", "content.system.services.warning")
         }
         internal enum SessionReset {
-          /// **%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.
+          /// %@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.
           internal static func other(_ p1: Any) -> String {
             return L10n.tr("Localizable", "content.system.session_reset.other", String(describing: p1))
           }
-          /// **You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.
+          /// You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.
           internal static let `self` = L10n.tr("Localizable", "content.system.session_reset.self")
         }
         internal enum StartedConversation {
@@ -1410,15 +1410,15 @@ internal enum L10n {
         internal static func arePresent(_ p1: Any) -> String {
           return L10n.tr("Localizable", "conversation.banner.are_present", String(describing: p1))
         }
-        /// **Externals**
+        /// Externals
         internal static let externals = L10n.tr("Localizable", "conversation.banner.externals")
-        /// **Guests**
+        /// Guests
         internal static let guests = L10n.tr("Localizable", "conversation.banner.guests")
-        /// **Federated users**
+        /// Federated users
         internal static let remotes = L10n.tr("Localizable", "conversation.banner.remotes")
         ///  and 
         internal static let separator = L10n.tr("Localizable", "conversation.banner.separator")
-        /// **Services**
+        /// Services
         internal static let services = L10n.tr("Localizable", "conversation.banner.services")
       }
       internal enum Call {
