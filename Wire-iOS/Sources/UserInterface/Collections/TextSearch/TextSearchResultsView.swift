@@ -28,7 +28,7 @@ final class TextSearchResultsView: UIView {
         setupViews()
         createConstraints()
 
-        backgroundColor = .from(scheme: .contentBackground)
+        backgroundColor = SemanticColors.View.backgroundConversationList
     }
 
     private func setupViews() {
@@ -40,7 +40,7 @@ final class TextSearchResultsView: UIView {
         addSubview(tableView)
 
         noResultsView.label.accessibilityLabel = "no text messages"
-        noResultsView.label.text = "collections.search.no_items".localized(uppercased: true)
+        noResultsView.label.text = "collections.search.no_items".localized
         noResultsView.icon = .search
         addSubview(noResultsView)
     }

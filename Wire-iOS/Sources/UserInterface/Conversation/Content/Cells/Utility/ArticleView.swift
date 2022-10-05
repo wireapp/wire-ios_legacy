@@ -24,12 +24,12 @@ import WireDataModel
 final class ArticleView: UIView {
 
     // MARK: - Styling
-    private let containerColor: UIColor = .from(scheme: .placeholderBackground)
-    private let titleTextColor: UIColor = .from(scheme: .textForeground)
+    private let containerColor: UIColor = SemanticColors.View.backgroundCollectionCell
+    private let titleTextColor: UIColor = SemanticColors.Label.textDefault
     private let titleFont: UIFont = .normalSemiboldFont
-    private let authorTextColor: UIColor = .from(scheme: .textDimmed)
+    private let authorTextColor: UIColor = SemanticColors.Label.textDefault
     private let authorFont: UIFont = .smallLightFont
-    private let authorHighlightTextColor = UIColor.from(scheme: .textDimmed)
+    private let authorHighlightTextColor = SemanticColors.Label.textDefault
     private let authorHighlightFont = UIFont.smallSemiboldFont
 
     var imageHeight: CGFloat = 144 {

@@ -39,14 +39,14 @@ final class AudioMessageView: UIView, TransferView {
     private let downloadProgressView = CircularProgressView()
     let playButton: IconButton = {
         let button = IconButton()
-        button.setIconColor(.white, for: .normal)
+        button.setIconColor(SemanticColors.Icon.foregroundCollectionCellPlayButton, for: .normal)
         return button
     }()
 
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = (UIFont.smallSemiboldFont).monospaced()
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
         label.numberOfLines = 1
         label.textAlignment = .center
         label.accessibilityIdentifier = "AudioTimeLabel"
@@ -64,7 +64,7 @@ final class AudioMessageView: UIView, TransferView {
 
     private let waveformProgressView: WaveformProgressView = {
         let waveformProgressView = WaveformProgressView()
-        waveformProgressView.backgroundColor = .from(scheme: .placeholderBackground)
+        waveformProgressView.backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         return waveformProgressView
     }()
@@ -88,7 +88,7 @@ final class AudioMessageView: UIView, TransferView {
         self.mediaPlaybackManager = mediaPlaybackManager
 
         super.init(frame: .zero)
-        backgroundColor = .from(scheme: .placeholderBackground)
+        backgroundColor = SemanticColors.View.backgroundCollectionCell
 
         playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
@@ -281,7 +281,7 @@ final class AudioMessageView: UIView, TransferView {
     private func updateActivePlayButton() {
         guard let audioTrackPlayer = audioTrackPlayer else { return }
 
-        playButton.backgroundColor = FileMessageViewState.normalColor
+        playButton.backgroundColor = SemanticColors.Icon.foregroundConversationDefault
 
         if audioTrackPlayer.isPlaying {
             playButton.setIcon(.pause, size: .tiny, for: [])

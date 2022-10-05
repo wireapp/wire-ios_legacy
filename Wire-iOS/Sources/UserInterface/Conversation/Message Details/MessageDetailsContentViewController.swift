@@ -104,7 +104,7 @@ final class MessageDetailsContentViewController: UIViewController {
     }
 
     private func configureSubviews() {
-        view.backgroundColor = .from(scheme: .contentBackground)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         collectionView = UICollectionView(forGroupedSections: ())
         collectionView.contentInset.bottom = 64
