@@ -47,7 +47,7 @@ final class SecurityLevelView: UIView {
     }
 
     func configure(with classification: SecurityClassification) {
-        securityLevelLabel.font = FontSpec(.small, .bold).font
+        securityLevelLabel.font = FontSpec.smallSemiboldFont.font!
 
         guard
             classification != .none,
@@ -60,12 +60,12 @@ final class SecurityLevelView: UIView {
         switch classification {
 
         case .classified:
-            securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
-            backgroundColor = UIColor.from(scheme: .textBackground)
+            securityLevelLabel.textColor = SemanticColors.Label.textDefault
+            backgroundColor = SemanticColors.View.backgroundUserCell
 
         case .notClassified:
-            securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
-            backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
+            securityLevelLabel.textColor = SemanticColors.Label.textDefaultWhite
+            backgroundColor = SemanticColors.View.backgroundConversationView
 
         default:
             isHidden = true
@@ -94,15 +94,9 @@ final class SecurityLevelView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         securityLevelLabel.textAlignment = .center
+        self.addBorder(for: .top)
+        self.addBorder(for: .bottom)
         addSubview(securityLevelLabel)
-
-        topBorderView.backgroundColor = UIColor.from(scheme: .separator)
-        addSubview(topBorderView)
-        bringSubviewToFront(topBorderView)
-
-        bottomBorderView.backgroundColor = UIColor.from(scheme: .separator)
-        addSubview(bottomBorderView)
-        bringSubviewToFront(bottomBorderView)
     }
 
     private func createConstraints() {
@@ -112,16 +106,6 @@ final class SecurityLevelView: UIView {
 
         NSLayoutConstraint.activate([
           securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
-
-          topBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-          topBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-          topBorderView.topAnchor.constraint(equalTo: topAnchor),
-          topBorderView.heightAnchor.constraint(equalToConstant: 1),
-
-          bottomBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-          bottomBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-          bottomBorderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          bottomBorderView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
 }
