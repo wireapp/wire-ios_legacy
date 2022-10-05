@@ -55,4 +55,3 @@ extension UnderlineButtonDescription: ViewDescriptor {
         buttonTapped?()
     }
 }
-
