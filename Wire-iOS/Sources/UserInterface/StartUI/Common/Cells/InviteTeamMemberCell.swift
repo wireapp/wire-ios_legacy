@@ -110,7 +110,7 @@ final class CreateGroupCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .createConversation
-        title = PeoplePicker.createConversation
+        title = PeoplePicker.QuickAction.createConversation
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -124,7 +124,7 @@ final class CreateGuestRoomCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .guest
-        title = PeoplePicker.createGuestRoom
+        title = PeoplePicker.QuickAction.createGuestRoom
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityTraits.insert(.button)
@@ -138,7 +138,7 @@ final class OpenServicesAdminCell: StartUIIconCell {
     override func setupViews() {
         super.setupViews()
         icon = .bot
-        title = PeoplePicker.adminServices
+        title = PeoplePicker.QuickAction.adminServices
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityIdentifier = "button.searchui.open-services"
