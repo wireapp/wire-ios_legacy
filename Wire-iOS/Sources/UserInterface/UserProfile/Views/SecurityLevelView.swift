@@ -29,8 +29,7 @@ extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
-    private let topBorderView = UIView()
-    private let bottomBorderView = UIView()
+    typealias SecurityClassification = L10n.Localizable.SecurityClassification
 
     init() {
         super.init(frame: .zero)
@@ -61,18 +60,18 @@ final class SecurityLevelView: UIView {
 
         case .classified:
             securityLevelLabel.textColor = SemanticColors.Label.textDefault
-            backgroundColor = SemanticColors.View.backgroundUserCell
+            backgroundColor = SemanticColors.View.backgroundSecurityLevel
 
         case .notClassified:
-            securityLevelLabel.textColor = SemanticColors.Label.textDefaultWhite
-            backgroundColor = SemanticColors.View.backgroundConversationView
+            securityLevelLabel.textColor = SemanticColors.Label.textDefault
+            backgroundColor = SemanticColors.View.backgroundSecurityLevel
 
         default:
             isHidden = true
             assertionFailure("should not reach this point")
         }
 
-        let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
+        let securityLevelText = SecurityClassification.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
 
         accessibilityIdentifier = "ClassificationBanner" + classification.accessibilitySuffix
@@ -100,24 +99,27 @@ final class SecurityLevelView: UIView {
     }
 
     private func createConstraints() {
-        [securityLevelLabel, topBorderView, bottomBorderView].prepareForLayout()
+        [securityLevelLabel].prepareForLayout()
 
         securityLevelLabel.fitIn(view: self)
 
         NSLayoutConstraint.activate([
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
 }
 
 private extension SecurityClassification {
+
+    typealias SecurityClassificationLevel = L10n.Localizable.SecurityClassification.Level
+
     var levelText: String? {
         switch self {
         case .none:
             return nil
 
         case .classified:
-            return L10n.Localizable.SecurityClassification.Level.bund
+            return SecurityClassificationLevel.bund
 
         case .notClassified:
             return L10n.Localizable.SecurityClassification.Level.notClassified
