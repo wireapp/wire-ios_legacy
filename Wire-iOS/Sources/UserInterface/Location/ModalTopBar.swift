@@ -28,7 +28,7 @@ final class ModalTopBar: UIView {
 
     public let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor =  SemanticColors.Label.textDefault
         label.textAlignment = .center
         label.accessibilityIdentifier = "Title"
 
@@ -37,7 +37,7 @@ final class ModalTopBar: UIView {
 
     public let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .from(scheme: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
         label.font = UIFont.systemFont(ofSize: 11)
         label.textAlignment = .center
         label.accessibilityIdentifier = "Subtitle"
@@ -47,7 +47,7 @@ final class ModalTopBar: UIView {
 
     public let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator)
+        view.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         return view
     }()
 
@@ -113,7 +113,7 @@ final class ModalTopBar: UIView {
     }
 
     fileprivate func configureViews() {
-        backgroundColor = .from(scheme: .background)
+        backgroundColor = SemanticColors.View.backgroundDefault
         titleLabel.isHidden = true
         subtitleLabel.isHidden = true
         [titleLabel, subtitleLabel].forEach(contentStackView.addArrangedSubview)
@@ -123,7 +123,7 @@ final class ModalTopBar: UIView {
         dismissButton.accessibilityLabel = "general.close".localized
 
         dismissButton.setIcon(.cross, size: .tiny, for: [])
-        dismissButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        dismissButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }

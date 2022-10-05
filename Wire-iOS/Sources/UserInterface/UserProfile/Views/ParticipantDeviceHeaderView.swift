@@ -53,6 +53,7 @@ final class ParticipantDeviceHeaderView: UIView {
         backgroundColor = .clear
         setupViews()
         setupConstraints()
+        setupAccessibility()
     }
 
     func setupViews() {
@@ -119,6 +120,10 @@ final class ParticipantDeviceHeaderView: UIView {
         ])
     }
 
+    private func setupAccessibility() {
+        textView.accessibilityTraits = .link
+        textView.accessibilityHint = L10n.Accessibility.DeviceDetails.WhyVerifyFingerprint.hint
+    }
 }
 
 extension ParticipantDeviceHeaderView: UITextViewDelegate {

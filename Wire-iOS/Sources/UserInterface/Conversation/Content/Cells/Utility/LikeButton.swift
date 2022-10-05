@@ -20,14 +20,18 @@ import Foundation
 import UIKit
 
 final class LikeButton: IconButton {
+    // MARK: Properties
+    typealias LikeButtonColors = SemanticColors.Button
+
     static var normalColor: UIColor {
-        return UIColor.from(scheme: .textDimmed)
+        return LikeButtonColors.backgroundLikeEnabled
     }
 
     static var selectedColor: UIColor {
-        return UIColor(for: .red)
+        return LikeButtonColors.backgroundLikeHighlighted
     }
 
+    // MARK: Configuration
     func setSelected(_ selected: Bool, animated: Bool) {
         // Do not animate changes if the state does not change
         guard selected != self.isSelected else {

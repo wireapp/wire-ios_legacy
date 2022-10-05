@@ -34,6 +34,15 @@ public struct ButtonStyle {
                                                         title: ButtonColors.textSecondaryEnabled,
                                                         border: ButtonColors.borderSecondaryHighlighted))
 
+    static let secondaryTextButtonStyleInConversationView = ButtonStyle(normalStateColors: (
+                                                        background: ButtonColors.backgroundSecondaryInConversationViewEnabled,
+                                                        title: ButtonColors.textSecondaryEnabled,
+                                                        border: ButtonColors.borderSecondaryEnabled),
+                                                      highlightedStateColors: (
+                                                        background: ButtonColors.backgroundSecondaryHighlighted,
+                                                        title: ButtonColors.textSecondaryEnabled,
+                                                        border: ButtonColors.borderSecondaryHighlighted))
+
     static let accentColorTextButtonStyle = ButtonStyle(normalStateColors: (
                                                          background: UIColor.accent(),
                                                          title: ButtonColors.textPrimaryEnabled,

@@ -41,7 +41,8 @@ extension SettingsCellDescriptorFactory {
 
         return SettingsGroupCellDescriptor(
             items: items,
-            title: "self.settings.account.data_usage_permissions.title".localized
+            title: L10n.Localizable.Self.Settings.Account.DataUsagePermissions.title ,
+            accessibilityBackButtonText: L10n.Accessibility.AccountSettings.BackButton.description
         )
     }
 }

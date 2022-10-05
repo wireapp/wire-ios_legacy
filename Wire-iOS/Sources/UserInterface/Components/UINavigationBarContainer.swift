@@ -25,7 +25,7 @@ final class UINavigationBarContainer: UIViewController {
     let portraitNavbarHeight: CGFloat = 44.0
 
     var navigationBar: UINavigationBar
-    lazy var navHeight: NSLayoutConstraint =   navigationBar.heightAnchor.constraint(equalToConstant: portraitNavbarHeight)
+    lazy var navHeight: NSLayoutConstraint = navigationBar.heightAnchor.constraint(equalToConstant: portraitNavbarHeight)
 
     init(_ navigationBar: UINavigationBar) {
         self.navigationBar = navigationBar

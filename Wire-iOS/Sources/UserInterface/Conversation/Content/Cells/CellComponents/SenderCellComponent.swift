@@ -31,7 +31,7 @@ private struct SenderCellConfiguration {
     init(user: UserType) {
         fullName = user.name ?? ""
         if user.isServiceUser {
-            textColor = .from(scheme: .textForeground)
+            textColor = SemanticColors.Label.textDefault
             icon = .bot
             accessibilityIdentifier = "img.serviceUser"
         } else if user.isExternalPartner {
@@ -142,7 +142,8 @@ final class SenderCellComponent: UIView {
         teamRoleIndicator.accessibilityIdentifier = configuration.accessibilityIdentifier
         teamRoleIndicator.isHidden = configuration.icon == nil
         if let icon = configuration.icon {
-            teamRoleIndicator.setIcon(icon, size: iconSize(for: icon), color: UIColor.from(scheme: .iconGuest))
+            teamRoleIndicator.setTemplateIcon(icon, size: iconSize(for: icon))
+            teamRoleIndicator.tintColor = SemanticColors.Icon.foregroundDefault
         }
     }
 

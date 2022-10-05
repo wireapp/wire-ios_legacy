@@ -119,6 +119,7 @@ final class SelfProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
         createConstraints()
+        setupAccessibility()
         view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
@@ -170,6 +171,13 @@ final class SelfProfileViewController: UIViewController {
             settingsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor)
         ])
+    }
+
+    private func setupAccessibility() {
+        typealias AccountPage = L10n.Accessibility.AccountPage
+
+        navigationItem.rightBarButtonItem?.accessibilityLabel = AccountPage.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = AccountPage.BackButton.description
     }
 
     // MARK: - Events

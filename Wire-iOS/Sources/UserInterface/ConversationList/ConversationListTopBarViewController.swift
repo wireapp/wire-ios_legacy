@@ -162,8 +162,7 @@ final class ConversationListTopBarViewController: UIViewController {
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
         let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
 
-        accountView.unreadCountStyle = .others
-        accountView.selected = false
+        accountView.unreadCountStyle = .current
         accountView.autoUpdateSelection = false
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
@@ -171,8 +170,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
         accountView.accessibilityTraits = .button
         accountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        accountView.accessibilityLabel = "self.voiceover.label".localized
-        accountView.accessibilityHint = "self.voiceover.hint".localized
+        accountView.accessibilityHint = L10n.Accessibility.ConversationsList.AccountButton.hint
 
         if let selfUser = ZMUser.selfUser(),
             selfUser.clientsRequiringUserAttention.count > 0 {

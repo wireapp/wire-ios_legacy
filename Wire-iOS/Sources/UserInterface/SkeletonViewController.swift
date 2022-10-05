@@ -26,7 +26,7 @@ final class ListSkeletonCellNameItemView: UIView {
         super.init(frame: CGRect.zero)
 
         layer.cornerRadius = 4
-        backgroundColor = .white
+        backgroundColor = SemanticColors.View.backgroundBadgeCell
         alpha = 0.16
     }
 
@@ -58,7 +58,7 @@ final class ListSkeletonCellView: UIView {
         super.init(frame: .zero)
 
         avatarView.layer.cornerRadius = 14
-        avatarView.backgroundColor = .white
+        avatarView.backgroundColor = SemanticColors.View.backgroundBadgeCell
         avatarView.alpha = 0.16
 
         [avatarView, lineView].forEach(addSubview)
@@ -205,13 +205,14 @@ final class ListSkeletonView: UIView {
         topBar.leftView = accountView.wrapInAvatarSizeContainer()
 
         createConstraints()
+        backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     func disabledButtons(with iconTypes: [StyleKitIcon]) -> [IconButton] {
         return iconTypes.map { (iconType) in
             let button = IconButton()
             button.setIcon(iconType, size: .tiny, for: .normal)
-            button.setIconColor(UIColor.init(white: 1.0, alpha: 0.32), for: .disabled)
+            button.setIconColor(SemanticColors.Icon.foregroundPlainCheckMark.withAlphaComponent(0.32), for: .disabled)
             button.isEnabled = false
             return button
         }
@@ -248,8 +249,6 @@ final class ListSkeletonView: UIView {
 final class SkeletonViewController: UIViewController {
 
     let account: Account
-    let backgroundImageView: UIImageView
-    let blurEffectView: UIVisualEffectView
     let listView: ListSkeletonView
     let customSplitViewController: SplitViewController
 
@@ -263,21 +262,10 @@ final class SkeletonViewController: UIViewController {
             account = to
         }
 
-        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        backgroundImageView = UIImageView()
         customSplitViewController = SplitViewController()
         listView = ListSkeletonView(account, randomizeDummyItem: randomizeDummyItem)
 
         super.init(nibName: nil, bundle: nil)
-
-        backgroundImageView.contentMode = .scaleAspectFill
-
-        let factor = BackgroundViewController.backgroundScaleFactor
-        backgroundImageView.transform = CGAffineTransform(scaleX: factor, y: factor)
-
-        if let imageData = account.imageData, let image = BackgroundViewController.blurredAppBackground(with: imageData) {
-            backgroundImageView.image = image
-        }
     }
 
     @available(*, unavailable)
@@ -292,7 +280,7 @@ final class SkeletonViewController: UIViewController {
         customSplitViewController.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(customSplitViewController)
 
-        [backgroundImageView, blurEffectView, customSplitViewController.view].forEach(view.addSubview)
+        [customSplitViewController.view].forEach(view.addSubview)
 
         createConstraints()
 
@@ -308,30 +296,14 @@ final class SkeletonViewController: UIViewController {
     private func createConstraints() {
         guard let splitViewControllerView = customSplitViewController.view else { return }
 
-        [blurEffectView, backgroundImageView, splitViewControllerView].prepareForLayout()
+        [splitViewControllerView].prepareForLayout()
 
         NSLayoutConstraint.activate([
-          blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
-          blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-          blurEffectView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          blurEffectView.rightAnchor.constraint(equalTo: view.rightAnchor),
           splitViewControllerView.topAnchor.constraint(equalTo: view.topAnchor),
           splitViewControllerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
           splitViewControllerView.leftAnchor.constraint(equalTo: view.leftAnchor),
-          splitViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor),
-          backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-          backgroundImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: -100),
-          backgroundImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 100),
-          backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+          splitViewControllerView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        if customSplitViewController.layoutSize == .compact {
-            return .lightContent
-        } else {
-            return .compatibleDarkContent
-        }
     }
 
 }
