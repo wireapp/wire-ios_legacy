@@ -29,7 +29,7 @@ extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
-    typealias SecurityClassification = L10n.Localizable.SecurityClassification
+    typealias SecurityLocalization = L10n.Localizable.SecurityClassification
 
     init() {
         super.init(frame: .zero)
@@ -71,7 +71,7 @@ final class SecurityLevelView: UIView {
             assertionFailure("should not reach this point")
         }
 
-        let securityLevelText = SecurityClassification.securityLevel
+        let securityLevelText = SecurityLocalization.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
 
         accessibilityIdentifier = "ClassificationBanner" + classification.accessibilitySuffix
