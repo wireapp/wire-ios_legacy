@@ -46,7 +46,7 @@ extension SolidButtonDescription: ViewDescriptor {
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title.localizedUppercase, for: .normal)
+        button.setTitle(title, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
         button.addTarget(self, action: #selector(SolidButtonDescription.buttonTapped(_:)), for: .touchUpInside)
 
@@ -55,7 +55,7 @@ extension SolidButtonDescription: ViewDescriptor {
         buttonContainer.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 200),
+            button.widthAnchor.constraint(equalToConstant: 300),
             button.topAnchor.constraint(equalTo: buttonContainer.topAnchor),
             button.bottomAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
             button.centerXAnchor.constraint(equalTo: buttonContainer.centerXAnchor)

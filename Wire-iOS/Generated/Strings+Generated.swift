@@ -4663,11 +4663,11 @@ internal enum L10n {
           return L10n.tr("Localizable", "team.activation_code.subheadline", String(describing: p1))
         }
         internal enum Button {
-          /// Change email
+          /// Change Email
           internal static let changeEmail = L10n.tr("Localizable", "team.activation_code.button.change_email")
           /// Change phone number
           internal static let changePhone = L10n.tr("Localizable", "team.activation_code.button.change_phone")
-          /// Resend code
+          /// Resend Code
           internal static let resend = L10n.tr("Localizable", "team.activation_code.button.resend")
         }
       }
