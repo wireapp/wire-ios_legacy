@@ -136,9 +136,10 @@ final class ConversationCellBurstTimestampView: UIView {
     }
 
     func setupStyle() {
+        let color = SemanticColors.View.backgroundSeparatorConversationView
         label.applyStyle(.dateInConversationLabel)
-        separatorColor = UIColor.from(scheme: .separator)
-        separatorColorExpanded = UIColor.from(scheme: .paleSeparator)
+        separatorColor = color
+        separatorColorExpanded = color
     }
 
     func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {

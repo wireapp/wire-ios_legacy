@@ -23,6 +23,8 @@ import WireCommonComponents
 
 final class GuestsBarController: UIViewController {
 
+    // MARK: Properties
+
     enum State: Equatable {
         case visible(labelKey: String, identifier: String)
         case hidden
@@ -48,6 +50,7 @@ final class GuestsBarController: UIViewController {
             setState(newValue, animated: false)
         }
     }
+    // MARK: Override Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +59,7 @@ final class GuestsBarController: UIViewController {
         updateState(animated: false)
     }
 
+    // MARK: UI and Layout
     private func setupViews() {
         view.backgroundColor = .clear
         container.backgroundColor = .accent()
@@ -67,15 +71,15 @@ final class GuestsBarController: UIViewController {
     private func createConstraints() {
         [container, label].prepareForLayout()
         NSLayoutConstraint.activate([
-          label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-          bottomLabelConstraint,
-          label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-          view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-          view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-          container.topAnchor.constraint(equalTo: view.topAnchor),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomLabelConstraint,
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            container.topAnchor.constraint(equalTo: view.topAnchor),
 
-          heightConstraint,
-          containerHeightConstraint
+            heightConstraint,
+            containerHeightConstraint
         ])
     }
 
@@ -127,9 +131,9 @@ final class GuestsBarController: UIViewController {
             label.text = nil
             label.accessibilityIdentifier = nil
         case .visible(let text, let accessibilityIdentifier):
-            let attributedText: NSAttributedString = .markdown(from: text,
-                                                               style: .labelStyle)
-            label.attributedText = attributedText
+            label.text = text
+            label.font = FontSpec.mediumSemiboldFont.font!
+            label.textColor = SemanticColors.Label.textDefaultWhite
             label.textAlignment = .center
             label.accessibilityIdentifier = accessibilityIdentifier
         }
@@ -138,22 +142,8 @@ final class GuestsBarController: UIViewController {
 }
 
 // MARK: - Bar
-
 extension GuestsBarController: Bar {
     var weight: Float {
         return 1
     }
-}
-
-private extension DownStyle {
-
-    static var labelStyle: DownStyle {
-        let style = DownStyle()
-        style.baseFont = UIFont.systemFont(ofSize: 12, contentSizeCategory: .medium, weight: .light)
-        style.baseFontColor = .white
-        style.baseParagraphStyle = NSParagraphStyle.default
-
-        return style
-    }
-
 }

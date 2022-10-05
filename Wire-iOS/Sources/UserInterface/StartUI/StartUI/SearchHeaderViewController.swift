@@ -64,7 +64,7 @@ final class SearchHeaderViewController: UIViewController {
         searchIcon.setTemplateIcon(.search, size: .tiny)
         searchIcon.tintColor = SemanticColors.SearchBar.backgroundButton
 
-        clearButton.accessibilityLabel = "clear"
+        clearButton.accessibilityLabel = L10n.Accessibility.SearchView.ClearButton.description
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.isHidden = true

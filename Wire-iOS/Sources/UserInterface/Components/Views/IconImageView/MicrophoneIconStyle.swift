@@ -55,6 +55,10 @@ extension MicrophoneIconStyle: IconImageStyle {
     var accessibilitySuffix: String {
         return rawValue
     }
+
+    var accessibilityLabel: String {
+        return rawValue
+    }
 }
 
 extension MicrophoneIconStyle: PulsingIconImageStyle {

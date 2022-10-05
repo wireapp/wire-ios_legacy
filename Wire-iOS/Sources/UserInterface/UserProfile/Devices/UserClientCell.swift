@@ -51,7 +51,6 @@ final class UserClientCell: SeparatorCollectionViewCell {
         super.setUp()
 
         accessibilityIdentifier = "device_cell"
-        shouldGroupAccessibilityChildren = true
         backgroundColor = SemanticColors.View.backgroundUserCell
 
         setUpDeviceIconView()
@@ -129,12 +128,12 @@ final class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
-        verifiedIconView.accessibilityLabel = client.verified ? "device.verified".localized : "device.not_verified".localized
 
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
 
         updateDeviceIcon()
+        setupAccessibility(isDeviceVerified: client.verified)
     }
 
     private func updateDeviceIcon() {
@@ -147,5 +146,24 @@ final class UserClientCell: SeparatorCollectionViewCell {
             setUpDeviceIconView()
             deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
         }
+    }
+
+    private func setupAccessibility(isDeviceVerified: Bool) {
+        typealias ClientListStrings = L10n.Accessibility.ClientsList
+
+        guard let deviceName = titleLabel.text,
+              let deviceId = subtitleLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        let verificationStatus = isDeviceVerified
+                                    ? ClientListStrings.DeviceVerified.description
+                                    : ClientListStrings.DeviceNotVerified.description
+        accessibilityLabel = "\(deviceName), \(deviceId), \(verificationStatus)"
+        accessibilityHint = ClientListStrings.DeviceDetails.hint
     }
 }

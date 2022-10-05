@@ -104,7 +104,6 @@ final class UserNameTakeOverViewController: UIViewController {
 
         let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
         subtitleTextView.attributedText = text
-        subtitleTextView.accessibilityLabel = text.string
         subtitleTextView.delegate = self
     }
 
