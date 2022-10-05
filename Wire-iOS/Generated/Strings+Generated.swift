@@ -3780,7 +3780,7 @@ internal enum L10n {
           /// Too Many Devices
           internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.title")
           internal enum ManageButton {
-            /// Manage devices
+            /// Manage Devices
             internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.manage_button.title")
           }
           internal enum ManageScreen {
