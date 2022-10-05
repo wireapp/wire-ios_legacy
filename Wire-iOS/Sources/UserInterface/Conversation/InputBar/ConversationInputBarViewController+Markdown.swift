@@ -25,20 +25,34 @@ extension ConversationInputBarViewController {
 
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, size: .tiny, for: .normal)
-        markdownButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
+
+        markdownButton.setIconColor(SemanticColors.Button.textInputBarItemEnabled, for: .normal)
     }
 
     func updateMarkdownButton() {
         let color: UIColor
+        let backgroundColor: UIColor
+        let borderColor: UIColor
         markdownButton.isHidden = inputBar.isEditing
 
         if inputBar.isMarkingDown {
-            color = .accent()
+            color = SemanticColors.Button.textInputBarItemHighlighted
+            backgroundColor = SemanticColors.Button.backgroundInputBarItemHighlighted
+            borderColor = SemanticColors.Button.borderInputBarItemHighlighted
         } else {
-            color = UIColor.from(scheme: .iconNormal)
+            color = SemanticColors.Button.textInputBarItemEnabled
+            backgroundColor = SemanticColors.Button.backgroundInputBarItemEnabled
+            borderColor = SemanticColors.Button.borderInputBarItemEnabled
         }
 
         markdownButton.setIconColor(color, for: .normal)
+        markdownButton.setBorderColor(borderColor, for: .normal)
+        markdownButton.setBackgroundImageColor(backgroundColor, for: .normal)
+
+        markdownButton.setIconColor(SemanticColors.Button.textInputBarItemHighlighted, for: .highlighted)
+        markdownButton.setBorderColor(SemanticColors.Button.borderInputBarItemHighlighted, for: .highlighted)
+        markdownButton.setBackgroundImageColor(SemanticColors.Button.backgroundInputBarItemHighlighted, for: .highlighted)
+
         markdownButton.isEnabled = !inputBar.isEditing
     }
 

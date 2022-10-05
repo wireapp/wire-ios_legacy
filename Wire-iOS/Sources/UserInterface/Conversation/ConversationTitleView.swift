@@ -37,8 +37,9 @@ final class ConversationTitleView: TitleView {
     }
 
     func configure() {
-        titleColor = UIColor.from(scheme: .textForeground)
-        titleFont = .mediumSemiboldFont
+        titleColor = SemanticColors.Label.textDefault
+        titleFont = .normalSemiboldFont
+        accessibilityHint = "conversation_details.open_button.accessibility_hint".localized
 
         var attachments: [NSTextAttachment] = []
 

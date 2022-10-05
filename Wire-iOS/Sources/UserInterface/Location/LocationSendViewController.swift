@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 protocol LocationSendViewControllerDelegate: AnyObject {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
@@ -24,18 +25,14 @@ protocol LocationSendViewControllerDelegate: AnyObject {
 
 final class LocationSendViewController: UIViewController {
 
-    let sendButton = LegacyButton(legacyStyle: .full)
+    let sendButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 12, fontSpec: .normalSemiboldFont)
+
     let addressLabel: UILabel = {
-        let label = UILabel()
-        label.font = .normalFont
-        label.textColor = .from(scheme: .textForeground)
+        let label = DynamicFontLabel(fontSpec: FontSpec.normalFont, color: SemanticColors.Label.textDefault)
+        label.numberOfLines = 0
         return label
     }()
-    let separatorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator)
-        return view
-    }()
+
     private let containerView = UIView()
 
     weak var delegate: LocationSendViewControllerDelegate?
@@ -51,36 +48,32 @@ final class LocationSendViewController: UIViewController {
         configureViews()
         createConstraints()
 
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     fileprivate func configureViews() {
-        sendButton.setTitle("location.send_button.title".localized(uppercased: true), for: [])
+        sendButton.setTitle("location.send_button.title".localized, for: [])
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         sendButton.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"
         view.addSubview(containerView)
-        [addressLabel, sendButton, separatorView].forEach(containerView.addSubview)
+        [addressLabel, sendButton].forEach(containerView.addSubview)
     }
 
     private func createConstraints() {
-        [containerView, separatorView, addressLabel, sendButton].prepareForLayout()
+        [containerView, addressLabel, sendButton].prepareForLayout()
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
-            containerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
-            containerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            containerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12),
+            containerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -12),
             addressLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             addressLabel.trailingAnchor.constraint(lessThanOrEqualTo: sendButton.leadingAnchor, constant: -12),
             addressLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
             addressLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -UIScreen.safeArea.bottom),
             sendButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             sendButton.centerYAnchor.constraint(equalTo: addressLabel.centerYAnchor),
-            sendButton.heightAnchor.constraint(equalToConstant: 28),
-            separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            separatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            separatorView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            separatorView.heightAnchor.constraint(equalToConstant: .hairline)
+            sendButton.heightAnchor.constraint(equalToConstant: 28)
         ])
 
         sendButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
