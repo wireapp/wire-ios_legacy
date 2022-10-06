@@ -20,15 +20,19 @@ import WireDataModel
 import WireSyncEngine
 
 protocol EventDecodingProtocol {
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent]
+    func decryptAndStoreEvent(_ event: ZMUpdateEvent) async throws -> ZMUpdateEvent
 }
 
 extension EventDecoder: EventDecodingProtocol {
 
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
-        return await withCheckedContinuation { continuation in
-            decryptAndStoreEvents(events) { decryptedEvents in
-                continuation.resume(with: .success(decryptedEvents))
+    func decryptAndStoreEvent(_ event: ZMUpdateEvent) async throws -> ZMUpdateEvent {
+        return try await withCheckedThrowingContinuation { continuation in
+            decryptAndStoreEvents([event]) { decryptedEvents in
+                guard let result = decryptedEvents.first else {
+                    continuation.resume(throwing: NotificationServiceError.noDecryptedEvent)
+                    return
+                }
+                continuation.resume(with: .success(result))
             }
         }
     }

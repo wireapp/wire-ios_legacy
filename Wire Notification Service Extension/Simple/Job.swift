@@ -101,8 +101,7 @@ final class Job: NSObject, Loggable {
     }
 
     private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
-        let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
-        guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
+        let updatedEvent =  try await eventDecoder.decryptAndStoreEvent(event)
         return try messageExtractor.extractMessage(fromDecodedEvent: updatedEvent)
     }
 

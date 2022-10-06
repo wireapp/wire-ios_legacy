@@ -1156,6 +1156,7 @@
 		D3095764283CEB2000CEC620 /* SessionFileRestrictionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309575F283CE1E900CEC620 /* SessionFileRestrictionsProtocol.swift */; };
 		D315714728E717F70009CCC9 /* EventMessageExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D315714628E717F70009CCC9 /* EventMessageExtractor.swift */; };
 		D337012828996269009C86FD /* ConversationInputBarViewController+DropInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D337012728996269009C86FD /* ConversationInputBarViewController+DropInteractionTests.swift */; };
+		D342840428EECF300006BEEB /* EventMessageExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D315714628E717F70009CCC9 /* EventMessageExtractor.swift */; };
 		D35EEDBB28C2004000949F02 /* NetworkPrimitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455EA28B2E470005ACD74 /* NetworkPrimitives.swift */; };
 		D35EEDBC28C2004000949F02 /* AccessAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455E728B2E210005ACD74 /* AccessAPIClient.swift */; };
 		D35EEDBD28C2004000949F02 /* NotificationsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455ED28B2E4CE005ACD74 /* NotificationsAPIClient.swift */; };
@@ -9635,6 +9636,7 @@
 				EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */,
 				EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */,
 				EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */,
+				D342840428EECF300006BEEB /* EventMessageExtractor.swift in Sources */,
 				EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */,
 				EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */,
 				EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */,
