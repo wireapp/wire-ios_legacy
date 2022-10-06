@@ -105,6 +105,7 @@ final class DeveloperToolsViewModel: ObservableObject {
             header: "Actions",
             items: [
                 .button(ButtonItem(title: "Send debug logs", action: sendDebugLogs)),
+                .button(ButtonItem(title: "Perform quick sync", action: performQuickSync)),
                 .destination(DestinationItem(title: "Configure flags", makeView: {
                     AnyView(DeveloperFlagsView(viewModel: DeveloperFlagsViewModel()))
                 }))
@@ -179,6 +180,13 @@ final class DeveloperToolsViewModel: ObservableObject {
 
     private func sendDebugLogs() {
         DebugLogSender.sendLogsByEmail(message: "Send logs")
+    }
+
+    private func performQuickSync() {
+        Task {
+            guard let session = ZMUserSession.shared() else { return }
+            await session.syncStatus?.performQuickSync()
+        }
     }
 
     // MARK: - Helpers
