@@ -31,7 +31,7 @@ extension UIImage {
 class ImagePickerManager: NSObject {
 
     // MARK: - Properties
-    private var currentVC: UIViewController?
+    weak var viewController: UIViewController?
     private var sourceType: UIImagePickerController.SourceType?
     private var completion: ((UIImage) -> Void)?
 
@@ -41,11 +41,11 @@ class ImagePickerManager: NSObject {
     // MARK: - Methods
     func showActionSheet(vc: UIViewController?,
                          completion: @escaping (UIImage) -> Void) {
-        self.currentVC = vc
+        self.viewController = vc
         self.completion = completion
 
         let actionSheet = imagePickerAlert()
-        currentVC?.present(actionSheet, animated: true)
+        viewController?.present(actionSheet, animated: true)
     }
 
     private func imagePickerAlert() -> UIAlertController {
@@ -89,7 +89,7 @@ class ImagePickerManager: NSObject {
                 imagePickerController.cameraDevice = .front
                 imagePickerController.modalTransitionStyle = .coverVertical
             case .photoLibrary, .savedPhotosAlbum:
-                if let viewController = currentVC, viewController.isIPadRegular() {
+                if let viewController = viewController, viewController.isIPadRegular() {
                     imagePickerController.modalPresentationStyle = .popover
 
                     let popover: UIPopoverPresentationController? = imagePickerController.popoverPresentationController
@@ -99,7 +99,7 @@ class ImagePickerManager: NSObject {
                 break
             }
 
-            currentVC?.present(imagePickerController, animated: true)
+            viewController?.present(imagePickerController, animated: true)
         }
     }
 
@@ -121,6 +121,7 @@ class ImagePickerManager: NSObject {
              .savedPhotosAlbum:
 
             let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
+                picker.dismiss(animated: true)
                 picker.dismiss(animated: true)
                 self?.completion?(editedImage ?? image)
             }

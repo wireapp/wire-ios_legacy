@@ -20,13 +20,10 @@ import UIKit
 import MobileCoreServices
 import WireSyncEngine
 
-typealias AppearancePreviewType = (SettingsCellDescriptorType) -> AppearanceType
-
 class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExternalScreenCellDescriptorType {
     static let cellType: SettingsTableCellProtocol.Type = SettingsAppearanceCell.self
 
     private var text: String
-    private let appearancePreview: AppearancePreviewType?
     private let presentationStyle: PresentationStyle
     private let imagePickerManager = ImagePickerManager()
 
@@ -46,11 +43,11 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
     }
 
     init(text: String,
-         appearancePreview: AppearancePreviewType? = .none,
+         previewGenerator: PreviewGeneratorType? = .none,
          presentationStyle: PresentationStyle,
          presentationAction: @escaping () -> (UIViewController?)) {
         self.text = text
-        self.appearancePreview = appearancePreview
+        self.previewGenerator = previewGenerator
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
 
@@ -60,8 +57,8 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
 
     func featureCell(_ cell: SettingsCellType) {
         if let tableCell = cell as? SettingsAppearanceCell {
-            if let appearancePreview = self.appearancePreview {
-                tableCell.type = appearancePreview(self)
+            if let previewGenerator = self.previewGenerator {
+                tableCell.type = previewGenerator(self)
             }
             tableCell.configure(with: .appearance(title: text), variant: .dark)
             if self.presentationStyle == .modal {
@@ -100,8 +97,8 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
     }
 }
 
-enum AppearanceType {
-    case none
-    case image(UIImage)
-    case color(UIColor)
-}
+//enum AppearanceType {
+//    case none
+//    case image(UIImage)
+//    case color(UIColor)
+//}

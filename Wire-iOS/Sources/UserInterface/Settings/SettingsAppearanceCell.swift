@@ -60,7 +60,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
 
     private lazy var titleLabelToIconInset: NSLayoutConstraint = titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22)
 
-    var type: AppearanceType = .none {
+    var type: SettingsCellPreview = .none {
         didSet {
             switch type {
             case .image(let image):
@@ -75,7 +75,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
                 subtitleLabel.text = AccentColor.current.name
                 accessoryIconView.isHidden = true
                 titleLabelToIconInset.isActive = true
-            case .none:
+            default:
                 subtitleLabel.text = nil
                 iconImageView.backgroundColor = UIColor.clear
                 iconImageView.image = .none

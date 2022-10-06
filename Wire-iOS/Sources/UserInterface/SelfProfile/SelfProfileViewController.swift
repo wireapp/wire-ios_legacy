@@ -185,8 +185,14 @@ final class SelfProfileViewController: UIViewController {
 
     @objc func userDidTapProfileImage(sender: UserImageView) {
         guard userCanSetProfilePicture else { return }
+
+        /*
+
+         profileImagePicker.selectProfileImage(from: self)
+
+         */
+
         imagePickerManager.showActionSheet(vc: self) { [weak self] image in
-            self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
             guard let jpegData = image.jpegData else {
                 return
             }

@@ -259,13 +259,13 @@ extension SettingsCellDescriptorFactory {
     }
 
     func pictureElement() -> SettingsCellDescriptorType {
-        let appearancePreview: AppearancePreviewType = { _ in
+        let previewGenerator: PreviewGeneratorType = { _ in
             guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
             return .image(image)
         }
         return SettingsAppearanceCellDescriptor(
             text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture,
-            appearancePreview: appearancePreview,
+            previewGenerator: previewGenerator,
             presentationStyle: .modal,
             presentationAction: AccentColorPickerController.init)
     }
@@ -273,7 +273,7 @@ extension SettingsCellDescriptorFactory {
     func colorElement() -> SettingsCellDescriptorType {
         return SettingsAppearanceCellDescriptor(
             text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.color,
-            appearancePreview: { _ in .color(ZMUser.selfUser().accentColor) },
+            previewGenerator: { _ in .color(ZMUser.selfUser().accentColor) },
             presentationStyle: .navigation,
             presentationAction: AccentColorPickerController.init)
     }
