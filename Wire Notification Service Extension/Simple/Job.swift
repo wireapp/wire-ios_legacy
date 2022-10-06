@@ -57,7 +57,7 @@ final class Job: NSObject, Loggable {
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil,
-        eventMessageExtractor: EventMessageExtractor? = nil
+        eventMessageExtractor: EventMessageExtractor
     ) throws {
         self.request = request
         let (userID, eventID) = try Self.pushPayload(from: request)
@@ -69,7 +69,7 @@ final class Job: NSObject, Loggable {
         self.networkSession = session
         self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
         self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
-        self.messageExtractor = eventMessageExtractor ?? EventMessageExtractor()
+        self.messageExtractor = eventMessageExtractor
         super.init()
     }
 
@@ -86,13 +86,13 @@ final class Job: NSObject, Loggable {
         networkSession.accessToken = try await fetchAccessToken()
         let event = try await fetchEvent(eventID: eventID)
 
+        guard event.senderUUID?.uuidString == self.request.content.accountID?.uuidString else { return .empty }
+
         switch event.type {
         case .conversationOtrMessageAdd:
             let messageContent = try await extractMessageContent(from: event)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
-            let content = UNMutableNotificationContent()
-            content.body = messageContent
-            return content
+            return messageContent
 
         default:
             logger.trace("\(self.request.identifier, privacy: .public): ignoring event of type: \(String(describing: event.type), privacy: .public)")
@@ -100,13 +100,12 @@ final class Job: NSObject, Loggable {
         }
     }
 
-    private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
+
+    private func extractMessageContent(from event: ZMUpdateEvent) async throws -> UNNotificationContent {
         let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
         guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
         return try messageExtractor.extractMessage(fromDecodedEvent: updatedEvent)
     }
-
-
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
         guard

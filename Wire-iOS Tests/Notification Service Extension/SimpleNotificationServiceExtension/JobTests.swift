@@ -97,7 +97,7 @@ class JobTests: XCTestCase {
         return decoder
     }()
 
-    var messageExtractor: MockEventMessageExtractor = MockEventMessageExtractor()
+    var messageExtractor: MockEventMessageExtractor = MockEventMessageExtractor(managedObjectContext: <#NSManagedObjectContext#>)
 
     // MARK: - Execute
 
