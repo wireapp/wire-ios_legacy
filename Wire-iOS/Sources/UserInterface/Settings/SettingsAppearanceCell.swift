@@ -21,7 +21,9 @@ import WireCommonComponents
 
 class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
 
-    let titleLabel: UILabel = {
+    // MARK: - Properties
+
+    private let titleLabel: UILabel = {
         let label = DynamicFontLabel(
             fontSpec: .normalSemiboldFont,
             color: .textForeground)
@@ -30,7 +32,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         return label
     }()
 
-    let subtitleLabel: UILabel = {
+    private let subtitleLabel: UILabel = {
         let valueLabel = DynamicFontLabel(
             fontSpec: .mediumRegularFont,
             color: .textForeground)
@@ -39,7 +41,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         return valueLabel
     }()
 
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let iconView = UIImageView()
         iconView.clipsToBounds = true
         iconView.layer.cornerRadius = 15
@@ -48,7 +50,7 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         return iconView
     }()
 
-    let accessoryIconView: UIImageView = {
+    private let accessoryIconView: UIImageView = {
         let iconView = UIImageView()
         iconView.clipsToBounds = true
         iconView.contentMode = .scaleAspectFill
@@ -60,6 +62,12 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
 
     private lazy var titleLabelToIconInset: NSLayoutConstraint = titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 22)
 
+    var isAccessoryIconHidden: Bool = true {
+        didSet {
+            accessoryIconView.isHidden = isAccessoryIconHidden
+        }
+    }
+
     var type: SettingsCellPreview = .none {
         didSet {
             switch type {
@@ -67,24 +75,23 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
                 iconImageView.image = image
                 iconImageView.backgroundColor = UIColor.clear
                 subtitleLabel.text = nil
-                accessoryIconView.isHidden = false
                 titleLabelToIconInset.isActive = true
             case .color(let color):
                 iconImageView.backgroundColor = color
                 iconImageView.image = .none
                 subtitleLabel.text = AccentColor.current.name
-                accessoryIconView.isHidden = true
                 titleLabelToIconInset.isActive = true
             default:
                 subtitleLabel.text = nil
                 iconImageView.backgroundColor = UIColor.clear
                 iconImageView.image = .none
-                accessoryIconView.isHidden = true
                 titleLabelToIconInset.isActive = false
             }
             layoutIfNeeded()
         }
     }
+
+    // MARK: - Life Cycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,6 +99,13 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         setupView()
         createConstraints()
     }
+
+    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
+        guard case let .appearance(title) = configuration else { preconditionFailure() }
+        titleLabel.text = title
+    }
+
+    // MARK: - Helpers
 
     private func createConstraints() {
         [titleLabel, subtitleLabel, iconImageView, accessoryIconView].prepareForLayout()
@@ -128,11 +142,6 @@ class SettingsAppearanceCell: SettingsTableCell, CellConfigurationConfigurable {
         [titleLabel, subtitleLabel, iconImageView, accessoryIconView].forEach {
             contentView.addSubview($0)
         }
-    }
-
-    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .appearance(title) = configuration else { preconditionFailure() }
-        titleLabel.text = title
     }
 
 }

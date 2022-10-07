@@ -49,20 +49,23 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         self.previewGenerator = previewGenerator
         self.presentationStyle = presentationStyle
         self.presentationAction = presentationAction
-
     }
 
     // MARK: - Configuration
 
     func featureCell(_ cell: SettingsCellType) {
         if let tableCell = cell as? SettingsAppearanceCell {
+            tableCell.configure(with: .appearance(title: text), variant: .dark)
+
             if let previewGenerator = self.previewGenerator {
                 tableCell.type = previewGenerator(self)
             }
-            tableCell.configure(with: .appearance(title: text), variant: .dark)
-            if self.presentationStyle == .modal {
+            switch self.presentationStyle {
+            case .modal, .alert:
+                tableCell.isAccessoryIconHidden = false
                 tableCell.hideDisclosureIndicator()
-            } else {
+            case .navigation:
+                tableCell.isAccessoryIconHidden = true
                 tableCell.showDisclosureIndicator()
             }
         }

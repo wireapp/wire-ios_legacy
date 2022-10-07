@@ -75,31 +75,36 @@ class ImagePickerManager: NSObject {
 
     private func getImage(fromSourceType sourceType: UIImagePickerController.SourceType) {
 
-        if UIImagePickerController.isSourceTypeAvailable(sourceType) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
+        guard UIImagePickerController.isSourceTypeAvailable(sourceType),
+              let viewController = viewController else {
+                  return
+              }
 
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
-            imagePickerController.sourceType = sourceType
-            imagePickerController.mediaTypes = [kUTTypeImage as String]
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = sourceType
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
 
-            switch sourceType {
-            case .camera:
-                imagePickerController.allowsEditing = true
-                imagePickerController.cameraDevice = .front
-                imagePickerController.modalTransitionStyle = .coverVertical
-            case .photoLibrary, .savedPhotosAlbum:
-                if let viewController = viewController, viewController.isIPadRegular() {
-                    imagePickerController.modalPresentationStyle = .popover
+        switch sourceType {
+        case .camera:
+            guard UIImagePickerController.isCameraDeviceAvailable(.front) else { return }
+            guard !CameraAccess.displayAlertIfOngoingCall(at: .takePhoto, from: viewController) else { return }
 
-                    let popover: UIPopoverPresentationController? = imagePickerController.popoverPresentationController
-                    popover?.backgroundColor = UIColor.white
-                }
-            default:
-                break
+            imagePickerController.allowsEditing = true
+            imagePickerController.cameraDevice = .front
+            imagePickerController.modalTransitionStyle = .coverVertical
+        case .photoLibrary, .savedPhotosAlbum:
+            if viewController.isIPadRegular() {
+                imagePickerController.modalPresentationStyle = .popover
+
+                let popover: UIPopoverPresentationController? = imagePickerController.popoverPresentationController
+                popover?.backgroundColor = UIColor.white
             }
-
-            viewController?.present(imagePickerController, animated: true)
+        default:
+            break
         }
+
+        viewController.present(imagePickerController, animated: true)
     }
 
 }
