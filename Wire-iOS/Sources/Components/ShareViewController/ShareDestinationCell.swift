@@ -115,7 +115,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         [avatarViewContainer, shieldView, guestUserIcon, legalHoldIcon, stackView, titleLabel, checkImageView].prepareForLayout()
 
         titleLabel.backgroundColor = .clear
-        titleLabel.textColor = .white
+        titleLabel.textColor = SemanticColors.Label.textDefault
         titleLabel.font = .normalLightFont
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
 
@@ -123,7 +123,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             stackView.addArrangedSubview($0)
         }
 
-        checkImageView.layer.borderColor = UIColor.white.cgColor
+        checkImageView.layer.borderColor = SemanticColors.Icon.borderCheckMark.cgColor
         checkImageView.layer.borderWidth = 2
         checkImageView.contentMode = .center
         checkImageView.layer.cornerRadius = checkmarkSize / 2.0
@@ -154,6 +154,16 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+        //  Border colors are not dynamically updating for Dark Mode
+        //  When you use adaptive colors with CALayers you’ll notice that these colors,
+        // are not updating when switching appearance live in the app.
+        // That's why we use the traitCollectionDidChange(_:) method.
+        checkImageView.layer.borderColor = SemanticColors.Icon.borderCheckMark.cgColor
+    }
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -162,7 +172,9 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white) : nil
-        checkImageView.backgroundColor = selected ? .accent() : .clear
+        checkImageView.image = selected ? StyleKitIcon.checkmark.makeImage(size: 12, color: .white).withRenderingMode(.alwaysTemplate) : nil
+        checkImageView.tintColor = selected ? SemanticColors.Icon.foregroundCheckMarkSelected : .clear
+        checkImageView.backgroundColor = selected ? SemanticColors.Icon.backgroundCheckMarkSelected : SemanticColors.Icon.backgroundCheckMark
+        checkImageView.layer.borderColor = selected ? UIColor.clear.cgColor : SemanticColors.Icon.borderCheckMark.cgColor
     }
 }

@@ -51,7 +51,7 @@ extension UITextView {
         textView.isSelectable = true
 
         textView.backgroundColor = .clear
-        textView.textColor = .from(scheme: .textForeground)
+        textView.textColor = SemanticColors.SearchBar.textInputView
 
         textView.setContentCompressionResistancePriority(.required, for: .vertical)
 
@@ -247,7 +247,7 @@ final class MessagePreviewView: UIView, Themeable {
         if displaySender {
             allViews.append(senderLabel)
             senderLabel.font = .mediumSemiboldFont
-            senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
+            senderLabel.textColor = SemanticColors.Label.textDefault
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             senderLabel.isAccessibilityElement = true
             senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
