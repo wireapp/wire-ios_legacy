@@ -57,6 +57,19 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
 
     typealias TextFieldColors = SemanticColors.SearchBar
 
+    private var style: TextFieldStyle?
+
+    private var isEditingTextField: Bool = false {
+        didSet {
+            guard let style = style else {
+                return
+            }
+            layer.borderColor = isEditingTextField
+            ? style.borderColorSelected.cgColor
+            : style.borderColorNotSelected.cgColor
+        }
+    }
+
     var isLoading = false {
         didSet {
             updateLoadingState()
@@ -140,7 +153,8 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
          leftInset: CGFloat = 8,
          accessoryTrailingInset: CGFloat = 16,
          cornerRadius: CGFloat? = nil,
-         setNewColors: Bool = false) {
+         setNewColors: Bool = false,
+         style: TextFieldStyle) {
 
         textFieldValidator = TextFieldValidator()
         self.kind = kind
@@ -171,8 +185,27 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         setup()
         setupTextFieldProperties()
         updateButtonIcon()
+        self.style = style
+        applyStyle(style)
+        configureObservers()
         applyColorScheme(colorSchemeVariant)
     }
+
+    private func configureObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidBeginEditing(_:)), name: UITextField.textDidBeginEditingNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidEndEditing(_:)), name: UITextField.textDidEndEditingNotification, object: self)
+    }
+
+    @objc
+    func textViewDidBeginEditing(_ note: Notification?) {
+        isEditingTextField = true
+    }
+
+    @objc
+    func textViewDidEndEditing(_ note: Notification?) {
+        isEditingTextField = false
+    }
+
 
     private func setupTextFieldProperties() {
         returnKeyType = .next

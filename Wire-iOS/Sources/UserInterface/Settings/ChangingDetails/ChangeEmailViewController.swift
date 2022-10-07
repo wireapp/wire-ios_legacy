@@ -141,7 +141,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
         emailPasswordCell.textField.setBackgroundColor(.clear)
         emailPasswordCell.textField.setTextColor(.white)
-        emailPasswordCell.textField.setSeparatorColor(.white)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.email.change.save".localized(uppercased: true),

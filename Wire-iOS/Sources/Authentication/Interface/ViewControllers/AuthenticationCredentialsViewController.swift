@@ -102,7 +102,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     let contentStack = UIStackView()
 
     let emailPasswordInputField = EmailPasswordTextField()
-    let emailInputField = ValidatedTextField(kind: .email)
+    let emailInputField = ValidatedTextField(kind: .email, style: .default)
     let phoneInputView = PhoneNumberInputView()
 
     let tabBar: TabBar = {

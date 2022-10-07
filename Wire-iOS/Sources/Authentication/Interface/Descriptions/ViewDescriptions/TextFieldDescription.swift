@@ -49,7 +49,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
 
 extension TextFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let textField = ValidatedTextField(kind: kind)
+        let textField = ValidatedTextField(kind: kind, style: .default)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = uppercasePlaceholder ? self.placeholder.localizedUppercase : self.placeholder

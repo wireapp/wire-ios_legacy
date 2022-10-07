@@ -27,7 +27,7 @@ extension ValidatedTextField {
                                            leftInset: 0,
                                            accessoryTrailingInset: 0,
                                            cornerRadius: 16,
-                                           setNewColors: setNewColors)
+                                           setNewColors: setNewColors, style: .default)
 
         textField.overrideButtonIcon = StyleKitIcon.AppLock.reveal
         textField.validatedTextFieldDelegate = delegate
