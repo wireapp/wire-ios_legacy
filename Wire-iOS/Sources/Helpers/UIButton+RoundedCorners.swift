@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireCommonComponents
 
-final class InviteButton: IconButton {
-    init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
-        super.init()
+extension UIButton {
 
-        clipsToBounds = true
-        titleLabel?.font = FontSpec(.normal, .semibold).font
-        applyStyle(.secondaryTextButtonStyle)
-        layer.cornerRadius = 12
-        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+    enum Edge {
+        case leading
+        case top
+        case trailing
+        case bottom
     }
+
+    func roundCorners(edge: Edge, radius: CGFloat) {
+        layer.cornerRadius = radius
+        clipsToBounds = true
+
+        switch edge {
+        case .leading:
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        case .top:
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case .trailing:
+            layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        case .bottom:
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
+        }
+    }
+
 }
