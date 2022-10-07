@@ -39,7 +39,7 @@ final class SelfProfileViewController: UIViewController {
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
-    private let imagePickerManager = ImagePickerManager()
+    private let profileImagePicker = ProfileImagePickerManager()
 
     // MARK: - AppLock
     private var callback: ResultHandler?
@@ -186,20 +186,8 @@ final class SelfProfileViewController: UIViewController {
     @objc func userDidTapProfileImage(sender: UserImageView) {
         guard userCanSetProfilePicture else { return }
 
-        /*
-
-         profileImagePicker.selectProfileImage(from: self)
-
-         */
-
-        imagePickerManager.showActionSheet(vc: self) { [weak self] image in
-            guard let jpegData = image.jpegData else {
-                return
-            }
-            ZMUserSession.shared()?.enqueue({
-                ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
-            })
-        }
+        let alert = profileImagePicker.selectProfileImage()
+        present(alert, animated: true)
     }
 
     override func accessibilityPerformEscape() -> Bool {

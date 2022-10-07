@@ -25,7 +25,6 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
 
     private var text: String
     private let presentationStyle: PresentationStyle
-    private let imagePickerManager = ImagePickerManager()
 
     weak var viewController: UIViewController?
     let presentationAction: () -> (UIViewController?)
@@ -77,18 +76,12 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         }
 
         switch self.presentationStyle {
-        case .modal:
-            imagePickerManager.showActionSheet(vc: viewController) { [weak self] image in
-                self?.imagePickerManager.presentingPickerController?.dismiss(animated: true)
-                guard let jpegData = image.jpegData else {
-                    return
-                }
-                ZMUserSession.shared()?.enqueue({
-                    ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
-                })
-            }
+        case .alert:
+            viewController?.present(controllerToShow, animated: true)
         case .navigation:
             viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
+        case .modal:
+            break
         }
     }
 
@@ -96,9 +89,3 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         return self.presentationAction()
     }
 }
-
-//enum AppearanceType {
-//    case none
-//    case image(UIImage)
-//    case color(UIColor)
-//}

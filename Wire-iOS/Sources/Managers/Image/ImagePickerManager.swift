@@ -39,13 +39,12 @@ class ImagePickerManager: NSObject {
     weak var presentingPickerController: UIImagePickerController?
 
     // MARK: - Methods
-    func showActionSheet(vc: UIViewController?,
-                         completion: @escaping (UIImage) -> Void) {
-        self.viewController = vc
+    func showActionSheet(completion: @escaping (UIImage) -> Void) -> UIAlertController {
         self.completion = completion
+        viewController = UIApplication.shared.topmostViewController()
 
         let actionSheet = imagePickerAlert()
-        viewController?.present(actionSheet, animated: true)
+        return actionSheet
     }
 
     private func imagePickerAlert() -> UIAlertController {

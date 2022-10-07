@@ -29,6 +29,7 @@
 		065A5AF5279B0840002D4D1E /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
 		065B7E842861F48500EF9595 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
 		0665DF6E28E494360094482B /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF6D28E494360094482B /* ImagePickerManager.swift */; };
+		0665DF7328F01D3B0094482B /* ProfileImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF7228F01D3B0094482B /* ProfileImagePickerManager.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		06717E592865179000AF442C /* SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E582865178F00AF442C /* SemanticColors.swift */; };
 		06717E5C2865183600AF442C /* Stylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E5B2865183600AF442C /* Stylable.swift */; };
@@ -1870,6 +1871,7 @@
 		065A5AE0279B07AC002D4D1E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		065A5AE2279B07AC002D4D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0665DF6D28E494360094482B /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
+		0665DF7228F01D3B0094482B /* ProfileImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImagePickerManager.swift; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
 		06717E582865178F00AF442C /* SemanticColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticColors.swift; sourceTree = "<group>"; };
 		06717E5B2865183600AF442C /* Stylable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylable.swift; sourceTree = "<group>"; };
@@ -3808,6 +3810,15 @@
 				065A5AE2279B07AC002D4D1E /* Info.plist */,
 			);
 			path = "Wire Notification Service Extension";
+			sourceTree = "<group>";
+		};
+		0665DF7128F01D120094482B /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				0665DF6D28E494360094482B /* ImagePickerManager.swift */,
+				0665DF7228F01D3B0094482B /* ProfileImagePickerManager.swift */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 		0685007F26B35DFC00721F80 /* Restrictions */ = {
@@ -5968,7 +5979,7 @@
 				EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */,
 				875060721E5B3D9E005B21C7 /* FileBackupExcluder.swift */,
 				551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */,
-				0665DF6D28E494360094482B /* ImagePickerManager.swift */,
+				0665DF7128F01D120094482B /* Image */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -8702,6 +8713,7 @@
 				5489E20E252C84BE0010461D /* AppStateCalculator.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				06DF42D12757DA56009C8A99 /* GuestLinkInfoCell.swift in Sources */,
+				0665DF7328F01D3B0094482B /* ProfileImagePickerManager.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
 				EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,

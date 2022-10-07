@@ -259,15 +259,21 @@ extension SettingsCellDescriptorFactory {
     }
 
     func pictureElement() -> SettingsCellDescriptorType {
+        let profileImagePicker = ProfileImagePickerManager()
         let previewGenerator: PreviewGeneratorType = { _ in
             guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
             return .image(image)
         }
+
+        let presentationAction: () -> (UIViewController?) = {
+            let actionSheet = profileImagePicker.selectProfileImage()
+            return actionSheet
+        }
         return SettingsAppearanceCellDescriptor(
             text: L10n.Localizable.`Self`.Settings.AccountPictureGroup.picture,
             previewGenerator: previewGenerator,
-            presentationStyle: .modal,
-            presentationAction: AccentColorPickerController.init)
+            presentationStyle: .alert,
+            presentationAction: presentationAction)
     }
 
     func colorElement() -> SettingsCellDescriptorType {
