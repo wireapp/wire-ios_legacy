@@ -31,7 +31,7 @@ extension UIImage {
 class ImagePickerManager: NSObject {
 
     // MARK: - Properties
-    weak var viewController: UIViewController?
+    private weak var viewController: UIViewController?
     private var sourceType: UIImagePickerController.SourceType?
     private var completion: ((UIImage) -> Void)?
 
@@ -39,9 +39,10 @@ class ImagePickerManager: NSObject {
     weak var presentingPickerController: UIImagePickerController?
 
     // MARK: - Methods
-    func showActionSheet(completion: @escaping (UIImage) -> Void) -> UIAlertController {
+    func showActionSheet(viewController: UIViewController? = UIApplication.shared.topmostViewController(),
+                         completion: @escaping (UIImage) -> Void) -> UIAlertController {
         self.completion = completion
-        viewController = UIApplication.shared.topmostViewController()
+        self.viewController = viewController
 
         let actionSheet = imagePickerAlert()
         return actionSheet
