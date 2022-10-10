@@ -35,11 +35,8 @@ class ImagePickerManager: NSObject {
     private var sourceType: UIImagePickerController.SourceType?
     private var completion: ((UIImage) -> Void)?
 
-    /// We need to store this reference to close the UIImagePickerController
-    weak var presentingPickerController: UIImagePickerController?
-
     // MARK: - Methods
-    func showActionSheet(viewController: UIViewController? = UIApplication.shared.topmostViewController(),
+    func showActionSheet(on viewController: UIViewController? = UIApplication.shared.topmostViewController(),
                          completion: @escaping (UIImage) -> Void) -> UIAlertController {
         self.completion = completion
         self.viewController = viewController
@@ -75,7 +72,6 @@ class ImagePickerManager: NSObject {
     }
 
     private func getImage(fromSourceType sourceType: UIImagePickerController.SourceType) {
-
         guard UIImagePickerController.isSourceTypeAvailable(sourceType),
               let viewController = viewController else {
                   return
@@ -114,7 +110,6 @@ class ImagePickerManager: NSObject {
 
      public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
-        presentingPickerController = picker
         guard let imageFromInfo = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
             picker.dismiss(animated: true)
             return
@@ -126,6 +121,7 @@ class ImagePickerManager: NSObject {
              .savedPhotosAlbum:
 
             let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
+                /// We need to dismiss two view controllers: the confirmation screen and the image picker.
                 picker.dismiss(animated: true)
                 picker.dismiss(animated: true)
                 self?.completion?(editedImage ?? image)
@@ -152,7 +148,6 @@ class ImagePickerManager: NSObject {
             picker.dismiss(animated: true)
             completion?(image)
         }
-
     }
 
 }
