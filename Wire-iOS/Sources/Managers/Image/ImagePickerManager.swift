@@ -121,7 +121,7 @@ class ImagePickerManager: NSObject {
              .savedPhotosAlbum:
 
             let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
-                /// We need to dismiss two view controllers: the confirmation screen and the image picker.
+                // We need to dismiss two view controllers: the confirmation screen and the image picker.
                 picker.dismiss(animated: true)
                 picker.dismiss(animated: true)
                 self?.completion?(editedImage ?? image)
