@@ -20,33 +20,26 @@ import Foundation
 import WireDataModel
 import WireRequestStrategy
 
-protocol EventMessageExtractorProtocol {
-    func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> UNNotificationContent
+protocol NotificationContentProviderProtocol {
+    func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent 
 }
 
-class EventMessageExtractor {
+class NotificationContentProvider: NotificationContentProviderProtocol {
     private let managedObjectContext: NSManagedObjectContext
 
     init(managedObjectContext: NSManagedObjectContext) {
         self.managedObjectContext = managedObjectContext
     }
 
-    func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> UNNotificationContent {
-        guard let message = GenericMessage(from: event) else { throw NotificationServiceError.noGenericMessage }
-
-        if message.hasCalling {
-            return .empty//"Calling"
-        }
-
-        var note: ZMLocalNotification?
-
+    func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent {
         guard let conversationID = event.conversationUUID else {
             throw NotificationServiceError.missingConversation
         }
 
         let conversation = ZMConversation.fetch(with: conversationID, domain: event.conversationDomain, in: managedObjectContext)
-        note = ZMLocalNotification.init(event: event, conversation: conversation, managedObjectContext: managedObjectContext)
-        return note?.content ?? .empty
-
+        guard let notification = ZMLocalNotification.init(event: event, conversation: conversation, managedObjectContext: managedObjectContext) else {
+            throw NotificationServiceError.noDecryptedEvent
+        }
+        return notification.content
     }
 }

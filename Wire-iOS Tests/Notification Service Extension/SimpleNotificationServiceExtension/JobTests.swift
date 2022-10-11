@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire_Notification_Service_Extension
 
 import WireDataModel
+import WireRequestStrategy
 
 @available(iOS 15, *)
 class JobTests: XCTestCase {
@@ -42,7 +43,7 @@ class JobTests: XCTestCase {
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
             notificationsAPIClient: mockNotificationsAPIClient,
-            eventMessageExtractor: messageExtractor
+            notificationContentProvider: notificationContentProviderMock
         )
     }
 
@@ -97,7 +98,7 @@ class JobTests: XCTestCase {
         return decoder
     }()
 
-    var messageExtractor: MockEventMessageExtractor = MockEventMessageExtractor(managedObjectContext: <#NSManagedObjectContext#>)
+    var notificationContentProviderMock =  MockNotificationContentProvider()
 
     // MARK: - Execute
 
@@ -170,7 +171,7 @@ class JobTests: XCTestCase {
                 source: .pushNotification
             )!
         }
-        messageExtractor.returnedMessage = "test123"
+        notificationContentProviderMock.notificationMessage = "test123"
 
         // When
         let result = try await self.sut.execute()
@@ -215,10 +216,14 @@ class JobTests: XCTestCase {
 
 }
 
-class MockEventMessageExtractor: EventMessageExtractor {
-    var returnedMessage = ""
-    override func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> String {
-        return returnedMessage
+class MockNotificationContentProvider: NotificationContentProviderProtocol {
+    var notificationMessage = ""
+
+    func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.body = notificationMessage
+
+        return content
     }
 }
 

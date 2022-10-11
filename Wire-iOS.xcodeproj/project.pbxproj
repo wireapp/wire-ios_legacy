@@ -1154,8 +1154,9 @@
 		D3095762283CEB1C00CEC620 /* MediaShareRestrictionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309575D283CDFED00CEC620 /* MediaShareRestrictionManager.swift */; };
 		D3095763283CEB2000CEC620 /* SessionFileRestrictionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309575F283CE1E900CEC620 /* SessionFileRestrictionsProtocol.swift */; };
 		D3095764283CEB2000CEC620 /* SessionFileRestrictionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309575F283CE1E900CEC620 /* SessionFileRestrictionsProtocol.swift */; };
-		D315714728E717F70009CCC9 /* EventMessageExtractorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D315714628E717F70009CCC9 /* EventMessageExtractorProtocol.swift */; };
+		D315714728E717F70009CCC9 /* NotificationContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D315714628E717F70009CCC9 /* NotificationContentProvider.swift */; };
 		D337012828996269009C86FD /* ConversationInputBarViewController+DropInteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D337012728996269009C86FD /* ConversationInputBarViewController+DropInteractionTests.swift */; };
+		D342840528F43D450006BEEB /* NotificationContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D315714628E717F70009CCC9 /* NotificationContentProvider.swift */; };
 		D35EEDBB28C2004000949F02 /* NetworkPrimitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455EA28B2E470005ACD74 /* NetworkPrimitives.swift */; };
 		D35EEDBC28C2004000949F02 /* AccessAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455E728B2E210005ACD74 /* AccessAPIClient.swift */; };
 		D35EEDBD28C2004000949F02 /* NotificationsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE455ED28B2E4CE005ACD74 /* NotificationsAPIClient.swift */; };
@@ -3103,7 +3104,7 @@
 		CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationView.swift; sourceTree = "<group>"; };
 		D309575D283CDFED00CEC620 /* MediaShareRestrictionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaShareRestrictionManager.swift; sourceTree = "<group>"; };
 		D309575F283CE1E900CEC620 /* SessionFileRestrictionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFileRestrictionsProtocol.swift; sourceTree = "<group>"; };
-		D315714628E717F70009CCC9 /* EventMessageExtractorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMessageExtractorProtocol.swift; sourceTree = "<group>"; };
+		D315714628E717F70009CCC9 /* NotificationContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationContentProvider.swift; sourceTree = "<group>"; };
 		D337012728996269009C86FD /* ConversationInputBarViewController+DropInteractionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+DropInteractionTests.swift"; sourceTree = "<group>"; };
 		D35EEDC428C2374300949F02 /* NetworkSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionTests.swift; sourceTree = "<group>"; };
 		D35EEDC728C7E68100949F02 /* URLRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestable.swift; sourceTree = "<group>"; };
@@ -6941,7 +6942,7 @@
 				D35EEDC728C7E68100949F02 /* URLRequestable.swift */,
 				D35EEDCA28C7E95F00949F02 /* CookieProvider.swift */,
 				D3E7459128E306D000DA9536 /* EventDecodingProtocol.swift */,
-				D315714628E717F70009CCC9 /* EventMessageExtractorProtocol.swift */,
+				D315714628E717F70009CCC9 /* NotificationContentProvider.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -8164,7 +8165,7 @@
 				D3E7459228E306D000DA9536 /* EventDecodingProtocol.swift in Sources */,
 				065A5AE1279B07AC002D4D1E /* NotificationService.swift in Sources */,
 				EEE455E828B2E210005ACD74 /* AccessAPIClient.swift in Sources */,
-				D315714728E717F70009CCC9 /* EventMessageExtractorProtocol.swift in Sources */,
+				D315714728E717F70009CCC9 /* NotificationContentProvider.swift in Sources */,
 				EEE455E428B2E157005ACD74 /* NetworkSession.swift in Sources */,
 				D35EEDC928C7E68100949F02 /* URLRequestable.swift in Sources */,
 				EE3D7AE428AD4FB500D0A37E /* LegacyNotificationService.swift in Sources */,
@@ -9682,6 +9683,7 @@
 				EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewSnapshotTests.swift in Sources */,
 				EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */,
+				D342840528F43D450006BEEB /* NotificationContentProvider.swift in Sources */,
 				87656FD11FB5FF0300D5286C /* FilePreviewGeneratorTests.swift in Sources */,
 				BFAAB23F1DED95B100CBC096 /* UserNameDetailViewTests.swift in Sources */,
 				5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */,
