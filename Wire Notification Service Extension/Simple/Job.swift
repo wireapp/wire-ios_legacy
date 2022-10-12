@@ -41,32 +41,35 @@ final class Job: NSObject, Loggable {
     private let request: UNNotificationRequest
     private let userID: UUID
     private let eventID: UUID
-    private let coreDataStack: CoreDataStack?
+    private let eventDecoder: EventDecodingProtocol
 
     private let environment: BackendEnvironmentProvider = BackendEnvironment.shared
     private let networkSession: NetworkSessionProtocol
     private let accessAPIClient: AccessAPIClientProtocol
     private let notificationsAPIClient: NotificationsAPIClientProtocol
+    private let messageExtractor: EventMessageExtractor
 
     // MARK: - Life cycle
 
     init(
         request: UNNotificationRequest,
-        coreDataStack: CoreDataStack?,
+        eventDecoder: EventDecodingProtocol,
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
-        notificationsAPIClient: NotificationsAPIClientProtocol? = nil
+        notificationsAPIClient: NotificationsAPIClientProtocol? = nil,
+        eventMessageExtractor: EventMessageExtractor? = nil
     ) throws {
         self.request = request
         let (userID, eventID) = try Self.pushPayload(from: request)
         self.userID = userID
         self.eventID = eventID
-        self.coreDataStack = coreDataStack
+        self.eventDecoder = eventDecoder
 
         let session = try networkSession ?? NetworkSession(userID: userID)
         self.networkSession = session
         self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
         self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
+        self.messageExtractor = eventMessageExtractor ?? EventMessageExtractor()
         super.init()
     }
 
@@ -81,13 +84,11 @@ final class Job: NSObject, Loggable {
         }
 
         networkSession.accessToken = try await fetchAccessToken()
-
         let event = try await fetchEvent(eventID: eventID)
-        if event.senderUUID?.uuidString == self.request.content.accountID?.uuidString { return .empty }
 
         switch event.type {
         case .conversationOtrMessageAdd:
-            let messageContent = try await decryptAndStoreEvent(event: event)
+            let messageContent = try await extractMessageContent(from: event)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
             let content = UNMutableNotificationContent()
             content.body = messageContent
@@ -99,23 +100,12 @@ final class Job: NSObject, Loggable {
         }
     }
 
-    private func decryptAndStoreEvent(event: ZMUpdateEvent) async throws -> String {
-        guard let coreDataStack = coreDataStack else { throw NotificationServiceError.noAccount }
-
-        try await coreDataStack.loadStores()
-        let eventDecoder = EventDecoder(eventMOC: coreDataStack.eventContext, syncMOC: coreDataStack.syncContext)
-        let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
-
-        guard let updatedEvent = updatedEvents.first,
-              let message = GenericMessage(from: updatedEvent) else {
-                  throw NotificationServiceError.decryptionError
-              }
-        if message.hasCalling { return "Call" }
-        if message.hasAsset { return "Received media"}
-        guard let text = message.textData else { throw NotificationServiceError.incorrectContent }
-
-        return text.content
+    private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
+        let updatedEvent =  try await eventDecoder.decryptAndStoreEvent(event)
+        return try messageExtractor.extractMessage(fromDecodedEvent: updatedEvent)
     }
+
+
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
         guard
@@ -146,31 +136,4 @@ final class Job: NSObject, Loggable {
         return try await notificationsAPIClient.fetchEvent(eventID: eventID)
     }
 
-}
-
-extension CoreDataStack {
-
-    func loadStores() async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            loadStores {
-                if let error = $0 {
-                    continuation.resume(with: .failure(error))
-                } else {
-                    continuation.resume(with: .success(()))
-                }
-            }
-        }
-    }
-
-}
-
-extension EventDecoder {
-
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
-        return await withCheckedContinuation { continuation in
-            decryptAndStoreEvents(events) { decryptedEvents in
-                continuation.resume(with: .success(decryptedEvents))
-            }
-        }
-    }
 }

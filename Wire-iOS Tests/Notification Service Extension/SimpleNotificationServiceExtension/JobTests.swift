@@ -19,6 +19,8 @@
 import XCTest
 @testable import Wire_Notification_Service_Extension
 
+import WireDataModel
+
 @available(iOS 15, *)
 class JobTests: XCTestCase {
 
@@ -36,10 +38,11 @@ class JobTests: XCTestCase {
 
         sut = try Job(
             request: notificationRequest,
-            coreDataStack: dataStack,
+            eventDecoder: eventDecoder,
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
-            notificationsAPIClient: mockNotificationsAPIClient
+            notificationsAPIClient: mockNotificationsAPIClient,
+            eventMessageExtractor: messageExtractor
         )
     }
 
@@ -68,20 +71,33 @@ class JobTests: XCTestCase {
         )
     }()
 
-    lazy var dataStack: CoreDataStack? = {
-        guard let groupID = Bundle.main.applicationGroupIdentifier else {
-            return nil
+    lazy var eventDecoder: MockEventDecoder = {
+        let decoder = MockEventDecoder()
+        decoder.mockDecodeEvent = {
+            let payload: [String: Any] = [
+                            "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
+                            "time": "2022-09-21T12:13:32.173Z",
+                            "type": "conversation.otr-message-add",
+                            "payload": [
+                                "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
+                                "data": [
+                                    "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
+                                ]
+                            ]
+                        ]
+
+                        return ZMUpdateEvent(
+                            uuid: self.eventID,
+                            payload: payload,
+                            transient: false,
+                            decrypted: true,
+                            source: .pushNotification
+                        )!
         }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: groupID)
-        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
-        guard let account = accountManager.account(with: userID) else {
-                  return nil
-        }
-        return CoreDataStack(
-            account: account,
-            applicationContainer: sharedContainerURL
-        )
+        return decoder
     }()
+
+    var messageExtractor: MockEventMessageExtractor = MockEventMessageExtractor()
 
     // MARK: - Execute
 
@@ -125,8 +141,7 @@ class JobTests: XCTestCase {
             _ = try await self.sut.execute()
         }
     }
-    
-    // TODO: need to mock CoreDataStack to return correct message and check it
+
     func test_Execute_NewMessageEvent_Content() async throws {
         // Given
         mockAccessAPIClient.mockFetchAccessToken = {
@@ -141,10 +156,12 @@ class JobTests: XCTestCase {
                 "time": "2022-09-21T12:13:32.173Z",
                 "type": "conversation.otr-message-add",
                 "payload": [
-                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0"
+                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
+                    "data": [
+                        "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
+                    ]
                 ]
             ]
-
             return ZMUpdateEvent(
                 uuid: eventID,
                 payload: payload,
@@ -153,12 +170,12 @@ class JobTests: XCTestCase {
                 source: .pushNotification
             )!
         }
-        
+        messageExtractor.returnedMessage = "test123"
+
+        // When
+        let result = try await self.sut.execute()
         // Then
-        await assertThrows(expectedError: NotificationServiceError.noAccount) {
-            // When
-            _ = try await self.sut.execute()
-        }
+        XCTAssertEqual(result.body, "test123")
 
     }
 
@@ -196,6 +213,24 @@ class JobTests: XCTestCase {
         XCTAssertEqual(result, .empty)
     }
 
+}
+
+class MockEventMessageExtractor: EventMessageExtractor {
+    var returnedMessage = ""
+    override func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> String {
+        return returnedMessage
+    }
+}
+
+class MockEventDecoder: EventDecodingProtocol {
+    var mockDecodeEvent: (() async -> ZMUpdateEvent)?
+
+    func decryptAndStoreEvent(_ event: ZMUpdateEvent) async -> ZMUpdateEvent {
+        guard let mock = mockDecodeEvent else {
+            fatalError("no mock for `decodeEvent`")
+        }
+        return await mock()
+    }
 }
 
 class MockNetworkSession: NetworkSessionProtocol {

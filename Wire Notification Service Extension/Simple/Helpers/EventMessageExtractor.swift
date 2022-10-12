@@ -17,16 +17,12 @@
 //
 
 import Foundation
+import WireDataModel
 
-enum NotificationServiceError: Error, Equatable {
-
-    case invalidEnvironment
-    case malformedPushPayload
-    case userNotAuthenticated
-    case noAppGroupID
-    case noAccount
-    case incorrectContent
-    case noDecryptedEvent
-    case noGenericMessage
-
+class EventMessageExtractor {
+    func extractMessage(fromDecodedEvent event: ZMUpdateEvent) throws -> String {
+        guard let message = GenericMessage(from: event) else { throw NotificationServiceError.noGenericMessage }
+        guard let messageContent = message.textData?.content else { throw NotificationServiceError.incorrectContent }
+        return messageContent
+    }
 }
