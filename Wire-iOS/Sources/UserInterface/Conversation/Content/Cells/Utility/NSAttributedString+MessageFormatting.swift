@@ -77,7 +77,7 @@ extension NSAttributedString {
     fileprivate static func previewMarkdownStyle() -> DownStyle {
         let style = DownStyle.preview
 
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault 
         style.codeColor = style.baseFontColor
         style.h1Color = style.baseFontColor
         style.h2Color = style.baseFontColor
