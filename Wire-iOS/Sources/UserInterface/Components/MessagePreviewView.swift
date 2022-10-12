@@ -60,21 +60,15 @@ extension UITextView {
     }
 }
 
-final class MessageThumbnailPreviewView: UIView, Themeable {
+final class MessageThumbnailPreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
     private var observerToken: Any?
     private let displaySender: Bool
+    private let iconColor = SemanticColors.Icon.foregroundDefault
 
     let message: ZMConversationMessage
-
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
 
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
@@ -150,7 +144,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
 
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
-            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: iconColor, iconSize: 8))
         } else {
             return NSAttributedString()
         }
@@ -159,15 +153,15 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private func updateForMessage() {
         typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                         .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
+                                                         .foregroundColor: SemanticColors.Label.textDefault]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         imagePreview.isHidden = !message.canBeShared
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                             .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+                                                             .foregroundColor: SemanticColors.Label.textDefault]
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
@@ -175,7 +169,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
                 imagePreview.setImageResource(imageResource)
             }
         } else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
@@ -185,7 +179,9 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         }
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         updateForMessage()
     }
 
@@ -211,8 +207,7 @@ final class MessagePreviewView: UIView {
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any?
     private let displaySender: Bool
-    let iconColor = SemanticColors.Icon.foregroundDefault
-
+    private let iconColor = SemanticColors.Icon.foregroundDefault
 
     let message: ZMConversationMessage
 
