@@ -79,12 +79,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         self.allowsMultipleSelection = allowsMultipleSelection
         super.init(nibName: nil, bundle: nil)
 
-        let messagePreviewAppearance = MessagePreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
-        messagePreviewAppearance.colorSchemeVariant = .light
-
-        let messageThumbnailPreviewAppearance = MessageThumbnailPreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
-        messageThumbnailPreviewAppearance.colorSchemeVariant = .light
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
@@ -118,6 +112,10 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         view.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         return view
     }()
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     // MARK: - Search
 

@@ -102,7 +102,7 @@ extension NSAttributedString {
     }
 
     @objc
-    static func formatForPreview(message: ZMTextMessageData, inputMode: Bool, variant: ColorSchemeVariant = ColorScheme.default.variant) -> NSAttributedString {
+    static func formatForPreview(message: ZMTextMessageData, inputMode: Bool) -> NSAttributedString {
         var plainText = message.messageText ?? ""
 
         // Substitute mentions with text markers
@@ -128,7 +128,7 @@ extension NSAttributedString {
         }
 
         markdownText.removeAttribute(.link, range: NSRange(location: 0, length: markdownText.length))
-        markdownText.addAttribute(.foregroundColor, value: UIColor.from(scheme: .textForeground, variant: variant), range: NSRange(location: 0, length: markdownText.length))
+        markdownText.addAttribute(.foregroundColor, value: SemanticColors.Label.textDefault, range: NSRange(location: 0, length: markdownText.length))
         return markdownText
     }
 
