@@ -47,7 +47,7 @@ final class Job: NSObject, Loggable {
     private let networkSession: NetworkSessionProtocol
     private let accessAPIClient: AccessAPIClientProtocol
     private let notificationsAPIClient: NotificationsAPIClientProtocol
-    private let messageExtractor: EventMessageExtractor
+    private let notificationContentProvider: NotificationContentProviderProtocol
 
     // MARK: - Life cycle
 
@@ -57,7 +57,7 @@ final class Job: NSObject, Loggable {
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil,
-        eventMessageExtractor: EventMessageExtractor? = nil
+        notificationContentProvider: NotificationContentProviderProtocol
     ) throws {
         self.request = request
         let (userID, eventID) = try Self.pushPayload(from: request)
@@ -69,7 +69,7 @@ final class Job: NSObject, Loggable {
         self.networkSession = session
         self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
         self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
-        self.messageExtractor = eventMessageExtractor ?? EventMessageExtractor()
+        self.notificationContentProvider = notificationContentProvider
         super.init()
     }
 
@@ -85,14 +85,11 @@ final class Job: NSObject, Loggable {
 
         networkSession.accessToken = try await fetchAccessToken()
         let event = try await fetchEvent(eventID: eventID)
-
         switch event.type {
         case .conversationOtrMessageAdd:
-            let messageContent = try await extractMessageContent(from: event)
+            let messageContent = try await extractNotificationContent(from: event)
             logger.trace("\(self.request.identifier, privacy: .public): returning notification for new message")
-            let content = UNMutableNotificationContent()
-            content.body = messageContent
-            return content
+            return messageContent
 
         default:
             logger.trace("\(self.request.identifier, privacy: .public): ignoring event of type: \(String(describing: event.type), privacy: .public)")
@@ -100,12 +97,10 @@ final class Job: NSObject, Loggable {
         }
     }
 
-    private func extractMessageContent(from event: ZMUpdateEvent) async throws -> String {
+    private func extractNotificationContent(from event: ZMUpdateEvent) async throws -> UNNotificationContent {
         let updatedEvent =  try await eventDecoder.decryptAndStoreEvent(event)
-        return try messageExtractor.extractMessage(fromDecodedEvent: updatedEvent)
+        return try notificationContentProvider.notificationContent(fromEvent: updatedEvent)
     }
-
-
 
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
         guard
