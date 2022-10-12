@@ -49,25 +49,48 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         NSAttributedString.invalidateParagraphStyle()
     }
 
-    private func verify(message: MockMessage,
+    private func verifyInLightMode(message: MockMessage,
                         file: StaticString = #file,
                         testName: String = #function,
                         line: UInt = #line) {
-		verifyInAllColorSchemes(createSut: {
-			message.replyPreview()!.prepareForSnapshot()
+        let sut = message.replyPreview()!.prepareForSnapshot()
+        sut.overrideUserInterfaceStyle = .light
+		verifyInLightScheme(createSut: {sut
 		}, file: file, testName: testName, line: line)
 	}
+
+    private func verifyInDarkMode(message: MockMessage,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        let sut = message.replyPreview()!.prepareForSnapshot()
+        sut.overrideUserInterfaceStyle = .dark
+        verifyInDarkScheme(createSut: { sut
+        }, file: file, testName: testName, line: line)
+    }
 
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
 
-		verify(message: message)
+		verifyInLightMode(message: message)
+    }
+
+    func testThatItRendersTextMessagePreview_DarkMode() {
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")
+
+        verifyInDarkMode(message: message)
     }
 
     func testThatItRendersEmojiOnly() {
         let message = MockMessageFactory.textMessage(withText: "😀🌮")
 
-		verify(message: message)
+        verifyInLightMode(message: message)
+    }
+
+    func testThatItRendersEmojiOnly_DarkMode() {
+        let message = MockMessageFactory.textMessage(withText: "😀🌮")
+
+        verifyInDarkMode(message: message)
     }
 
     private func mentionMessage() -> MockMessage {
@@ -84,22 +107,41 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     }
 
     func testThatItRendersMention() {
-		verify(message: mentionMessage())
+		verifyInLightMode(message: mentionMessage())
+    }
+
+    func testThatItRendersMention_DarkMode() {
+        verifyInDarkMode(message: mentionMessage())
     }
 
     func testThatItRendersTextMessagePreview_LongText() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
-		verify(message: message)
+		verifyInLightMode(message: message)
+    }
+
+    func testThatItRendersTextMessagePreview_LongText_DarkMode() {
+        let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed. Lorem Ipsum Dolor Sit Amed.")
+        verifyInDarkMode(message: message)
     }
 
     func testThatItRendersFileMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()
-		verify(message: message)
+		verifyInLightMode(message: message)
+    }
+
+    func testThatItRendersFileMessagePreview_DarkMode() {
+        let message = MockMessageFactory.fileTransferMessage()
+        verifyInDarkMode(message: message)
     }
 
     func testThatItRendersLocationMessagePreview() {
         let message = MockMessageFactory.locationMessage()
-		verify(message: message)
+		verifyInLightMode(message: message)
+    }
+
+    func testThatItRendersLocationMessagePreview_DarkMode() {
+        let message = MockMessageFactory.locationMessage()
+        verifyInDarkMode(message: message)
     }
 
     func testThatItRendersLinkPreviewMessagePreview() {
