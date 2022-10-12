@@ -50,9 +50,9 @@ final class MessageReplyPreviewViewTests: XCTestCase {
     }
 
     private func verifyInLightMode(message: MockMessage,
-                        file: StaticString = #file,
-                        testName: String = #function,
-                        line: UInt = #line) {
+                                   file: StaticString = #file,
+                                   testName: String = #function,
+                                   line: UInt = #line) {
         let sut = message.replyPreview()!.prepareForSnapshot()
         sut.overrideUserInterfaceStyle = .light
 		verifyInLightScheme(createSut: {sut
@@ -60,9 +60,9 @@ final class MessageReplyPreviewViewTests: XCTestCase {
 	}
 
     private func verifyInDarkMode(message: MockMessage,
-                        file: StaticString = #file,
-                        testName: String = #function,
-                        line: UInt = #line) {
+                                  file: StaticString = #file,
+                                  testName: String = #function,
+                                  line: UInt = #line) {
         let sut = message.replyPreview()!.prepareForSnapshot()
         sut.overrideUserInterfaceStyle = .dark
         verifyInDarkScheme(createSut: { sut
@@ -95,7 +95,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
 
     private func mentionMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
-        
+
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Hello @user"
         let mockUser = SwiftMockLoader.mockUsers().first!
