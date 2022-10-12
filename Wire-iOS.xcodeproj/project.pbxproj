@@ -9636,6 +9636,7 @@
 				EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */,
 				EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */,
 				EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */,
+				D342840428EECF300006BEEB /* EventMessageExtractor.swift in Sources */,
 				EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */,
 				EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */,
 				EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */,
@@ -10158,7 +10159,6 @@
 					"@executable_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE_SPECIFIER = "Wire iOS Development Debug";
 			};
 			name = Debug;
 		};

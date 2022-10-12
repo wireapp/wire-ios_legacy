@@ -87,13 +87,13 @@ class JobTests: XCTestCase {
                             ]
                         ]
 
-                        return [ZMUpdateEvent(
+                        return ZMUpdateEvent(
                             uuid: self.eventID,
                             payload: payload,
                             transient: false,
                             decrypted: true,
                             source: .pushNotification
-                        )!]
+                        )!
         }
         return decoder
     }()
@@ -228,9 +228,9 @@ class MockNotificationContentProvider: NotificationContentProviderProtocol {
 }
 
 class MockEventDecoder: EventDecodingProtocol {
-    var mockDecodeEvent: (() async -> [ZMUpdateEvent])?
+    var mockDecodeEvent: (() async -> ZMUpdateEvent)?
 
-    func decryptAndStoreEvents(events: [ZMUpdateEvent]) async -> [ZMUpdateEvent] {
+    func decryptAndStoreEvent(_ event: ZMUpdateEvent) async -> ZMUpdateEvent {
         guard let mock = mockDecodeEvent else {
             fatalError("no mock for `decodeEvent`")
         }

@@ -85,9 +85,6 @@ final class Job: NSObject, Loggable {
 
         networkSession.accessToken = try await fetchAccessToken()
         let event = try await fetchEvent(eventID: eventID)
-
-//        guard event.senderUUID?.uuidString == self.request.content.accountID?.uuidString else { return .empty }
-
         switch event.type {
         case .conversationOtrMessageAdd:
             let messageContent = try await extractNotificationContent(from: event)
@@ -100,10 +97,8 @@ final class Job: NSObject, Loggable {
         }
     }
 
-
     private func extractNotificationContent(from event: ZMUpdateEvent) async throws -> UNNotificationContent {
-        let updatedEvents = await eventDecoder.decryptAndStoreEvents(events: [event])
-        guard let updatedEvent = updatedEvents.first else { throw NotificationServiceError.noDecryptedEvent }
+        let updatedEvent =  try await eventDecoder.decryptAndStoreEvent(event)
         return try notificationContentProvider.notificationContent(fromEvent: updatedEvent)
     }
 
