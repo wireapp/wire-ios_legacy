@@ -43,7 +43,10 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     }()
 
     private let guestUserIcon: UIImageView = {
-        let imageView = UIImageView(image: StyleKitIcon.guest.makeImage(size: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
+        let guestUserIconColor = SemanticColors.Icon.foregroundDefault
+        let imageView = UIImageView()
+        imageView.setTemplateIcon(.guest, size: .tiny)
+        imageView.tintColor = guestUserIconColor
         imageView.accessibilityIdentifier = "guestUserIcon"
         imageView.isAccessibilityElement = true
 
@@ -51,8 +54,10 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     }()
 
     private let legalHoldIcon: UIImageView = {
+        let legalHoldActiveIconColor = SemanticColors.LegacyColors.vividRed
         let imageView = UIImageView()
-        imageView.setIcon(.legalholdactive, size: .tiny, color: SemanticColors.LegacyColors.vividRed)
+        imageView.setTemplateIcon(.legalholdactive, size: .tiny)
+        imageView.tintColor = legalHoldActiveIconColor
         imageView.accessibilityIdentifier = "legalHoldIcon"
         imageView.isAccessibilityElement = true
 
