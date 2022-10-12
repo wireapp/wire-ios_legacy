@@ -27,7 +27,7 @@ extension UIView {
 
         container.widthAnchor.constraint(equalToConstant: size.width).isActive = true
 
-		container.backgroundColor = UIColor.from(scheme: .contentBackground)
+        container.backgroundColor = SemanticColors.View.backgroundUserCell
 
         return container
     }
@@ -72,7 +72,7 @@ final class MessageReplyPreviewViewTests: XCTestCase {
 
     private func mentionMessage() -> MockMessage {
         let message = MockMessageFactory.messageTemplate()
-
+        
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Hello @user"
         let mockUser = SwiftMockLoader.mockUsers().first!
