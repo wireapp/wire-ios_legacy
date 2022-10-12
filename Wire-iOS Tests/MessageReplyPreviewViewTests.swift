@@ -43,12 +43,6 @@ final class MessageReplyPreviewViewTests: XCTestCase {
         super.tearDown()
     }
 
-    func activateDarkColorScheme() {
-        ColorScheme.default.variant = .dark
-        NSAttributedString.invalidateMarkdownStyle()
-        NSAttributedString.invalidateParagraphStyle()
-    }
-
     func disableDarkColorScheme() {
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateMarkdownStyle()
