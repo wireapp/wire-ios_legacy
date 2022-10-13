@@ -140,7 +140,7 @@ extension ConversationInputBarViewController {
 
     func updateViewsForSelfDeletingMessageChanges() {
         updateAccessoryViews()
-
+        updateInputBarButtons()
         inputBar.changeEphemeralState(to: ephemeralState)
 
         if conversation.hasSyncedMessageDestructionTimeout {
