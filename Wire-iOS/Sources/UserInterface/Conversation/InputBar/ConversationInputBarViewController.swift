@@ -35,7 +35,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     let mediaShareRestrictionManager = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
 
-    // MARK: PopoverPresenter    
+    // MARK: PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
@@ -219,18 +219,32 @@ final class ConversationInputBarViewController: UIViewController,
         switch mediaShareRestrictionManager.level {
 
         case .none:
-            return [
-                hourglassButton,
-                mentionButton,
-                photoButton,
-                sketchButton,
-                gifButton,
-                audioButton,
-                pingButton,
-                uploadFileButton,
-                locationButton,
-                videoButton
-            ]
+            if conversation.isSelfDeletingMessageSendingDisabled {
+                return [
+                    mentionButton,
+                    photoButton,
+                    sketchButton,
+                    gifButton,
+                    audioButton,
+                    pingButton,
+                    uploadFileButton,
+                    locationButton,
+                    videoButton
+                ]
+            } else {
+                return [
+                    hourglassButton,
+                    mentionButton,
+                    photoButton,
+                    sketchButton,
+                    gifButton,
+                    audioButton,
+                    pingButton,
+                    uploadFileButton,
+                    locationButton,
+                    videoButton
+                ]
+            }
         case .securityFlag:
             return [
                 photoButton,
@@ -858,7 +872,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
         if change.participantsChanged ||
             change.connectionStateChanged ||
             change.allowGuestsChanged {
-            // Sometime participantsChanged is not observed after allowGuestsChanged 
+            // Sometime participantsChanged is not observed after allowGuestsChanged
             updateInputBarVisibility()
             updateClassificationBanner()
         }
