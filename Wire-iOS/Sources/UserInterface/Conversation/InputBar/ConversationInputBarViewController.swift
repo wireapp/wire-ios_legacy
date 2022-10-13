@@ -660,7 +660,6 @@ final class ConversationInputBarViewController: UIViewController,
     private func giphyButtonPressed(_ sender: Any?) {
         guard !AppDelegate.isOffline,
                 let conversation = conversation as? ZMConversation else { return }
-              let conversation = conversation as? ZMConversation else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
