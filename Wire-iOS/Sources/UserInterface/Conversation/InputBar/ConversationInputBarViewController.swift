@@ -216,37 +216,22 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
+        var buttonArray: [IconButton] = []
         switch mediaShareRestrictionManager.level {
-
         case .none:
-            if conversation.isSelfDeletingMessageSendingDisabled {
-                return [
-                    mentionButton,
-                    photoButton,
-                    sketchButton,
-                    gifButton,
-                    audioButton,
-                    pingButton,
-                    uploadFileButton,
-                    locationButton,
-                    videoButton
-                ]
-            } else {
-                return [
-                    hourglassButton,
-                    mentionButton,
-                    photoButton,
-                    sketchButton,
-                    gifButton,
-                    audioButton,
-                    pingButton,
-                    uploadFileButton,
-                    locationButton,
-                    videoButton
-                ]
-            }
+            buttonArray = [
+                mentionButton,
+                photoButton,
+                sketchButton,
+                gifButton,
+                audioButton,
+                pingButton,
+                uploadFileButton,
+                locationButton,
+                videoButton
+            ]
         case .securityFlag:
-            return [
+            buttonArray = [
                 photoButton,
                 mentionButton,
                 sketchButton,
@@ -256,12 +241,17 @@ final class ConversationInputBarViewController: UIViewController,
                 videoButton
             ]
         case .APIFlag:
-            return [
+            buttonArray = [
                 mentionButton,
                 pingButton,
                 locationButton
             ]
         }
+        if !conversation.isSelfDeletingMessageSendingDisabled {
+            buttonArray.insert(hourglassButton, at: buttonArray.startIndex)
+        }
+
+        return buttonArray
     }
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
@@ -496,7 +486,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     func updateRightAccessoryView() {
-       updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
@@ -542,10 +532,10 @@ final class ConversationInputBarViewController: UIViewController,
 
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
-            conversation.conversationType == .oneOnOne,
-            let connectedUser = conversation.connectedUserType else {
-                return
-        }
+              conversation.conversationType == .oneOnOne,
+              let connectedUser = conversation.connectedUserType else {
+                  return
+              }
 
         inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
     }
@@ -670,6 +660,7 @@ final class ConversationInputBarViewController: UIViewController,
     private func giphyButtonPressed(_ sender: Any?) {
         guard !AppDelegate.isOffline,
                 let conversation = conversation as? ZMConversation else { return }
+              let conversation = conversation as? ZMConversation else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
