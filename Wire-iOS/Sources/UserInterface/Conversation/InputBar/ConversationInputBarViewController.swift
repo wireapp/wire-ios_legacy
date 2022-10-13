@@ -216,10 +216,10 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
-        var buttonArray: [IconButton] = []
+        var buttonsArray: [IconButton] = []
         switch mediaShareRestrictionManager.level {
         case .none:
-            buttonArray = [
+            buttonsArray = [
                 mentionButton,
                 photoButton,
                 sketchButton,
@@ -231,7 +231,7 @@ final class ConversationInputBarViewController: UIViewController,
                 videoButton
             ]
         case .securityFlag:
-            buttonArray = [
+            buttonsArray = [
                 photoButton,
                 mentionButton,
                 sketchButton,
@@ -241,17 +241,17 @@ final class ConversationInputBarViewController: UIViewController,
                 videoButton
             ]
         case .APIFlag:
-            buttonArray = [
+            buttonsArray = [
                 mentionButton,
                 pingButton,
                 locationButton
             ]
         }
         if !conversation.isSelfDeletingMessageSendingDisabled {
-            buttonArray.insert(hourglassButton, at: buttonArray.startIndex)
+            buttonsArray.insert(hourglassButton, at: buttonsArray.startIndex)
         }
 
-        return buttonArray
+        return buttonsArray
     }
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
