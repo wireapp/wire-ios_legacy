@@ -38,10 +38,8 @@ final class AnimatedPenView: UIView {
         let iconColor = SemanticColors.Icon.foregroundDefault
         let backgroundColor = SemanticColors.View.backgroundConversationView
 
-        dots.setTemplateIcon(.typingDots, size: 8)
-        dots.tintColor = iconColor
-        pen.setTemplateIcon(.pencil, size: 8)
-        pen.tintColor = iconColor
+        dots.setIcon(.typingDots, size: 8, color: iconColor)
+        pen.setIcon(.pencil, size: 8, color: iconColor)
         pen.backgroundColor = backgroundColor
         pen.contentMode = .center
 

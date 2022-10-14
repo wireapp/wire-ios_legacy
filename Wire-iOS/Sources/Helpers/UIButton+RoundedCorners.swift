@@ -27,7 +27,7 @@ extension UIButton {
         case bottom
     }
 
-    func roundCorners(edge: Edge, radius: CGFloat) {
+    func roundCorners(edge: Edge, radius: CGFloat = 0) {
         layer.cornerRadius = radius
         clipsToBounds = true
 
