@@ -240,7 +240,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
 
-        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
+        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
 
         let closeItem = passcodeSetupViewController.closeItem
 

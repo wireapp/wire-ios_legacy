@@ -36,11 +36,3 @@ final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroun
         configureTransparentBackground()
     }
 }
-
-final class DarkBarItemTransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
-
-    override func configureBackground() {
-        configureTransparentBackground()
-    }
-
-}
