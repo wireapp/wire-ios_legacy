@@ -20,10 +20,6 @@ import UIKit
 
 final class AuthenticationNavigationBar: DefaultNavigationBar {
 
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-
     override func configureBackground() {
         isTranslucent = true
         setBackgroundImage(UIImage(), for: .default)

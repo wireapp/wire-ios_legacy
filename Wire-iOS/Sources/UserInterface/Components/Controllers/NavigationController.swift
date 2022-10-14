@@ -59,7 +59,7 @@ class NavigationController: UINavigationController, SpinnerCapable {
         self.useDefaultPopGesture = false
         self.navigationBar.tintColor = SemanticColors.Label.textDefault
 
-        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
+        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
 
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]

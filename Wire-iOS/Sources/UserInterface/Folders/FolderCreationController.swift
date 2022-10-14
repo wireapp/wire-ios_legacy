@@ -119,7 +119,7 @@ final class FolderCreationController: UIViewController {
 
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
-        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
 
         if navigationController?.viewControllers.count ?? 0 <= 1 {
             navigationItem.leftBarButtonItem = navigationController?.closeItem()
