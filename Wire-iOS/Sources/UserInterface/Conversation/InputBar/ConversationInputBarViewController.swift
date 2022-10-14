@@ -35,7 +35,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     let mediaShareRestrictionManager = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
 
-    // MARK: PopoverPresenter    
+    // MARK: PopoverPresenter
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
@@ -216,11 +216,10 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
 
     private var inputBarButtons: [IconButton] {
+        var buttonsArray: [IconButton] = []
         switch mediaShareRestrictionManager.level {
-
         case .none:
-            return [
-                hourglassButton,
+            buttonsArray = [
                 mentionButton,
                 photoButton,
                 sketchButton,
@@ -232,7 +231,7 @@ final class ConversationInputBarViewController: UIViewController,
                 videoButton
             ]
         case .securityFlag:
-            return [
+            buttonsArray = [
                 photoButton,
                 mentionButton,
                 sketchButton,
@@ -242,12 +241,17 @@ final class ConversationInputBarViewController: UIViewController,
                 videoButton
             ]
         case .APIFlag:
-            return [
+            buttonsArray = [
                 mentionButton,
                 pingButton,
                 locationButton
             ]
         }
+        if !conversation.isSelfDeletingMessageSendingDisabled {
+            buttonsArray.insert(hourglassButton, at: buttonsArray.startIndex)
+        }
+
+        return buttonsArray
     }
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
@@ -317,7 +321,7 @@ final class ConversationInputBarViewController: UIViewController,
 
     // MARK: - Input views handling
 
-    /// init with a InputBarConversationType objcet
+    /// init with a InputBarConversationType object
     /// - Parameter conversation: provide nil only for tests
     init(
         conversation: InputBarConversationType,
@@ -482,7 +486,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     func updateRightAccessoryView() {
-       updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
@@ -528,10 +532,10 @@ final class ConversationInputBarViewController: UIViewController,
 
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
-            conversation.conversationType == .oneOnOne,
-            let connectedUser = conversation.connectedUserType else {
-                return
-        }
+              conversation.conversationType == .oneOnOne,
+              let connectedUser = conversation.connectedUserType else {
+                  return
+              }
 
         inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
     }
@@ -858,7 +862,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
         if change.participantsChanged ||
             change.connectionStateChanged ||
             change.allowGuestsChanged {
-            // Sometime participantsChanged is not observed after allowGuestsChanged 
+            // Sometime participantsChanged is not observed after allowGuestsChanged
             updateInputBarVisibility()
             updateClassificationBanner()
         }
