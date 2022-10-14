@@ -22,9 +22,12 @@ class VerifyEmailStepSecondaryView: AuthenticationFooterViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
+    typealias TeamActivationCode = L10n.Localizable.Team.ActivationCode.Button
+
     init(canResend: Bool = true, canChangeEmail: Bool = true) {
-        let resendCode = SecondaryButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        let changeEmail = SecondaryButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
+        L10n.Localizable.Team.ActivationCode.Button.resend
+        let resendCode = SecondaryButtonDescription(title: TeamActivationCode.resend, accessibilityIdentifier: "resend_button")
+        let changeEmail = SecondaryButtonDescription(title: TeamActivationCode.changeEmail, accessibilityIdentifier: "change_email_button")
         var views: [SecondaryButtonDescription] = []
 
         if canResend {
