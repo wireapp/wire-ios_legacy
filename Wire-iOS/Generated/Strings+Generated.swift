@@ -3288,7 +3288,7 @@ internal enum L10n {
       internal static let blockButtonTitle = L10n.tr("Localizable", "profile.block_button_title")
       /// Block
       internal static let blockButtonTitleAction = L10n.tr("Localizable", "profile.block_button_title_action")
-      /// CANCEL REQUEST
+      /// Cancel Request
       internal static let cancelConnectionButtonTitle = L10n.tr("Localizable", "profile.cancel_connection_button_title")
       /// Create group
       internal static let createConversationButtonTitle = L10n.tr("Localizable", "profile.create_conversation_button_title")
