@@ -1308,8 +1308,8 @@
 "team.activation_code.headline" = "You’ve got mail";
 "team.phone_activation_code.headline" = "Verification";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
-"team.activation_code.button.resend" = "Resend Code";
-"team.activation_code.button.change_email" = "Change Email";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
 "team.activation_code.button.change_phone" = "Change phone number";
 
 "team.full_name.headline" = "Your name";
@@ -1388,7 +1388,7 @@
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
-"registration.no_history.restore_backup" = "Restore From Backup";
+"registration.no_history.restore_backup" = "Restore from backup";
 
 "registration.alert.account_exists.title" = "Account Exists";
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
@@ -1496,7 +1496,7 @@
 "registration.signin.title" = "Log in";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
-"registration.signin.too_many_devices.manage_button.title" = "Manage Devices";
+"registration.signin.too_many_devices.manage_button.title" = "Manage devices";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
 
 "registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
@@ -1513,7 +1513,7 @@
 
 "signin.use_email.label" = "Login with Email";
 "signin.use_phone.label" = "Login with Phone";
-"signin.forgot_password" = "Forgot Password?";
+"signin.forgot_password" = "Forgot password?";
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log In";

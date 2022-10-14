@@ -25,8 +25,8 @@ class VerifyPhoneStepSecondaryView: AuthenticationFooterViewDescription {
     typealias TeamActivationCode = L10n.Localizable.Team.ActivationCode.Button
 
     init(phoneNumber: String, allowChange: Bool) {
-        let resendCode = SecondaryButtonDescription(title: TeamActivationCode.resend, accessibilityIdentifier: "resend_button")
-        let changePhoneNumber = SecondaryButtonDescription(title: TeamActivationCode.changePhone, accessibilityIdentifier: "change_phone_button")
+        let resendCode = SecondaryButtonDescription(title: TeamActivationCode.resend.capitalized, accessibilityIdentifier: "resend_button")
+        let changePhoneNumber = SecondaryButtonDescription(title: TeamActivationCode.changePhone.capitalized, accessibilityIdentifier: "change_phone_button")
         views = allowChange ? [resendCode, changePhoneNumber] : [resendCode]
 
         resendCode.buttonTapped = { [weak self] in

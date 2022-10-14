@@ -3589,7 +3589,7 @@ internal enum L10n {
         internal static let gotIt = L10n.tr("Localizable", "registration.no_history.got_it")
         /// It’s the first time you’re using Wire on this device.
         internal static let hero = L10n.tr("Localizable", "registration.no_history.hero")
-        /// Restore From Backup
+        /// Restore from backup
         internal static let restoreBackup = L10n.tr("Localizable", "registration.no_history.restore_backup")
         /// For privacy reasons, your conversation history will not appear here.
         internal static let subtitle = L10n.tr("Localizable", "registration.no_history.subtitle")
@@ -3780,7 +3780,7 @@ internal enum L10n {
           /// Too Many Devices
           internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.title")
           internal enum ManageButton {
-            /// Manage Devices
+            /// Manage devices
             internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.manage_button.title")
           }
           internal enum ManageScreen {
@@ -4583,7 +4583,7 @@ internal enum L10n {
     internal enum Signin {
       /// Log In
       internal static let confirm = L10n.tr("Localizable", "signin.confirm")
-      /// Forgot Password?
+      /// Forgot password?
       internal static let forgotPassword = L10n.tr("Localizable", "signin.forgot_password")
       internal enum CompanyIdp {
         internal enum Button {
@@ -4663,11 +4663,11 @@ internal enum L10n {
           return L10n.tr("Localizable", "team.activation_code.subheadline", String(describing: p1))
         }
         internal enum Button {
-          /// Change Email
+          /// Change email
           internal static let changeEmail = L10n.tr("Localizable", "team.activation_code.button.change_email")
           /// Change phone number
           internal static let changePhone = L10n.tr("Localizable", "team.activation_code.button.change_phone")
-          /// Resend Code
+          /// Resend code
           internal static let resend = L10n.tr("Localizable", "team.activation_code.button.resend")
         }
       }

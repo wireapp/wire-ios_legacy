@@ -30,7 +30,7 @@ class BackupRestoreStepDescriptionFooterView: AuthenticationFooterViewDescriptio
     typealias NoHistory = L10n.Localizable.Registration.NoHistory
 
     init() {
-        let restoreButton = SecondaryButtonDescription(title: NoHistory.restoreBackup, accessibilityIdentifier: "restore_backup")
+        let restoreButton = SecondaryButtonDescription(title: NoHistory.restoreBackup.capitalized, accessibilityIdentifier: "restore_backup")
         views = [restoreButton]
 
         restoreButton.buttonTapped = { [weak self] in
