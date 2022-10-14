@@ -1,5 +1,5 @@
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
-github "wireapp/Down" "2.3.2_Xcode12.4_module_stability"
+github "wireapp/Down" "2.3.3"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/HTMLString" "6.0.1_xcframework"
