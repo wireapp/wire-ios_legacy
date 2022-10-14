@@ -54,7 +54,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     }()
 
     private let legalHoldIcon: UIImageView = {
-        let legalHoldActiveIconColor = SemanticColors.LegacyColors.vividRed
+        let legalHoldActiveIconColor = SemanticColors.Icon.backgroundMissedPhoneCall
         let imageView = UIImageView()
         imageView.setTemplateIcon(.legalholdactive, size: .tiny)
         imageView.tintColor = legalHoldActiveIconColor
