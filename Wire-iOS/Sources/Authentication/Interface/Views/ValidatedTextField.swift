@@ -206,7 +206,6 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         isEditingTextField = false
     }
 
-
     private func setupTextFieldProperties() {
         returnKeyType = .next
 
