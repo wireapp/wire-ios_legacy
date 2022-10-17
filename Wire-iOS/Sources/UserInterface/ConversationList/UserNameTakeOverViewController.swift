@@ -29,18 +29,26 @@ enum UserNameTakeOverViewControllerAction {
 
 final class UserNameTakeOverViewController: UIViewController {
 
-    public let displayNameLabel = UILabel()
-    public let suggestedHandleLabel = UILabel()
+    typealias RegistrationSelectHandle = L10n.Localizable.Registration.SelectHandle.Takeover
+    typealias LabelColors = SemanticColors.Label
+
+    public let displayNameLabel = DynamicFontLabel(fontSpec: .largeThinFont,
+                                                   color: LabelColors.textMessageDetails)
+    public let suggestedHandleLabel = DynamicFontLabel(fontSpec: .largeFont,
+                                                       color: LabelColors.textDefault)
     public let subtitleTextView = WebLinkTextView()
 
-    private let chooseOwnButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
-    private let keepSuggestedButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+    private let chooseOwnButton = Button(style: .accentColorTextButtonStyle,
+                                         cornerRadius: 16,
+                                         fontSpec: .normalSemiboldFont)
+    private let keepSuggestedButton = Button(style: .secondaryTextButtonStyle,
+                                             cornerRadius: 16,
+                                             fontSpec: .normalSemiboldFont)
     private let contentView = UIView()
     private let topContainer = UIView()
     private let suggestedHandle: String
     private let name: String
-
-    private let learnMore = "registration.select_handle.takeover.subtitle_link".localized
+    private let learnMore = RegistrationSelectHandle.subtitleLink
     fileprivate let learnMoreURL = URL(string: "action://learn-more")!
 
     weak var delegate: UserNameTakeOverViewControllerDelegate?
@@ -68,18 +76,14 @@ final class UserNameTakeOverViewController: UIViewController {
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleTextView, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
 
-        displayNameLabel.font = FontSpec(.large, .thin).font!
-        displayNameLabel.textColor = SemanticColors.Label.textMessageDetails
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
 
-        suggestedHandleLabel.font = FontSpec(.large, .none).font!
-        suggestedHandleLabel.textColor = SemanticColors.Label.textDefault
         suggestedHandleLabel.text = "@" + suggestedHandle
         suggestedHandleLabel.textAlignment = .center
 
-        chooseOwnButton.setTitle("registration.select_handle.takeover.choose_own".localized, for: .normal)
-        keepSuggestedButton.setTitle("registration.select_handle.takeover.keep_suggested".localized, for: .normal)
+        chooseOwnButton.setTitle(RegistrationSelectHandle.chooseOwn, for: .normal)
+        keepSuggestedButton.setTitle(RegistrationSelectHandle.keepSuggested, for: .normal)
 
         setupSubtitleLabel()
 
@@ -92,11 +96,11 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleTextView.textAlignment = .natural
         subtitleTextView.linkTextAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
 
-        let font = FontSpec(.large, .thin).font!
-        let linkFont = FontSpec(.large, .none).font!
-        let color = SemanticColors.Label.textDefault
+        let font = FontSpec.largeThinFont.font!
+        let linkFont = FontSpec.largeFont.font!
+        let color = LabelColors.textDefault
 
-        let subtitle = "registration.select_handle.takeover.subtitle".localized
+        let subtitle = RegistrationSelectHandle.subtitle
         let linkAttributes: [NSAttributedString.Key: Any] = [
             .font: linkFont,
             .link: learnMoreURL

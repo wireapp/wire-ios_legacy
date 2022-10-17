@@ -76,6 +76,9 @@ public extension FontSpec {
     }
 
     // MARK: - Large
+    static var largeFont: Self {
+        return self.init(.large, .none)
+    }
     static var largeThinFont: Self {
         return self.init(.large, .thin)
     }
