@@ -76,6 +76,7 @@ final class ClientListViewController: UIViewController,
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken: NSObjectProtocol?
+    var testVC: UIViewController
 
     var leftBarButtonItem: UIBarButtonItem? {
         if self.isIPadRegular() {
@@ -115,6 +116,15 @@ final class ClientListViewController: UIViewController,
             guard let leftDate = $0.activationDate, let rightDate = $1.activationDate else { return false }
             return leftDate.compare(rightDate) == .orderedDescending
         }
+
+        testVC = WelcomeContainerViewController(
+            contentViewController: HelloViewController(),
+            bottomSheetViewController: MyCustomViewController(),
+            bottomSheetConfiguration: .init(
+                height: UIScreen.main.bounds.height * 0.8,
+                initialOffset: 130
+            )
+        )
 
         super.init(nibName: nil, bundle: nil)
         setupControllerTitle()
@@ -215,7 +225,11 @@ final class ClientListViewController: UIViewController,
             clientsTableView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
             clientsTableView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             clientsTableView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
-            clientsTableView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+            clientsTableView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -60),
+
+            testVC.view.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            testVC.view.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            testVC.view.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
         ])
     }
 
@@ -235,15 +249,6 @@ final class ClientListViewController: UIViewController,
 
     @objc private func endEditing(_ sender: AnyObject!) {
         self.editingList = false
-//        let testVC = WelcomeContainerViewController(
-//            contentViewController: HelloViewController(),
-//            bottomSheetViewController: MyCustomViewController(),
-//            bottomSheetConfiguration: .init(
-//                height: UIScreen.main.bounds.height * 0.8,
-//                initialOffset: 60
-//            )
-//        )
-//        present(testVC, animated: true)
     }
 
     @objc func backPressed(_ sender: AnyObject!) {
