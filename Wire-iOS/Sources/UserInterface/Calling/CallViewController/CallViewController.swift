@@ -48,6 +48,7 @@ final class CallViewController: UIViewController {
     private var conversationObserverToken: Any?
     private var callGridConfiguration: CallGridConfiguration
     private let callGridViewController: CallGridViewController
+    private let testVC: UIViewController
     private var cameraType: CaptureDevice = .front
     private var singleTapRecognizer: UITapGestureRecognizer!
     private var doubleTapRecognizer: UITapGestureRecognizer!
@@ -95,6 +96,14 @@ final class CallViewController: UIViewController {
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration, selfUser: ZMUser.selfUser())
         callGridViewController = CallGridViewController(configuration: callGridConfiguration)
+        testVC = WelcomeContainerViewController(
+            contentViewController: HelloViewController(),
+            bottomSheetViewController: MyCustomViewController(),
+            bottomSheetConfiguration: .init(
+                height: UIScreen.main.bounds.height * 0.8,
+                initialOffset: 130
+            )
+        )
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
@@ -205,11 +214,28 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [callGridViewController, callInfoRootViewController].forEach(addToSelf)
+        [callGridViewController, callInfoRootViewController, testVC].forEach(addToSelf)
     }
 
     private func createConstraints() {
-        [callGridViewController, callInfoRootViewController].forEach { $0.view.fitIn(view: view) }
+        [callGridViewController.view, callInfoRootViewController.view, testVC.view].prepareForLayout()
+        NSLayoutConstraint.activate([
+            callGridViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            callGridViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            callGridViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            callGridViewController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+
+            callInfoRootViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            callInfoRootViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            callInfoRootViewController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            callInfoRootViewController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+
+            //callInfoRootViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            testVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            testVC.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            testVC.view.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+       // [callGridViewController, callInfoRootViewController].forEach { $0.view.fitIn(view: view) }
     }
 
     private func setupObservers() {

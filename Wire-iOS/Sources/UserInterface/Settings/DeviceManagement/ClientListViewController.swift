@@ -235,6 +235,15 @@ final class ClientListViewController: UIViewController,
 
     @objc private func endEditing(_ sender: AnyObject!) {
         self.editingList = false
+//        let testVC = WelcomeContainerViewController(
+//            contentViewController: HelloViewController(),
+//            bottomSheetViewController: MyCustomViewController(),
+//            bottomSheetConfiguration: .init(
+//                height: UIScreen.main.bounds.height * 0.8,
+//                initialOffset: 60
+//            )
+//        )
+//        present(testVC, animated: true)
     }
 
     @objc func backPressed(_ sender: AnyObject!) {
@@ -412,12 +421,31 @@ final class ClientListViewController: UIViewController,
             }
 
         case 1:
-            self.openDetailsOfClient(self.sortedClients[indexPath.row])
+//            self.openDetailsOfClient(self.sortedClients[indexPath.row])
+            openDetailsOfClient1()
 
         default:
             break
         }
 
+    }
+
+    func openDetailsOfClient1() {
+        let testVC = WelcomeContainerViewController(
+            contentViewController: HelloViewController(),
+            bottomSheetViewController: MyCustomViewController(),
+            bottomSheetConfiguration: .init(
+                height: UIScreen.main.bounds.height * 0.8,
+                initialOffset: 60
+            )
+        )
+//        present(testVC , animated: true)
+
+        if let navigationController = self.navigationController {
+           // let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+           // clientViewController.view.backgroundColor = SemanticColors.View.backgroundDefault
+            navigationController.pushViewController(testVC, animated: true)
+        }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

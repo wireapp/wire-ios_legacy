@@ -28,6 +28,7 @@
 		065A5AF3279B083B002D4D1E /* WireDataModel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE1A5266657B000E713FC /* WireDataModel.xcframework */; };
 		065A5AF5279B0840002D4D1E /* WireSyncEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99EE19D266657AF00E713FC /* WireSyncEngine.xcframework */; };
 		065B7E842861F48500EF9595 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D5A7A2858C18600D0494E /* Colors+Generated.swift */; };
+		0665DF7628F857900094482B /* BottomSheetContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0665DF7528F857900094482B /* BottomSheetContainerViewController.swift */; };
 		0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */; };
 		06717E592865179000AF442C /* SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E582865178F00AF442C /* SemanticColors.swift */; };
 		06717E5C2865183600AF442C /* Stylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06717E5B2865183600AF442C /* Stylable.swift */; };
@@ -1868,6 +1869,7 @@
 		065A5ADE279B07AC002D4D1E /* Wire Notification Service Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Notification Service Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		065A5AE0279B07AC002D4D1E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		065A5AE2279B07AC002D4D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0665DF7528F857900094482B /* BottomSheetContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetContainerViewController.swift; sourceTree = "<group>"; };
 		0667FE302384237E00F75F93 /* UICollectionView+SetMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SetMessage.swift"; sourceTree = "<group>"; };
 		06717E582865178F00AF442C /* SemanticColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticColors.swift; sourceTree = "<group>"; };
 		06717E5B2865183600AF442C /* Stylable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylable.swift; sourceTree = "<group>"; };
@@ -3806,6 +3808,14 @@
 				065A5AE2279B07AC002D4D1E /* Info.plist */,
 			);
 			path = "Wire Notification Service Extension";
+			sourceTree = "<group>";
+		};
+		0665DF7428F857720094482B /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				0665DF7528F857900094482B /* BottomSheetContainerViewController.swift */,
+			);
+			path = BottomSheet;
 			sourceTree = "<group>";
 		};
 		0685007F26B35DFC00721F80 /* Restrictions */ = {
@@ -6984,6 +6994,7 @@
 		D58191FE2091CB01003BA7EC /* Calling */ = {
 			isa = PBXGroup;
 			children = (
+				0665DF7428F857720094482B /* BottomSheet */,
 				160D6921212C813700096EAD /* CallController */,
 				160D691E212C78C700096EAD /* CallQualityController */,
 				5E33F0D120AD637400414EA6 /* Permissions */,
@@ -8423,6 +8434,7 @@
 				A9C33E0023D078B80069C8BB /* ConversationListItemView.swift in Sources */,
 				A9730DDA250274150061BF36 /* AnalyticsCountlyProvider.swift in Sources */,
 				5E8FFC1A21EF6EB10052DF03 /* RemoveClientStepViewController.swift in Sources */,
+				0665DF7628F857900094482B /* BottomSheetContainerViewController.swift in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
 				EE44D7EA259BD85F000C6345 /* Viper+Relationships.swift in Sources */,

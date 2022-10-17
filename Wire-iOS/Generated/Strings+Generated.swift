@@ -4897,7 +4897,7 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "voice.end_call_button.title")
       }
       internal enum FlipVideoButton {
-        /// Switch camera
+        /// Flip
         internal static let title = L10n.tr("Localizable", "voice.flip_video_button.title")
       }
       internal enum HangUpButton {

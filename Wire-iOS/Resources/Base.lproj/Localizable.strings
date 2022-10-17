@@ -645,7 +645,7 @@
 "voice.hang_up_button.title" = "Hang Up";
 "voice.mute_button.title" = "Microphone";
 "voice.video_button.title" = "Camera";
-"voice.flip_video_button.title" = "Switch camera";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
