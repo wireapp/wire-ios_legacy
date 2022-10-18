@@ -138,7 +138,7 @@ final class BadgeUserImageView: UserImageView {
 
             let changeImage = {
                 self.badgeImageView.setTemplateIcon(icon, size: self.badgeIconSize)
-                self.badgeImageView.tintColor = SemanticColors.Label.conversationListTableViewCellBadge
+                self.badgeImageView.tintColor = SemanticColors.Label.textDefaultWhite
             }
 
             let showBadge = {
