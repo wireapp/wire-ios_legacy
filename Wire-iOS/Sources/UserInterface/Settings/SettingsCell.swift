@@ -69,7 +69,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
 
     let badge: RoundedBadge = {
         let badge = RoundedBadge(view: UIView())
-        badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
+        badge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
         badge.isHidden = true
 
         return badge
@@ -258,7 +258,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
 
         if isHighlighted && selectionStyle != .none {
             backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
-            badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
+            badge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
             badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
         }
     }

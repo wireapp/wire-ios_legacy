@@ -26,7 +26,7 @@ final class ListSkeletonCellNameItemView: UIView {
         super.init(frame: CGRect.zero)
 
         layer.cornerRadius = 4
-        backgroundColor = SemanticColors.View.backgroundBadgeCell
+        backgroundColor = SemanticColors.View.backgroundDefaultBlack
         alpha = 0.16
     }
 
@@ -58,7 +58,7 @@ final class ListSkeletonCellView: UIView {
         super.init(frame: .zero)
 
         avatarView.layer.cornerRadius = 14
-        avatarView.backgroundColor = SemanticColors.View.backgroundBadgeCell
+        avatarView.backgroundColor = SemanticColors.View.backgroundDefaultBlack
         avatarView.alpha = 0.16
 
         [avatarView, lineView].forEach(addSubview)

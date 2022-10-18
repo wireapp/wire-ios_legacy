@@ -105,7 +105,6 @@ public enum SemanticColors {
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
         static let backgroundSeparatorCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
         static let backgroundConversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
         static let backgroundConversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundTeamImageView = UIColor(light: Asset.white, dark: Asset.black)
