@@ -55,7 +55,7 @@ final class ArchivedNavigationBar: UIView {
         dismissButton.accessibilityLabel = "general.close".localized
         dismissButton.setIconColor(SemanticColors.Label.textNavigationController, for: .normal)
         [titleLabel, dismissButton].forEach(addSubview)
-        addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+        addBorder(for: .bottom)
     }
 
     private func createConstraints() {

@@ -122,10 +122,10 @@ class ColorPickerController: UIViewController {
             }
 
             backgroundColor = SemanticColors.View.backgroundUserCell
-            addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
+            addBorder(for: .bottom)
             colorView.layer.cornerRadius = 14
-            checkmarkView.tintColor = SemanticColors.Label.textDefault
             checkmarkView.setTemplateIcon(.checkmark, size: .small)
+            checkmarkView.tintColor = SemanticColors.Label.textDefault
             checkmarkView.isHidden = true
         }
 
