@@ -34,7 +34,7 @@ final class DeveloperOptionsController: UIViewController {
     var mailViewController: MFMailComposeViewController?
 
     override func loadView() {
-        title = "OPTIONS"
+        setupNavigationTitle()
         view = UIView()
         edgesForExtendedLayout = UIRectEdge()
         view.backgroundColor = .clear
@@ -54,6 +54,14 @@ final class DeveloperOptionsController: UIViewController {
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     // MARK: - Cells
@@ -93,7 +101,9 @@ final class DeveloperOptionsController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go!", for: .normal)
         button.titleLabel?.textAlignment = .right
-
+        button.setTitleColor(
+            SemanticColors.Label.textDefault,
+            for: .normal)
         if let titleLabel = button.titleLabel {
             NSLayoutConstraint.activate([
                 titleLabel.rightAnchor.constraint(equalTo: button.rightAnchor)
@@ -121,7 +131,7 @@ final class DeveloperOptionsController: UIViewController {
 
         let label = UILabel()
         label.text = labelText
-        label.textColor = .white
+        label.textColor = SemanticColors.Label.textDefault
         label.translatesAutoresizingMaskIntoConstraints = false
         [label, view].forEach {
             cell.contentView.addSubview($0)

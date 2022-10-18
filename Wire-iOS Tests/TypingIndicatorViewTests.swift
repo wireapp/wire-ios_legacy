@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TypingIndicatorViewSnapshotTests: XCTestCase {
+final class TypingIndicatorViewSnapshotTests: ZMSnapshotTestCase {
 
     var sut: TypingIndicatorView!
 

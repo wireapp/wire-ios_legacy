@@ -22,6 +22,10 @@ import WireDataModel
 
 extension ZMConversationMessage {
 
+    var mediaShareRestrictionManager: MediaShareRestrictionManager {
+        return MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared())
+    }
+
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
         guard
@@ -40,8 +44,7 @@ extension ZMConversationMessage {
         guard canBeShared else {
             return false
         }
-        return SecurityFlags.clipboard.isEnabled &&
-               MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard &&
+        return mediaShareRestrictionManager.canUseClipboard &&
                !isEphemeral &&
                (isText || isImage || isLocation)
     }
@@ -112,7 +115,7 @@ extension ZMConversationMessage {
     var canBeDownloaded: Bool {
         guard let fileMessageData = self.fileMessageData,
               canBeShared,
-              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
+              mediaShareRestrictionManager.canDownloadMedia else {
             return false
         }
         return isFile && fileMessageData.transferState == .uploaded
@@ -129,7 +132,7 @@ extension ZMConversationMessage {
     var canBeSaved: Bool {
         guard canBeShared,
               !isEphemeral,
-              MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canDownloadMedia else {
+              mediaShareRestrictionManager.canDownloadMedia else {
                   return false
               }
 
@@ -148,9 +151,11 @@ extension ZMConversationMessage {
 
     /// Whether it should be possible to forward given message to another conversation.
     var canBeForwarded: Bool {
-        if isEphemeral || !canBeShared {
-            return false
-        }
+        guard !isEphemeral,
+              canBeShared,
+              mediaShareRestrictionManager.canUseClipboard else {
+                  return false
+              }
 
         if isFile, let fileMessageData = self.fileMessageData {
             return fileMessageData.fileURL != nil

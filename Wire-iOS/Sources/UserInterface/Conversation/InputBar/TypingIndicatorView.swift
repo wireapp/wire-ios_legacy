@@ -35,8 +35,8 @@ final class AnimatedPenView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let iconColor = UIColor.from(scheme: .textForeground)
-        let backgroundColor = UIColor.from(scheme: .background)
+        let iconColor = SemanticColors.Icon.foregroundDefault
+        let backgroundColor = SemanticColors.View.backgroundConversationView
 
         dots.setIcon(.typingDots, size: 8, color: iconColor)
         pen.setIcon(.pencil, size: 8, color: iconColor)
@@ -116,20 +116,20 @@ final class TypingIndicatorView: UIView {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .from(scheme: .textPlaceholder)
+        label.textColor = SemanticColors.Label.textDefault
 
         return label
     }()
     let animatedPen = AnimatedPenView()
     let container: UIView = {
         let view = UIView()
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundConversationView
 
         return view
     }()
     let expandingLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundConversationView
 
         return view
     }()

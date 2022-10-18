@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Наразі активна.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Контакти";
+"conversation_list.bottom_bar.conversations.title" = "Розмови";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Архівувати";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Допоможіть нам зробити Wire кращим";
 "conversation_list.data_usage_permission_alert.message" = "Я згоден з тим, що Wire може створювати та використовувати анонімні звіти про використання програми та збої в роботі для покращення якості додатку. Я можу відкликати мою згоду в будь-який час.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Федеративна система";
 "profile.details.blocking_reason" = "Цей користувач заблокований через правовий захист. [ДІЗНАТИСЯ БІЛЬШЕ](%@)";
 
-"profile_view.accessibility.handle" = "Нік";
-"profile_view.accessibility.name" = "Власне ім'я";
-"profile_view.accessibility.team_name" = "Назва команди";
-
 // Device list
 "profile.devices.title" = "Пристрої";
 "profile.devices.fingerprint_message_unencrypted" = "%@ використовує стару версію Wire, тому не показується жоден пристрій.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Невідомо";
 
 // Bot
-"participants.services.remove_integration.button" = "видалити інтеграцію";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Гості";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Профіль, нещодавно додані пристрої";
 
 "self.add_email_password" = "Додайте email та пароль";
-
-"self.accessibility.profile_photo_image" = "Картинка для профілю";
-"self.accessibility.profile_photo_edit_button" = "Змінити картинку для профілю";
 
 // About screen
 "about.tos.title" = "Умови використання";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Картинка";
 "self.settings.account_picture_group.color" = "Колір";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Особисті дані";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Налаштування розробника";
+"self.settings.developer_options.loggin.title" = "Налаштування";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "Ведення журналу APNS";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Скасувати";
 "availability.message.set_status" = "Встановити статус";
-"availability.accessibility_label.change_status" = "Змінити статус";
-"availability.accessibility_label.status" = "Статус";
 
 "availability.none" = "Недоступний(-а)";
 "availability.available" = "Онлайн";

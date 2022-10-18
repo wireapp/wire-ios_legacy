@@ -121,7 +121,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell, DynamicTypeCapable
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
     }
 
     // MARK: - Layout

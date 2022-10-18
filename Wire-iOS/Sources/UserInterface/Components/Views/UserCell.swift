@@ -69,19 +69,19 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var sectionName: String?
     var cellIdentifier: String?
-    let iconColor = IconColors.foregroundCellIconActive
+    let iconColor = IconColors.foregroundDefault
 
     override var isSelected: Bool {
         didSet {
-            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCellCheckMarkIconActive) : nil
-            checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCellCheckMarkSelectedActive : IconColors.backgroundCellCheckMarkActive
-            checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.boarderCellCheckMarkActive.cgColor
+            checkmarkIconView.image = isSelected ? StyleKitIcon.checkmark.makeImage(size: 12, color: IconColors.foregroundCheckMarkSelected) : nil
+            checkmarkIconView.backgroundColor = isSelected ? IconColors.backgroundCheckMarkSelected : IconColors.backgroundCheckMark
+            checkmarkIconView.layer.borderColor = isSelected ? UIColor.clear.cgColor : IconColors.borderCheckMark.cgColor
         }
     }
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? SemanticColors.View.Background.backgroundUserCellHightLighted : SemanticColors.View.Background.backgroundUserCell
+            backgroundColor = isHighlighted ? SemanticColors.View.backgroundUserCellHightLighted : SemanticColors.View.backgroundUserCell
         }
     }
 
@@ -97,23 +97,25 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             connectButton.isHidden = true
             accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
-            checkmarkIconView.layer.borderColor = IconColors.boarderCellCheckMarkActive.cgColor
+            checkmarkIconView.layer.borderColor = IconColors.borderCheckMark.cgColor
             checkmarkIconView.isHidden = true
         }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         //  Border colors are not dynamically updating for Dark Mode
         //  When you use adaptive colors with CALayers you’ll notice that these colors,
         // are not updating when switching appearance live in the app.
         // That's why we use the traitCollectionDidChange(_:) method.
-        checkmarkIconView.layer.borderColor = IconColors.boarderCellCheckMarkActive.cgColor
+        checkmarkIconView.layer.borderColor = IconColors.borderCheckMark.cgColor
     }
 
     override func setUp() {
         super.setUp()
 
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
         userTypeIconView.setUpIconImageView()
         microphoneIconView.setUpIconImageView()
@@ -134,7 +136,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         checkmarkIconView.layer.borderWidth = 2
         checkmarkIconView.contentMode = .center
         checkmarkIconView.layer.cornerRadius = 12
-        checkmarkIconView.backgroundColor = IconColors.backgroundCellCheckMarkActive
+        checkmarkIconView.backgroundColor = IconColors.backgroundCheckMark
         checkmarkIconView.isHidden = true
 
         accessoryIconView.setUpIconImageView()
@@ -199,11 +201,43 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         ])
     }
 
+    private func setupAccessibility() {
+        typealias ContactsList = L10n.Accessibility.ContactsList
+        typealias ServicesList = L10n.Accessibility.ServicesList
+        typealias ClientsList = L10n.Accessibility.ClientsList
+
+        guard let title = titleLabel.text,
+              let subtitle = subtitleLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        var content = "\(title), \(subtitle)"
+        if let userType = userTypeIconView.accessibilityLabel,
+           !userTypeIconView.isHidden {
+            content += ", \(userType)"
+        }
+
+        if !verifiedIconView.isHidden {
+            content += ", " + ClientsList.DeviceVerified.description
+        }
+
+        accessibilityLabel = content
+
+        guard let user = user, !user.isServiceUser else {
+            accessibilityHint = ServicesList.ServiceCell.hint
+            return
+        }
+        accessibilityHint = ContactsList.UserCell.hint
+    }
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
 
         accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
-        accessoryIconView.tintColor = IconColors.foregroundCellIconActive
+        accessoryIconView.tintColor = IconColors.foregroundDefault
 
         updateTitleLabel()
     }
@@ -252,6 +286,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         } else {
             subtitleLabel.isHidden = true
         }
+        setupAccessibility()
     }
 
 }

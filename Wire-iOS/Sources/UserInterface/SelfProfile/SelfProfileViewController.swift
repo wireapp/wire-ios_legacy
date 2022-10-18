@@ -49,10 +49,6 @@ final class SelfProfileViewController: UIViewController {
         return [.portrait]
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     private var userCanSetProfilePicture: Bool {
         return userRightInterfaceType.selfUserIsPermitted(to: .editProfilePicture)
     }
@@ -123,6 +119,8 @@ final class SelfProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
         createConstraints()
+        setupAccessibility()
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -137,7 +135,11 @@ final class SelfProfileViewController: UIViewController {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
         } else {
-            title = "self.account".localized(uppercased: true)
+            let titleLabel = DynamicFontLabel(
+                text: L10n.Localizable.Self.account,
+                fontSpec: .headerSemiboldFont,
+                color: SemanticColors.Label.textDefault)
+            navigationItem.titleView = titleLabel
         }
     }
 
@@ -169,6 +171,13 @@ final class SelfProfileViewController: UIViewController {
             settingsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             settingsController.view.bottomAnchor.constraint(equalTo: safeBottomAnchor)
         ])
+    }
+
+    private func setupAccessibility() {
+        typealias AccountPage = L10n.Accessibility.AccountPage
+
+        navigationItem.rightBarButtonItem?.accessibilityLabel = AccountPage.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = AccountPage.BackButton.description
     }
 
     // MARK: - Events

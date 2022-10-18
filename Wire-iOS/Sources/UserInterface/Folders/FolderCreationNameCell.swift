@@ -54,6 +54,6 @@ class FolderCreationNameCell: UICollectionViewCell {
 
     private func configureColors() {
         backgroundColor = UIColor.from(scheme: .barBackground, variant: variant)
-        textField.applyColorScheme(variant)
+
     }
 }

@@ -74,12 +74,6 @@
 	<string>${WIRE_BUILD_NUMBER}</string>
 	<key>CameraRollEnabled</key>
 	<string>${CAMERA_ROLL_ENABLED}</string>
-	<key>ClipboardEnabled</key>
-	<string>${CLIPBOARD_ENABLED}</string>
-	<key>MaxNumberAccounts</key>
-	<string>${MAX_NUMBER_ACCOUNTS}</string>
-	<key>FileSharingEnabled</key>
-	<string>${FILE_SHARING_ENABLED}</string>
 	<key>CountlyAppKey</key>
 	<string>$(COUNTLY_APP_KEY)</string>
 	<key>CountlyHost</key>
@@ -88,6 +82,8 @@
 	<string>${CUSTOM_BACKEND_ENABLED}</string>
 	<key>EnableDeveloperMenu</key>
 	<string>${DEVELOPER_MODE_ENABLED}</string>
+	<key>FileSharingEnabled</key>
+	<string>${FILE_SHARING_ENABLED}</string>
 	<key>ForceCBREnabled</key>
 	<string>${FORCE_CBR_ENABLED}</string>
 	<key>ForceEncryptionAtRestEnabled</key>
@@ -114,6 +110,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MaxNumberAccounts</key>
+	<string>${MAX_NUMBER_ACCOUNTS}</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -150,9 +148,10 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
-		<string>voip</string>
-		<string>remote-notification</string>
 		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

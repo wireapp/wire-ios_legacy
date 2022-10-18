@@ -40,7 +40,7 @@ final class SearchResultsView: UIView {
         collectionViewLayout.minimumLineSpacing = 0
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        collectionView.backgroundColor = SemanticColors.View.backgroundDefault
         collectionView.allowsMultipleSelection = true
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true

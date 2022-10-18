@@ -173,7 +173,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(profileFooterView)
         view.addSubview(incomingRequestFooter)
 
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         setupHeader()
         setupTabsController()
@@ -239,7 +239,7 @@ final class ProfileViewController: UIViewController {
         addToSelf(tabsController!)
 
         tabsController?.isTabBarHidden = viewControllers.count < 2
-        tabsController?.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        tabsController?.view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     // MARK: - Constraints
@@ -508,6 +508,8 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         } else {
             navigationItem.rightBarButtonItem = legalHoldItem
         }
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.Profile.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.DeviceDetails.BackButton.description
     }
 
     func updateFooterViews() {

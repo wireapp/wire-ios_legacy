@@ -453,8 +453,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,
-            actionType: .addService(conversation as! ZMConversation),
-            variant: .init(colorScheme: self.variant, opaque: true)
+            actionType: .addService(conversation as! ZMConversation)
         ) { [weak self] result in
             guard let `self` = self, let result = result else { return }
             switch result {

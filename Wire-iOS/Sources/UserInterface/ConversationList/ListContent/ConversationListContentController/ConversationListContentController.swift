@@ -128,7 +128,7 @@ final class ConversationListContentController: UICollectionViewController, Popov
         collectionView.register(ConnectRequestsCell.self, forCellWithReuseIdentifier: CellReuseIdConnectionRequests)
         collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: CellReuseIdConversation)
 
-        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundColor = SemanticColors.View.backgroundConversationList
         collectionView.alwaysBounceVertical = true
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
@@ -350,7 +350,7 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
 
@@ -420,9 +420,7 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         }
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
-        collectionView.accessibilityValue = folderEnabled ? "folders" : "recent"
-    }
+    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {}
 
     func reload<C>(
         using stagedChangeset: StagedChangeset<C>,

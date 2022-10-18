@@ -61,7 +61,7 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
                         line: UInt = #line) {
         let state = HandleChangeState(currentHandle: currentHandle, newHandle: newHandle, availability: availability)
         let sut = ChangeHandleViewController(state: state, federationEnabled: federationEnabled)
-        verify(matching: sut.prepareForSnapshots(), file: file, testName: testName, line: line)
+        verify(matching: sut.prepareForSettingsSnapshots(), file: file, testName: testName, line: line)
     }
 }
 
@@ -77,6 +77,18 @@ fileprivate extension UIViewController {
         view.setNeedsLayout()
         view.layoutIfNeeded()
         navigationController.view.backgroundColor = .darkGray
+        return navigationController.view
+    }
+
+    func prepareForSettingsSnapshots() -> UIView {
+        let navigationController = wrapInNavigationController(navigationControllerClass: NavigationController.self)
+
+        beginAppearanceTransition(true, animated: false)
+        endAppearanceTransition()
+
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+
         return navigationController.view
     }
 

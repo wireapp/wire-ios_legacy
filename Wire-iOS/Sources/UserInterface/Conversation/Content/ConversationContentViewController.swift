@@ -147,8 +147,8 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         tableView.delaysContentTouches = false
         tableView.keyboardDismissMode = AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal ? .none : .interactive
 
-        tableView.backgroundColor = SemanticColors.View.Background.backgroundConversationView
-        view.backgroundColor = SemanticColors.View.Background.backgroundConversationView
+        tableView.backgroundColor = SemanticColors.View.backgroundConversationView
+        view.backgroundColor = SemanticColors.View.backgroundConversationView
 
         setupMentionsResultsView()
 

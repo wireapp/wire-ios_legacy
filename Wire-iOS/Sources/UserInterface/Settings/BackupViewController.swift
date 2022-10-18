@@ -26,6 +26,7 @@ final class BackupStatusCell: UITableViewCell {
         let label = DynamicFontLabel(fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -39,9 +40,8 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
 
-        let color = UIColor.from(scheme: .textForeground, variant: .dark)
-
-        iconView.setIcon(.restore, size: .large, color: color)
+        iconView.tintColor = SemanticColors.Label.textDefault
+        iconView.setTemplateIcon(.restore, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -75,6 +75,7 @@ final class BackupActionCell: UITableViewCell {
                                      fontSpec: .normalRegularFont,
                                      color: .textForeground,
                                      variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
         label.textAlignment = .left
         return label
     }()
@@ -82,7 +83,8 @@ final class BackupActionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .clear
+        backgroundColor = SemanticColors.View.backgroundUserCell
+        accessibilityTraits = .button
         contentView.backgroundColor = .clear
 
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +96,7 @@ final class BackupActionCell: UITableViewCell {
             actionTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        addBorder(for: .bottom)
     }
 
     @available(*, unavailable)
@@ -131,13 +134,9 @@ final class BackupViewController: UIViewController, SpinnerCapable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = L10n.Localizable.Self.Settings.HistoryBackup.title.localizedUppercase
+        setupNavigationTitle()
         setupViews()
         setupLayout()
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     private func setupViews() {
@@ -164,6 +163,14 @@ final class BackupViewController: UIViewController, SpinnerCapable {
 
     private func setupLayout() {
         tableView.fitIn(view: view)
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.HistoryBackup.title.localized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
     var loadingHostController: SpinnerCapableViewController {

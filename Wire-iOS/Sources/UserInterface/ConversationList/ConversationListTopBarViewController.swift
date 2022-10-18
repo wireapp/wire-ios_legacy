@@ -64,6 +64,8 @@ final class ConversationListTopBarViewController: UIViewController {
 
     override func viewDidLoad() {
         topBar?.splitSeparator = false
+        view.backgroundColor = SemanticColors.View.backgroundConversationList
+        view.addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
 
         availabilityViewController?.didMove(toParent: self)
 
@@ -91,7 +93,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
             titleLabel.text = selfUser.name
             titleLabel.font = FontSpec(.normal, .semibold).font
-            titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+            titleLabel.textColor = SemanticColors.Label.textDefault
             titleLabel.accessibilityTraits = .header
             titleLabel.accessibilityValue = selfUser.name
             titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -160,8 +162,7 @@ final class ConversationListTopBarViewController: UIViewController {
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
         let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
 
-        accountView.unreadCountStyle = .others
-        accountView.selected = false
+        accountView.unreadCountStyle = .current
         accountView.autoUpdateSelection = false
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
@@ -169,8 +170,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
         accountView.accessibilityTraits = .button
         accountView.accessibilityIdentifier = "bottomBarSettingsButton"
-        accountView.accessibilityLabel = "self.voiceover.label".localized
-        accountView.accessibilityHint = "self.voiceover.hint".localized
+        accountView.accessibilityHint = L10n.Accessibility.ConversationsList.AccountButton.hint
 
         if let selfUser = ZMUser.selfUser(),
             selfUser.clientsRequiringUserAttention.count > 0 {
@@ -223,7 +223,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     func createSettingsViewController() -> UIViewController {
         let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
-        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+        return selfProfileViewController.wrapInNavigationController(navigationControllerClass: NavigationController.self)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

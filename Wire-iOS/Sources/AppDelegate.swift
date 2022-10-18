@@ -52,7 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         APIVersionOperation(),
         FontSchemeOperation(),
         VoIPPushHelperOperation(),
-        DebugLoggerOperation()
+        DebugLoggerOperation(),
+        CleanUpDebugStateOperation()
     ]
     private var appStateCalculator = AppStateCalculator()
 
@@ -163,6 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        DebugLogger.addStep(step: "! App will terminate: ", eventID: "\(application.applicationState)")
         zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
     }
 
@@ -295,10 +297,10 @@ private extension AppDelegate {
     }
 
     private var requiredPushTokenType: PushToken.TokenType {
-        // From iOS 14 our "unrestricted-voip" entitlement is no longer supported,
+        // From iOS 15 our "unrestricted-voip" entitlement is no longer supported,
         // so users should register for standard push tokens instead and use the
         // notification service extension.
-        if #available(iOS 14.0, *) {
+        if #available(iOS 15.0, *) {
             return .standard
         } else {
             return .voip

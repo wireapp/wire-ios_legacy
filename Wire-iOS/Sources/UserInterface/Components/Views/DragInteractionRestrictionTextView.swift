@@ -23,7 +23,7 @@ class DragInteractionRestrictionTextView: TextView {
     convenience init() {
         self.init(frame: .zero)
 
-        textDragInteraction?.isEnabled = SecurityFlags.clipboard.isEnabled
+        textDragInteraction?.isEnabled = SecurityFlags.fileSharing.isEnabled
     }
 
 }

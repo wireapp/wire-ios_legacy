@@ -96,7 +96,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized(uppercased: true)
-        view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +104,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         updateLegalHoldIndicator()
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.Profile.BackButton.description
         collectionViewController.collectionView?.reloadData()
     }
 

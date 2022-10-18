@@ -21,7 +21,7 @@ import WireCommonComponents
 
 final class CheckmarkCell: RightIconDetailsCell {
 
-    typealias BackgroundColors = SemanticColors.View.Background
+    typealias BackgroundColors = SemanticColors.View
 
     var showCheckmark: Bool = false {
         didSet {
@@ -44,6 +44,7 @@ final class CheckmarkCell: RightIconDetailsCell {
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
+        accessibilityTraits = .button
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
@@ -70,11 +71,11 @@ final class CheckmarkCell: RightIconDetailsCell {
 
         switch (colorSchemeVariant, disabled) {
         case (.light, false):
-            color = SemanticColors.Icon.foregroundCellPlainCheckMark
+            color = SemanticColors.Icon.foregroundPlainCheckMark
         case (.light, true):
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         case (.dark, false):
-            color = SemanticColors.Icon.foregroundCellPlainCheckMark
+            color = SemanticColors.Icon.foregroundPlainCheckMark
         case (.dark, true):
             color = UIColor.from(scheme: .textPlaceholder, variant: colorSchemeVariant)
         }
@@ -96,7 +97,7 @@ final class CheckmarkCell: RightIconDetailsCell {
 
     override var accessibilityValue: String? {
         get {
-            return "\(showCheckmark)"
+            return showCheckmark ? L10n.Accessibility.ConversationDetails.MessageTimeoutState.description : nil
         }
 
         set {

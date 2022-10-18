@@ -77,7 +77,7 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = SemanticColors.View.backgroundDefault
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -128,10 +128,6 @@ class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
             newFooter.rightAnchor.constraint(equalTo: footerContainer.rightAnchor)
         ])
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {
@@ -166,7 +162,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         self.group = group
         self.sections = group.visibleItems
         super.init(style: group.style == .plain ? .plain : .grouped)
-        self.title = group.title.localizedUppercase
+        setupNavigationTitle()
 
         self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
@@ -192,26 +188,40 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupTableView()
 
-        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupTableView()
+        setupNavigationBar()
     }
 
-    func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [
+    private func setupTableView() {
+        let allCellTypes: [SettingsTableCellProtocol.Type] = [
             SettingsTableCell.self,
             SettingsButtonCell.self,
             SettingsToggleCell.self,
             SettingsValueCell.self,
             SettingsTextCell.self,
             SettingsStaticTextTableCell.self,
+            SettingsLinkTableCell.self,
             IconActionCell.self,
-            SettingsProfileLinkCell.self
+            SettingsProfileLinkCell.self,
+            SettingsAppearanceCell.self
         ]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        setupAccessibility()
+    }
+
+    private func setupAccessibility() {
+        typealias Accessibility = L10n.Accessibility.Settings
+
+        navigationItem.rightBarButtonItem?.accessibilityLabel = Accessibility.CloseButton.description
+        navigationItem.backBarButtonItem?.accessibilityLabel = group.accessibilityBackButtonText
     }
 
     func refreshData() {
@@ -234,10 +244,9 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
         let sectionDescriptor = sections[(indexPath as NSIndexPath).section]
         let cellDescriptor = sectionDescriptor.visibleCellDescriptors[(indexPath as NSIndexPath).row]
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: cellDescriptor).cellType.reuseIdentifier, for: indexPath) as? SettingsTableCellProtocol {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
-            cell.isFirst = indexPath.row == 0
             return cell
         }
 
@@ -264,14 +273,22 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionHeader
         }
     }
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = SemanticColors.Label.textSectionFooter
         }
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: group.title.localized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 
 }

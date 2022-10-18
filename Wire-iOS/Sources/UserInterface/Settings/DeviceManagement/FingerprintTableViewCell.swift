@@ -27,22 +27,6 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
 
-    var variant: ColorSchemeVariant? {
-        didSet {
-            var color = UIColor.white
-
-            switch variant {
-            case .dark?, .none:
-                color = .white
-            case .light?:
-                color = UIColor.from(scheme: .textForeground, variant: .light)
-            }
-
-            fingerprintLabel.textColor = color
-            titleLabel.textColor = color
-        }
-    }
-
     var fingerprintLabelFont: FontSpec? {
         didSet {
             updateFingerprint()
@@ -64,8 +48,10 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         titleLabel.text = L10n.Localizable.Self.Settings.AccountDetails.KeyFingerprint.title
         titleLabel.accessibilityIdentifier = "fingerprint title"
+        titleLabel.textColor = SemanticColors.Label.textSectionHeader
         fingerprintLabel.numberOfLines = 0
         fingerprintLabel.accessibilityIdentifier = "fingerprint"
+        fingerprintLabel.textColor = SemanticColors.Label.textDefault
         spinner.hidesWhenStopped = true
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,9 +78,10 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
 
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
 
-        backgroundColor = UIColor.clear
+        backgroundColor = SemanticColors.View.backgroundUserCell
         backgroundView = UIView()
         selectedBackgroundView = UIView()
+        addBorder(for: .bottom)
 
         setupStyle()
     }
@@ -105,12 +92,12 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
     }
 
     // MARK: - Methods
-    func setupStyle() {
+    private func setupStyle() {
         fingerprintLabelFont = .normalLightFont
         fingerprintLabelBoldFont = .normalSemiboldFont
     }
 
-    func updateFingerprint() {
+    private func updateFingerprint() {
         if let fingerprintLabelBoldMonoFont = fingerprintLabelBoldFont?.font?.monospaced(),
            let fingerprintLabelMonoFont = fingerprintLabelFont?.font?.monospaced(),
             let attributedFingerprint = fingerprint?.attributedFingerprint(
@@ -124,7 +111,20 @@ final class FingerprintTableViewCell: UITableViewCell, DynamicTypeCapable {
             fingerprintLabel.attributedText = .none
             spinner.startAnimating()
         }
+        setupAccessibility()
         layoutIfNeeded()
+    }
+
+    private func setupAccessibility() {
+        guard let titleText = titleLabel.text,
+              let fingerprintText = fingerprintLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+
+        accessibilityElements = [titleLabel, fingerprintLabel]
+        isAccessibilityElement = true
+        accessibilityLabel = "\(titleText), \(fingerprintText)"
     }
 
     func redrawFont() {

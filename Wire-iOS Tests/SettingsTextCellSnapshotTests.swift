@@ -44,10 +44,9 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         let cellDescriptor = settingsCellDescriptorFactory.nameElement()
         sut.descriptor = cellDescriptor
         cellDescriptor.featureCell(sut)
-        sut.backgroundColor = .black
 
         let mockTableView = sut.wrapInTableView()
-        mockTableView.backgroundColor = .black
+        sut.overrideUserInterfaceStyle = .dark
 
         XCTAssert(sut.textInput.isEnabled)
 

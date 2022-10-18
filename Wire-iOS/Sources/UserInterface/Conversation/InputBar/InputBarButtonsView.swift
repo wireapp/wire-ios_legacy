@@ -83,7 +83,7 @@ final class InputBarButtonsView: UIView {
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
-        self.backgroundColor = UIColor.from(scheme: .barBackground)
+        self.backgroundColor = SemanticColors.SearchBar.backgroundInputView
     }
 
     private func createConstraints() {
@@ -136,6 +136,8 @@ final class InputBarButtonsView: UIView {
 
         // Drop existing constraints
         buttons.forEach {
+            $0.roundCorners(edge: .leading)
+            $0.roundCorners(edge: .trailing)
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
@@ -158,6 +160,10 @@ final class InputBarButtonsView: UIView {
             secondRow = []
             buttonRowHeight.constant = constants.buttonsBarHeight
         }
+
+        firstRow.first?.roundCorners(edge: .leading, radius: 12)
+        firstRow.last?.roundCorners(edge: .trailing, radius: 12)
+        secondRow.first?.roundCorners(edge: .leading, radius: 12)
 
         var constraints = constrainRowOfButtons(firstRow,
                                                 inset: 0,
@@ -184,17 +190,20 @@ final class InputBarButtonsView: UIView {
         guard let firstButton = buttons.first,
               let lastButton = buttons.last else { return [] }
 
+        let buttonPadding: CGFloat = 12
+        let buttonHeight = constants.buttonsBarHeight - buttonPadding * 2
+
         var constraints = [NSLayoutConstraint]()
 
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         constraints.append(
-            firstButton.leadingAnchor.constraint(equalTo: firstButton.superview!.leadingAnchor)
+            firstButton.leadingAnchor.constraint(equalTo: firstButton.superview!.leadingAnchor, constant: buttonPadding)
         )
 
         if rowIsFull {
             lastButton.translatesAutoresizingMaskIntoConstraints = false
             constraints.append(
-                lastButton.trailingAnchor.constraint(equalTo: lastButton.superview!.trailingAnchor)
+                lastButton.trailingAnchor.constraint(equalTo: lastButton.superview!.trailingAnchor, constant: -buttonPadding)
             )
         }
 
@@ -203,15 +212,15 @@ final class InputBarButtonsView: UIView {
 
             if button == expandRowButton {
                 constraints.append(contentsOf: [
-                    button.topAnchor.constraint(equalTo: topAnchor),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.topAnchor.constraint(equalTo: topAnchor, constant: buttonPadding),
+                    button.heightAnchor.constraint(equalToConstant: buttonHeight)
                 ])
             } else {
                 buttonInnerContainer.translatesAutoresizingMaskIntoConstraints = false
 
                 constraints.append(contentsOf: [
-                    button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset),
-                    button.heightAnchor.constraint(equalToConstant: constants.buttonsBarHeight)
+                    button.topAnchor.constraint(equalTo: buttonInnerContainer.topAnchor, constant: inset + buttonPadding),
+                    button.heightAnchor.constraint(equalToConstant: buttonHeight)
                 ])
             }
         }

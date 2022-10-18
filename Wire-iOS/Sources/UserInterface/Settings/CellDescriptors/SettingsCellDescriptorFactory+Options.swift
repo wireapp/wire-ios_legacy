@@ -46,7 +46,8 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(
             items: descriptors,
             title: "self.settings.options_menu.title".localized,
-            icon: .settingsOptions
+            icon: .settingsOptions,
+            accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description
         )
     }
 
@@ -278,7 +279,11 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap({ SettingsColorScheme(rawValue: $0) }) else { return .text(SettingsColorScheme.defaultPreference.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section],
+                                           title: property.propertyName.settingsPropertyLabelText,
+                                           identifier: nil,
+                                           previewGenerator: preview,
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -297,7 +302,11 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section],
+                                           title: property.propertyName.settingsPropertyLabelText,
+                                           identifier: nil,
+                                           previewGenerator: preview,
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func mapsOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -316,7 +325,11 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section],
+                                           title: property.propertyName.settingsPropertyLabelText,
+                                           identifier: nil,
+                                           previewGenerator: preview,
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     func browserOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
@@ -335,7 +348,11 @@ extension SettingsCellDescriptorFactory {
             guard let option = value.flatMap({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
             return .text(option.displayString)
         }
-        return SettingsGroupCellDescriptor(items: [section], title: property.propertyName.settingsPropertyLabelText, identifier: nil, previewGenerator: preview)
+        return SettingsGroupCellDescriptor(items: [section],
+                                           title: property.propertyName.settingsPropertyLabelText,
+                                           identifier: nil,
+                                           previewGenerator: preview,
+                                           accessibilityBackButtonText: L10n.Accessibility.OptionsSettings.BackButton.description)
     }
 
     static var appLockFormatter: DateComponentsFormatter {

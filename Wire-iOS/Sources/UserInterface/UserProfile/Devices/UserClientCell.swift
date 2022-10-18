@@ -39,11 +39,19 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
     private weak var client: UserClientType?
 
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? SemanticColors.View.backgroundUserCellHightLighted
+            : SemanticColors.View.backgroundUserCell
+        }
+    }
+
     override func setUp() {
         super.setUp()
 
         accessibilityIdentifier = "device_cell"
-        shouldGroupAccessibilityChildren = true
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
         setUpDeviceIconView()
 
@@ -58,13 +66,17 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
+        accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
+        accessoryIconView.tintColor = SemanticColors.Icon.foregroundDefault
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .smallSemiboldFont
+        titleLabel.textColor = SemanticColors.Label.textCellTitle
         titleLabel.accessibilityIdentifier = "device_cell.name"
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = .smallRegularFont
+        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
         subtitleLabel.accessibilityIdentifier = "device_cell.identifier"
 
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, accessoryIconView])
@@ -95,7 +107,7 @@ final class UserClientCell: SeparatorCollectionViewCell {
 
     private func setUpDeviceIconView() {
         deviceTypeIconView.setTemplateIcon(.devices, size: .tiny)
-        deviceTypeIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
+        deviceTypeIconView.tintColor = SemanticColors.Icon.foregroundDefault
     }
 
     private func createConstraints() {
@@ -109,18 +121,6 @@ final class UserClientCell: SeparatorCollectionViewCell {
         ])
     }
 
-    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        super.applyColorScheme(colorSchemeVariant)
-
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
-        accessoryIconView.setTemplateIcon(.disclosureIndicator, size: 12)
-        accessoryIconView.tintColor = SemanticColors.Icon.foregroundCellIconActive
-        titleLabel.textColor = SemanticColors.Label.textCellTitle
-        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
-
-        updateDeviceIcon()
-    }
-
     func configure(with client: UserClientType) {
         self.client = client
 
@@ -128,22 +128,42 @@ final class UserClientCell: SeparatorCollectionViewCell {
         let boldAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: boldFingerprintFont.monospaced()]
 
         verifiedIconView.image = client.verified ? WireStyleKit.imageOfShieldverified : WireStyleKit.imageOfShieldnotverified
-        verifiedIconView.accessibilityLabel = client.verified ? "device.verified".localized : "device.not_verified".localized
 
         titleLabel.text = client.deviceClass?.localizedDescription.localizedUppercase ?? client.type.localizedDescription.localizedUppercase
         subtitleLabel.attributedText = client.attributedRemoteIdentifier(attributes, boldAttributes: boldAttributes, uppercase: true)
 
         updateDeviceIcon()
+        setupAccessibility(isDeviceVerified: client.verified)
     }
 
     private func updateDeviceIcon() {
         switch client?.deviceClass {
         case .legalHold?:
-            deviceTypeIconView.image = StyleKitIcon.legalholdactive.makeImage(size: .tiny, color: SemanticColors.LegacyColors.vividRed)
+            deviceTypeIconView.setTemplateIcon(.legalholdactive, size: .tiny)
+            deviceTypeIconView.tintColor = SemanticColors.LegacyColors.vividRed
             deviceTypeIconView.accessibilityIdentifier = "img.device_class.legalhold"
         default:
             setUpDeviceIconView()
             deviceTypeIconView.accessibilityIdentifier = client?.deviceClass == .desktop ? "img.device_class.desktop" : "img.device_class.phone"
         }
+    }
+
+    private func setupAccessibility(isDeviceVerified: Bool) {
+        typealias ClientListStrings = L10n.Accessibility.ClientsList
+
+        guard let deviceName = titleLabel.text,
+              let deviceId = subtitleLabel.text else {
+                  isAccessibilityElement = false
+                  return
+              }
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
+        let verificationStatus = isDeviceVerified
+                                    ? ClientListStrings.DeviceVerified.description
+                                    : ClientListStrings.DeviceNotVerified.description
+        accessibilityLabel = "\(deviceName), \(deviceId), \(verificationStatus)"
+        accessibilityHint = ClientListStrings.DeviceDetails.hint
     }
 }

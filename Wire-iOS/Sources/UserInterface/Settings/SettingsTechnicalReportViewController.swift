@@ -29,20 +29,23 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
 
     init() {
         sendReportCell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        sendReportCell.backgroundColor = UIColor.clear
+        sendReportCell.backgroundColor = SemanticColors.View.backgroundUserCell
         sendReportCell.textLabel?.text = "self.settings.technical_report.send_report".localized
         sendReportCell.textLabel?.textColor = UIColor.accent()
-        sendReportCell.backgroundColor = UIColor.clear
         sendReportCell.backgroundView = UIView()
         sendReportCell.selectedBackgroundView = UIView()
 
         includedVoiceLogCell = UITableViewCell(style: .default, reuseIdentifier: nil)
         includedVoiceLogCell.accessoryType = .checkmark
         includedVoiceLogCell.textLabel?.text = "self.settings.technical_report.include_log".localized
-        includedVoiceLogCell.textLabel?.textColor = UIColor.white
-        includedVoiceLogCell.backgroundColor = UIColor.clear
+        includedVoiceLogCell.textLabel?.textColor = SemanticColors.Label.textDefault
+        includedVoiceLogCell.backgroundColor = SemanticColors.View.backgroundUserCell
         includedVoiceLogCell.backgroundView = UIView()
         includedVoiceLogCell.selectedBackgroundView = UIView()
+
+        [sendReportCell, includedVoiceLogCell].forEach { cell in
+            cell.addBorder(for: .bottom)
+        }
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -55,7 +58,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "").localizedUppercase
+        setupNavigationTitle()
         tableView.backgroundColor = UIColor.clear
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
@@ -86,6 +89,14 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
 
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.TechnicalReportSection.title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+    }
+
     // MARK: - TableView Delegates
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -111,7 +122,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "self.settings.technical_report.privacy_warning".localized
-        label.textColor = UIColor.from(scheme: .textDimmed)
+        label.textColor = SemanticColors.Label.textSectionFooter
         label.backgroundColor = .clear
         label.font = FontSpec(.small, .light).font!
 
@@ -146,9 +157,5 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }

@@ -27,7 +27,6 @@ import WireSystem
 class ConversationDetailFooterView: UIView {
 
     // MARK: - Properties
-    private let variant: ColorSchemeVariant
     let rightButton = IconButton()
     var leftButton: IconButton
     private let containerView = UIView()
@@ -58,8 +57,7 @@ class ConversationDetailFooterView: UIView {
 
     // MARK: - Initialization
     init() {
-        self.variant = ColorScheme.default.variant
-        self.leftButton = IconButton(fontSpec: .smallRegularFont)
+        self.leftButton = IconButton(fontSpec: .normalSemiboldFont)
         super.init(frame: .zero)
         setupViews()
         createConstraints()
@@ -72,11 +70,13 @@ class ConversationDetailFooterView: UIView {
 
     // MARK: - Layout
     private func setupViews() {
+        let highlightedStateColor = UIColor.accent()
         let configureButton = { (button: IconButton) in
             self.containerView.addSubview(button)
-            button.setIconColor(SemanticColors.Label.textDefault, for: .normal)
+            button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
             button.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
-
+            button.setIconColor(highlightedStateColor, for: .highlighted)
+            button.setTitleColor(highlightedStateColor, for: .highlighted)
         }
 
         configureButton(leftButton)
@@ -87,8 +87,9 @@ class ConversationDetailFooterView: UIView {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
 
-        backgroundColor = SemanticColors.View.Background.backgroundUserCell
+        backgroundColor = SemanticColors.View.backgroundUserCell
         addSubview(containerView)
+        addBorder(for: .top)
 
         setupButtons()
     }

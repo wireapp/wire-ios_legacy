@@ -54,6 +54,7 @@ final class ConversationListAccessoryView: UIView {
         super.init(frame: .zero)
 
         badgeView.accessibilityIdentifier = "action_button"
+        badgeView.isAccessibilityElement = false
 
         textLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
@@ -61,7 +62,8 @@ final class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
-
+        textLabel.textColor = SemanticColors.Label.textConversationListCell
+        textLabel.isAccessibilityElement = false
         transparentIconView.contentMode = .center
         transparentIconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         transparentIconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
@@ -105,7 +107,7 @@ final class ConversationListAccessoryView: UIView {
             expandWidthConstraint,
             transparentIconView.topAnchor.constraint(equalTo: topAnchor),
             transparentIconView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ]
+        ]
         )
         badgeView.fitIn(view: self)
     }
@@ -116,13 +118,18 @@ final class ConversationListAccessoryView: UIView {
     }
 
     private var viewForState: UIView? {
+        typealias ConversationsList = L10n.Accessibility.ConversationsList
+
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
+        badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
+        let iconTintColor = SemanticColors.Label.conversationListTableViewCellBadge
 
         switch icon {
         case .pendingConnection:
-            iconView.setIcon(.clock, size: iconSize, color: .white)
+            iconView.tintColor = iconTintColor
+            iconView.setTemplateIcon(.clock, size: iconSize)
             accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
@@ -130,43 +137,58 @@ final class ConversationListAccessoryView: UIView {
             return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized(uppercased: true)
-            accessibilityValue = textLabel.text
+            textLabel.textColor = SemanticColors.Label.textDefaultWhite
+            badgeView.backgroundColor = SemanticColors.Icon.backgroundJoinCall
+
+            badgeView.isAccessibilityElement = true
+            badgeView.accessibilityTraits = .button
+            badgeView.accessibilityValue = ConversationsList.JoinButton.description
+            badgeView.accessibilityHint = ConversationsList.JoinButton.hint
             return textLabel
         case .missedCall:
-            iconView.setIcon(.endCall, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
+            iconView.tintColor = iconTintColor
+            iconView.setTemplateIcon(.endCall, size: iconSize)
             return iconView
         case .playingMedia:
             if let mediaPlayer = activeMediaPlayer, mediaPlayer.state == .playing {
-                iconView.setIcon(.pause, size: iconSize, color: .white)
+                iconView.tintColor = iconTintColor
+                iconView.setTemplateIcon(.pause, size: iconSize)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             } else {
-                iconView.setIcon(.play, size: iconSize, color: .white)
+                iconView.tintColor = iconTintColor
+                iconView.setTemplateIcon(.play, size: iconSize)
                 accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
             return iconView
         case .silenced:
-            iconView.setIcon(.bellWithStrikethrough, size: iconSize, color: .white)
-            accessibilityValue = "conversation_list.voiceover.status.silenced".localized
+            iconView.tintColor = SemanticColors.Label.conversationListTableViewCellBadgeReverted
+            iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
+            badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadgeReverted
+            badgeView.layer.borderColor = SemanticColors.View.borderConversationListTableViewCellBadgeReverted.cgColor
+            badgeView.layer.borderWidth = 1
+            badgeView.layer.cornerRadius = 6
+            accessibilityValue = ConversationsList.SilencedStatus.value
             return iconView
         case .typing:
-            accessibilityValue = "conversation_list.voiceover.status.typing".localized
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
-            accessibilityValue = textLabel.text
+            textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
+            accessibilityValue = ConversationsList.BadgeView.value(count)
             return textLabel
         case .mention:
-            iconView.setIcon(.mention, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.mention".localized
+            iconView.tintColor = iconTintColor
+            iconView.setTemplateIcon(.mention, size: iconSize)
+            accessibilityValue = ConversationsList.MentionStatus.value
             return iconView
         case .reply:
-            iconView.setIcon(.reply, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.reply".localized
+            iconView.tintColor = iconTintColor
+            iconView.setTemplateIcon(.reply, size: iconSize)
+            accessibilityValue = ConversationsList.ReplyStatus.value
             return iconView
         case .unreadPing:
-            iconView.setIcon(.ping, size: iconSize, color: .black)
-            accessibilityValue = "conversation_list.voiceover.status.ping".localized
+            iconView.tintColor = iconTintColor
+            iconView.setTemplateIcon(.ping, size: iconSize)
             return iconView
         }
     }
@@ -187,15 +209,12 @@ final class ConversationListAccessoryView: UIView {
 
     func updateForIcon() {
         self.badgeView.containedView.subviews.forEach { $0.removeFromSuperview() }
-        self.badgeView.backgroundColor = .blackAlpha16
 
         self.badgeView.isHidden = false
         self.transparentIconView.isHidden = true
 
         self.expandTransparentIconViewWidthConstraint.constant = defaultViewWidth
         self.expandWidthConstraint.constant = defaultViewWidth
-
-        self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
 
         guard let icon = icon else {
             self.badgeView.isHidden = true
@@ -215,7 +234,7 @@ final class ConversationListAccessoryView: UIView {
             self.expandWidthConstraint.constant = activeCallWidth
 
         case .activeCall(true): // "Join" button
-            self.badgeView.backgroundColor = SemanticColors.LegacyColors.strongLimeGreen
+            self.badgeView.backgroundColor = SemanticColors.Icon.backgroundJoinCall
 
         case .typing:
             self.badgeView.isHidden = true
@@ -223,14 +242,11 @@ final class ConversationListAccessoryView: UIView {
             self.transparentIconView.setIcon(.pencil, size: 12, color: .white)
 
         case .unreadMessages, .mention:
-            self.textLabel.textColor = UIColor.from(scheme: .textForeground, variant: .light)
-            self.badgeView.backgroundColor = UIColor.from(scheme: .textBackground, variant: .light)
+            self.textLabel.textColor = SemanticColors.Label.conversationListTableViewCellBadge
+            self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
-        case .unreadPing,
-             .reply,
-             .missedCall:
-
-            self.badgeView.backgroundColor = .from(scheme: .textBackground, variant: .light)
+        case .unreadPing, .reply, .missedCall:
+            self.badgeView.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
 
         default:
             self.transparentIconView.image = .none
@@ -250,7 +266,7 @@ final class ConversationListAccessoryView: UIView {
                 view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
                 view.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 6),
                 view.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -6)
-                ])
+            ])
 
         }
     }

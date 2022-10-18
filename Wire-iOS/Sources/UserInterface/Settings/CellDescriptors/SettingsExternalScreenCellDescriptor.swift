@@ -32,7 +32,7 @@ enum AccessoryViewMode: Int {
 }
 
 class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
-    static let cellType = SettingsTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsTableCell.self
     var visible: Bool = true
     let title: String
     let destructive: Bool
@@ -122,7 +122,6 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        cell.titleColor = UIColor.white
 
         if let tableCell = cell as? SettingsTableCell {
             tableCell.valueLabel.accessibilityIdentifier = title + "Field"

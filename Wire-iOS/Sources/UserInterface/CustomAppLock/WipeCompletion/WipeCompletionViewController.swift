@@ -21,8 +21,8 @@ import UIKit
 final class WipeCompletionViewController: UIViewController {
     let wireLogoInfoView = WireLogoInfoView(title: "wipe_database_completion.title".localized, subtitle: "wipe_database_completion.subtitle".localized)
 
-    private lazy var loginButton: Button = {
-        let button = Button(style: .full, fontSpec: .smallSemiboldFont)
+    private lazy var loginButton: LegacyButton = {
+        let button = LegacyButton(legacyStyle: .full, fontSpec: .smallSemiboldFont)
 
         button.setBackgroundImageColor(SemanticColors.LegacyColors.strongBlue, for: .normal)
 

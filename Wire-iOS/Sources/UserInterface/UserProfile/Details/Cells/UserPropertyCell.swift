@@ -32,6 +32,7 @@ final class UserPropertyCell: SeparatorTableViewCell {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.font = .smallRegularFont
+        label.textColor = SemanticColors.Label.textUserPropertyCellName
         return label
     }()
 
@@ -69,6 +70,16 @@ final class UserPropertyCell: SeparatorTableViewCell {
         }
     }
 
+    // MARK: - Configuration
+
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+            ? UIColor(white: 0, alpha: 0.08)
+            : SemanticColors.View.backgroundUserCell
+        }
+    }
+
     // MARK: - Initialization
 
     override func setUp() {
@@ -78,6 +89,15 @@ final class UserPropertyCell: SeparatorTableViewCell {
     }
 
     private func configureSubviews() {
+        backgroundColor = SemanticColors.View.backgroundUserCell
+        propertyNameLabel.textColor = SemanticColors.Label.textUserPropertyCellName
+        propertyValueLabel.textColor = SemanticColors.Label.textDefault
+        addBorder(for: .bottom)
+
+        separator.isHidden = true
+        separator.backgroundColor = .clear
+        showSeparator = false
+
         contentStack.addArrangedSubview(propertyNameLabel)
         contentStack.addArrangedSubview(propertyValueLabel)
         contentStack.spacing = 2
@@ -86,7 +106,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
         contentStack.alignment = .leading
         contentView.addSubview(contentStack)
 
-        applyColorScheme(colorSchemeVariant)
         shouldGroupAccessibilityChildren = true
     }
 
@@ -99,15 +118,6 @@ final class UserPropertyCell: SeparatorTableViewCell {
             contentStack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             contentStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-    }
-
-    // MARK: - Configuration
-
-    override func applyColorScheme(_ variant: ColorSchemeVariant) {
-        super.applyColorScheme(variant)
-        propertyNameLabel.textColor = UIColor.from(scheme: .textDimmed, variant: variant)
-        propertyValueLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        backgroundColor = UIColor.from(scheme: .background, variant: variant)
     }
 
 }

@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Теперь активна.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Контакты";
+"conversation_list.bottom_bar.conversations.title" = "Беседы";
+"conversation_list.bottom_bar.folders.title" = "Папки";
+"conversation_list.bottom_bar.archived.title" = "Архивировать";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
 "conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и анализировать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать данное согласие в любое время.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Федеративный";
 "profile.details.blocking_reason" = "Этот пользователь заблокирован из-за юридических ограничений. [ПОДРОБНЕЕ](%@)";
 
-"profile_view.accessibility.handle" = "Псевдоним";
-"profile_view.accessibility.name" = "Отображаемое имя";
-"profile_view.accessibility.team_name" = "Название команды";
-
 // Device list
 "profile.devices.title" = "Устройства";
 "profile.devices.fingerprint_message_unencrypted" = "%@ использует устаревшую версию Wire. Устройства не отображаются.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Неизвестное";
 
 // Bot
-"participants.services.remove_integration.button" = "удалить интеграцию";
+"participants.services.remove_integration.button" = "Удалить интеграцию";
 
 // Group details
 "group_details.guest_options_cell.title" = "Гости";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Профиль, добавлены новые устройства";
 
 "self.add_email_password" = "Добавить email и пароль";
-
-"self.accessibility.profile_photo_image" = "Изображение профиля";
-"self.accessibility.profile_photo_edit_button" = "Изменить изображение профиля";
 
 // About screen
 "about.tos.title" = "Условия использования";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
+"self.settings.account_picture_group.accent_color.blue" = "Синий";
+"self.settings.account_picture_group.accent_color.green" = "Зеленый";
+"self.settings.account_picture_group.accent_color.yellow" = "Желтый";
+"self.settings.account_picture_group.accent_color.red" = "Красный";
+"self.settings.account_picture_group.accent_color.amber" = "Янтарный";
+"self.settings.account_picture_group.accent_color.turquoise" = "Бирюзовый";
+"self.settings.account_picture_group.accent_color.purple" = "Фиолетовый";
 
 "self.settings.account_personal_information_group.title" = "Личные данные";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Опции для разработчиков";
+"self.settings.developer_options.loggin.title" = "Настройки";
+"self.settings.developer_options.database_statistics.title" = "Статистика базы данных";
 "self.settings.apns_logging.title" = "APNS журналирование";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Отмена";
 "availability.message.set_status" = "Установить статус";
-"availability.accessibility_label.change_status" = "Изменить статус";
-"availability.accessibility_label.status" = "Статус";
 
 "availability.none" = "Отключены";
 "availability.available" = "Доступен";

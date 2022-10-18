@@ -82,9 +82,11 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     var stackView: CustomSpacingStackView!
 
+    typealias AccountPageStrings = L10n.Accessibility.AccountPage
+
     let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeLightFont, color: .textForeground)
-        label.accessibilityLabel = "profile_view.accessibility.name".localized
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
+        label.accessibilityLabel = AccountPageStrings.Name.description
         label.accessibilityIdentifier = "name"
 
         label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
@@ -157,7 +159,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
             tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
 
-        handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
+        handleLabel.accessibilityLabel = AccountPageStrings.Handle.description
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
@@ -167,7 +169,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         nameHandleStack.alignment = .center
         nameHandleStack.spacing = 2
 
-        teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
+        teamNameLabel.accessibilityLabel = AccountPageStrings.TeamName.description
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
@@ -224,6 +226,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         if let team = (user as? ZMUser)?.team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
         }
+        view.backgroundColor = UIColor.clear
     }
 
     private func configureConstraints() {
@@ -244,13 +247,11 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     func applyColorScheme(_ variant: ColorSchemeVariant) {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
-        guestIndicator.tintColor = SemanticColors.Icon.foregroundCellIconActive
-        let labelColor = SemanticColors.Label.textDefault
 
-        handleLabel.textColor = labelColor
-        nameLabel.textColor = labelColor
-        teamNameLabel.textColor = labelColor
-        remainingTimeLabel.textColor = labelColor
+        guestIndicator.tintColor = SemanticColors.Icon.foregroundDefault
+        let labelColor = SemanticColors.Label.textDefault
+        [handleLabel, nameLabel, teamNameLabel, remainingTimeLabel].forEach { $0.textColor = labelColor}
+        view.backgroundColor = UIColor.clear
     }
 
     private func updateGuestIndicator() {
@@ -300,7 +301,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateTeamLabel() {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
-            teamNameLabel.text = teamName.localizedUppercase
+            teamNameLabel.text = teamName.localized
             teamNameLabel.accessibilityValue = teamNameLabel.text
             teamNameLabel.isHidden = false
         } else {
@@ -315,11 +316,12 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
     private func updateImageButton() {
         if options.contains(.allowEditingProfilePicture) {
-            imageView.accessibilityLabel = "self.accessibility.profile_photo_edit_button".localized
-            imageView.accessibilityTraits = [.image, .button]
+            imageView.accessibilityLabel = AccountPageStrings.ProfilePicture.description
+            imageView.accessibilityHint = AccountPageStrings.ProfilePicture.hint
+            imageView.accessibilityTraits = .button
             imageView.isUserInteractionEnabled = true
         } else {
-            imageView.accessibilityLabel = "self.accessibility.profile_photo_image".localized
+            imageView.accessibilityLabel = AccountPageStrings.ProfilePicture.description
             imageView.accessibilityTraits = [.image]
             imageView.isUserInteractionEnabled = false
         }

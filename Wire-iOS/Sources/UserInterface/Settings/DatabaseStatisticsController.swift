@@ -38,7 +38,7 @@ final class DatabaseStatisticsController: UIViewController {
 
         edgesForExtendedLayout = []
 
-        self.title = "Database Statistics".localizedUppercase
+        setupNavigationTitle()
 
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,12 +53,12 @@ final class DatabaseStatisticsController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = title
-        titleLabel.textColor = .white
+        titleLabel.textColor = SemanticColors.Label.textDefault
         titleLabel.textAlignment = .left
 
         let contentsLabel = UILabel()
         contentsLabel.text = contents
-        contentsLabel.textColor = .white
+        contentsLabel.textColor = SemanticColors.Label.textDefault
         contentsLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .horizontal)
         contentsLabel.textAlignment = .right
 
@@ -133,5 +133,13 @@ final class DatabaseStatisticsController: UIViewController {
 
             } catch {}
         }
+    }
+
+    private func setupNavigationTitle() {
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
     }
 }

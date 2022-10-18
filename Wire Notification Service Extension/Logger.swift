@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2021 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,17 +17,39 @@
 //
 
 import Foundation
+import OSLog
+import UserNotifications
 
-protocol PerformClipboardAction: AnyObject {
-    func shouldAllowPerformAction(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> Bool
+extension Loggable {
+
+    var logger: Logger {
+        
+        return Logger(category: String(describing: type(of: self))
+)
+    }
+
 }
 
-extension PerformClipboardAction {
-    func shouldAllowPerformAction(isText: Bool, isClipboardEnabled: Bool, canFilesBeShared: Bool) -> Bool {
-        if isText {
-            return isClipboardEnabled
-        } else {
-            return isClipboardEnabled && canFilesBeShared
-        }
+protocol Loggable {
+
+    var logger: Logger { get }
+
+}
+
+extension Logger {
+
+    private static var subsystem = "simple nse"
+
+    init(category: String) {
+        self.init(subsystem: Self.subsystem, category: category)
     }
+
+}
+
+extension OSLogInterpolation {
+
+    mutating func appendInterpolation(_ request: UNNotificationRequest) {
+        appendInterpolation(String(request.identifier), align: .none, privacy: .public)
+    }
+
 }

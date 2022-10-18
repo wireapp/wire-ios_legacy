@@ -19,7 +19,7 @@
 import UIKit
 
 class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsStaticTextTableCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsStaticTextTableCell.self
 
     var text: String
 
@@ -33,7 +33,6 @@ class SettingsStaticTextCellDescriptor: SettingsCellDescriptorType {
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.text
-        cell.titleColor = .white
     }
 
     // MARK: - SettingsCellDescriptorType

@@ -23,7 +23,7 @@ import UIKit
 private let zmLog = ZMSLog(tag: "UI")
 
 final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsValueCell.self
+    static let cellType: SettingsTableCellProtocol.Type = SettingsValueCell.self
     let value: SettingsPropertyValue
     let title: String
     let identifier: String?
@@ -47,7 +47,6 @@ final class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescr
 
     func featureCell(_ cell: SettingsCellType) {
         cell.titleText = self.title
-        cell.cellColor = self.backgroundColor
         if let valueCell = cell as? SettingsValueCell {
             valueCell.accessoryType = self.settingsProperty.value() == self.value ? .checkmark : .none
         }

@@ -30,24 +30,25 @@ enum SettingsCellPreview {
 protocol SettingsCellType: AnyObject {
     var titleText: String {get set}
     var preview: SettingsCellPreview {get set}
-    var titleColor: UIColor {get set}
-    var cellColor: UIColor? {get set}
     var descriptor: SettingsCellDescriptorType? {get set}
     var icon: StyleKitIcon? {get set}
 }
 
-class SettingsTableCell: UITableViewCell, SettingsCellType {
+typealias SettingsTableCellProtocol = UITableViewCell & SettingsCellType
+
+class SettingsTableCell: SettingsTableCellProtocol {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.contentMode = .center
-
+        iconImageView.tintColor = SemanticColors.Label.textDefault
         return iconImageView
     }()
 
     let cellNameLabel: UILabel = {
         let label = DynamicFontLabel(
-            fontSpec: .normalLightFont,
+            fontSpec: .normalSemiboldFont,
             color: .textForeground)
+        label.textColor = SemanticColors.Label.textDefault
         label.numberOfLines = 0
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         label.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -59,7 +60,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     let valueLabel: UILabel = {
         let valueLabel = UILabel()
 
-        valueLabel.textColor = .lightGray
+        valueLabel.textColor = SemanticColors.Label.textDefault
         valueLabel.font = UIFont.systemFont(ofSize: 17)
         valueLabel.textAlignment = .right
 
@@ -68,7 +69,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 
     let badge: RoundedBadge = {
         let badge = RoundedBadge(view: UIView())
-        badge.backgroundColor = .white
+        badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
         badge.isHidden = true
 
         return badge
@@ -77,6 +78,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     private let badgeLabel: UILabel = {
         let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
         badgeLabel.textAlignment = .center
+        badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
 
         return badgeLabel
     }()
@@ -91,34 +93,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         return imagePreview
     }()
 
-    private let separatorLine: UIView = {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        separatorLine.isAccessibilityElement = false
-
-        return separatorLine
-    }()
-
-    private let topSeparatorLine: UIView = {
-        let topSeparatorLine = UIView()
-        topSeparatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        topSeparatorLine.isAccessibilityElement = false
-
-        return topSeparatorLine
-    }()
-
     private lazy var cellNameLabelToIconInset: NSLayoutConstraint = cellNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 24)
-
-    var variant: ColorSchemeVariant? = .none {
-        didSet {
-            switch variant {
-            case .dark?, .none:
-                titleColor = .white
-            case .light?:
-                titleColor = UIColor.from(scheme: .textForeground, variant: .light)
-            }
-        }
-    }
 
     var titleText: String = "" {
         didSet {
@@ -174,36 +149,19 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
                 imagePreview.accessibilityValue = nil
                 imagePreview.isAccessibilityElement = false
             }
+            setupAccessibility()
         }
     }
 
     var icon: StyleKitIcon? {
         didSet {
             if let icon = icon {
-                iconImageView.setIcon(icon, size: .tiny, color: UIColor.white)
+                iconImageView.setTemplateIcon(icon, size: .tiny)
                 cellNameLabelToIconInset.isActive = true
             } else {
                 iconImageView.image = nil
                 cellNameLabelToIconInset.isActive = false
             }
-        }
-    }
-
-    var isFirst: Bool = false {
-        didSet {
-            topSeparatorLine.isHidden = !isFirst
-        }
-    }
-
-    var titleColor: UIColor = .white {
-        didSet {
-            cellNameLabel.textColor = titleColor
-        }
-    }
-
-    var cellColor: UIColor? {
-        didSet {
-            backgroundColor = cellColor
         }
     }
 
@@ -217,7 +175,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
-        setupAccessibiltyElements()
     }
 
     @available(*, unavailable)
@@ -231,7 +188,6 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 
     func setup() {
-        backgroundColor = .clear
         backgroundView = UIView()
         selectedBackgroundView = UIView()
 
@@ -241,13 +197,9 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             contentView.addSubview($0)
         }
 
-        [separatorLine, topSeparatorLine].forEach {
-            addSubview($0)
-        }
-
-        variant = .none
-
         createConstraints()
+        addBorder(for: .bottom)
+        setupAccessibility()
     }
 
     private func createConstraints() {
@@ -260,7 +212,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             trailingBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, separatorLine, topSeparatorLine, cellNameLabel].prepareForLayout()
+        [iconImageView, valueLabel, badge, badgeLabel, imagePreview, cellNameLabel].prepareForLayout()
 
         NSLayoutConstraint.activate([
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
@@ -290,37 +242,24 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
             imagePreview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             imagePreview.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            separatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-            separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor),
-            separatorLine.heightAnchor.constraint(equalToConstant: .hairline),
-
-            topSeparatorLine.leadingAnchor.constraint(equalTo: cellNameLabel.leadingAnchor),
-            topSeparatorLine.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topSeparatorLine.topAnchor.constraint(equalTo: topAnchor),
-            topSeparatorLine.heightAnchor.constraint(equalToConstant: .hairline),
-
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56)
         ])
     }
 
-    func setupAccessibiltyElements() {
-        var currentElements = accessibilityElements ?? []
-        currentElements.append(contentsOf: [cellNameLabel, valueLabel, imagePreview])
-        accessibilityElements = currentElements
+    func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        let badgeValue = badgeLabel.text ?? ""
+        accessibilityHint = badgeValue.isEmpty ? "" : L10n.Accessibility.Settings.DeviceCount.hint("\(badgeValue)")
     }
 
     func updateBackgroundColor() {
-        if cellColor != nil {
-            return
-        }
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
         if isHighlighted && selectionStyle != .none {
-            backgroundColor = UIColor(white: 0, alpha: 0.2)
-            badge.backgroundColor = UIColor.white
-            badgeLabel.textColor = UIColor.black
-        } else {
-            backgroundColor = UIColor.clear
+            backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
+            badge.backgroundColor = SemanticColors.View.backgroundBadgeCell
+            badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
         }
     }
 }
@@ -328,7 +267,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
 final class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
-        cellNameLabel.textColor = UIColor.accent()
+        cellNameLabel.textColor = SemanticColors.Label.textDefault
     }
 }
 
@@ -344,7 +283,9 @@ final class SettingsToggleCell: SettingsTableCell {
         accessoryView = switchView
         switchView.isAccessibilityElement = true
         accessibilityElements = [cellNameLabel, switchView]
+        accessibilityTraits = .button
         self.switchView = switchView
+        backgroundColor = SemanticColors.View.backgroundUserCell
     }
 
     @objc
@@ -391,7 +332,7 @@ final class SettingsTextCell: SettingsTableCell,
         textInput = TailEditingTextField(frame: CGRect.zero)
         textInput.delegate = self
         textInput.textAlignment = .right
-        textInput.textColor = UIColor.lightGray
+        textInput.textColor = SemanticColors.Label.textDefault
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         textInput.isAccessibilityElement = true
 
@@ -423,8 +364,8 @@ final class SettingsTextCell: SettingsTableCell,
 
     }
 
-    override func setupAccessibiltyElements() {
-        super.setupAccessibiltyElements()
+    override func setupAccessibility() {
+        super.setupAccessibility()
 
         var currentElements = accessibilityElements ?? []
         if let textInput = textInput {
@@ -468,6 +409,7 @@ final class SettingsStaticTextTableCell: SettingsTableCell {
         super.setup()
         cellNameLabel.numberOfLines = 0
         cellNameLabel.textAlignment = .justified
+        accessibilityTraits = .staticText
     }
 
 }
@@ -488,13 +430,13 @@ final class SettingsProfileLinkCell: SettingsTableCell {
     // MARK: - Helpers
 
     private func setupViews() {
-        backgroundColor = .clear
         contentView.addSubview(label)
 
-        label.textColor = UIColor.from(scheme: .iconGuest, variant: .dark)
+        label.textColor = SemanticColors.Label.textDefault
         label.font = FontSpec(.normal, .light).font
         label.lineBreakMode = .byClipping
         label.numberOfLines = 0
+        accessibilityTraits = .staticText
     }
 
     private func createConstraints() {

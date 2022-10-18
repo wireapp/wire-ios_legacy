@@ -46,23 +46,29 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
     }
 
     func configure() {
-        tintColor = SemanticColors.NavigationBar.foregroundNavigationTintColor
+        tintColor = SemanticColors.Label.textDefault
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundCellIconActive).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault).with(insets: backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault).with(insets: backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
         isTranslucent = false
-        barTintColor = SemanticColors.View.Background.backgroundViewDefault
+        barTintColor = SemanticColors.View.backgroundDefault
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
 
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key: Any] {
         return [.font: FontSpec.smallSemiboldFont.font!,
-                .foregroundColor: SemanticColors.NavigationBar.foregroundNavigationTintColor,
+                .foregroundColor: SemanticColors.Label.textDefault,
+                .baselineOffset: 1.0]
+    }
+
+    static func titleTextAttributes(for color: UIColor) -> [NSAttributedString.Key: Any] {
+        return [.font: FontSpec.smallSemiboldFont.font!,
+                .foregroundColor: color,
                 .baselineOffset: 1.0]
     }
 
@@ -76,7 +82,7 @@ extension UIViewController {
         navigationController.setViewControllers([self], animated: false)
 
         if #available(iOS 15, *), setBackgroundColor {
-            navigationController.view.backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+            navigationController.view.backgroundColor = SemanticColors.View.backgroundDefault
         }
 
         return navigationController

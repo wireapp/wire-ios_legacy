@@ -33,8 +33,8 @@ protocol IncomingRequestFooterViewDelegate: AnyObject {
 class IncomingRequestFooterView: UIView {
 
     let titleLabel = UILabel()
-    let acceptButton = Button(fontSpec: .smallSemiboldFont)
-    let ignoreButton = Button(fontSpec: .smallSemiboldFont)
+    let acceptButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    let ignoreButton = LegacyButton(fontSpec: .smallSemiboldFont)
 
     let contentStack = UIStackView()
 
@@ -71,7 +71,7 @@ class IncomingRequestFooterView: UIView {
         ignoreButton.layer.cornerRadius = 8
 
         titleLabel.textColor = SemanticColors.Label.textDefault
-        backgroundColor = SemanticColors.View.Background.backgroundViewDefault
+        backgroundColor = SemanticColors.View.backgroundDefault
 
         acceptButton.applyStyle(.accentColorTextButtonStyle)
 

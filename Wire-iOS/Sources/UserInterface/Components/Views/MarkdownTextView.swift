@@ -27,7 +27,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
+final class MarkdownTextView: NextResponderTextView {
 
     enum ListType {
         case number, bullet
@@ -62,18 +62,13 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
 
     override func canPerformAction(_ action: Selector,
                                    withSender sender: Any?) -> Bool {
-        switch action {
-        case #selector(UIResponderStandardEditActions.paste(_:)),
-             #selector(UIResponderStandardEditActions.cut(_:)),
-             #selector(UIResponderStandardEditActions.copy(_:)):
-
-            let pasteboard = UIPasteboard.general
-            let canFilesBeShared = MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canCopyFromClipboard
-            guard shouldAllowPerformAction(isText: pasteboard.hasText,
-                                         isClipboardEnabled: SecurityFlags.clipboard.isEnabled,
-                                         canFilesBeShared: canFilesBeShared) else { return false }
-            fallthrough
-        default:
+        if !MediaShareRestrictionManager(sessionRestriction: ZMUserSession.shared()).canUseClipboard {
+            let validActions = [
+                #selector(UIResponderStandardEditActions.select(_:)),
+                #selector(UIResponderStandardEditActions.selectAll(_:))
+            ]
+            return text.isEmpty ? false: validActions.contains(action)
+        } else {
             return super.canPerformAction(action, withSender: sender)
         }
     }
@@ -220,7 +215,7 @@ final class MarkdownTextView: NextResponderTextView, PerformClipboardAction {
 
     /// Updates the color of the text.
     func updateTextColor(base: UIColor?) {
-        let baseColor = base ?? UIColor.from(scheme: .textForeground)
+        let baseColor = base ?? SemanticColors.Label.textDefault
         self.textColor = baseColor
         self.style.baseFontColor = baseColor
     }
@@ -634,7 +629,7 @@ extension DownStyle {
     static var systemMessage: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.medium, .none).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = ParagraphStyleDescriptor.paragraphSpacing(CGFloat.MessageCell.paragraphSpacing).style
         style.listItemPrefixSpacing = 8
@@ -668,7 +663,7 @@ extension DownStyle {
     static var compact: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = UIColor.from(scheme: .textForeground)
+        style.baseFontColor = SemanticColors.Label.textDefault
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8

@@ -135,6 +135,12 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Nu activeren.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Heeft nieuwe berichten.";
 
+// Conversation List Bottom Bar
+"conversation_list.bottom_bar.contacts.title" = "Contacten";
+"conversation_list.bottom_bar.conversations.title" = "Gesprekken";
+"conversation_list.bottom_bar.folders.title" = "Folders";
+"conversation_list.bottom_bar.archived.title" = "Archiveren";
+
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Help ons Wire te verbeteren";
 "conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
@@ -888,10 +894,6 @@
 "profile.details.federated" = "Federated";
 "profile.details.blocking_reason" = "This user is blocked due to legal hold. [LEARN MORE](%@)";
 
-"profile_view.accessibility.handle" = "Gebruikersnaam";
-"profile_view.accessibility.name" = "Weergavenaam";
-"profile_view.accessibility.team_name" = "Team naam";
-
 // Device list
 "profile.devices.title" = "Apparaten";
 "profile.devices.fingerprint_message_unencrypted" = "%@ gebruikt een oude versie van Wire. Er worden daarom geen apparaten getoond.";
@@ -918,7 +920,7 @@
 "device.type.unknown" = "Onbekend";
 
 // Bot
-"participants.services.remove_integration.button" = "verwijder integratie";
+"participants.services.remove_integration.button" = "Remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Gasten";
@@ -964,9 +966,6 @@
 "self.new-device.voiceover.label" = "Profiel, nieuwe apparaten toegevoegd";
 
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
-
-"self.accessibility.profile_photo_image" = "Profielfoto";
-"self.accessibility.profile_photo_edit_button" = "Wijzig profiel afbeelding";
 
 // About screen
 "about.tos.title" = "Gebruikersvoorwaarden";
@@ -1041,6 +1040,13 @@
 
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Kleur";
+"self.settings.account_picture_group.accent_color.blue" = "Blue";
+"self.settings.account_picture_group.accent_color.green" = "Green";
+"self.settings.account_picture_group.accent_color.yellow" = "Yellow";
+"self.settings.account_picture_group.accent_color.red" = "Red";
+"self.settings.account_picture_group.accent_color.amber" = "Amber";
+"self.settings.account_picture_group.accent_color.turquoise" = "Turquoise";
+"self.settings.account_picture_group.accent_color.purple" = "Purple";
 
 "self.settings.account_personal_information_group.title" = "Persoonlijke informatie";
 
@@ -1189,6 +1195,8 @@
 
 // Developer options
 "self.settings.developer_options.title" = "Opties voor ontwikkelaars";
+"self.settings.developer_options.loggin.title" = "Opties";
+"self.settings.developer_options.database_statistics.title" = "Database Statistics";
 "self.settings.apns_logging.title" = "APNS logging";
 
 // Privacy (visibility) options
@@ -1739,8 +1747,6 @@
 
 "availability.message.cancel" = "Annuleer";
 "availability.message.set_status" = "Een status instellen";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
 
 "availability.none" = "Geen";
 "availability.available" = "Beschikbaar";

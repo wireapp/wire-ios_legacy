@@ -35,7 +35,7 @@ final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        iconColor = SemanticColors.Icon.foregroundCellIconActive
+        iconColor = SemanticColors.Icon.foregroundDefault
         guard let iconColor = iconColor else { return }
         icon = StyleKitIcon.hourglass.makeImage(size: .tiny,
                                                 color: iconColor).withRenderingMode(.alwaysTemplate)
@@ -44,8 +44,8 @@ final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
-            ? SemanticColors.View.Background.backgroundUserCellHightLighted
-            : SemanticColors.View.Background.backgroundUserCell
+            ? SemanticColors.View.backgroundUserCellHightLighted
+            : SemanticColors.View.backgroundUserCell
         }
     }
 
