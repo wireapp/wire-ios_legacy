@@ -78,7 +78,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
     private let badgeLabel: UILabel = {
         let badgeLabel = DynamicFontLabel(fontSpec: .smallMediumFont, color: .textInBadge)
         badgeLabel.textAlignment = .center
-        badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
+        badgeLabel.textColor = SemanticColors.Label.textDefaultWhite
 
         return badgeLabel
     }()
@@ -259,7 +259,7 @@ class SettingsTableCell: SettingsTableCellProtocol {
         if isHighlighted && selectionStyle != .none {
             backgroundColor = SemanticColors.View.backgroundUserCellHightLighted
             badge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
-            badgeLabel.textColor = SemanticColors.Label.textSettingsCellBadge
+            badgeLabel.textColor = SemanticColors.Label.textDefaultWhite
         }
     }
 }

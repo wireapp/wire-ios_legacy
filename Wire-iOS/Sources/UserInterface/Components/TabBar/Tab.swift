@@ -41,8 +41,8 @@ class Tab: LegacyButton {
     }
 
     private func updateColors() {
-        setTitleColor(SemanticColors.Label.textCellTitle, for: .normal)
-        setTitleColor(SemanticColors.Label.textCellTitle, for: .highlighted)
+        setTitleColor(SemanticColors.Label.textDefault, for: .normal)
+        setTitleColor(SemanticColors.Label.textDefault, for: .highlighted)
 
     }
 }

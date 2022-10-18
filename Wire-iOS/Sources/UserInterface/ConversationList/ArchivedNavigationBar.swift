@@ -26,7 +26,7 @@ final class ArchivedNavigationBar: UIView {
             color: .textBackground,
             variant: .dark
         )
-        label.textColor = SemanticColors.Label.textNavigationController
+        label.textColor = SemanticColors.Label.textDefault
         return label
     }()
     let dismissButton = IconButton()
@@ -53,7 +53,7 @@ final class ArchivedNavigationBar: UIView {
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
         dismissButton.accessibilityLabel = "general.close".localized
-        dismissButton.setIconColor(SemanticColors.Label.textNavigationController, for: .normal)
+        dismissButton.setIconColor(SemanticColors.Label.textDefault, for: .normal)
         [titleLabel, dismissButton].forEach(addSubview)
         addBottomBorderWithInset(color: SemanticColors.View.borderConversationListTableViewCell)
     }
