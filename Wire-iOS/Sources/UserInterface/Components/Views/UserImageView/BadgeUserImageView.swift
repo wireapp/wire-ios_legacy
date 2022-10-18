@@ -147,7 +147,7 @@ final class BadgeUserImageView: UserImageView {
             }
 
             let showShadow = {
-                self.badgeShadow.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
+                self.badgeShadow.backgroundColor = SemanticColors.View.backgroundDefaultBlack
             }
 
             if animated {

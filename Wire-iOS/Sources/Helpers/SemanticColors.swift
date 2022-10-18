@@ -99,6 +99,8 @@ public enum SemanticColors {
 
     public enum View {
         static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundDefaultBlack = UIColor(light: Asset.black, dark: Asset.white)
+        static let backgroundDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
@@ -106,8 +108,6 @@ public enum SemanticColors {
         static let backgroundBadgeCell = UIColor(light: Asset.black, dark: Asset.white)
         static let backgroundConversationList = UIColor(light: Asset.gray20, dark: Asset.gray100)
         static let backgroundConversationListTableViewCell = UIColor(light: Asset.white, dark: Asset.gray95)
-        static let backgroundConversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
-        static let backgroundConversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundTeamImageView = UIColor(light: Asset.white, dark: Asset.black)
         static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
         static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)

@@ -61,7 +61,7 @@ final class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
-        textLabel.font = FontSpec(.medium, .semibold).font!
+        textLabel.font = FontSpec.mediumSemiboldFont.font!
         textLabel.textColor = SemanticColors.Label.textDefault
         textLabel.isAccessibilityElement = false
         transparentIconView.contentMode = .center
@@ -124,7 +124,7 @@ final class ConversationListAccessoryView: UIView {
         let iconSize: StyleKitIcon.Size = 12
 
         guard let icon = icon else { return nil }
-        badgeView.backgroundColor = ViewColors.backgroundConversationListTableViewCellBadge
+        badgeView.backgroundColor = ViewColors.backgroundDefaultBlack
         let iconTintColor = SemanticColors.Label.textDefaultWhite
         let textLabelColor = SemanticColors.Label.textDefaultWhite
 
@@ -165,7 +165,7 @@ final class ConversationListAccessoryView: UIView {
         case .silenced:
             iconView.setTemplateIcon(.bellWithStrikethrough, size: iconSize)
             iconView.tintColor = SemanticColors.Label.textDefault
-            badgeView.backgroundColor = ViewColors.backgroundConversationListTableViewCellBadgeReverted
+            badgeView.backgroundColor = ViewColors.backgroundDefaultWhite
             badgeView.layer.borderColor = ViewColors.borderConversationListTableViewCellBadgeReverted.cgColor
             badgeView.layer.borderWidth = 1
             badgeView.layer.cornerRadius = 6

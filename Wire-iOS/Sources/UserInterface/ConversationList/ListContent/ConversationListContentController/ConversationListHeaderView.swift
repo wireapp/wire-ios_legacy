@@ -84,7 +84,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let roundedTextBadge = RoundedTextBadge(contentInset: UIEdgeInsets(top: 2, left: margin, bottom: 2, right: margin), font: FontSpec(.medium, .semibold).font!)
 
         roundedTextBadge.textLabel.textColor = SemanticColors.Label.textDefaultWhite
-        roundedTextBadge.backgroundColor = SemanticColors.View.backgroundConversationListTableViewCellBadge
+        roundedTextBadge.backgroundColor = SemanticColors.View.backgroundDefaultBlack
         roundedTextBadge.isHidden = true
 
         return roundedTextBadge
