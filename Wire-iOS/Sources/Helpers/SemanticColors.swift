@@ -61,7 +61,6 @@ public enum SemanticColors {
         static let textUserPropertyCellValue = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationQuestOptionInfo = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textConversationListItemTitleField = UIColor(light: Asset.black, dark: Asset.white)
-        static let textConversationListCell = UIColor(light: Asset.black, dark: Asset.white)
         static let teamImageView = UIColor(light: Asset.black, dark: Asset.white)
         static let textConversationListItemSubtitleField = UIColor(light: Asset.gray90, dark: Asset.gray20)
         static let textNavigationController = UIColor(light: Asset.black, dark: Asset.white)

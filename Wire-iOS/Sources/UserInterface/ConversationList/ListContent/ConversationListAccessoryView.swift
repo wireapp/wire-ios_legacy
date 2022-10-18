@@ -62,7 +62,7 @@ final class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
-        textLabel.textColor = SemanticColors.Label.textConversationListCell
+        textLabel.textColor = SemanticColors.Label.textDefault
         textLabel.isAccessibilityElement = false
         transparentIconView.contentMode = .center
         transparentIconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
