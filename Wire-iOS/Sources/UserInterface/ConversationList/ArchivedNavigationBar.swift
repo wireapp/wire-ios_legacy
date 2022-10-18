@@ -67,7 +67,7 @@ final class ArchivedNavigationBar: UIView {
 
             dismissButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             dismissButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
-            dismissButton.leftAnchor.constraint(greaterThanOrEqualTo: titleLabe.rightAnchor, constant: 8),
+            dismissButton.leftAnchor.constraint(greaterThanOrEqualTo: titleLabel.rightAnchor, constant: 8),
 
             heightAnchor.constraint(equalToConstant: barHeight)
         ])
