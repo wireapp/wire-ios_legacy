@@ -117,6 +117,7 @@ final class FolderCreationController: UIViewController {
 
     private func setupNavigationBar() {
         let navBarColor = SemanticColors.Label.textDefault
+        typealias FolderCreationName = L10n.Localizable.Folder.Creation.Name
         self.navigationController?.navigationBar.tintColor = navBarColor
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: navBarColor)
 
@@ -124,7 +125,7 @@ final class FolderCreationController: UIViewController {
             navigationItem.leftBarButtonItem = navigationController?.updatedCloseItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: L10n.Localizable.Folder.Creation.Name.Button.create.capitalized,
+        let nextButtonItem = UIBarButtonItem(title: FolderCreationName.Button.create.capitalized,
                                              style: .plain,
                                              target: self,
                                              action: #selector(tryToProceed))
@@ -133,7 +134,7 @@ final class FolderCreationController: UIViewController {
         nextButtonItem.isEnabled = false
 
         let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Folder.Creation.Name.title.capitalized,
+            text: FolderCreationName.title.capitalized,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
 

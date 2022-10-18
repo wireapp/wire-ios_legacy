@@ -65,8 +65,8 @@ final class FolderPickerViewController: UIViewController {
         super.viewWillAppear(animated)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
+        return overrideUserInterfaceStyle == .light ? .compatibleDarkContent : .lightContent
     }
 
     private func configureNavbar() {
