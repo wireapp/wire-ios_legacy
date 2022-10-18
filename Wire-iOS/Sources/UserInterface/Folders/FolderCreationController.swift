@@ -65,7 +65,6 @@ final class FolderCreationController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = SemanticColors.View.backgroundDefault
-        title = L10n.Localizable.Folder.Creation.Name.title.capitalized
 
         setupNavigationBar()
         setupViews()
@@ -133,6 +132,12 @@ final class FolderCreationController: UIViewController {
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false
 
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.Folder.Creation.Name.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+
+        navigationItem.titleView = titleLabel
         navigationItem.rightBarButtonItem = nextButtonItem
     }
 
