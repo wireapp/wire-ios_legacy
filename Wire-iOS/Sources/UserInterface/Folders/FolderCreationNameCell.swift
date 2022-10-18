@@ -37,7 +37,7 @@ class FolderCreationNameCell: UICollectionViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newfolder.name"
-        textField.placeholder = L10n.Localizable.Folder.Creation.Name.placeholder.uppercased()
+        textField.placeholder = L10n.Localizable.Folder.Creation.Name.placeholder.capitalized
 
         contentView.addSubview(textField)
         textField.fitIn(view: contentView)

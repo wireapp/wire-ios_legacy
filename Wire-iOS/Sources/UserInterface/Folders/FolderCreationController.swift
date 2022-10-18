@@ -35,7 +35,6 @@ protocol FolderCreationControllerDelegate: AnyObject {
 final class FolderCreationController: UIViewController {
 
     static let mainViewHeight: CGFloat = 56
-    fileprivate let colorSchemeVariant = ColorScheme.default.variant
     private let collectionViewController = SectionCollectionViewController()
 
     private lazy var nameSection: FolderCreationNameSectionController = {
@@ -66,7 +65,7 @@ final class FolderCreationController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = SemanticColors.View.backgroundDefault
-        title = "folder.creation.name.title".localized(uppercased: true)
+        title = L10n.Localizable.Folder.Creation.Name.title.capitalized
 
         setupNavigationBar()
         setupViews()
@@ -78,7 +77,7 @@ final class FolderCreationController: UIViewController {
     }
 
     override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return colorSchemeVariant == .light ? .compatibleDarkContent : .lightContent
+        return overrideUserInterfaceStyle == .light ? .compatibleDarkContent : .lightContent
     }
 
     override public func viewDidAppear(_ animated: Bool) {
@@ -102,9 +101,9 @@ final class FolderCreationController: UIViewController {
         ])
 
         collectionViewController.collectionView = collectionView
-        collectionViewController.sections = [nameSection]// , errorSection]
+        collectionViewController.sections = [nameSection]
 
-        navBarBackgroundView.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
+        navBarBackgroundView.backgroundColor = SemanticColors.View.backgroundDefault
         view.addSubview(navBarBackgroundView)
 
         navBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,18 +113,22 @@ final class FolderCreationController: UIViewController {
             navBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             navBarBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navBarBackgroundView.bottomAnchor.constraint(equalTo: view.safeTopAnchor)
-            ])
+        ])
     }
 
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
-        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        let navBarColor = SemanticColors.Label.textDefault
+        self.navigationController?.navigationBar.tintColor = navBarColor
+        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: navBarColor)
 
         if navigationController?.viewControllers.count ?? 0 <= 1 {
-            navigationItem.leftBarButtonItem = navigationController?.closeItem()
+            navigationItem.leftBarButtonItem = navigationController?.updatedCloseItem()
         }
 
-        let nextButtonItem = UIBarButtonItem(title: "folder.creation.name.button.create".localized(uppercased: true), style: .plain, target: self, action: #selector(tryToProceed))
+        let nextButtonItem = UIBarButtonItem(title: L10n.Localizable.Folder.Creation.Name.Button.create.capitalized,
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(tryToProceed))
         nextButtonItem.accessibilityIdentifier = "button.newfolder.create"
         nextButtonItem.tintColor = UIColor.accent()
         nextButtonItem.isEnabled = false
