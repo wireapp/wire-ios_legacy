@@ -163,7 +163,6 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
         if let passwordError = state.passwordValidationError {
             validationCell.updateValidation(.error(passwordError, showVisualFeedback: true))
-            emailPasswordCell.textField.passwordField.showGuidanceDot()
             return
         }
 
@@ -279,7 +278,6 @@ extension ChangeEmailViewController: EmailPasswordTextFieldDelegate {
         // Re-enable the buttons if needed
         updateSaveButtonState()
         validationCell.updateValidation(nil)
-        textField.passwordField.hideGuidanceDot()
     }
 
     func textFieldDidSubmitWithValidationError(_ textField: EmailPasswordTextField) {

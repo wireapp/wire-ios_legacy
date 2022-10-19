@@ -95,7 +95,6 @@ extension TextFieldDescription: UITextFieldDelegate {
         // If we use deferred validation, remove the error when the text changes
         guard useDeferredValidation else { return }
         self.valueValidated?(nil)
-        sender.hideGuidanceDot()
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -117,7 +116,6 @@ extension TextFieldDescription: UITextFieldDelegate {
 
     func submitValue(with text: String) {
         if let error = validationError {
-            textField?.showGuidanceDot()
             self.valueValidated?(.error(error, showVisualFeedback: textField?.input.isEmpty == false))
         } else {
             self.valueValidated?(nil)

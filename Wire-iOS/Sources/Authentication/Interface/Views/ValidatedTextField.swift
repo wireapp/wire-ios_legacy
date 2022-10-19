@@ -135,13 +135,6 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         return iconButton
     }()
 
-    let guidanceDot: RoundedView = {
-        let indicator = RoundedView()
-        indicator.shape = .circle
-        indicator.isHidden = true
-        return indicator
-    }()
-
     let accessoryContainer = UIView()
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
@@ -245,9 +238,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         }
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        guidanceDot.backgroundColor = UIColor.from(scheme: .errorIndicator, variant: colorSchemeVariant)
-    }
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) { }
 
     private func updateLoadingState() {
         updateButtonIcon()
@@ -297,7 +288,6 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
     }
 
     private func setup() {
-        accessoryStack.addArrangedSubview(guidanceDot)
         accessoryStack.addArrangedSubview(confirmButton)
 
         confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
@@ -305,9 +295,7 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
 
         NSLayoutConstraint.activate([
             confirmButton.widthAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
-            confirmButton.heightAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth),
-            guidanceDot.widthAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth),
-            guidanceDot.heightAnchor.constraint(equalToConstant: ValidatedTextField.GuidanceDotWidth)
+            confirmButton.heightAnchor.constraint(equalToConstant: ValidatedTextField.ConfirmButtonWidth)
         ])
     }
 
@@ -348,13 +336,4 @@ final class ValidatedTextField: AccessoryTextField, TextContainer, Themeable {
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
         updateConfirmButton()
     }
-
-    func showGuidanceDot() {
-        guidanceDot.isHidden = false
-    }
-
-    func hideGuidanceDot() {
-        guidanceDot.isHidden = true
-    }
-
 }
