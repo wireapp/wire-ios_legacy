@@ -67,7 +67,20 @@ extension TextFieldDescription: ViewDescriptor {
         }
 
         self.textField = textField
-        return textField
+
+        let textfieldContainer = UIView()
+        textfieldContainer.addSubview(textField)
+        textfieldContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: textfieldContainer.topAnchor),
+            textField.bottomAnchor.constraint(equalTo: textfieldContainer.bottomAnchor),
+            textField.centerXAnchor.constraint(equalTo: textfieldContainer.centerXAnchor),
+            textField.leadingAnchor.constraint(equalTo: textfieldContainer.leadingAnchor, constant: 31),
+            textField.leadingAnchor.constraint(equalTo: textfieldContainer.trailingAnchor, constant: -31)
+        ])
+
+        return textfieldContainer
     }
 }
 
