@@ -27,16 +27,14 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     var valueValidated: ValueValidated?
     var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError?
-    let uppercasePlaceholder: Bool
     var showConfirmButton: Bool = true
     var canSubmit: (() -> Bool)?
     var textField: ValidatedTextField?
     var useDeferredValidation: Bool = false
 
-    init(placeholder: String, actionDescription: String, kind: ValidatedTextField.Kind, uppercasePlaceholder: Bool = true) {
+    init(placeholder: String, actionDescription: String, kind: ValidatedTextField.Kind) {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
-        self.uppercasePlaceholder = uppercasePlaceholder
         self.kind = kind
         validationError = .tooShort(kind: kind)
         super.init()
@@ -52,7 +50,7 @@ extension TextFieldDescription: ViewDescriptor {
         let textField = ValidatedTextField(kind: kind, style: .default)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = uppercasePlaceholder ? self.placeholder.localizedUppercase : self.placeholder
+        textField.placeholder = self.placeholder
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
