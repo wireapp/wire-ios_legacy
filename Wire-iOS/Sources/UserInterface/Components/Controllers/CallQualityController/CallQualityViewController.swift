@@ -254,7 +254,7 @@ final class CallQualityView: UIStackView {
     func setupScoreButton() {
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.textAlignment = .center
-
+        scoreLabel.adjustsFontSizeToFitWidth = true
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
