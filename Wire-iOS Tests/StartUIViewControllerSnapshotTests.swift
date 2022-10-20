@@ -73,7 +73,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         nonTeamTest {
             setupSut()
 
-            let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
+            let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: NavigationController.self)
             navigationController.overrideUserInterfaceStyle = .dark
 
             navigationController.pushViewController(sut, animated: false)
