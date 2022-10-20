@@ -20,11 +20,13 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+// MARK: Call Quality View Controller Delegate
 protocol CallQualityViewControllerDelegate: AnyObject {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
+// MARK: Call Quality View Controller
 final class CallQualityViewController: UIViewController, UIGestureRecognizerDelegate {
 
     let questionLabelText: String
@@ -36,7 +38,8 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
     let dimmingView = UIView()
     let closeButton = IconButton(fontSpec: .smallSemiboldFont)
     let titleLabel = UILabel()
-    let questionLabel = UILabel()
+    let questionLabel = DynamicFontLabel(fontSpec: .normalRegularFont,
+                                         color: SemanticColors.Label.textSectionFooter)
 
     var callQualityStackView: CustomSpacingStackView!
     var scoreSelectorView: QualityScoreSelectorView!
@@ -82,6 +85,8 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
     func createViews() {
 
+        typealias QualitySurvey = L10n.Localizable.Calling.QualitySurvey
+
         self.scoreSelectorView = QualityScoreSelectorView(onScoreSet: { [weak self] score in
             self?.delegate?.callQualityController(self!, didSelect: score)
         })
@@ -89,8 +94,9 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         dimmingView.backgroundColor = UIColor.CallQuality.backgroundDim
         dimmingView.alpha = 0
 
-        let graphite = UIColor.from(scheme: .textForeground)
-        let closeButtonTitle = "calling.quality_survey.skip_button_title".localized(uppercased: true)
+        let graphite = SemanticColors.Label.textDefault
+        let closeButtonTitle = QualitySurvey.skipButtonTitle
+
         closeButton.setTitle(closeButtonTitle, for: .normal)
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = closeButtonTitle
@@ -99,15 +105,13 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
 
-        titleLabel.textColor = UIColor.CallQuality.title
+        titleLabel.textColor = SemanticColors.Label.textDefault
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight.medium)
-        titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
+        titleLabel.text = QualitySurvey.title
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .center
 
         questionLabel.text = questionLabelText
-        questionLabel.font = FontSpec(.normal, .regular).font
-        questionLabel.textColor = UIColor.CallQuality.question
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
 
@@ -125,7 +129,7 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         view.addGestureRecognizer(dismissTapGestureRecognizer)
 
         contentView.shape = .rounded(radius: 32)
-        contentView.backgroundColor = UIColor.CallQuality.contentBackground
+        contentView.backgroundColor = SemanticColors.View.backgroundDefault
 
         view.addSubview(dimmingView)
         view.addSubview(contentView)
@@ -217,10 +221,15 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
     }
 
 }
-
+// MARK: Call Quality View
 final class CallQualityView: UIStackView {
-    let scoreLabel = UILabel()
-    let scoreButton = LegacyButton(fontSpec: .normalRegularFont)
+
+    typealias ViewColors = SemanticColors.View
+
+    let defaultTextColor = SemanticColors.Label.textDefault
+    let scoreLabel = DynamicFontLabel(fontSpec: FontSpec.mediumRegularFont,
+                                      color: SemanticColors.Label.textDefault)
+    let scoreButton = Button()
     let callback: (Int) -> Void
     let labelText: String
     let buttonScore: Int
@@ -235,31 +244,38 @@ final class CallQualityView: UIStackView {
         axis = .vertical
         spacing = 16
 
+        setupScoreButton()
+        addArrangedSubview(scoreLabel)
+        addArrangedSubview(scoreButton)
+
+        createConstraints()
+    }
+
+    func setupScoreButton() {
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
-        scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center
-        scoreLabel.textColor = UIColor.CallQuality.score
-        scoreLabel.adjustsFontSizeToFitWidth = true
 
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
         scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFont.Weight.regular)
-        scoreButton.setTitleColor(UIColor.CallQuality.score, for: .normal)
-        scoreButton.setTitleColor(.white, for: .highlighted)
-        scoreButton.setTitleColor(.white, for: .selected)
+        scoreButton.setTitleColor(defaultTextColor, for: .normal)
         scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreBackground, for: .normal)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .highlighted)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .selected)
+        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCell, for: .normal)
+        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCellHightLighted, for: .highlighted)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
+    }
 
-        addArrangedSubview(scoreLabel)
-        addArrangedSubview(scoreButton)
-
-        createConstraints()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
+        // based on the setup that we have here we need to call these three methods here so the colors for
+        // background and text of the button changes according to light and dark mode.
+        scoreButton.setTitleColor(defaultTextColor, for: .normal)
+        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCell, for: .normal)
+        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCellHightLighted, for: .highlighted)
     }
 
     private func createConstraints() {
@@ -280,6 +296,7 @@ final class CallQualityView: UIStackView {
     }
 }
 
+// MARK: Quality Score Selector View
 class QualityScoreSelectorView: UIView {
     private let scoreStackView = UIStackView()
 
@@ -332,6 +349,7 @@ class QualityScoreSelectorView: UIView {
     }
 }
 
+// MARK: Call Quality Animator
 class CallQualityAnimator: NSObject, UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
