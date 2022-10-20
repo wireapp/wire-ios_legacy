@@ -34,6 +34,9 @@ public extension FontSpec {
     static var smallSemiboldFont: Self {
         return self.init(.small, .semibold)
     }
+    static var smallBoldFont: Self {
+        return self.init(.small, .bold)
+    }
 
     // MARK: - Normal
     static var normalFont: Self {
