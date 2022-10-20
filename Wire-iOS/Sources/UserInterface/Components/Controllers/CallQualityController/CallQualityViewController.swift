@@ -244,17 +244,18 @@ final class CallQualityView: UIStackView {
         axis = .vertical
         spacing = 16
 
-        setupScoreButton()
+        setupSubviews()
         addArrangedSubview(scoreLabel)
         addArrangedSubview(scoreButton)
 
         createConstraints()
     }
 
-    func setupScoreButton() {
+    func setupSubviews() {
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.textAlignment = .center
         scoreLabel.adjustsFontSizeToFitWidth = true
+
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
@@ -320,10 +321,10 @@ class QualityScoreSelectorView: UIView {
         addSubview(scoreStackView)
         scoreStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-          scoreStackView.topAnchor.constraint(equalTo: topAnchor),
-          scoreStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          scoreStackView.leftAnchor.constraint(equalTo: leftAnchor),
-          scoreStackView.rightAnchor.constraint(equalTo: rightAnchor)
+            scoreStackView.topAnchor.constraint(equalTo: topAnchor),
+            scoreStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            scoreStackView.leftAnchor.constraint(equalTo: leftAnchor),
+            scoreStackView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }
 
