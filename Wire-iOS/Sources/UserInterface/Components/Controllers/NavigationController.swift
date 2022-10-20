@@ -61,7 +61,7 @@ class NavigationController: UINavigationController, SpinnerCapable {
 
         self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
 
-        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
+        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(NavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
         self.dismissGestureRecognizer.delegate = self
         self.view.addGestureRecognizer(self.dismissGestureRecognizer)
