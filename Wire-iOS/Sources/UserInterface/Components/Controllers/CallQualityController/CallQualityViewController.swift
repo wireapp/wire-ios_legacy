@@ -94,14 +94,14 @@ final class CallQualityViewController: UIViewController, UIGestureRecognizerDele
         dimmingView.backgroundColor = UIColor.CallQuality.backgroundDim
         dimmingView.alpha = 0
 
-        let graphite = SemanticColors.Label.textDefault
         let closeButtonTitle = QualitySurvey.skipButtonTitle
 
         closeButton.setTitle(closeButtonTitle, for: .normal)
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = closeButtonTitle
-        closeButton.setTitleColor(graphite, for: .normal)
-        closeButton.setTitleColor(graphite.withAlphaComponent(0.6), for: .highlighted)
+        closeButton.clipsToBounds = true
+        closeButton.layer.cornerRadius = 16
+        closeButton.applyStyle(.secondaryTextButtonStyle)
 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
 
@@ -259,24 +259,12 @@ final class CallQualityView: UIStackView {
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
-        scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFont.Weight.regular)
-        scoreButton.setTitleColor(defaultTextColor, for: .normal)
+        scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.semibold)
         scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCell, for: .normal)
-        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCellHightLighted, for: .highlighted)
+        scoreButton.applyStyle(.secondaryTextButtonStyle)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
 
         scoreButton.accessibilityLabel = labelText
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
-        // based on the setup that we have here we need to call these three methods here so the colors for
-        // background and text of the button changes according to light and dark mode.
-        scoreButton.setTitleColor(defaultTextColor, for: .normal)
-        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCell, for: .normal)
-        scoreButton.setBackgroundImageColor(ViewColors.backgroundUserCellHightLighted, for: .highlighted)
     }
 
     private func createConstraints() {
