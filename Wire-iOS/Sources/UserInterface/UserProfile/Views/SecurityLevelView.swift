@@ -29,8 +29,7 @@ extension ZMUserSession: ClassificationProviding {}
 
 final class SecurityLevelView: UIView {
     private let securityLevelLabel = UILabel()
-    private let topBorderView = UIView()
-    private let bottomBorderView = UIView()
+    typealias SecurityLocalization = L10n.Localizable.SecurityClassification
 
     init() {
         super.init(frame: .zero)
@@ -47,7 +46,7 @@ final class SecurityLevelView: UIView {
     }
 
     func configure(with classification: SecurityClassification) {
-        securityLevelLabel.font = FontSpec(.small, .bold).font
+        securityLevelLabel.font = FontSpec.smallSemiboldFont.font!
 
         guard
             classification != .none,
@@ -60,19 +59,19 @@ final class SecurityLevelView: UIView {
         switch classification {
 
         case .classified:
-            securityLevelLabel.textColor = UIColor.from(scheme: .textForeground)
-            backgroundColor = UIColor.from(scheme: .textBackground)
+            securityLevelLabel.textColor = SemanticColors.Label.textDefault
+            backgroundColor = SemanticColors.View.backgroundSecurityLevel
 
         case .notClassified:
-            securityLevelLabel.textColor = UIColor.from(scheme: .textSecurityNotClassified)
-            backgroundColor = UIColor.from(scheme: .backgroundSecurityNotClassified)
+            securityLevelLabel.textColor = SemanticColors.Label.textDefault
+            backgroundColor = SemanticColors.View.backgroundSecurityLevel
 
         default:
             isHidden = true
             assertionFailure("should not reach this point")
         }
 
-        let securityLevelText = L10n.Localizable.SecurityClassification.securityLevel
+        let securityLevelText = SecurityLocalization.securityLevel
         securityLevelLabel.text = [securityLevelText, levelText].joined(separator: " ")
 
         accessibilityIdentifier = "ClassificationBanner" + classification.accessibilitySuffix
@@ -94,46 +93,33 @@ final class SecurityLevelView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         securityLevelLabel.textAlignment = .center
+        self.addBorder(for: .top)
+        self.addBorder(for: .bottom)
         addSubview(securityLevelLabel)
-
-        topBorderView.backgroundColor = UIColor.from(scheme: .separator)
-        addSubview(topBorderView)
-        bringSubviewToFront(topBorderView)
-
-        bottomBorderView.backgroundColor = UIColor.from(scheme: .separator)
-        addSubview(bottomBorderView)
-        bringSubviewToFront(bottomBorderView)
     }
 
     private func createConstraints() {
-        [securityLevelLabel, topBorderView, bottomBorderView].prepareForLayout()
+        [securityLevelLabel].prepareForLayout()
 
         securityLevelLabel.fitIn(view: self)
 
         NSLayoutConstraint.activate([
-          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24),
-
-          topBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-          topBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-          topBorderView.topAnchor.constraint(equalTo: topAnchor),
-          topBorderView.heightAnchor.constraint(equalToConstant: 1),
-
-          bottomBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-          bottomBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-          bottomBorderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-          bottomBorderView.heightAnchor.constraint(equalToConstant: 1)
+          securityLevelLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
 }
 
 private extension SecurityClassification {
+
+    typealias SecurityClassificationLevel = L10n.Localizable.SecurityClassification.Level
+
     var levelText: String? {
         switch self {
         case .none:
             return nil
 
         case .classified:
-            return L10n.Localizable.SecurityClassification.Level.bund
+            return SecurityClassificationLevel.bund
 
         case .notClassified:
             return L10n.Localizable.SecurityClassification.Level.notClassified
