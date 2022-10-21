@@ -112,7 +112,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
+
     }
 
     func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didReceiveError error: Error) {

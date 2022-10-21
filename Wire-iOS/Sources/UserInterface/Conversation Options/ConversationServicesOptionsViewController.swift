@@ -97,7 +97,6 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
     }
 
     func viewModel(_ viewModel: ConversationServicesOptionsViewModel, didReceiveError error: Error) {
