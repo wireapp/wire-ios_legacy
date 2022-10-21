@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,30 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
+import WireSyncEngine
 
-final class ProfileSelfPictureViewControllerSnapshotTests: ZMSnapshotTestCase {
+class ProfileImagePickerManager: ImagePickerManager {
 
-    var sut: ProfileSelfPictureViewController!
-
-    override func setUp() {
-        super.setUp()
-        sut = ProfileSelfPictureViewController()
-
-        // call viewDidLoad
-        sut.loadViewIfNeeded()
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-
-        sut.selfUserImageView.image = image
+    func selectProfileImage() -> UIAlertController {
+        let actionSheet = showActionSheet { image in
+            guard let jpegData = image.jpegData else {
+                return
+            }
+            ZMUserSession.shared()?.enqueue({
+                ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
+            })
+        }
+        return actionSheet
     }
 
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState() {
-        verify(view: sut.view)
-    }
 }
