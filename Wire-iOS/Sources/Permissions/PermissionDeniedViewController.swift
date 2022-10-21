@@ -20,23 +20,25 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+// MARK: - PermissionDeniedViewControllerDelegate
 protocol PermissionDeniedViewControllerDelegate: AnyObject {
     func continueWithoutPermission(_ viewController: PermissionDeniedViewController)
 }
 
+// MARK: - PermissionDeniedViewController
 final class PermissionDeniedViewController: UIViewController {
 
+    // MARK: - Properties
     weak var delegate: PermissionDeniedViewControllerDelegate?
-
     private var initialConstraintsCreated = false
     private let heroLabel: UILabel = UILabel.createHeroLabel()
     private var settingsButton: LegacyButton!
     private var laterButton: UIButton!
 
+    // MARK: - addressBookAccessDeniedViewController
     class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
-
+        // MARK: - Properties
         typealias RegistrationAddressBookDenied = L10n.Localizable.Registration.AddressBookAccessDenied
-
         let vc = PermissionDeniedViewController()
         let title = RegistrationAddressBookDenied.Hero.title
         let paragraph1 = RegistrationAddressBookDenied.Hero.paragraph1
@@ -61,8 +63,9 @@ final class PermissionDeniedViewController: UIViewController {
         return vc
     }
 
+    // MARK: - pushDeniedViewController
     class func pushDeniedViewController() -> PermissionDeniedViewController {
-
+        // MARK: - Properties
         typealias RegistrationPushAccessDenied = L10n.Localizable.Registration.PushAccessDenied
         let vc = PermissionDeniedViewController()
         let title = RegistrationPushAccessDenied.Hero.title
@@ -87,6 +90,7 @@ final class PermissionDeniedViewController: UIViewController {
         return vc
     }
 
+    // MARK: - Initialization
     required init() {
         super.init(nibName: nil, bundle: nil)
 
@@ -102,15 +106,20 @@ final class PermissionDeniedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup Buttons
     private func createSettingsButton() {
-        settingsButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+        settingsButton = Button(style: .accentColorTextButtonStyle,
+                                cornerRadius: 16,
+                                fontSpec: .normalSemiboldFont)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
 
         view.addSubview(settingsButton)
     }
 
     private func createLaterButton() {
-        laterButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+        laterButton = Button(style: .secondaryTextButtonStyle,
+                             cornerRadius: 16,
+                             fontSpec: .normalSemiboldFont)
         laterButton.addTarget(self, action: #selector(continueWithoutAccess(_:)), for: .touchUpInside)
 
         view.addSubview(laterButton)
@@ -129,6 +138,7 @@ final class PermissionDeniedViewController: UIViewController {
         delegate?.continueWithoutPermission(self)
     }
 
+    // MARK: - Constraints
     override func updateViewConstraints() {
         super.updateViewConstraints()
 
