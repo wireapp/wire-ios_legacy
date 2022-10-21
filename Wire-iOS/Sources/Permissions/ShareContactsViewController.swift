@@ -20,11 +20,13 @@ import Foundation
 import UIKit
 import WireCommonComponents
 
+// MARK: - ShareContactsViewControllerDelegate
 protocol ShareContactsViewControllerDelegate: AnyObject {
     func shareDidSkip(_ viewController: UIViewController)
     func shareDidFinish(_ viewController: UIViewController)
 }
 
+// MARK: - String Extension
 extension String {
     func withCustomParagraphSpacing() -> NSMutableAttributedString {
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
@@ -38,6 +40,7 @@ extension String {
     }
 }
 
+// MARK: - UILabel Extension
 extension UILabel {
     static func createHeroLabel() -> UILabel {
         let heroLabel = UILabel()
@@ -48,8 +51,10 @@ extension UILabel {
     }
 }
 
+// MARK: - ShareContactsViewController
 final class ShareContactsViewController: UIViewController {
 
+    // MARK: - Properties
     typealias RegistrationShareContacts = L10n.Localizable.Registration.ShareContacts
 
     weak var delegate: ShareContactsViewControllerDelegate?
@@ -78,7 +83,9 @@ final class ShareContactsViewController: UIViewController {
     }()
 
     private let shareContactsButton: Button = {
-        let shareContactsButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+        let shareContactsButton = Button(style: .accentColorTextButtonStyle,
+                                         cornerRadius: 16,
+                                         fontSpec: .normalSemiboldFont)
         shareContactsButton.setTitle(RegistrationShareContacts.FindFriendsButton.title.capitalized, for: .normal)
 
         return shareContactsButton
@@ -102,11 +109,12 @@ final class ShareContactsViewController: UIViewController {
         attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: SemanticColors.Label.textDefault,
             NSAttributedString.Key.font: FontSpec.largeThinFont.font!
-            ], range: (text as NSString).range(of: paragraph))
+        ], range: (text as NSString).range(of: paragraph))
 
         return attributedText
     }
 
+    // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -207,6 +215,7 @@ final class ShareContactsViewController: UIViewController {
     }
 }
 
+// MARK: - ShareContactsViewController Extension
 extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
     public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
         delegate?.shareDidSkip(self)
