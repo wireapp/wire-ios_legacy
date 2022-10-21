@@ -79,7 +79,7 @@ final class ShareContactsViewController: UIViewController {
 
     private let shareContactsButton: Button = {
         let shareContactsButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
-        shareContactsButton.setTitle(RegistrationShareContacts.FindFriendsButton.title, for: .normal)
+        shareContactsButton.setTitle(RegistrationShareContacts.FindFriendsButton.title.capitalized, for: .normal)
 
         return shareContactsButton
     }()

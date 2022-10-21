@@ -48,10 +48,10 @@ final class PermissionDeniedViewController: UIViewController {
 
         attributedText.addAttributes([
             NSAttributedString.Key.font: FontSpec.largeThinFont.font!
-            ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
+        ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
         attributedText.addAttributes([
             NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
-            ], range: (text as NSString).range(of: title))
+        ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
         vc.settingsButton.setTitle(RegistrationAddressBookDenied.SettingsButton.title.capitalized, for: .normal)
@@ -62,9 +62,11 @@ final class PermissionDeniedViewController: UIViewController {
     }
 
     class func pushDeniedViewController() -> PermissionDeniedViewController {
+
+        typealias RegistrationPushAccessDenied = L10n.Localizable.Registration.PushAccessDenied
         let vc = PermissionDeniedViewController()
-        let title = "registration.push_access_denied.hero.title".localized
-        let paragraph1 = "registration.push_access_denied.hero.paragraph1".localized
+        let title = RegistrationPushAccessDenied.Hero.title
+        let paragraph1 = RegistrationPushAccessDenied.Hero.paragraph1
 
         let text = [title, paragraph1].joined(separator: "\u{2029}")
 
@@ -72,15 +74,15 @@ final class PermissionDeniedViewController: UIViewController {
 
         attributedText.addAttributes([
             NSAttributedString.Key.font: FontSpec.largeThinFont.font!
-            ], range: (text as NSString).range(of: paragraph1))
+        ], range: (text as NSString).range(of: paragraph1))
         attributedText.addAttributes([
             NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
-            ], range: (text as NSString).range(of: title))
+        ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.push_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(RegistrationPushAccessDenied.SettingsButton.title.capitalized, for: .normal)
 
-        vc.laterButton.setTitle("registration.push_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(RegistrationPushAccessDenied.MaybeLaterButton.title.capitalized, for: .normal)
 
         return vc
     }
