@@ -50,6 +50,8 @@ extension UILabel {
 
 final class ShareContactsViewController: UIViewController {
 
+    typealias RegistrationShareContacts = L10n.Localizable.Registration.ShareContacts
+
     weak var delegate: ShareContactsViewControllerDelegate?
     var uploadAddressBookImmediately = false
     var backgroundBlurDisabled = false
@@ -61,7 +63,7 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.titleLabel?.font = UIFont.smallLightFont
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
         notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
-        notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
+        notNowButton.setTitle(RegistrationShareContacts.SkipButton.title.capitalized, for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
 
         return notNowButton
@@ -77,7 +79,7 @@ final class ShareContactsViewController: UIViewController {
 
     private let shareContactsButton: Button = {
         let shareContactsButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
-        shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized, for: .normal)
+        shareContactsButton.setTitle(RegistrationShareContacts.FindFriendsButton.title, for: .normal)
 
         return shareContactsButton
     }()
@@ -90,8 +92,8 @@ final class ShareContactsViewController: UIViewController {
     }()
 
     private static var attributedHeroText: NSAttributedString {
-        let title = "registration.share_contacts.hero.title".localized
-        let paragraph = "registration.share_contacts.hero.paragraph".localized
+        let title = RegistrationShareContacts.Hero.title
+        let paragraph = RegistrationShareContacts.Hero.paragraph
 
         let text = [title, paragraph].joined(separator: "\u{2029}")
 

@@ -34,10 +34,13 @@ final class PermissionDeniedViewController: UIViewController {
     private var laterButton: UIButton!
 
     class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
+
+        typealias RegistrationAddressBookDenied = L10n.Localizable.Registration.AddressBookAccessDenied
+
         let vc = PermissionDeniedViewController()
-        let title = "registration.address_book_access_denied.hero.title".localized
-        let paragraph1 = "registration.address_book_access_denied.hero.paragraph1".localized
-        let paragraph2 = "registration.address_book_access_denied.hero.paragraph2".localized
+        let title = RegistrationAddressBookDenied.Hero.title
+        let paragraph1 = RegistrationAddressBookDenied.Hero.paragraph1
+        let paragraph2 = RegistrationAddressBookDenied.Hero.paragraph2
 
         let text = [title, paragraph1, paragraph2].joined(separator: "\u{2029}")
 
@@ -51,9 +54,9 @@ final class PermissionDeniedViewController: UIViewController {
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
-        vc.settingsButton.setTitle("registration.address_book_access_denied.settings_button.title".localized.uppercased(), for: .normal)
+        vc.settingsButton.setTitle(RegistrationAddressBookDenied.SettingsButton.title.capitalized, for: .normal)
 
-        vc.laterButton.setTitle("registration.address_book_access_denied.maybe_later_button.title".localized.uppercased(), for: .normal)
+        vc.laterButton.setTitle(RegistrationAddressBookDenied.MaybeLaterButton.title.capitalized, for: .normal)
 
         return vc
     }
