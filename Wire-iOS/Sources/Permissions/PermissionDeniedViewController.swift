@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 protocol PermissionDeniedViewControllerDelegate: AnyObject {
     func continueWithoutPermission(_ viewController: PermissionDeniedViewController)
@@ -25,18 +26,12 @@ protocol PermissionDeniedViewControllerDelegate: AnyObject {
 
 final class PermissionDeniedViewController: UIViewController {
 
-    var backgroundBlurDisabled = false {
-        didSet {
-            backgroundBlurView.isHidden = backgroundBlurDisabled
-        }
-    }
     weak var delegate: PermissionDeniedViewControllerDelegate?
 
     private var initialConstraintsCreated = false
     private let heroLabel: UILabel = UILabel.createHeroLabel()
     private var settingsButton: LegacyButton!
     private var laterButton: UIButton!
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
     class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
         let vc = PermissionDeniedViewController()
@@ -49,10 +44,10 @@ final class PermissionDeniedViewController: UIViewController {
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
             ], range: (text as NSString).range(of: [paragraph1, paragraph2].joined(separator: "\u{2029}")))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeSemiboldFont
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
@@ -73,10 +68,10 @@ final class PermissionDeniedViewController: UIViewController {
         let attributedText = text.withCustomParagraphSpacing()
 
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeThinFont
+            NSAttributedString.Key.font: FontSpec.largeThinFont.font!
             ], range: (text as NSString).range(of: paragraph1))
         attributedText.addAttributes([
-            NSAttributedString.Key.font: UIFont.largeSemiboldFont
+            NSAttributedString.Key.font: FontSpec.largeSemiboldFont.font!
             ], range: (text as NSString).range(of: title))
         vc.heroLabel.attributedText = attributedText
 
@@ -90,13 +85,9 @@ final class PermissionDeniedViewController: UIViewController {
     required init() {
         super.init(nibName: nil, bundle: nil)
 
-        view.addSubview(backgroundBlurView)
-        backgroundBlurView.isHidden = backgroundBlurDisabled
-
         view.addSubview(heroLabel)
         createSettingsButton()
         createLaterButton()
-        createConstraints()
 
         updateViewConstraints()
     }
@@ -107,17 +98,14 @@ final class PermissionDeniedViewController: UIViewController {
     }
 
     private func createSettingsButton() {
-        settingsButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
+        settingsButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
 
         view.addSubview(settingsButton)
     }
 
     private func createLaterButton() {
-        laterButton = UIButton(type: .custom)
-        laterButton.titleLabel?.font = UIFont.smallLightFont
-        laterButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
-        laterButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .highlighted)
+        laterButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
         laterButton.addTarget(self, action: #selector(continueWithoutAccess(_:)), for: .touchUpInside)
 
         view.addSubview(laterButton)
@@ -136,11 +124,6 @@ final class PermissionDeniedViewController: UIViewController {
         delegate?.continueWithoutPermission(self)
     }
 
-    private func createConstraints() {
-        backgroundBlurView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBlurView.fitIn(view: view)
-    }
-
     override func updateViewConstraints() {
         super.updateViewConstraints()
 
@@ -156,14 +139,17 @@ final class PermissionDeniedViewController: UIViewController {
                            heroLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [settingsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 28),
-                        settingsButton.heightAnchor.constraint(equalToConstant: 40)]
+                        settingsButton.heightAnchor.constraint(equalToConstant: 56)]
 
         constraints += [settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
                         settingsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28)]
 
         constraints += [laterButton.topAnchor.constraint(equalTo: settingsButton.bottomAnchor, constant: 28),
                         laterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28),
-                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)]
+                        laterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                        laterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+                        laterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+                        laterButton.heightAnchor.constraint(equalToConstant: 56)]
 
         NSLayoutConstraint.activate(constraints)
 
