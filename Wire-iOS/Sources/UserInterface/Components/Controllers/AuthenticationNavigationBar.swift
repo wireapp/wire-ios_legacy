@@ -34,11 +34,22 @@ final class AuthenticationNavigationBar: DefaultNavigationBar {
 
 extension AuthenticationNavigationBar {
 
-    static func makeBackButton() -> IconButton {
+    static func makeLegacyBackButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, size: .tiny, for: .normal)
         button.setIconColor(.graphite, for: .normal)
         button.setIconColor(.graphiteAlpha40, for: .highlighted)
+        button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
+        button.accessibilityIdentifier = "back"
+        button.accessibilityLabel = "general.back".localized
+        return button
+    }
+
+    static func makeBackButton() -> IconButton {
+        let button = IconButton(style: .default)
+        button.setIcon(UIApplication.isLeftToRightLayout ? .backArrow : .forwardArrow, size: .tiny, for: .normal)
+        button.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
         button.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
         button.accessibilityIdentifier = "back"

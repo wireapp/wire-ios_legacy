@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,11 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 import WireCommonComponents
 
-final class ButtonDescription {
+final class UnderlineButtonDescription {
 
     var buttonTapped: (() -> Void)?
     let title: String
@@ -32,19 +31,23 @@ final class ButtonDescription {
     }
 }
 
-extension ButtonDescription: ViewDescriptor {
+extension UnderlineButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = DynamicFontButton(fontSpec: .smallSemiboldFont)
-        let color = SemanticColors.Label.textDefault
-        button.setTitleColor(color, for: .normal)
-        button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.smallSemiboldFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
 
-        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
-        button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        let attributeString = NSMutableAttributedString(
+            string: title,
+            attributes: attributes
+        )
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title.localizedUppercase, for: .normal)
+        button.setAttributedTitle(attributeString, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
-        button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(UnderlineButtonDescription.buttonTapped(_:)), for: .touchUpInside)
         return button
     }
 

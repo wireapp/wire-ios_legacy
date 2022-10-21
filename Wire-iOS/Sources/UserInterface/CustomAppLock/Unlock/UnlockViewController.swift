@@ -107,7 +107,7 @@ final class UnlockViewController: UIViewController {
 
     private let errorLabel: UILabel = {
         let label = DynamicFontLabel(fontSpec: .smallLightFont,
-                                     color: SemanticColors.Label.textWarning)
+                                     color: SemanticColors.Label.textErrorDefault)
         label.text = " "
 
         return label
@@ -231,7 +231,7 @@ final class UnlockViewController: UIViewController {
     func showWrongPasscodeMessage() {
 
         let textAttachment = NSTextAttachment.textAttachment(for: .exclamationMarkCircle,
-                                                             with: SemanticColors.Label.textWarning,
+                                                             with: SemanticColors.Label.textErrorDefault,
                                                              iconSize: StyleKitIcon.Size.CreatePasscode.errorIconSize,
                                                              verticalCorrection: -1,
                                                              insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4))

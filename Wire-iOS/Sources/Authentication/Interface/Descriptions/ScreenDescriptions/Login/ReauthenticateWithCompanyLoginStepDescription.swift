@@ -25,6 +25,7 @@ class ReauthenticateWithCompanyLoginStepDescription: AuthenticationStepDescripti
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -33,6 +34,7 @@ class ReauthenticateWithCompanyLoginStepDescription: AuthenticationStepDescripti
 
         mainView = SolidButtonDescription(title: "signin_logout.sso.buton".localized, accessibilityIdentifier: "company_login")
         secondaryView = nil
+        footerView = nil
     }
 
 }

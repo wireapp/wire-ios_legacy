@@ -27,6 +27,7 @@ final class SetPasswordStepDescription: DefaultValidatingStepDescription {
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
     let initialValidation: ValueValidation
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -37,5 +38,6 @@ final class SetPasswordStepDescription: DefaultValidatingStepDescription {
         subtext = nil
         secondaryView = nil
         initialValidation = .info(PasswordRuleSet.localizedErrorMessage)
+        footerView = nil
     }
 }

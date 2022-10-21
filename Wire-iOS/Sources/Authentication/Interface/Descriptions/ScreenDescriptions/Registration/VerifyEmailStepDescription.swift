@@ -18,14 +18,16 @@
 
 import Foundation
 
-class VerifyEmailStepSecondaryView: AuthenticationSecondaryViewDescription {
+class VerifyEmailStepSecondaryView: AuthenticationFooterViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
+    typealias TeamActivationCode = L10n.Localizable.Team.ActivationCode.Button
+
     init(canResend: Bool = true, canChangeEmail: Bool = true) {
-        let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
-        var views: [ButtonDescription] = []
+        let resendCode = SecondaryButtonDescription(title: TeamActivationCode.resend.capitalized, accessibilityIdentifier: "resend_button")
+        let changeEmail = SecondaryButtonDescription(title: TeamActivationCode.changeEmail.capitalized, accessibilityIdentifier: "change_email_button")
+        var views: [SecondaryButtonDescription] = []
 
         if canResend {
             views.append(resendCode)
@@ -54,6 +56,7 @@ final class VerifyEmailStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(email: String, canChangeEmail: Bool = true) {
         self.email = email
@@ -61,7 +64,8 @@ final class VerifyEmailStepDescription: AuthenticationStepDescription {
         mainView = VerificationCodeFieldDescription()
         headline = "team.activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: email)
-        secondaryView = VerifyEmailStepSecondaryView(canChangeEmail: canChangeEmail)
+        secondaryView = nil
+        footerView = VerifyEmailStepSecondaryView(canChangeEmail: canChangeEmail)
     }
 
     func shouldSkipFromNavigation() -> Bool {

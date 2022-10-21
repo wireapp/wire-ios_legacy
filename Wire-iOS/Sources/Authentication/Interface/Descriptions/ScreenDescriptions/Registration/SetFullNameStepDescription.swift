@@ -25,6 +25,7 @@ final class SetFullNameStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -32,5 +33,6 @@ final class SetFullNameStepDescription: AuthenticationStepDescription {
         headline = "team.full_name.headline".localized
         subtext = nil
         secondaryView = nil
+        footerView = nil
     }
 }
