@@ -307,5 +307,14 @@ extension SettingsTableViewController: ZMUserObserver {
         if note.accentColorValueChanged {
             refreshData()
         }
+
+        if note.imageMediumDataChanged, let userSession = ZMUserSession.shared() {
+            note.user.fetchProfileImage(session: userSession,
+                                        imageCache: UIImage.defaultUserImageCache,
+                                        sizeLimit: nil,
+                                        isDesaturated: false) { [weak self] (_, _) in
+                self?.refreshData()
+            }
+        }
     }
 }
