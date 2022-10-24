@@ -858,7 +858,7 @@
 "profile.block_button_title_action" = "Block";
 "profile.unblock_button_title_action" = "Unblock";
 
-"profile.cancel_connection_button_title" = "CANCEL REQUEST";
+"profile.cancel_connection_button_title" = "Cancel Request";
 "profile.connection_request_state.blocked" = "BLOCKED";
 "profile.create_conversation_button_title" = "Create group";
 "profile.open_conversation_button_title" = "Open conversation";
