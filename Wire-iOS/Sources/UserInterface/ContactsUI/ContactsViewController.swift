@@ -24,6 +24,7 @@ final class ContactsViewController: UIViewController {
     let dataSource = ContactsDataSource()
 
     typealias PeoplePicker = L10n.Localizable.Peoplepicker
+    typealias ContactsUI  = L10n.Localizable.ContactsUi
     typealias LabelColors = SemanticColors.Label
     typealias ViewColors = SemanticColors.View
 
@@ -124,16 +125,17 @@ final class ContactsViewController: UIViewController {
         bottomContainerView.addSubview(bottomContainerSeparatorView)
 
         inviteOthersButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
-        inviteOthersButton.setTitle("contacts_ui.invite_others".localized.capitalized, for: .normal)
+        inviteOthersButton.setTitle(ContactsUI.inviteOthers.capitalized, for: .normal)
         bottomContainerView.addSubview(inviteOthersButton)
+
     }
 
     private func setupStyle() {
-        title = L10n.Localizable.ContactsUi.title.capitalized
+        title = ContactsUI.title.capitalized
         let titleLabel = DynamicFontLabel(
-                     text: title,
-                     fontSpec: .headerSemiboldFont,
-                     color: LabelColors.textDefault)
+            text: title,
+            fontSpec: .headerSemiboldFont,
+            color: LabelColors.textDefault)
 
         navigationItem.titleView = titleLabel
 
@@ -194,7 +196,7 @@ final class ContactsViewController: UIViewController {
             let userInfo = notification.userInfo,
             let beginFrame = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect,
             let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-            else { return }
+        else { return }
 
         let willAppear = (beginFrame.minY - endFrame.minY) > 0
         let padding: CGFloat = 12
