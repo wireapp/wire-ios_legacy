@@ -3993,9 +3993,9 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "self.settings.account_personal_information_group.title")
         }
         internal enum AccountPictureGroup {
-          /// Color
+          /// Profile color
           internal static let color = L10n.tr("Localizable", "self.settings.account_picture_group.color")
-          /// Picture
+          /// Profile picture
           internal static let picture = L10n.tr("Localizable", "self.settings.account_picture_group.picture")
           /// Theme
           internal static let theme = L10n.tr("Localizable", "self.settings.account_picture_group.theme")
@@ -4014,6 +4014,14 @@ internal enum L10n {
             internal static let turquoise = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.turquoise")
             /// Yellow
             internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
+          }
+          internal enum Alert {
+            /// Choose from library
+            internal static let choosePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.choose_picture")
+            /// Take photo
+            internal static let takePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.take_picture")
+            /// Change your profile picture
+            internal static let title = L10n.tr("Localizable", "self.settings.account_picture_group.alert.title")
           }
         }
         internal enum AccountSection {
