@@ -228,6 +228,8 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 }
 
+// TODO: [AGIS] Remove that extension and function as soon as we remove ColorSchemeVariant
+// from UserCellSubtitleProtocol
 extension ContactsCell: Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) { }
 }
