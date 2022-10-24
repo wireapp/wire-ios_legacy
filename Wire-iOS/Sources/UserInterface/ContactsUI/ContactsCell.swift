@@ -43,6 +43,9 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     static let boldFont: FontSpec = .smallRegularFont
     static let lightFont: FontSpec = .smallLightFont
 
+    typealias ViewColors = SemanticColors.View
+    typealias LabelColors = SemanticColors.Label
+
     let avatar: BadgeUserImageView = {
         let badgeUserImageView = BadgeUserImageView()
         badgeUserImageView.userSession = ZMUserSession.shared()
@@ -59,7 +62,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .normalLightFont
+        label.font = FontSpec.normalLightFont.font!
         label.accessibilityIdentifier = "contact_cell.name"
 
         return label
@@ -68,7 +71,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .smallRegularFont
+        label.font = FontSpec.smallRegularFont.font!
         label.accessibilityIdentifier = "contact_cell.username"
 
         return label
@@ -159,12 +162,12 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
         createSeparatorConstraints()
 
-        separator.backgroundColor = SemanticColors.View.backgroundSeparatorCell
+        separator.backgroundColor = ViewColors.backgroundSeparatorCell
 
-        backgroundColor = SemanticColors.View.backgroundUserCell
+        backgroundColor = ViewColors.backgroundUserCell
 
-        titleLabel.textColor = SemanticColors.Label.textCellTitle
-        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
+        titleLabel.textColor = LabelColors.textCellTitle
+        subtitleLabel.textColor = LabelColors.textCellSubtitle
 
         updateTitleLabel()
     }
