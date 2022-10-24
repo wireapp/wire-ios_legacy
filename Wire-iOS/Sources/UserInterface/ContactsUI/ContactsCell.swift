@@ -38,24 +38,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
-    // if nil the background color is the default content background color for the theme
-    var contentBackgroundColor: UIColor? {
-        didSet {
-            guard oldValue != contentBackgroundColor else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
-    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
-    }
+    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant
 
     static let boldFont: FontSpec = .smallRegularFont
     static let lightFont: FontSpec = .smallLightFont
@@ -97,7 +80,9 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    let actionButton: LegacyButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
+    let actionButton: Button = Button(style: .accentColorTextButtonStyle,
+                                      cornerRadius: 4,
+                                      fontSpec: .mediumSemiboldFont)
 
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
@@ -174,7 +159,14 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
         createSeparatorConstraints()
 
-        applyColorScheme(ColorScheme.default.variant)
+        separator.backgroundColor = SemanticColors.View.backgroundSeparatorCell
+
+        backgroundColor = SemanticColors.View.backgroundUserCell
+
+        titleLabel.textColor = SemanticColors.Label.textCellTitle
+        subtitleLabel.textColor = SemanticColors.Label.textCellSubtitle
+
+        updateTitleLabel()
     }
 
     private func createConstraints() {
@@ -223,7 +215,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             return
         }
 
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), selfUser: ZMUser.selfUser())
+        titleLabel.attributedText = user.nameIncludingAvailability(color: SemanticColors.Label.textDefault, selfUser: ZMUser.selfUser())
     }
 
     @objc func actionButtonPressed(sender: Any?) {
@@ -234,18 +226,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 }
 
 extension ContactsCell: Themeable {
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor.from(scheme: .separator, variant: colorSchemeVariant)
-
-        let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = sectionTextColor
-
-        updateTitleLabel()
-    }
-
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) { }
 }
 
 extension ContactsCell: UserCellSubtitleProtocol {
@@ -262,9 +243,9 @@ extension ContactsCell {
         var localizedDescription: String {
             switch self {
             case .open:
-                return "contacts_ui.action_button.open".localized
+                return "contacts_ui.action_button.open".localized.capitalized
             case .invite:
-                return "contacts_ui.action_button.invite".localized
+                return "contacts_ui.action_button.invite".localized.capitalized
             }
         }
     }
