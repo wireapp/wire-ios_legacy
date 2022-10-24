@@ -22,21 +22,13 @@ import WireCommonComponents
 
 final class IncomingConnectionView: UIView {
 
-    static private var correlationFormatter: AddressBookCorrelationFormatter = {
-        return AddressBookCorrelationFormatter(
-            lightFont: FontSpec(.small, .light),
-            boldFont: FontSpec(.small, .medium),
-            color: UIColor.from(scheme: .textDimmed)
-        )
-    }()
-
     private let usernameLabel = UILabel()
     private let userDetailView = UserNameDetailView()
     private let securityLevelView = SecurityLevelView()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
-    private let acceptButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
-    private let ignoreButton = LegacyButton(legacyStyle: .empty, fontSpec: .smallLightFont)
+    private let acceptButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
+    private let ignoreButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .smallSemiboldFont)
 
     private let classificationProvider: ClassificationProviding?
 
