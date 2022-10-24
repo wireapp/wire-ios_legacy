@@ -23,20 +23,24 @@ final class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
 
+    typealias PeoplePicker = L10n.Localizable.Peoplepicker
+    typealias LabelColors = SemanticColors.Label
+    typealias ViewColors = SemanticColors.View
+
     let bottomContainerView = UIView()
     let bottomContainerSeparatorView = UIView()
-    let noContactsLabel = DynamicFontLabel(text: "peoplepicker.no_contacts_title".localized,
+    let noContactsLabel = DynamicFontLabel(text: PeoplePicker.noContactsTitle,
                                            fontSpec: .headerRegularFont,
-                                           color: SemanticColors.Label.textSettingsPasswordPlaceholder)
+                                           color: LabelColors.textSettingsPasswordPlaceholder)
     let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
     let separatorView = UIView()
     let tableView = UITableView()
     let inviteOthersButton = Button(style: .accentColorTextButtonStyle,
                                     cornerRadius: 16,
                                     fontSpec: .normalSemiboldFont)
-    let emptyResultsLabel = DynamicFontLabel(text: "peoplepicker.no_matching_results_after_address_book_upload_title".localized,
+    let emptyResultsLabel = DynamicFontLabel(text: PeoplePicker.noMatchingResultsAfterAddressBookUploadTitle,
                                              fontSpec: .headerRegularFont,
-                                             color: SemanticColors.Label.textSettingsPasswordPlaceholder)
+                                             color: LabelColors.textSettingsPasswordPlaceholder)
 
     var bottomEdgeConstraint: NSLayoutConstraint?
     var bottomContainerBottomConstraint: NSLayoutConstraint?
@@ -87,7 +91,7 @@ final class ContactsViewController: UIViewController {
     private func setupSearchHeader() {
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
-        searchHeaderViewController.view.backgroundColor = SemanticColors.View.backgroundDefault
+        searchHeaderViewController.view.backgroundColor = ViewColors.backgroundDefault
         addToSelf(searchHeaderViewController)
     }
 
@@ -125,11 +129,11 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setupStyle() {
-        title = "contacts_ui.title".localized.capitalized
+        title = L10n.Localizable.ContactsUi.title.capitalized
         let titleLabel = DynamicFontLabel(
                      text: title,
                      fontSpec: .headerSemiboldFont,
-                     color: SemanticColors.Label.textDefault)
+                     color: LabelColors.textDefault)
 
         navigationItem.titleView = titleLabel
 
@@ -140,8 +144,8 @@ final class ContactsViewController: UIViewController {
         tableView.sectionIndexBackgroundColor = .clear
         tableView.sectionIndexColor = .accent()
 
-        bottomContainerSeparatorView.backgroundColor = SemanticColors.View.backgroundSeparatorCell
-        bottomContainerView.backgroundColor = SemanticColors.View.backgroundUserCell
+        bottomContainerSeparatorView.backgroundColor = ViewColors.backgroundSeparatorCell
+        bottomContainerView.backgroundColor = ViewColors.backgroundUserCell
     }
 
     // MARK: - Methods
