@@ -208,11 +208,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-BackendEnvironmentTypeOverrideKey staging"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--persist-backend-type"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-UseAnalytics 1"
