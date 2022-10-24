@@ -99,7 +99,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private func configureSubviews() {
         // countryPickerButton
         countryPickerButton.accessibilityIdentifier = "CountryPickerButton"
-        countryPickerButton.titleLabel?.font = FontSpec.smallRegularFont.font!
+        countryPickerButton.titleLabel?.font = FontSpec.normalLightFont.font!
         countryPickerButton.contentHorizontalAlignment = UIApplication.isLeftToRightLayout ? .left : .right
         countryPickerButton.addTarget(self, action: #selector(handleCountryButtonTap), for: .touchUpInside)
         countryPickerButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
