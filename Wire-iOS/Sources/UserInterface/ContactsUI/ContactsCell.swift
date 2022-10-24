@@ -187,16 +187,16 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
-            ])
+        ])
 
         [actionButton, buttonSpacer].prepareForLayout()
         NSLayoutConstraint.activate([
-          buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
-          buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),
+            buttonSpacer.topAnchor.constraint(equalTo: actionButton.topAnchor),
+            buttonSpacer.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor),
 
-          actionButton.widthAnchor.constraint(equalToConstant: actionButtonWidth),
-          buttonSpacer.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
-          buttonSpacer.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -buttonMargin)
+            actionButton.widthAnchor.constraint(equalToConstant: actionButtonWidth),
+            buttonSpacer.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
+            buttonSpacer.leadingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -buttonMargin)
         ])
     }
 
@@ -240,6 +240,8 @@ extension ContactsCell: UserCellSubtitleProtocol {
 
 extension ContactsCell {
 
+    typealias ContactsUIActionButton = L10n.Localizable.ContactsUi.ActionButton
+
     enum Action {
 
         case open
@@ -248,9 +250,9 @@ extension ContactsCell {
         var localizedDescription: String {
             switch self {
             case .open:
-                return "contacts_ui.action_button.open".localized.capitalized
+                return ContactsUIActionButton.open.capitalized
             case .invite:
-                return "contacts_ui.action_button.invite".localized.capitalized
+                return ContactsUIActionButton.invite.capitalized
             }
         }
     }
