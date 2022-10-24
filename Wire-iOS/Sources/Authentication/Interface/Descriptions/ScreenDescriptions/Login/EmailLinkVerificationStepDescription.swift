@@ -63,7 +63,7 @@ final class EmailLinkVerificationMainView: NSObject, ViewDescriptor, ValueSubmis
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
 
-        let button = SolidButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
+        let button = SolidButtonDescription(title: L10n.Localizable.Team.ActivationCode.Button.resend.capitalized, accessibilityIdentifier: "resend_button")
         button.valueSubmitted = valueSubmitted
 
         let buttonView = button.create()

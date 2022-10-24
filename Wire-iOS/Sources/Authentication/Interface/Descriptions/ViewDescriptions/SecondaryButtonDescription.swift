@@ -47,7 +47,6 @@ extension SecondaryButtonDescription: ViewDescriptor {
         ])
 
         return button
-
     }
 
     @objc dynamic func buttonTapped(_ sender: UIButton) {
