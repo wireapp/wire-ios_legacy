@@ -58,6 +58,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
 
         title = "group_details.notification_options_cell.title".localized(uppercased: true)
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.NotificationConversationSettings.CloseButton.description
 
         configureSubviews()
         configureConstraints()
