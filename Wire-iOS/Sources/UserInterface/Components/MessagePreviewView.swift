@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 extension ZMConversationMessage {
     func replyPreview() -> UIView? {
@@ -51,7 +52,7 @@ extension UITextView {
         textView.isSelectable = true
 
         textView.backgroundColor = .clear
-        textView.textColor = .from(scheme: .textForeground)
+        textView.textColor = SemanticColors.SearchBar.textInputView
 
         textView.setContentCompressionResistancePriority(.required, for: .vertical)
 
@@ -59,21 +60,15 @@ extension UITextView {
     }
 }
 
-final class MessageThumbnailPreviewView: UIView, Themeable {
+final class MessageThumbnailPreviewView: UIView {
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private let imagePreview = ImageResourceView()
     private var observerToken: Any?
     private let displaySender: Bool
+    private let iconColor = SemanticColors.Icon.foregroundDefault
 
     let message: ZMConversationMessage
-
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
 
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
@@ -102,8 +97,8 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
 
         if displaySender {
             allViews.append(senderLabel)
-            senderLabel.font = .mediumSemiboldFont
-            senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
+            senderLabel.font = FontSpec.mediumSemiboldFont.font!
+            senderLabel.textColor = SemanticColors.Label.textDefault
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             senderLabel.isAccessibilityElement = true
             senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
@@ -115,7 +110,6 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         imagePreview.layer.cornerRadius = 4
         imagePreview.isAccessibilityElement = true
         imagePreview.accessibilityIdentifier = "ThumbnailImage_ReplyPreview"
-
         allViews.prepareForLayout()
         allViews.forEach(addSubview)
     }
@@ -150,7 +144,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
 
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
-            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: iconColor, iconSize: 8))
         } else {
             return NSAttributedString()
         }
@@ -159,15 +153,15 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
     private func updateForMessage() {
         typealias MessagePreview = L10n.Localizable.Conversation.InputBar.MessagePreview
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                         .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
+                                                         .foregroundColor: SemanticColors.Label.textDefault]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
         imagePreview.isHidden = !message.canBeShared
 
         if message.isImage {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                             .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
-            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+                                                             .foregroundColor: SemanticColors.Label.textDefault]
+            let imageIcon = NSTextAttachment.textAttachment(for: .photo, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.image.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
@@ -175,7 +169,7 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
                 imagePreview.setImageResource(imageResource)
             }
         } else if message.isVideo, let fileMessageData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .camera, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + MessagePreview.video.localizedUppercase
             contentTextView.attributedText = initialString && attributes
 
@@ -185,7 +179,9 @@ final class MessageThumbnailPreviewView: UIView, Themeable {
         }
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         updateForMessage()
     }
 
@@ -205,21 +201,15 @@ extension MessageThumbnailPreviewView: ZMMessageObserver {
     }
 }
 
-final class MessagePreviewView: UIView, Themeable {
+final class MessagePreviewView: UIView {
 
     private let senderLabel = UILabel()
     private let contentTextView = UITextView.previewTextView()
     private var observerToken: Any?
     private let displaySender: Bool
+    private let iconColor = SemanticColors.Icon.foregroundDefault
 
     let message: ZMConversationMessage
-
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
 
     init(message: ZMConversationMessage, displaySender: Bool = true) {
         require(message.canBeQuoted || !displaySender)
@@ -243,16 +233,14 @@ final class MessagePreviewView: UIView, Themeable {
 
     private func setupSubviews() {
         var allViews: [UIView] = [contentTextView]
-
         if displaySender {
             allViews.append(senderLabel)
-            senderLabel.font = .mediumSemiboldFont
-            senderLabel.textColor = .from(scheme: .textForeground, variant: colorSchemeVariant)
+            senderLabel.font = FontSpec.mediumSemiboldFont.font!
+            senderLabel.textColor = SemanticColors.Label.textDefault
             senderLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             senderLabel.isAccessibilityElement = true
             senderLabel.accessibilityIdentifier = "SenderLabel_ReplyPreview"
         }
-
         allViews.prepareForLayout()
         allViews.forEach(self.addSubview)
     }
@@ -280,37 +268,39 @@ final class MessagePreviewView: UIView, Themeable {
 
     private func editIcon() -> NSAttributedString {
         if message.updatedAt != nil {
-            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: .from(scheme: .textForeground, variant: colorSchemeVariant), iconSize: 8))
+            return "  " + NSAttributedString(attachment: NSTextAttachment.textAttachment(for: .pencil, with: iconColor, iconSize: 8))
         } else {
             return NSAttributedString()
         }
     }
 
     private func updateForMessage() {
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.smallSemiboldFont,
-                                                         .foregroundColor: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)]
+        let attributes: [NSAttributedString.Key: Any] = [.font: FontSpec.smallSemiboldFont.font!,
+                                                         .foregroundColor: SemanticColors.Label.textDefault]
 
         senderLabel.attributedText = (message.senderName && attributes) + self.editIcon()
 
         if let textMessageData = message.textMessageData {
-            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true, variant: colorSchemeVariant)
+            contentTextView.attributedText = NSAttributedString.formatForPreview(message: textMessageData, inputMode: true)
         } else if let location = message.locationMessageData {
 
-            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .locationPin, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (location.name ?? "conversation.input_bar.message_preview.location".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         } else if message.isAudio {
-            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .microphone, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + "conversation.input_bar.message_preview.audio".localized.localizedUppercase
             contentTextView.attributedText = initialString && attributes
         } else if let fileData = message.fileMessageData {
-            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: .from(scheme: .textForeground, variant: colorSchemeVariant), verticalCorrection: -1)
+            let imageIcon = NSTextAttachment.textAttachment(for: .document, with: iconColor, verticalCorrection: -1)
             let initialString = NSAttributedString(attachment: imageIcon) + "  " + (fileData.filename ?? "conversation.input_bar.message_preview.file".localized).localizedUppercase
             contentTextView.attributedText = initialString && attributes
         }
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle else { return }
         updateForMessage()
     }
 
