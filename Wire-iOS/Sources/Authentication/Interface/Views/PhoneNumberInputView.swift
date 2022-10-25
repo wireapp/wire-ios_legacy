@@ -79,6 +79,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private let countryPickerButton = IconButton()
 
     private let inputStack = UIStackView()
+    private let loginButton = Button(style: .accentColorTextButtonStyle,
+                                     cornerRadius: 16,
+                                     fontSpec: .normalSemiboldFont)
     private let countryCodeInputView = IconButton()
     private let textField = ValidatedTextField(kind: .phoneNumber, leftInset: 8, style: .default)
 
@@ -132,6 +135,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
+        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title, for: .normal)
+        loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
+        addSubview(loginButton)
 
         backgroundColor = SemanticColors.View.backgroundDefault
     }
@@ -139,6 +145,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private func configureConstraints() {
         inputStack.translatesAutoresizingMaskIntoConstraints = false
         countryPickerButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // countryPickerStack
@@ -155,7 +162,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
             // dimentions
             textField.heightAnchor.constraint(equalToConstant: 48),
-            countryCodeInputView.widthAnchor.constraint(equalToConstant: 60)
+            countryCodeInputView.widthAnchor.constraint(equalToConstant: 60),
+
+            loginButton.topAnchor.constraint(equalTo: inputStack.bottomAnchor, constant: 20),
+            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 
@@ -298,6 +310,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     @objc private func handleCountryButtonTap() {
         delegate?.phoneNumberInputViewDidRequestCountryPicker(self)
+    }
+
+    @objc private func handleLoginButtonTap(_ sender: UIButton!) {
+        submitValue()
     }
 
     @objc private func handleConfirmButtonTap() {
