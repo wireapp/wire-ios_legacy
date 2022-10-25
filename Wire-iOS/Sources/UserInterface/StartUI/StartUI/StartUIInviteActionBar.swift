@@ -20,16 +20,15 @@ import UIKit
 
 final class StartUIInviteActionBar: UIView {
 
-    var backgroundView: UIVisualEffectView?
     var bottomEdgeConstraint: NSLayoutConstraint!
 
-    private(set) var inviteButton: LegacyButton!
+    private(set) var inviteButton: Button!
 
     private let padding: CGFloat = 12
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        backgroundColor = SemanticColors.View.backgroundUserCell
 
         createInviteButton()
         createConstraints()
@@ -43,10 +42,12 @@ final class StartUIInviteActionBar: UIView {
     }
 
     private func createInviteButton() {
-        inviteButton = Button(style: .accentColorTextButtonStyle)
+        inviteButton = Button(style: .accentColorTextButtonStyle,
+                              cornerRadius: 16,
+                              fontSpec: .mediumSemiboldFont)
         inviteButton.titleEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 3, right: 8)
+        inviteButton.setTitle(L10n.Localizable.Peoplepicker.inviteMorePeople, for: .normal)
         addSubview(inviteButton)
-        inviteButton.setTitle("peoplepicker.invite_more_people".localized, for: .normal)
     }
 
     override var isHidden: Bool {
@@ -71,7 +72,7 @@ final class StartUIInviteActionBar: UIView {
         bottomEdgeConstraint = inviteButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(padding + UIScreen.safeArea.bottom))
         bottomEdgeConstraint.isActive = true
 
-        inviteButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        inviteButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
     }
 
     // MARK: - UIKeyboard notifications
