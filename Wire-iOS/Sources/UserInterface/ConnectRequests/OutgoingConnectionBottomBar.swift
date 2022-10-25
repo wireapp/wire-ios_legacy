@@ -25,8 +25,8 @@ enum OutgoingConnectionBottomBarAction: UInt {
 
 final class OutgoingConnectionViewController: UIViewController {
 
-    private let cancelButton = IconButton(style: .default)
-    private let archiveButton = IconButton(style: .default)
+    private let cancelButton = IconButton()
+    private let archiveButton = IconButton()
 
     var buttonCallback: ((OutgoingConnectionBottomBarAction) -> Void)?
 
@@ -42,6 +42,7 @@ final class OutgoingConnectionViewController: UIViewController {
     }
 
     private func setupViews() {
+        self.view.backgroundColor = SemanticColors.View.backgroundConversationView
         setupCancelButton()
         setupArchiveButton()
         [cancelButton, archiveButton].forEach(view.addSubview)
@@ -50,9 +51,11 @@ final class OutgoingConnectionViewController: UIViewController {
     private func setupCancelButton() {
         cancelButton.accessibilityLabel = "cancel connection"
         cancelButton.setIcon(.undo, size: .tiny, for: .normal)
-        cancelButton.setTitle("profile.cancel_connection_button_title".localized(uppercased: true), for: .normal)
-        cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
-        cancelButton.setTitleColor(UIColor.from(scheme: .textForeground), for: .normal)
+        cancelButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
+        cancelButton.setIconColor(SemanticColors.Icon.foregroundDefault.withAlphaComponent(0.4), for: .highlighted)
+        cancelButton.setTitle("profile.cancel_connection_button_title".localized, for: .normal)
+        cancelButton.titleLabel?.font = FontSpec.normalSemiboldFont.font!
+        cancelButton.setTitleColor(SemanticColors.Label.textDefault, for: .normal)
         cancelButton.setTitleImageSpacing(24)
         cancelButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
@@ -60,6 +63,8 @@ final class OutgoingConnectionViewController: UIViewController {
     private func setupArchiveButton() {
         archiveButton.accessibilityLabel = "archive connection"
         archiveButton.setIcon(.archive, size: .tiny, for: .normal)
+        archiveButton.setIconColor(SemanticColors.Icon.foregroundDefault, for: .normal)
+        archiveButton.setIconColor(SemanticColors.Icon.foregroundDefault.withAlphaComponent(0.4), for: .highlighted)
         archiveButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 
