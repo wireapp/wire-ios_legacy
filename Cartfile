@@ -1,7 +1,7 @@
 github "wireapp/appcenter-sdk-apple" "4.3.0"
 github "wireapp/countly-sdk-ios" "20.11.1_xcframework"
 github "wireapp/DifferenceKit" "1.1.5_xcframework"
-github "wireapp/Down" "2.3.2_Xcode12.4_module_stability"
+github "wireapp/Down" "2.3.3"
 github "wireapp/FLAnimatedImage" "1.0.12_xcframework"
 github "wireapp/FormatterKit" "1.8.1_xcframework"
 github "wireapp/wire-ios-canvas" ~> 16.0.0

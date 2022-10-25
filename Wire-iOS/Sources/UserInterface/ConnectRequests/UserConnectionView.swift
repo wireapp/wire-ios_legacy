@@ -31,7 +31,7 @@ final class UserConnectionView: UIView, Copyable {
         return AddressBookCorrelationFormatter(
             lightFont: FontSpec(.small, .light),
             boldFont: FontSpec(.small, .medium),
-            color: UIColor.from(scheme: .textDimmed)
+            color: SemanticColors.Label.textDefault
         )
     }()
 
@@ -61,6 +61,7 @@ final class UserConnectionView: UIView, Copyable {
     }
 
     private func setup() {
+        self.backgroundColor = SemanticColors.View.backgroundConversationView
         [firstLabel, secondLabel].forEach {
             $0.numberOfLines = 0
             $0.textAlignment = .center
@@ -100,7 +101,7 @@ final class UserConnectionView: UIView, Copyable {
         guard let handle = user.handleDisplayString(withDomain: user.isFederated), !handle.isEmpty else { return nil }
 
         return handle && [
-            .foregroundColor: UIColor.from(scheme: .textDimmed),
+            .foregroundColor: SemanticColors.Label.textDefault,
             .font: UIFont.smallSemiboldFont
         ]
     }

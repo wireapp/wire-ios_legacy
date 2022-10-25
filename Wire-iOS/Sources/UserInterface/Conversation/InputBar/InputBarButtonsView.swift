@@ -136,6 +136,8 @@ final class InputBarButtonsView: UIView {
 
         // Drop existing constraints
         buttons.forEach {
+            $0.roundCorners(edge: .leading)
+            $0.roundCorners(edge: .trailing)
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
