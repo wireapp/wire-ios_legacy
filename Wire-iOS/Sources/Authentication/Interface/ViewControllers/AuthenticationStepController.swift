@@ -371,6 +371,12 @@ class AuthenticationStepController: AuthenticationStepViewController {
         return (mainView as? MagicTappable)?.performMagicTap() == true
     }
 
+    // MARK: - AuthenticationCoordinatedViewController
+
+    func executeAction(_ action: AuthenticationCoordinatorAction) {
+        // No op
+    }
+
 }
 
 // MARK: - Event Handling
@@ -381,10 +387,6 @@ extension AuthenticationStepController {
 
     func displayError(_ error: Error) {
         // no-op
-    }
-
-    func executeAction(_ action: AuthenticationCoordinatorAction) {
-        // No op
     }
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
