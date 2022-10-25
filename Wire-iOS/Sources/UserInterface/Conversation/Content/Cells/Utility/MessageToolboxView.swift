@@ -86,7 +86,7 @@ final class MessageToolboxView: UIView {
     private let resendButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_resend".localized,
-                                                 attributes: [.foregroundColor: MessageActionsColor.textWarning,
+                                                 attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
 
@@ -100,7 +100,7 @@ final class MessageToolboxView: UIView {
     private let deleteButton: UIButton = {
         let button = UIButton()
         let attributedTitle = NSAttributedString(string: "content.system.failedtosend_message_timestamp_delete".localized,
-                                                 attributes: [.foregroundColor: MessageActionsColor.textWarning,
+                                                 attributes: [.foregroundColor: MessageActionsColor.textErrorDefault,
                                                               .underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                                               .font: UIFont.smallSemiboldFont])
 

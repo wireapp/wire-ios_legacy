@@ -18,13 +18,15 @@
 
 import Foundation
 
-class VerifyPhoneStepSecondaryView: AuthenticationSecondaryViewDescription {
+class VerifyPhoneStepSecondaryView: AuthenticationFooterViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
+    typealias TeamActivationCode = L10n.Localizable.Team.ActivationCode.Button
+
     init(phoneNumber: String, allowChange: Bool) {
-        let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        let changePhoneNumber = ButtonDescription(title: "team.activation_code.button.change_phone".localized, accessibilityIdentifier: "change_phone_button")
+        let resendCode = SecondaryButtonDescription(title: TeamActivationCode.resend.capitalized, accessibilityIdentifier: "resend_button")
+        let changePhoneNumber = SecondaryButtonDescription(title: TeamActivationCode.changePhone.capitalized, accessibilityIdentifier: "change_phone_button")
         views = allowChange ? [resendCode, changePhoneNumber] : [resendCode]
 
         resendCode.buttonTapped = { [weak self] in
@@ -44,6 +46,7 @@ final class VerifyPhoneStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(phoneNumber: String, allowChange: Bool) {
         self.phoneNumber = phoneNumber
@@ -51,7 +54,8 @@ final class VerifyPhoneStepDescription: AuthenticationStepDescription {
         mainView = VerificationCodeFieldDescription()
         headline = "team.phone_activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: phoneNumber)
-        secondaryView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber, allowChange: allowChange)
+        secondaryView = nil
+        footerView = VerifyPhoneStepSecondaryView(phoneNumber: phoneNumber, allowChange: allowChange)
     }
 
     func shouldSkipFromNavigation() -> Bool {

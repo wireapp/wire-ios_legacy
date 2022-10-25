@@ -29,14 +29,18 @@ class ClientUnregisterInvitationStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
+
+    typealias TooManyDevices = L10n.Localizable.Registration.Signin.TooManyDevices
 
     init() {
         backButton = BackButtonDescription()
-        headline = "registration.signin.too_many_devices.title".localized
-        subtext = "registration.signin.too_many_devices.subtitle".localized
+        headline = TooManyDevices.title
+        subtext = TooManyDevices.subtitle
 
-        mainView = SolidButtonDescription(title: "registration.signin.too_many_devices.manage_button.title".localized, accessibilityIdentifier: "manage_devices")
+        mainView = SolidButtonDescription(title: TooManyDevices.ManageButton.title.capitalized, accessibilityIdentifier: "manage_devices")
         secondaryView = nil
+        footerView = nil
     }
 
 }

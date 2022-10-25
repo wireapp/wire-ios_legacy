@@ -22,13 +22,15 @@ import UIKit
  * The view that displays the restore from backup button.
  */
 
-class BackupRestoreStepDescriptionSecondaryView: AuthenticationSecondaryViewDescription {
+class BackupRestoreStepDescriptionFooterView: AuthenticationFooterViewDescription {
 
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
+    typealias NoHistory = L10n.Localizable.Registration.NoHistory
+
     init() {
-        let restoreButton = ButtonDescription(title: "registration.no_history.restore_backup".localized(uppercased: true), accessibilityIdentifier: "restore_backup")
+        let restoreButton = SecondaryButtonDescription(title: NoHistory.restoreBackup.capitalized, accessibilityIdentifier: "restore_backup")
         views = [restoreButton]
 
         restoreButton.buttonTapped = { [weak self] in
@@ -47,11 +49,12 @@ class BackupRestoreStepDescription: AuthenticationStepDescription {
     let headline: String
     let subtext: String?
     let secondaryView: AuthenticationSecondaryViewDescription?
+    let footerView: AuthenticationFooterViewDescription?
 
     init(context: NoHistoryContext) {
         backButton = BackButtonDescription()
         mainView = SolidButtonDescription(title: "registration.no_history.got_it".localized, accessibilityIdentifier: "ignore_backup")
-
+        secondaryView = nil
         switch context {
         case .newDevice:
             headline = "registration.no_history.hero".localized
@@ -62,10 +65,12 @@ class BackupRestoreStepDescription: AuthenticationStepDescription {
         }
 
         guard SecurityFlags.backup.isEnabled else {
-            secondaryView = nil
+            footerView = nil
             return
         }
-        secondaryView = BackupRestoreStepDescriptionSecondaryView()
+
+        footerView = BackupRestoreStepDescriptionFooterView()
+
     }
 
 }

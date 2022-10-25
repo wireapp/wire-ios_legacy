@@ -39,6 +39,7 @@ final class SelfProfileViewController: UIViewController {
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
+    private let profileImagePicker = ProfileImagePickerManager()
 
     // MARK: - AppLock
     private var callback: ResultHandler?
@@ -184,8 +185,9 @@ final class SelfProfileViewController: UIViewController {
 
     @objc func userDidTapProfileImage(sender: UserImageView) {
         guard userCanSetProfilePicture else { return }
-        let profileImageController = ProfileSelfPictureViewController()
-        self.present(profileImageController, animated: true, completion: .none)
+
+        let alert = profileImagePicker.selectProfileImage()
+        present(alert, animated: true)
     }
 
     override func accessibilityPerformEscape() -> Bool {
