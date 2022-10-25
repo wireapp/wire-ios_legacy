@@ -81,6 +81,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
 
         title = "group_details.timeout_options_cell.title".localized(uppercased: true)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.SelfDeletingMessagesConversationSettings.CloseButton.description
 
         configureSubviews()
         configureConstraints()
