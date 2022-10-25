@@ -107,7 +107,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            // no op
+            super.accessibilityLabel = newValue
         }
     }
 
@@ -122,7 +122,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
 
         set {
-            // no op
+            super.accessibilityValue = newValue
         }
     }
 
