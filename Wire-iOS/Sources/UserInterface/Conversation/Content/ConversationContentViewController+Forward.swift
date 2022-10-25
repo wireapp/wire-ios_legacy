@@ -125,7 +125,7 @@ extension ZMConversationMessage {
     func previewView() -> UIView? {
         let view = preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = SemanticColors.View.backgroundUserCell
         return view
     }
 }
