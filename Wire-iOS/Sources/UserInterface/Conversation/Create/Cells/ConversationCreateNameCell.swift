@@ -38,6 +38,7 @@ class ConversationCreateNameCell: UICollectionViewCell {
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newgroup.name"
         textField.placeholder = "conversation.create.group_name.placeholder".localized(uppercased: true)
+        textField.accessibilityValue = L10n.Accessibility.CreateConversation.SearchView.description
 
         contentView.addSubview(textField)
         textField.fitIn(view: contentView)

@@ -84,6 +84,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.SelfDeletingMessagesConversationSettings.CloseButton.description
 
         configureSubviews()
         configureConstraints()

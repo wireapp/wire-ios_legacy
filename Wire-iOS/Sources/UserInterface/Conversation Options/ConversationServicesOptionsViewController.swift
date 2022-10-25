@@ -60,6 +60,7 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceConversationSettings.CloseButton.description
     }
 
     @available(*, unavailable)

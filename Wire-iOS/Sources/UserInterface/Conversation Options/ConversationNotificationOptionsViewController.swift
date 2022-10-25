@@ -61,6 +61,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.NotificationConversationSettings.CloseButton.description
 
         configureSubviews()
         configureConstraints()
