@@ -55,6 +55,7 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceConversationSettings.CloseButton.description
     }
 
     @available(*, unavailable)

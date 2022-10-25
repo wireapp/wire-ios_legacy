@@ -55,6 +55,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.GuestConversationSettings.CloseButton.description
         navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
     }
 

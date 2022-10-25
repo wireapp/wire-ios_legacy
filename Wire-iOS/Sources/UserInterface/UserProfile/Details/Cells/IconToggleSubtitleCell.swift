@@ -41,6 +41,35 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
 
     private let subtitleInsets = UIEdgeInsets(top: 16, left: 16, bottom: 24, right: 16)
 
+    override var accessibilityLabel: String? {
+        get {
+            return titleLabel.text
+        }
+
+        set {
+            super.accessibilityLabel = newValue
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return toggle.accessibilityValue
+        }
+
+        set {
+            super.accessibilityValue = newValue
+        }
+    }
+
+    override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            return toggle.accessibilityTraits
+        }
+        set {
+            super.accessibilityTraits = newValue
+        }
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -53,6 +82,12 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func accessibilityActivate() -> Bool {
+        toggle.isOn = !toggle.isOn
+
+        return true
+    }
+
     private func setupViews() {
         [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
         imageContainer.addSubview(iconImageView)
@@ -61,7 +96,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         titleLabel.font = FontSpec(.normal, .light).font
-        accessibilityElements = [titleLabel, toggle]
+        isAccessibilityElement = true
     }
 
     private func createConstraints() {
