@@ -34,6 +34,8 @@ protocol PhoneNumberInputViewDelegate: AnyObject {
 
 class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {
 
+    typealias RegistrationEnterPhoneNumber = L10n.Localizable.Registration.EnterPhoneNumber
+
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
@@ -126,8 +128,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         // textField
         textField.textInsets.left = 10
-        textField.placeholder = "registration.enter_phone_number.placeholder".localized
-        textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
+        textField.placeholder = RegistrationEnterPhoneNumber.placeholder.capitalized
+        textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
         textField.delegate = self
@@ -135,7 +137,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
-        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title, for: .normal)
+        loginButton.isUserInteractionEnabled = true
+        loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
         loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
         addSubview(loginButton)
 
@@ -237,10 +240,10 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         updateCountryButtonLabel()
 
         countryPickerButton.accessibilityValue = country.displayName
-        countryPickerButton.accessibilityLabel = "registration.phone_country".localized
+        countryPickerButton.accessibilityLabel = L10n.Localizable.Registration.phoneCountry
 
         countryCodeInputView.setTitle(country.e164PrefixString, for: .normal)
-        countryCodeInputView.accessibilityLabel = "registration.phone_code".localized
+        countryCodeInputView.accessibilityLabel = L10n.Localizable.Registration.phoneCode
         countryCodeInputView.accessibilityValue = country.e164PrefixString
     }
 
