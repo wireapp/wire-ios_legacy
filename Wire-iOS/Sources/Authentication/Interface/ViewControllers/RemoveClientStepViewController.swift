@@ -127,6 +127,10 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         // no-op
     }
 
+    func executeAction(_ action: AuthenticationCoordinatorAction) {
+        // No op
+    }
+
     func displayError(_ error: Error) {
         // no-op
     }

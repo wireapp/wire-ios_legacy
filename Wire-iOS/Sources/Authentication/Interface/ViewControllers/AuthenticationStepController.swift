@@ -182,6 +182,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
         }
 
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
+        secondaryViewsStackView.axis = .vertical
         secondaryViewsStackView.distribution = .equalCentering
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -380,6 +381,10 @@ extension AuthenticationStepController {
 
     func displayError(_ error: Error) {
         // no-op
+    }
+
+    func executeAction(_ action: AuthenticationCoordinatorAction) {
+        // No op
     }
 
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {

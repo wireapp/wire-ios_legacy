@@ -41,10 +41,15 @@ class LoginSecondaryView: AuthenticationSecondaryViewDescription {
 
     init() {
         let resetPasswordButton = UnderlineButtonDescription(title: L10n.Localizable.Signin.forgotPassword.capitalized, accessibilityIdentifier: "forgot_password")
-        views = [resetPasswordButton]
+        let loginButton = SolidButtonDescription(title: L10n.Localizable.Landing.Login.Button.title.capitalized, accessibilityIdentifier: "submit_credentials")
+        views = [resetPasswordButton, loginButton]
 
         resetPasswordButton.buttonTapped = { [weak self] in
             self?.actioner?.executeAction(.openURL(.wr_passwordReset))
+        }
+
+        loginButton.valueSubmitted = { [weak self] _ in
+            self?.actioner?.executeAction(.confirmCredentials)
         }
     }
 

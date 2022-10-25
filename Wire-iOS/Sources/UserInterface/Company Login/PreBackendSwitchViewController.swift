@@ -121,4 +121,9 @@ final class PreBackendSwitchViewController: AuthenticationStepViewController {
     func displayError(_ error: Error) {
         // NO OP
     }
+
+    func executeAction(_ action: AuthenticationCoordinatorAction) {
+        // NO OP
+    }
+
 }

@@ -182,7 +182,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
     // MARK: - Submission
 
-    @objc private func confirmButtonTapped() {
+    @objc func confirmButtonTapped() {
         guard emailValidationError == nil && passwordValidationError == nil else {
             delegate?.textFieldDidSubmitWithValidationError(self)
             return

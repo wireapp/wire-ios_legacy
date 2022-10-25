@@ -38,6 +38,8 @@ protocol AuthenticationCoordinatedViewController: AnyObject {
     /// - Parameter feedbackAction: The action to execute to provide feedback to the user.
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction)
 
+    func executeAction(_ action: AuthenticationCoordinatorAction)
+
     /// The view controller should display information about the specified error.
     ///
     /// - Parameter error: The error to present to the user.
