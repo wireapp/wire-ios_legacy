@@ -78,7 +78,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
         emailField.delegate = self
         emailField.textFieldValidationDelegate = self
-        emailField.placeholder = "email.placeholder".localized(uppercased: true)
+        emailField.placeholder = L10n.Localizable.Email.placeholder.capitalized
         emailField.showConfirmButton = false
         emailField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         emailField.colorSchemeVariant = colorSchemeVariant
@@ -90,7 +90,7 @@ class EmailPasswordTextField: UIView, MagicTappable {
 
         passwordField.delegate = self
         passwordField.textFieldValidationDelegate = self
-        passwordField.placeholder = "password.placeholder".localized(uppercased: true)
+        passwordField.placeholder = L10n.Localizable.Password.placeholder.capitalized
         passwordField.bindConfirmationButton(to: emailField)
         passwordField.addTarget(self, action: #selector(textInputDidChange), for: .editingChanged)
         passwordField.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)

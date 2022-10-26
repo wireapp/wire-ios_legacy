@@ -144,7 +144,6 @@ final class TabBar: UIView {
 
     fileprivate func makeButtonForItem(_ index: Int, _ item: UITabBarItem) -> Tab {
         let tab = Tab()
-        tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
 
         if let accessibilityID = item.accessibilityIdentifier {
