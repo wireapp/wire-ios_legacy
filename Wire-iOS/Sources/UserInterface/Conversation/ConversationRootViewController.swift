@@ -118,12 +118,14 @@ final class ConversationRootViewController: UIViewController {
 
         shouldAnimateNetworkStatusView = true
         navBarContainer.navigationBar.accessibilityElementsHidden = false
+        conversationViewController?.view.accessibilityElementsHidden = false
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         navBarContainer.navigationBar.accessibilityElementsHidden = true
+        conversationViewController?.view.accessibilityElementsHidden = true
     }
 
     private var child: UIViewController? {
