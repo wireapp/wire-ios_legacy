@@ -34,7 +34,7 @@ protocol Shareable {
     func previewView() -> UIView?
 }
 
-final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate {
+final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let destinations: [D]
     let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -78,13 +78,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         self.showPreview = showPreview
         self.allowsMultipleSelection = allowsMultipleSelection
         super.init(nibName: nil, bundle: nil)
-        transitioningDelegate = self
-
-        let messagePreviewAppearance = MessagePreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
-        messagePreviewAppearance.colorSchemeVariant = .light
-
-        let messageThumbnailPreviewAppearance = MessageThumbnailPreviewView.appearance(whenContainedInInstancesOf: [ShareViewController.self])
-        messageThumbnailPreviewAppearance.colorSchemeVariant = .light
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
@@ -103,21 +96,20 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
         fatalError("init(coder:) has not been implemented")
     }
 
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     let containerView  = UIView()
     var shareablePreviewView: UIView?
     var shareablePreviewWrapper: UIView?
     let searchIcon = UIImageView()
     let topSeparatorView = OverflowSeparatorView()
     let destinationsTableView = UITableView()
-    let closeButton = IconButton(style: .default, variant: .dark)
-    let sendButton = IconButton(style: .default, variant: .light)
+    let closeButton = IconButton(style: .default)
+    let sendButton = IconButton(style: .default)
 
     let clearButton = IconButton(style: .default)
     let tokenField = TokenField()
     let bottomSeparatorLine: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.from(scheme: .separator)
+        view.backgroundColor = SemanticColors.View.backgroundSeparatorCell
         return view
     }()
 
@@ -218,16 +210,6 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparatorView.scrollViewDidScroll(scrollView: scrollView)
-    }
-
-    // MARK: - UIViewControllerTransitioningDelegate
-
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: false)
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
 
     @objc

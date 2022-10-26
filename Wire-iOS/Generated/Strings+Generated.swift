@@ -57,6 +57,12 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "accountSettings.backButton.description")
       }
     }
+    internal enum AddParticipantsConversationSettings {
+      internal enum CloseButton {
+        /// Close add participants option
+        internal static let description = L10n.tr("Accessibility", "addParticipantsConversationSettings.closeButton.description")
+      }
+    }
     internal enum AdvancedSettings {
       internal enum BackButton {
         /// Go back to Advanced
@@ -152,9 +158,29 @@ internal enum L10n {
       }
     }
     internal enum ConversationDetails {
+      internal enum CloseButton {
+        /// Close conversation details
+        internal static let description = L10n.tr("Accessibility", "conversationDetails.closeButton.description")
+      }
       internal enum MessageTimeoutState {
         /// Selected
         internal static let description = L10n.tr("Accessibility", "conversationDetails.messageTimeoutState.description")
+      }
+      internal enum MoreButton {
+        /// Open conversation options
+        internal static let description = L10n.tr("Accessibility", "conversationDetails.moreButton.description")
+      }
+      internal enum OptionButton {
+        /// Double tap to open settings
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.optionButton.hint")
+      }
+      internal enum ParticipantCell {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.participantCell.hint")
+      }
+      internal enum ShowParticipantsButton {
+        /// Double tap to open participant list
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.showParticipantsButton.hint")
       }
     }
     internal enum ConversationsList {
@@ -235,6 +261,32 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationsListHeader.expandedButton.description")
       }
     }
+    internal enum CreateConversation {
+      internal enum BackButton {
+        /// Go back to contact list
+        internal static let description = L10n.tr("Accessibility", "createConversation.backButton.description")
+      }
+      internal enum HideSettings {
+        /// Double tap to hide settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.hideSettings.hint")
+      }
+      internal enum OpenSettings {
+        /// Double tap to open settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.openSettings.hint")
+      }
+      internal enum SearchView {
+        /// Type group name
+        internal static let description = L10n.tr("Accessibility", "createConversation.searchView.description")
+      }
+      internal enum SelectedUser {
+        /// Double tap to deselect
+        internal static let hint = L10n.tr("Accessibility", "createConversation.selectedUser.hint")
+      }
+      internal enum UnselectedUser {
+        /// Double tap to select
+        internal static let hint = L10n.tr("Accessibility", "createConversation.unselectedUser.hint")
+      }
+    }
     internal enum DeveloperOptionsSettings {
       internal enum BackButton {
         /// Go back to Developer options
@@ -259,6 +311,12 @@ internal enum L10n {
         internal static let hint = L10n.tr("Accessibility", "deviceDetails.whyVerifyFingerprint.hint")
       }
     }
+    internal enum GuestConversationSettings {
+      internal enum CloseButton {
+        /// Close guest settings
+        internal static let description = L10n.tr("Accessibility", "guestConversationSettings.closeButton.description")
+      }
+    }
     internal enum LicenseDetailsSettings {
       internal enum BackButton {
         /// Go back to License details
@@ -269,6 +327,12 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to License information
         internal static let description = L10n.tr("Accessibility", "licenseInformationSettings.backButton.description")
+      }
+    }
+    internal enum NotificationConversationSettings {
+      internal enum CloseButton {
+        /// Close notification settings
+        internal static let description = L10n.tr("Accessibility", "notificationConversationSettings.closeButton.description")
       }
     }
     internal enum OptionsSettings {
@@ -291,6 +355,18 @@ internal enum L10n {
       internal enum ClearButton {
         /// Clear
         internal static let description = L10n.tr("Accessibility", "searchView.clearButton.description")
+      }
+    }
+    internal enum SelfDeletingMessagesConversationSettings {
+      internal enum CloseButton {
+        /// Close settings for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "selfDeletingMessagesConversationSettings.closeButton.description")
+      }
+    }
+    internal enum ServiceConversationSettings {
+      internal enum CloseButton {
+        /// Close service settings
+        internal static let description = L10n.tr("Accessibility", "serviceConversationSettings.closeButton.description")
       }
     }
     internal enum ServiceDetails {
