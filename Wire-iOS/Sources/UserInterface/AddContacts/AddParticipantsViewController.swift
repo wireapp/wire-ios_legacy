@@ -300,6 +300,7 @@ final class AddParticipantsViewController: UIViewController {
         }
         updateTitle()
         navigationItem.rightBarButtonItem = viewModel.rightNavigationItem(target: self, action: #selector(rightNavigationItemTapped))
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.AddParticipantsConversationSettings.CloseButton.description
     }
 
     fileprivate func updateSelectionValues() {

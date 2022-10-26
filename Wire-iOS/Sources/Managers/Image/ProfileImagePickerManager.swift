@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@
 //
 
 import Foundation
-import UIKit
-import WireUtilities
+import WireSyncEngine
 
-class ClearBackgroundNavigationController: NavigationController {
+class ProfileImagePickerManager: ImagePickerManager {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .clear
-        navigationBar.tintColor = .white
+    func selectProfileImage() -> UIAlertController {
+        let actionSheet = showActionSheet { image in
+            guard let jpegData = image.jpegData else {
+                return
+            }
+            ZMUserSession.shared()?.enqueue({
+                ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
+            })
+        }
+        return actionSheet
     }
 
 }
