@@ -137,7 +137,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         inputStack.addArrangedSubview(textField)
 
         selectCountry(.defaultCountry)
-        loginButton.isUserInteractionEnabled = true
         loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
         loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
         addSubview(loginButton)
