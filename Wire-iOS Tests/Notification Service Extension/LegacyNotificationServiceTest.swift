@@ -31,7 +31,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
     var mockConversation: ZMConversation!
     var currentUserIdentifier: UUID!
 
-    var callEventHandlerMock: CallEventHandlerMock!
+    var callEventHandlerMock: LegacyCallEventHandlerMock!
 
     var otherUser: ZMUser! {
         return coreDataFixture.otherUser
@@ -49,7 +49,7 @@ final class LegacyNotificationServiceTests: XCTestCase {
         super.setUp()
 
         sut = LegacyNotificationService()
-        callEventHandlerMock = CallEventHandlerMock()
+        callEventHandlerMock = LegacyCallEventHandlerMock()
         currentUserIdentifier = UUID.create()
         notificationContent = createNotificationContent()
         request = UNNotificationRequest(identifier: currentUserIdentifier.uuidString,
@@ -190,7 +190,7 @@ extension LegacyNotificationServiceTests {
 
 }
 
-class CallEventHandlerMock: CallEventHandlerProtocol {
+class LegacyCallEventHandlerMock: LegacyCallEventHandlerProtocol {
 
     var reportIncomingVoIPCallCalled: Bool = false
 
