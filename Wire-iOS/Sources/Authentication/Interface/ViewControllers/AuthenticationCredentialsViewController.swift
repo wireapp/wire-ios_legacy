@@ -338,7 +338,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     }
 
     func phoneNumberInputView(_ inputView: PhoneNumberInputView, didValidatePhoneNumber phoneNumber: PhoneNumber, withResult validationError: TextFieldValidator.ValidationError?) {
-        // no-op: handled by the input view directly
+        phoneInputView.loginButton.isEnabled = validationError == nil
     }
 
     func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {

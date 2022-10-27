@@ -81,7 +81,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     private let countryPickerButton = IconButton()
 
     private let inputStack = UIStackView()
-    private let loginButton = Button(style: .accentColorTextButtonStyle,
+    let loginButton = Button(style: .accentColorTextButtonStyle,
                                      cornerRadius: 16,
                                      fontSpec: .normalSemiboldFont)
     private let countryCodeInputView = IconButton()
@@ -140,6 +140,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         // loginButton
         loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
         loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
+        if let text = textField.text, text.isEmpty {
+            loginButton.isEnabled = false
+        }
         addSubview(loginButton)
 
         backgroundColor = SemanticColors.View.backgroundDefault
