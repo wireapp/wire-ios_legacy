@@ -54,9 +54,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.GuestConversationSettings.CloseButton.description
-        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
+        setupNavigationBar()
     }
 
     @available(*, unavailable)
@@ -86,6 +84,15 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
             textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.Label.textDefault
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
+
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.GroupDetails.GuestOptionsCell.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
+
     }
 
     private func createConstraints() {
@@ -105,7 +112,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
+
     }
 
     func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didReceiveError error: Error) {
