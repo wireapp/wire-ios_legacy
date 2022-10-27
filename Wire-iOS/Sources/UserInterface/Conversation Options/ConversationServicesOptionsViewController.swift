@@ -54,7 +54,12 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.GroupDetails.ServicesOptionsCell.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceConversationSettings.CloseButton.description
     }
 
@@ -93,7 +98,6 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
     }
 
     func viewModel(_ viewModel: ConversationServicesOptionsViewModel, didReceiveError error: Error) {
