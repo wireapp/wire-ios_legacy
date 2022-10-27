@@ -131,7 +131,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         textField.placeholder = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder.capitalized
         textField.accessibilityIdentifier = "PhoneNumberField"
-        textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
+        textField.showConfirmButton = false
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
@@ -177,9 +177,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     private func configureValidation() {
-        textField.enableConfirmButton = { [weak self] in
-            self?.validationError == nil
-        }
 
         textField.textFieldValidator.customValidator = { input in
             let phoneNumber = self.country.e164PrefixString + input
