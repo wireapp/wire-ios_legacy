@@ -78,9 +78,12 @@ final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "group_details.timeout_options_cell.title".localized(uppercased: true)
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        let titleLabel = DynamicFontLabel(
+            text: L10n.Localizable.GroupDetails.TimeoutOptionsCell.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.SelfDeletingMessagesConversationSettings.CloseButton.description
 
         configureSubviews()
