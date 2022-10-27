@@ -473,8 +473,9 @@
 		6316C4062654209C00D7E806 /* CallParticipantViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6391628B24F6A39D0054962E /* CallParticipantViewTests.swift */; };
 		6316C415265556C700D7E806 /* CallParticipantDetailsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634273EA24B60D4B00EC2976 /* CallParticipantDetailsViewTests.swift */; };
 		6316C42F2657F0CE00D7E806 /* RoundedBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316C42E2657F0CE00D7E806 /* RoundedBlurView.swift */; };
+		63172F912906C57F00DBECC9 /* CoreCrypto+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D5EA228AE4AA700641551 /* CoreCrypto+Setup.swift */; };
+		63172F932906CA9900DBECC9 /* CoreCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08B347284E33290022830B /* CoreCrypto.swift */; };
 		631D27A2255ADEBF00BCF8C4 /* CallStateExtending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D27A1255ADEBF00BCF8C4 /* CallStateExtending.swift */; };
-		631D5EA328AE4AA700641551 /* CoreCrypto+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D5EA228AE4AA700641551 /* CoreCrypto+Setup.swift */; };
 		631ED088257558A400EFDD05 /* PulsingIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631ED087257558A400EFDD05 /* PulsingIconImageView.swift */; };
 		63256D8224D46456009FC58B /* BitRateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63256D8124D46455009FC58B /* BitRateLabel.swift */; };
 		6328283C24A1100F000748D2 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6328283B24A1100F000748D2 /* IconImageView.swift */; };
@@ -1276,7 +1277,6 @@
 		EE01D08725ADA3D5001DB205 /* AppLockModule.Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08225ADA3D5001DB205 /* AppLockModule.Router.swift */; };
 		EE01D08825ADA3D5001DB205 /* AppLockModule.Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08325ADA3D5001DB205 /* AppLockModule.Interactor.swift */; };
 		EE01D08925ADA3D5001DB205 /* AppLockModule.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01D08425ADA3D5001DB205 /* AppLockModule.View.swift */; };
-		EE08B348284E33290022830B /* CoreCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE08B347284E33290022830B /* CoreCrypto.swift */; };
 		EE08B35B284E41E60022830B /* WireCoreCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE08B358284E41C80022830B /* WireCoreCrypto.framework */; };
 		EE09DE6025B24B2000B515F0 /* AppLockModuleRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE09DE5E25B24B2000B515F0 /* AppLockModuleRouterTests.swift */; };
 		EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */; };
@@ -4766,6 +4766,15 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		63172F922906CA7D00DBECC9 /* MLS */ = {
+			isa = PBXGroup;
+			children = (
+				EE08B347284E33290022830B /* CoreCrypto.swift */,
+				631D5EA228AE4AA700641551 /* CoreCrypto+Setup.swift */,
+			);
+			path = MLS;
+			sourceTree = "<group>";
+		};
 		6328283D24A110AC000748D2 /* IconImageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -7125,8 +7134,6 @@
 		EE08B346284E33180022830B /* MLS */ = {
 			isa = PBXGroup;
 			children = (
-				EE08B347284E33290022830B /* CoreCrypto.swift */,
-				631D5EA228AE4AA700641551 /* CoreCrypto+Setup.swift */,
 			);
 			path = MLS;
 			sourceTree = "<group>";
@@ -7733,6 +7740,7 @@
 		F1FEA14B21DCEB1700790A54 /* WireCommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				63172F922906CA7D00DBECC9 /* MLS */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
 				CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */,
 				06F9864825CC1518005572C5 /* AccessoryTextField.swift */,
@@ -8768,7 +8776,6 @@
 				EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */,
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
 				5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */,
-				631D5EA328AE4AA700641551 /* CoreCrypto+Setup.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				16A94AF8209B5334008A5718 /* CallGridViewController.swift in Sources */,
 				7C440E7A23472E9900D91B5F /* FolderCreationNameCell.swift in Sources */,
@@ -8922,7 +8929,6 @@
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
 				E9D6C37D289A9DC100861E4C /* StylableButton.swift in Sources */,
 				EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */,
-				EE08B348284E33290022830B /* CoreCrypto.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				A90BECF124A23E6500E5C008 /* LinkViewDelegate.swift in Sources */,
 				A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */,
@@ -9819,11 +9825,13 @@
 				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
+				63172F912906C57F00DBECC9 /* CoreCrypto+Setup.swift in Sources */,
 				5E39FC6F2260BAEC00C682B8 /* UIImage+StyleKit.swift in Sources */,
 				E9EBE0D9281958BE0058C793 /* FontSpec.swift in Sources */,
 				A92E731E2407F587007C1FFE /* String+Localized.swift in Sources */,
 				E9EBE0D428194F890058C793 /* FontScheme+DynamicType.swift in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
+				63172F932906CA9900DBECC9 /* CoreCrypto.swift in Sources */,
 				F15650B321DD025A00210504 /* URL+Backup.swift in Sources */,
 				A9BBD8CE26A5D47C00C768B1 /* UIEdgeInsets+directionAware.swift in Sources */,
 				A9CF5F58242B98B300920877 /* NetworkStatus.swift in Sources */,

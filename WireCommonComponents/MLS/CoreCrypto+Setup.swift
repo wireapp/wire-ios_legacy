@@ -21,7 +21,7 @@ import WireCoreCrypto
 import WireSyncEngine
 
 extension CoreCrypto {
-    static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCrypto {
+    public static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCrypto {
         let coreCrypto =  try CoreCrypto(
             path: configuration.path,
             key: configuration.key,
