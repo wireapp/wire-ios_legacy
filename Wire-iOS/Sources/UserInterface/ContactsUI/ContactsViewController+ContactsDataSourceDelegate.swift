@@ -24,8 +24,6 @@ extension ContactsViewController: ContactsDataSourceDelegate {
 
     func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: ContactsCell.self, for: indexPath)
-        cell.contentBackgroundColor = .clear
-        cell.colorSchemeVariant = .dark
         cell.user = user
 
         cell.actionButtonHandler = { [weak self] user, action in
