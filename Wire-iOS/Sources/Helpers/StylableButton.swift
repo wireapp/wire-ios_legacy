@@ -44,7 +44,7 @@ class StylableButton: UIButton, Stylable {
         let normalStateColor = style.normalStateColors.border?.cgColor ?? UIColor.clear.cgColor
         let highlightedStateColor = style.highlightedStateColors.border?.cgColor ?? UIColor.clear.cgColor
         self.layer.borderWidth = 1
-        self.layer.borderColor = isHighlighted ? normalStateColor : highlightedStateColor
+        self.layer.borderColor = isHighlighted ? highlightedStateColor : normalStateColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
