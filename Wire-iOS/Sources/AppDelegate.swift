@@ -38,6 +38,10 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private lazy var voIPPushManager: VoIPPushManager = {
+        return VoIPPushManager(requiredPushTokenType: requiredPushTokenType)
+    }()
+
     // MARK: - Private Property
     private var launchOperations: [LaunchSequenceOperation] = [
         BackendEnvironmentOperation(),
@@ -107,6 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        voIPPushManager.registerForVoIPPushes()
+
         ZMSLog.switchCurrentLogToPrevious()
 
         zmLog.info("application:didFinishLaunchingWithOptions START \(String(describing: launchOptions)) (applicationState = \(application.applicationState.rawValue))")
@@ -264,6 +270,7 @@ private extension AppDelegate {
         /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
+        // TODO: [John] Pass in buffer
         return SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
@@ -274,7 +281,8 @@ private extension AppDelegate {
             environment: BackendEnvironment.shared,
             configuration: configuration,
             detector: jailbreakDetector,
-            requiredPushTokenType: requiredPushTokenType
+            requiredPushTokenType: requiredPushTokenType,
+            callKitManager: voIPPushManager.callKitManager
         )
     }
 
