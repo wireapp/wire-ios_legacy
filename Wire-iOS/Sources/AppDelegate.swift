@@ -270,7 +270,7 @@ private extension AppDelegate {
         /// get maxNumberAccounts form SecurityFlags or SessionManager.defaultMaxNumberAccounts if no MAX_NUMBER_ACCOUNTS flag defined
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
-        // TODO: [John] Pass in buffer
+        // TODO: [John] Pass in voip manager reference.
         let sessionManager = SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
@@ -285,7 +285,8 @@ private extension AppDelegate {
             callKitManager: voIPPushManager.callKitManager
         )
 
-        voIPPushManager.delegate = sessionManager
+        // TODO: remove this, it should be set in the session manager.
+        voIPPushManager.setDelegate(sessionManager)
 
         return sessionManager
     }
