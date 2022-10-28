@@ -166,7 +166,7 @@ final class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
         backgroundColor = ViewColors.backgroundUserCell
 
-        titleLabel.textColor = LabelColors.textCellTitle
+        titleLabel.textColor = LabelColors.textDefault
         subtitleLabel.textColor = LabelColors.textCellSubtitle
 
         updateTitleLabel()
