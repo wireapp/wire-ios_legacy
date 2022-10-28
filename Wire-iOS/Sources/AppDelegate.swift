@@ -271,7 +271,7 @@ private extension AppDelegate {
         let maxNumberAccounts = SecurityFlags.maxNumberAccounts.intValue ?? SessionManager.defaultMaxNumberAccounts
 
         // TODO: [John] Pass in buffer
-        return SessionManager(
+        let sessionManager = SessionManager(
             maxNumberAccounts: maxNumberAccounts,
             appVersion: appVersion,
             mediaManager: mediaManager,
@@ -284,6 +284,10 @@ private extension AppDelegate {
             requiredPushTokenType: requiredPushTokenType,
             callKitManager: voIPPushManager.callKitManager
         )
+
+        voIPPushManager.delegate = sessionManager
+
+        return sessionManager
     }
 
     private func queueInitializationOperations(launchOptions: LaunchOptions) {
