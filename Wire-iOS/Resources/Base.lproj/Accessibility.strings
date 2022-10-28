@@ -32,6 +32,24 @@
 "conversation.verifiedIcon.description" = "Verified";
 
 "conversationDetails.messageTimeoutState.description" = "Selected";
+"selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
+"notificationConversationSettings.closeButton.description" = "Close notification settings";
+"serviceConversationSettings.closeButton.description" = "Close service settings";
+"guestConversationSettings.closeButton.description" = "Close guest settings";
+"addParticipantsConversationSettings.closeButton.description" = "Close add participants option";
+
+"conversationDetails.optionButton.hint" = "Double tap to open settings";
+"conversationDetails.closeButton.description" = "Close conversation details";
+"conversationDetails.moreButton.description" = "Open conversation options";
+"conversationDetails.showParticipantsButton.hint" = "Double tap to open participant list";
+"conversationDetails.participantCell.hint" = "Double tap to open profile";
+
+"createConversation.backButton.description" = "Go back to contact list";
+"createConversation.hideSettings.hint" = "Double tap to hide settings";
+"createConversation.openSettings.hint" = "Double tap to open settings";
+"createConversation.searchView.description" = "Type group name";
+"createConversation.selectedUser.hint" = "Double tap to deselect";
+"createConversation.unselectedUser.hint" = "Double tap to select";
 
 "settings.deviceCount.hint" = "%@ devices in use";
 "settings.closeButton.description" = "Close settings";
