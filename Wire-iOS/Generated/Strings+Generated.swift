@@ -126,13 +126,45 @@ internal enum L10n {
       }
     }
     internal enum Conversation {
+      internal enum AudioButton {
+        /// Record an audio message
+        internal static let description = L10n.tr("Accessibility", "conversation.audioButton.description")
+      }
       internal enum BackButton {
         /// Go back to conversation list
         internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
       }
+      internal enum CameraButton {
+        /// Take or select a photo
+        internal static let description = L10n.tr("Accessibility", "conversation.cameraButton.description")
+      }
+      internal enum GifButton {
+        /// Select a GIF
+        internal static let description = L10n.tr("Accessibility", "conversation.gifButton.description")
+      }
+      internal enum HideFormattingButton {
+        /// Hide formatting options
+        internal static let description = L10n.tr("Accessibility", "conversation.hideFormattingButton.description")
+      }
       internal enum LegalHoldIcon {
         /// Legal hold
         internal static let description = L10n.tr("Accessibility", "conversation.legalHoldIcon.description")
+      }
+      internal enum LocationButton {
+        /// Share your location
+        internal static let description = L10n.tr("Accessibility", "conversation.locationButton.description")
+      }
+      internal enum MentionButton {
+        /// Mention someone
+        internal static let description = L10n.tr("Accessibility", "conversation.mentionButton.description")
+      }
+      internal enum OpenFormattingButton {
+        /// Open formatting options
+        internal static let description = L10n.tr("Accessibility", "conversation.openFormattingButton.description")
+      }
+      internal enum PingButton {
+        /// Send a ping
+        internal static let description = L10n.tr("Accessibility", "conversation.pingButton.description")
       }
       internal enum ProfileImage {
         /// Profile picture
@@ -144,6 +176,18 @@ internal enum L10n {
         /// Open search
         internal static let description = L10n.tr("Accessibility", "conversation.searchButton.description")
       }
+      internal enum SendButton {
+        /// Send this message
+        internal static let description = L10n.tr("Accessibility", "conversation.sendButton.description")
+      }
+      internal enum SketchButton {
+        /// Open sketch to draw or write
+        internal static let description = L10n.tr("Accessibility", "conversation.sketchButton.description")
+      }
+      internal enum TimerButton {
+        /// Set a timer for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "conversation.timerButton.description")
+      }
       internal enum TitleViewForGroup {
         /// Double tap to open conversation details
         internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForGroup.hint")
@@ -152,9 +196,17 @@ internal enum L10n {
         /// Double tap to open profile
         internal static let hint = L10n.tr("Accessibility", "conversation.titleViewForOneToOne.hint")
       }
+      internal enum UploadFileButton {
+        /// Share a file
+        internal static let description = L10n.tr("Accessibility", "conversation.uploadFileButton.description")
+      }
       internal enum VerifiedIcon {
         /// Verified
         internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
+      }
+      internal enum VideoButton {
+        /// Record a video
+        internal static let description = L10n.tr("Accessibility", "conversation.videoButton.description")
       }
     }
     internal enum ConversationDetails {

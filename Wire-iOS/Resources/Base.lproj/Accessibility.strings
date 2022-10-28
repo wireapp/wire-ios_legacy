@@ -31,6 +31,20 @@
 "conversation.legalHoldIcon.description" = "Legal hold";
 "conversation.verifiedIcon.description" = "Verified";
 
+"conversation.sendButton.description" = "Send this message";
+"conversation.openFormattingButton.description" = "Open formatting options";
+"conversation.hideFormattingButton.description" = "Hide formatting options";
+"conversation.timerButton.description" = "Set a timer for self-deleting messages";
+"conversation.mentionButton.description" = "Mention someone";
+"conversation.cameraButton.description" = "Take or select a photo";
+"conversation.sketchButton.description" = "Open sketch to draw or write";
+"conversation.gifButton.description" = "Select a GIF";
+"conversation.audioButton.description" = "Record an audio message";
+"conversation.pingButton.description" = "Send a ping";
+"conversation.uploadFileButton.description" = "Share a file";
+"conversation.locationButton.description" = "Share your location";
+"conversation.videoButton.description" = "Record a video";
+
 "conversationDetails.messageTimeoutState.description" = "Selected";
 "selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
 "notificationConversationSettings.closeButton.description" = "Close notification settings";
