@@ -25,6 +25,7 @@ import WireDataModel
 import WireSyncEngine
 import UIKit
 import CallKit
+import OSLog
 
 public protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
@@ -33,8 +34,10 @@ public protocol CallEventHandlerProtocol {
 class CallEventHandler: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
+        os_log("CallKit_Tests: NSE - reportIncomingVoIPCall")
         guard #available(iOS 14.5, *) else { return }
         CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
+            os_log("CallKit_Tests: NSE - completion")
             if let error = error {
                 // TODO: handle
             }

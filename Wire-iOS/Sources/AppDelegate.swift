@@ -20,6 +20,7 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 import avs
+import OSLog
 
 enum ApplicationLaunchType {
     case unknown
@@ -111,6 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        os_log("CallKit_Tests: Main - didFinishLaunchingWithOptions")
         voIPPushManager.registerForVoIPPushes()
 
         ZMSLog.switchCurrentLogToPrevious()
@@ -286,6 +288,7 @@ private extension AppDelegate {
         )
 
         // TODO: remove this, it should be set in the session manager.
+        os_log("CallKit_Tests: Main - setDelegate")
         voIPPushManager.setDelegate(sessionManager)
 
         return sessionManager
