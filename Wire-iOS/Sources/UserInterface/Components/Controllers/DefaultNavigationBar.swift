@@ -35,13 +35,9 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
         fatalError("init?(coder aDecoder: NSCoder) is not implemented")
     }
 
-    var colorSchemeVariant: ColorSchemeVariant {
-        return ColorScheme.default.variant
-    }
-
     func configure() {
         tintColor = SemanticColors.Label.textDefault
-        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
         configureBackground()
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
         backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefault).with(insets: backIndicatorInsets, backgroundColor: .clear)
@@ -54,13 +50,7 @@ class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
     }
 
-    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key: Any] {
-        return [.font: FontSpec.smallSemiboldFont.font!,
-                .foregroundColor: SemanticColors.Label.textDefault,
-                .baselineOffset: 1.0]
-    }
-
-    static func titleTextAttributes(for color: UIColor) -> [NSAttributedString.Key: Any] {
+    static func titleTextAttributes(for color: UIColor = SemanticColors.Label.textDefault) -> [NSAttributedString.Key: Any] {
         return [.font: FontSpec.smallSemiboldFont.font!,
                 .foregroundColor: color,
                 .baselineOffset: 1.0]

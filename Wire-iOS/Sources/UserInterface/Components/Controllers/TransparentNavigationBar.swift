@@ -32,23 +32,7 @@ extension TransparentBackgroundNavigationBar where Self: DefaultNavigationBar {
 
 final class TransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
 
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return ColorScheme.default.variant
-    }
-
     override func configureBackground() {
         configureTransparentBackground()
     }
-}
-
-final class DarkBarItemTransparentNavigationBar: DefaultNavigationBar, TransparentBackgroundNavigationBar {
-
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-
-    override func configureBackground() {
-        configureTransparentBackground()
-    }
-
 }

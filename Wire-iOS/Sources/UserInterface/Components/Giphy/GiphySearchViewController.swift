@@ -170,13 +170,13 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
         navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        navigationController.navigationBar.tintColor = UIColor.from(scheme: .textForeground)
-        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
-        navigationController.navigationBar.barTintColor = UIColor.from(scheme: .background)
+        navigationController.navigationBar.tintColor = SemanticColors.Label.textDefault
+        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
+        navigationController.navigationBar.barTintColor = SemanticColors.View.backgroundDefault
         navigationController.navigationBar.isTranslucent = false
 
         if #available(iOS 15, *) {
-            navigationController.view.backgroundColor = UIColor.from(scheme: .barBackground, variant: ColorScheme.default.variant)
+            navigationController.view.backgroundColor = SemanticColors.View.backgroundDefault
         }
 
         return navigationController
