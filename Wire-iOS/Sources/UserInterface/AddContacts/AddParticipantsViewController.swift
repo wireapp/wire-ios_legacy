@@ -330,6 +330,13 @@ final class AddParticipantsViewController: UIViewController {
             case .add: return viewModel.title(with: userSelection.users)
             }
         }()
+
+        let titleLabel = DynamicFontLabel(
+            text: title,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
+
     }
 
     @objc private func rightNavigationItemTapped(_ sender: Any!) {
