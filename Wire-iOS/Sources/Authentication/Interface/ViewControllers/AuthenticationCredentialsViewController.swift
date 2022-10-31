@@ -189,6 +189,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
 
         // Email Password Input View
         emailPasswordInputField.allowEditingPrefilledValue = !isReauthenticating
+        emailPasswordInputField.passwordField.showConfirmButton = false
         emailPasswordInputField.delegate = self
 
         // Email input view

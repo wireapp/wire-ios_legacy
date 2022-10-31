@@ -53,7 +53,7 @@ class ReauthenticateStepDescription: AuthenticationStepDescription {
             subtext = "signin_logout.subheadline".localized
         }
 
-        secondaryView = LoginSecondaryView()
+        secondaryView = nil
         footerView = nil
     }
 
