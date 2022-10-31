@@ -274,7 +274,8 @@ private extension AppDelegate {
             environment: BackendEnvironment.shared,
             configuration: configuration,
             detector: jailbreakDetector,
-            requiredPushTokenType: requiredPushTokenType
+            requiredPushTokenType: requiredPushTokenType,
+            isDeveloperModeEnabled: Bundle.developerModeEnabled
         )
     }
 
