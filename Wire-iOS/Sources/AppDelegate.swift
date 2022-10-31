@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AutomationHelperOperation(),
         MediaManagerOperation(),
         FileBackupExcluderOperation(),
-        APIVersionOperation(),
+        BackendInfoOperation(),
         FontSchemeOperation(),
         VoIPPushHelperOperation(),
         CleanUpDebugStateOperation()
