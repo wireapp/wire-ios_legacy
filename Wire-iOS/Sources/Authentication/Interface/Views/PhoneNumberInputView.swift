@@ -34,6 +34,8 @@ protocol PhoneNumberInputViewDelegate: AnyObject {
 
 class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDelegate, TextContainer {
 
+    typealias RegistrationEnterPhoneNumber = L10n.Localizable.Registration.EnterPhoneNumber
+
     /// The object receiving notifications about events from this view.
     weak var delegate: PhoneNumberInputViewDelegate?
 
@@ -123,8 +125,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
         // textField
         textField.textInsets.left = 10
-        textField.placeholder = "registration.enter_phone_number.placeholder".localized
-        textField.accessibilityLabel = "registration.enter_phone_number.placeholder".localized
+        textField.placeholder = RegistrationEnterPhoneNumber.placeholder
+        textField.accessibilityLabel = RegistrationEnterPhoneNumber.placeholder
         textField.accessibilityIdentifier = "PhoneNumberField"
         textField.confirmButton.addTarget(self, action: #selector(handleConfirmButtonTap), for: .touchUpInside)
         textField.delegate = self

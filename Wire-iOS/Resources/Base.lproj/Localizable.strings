@@ -1499,7 +1499,7 @@
 "registration.signin.title" = "Log in";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Remove one of your other devices to start using Wire on this one.";
-"registration.signin.too_many_devices.manage_button.title" = "Manage Devices";
+"registration.signin.too_many_devices.manage_button.title" = "Manage devices";
 "registration.signin.too_many_devices.sign_out_button.title" = "Log out";
 
 "registration.signin.too_many_devices.manage_screen.title" = "Remove a Device";
@@ -1516,7 +1516,7 @@
 
 "signin.use_email.label" = "Login with Email";
 "signin.use_phone.label" = "Login with Phone";
-"signin.forgot_password" = "Forgot Password?";
+"signin.forgot_password" = "Forgot password?";
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log In";
