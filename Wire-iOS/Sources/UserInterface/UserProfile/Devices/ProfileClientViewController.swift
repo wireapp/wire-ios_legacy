@@ -165,7 +165,8 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = userClient.user {
-            descriptionTextView.attributedText = (String(format: ProfileDevicesDetail.VerifyMessage, user.name ?? "") &&
+
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
                                                   descriptionTextFont &&
                                                   defaultTextColor) +
             "\n" +
@@ -209,7 +210,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = defaultTextColor
-        verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
+        verifiedToggleLabel.text = L10n.Localizable.Device.verified
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
     }
@@ -228,7 +229,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let debugButton = ButtonWithLargerHitArea()
         debugButton.setTitleColor(UIColor.accent(), for: .normal)
         debugButton.titleLabel?.font = FontSpec(.small, .light).font!
-        debugButton.setTitle("DEBUG MENU", for: [])
+        debugButton.setTitle("Debug Menu", for: [])
         debugButton.addTarget(self, action: #selector(ProfileClientViewController.onShowDebugActions(_:)), for: .touchUpInside)
         contentView.addSubview(debugButton)
         debugMenuButton = debugButton
