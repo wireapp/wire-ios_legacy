@@ -200,7 +200,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
         loginButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            loginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 

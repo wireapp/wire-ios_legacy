@@ -261,7 +261,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
             // height
             mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: AuthenticationStepController.mainViewHeight),
             secondaryViewsStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 13),
-            errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19),
+            errorLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 19)
 
         ])
 
