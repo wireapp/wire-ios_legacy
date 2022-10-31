@@ -143,25 +143,33 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         if let text = textField.text, text.isEmpty {
             loginButton.isEnabled = false
         }
+        // textField = PhoneTextField(onValidationChanged: {
+        //    updateLoginButton()
+        // })
+        // updateLoginButton
         addSubview(loginButton)
 
         backgroundColor = SemanticColors.View.backgroundDefault
     }
+
+    // updateLoginbutton() {
+    //   loginButton.isEnabled = textField.hasValidInput
+    // }
 
     private func configureConstraints() {
         [inputStack, countryPickerButton, loginButton].prepareForLayout()
 
         NSLayoutConstraint.activate([
             // countryPickerStack
-            countryPickerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            countryPickerButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             countryPickerButton.topAnchor.constraint(equalTo: topAnchor),
-            countryPickerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            countryPickerButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             countryPickerButton.heightAnchor.constraint(equalToConstant: 28),
 
             // inputStack
             inputStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 16),
-            inputStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -25),
+            inputStack.topAnchor.constraint(equalTo: countryPickerButton.bottomAnchor, constant: 20),
+            inputStack.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             // dimensions
             textField.heightAnchor.constraint(equalToConstant: 48),
@@ -169,8 +177,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
             // loginButton
             loginButton.topAnchor.constraint(equalTo: inputStack.bottomAnchor, constant: 20),
-            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            loginButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
             loginButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
@@ -400,3 +408,50 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
 }
+
+//protocol ValidatedInputViewDelegate: AnyClass {
+//
+//    func inputView(_ view: ValidatedInputView, hasValidInput: Bool)
+//
+//}
+//
+//class ValidatedInputView: UIView, UITextFieldDelegate {
+//
+//    private textField = UITextField()
+//
+//    private let isValidInput: (String?) -> Bool
+//
+//    weak var delegate: ValidatedInputViewDelegate?
+//
+//    init(isValidInput: @escaping (String?) -> Bool) {
+//        self.isValidInput = isValidInput
+//        super.init(frame: .zero)
+//        textField.delegate = self
+//        addSubview(textField)
+//    }
+//
+//    var hasValidInput: Bool {
+//        return isValidInput(textField.text)
+//    }
+//
+//    func textField(
+//        _ textField: UITextField,
+//        shouldChangeCharactersIn range: NSRange,
+//        replacementString string: String
+//    ) -> Bool {
+//        delegate?.inputView(self, hasValidInput: hasValidInput)
+//        return true
+//    }
+//
+//}
+//
+//
+//class EmailTextField: ValidatedTextField {
+//
+//    init() {
+//        super.init { input in
+//            return input.count > 5
+//        }
+//    }
+//
+//}

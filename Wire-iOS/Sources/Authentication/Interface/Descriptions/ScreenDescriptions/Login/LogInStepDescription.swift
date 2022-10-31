@@ -73,7 +73,7 @@ class LogInStepDescription: AuthenticationStepDescription {
         mainView = EmptyViewDescription()
         headline = "registration.signin.title".localized
         subtext = nil
-        secondaryView = LoginSecondaryView()
+        secondaryView = nil
         footerView = nil
     }
 
