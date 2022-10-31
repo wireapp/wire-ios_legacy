@@ -140,21 +140,15 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         // loginButton
         loginButton.setTitle(L10n.Localizable.Landing.Login.Button.title.capitalized, for: .normal)
         loginButton.addTarget(self, action: #selector(handleLoginButtonTap), for: .touchUpInside)
+        
         if let text = textField.text, text.isEmpty {
             loginButton.isEnabled = false
         }
-        // textField = PhoneTextField(onValidationChanged: {
-        //    updateLoginButton()
-        // })
-        // updateLoginButton
+
         addSubview(loginButton)
 
         backgroundColor = SemanticColors.View.backgroundDefault
     }
-
-    // updateLoginbutton() {
-    //   loginButton.isEnabled = textField.hasValidInput
-    // }
 
     private func configureConstraints() {
         [inputStack, countryPickerButton, loginButton].prepareForLayout()
@@ -408,50 +402,3 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
 }
-
-//protocol ValidatedInputViewDelegate: AnyClass {
-//
-//    func inputView(_ view: ValidatedInputView, hasValidInput: Bool)
-//
-//}
-//
-//class ValidatedInputView: UIView, UITextFieldDelegate {
-//
-//    private textField = UITextField()
-//
-//    private let isValidInput: (String?) -> Bool
-//
-//    weak var delegate: ValidatedInputViewDelegate?
-//
-//    init(isValidInput: @escaping (String?) -> Bool) {
-//        self.isValidInput = isValidInput
-//        super.init(frame: .zero)
-//        textField.delegate = self
-//        addSubview(textField)
-//    }
-//
-//    var hasValidInput: Bool {
-//        return isValidInput(textField.text)
-//    }
-//
-//    func textField(
-//        _ textField: UITextField,
-//        shouldChangeCharactersIn range: NSRange,
-//        replacementString string: String
-//    ) -> Bool {
-//        delegate?.inputView(self, hasValidInput: hasValidInput)
-//        return true
-//    }
-//
-//}
-//
-//
-//class EmailTextField: ValidatedTextField {
-//
-//    init() {
-//        super.init { input in
-//            return input.count > 5
-//        }
-//    }
-//
-//}
