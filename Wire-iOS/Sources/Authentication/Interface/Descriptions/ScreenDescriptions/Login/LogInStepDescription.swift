@@ -34,27 +34,6 @@ struct AuthenticationPrefilledCredentials: Equatable {
     let isExpired: Bool
 }
 
-class LoginSecondaryView: AuthenticationSecondaryViewDescription {
-
-    let views: [ViewDescriptor]
-    weak var actioner: AuthenticationActioner?
-
-    init() {
-        let resetPasswordButton = UnderlineButtonDescription(title: L10n.Localizable.Signin.forgotPassword.capitalized, accessibilityIdentifier: "forgot_password")
-        let loginButton = SolidButtonDescription(title: L10n.Localizable.Landing.Login.Button.title.capitalized, accessibilityIdentifier: "submit_credentials")
-        views = [resetPasswordButton, loginButton]
-
-        resetPasswordButton.buttonTapped = { [weak self] in
-            self?.actioner?.executeAction(.openURL(.wr_passwordReset))
-        }
-
-        loginButton.valueSubmitted = { [weak self] _ in
-            self?.actioner?.executeAction(.confirmCredentials)
-        }
-    }
-
-}
-
 /**
  * An authentication step to ask the user for login credentials.
  */
