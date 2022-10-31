@@ -19,12 +19,6 @@
 import UIKit
 import WireCommonComponents
 
-final class LightNavigationBar: DefaultNavigationBar {
-    override var colorSchemeVariant: ColorSchemeVariant {
-        return .light
-    }
-}
-
 class DefaultNavigationBar: UINavigationBar, DynamicTypeCapable {
 
     func redrawFont() {
