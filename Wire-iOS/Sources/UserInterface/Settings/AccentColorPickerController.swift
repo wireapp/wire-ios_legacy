@@ -211,7 +211,7 @@ final class AccentColorPickerController: ColorPickerController {
 
     private func setupControllerTitle() {
         let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Self.Settings.AccountPictureGroup.color,
+            text: L10n.Localizable.Self.Settings.AccountPictureGroup.color.capitalized,
             fontSpec: .headerSemiboldFont,
             color: SemanticColors.Label.textDefault)
         navigationItem.titleView = titleLabel

@@ -245,7 +245,11 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = HandleChange.title.uppercased()
+        let titleLabel = DynamicFontLabel(
+            text: HandleChange.title.capitalized,
+            fontSpec: .headerSemiboldFont,
+            color: SemanticColors.Label.textDefault)
+        navigationItem.titleView = titleLabel
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false
@@ -256,7 +260,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         updateUI()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: HandleChange.save.uppercased(),
+            title: HandleChange.save.capitalized,
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
