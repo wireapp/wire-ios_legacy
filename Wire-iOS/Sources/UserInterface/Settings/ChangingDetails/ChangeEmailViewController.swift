@@ -125,11 +125,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        let titleLabel = DynamicFontLabel(
-            text: EmailAccountSection.Change.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: EmailAccountSection.Change.title.capitalized)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
 

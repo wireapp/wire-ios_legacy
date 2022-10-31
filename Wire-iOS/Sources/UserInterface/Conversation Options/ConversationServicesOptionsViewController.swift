@@ -54,11 +54,7 @@ final class ConversationServicesOptionsViewController: UIViewController, UITable
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.GroupDetails.ServicesOptionsCell.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.ServicesOptionsCell.title.capitalized)
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ServiceConversationSettings.CloseButton.description
     }

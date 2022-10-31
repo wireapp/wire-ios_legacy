@@ -131,13 +131,7 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setupStyle() {
-        title = ContactsUI.title.capitalized
-        let titleLabel = DynamicFontLabel(
-            text: title,
-            fontSpec: .headerSemiboldFont,
-            color: LabelColors.textDefault)
-
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: ContactsUI.title.capitalized)
 
         view.backgroundColor = .clear
 

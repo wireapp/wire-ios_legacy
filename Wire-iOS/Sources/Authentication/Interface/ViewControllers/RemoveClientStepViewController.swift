@@ -62,11 +62,7 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Registration.Signin.TooManyDevices.ManageScreen.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Signin.TooManyDevices.ManageScreen.title.capitalized)
         configureSubviews()
         configureConstraints()
         updateBackButton()
