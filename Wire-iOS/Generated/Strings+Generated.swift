@@ -3856,7 +3856,7 @@ internal enum L10n {
           /// Too Many Devices
           internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.title")
           internal enum ManageButton {
-            /// Manage Devices
+            /// Manage devices
             internal static let title = L10n.tr("Localizable", "registration.signin.too_many_devices.manage_button.title")
           }
           internal enum ManageScreen {
@@ -4667,7 +4667,7 @@ internal enum L10n {
     internal enum Signin {
       /// Log In
       internal static let confirm = L10n.tr("Localizable", "signin.confirm")
-      /// Forgot Password?
+      /// Forgot password?
       internal static let forgotPassword = L10n.tr("Localizable", "signin.forgot_password")
       internal enum CompanyIdp {
         internal enum Button {
