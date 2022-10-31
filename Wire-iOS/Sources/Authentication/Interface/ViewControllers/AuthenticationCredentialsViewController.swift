@@ -35,6 +35,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
                                                      UITextFieldDelegate {
 
     typealias Registration = L10n.Localizable.Registration
+    weak var actioner: AuthenticationActioner?
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -74,6 +75,12 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
             return true
         } else {
             return false
+        }
+    }
+
+    weak override var authenticationCoordinator: AuthenticationCoordinator? {
+        didSet {
+            actioner = authenticationCoordinator
         }
     }
 
@@ -126,24 +133,24 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     }()
 
     lazy var forgotPasswordButton: Button = {
-       let button = Button(fontSpec: .smallLightFont)
-       let attributes: [NSAttributedString.Key: Any] = [
-           .font: FontSpec.smallSemiboldFont.font!,
-           .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
-           .underlineStyle: NSUnderlineStyle.single.rawValue
-       ]
+        let button = Button(fontSpec: .smallLightFont)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.smallSemiboldFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
 
-       let attributeString = NSMutableAttributedString(
-           string: L10n.Localizable.Signin.forgotPassword.capitalized,
-           attributes: attributes
-       )
+        let attributeString = NSMutableAttributedString(
+            string: L10n.Localizable.Signin.forgotPassword.capitalized,
+            attributes: attributes
+        )
 
-       button.translatesAutoresizingMaskIntoConstraints = false
-       button.setAttributedTitle(attributeString, for: .normal)
-       button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(attributeString, for: .normal)
+        button.addTarget(self, action: #selector(forgotPasswordTapped), for: .touchUpInside)
 
-       return button
-   }()
+        return button
+    }()
 
     // MARK: - Lifecycle
 
@@ -207,6 +214,11 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     @objc
     func loginButtonTapped(sender: UIButton) {
         emailPasswordInputField.confirmButtonTapped()
+    }
+
+    @objc
+    func forgotPasswordTapped(sender: UIButton) {
+        actioner?.executeAction(.openURL(.wr_passwordReset))
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
