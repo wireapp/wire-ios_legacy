@@ -25,6 +25,8 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     // MARK: Properties
 
+    typealias ProfileDevicesDetail = L10n.Localizable.Profile.Devices.Detail
+
     private let userClient: UserClient
     private let contentView = UIView()
     private let backButton = IconButton(style: .circular)
@@ -145,7 +147,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
-        showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
+        showMyDeviceButton.setTitle(ProfileDevicesDetail.ShowMyDevice.title.capitalized, for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
@@ -163,11 +165,11 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
+            descriptionTextView.attributedText = (String(format: ProfileDevicesDetail.VerifyMessage, user.name ?? "") &&
                                                   descriptionTextFont &&
                                                   defaultTextColor) +
             "\n" +
-            ("profile.devices.detail.verify_message.link".localized &&
+            (ProfileDevicesDetail.VerifyMessage.link &&
              [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         contentView.addSubview(descriptionTextView)
@@ -215,7 +217,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
-        resetButton.setTitle("profile.devices.detail.reset_session.title".localized(uppercased: true), for: [])
+        resetButton.setTitle(ProfileDevicesDetail.ResetSession.title.capitalized, for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
         contentView.addSubview(resetButton)
