@@ -322,11 +322,6 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         submitValue()
     }
 
-    @objc
-    private func handleConfirmButtonTap() {
-        submitValue()
-    }
-
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(UIResponderStandardEditActions.paste(_:)) {
             return UIPasteboard.general.hasStrings
