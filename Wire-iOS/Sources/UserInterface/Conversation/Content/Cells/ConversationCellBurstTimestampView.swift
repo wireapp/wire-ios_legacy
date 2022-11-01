@@ -17,14 +17,12 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class ConversationCellBurstTimestampView: UIView {
 
     let unreadDot = UIView()
     private let label: UILabel = UILabel()
-
-    var separatorColor: UIColor?
-    var separatorColorExpanded: UIColor?
 
     private let unreadDotContainer = UIView()
     private let leftSeparator = UIView()
@@ -34,8 +32,7 @@ final class ConversationCellBurstTimestampView: UIView {
     private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
     private var accentColorObserver: AccentColorChangeHandler?
-    private let burstNormalFont = UIFont.smallLightFont
-    private let burstBoldFont = UIFont.smallSemiboldFont
+    private let burstBoldFont = FontSpec.mediumSemiboldFont.font!
 
     private var isShowingUnreadDot: Bool = true {
         didSet {
@@ -48,15 +45,6 @@ final class ConversationCellBurstTimestampView: UIView {
         didSet {
             leftSeparator.isHidden = isSeparatorHidden || isShowingUnreadDot
             rightSeparator.isHidden = isSeparatorHidden
-        }
-    }
-
-    private var isSeparatorExpanded: Bool = false {
-        didSet {
-            separatorHeight = isSeparatorExpanded ? 4 : .hairline
-            let color = isSeparatorExpanded ? separatorColorExpanded : separatorColor
-            leftSeparator.backgroundColor = color
-            rightSeparator.backgroundColor = color
         }
     }
 
@@ -138,23 +126,21 @@ final class ConversationCellBurstTimestampView: UIView {
     func setupStyle() {
         let color = SemanticColors.View.backgroundSeparatorConversationView
         label.applyStyle(.dateInConversationLabel)
-        separatorColor = color
-        separatorColorExpanded = color
+        separatorHeight = .hairline
+        leftSeparator.backgroundColor = color
+        rightSeparator.backgroundColor = color
     }
 
     func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {
         if includeDayOfWeek {
-            isSeparatorExpanded = true
             isSeparatorHidden = false
-            label.font = burstBoldFont
-            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).localizedUppercase
+            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).localized.capitalized
         } else {
-            isSeparatorExpanded = false
             isSeparatorHidden = false
-            label.font = burstNormalFont
-            label.text = timestamp.formattedDate.localizedUppercase
+            label.text = timestamp.formattedDate.localized.capitalized
         }
 
+        label.font = burstBoldFont
         isShowingUnreadDot = showUnreadDot
     }
 
