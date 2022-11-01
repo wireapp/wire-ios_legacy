@@ -332,7 +332,7 @@ final class AddParticipantsViewController: UIViewController {
         }()
 
         guard let title = title else { return }
-        navigationItem.setupNavigationBarTitle(title: title)
+        navigationItem.setupNavigationBarTitle(title: title.capitalized)
 
     }
 

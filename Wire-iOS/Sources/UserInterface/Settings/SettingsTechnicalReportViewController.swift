@@ -90,7 +90,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     }
 
     private func setupNavigationTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.TechnicalReportSection.title)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.TechnicalReportSection.title.capitalized)
     }
 
     // MARK: - TableView Delegates

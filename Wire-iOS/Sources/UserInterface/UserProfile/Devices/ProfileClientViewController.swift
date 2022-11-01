@@ -210,7 +210,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = defaultTextColor
-        verifiedToggleLabel.text = L10n.Localizable.Device.verified
+        verifiedToggleLabel.text = L10n.Localizable.Device.verified.capitalized
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
     }

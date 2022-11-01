@@ -442,7 +442,7 @@ final class ClientListViewController: UIViewController,
     }
 
     private func setupControllerTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Devices.title)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Registration.Devices.title.capitalized)
     }
 
 }

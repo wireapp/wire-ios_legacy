@@ -166,7 +166,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupNavigationTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.HistoryBackup.title.localized)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.HistoryBackup.title.capitalized)
     }
 
     var loadingHostController: SpinnerCapableViewController {

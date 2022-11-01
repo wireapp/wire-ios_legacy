@@ -57,7 +57,7 @@ final class DeveloperOptionsController: UIViewController {
     }
 
     private func setupNavigationTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.Loggin.title.capitalized)
     }
 
     // MARK: - Cells

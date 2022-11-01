@@ -136,6 +136,6 @@ final class DatabaseStatisticsController: UIViewController {
     }
 
     private func setupNavigationTitle() {
-        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title.capitalized)
     }
 }
