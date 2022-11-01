@@ -33,6 +33,7 @@ final class ConversationCellBurstTimestampView: UIView {
     private var heightConstraints = [NSLayoutConstraint]()
     private var accentColorObserver: AccentColorChangeHandler?
     private let burstBoldFont = FontSpec.mediumSemiboldFont.font!
+    private let color = SemanticColors.View.backgroundSeparatorConversationView
 
     private var isShowingUnreadDot: Bool = true {
         didSet {
@@ -124,11 +125,7 @@ final class ConversationCellBurstTimestampView: UIView {
     }
 
     func setupStyle() {
-        let color = SemanticColors.View.backgroundSeparatorConversationView
         label.applyStyle(.dateInConversationLabel)
-        separatorHeight = .hairline
-        leftSeparator.backgroundColor = color
-        rightSeparator.backgroundColor = color
     }
 
     func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {
@@ -141,6 +138,8 @@ final class ConversationCellBurstTimestampView: UIView {
         }
 
         label.font = burstBoldFont
+        leftSeparator.backgroundColor = color
+        rightSeparator.backgroundColor = color
         isShowingUnreadDot = showUnreadDot
     }
 
