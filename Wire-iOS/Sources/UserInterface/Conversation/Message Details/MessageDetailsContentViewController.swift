@@ -194,7 +194,7 @@ final class MessageDetailsContentViewController: UIViewController {
             noResultsView.label.accessibilityIdentifier = "placeholder.no_read_receipts"
             noResultsView.placeholderText = MessageDetails.emptyReadReceipts.capitalized
             noResultsView.icon = .eye
-            
+
         case .receipts(enabled: false):
             noResultsView.label.accessibilityIdentifier = "placeholder.read_receipts_disabled"
             noResultsView.placeholderText = MessageDetails.readReceiptsDisabled.capitalized
