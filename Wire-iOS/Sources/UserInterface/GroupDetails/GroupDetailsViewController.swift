@@ -95,11 +95,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Participants.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Participants.title.capitalized)
         view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
