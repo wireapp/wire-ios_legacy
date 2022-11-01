@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 /**
  * Displays the list of users for a specified message detail content type.
@@ -122,7 +123,7 @@ final class MessageDetailsContentViewController: UIViewController {
 
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
-        subtitleLabel.font = .mediumFont
+        subtitleLabel.font = FontSpec.mediumFont.font!
         subtitleLabel.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
         subtitleLabel.accessibilityIdentifier = "DeliveryStatus"
         subtitleLabel.accessibilityLabel = MessageDetails.subtitleLabelVoiceOver
