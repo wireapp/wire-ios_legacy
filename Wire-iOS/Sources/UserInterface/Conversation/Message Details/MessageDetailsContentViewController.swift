@@ -25,6 +25,8 @@ import WireDataModel
 
 final class MessageDetailsContentViewController: UIViewController {
 
+    typealias MessageDetails = L10n.Localizable.MessageDetails
+
     /// The type of the displayed content.
     enum ContentType {
         case reactions, receipts(enabled: Bool)
@@ -104,7 +106,7 @@ final class MessageDetailsContentViewController: UIViewController {
     }
 
     private func configureSubviews() {
-        view.backgroundColor = .from(scheme: .contentBackground)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
 
         collectionView = UICollectionView(forGroupedSections: ())
         collectionView.contentInset.bottom = 64
@@ -121,9 +123,9 @@ final class MessageDetailsContentViewController: UIViewController {
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
         subtitleLabel.font = .mediumFont
-        subtitleLabel.textColor = UIColor.from(scheme: .sectionText)
+        subtitleLabel.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
         subtitleLabel.accessibilityIdentifier = "DeliveryStatus"
-        subtitleLabel.accessibilityLabel = "message_details.subtitle_label_voiceOver".localized
+        subtitleLabel.accessibilityLabel = MessageDetails.subtitleLabelVoiceOver
         view.addSubview(subtitleLabel)
 
         noResultsView.isHidden = true
@@ -138,16 +140,16 @@ final class MessageDetailsContentViewController: UIViewController {
         switch contentType {
         case .receipts:
             if cells.isEmpty {
-                title = "message_details.receipts_title".localized(uppercased: true)
+                title = MessageDetails.receiptsTitle.capitalized
             } else {
-                title = "message_details.tabs.seen".localized(args: cells.count).localizedUppercase
+                title = MessageDetails.Tabs.seen(cells.count).capitalized
             }
 
         case .reactions:
             if cells.isEmpty {
-                title = "message_details.likes_title".localized(uppercased: true)
+                title = MessageDetails.likesTitle.capitalized
             } else {
-                title = "message_details.tabs.likes".localized(args: cells.count).localizedUppercase
+                title = MessageDetails.Tabs.likes(cells.count).capitalized
             }
         }
     }
@@ -185,17 +187,17 @@ final class MessageDetailsContentViewController: UIViewController {
         switch contentType {
         case .reactions:
             noResultsView.label.accessibilityIdentifier = "placeholder.no_likes"
-            noResultsView.placeholderText = "message_details.empty_likes".localized(uppercased: true)
+            noResultsView.placeholderText = MessageDetails.emptyLikes.capitalized
             noResultsView.icon = .like
 
         case .receipts(enabled: true):
             noResultsView.label.accessibilityIdentifier = "placeholder.no_read_receipts"
-            noResultsView.placeholderText = "message_details.empty_read_receipts".localized(uppercased: true)
+            noResultsView.placeholderText = MessageDetails.emptyReadReceipts.capitalized
             noResultsView.icon = .eye
-
+            
         case .receipts(enabled: false):
             noResultsView.label.accessibilityIdentifier = "placeholder.read_receipts_disabled"
-            noResultsView.placeholderText = "message_details.read_receipts_disabled".localized(uppercased: true)
+            noResultsView.placeholderText = MessageDetails.readReceiptsDisabled.capitalized
             noResultsView.icon = .eye
         }
     }
