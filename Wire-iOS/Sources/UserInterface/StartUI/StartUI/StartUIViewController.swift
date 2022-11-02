@@ -29,7 +29,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     weak var delegate: StartUIDelegate?
 
-    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection())
 
     let groupSelector: SearchGroupSelector = SearchGroupSelector()
 
