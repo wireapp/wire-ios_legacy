@@ -33,7 +33,7 @@ final class ContactsViewController: UIViewController {
     let noContactsLabel = DynamicFontLabel(text: PeoplePicker.noContactsTitle,
                                            fontSpec: .headerRegularFont,
                                            color: LabelColors.textSettingsPasswordPlaceholder)
-    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init())
     let separatorView = UIView()
     let tableView = UITableView()
     let inviteOthersButton = Button(style: .accentColorTextButtonStyle,
