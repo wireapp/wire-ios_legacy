@@ -62,7 +62,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
 
-        title = conversation.displayName.localizedUppercase
+        navigationItem.setupNavigationBarTitle(title: conversation.displayName.capitalized)
         performSearch()
     }
 

@@ -166,11 +166,7 @@ final class BackupViewController: UIViewController, SpinnerCapable {
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Self.Settings.HistoryBackup.title.localized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.HistoryBackup.title.capitalized)
     }
 
     var loadingHostController: SpinnerCapableViewController {

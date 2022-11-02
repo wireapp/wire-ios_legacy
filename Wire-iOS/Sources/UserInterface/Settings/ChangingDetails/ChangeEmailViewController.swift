@@ -87,6 +87,8 @@ struct ChangeEmailState {
 
 final class ChangeEmailViewController: SettingsBaseTableViewController {
 
+    typealias EmailAccountSection = L10n.Localizable.Self.Settings.AccountSection.Email
+
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state: ChangeEmailState
     private var observerToken: Any?
@@ -123,7 +125,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = "self.settings.account_section.email.change.title".localized(uppercased: true)
+        navigationItem.setupNavigationBarTitle(title: EmailAccountSection.Change.title.capitalized)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
 
@@ -144,7 +146,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         emailPasswordCell.textField.setSeparatorColor(.white)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.email.change.save".localized(uppercased: true),
+            title:EmailAccountSection.Change.save.capitalized,
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)

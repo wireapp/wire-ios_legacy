@@ -331,11 +331,8 @@ final class AddParticipantsViewController: UIViewController {
             }
         }()
 
-        let titleLabel = DynamicFontLabel(
-            text: title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        guard let title = title else { return }
+        navigationItem.setupNavigationBarTitle(title: title.capitalized)
 
     }
 
