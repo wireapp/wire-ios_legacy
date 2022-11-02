@@ -51,7 +51,7 @@ class SketchToolbar: UIView {
     }
 
     func setupSubviews() {
-        backgroundColor = SemanticColors.View.backgroundDefault
+        backgroundColor = SemanticColors.View.backgroundDefaultWhite
         addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)

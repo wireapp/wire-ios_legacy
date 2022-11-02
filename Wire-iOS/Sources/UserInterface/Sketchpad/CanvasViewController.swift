@@ -129,6 +129,15 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 
     func configureButtons() {
+        let enabledStateIconColor = SemanticColors.Button.textInputBarItemEnabled
+        let highlightedStateIconColor = SemanticColors.Button.textInputBarItemHighlighted
+
+        let enabledStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemEnabled
+        let highlightedStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemHighlighted
+
+        let enabledStateBorderColor = SemanticColors.Button.borderInputBarItemEnabled
+        let highlightedStateBorderColor = SemanticColors.Button.borderInputBarItemHighlighted
+        
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
@@ -152,9 +161,21 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         emojiButton.accessibilityIdentifier = "emojiButton"
 
         [photoButton, drawButton, emojiButton].forEach { iconButton in
-            iconButton.setIconColor(SemanticColors.Icon.foregroundDefaultBlack, for: .normal)
-            iconButton.setIconColor(SemanticColors.Icon.foregroundDefaultBlack.withAlphaComponent(0.6), for: .highlighted)
-            iconButton.setIconColor(UIColor.accent(), for: .selected)
+            iconButton.layer.borderWidth = 1
+            iconButton.layer.cornerRadius = 12
+            iconButton.clipsToBounds = true
+
+            iconButton.setIconColor(enabledStateIconColor, for: .normal)
+            iconButton.setBorderColor(enabledStateBorderColor, for: .normal)
+            iconButton.setBackgroundImageColor(enabledStateBackgroundColor, for: .normal)
+
+            iconButton.setIconColor(highlightedStateIconColor, for: .highlighted)
+            iconButton.setBorderColor(highlightedStateBorderColor, for: .highlighted)
+            iconButton.setBackgroundImageColor(highlightedStateBackgroundColor, for: .highlighted)
+
+            iconButton.setIconColor(highlightedStateIconColor, for: .selected)
+            iconButton.setBorderColor(highlightedStateBorderColor, for: .selected)
+            iconButton.setBackgroundImageColor(highlightedStateBackgroundColor, for: .selected)
         }
     }
 
