@@ -97,7 +97,6 @@ final class EmptySearchResultsViewTests: XCTestCase {
             verticalFittingPriority: .fittingSizeLevel
         )
         view.backgroundColor = .black
-        
     }
 
 }
