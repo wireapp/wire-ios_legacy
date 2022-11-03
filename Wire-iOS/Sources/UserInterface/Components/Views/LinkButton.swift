@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class LinkButton: DynamicFontButton {
 
@@ -44,4 +45,3 @@ final class LinkButton: DynamicFontButton {
         setAttributedTitle(attributeString, for: .normal)
     }
 }
-
