@@ -255,7 +255,6 @@ final class PasscodeSetupViewController: UIViewController {
     lazy var closeItem: UIBarButtonItem = {
         let closeItem = UIBarButtonItem.createUpdatedCloseItem()
         closeItem.accessibilityIdentifier = "closeButton"
-        closeItem.tintColor = .white
 
         closeItem.target = self
         closeItem.action = #selector(PasscodeSetupViewController.closeTapped)

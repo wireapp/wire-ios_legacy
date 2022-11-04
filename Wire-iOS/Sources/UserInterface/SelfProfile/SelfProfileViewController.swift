@@ -136,11 +136,7 @@ final class SelfProfileViewController: UIViewController {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
         } else {
-            let titleLabel = DynamicFontLabel(
-                text: L10n.Localizable.Self.account,
-                fontSpec: .headerSemiboldFont,
-                color: SemanticColors.Label.textDefault)
-            navigationItem.titleView = titleLabel
+            navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.account.capitalized)
         }
     }
 
@@ -242,7 +238,7 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
         let keyboardAvoidingViewController = KeyboardAvoidingViewController(viewController: passcodeSetupViewController)
 
-        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: DarkBarItemTransparentNavigationBar.self)
+        let wrappedViewController = keyboardAvoidingViewController.wrapInNavigationController(navigationBarClass: TransparentNavigationBar.self)
 
         let closeItem = passcodeSetupViewController.closeItem
 

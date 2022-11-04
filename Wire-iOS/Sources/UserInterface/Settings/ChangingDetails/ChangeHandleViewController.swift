@@ -245,7 +245,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = HandleChange.title.uppercased()
+        navigationItem.setupNavigationBarTitle(title: HandleChange.title.capitalized)
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false
@@ -256,7 +256,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         updateUI()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: HandleChange.save.uppercased(),
+            title: HandleChange.save.capitalized,
             style: .plain,
             target: self,
             action: #selector(saveButtonTapped)

@@ -136,10 +136,6 @@ final class DatabaseStatisticsController: UIViewController {
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.DeveloperOptions.DatabaseStatistics.title.capitalized)
     }
 }

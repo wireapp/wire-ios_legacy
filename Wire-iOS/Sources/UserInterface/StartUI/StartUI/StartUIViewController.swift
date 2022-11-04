@@ -29,7 +29,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     weak var delegate: StartUIDelegate?
 
-    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection())
 
     let groupSelector: SearchGroupSelector = SearchGroupSelector()
 
@@ -98,7 +98,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         navigationController?.navigationBar.barTintColor = backgroundColor
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = SemanticColors.Label.textDefault
-        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
+        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes()
 
     }
 
