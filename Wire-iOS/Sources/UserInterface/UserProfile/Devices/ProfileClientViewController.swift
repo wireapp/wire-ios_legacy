@@ -25,6 +25,8 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     // MARK: Properties
 
+    typealias ProfileDevicesDetail = L10n.Localizable.Profile.Devices.Detail
+
     private let userClient: UserClient
     private let contentView = UIView()
     private let backButton = IconButton(style: .circular)
@@ -145,7 +147,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
 
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
-        showMyDeviceButton.setTitle("profile.devices.detail.show_my_device.title".localized(uppercased: true), for: [])
+        showMyDeviceButton.setTitle(ProfileDevicesDetail.ShowMyDevice.title.capitalized, for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
@@ -163,11 +165,12 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = userClient.user {
+
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
                                                   descriptionTextFont &&
                                                   defaultTextColor) +
             "\n" +
-            ("profile.devices.detail.verify_message.link".localized &&
+            (ProfileDevicesDetail.VerifyMessage.link &&
              [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         contentView.addSubview(descriptionTextView)
@@ -207,7 +210,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
         verifiedToggleLabel.textColor = defaultTextColor
-        verifiedToggleLabel.text = "device.verified".localized(uppercased: true)
+        verifiedToggleLabel.text = L10n.Localizable.Device.verified.capitalized
         verifiedToggleLabel.numberOfLines = 0
         contentView.addSubview(verifiedToggleLabel)
     }
@@ -215,7 +218,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
-        resetButton.setTitle("profile.devices.detail.reset_session.title".localized(uppercased: true), for: [])
+        resetButton.setTitle(ProfileDevicesDetail.ResetSession.title.capitalized, for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
         contentView.addSubview(resetButton)
@@ -226,7 +229,7 @@ final class ProfileClientViewController: UIViewController, SpinnerCapable {
         let debugButton = ButtonWithLargerHitArea()
         debugButton.setTitleColor(UIColor.accent(), for: .normal)
         debugButton.titleLabel?.font = FontSpec(.small, .light).font!
-        debugButton.setTitle("DEBUG MENU", for: [])
+        debugButton.setTitle("Debug Menu", for: [])
         debugButton.addTarget(self, action: #selector(ProfileClientViewController.onShowDebugActions(_:)), for: .touchUpInside)
         contentView.addSubview(debugButton)
         debugMenuButton = debugButton
