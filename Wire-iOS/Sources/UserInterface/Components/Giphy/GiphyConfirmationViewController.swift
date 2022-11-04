@@ -29,9 +29,11 @@ protocol GiphyConfirmationViewControllerDelegate: AnyObject {
 
 final class GiphyConfirmationViewController: UIViewController {
 
+    typealias Giphy = L10n.Localizable.Giphy
+
     private let imagePreview = FLAnimatedImageView()
-    private let acceptButton = LegacyButton(legacyStyle: .full, fontSpec: .smallLightFont)
-    private let cancelButton = LegacyButton(legacyStyle: .empty, fontSpec: .smallLightFont)
+    private let acceptButton = Button(style: .accentColorTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
+    private let cancelButton = Button(style: .secondaryTextButtonStyle, cornerRadius: 16, fontSpec: .normalSemiboldFont)
     private let buttonContainer = UIView()
     weak var delegate: GiphyConfirmationViewControllerDelegate?
     private let searchResultController: ZiphySearchResultsController?
@@ -56,13 +58,13 @@ final class GiphyConfirmationViewController: UIViewController {
             imagePreview.animatedImage = previewImage
         }
 
-        let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
+        let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: SemanticColors.Icon.foregroundDefaultBlack)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(GiphySearchViewController.onDismiss))
 
-        view.backgroundColor = .from(scheme: .background)
+        view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
     @available(*, unavailable)
@@ -71,7 +73,7 @@ final class GiphyConfirmationViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+        return .lightContent
     }
 
     override func viewDidLoad() {
@@ -80,17 +82,17 @@ final class GiphyConfirmationViewController: UIViewController {
         extendedLayoutIncludesOpaqueBars = true
 
         let titleLabel = UILabel()
-        titleLabel.font = FontSpec(.small, .semibold).font!
-        titleLabel.textColor = UIColor.from(scheme: .textForeground)
-        titleLabel.text = title?.localizedUppercase
+        titleLabel.font = FontSpec.headerSemiboldFont.font!
+        titleLabel.textColor = SemanticColors.Label.textDefault
+        titleLabel.text = title?.capitalized
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
 
         view.backgroundColor = .black
         acceptButton.isEnabled = false
-        acceptButton.setTitle("giphy.confirm".localized, for: .normal)
+        acceptButton.setTitle(Giphy.confirm.capitalized, for: .normal)
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
-        cancelButton.setTitle("giphy.cancel".localized, for: .normal)
+        cancelButton.setTitle(Giphy.cancel.capitalized, for: .normal)
         cancelButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onCancel), for: .touchUpInside)
 
         imagePreview.contentMode = .scaleAspectFit
