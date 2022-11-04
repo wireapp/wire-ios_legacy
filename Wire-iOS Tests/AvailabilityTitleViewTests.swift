@@ -97,13 +97,8 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
         updateAvailability(for: user, newValue: availability)
         let sut = AvailabilityTitleView(user: user, options: options)
 
-        if hasDarkMode == true {
-            sut.overrideUserInterfaceStyle = .dark
-        } else {
-            sut.overrideUserInterfaceStyle = .light
-        }
-
-        sut.backgroundColor = sut.overrideUserInterfaceStyle == .light ? .white : .black
+        sut.overrideUserInterfaceStyle = hasDarkMode ? .dark : .light
+        sut.backgroundColor = hasDarkMode ? .black : .white
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         verify(view: sut, file: file, line: line)
     }
