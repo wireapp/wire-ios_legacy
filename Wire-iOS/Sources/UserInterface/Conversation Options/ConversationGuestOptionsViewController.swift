@@ -85,11 +85,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
 
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.GroupDetails.GuestOptionsCell.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.GuestOptionsCell.title.capitalized)
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
 

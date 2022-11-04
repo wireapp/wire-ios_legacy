@@ -91,11 +91,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
 
     private func setupNavigationBar() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Inbox.title.capitalized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Inbox.title.capitalized)
         let button = AuthenticationNavigationBar.makeBackButton(isLegacy: false)
         button.addTarget(self, action: #selector(onBackButtonPressed), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)

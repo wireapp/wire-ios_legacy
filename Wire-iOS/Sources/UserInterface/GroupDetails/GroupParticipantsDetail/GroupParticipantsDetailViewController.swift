@@ -22,7 +22,7 @@ import WireDataModel
 final class GroupParticipantsDetailViewController: UIViewController {
 
     private let collectionView = UICollectionView(forGroupedSections: ())
-    private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
+    private let searchViewController = SearchHeaderViewController(userSelection: .init())
     let viewModel: GroupParticipantsDetailViewModel
     private let collectionViewController: SectionCollectionViewController
     private let variant: ColorSchemeVariant

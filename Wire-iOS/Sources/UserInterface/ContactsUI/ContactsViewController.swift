@@ -33,7 +33,7 @@ final class ContactsViewController: UIViewController {
     let noContactsLabel = DynamicFontLabel(text: PeoplePicker.noContactsTitle,
                                            fontSpec: .headerRegularFont,
                                            color: LabelColors.textSettingsPasswordPlaceholder)
-    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init())
     let separatorView = UIView()
     let tableView = UITableView()
     let inviteOthersButton = Button(style: .accentColorTextButtonStyle,
@@ -131,13 +131,7 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setupStyle() {
-        title = ContactsUI.title.capitalized
-        let titleLabel = DynamicFontLabel(
-            text: title,
-            fontSpec: .headerSemiboldFont,
-            color: LabelColors.textDefault)
-
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: ContactsUI.title.capitalized)
 
         view.backgroundColor = .clear
 
