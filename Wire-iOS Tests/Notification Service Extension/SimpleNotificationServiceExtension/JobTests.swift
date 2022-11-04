@@ -233,7 +233,6 @@ class JobTests: XCTestCase {
         XCTAssertEqual(result, .empty)
         XCTAssertTrue(mockCallEventHandler.didCallProcessCallEvent)
     }
-
 }
 
 class MockCallEventHandler: CallEventHandlerProtocol {
@@ -247,8 +246,6 @@ class MockCallEventHandler: CallEventHandlerProtocol {
     func processCallEvent(event: ZMUpdateEvent) throws {
         didCallProcessCallEvent = true
     }
-
-
 }
 
 class MockNotificationContentProvider: NotificationContentProviderProtocol {
