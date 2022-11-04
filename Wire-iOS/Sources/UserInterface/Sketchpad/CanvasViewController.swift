@@ -137,7 +137,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
 
         let enabledStateBorderColor = SemanticColors.Button.borderInputBarItemEnabled
         let highlightedStateBorderColor = SemanticColors.Button.borderInputBarItemHighlighted
-        
+
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
