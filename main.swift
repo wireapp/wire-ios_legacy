@@ -18,6 +18,45 @@
 
 import UIKit
 
+/*
+
+ ------------------------
+ NSE
+
+ - detect call event
+ - switch event type
+    - incoming call
+        if not yet reported
+            then forward to main app
+        else
+            ignore
+
+    - terminated call (cancel, answered elsewhere, rejected elsewhere, maybe normal termination too)
+        if not yet reported
+            ignore
+        else
+            then foward to main app
+
+    - other
+        ignore
+
+ -------------------------
+ Main app
+
+ - switCh event type
+        - incoming call
+            report incoming to call kit
+            forward event to avs
+
+        - terminated
+            report call ended to call kit
+            forward event to avs (with changes to not duplicate call kit reporting)
+
+
+ */
+
+
+
 // Conditionally inject App Delegate depending on whether we're running tests or not.
 let appDelegateClass: AnyClass = NSClassFromString("TestingAppDelegate") ?? AppDelegate.self
 
