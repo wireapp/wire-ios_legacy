@@ -103,10 +103,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         createConstraints()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     func configureNavigationItems() {
         let undoImage = StyleKitIcon.undo.makeImage(size: .tiny, color: .black)
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
@@ -129,14 +125,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 
     func configureButtons() {
-        let enabledStateIconColor = SemanticColors.Button.textInputBarItemEnabled
-        let highlightedStateIconColor = SemanticColors.Button.textInputBarItemHighlighted
-
-        let enabledStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemEnabled
-        let highlightedStateBackgroundColor = SemanticColors.Button.backgroundInputBarItemHighlighted
-
-        let enabledStateBorderColor = SemanticColors.Button.borderInputBarItemEnabled
-        let highlightedStateBorderColor = SemanticColors.Button.borderInputBarItemHighlighted
 
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
@@ -163,13 +151,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         [photoButton, drawButton, emojiButton].forEach { iconButton in
             iconButton.layer.cornerRadius = 12
             iconButton.clipsToBounds = true
-
             iconButton.applyStyle(.iconButtonStyle)
-
-            iconButton.setIconColor(highlightedStateIconColor, for: .selected)
-            iconButton.setBorderColor(highlightedStateBorderColor, for: .selected)
-            iconButton.setBackgroundImageColor(highlightedStateBackgroundColor, for: .selected)
-
         }
     }
 
