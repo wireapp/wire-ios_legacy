@@ -161,21 +161,15 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         emojiButton.accessibilityIdentifier = "emojiButton"
 
         [photoButton, drawButton, emojiButton].forEach { iconButton in
-            iconButton.layer.borderWidth = 1
             iconButton.layer.cornerRadius = 12
             iconButton.clipsToBounds = true
 
-            iconButton.setIconColor(enabledStateIconColor, for: .normal)
-            iconButton.setBorderColor(enabledStateBorderColor, for: .normal)
-            iconButton.setBackgroundImageColor(enabledStateBackgroundColor, for: .normal)
-
-            iconButton.setIconColor(highlightedStateIconColor, for: .highlighted)
-            iconButton.setBorderColor(highlightedStateBorderColor, for: .highlighted)
-            iconButton.setBackgroundImageColor(highlightedStateBackgroundColor, for: .highlighted)
+            iconButton.applyStyle(.iconButtonStyle)
 
             iconButton.setIconColor(highlightedStateIconColor, for: .selected)
             iconButton.setBorderColor(highlightedStateBorderColor, for: .selected)
             iconButton.setBackgroundImageColor(highlightedStateBackgroundColor, for: .selected)
+
         }
     }
 
