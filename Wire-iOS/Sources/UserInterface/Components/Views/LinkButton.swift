@@ -21,9 +21,9 @@ import WireCommonComponents
 
 final class LinkButton: DynamicFontButton {
 
-    init(title: String) {
+    init() {
         super.init()
-        setUpButtonStyle(title: title)
+
     }
 
     required init?(coder: NSCoder) {

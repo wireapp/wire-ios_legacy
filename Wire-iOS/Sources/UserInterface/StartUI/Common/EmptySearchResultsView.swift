@@ -96,7 +96,7 @@ final class EmptySearchResultsView: UIView {
         self.isSelfUserAdmin = isSelfUserAdmin
         self.isFederationEnabled = isFederationEnabled
         stackView = UIStackView()
-        actionButton = LinkButton(title: "")
+        actionButton = LinkButton()
         super.init(frame: .zero)
 
         stackView.alignment = .center
