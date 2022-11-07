@@ -167,9 +167,9 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
            showVerified {
 
             if userClient.verified {
-                verifiedLabel.text = L10n.Localizable.Device.verified
+                verifiedLabel.text = L10n.Localizable.Device.verified.capitalized
             } else {
-                verifiedLabel.text = L10n.Localizable.Device.notVerified
+                verifiedLabel.text = L10n.Localizable.Device.notVerified.capitalized
             }
         } else {
             verifiedLabel.text = ""

@@ -143,6 +143,20 @@ final class SimpleTextField: UITextField, DynamicTypeCapable {
         }
     }
 
+    override var accessibilityValue: String? {
+        get {
+            guard let text = text,
+                  !text.isEmpty else {
+                      return super.accessibilityValue ?? placeholder
+                  }
+            return text
+        }
+
+        set {
+            super.accessibilityValue = newValue
+        }
+    }
+
     override func drawPlaceholder(in rect: CGRect) {
         super.drawPlaceholder(in: rect.inset(by: placeholderInsets))
     }

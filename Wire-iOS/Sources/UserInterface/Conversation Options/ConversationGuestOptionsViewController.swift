@@ -54,8 +54,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
+        setupNavigationBar()
     }
 
     @available(*, unavailable)
@@ -85,6 +84,11 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
             textAttributes[NSAttributedString.Key.foregroundColor] = SemanticColors.Label.textDefault
             navigationController?.navigationBar.titleTextAttributes = textAttributes
         }
+
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.GuestOptionsCell.title.capitalized)
+        navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationController?.navigationBar.backgroundColor = SemanticColors.View.backgroundDefault
+
     }
 
     private func createConstraints() {
@@ -104,7 +108,7 @@ final class ConversationGuestOptionsViewController: UIViewController, UITableVie
         tableView.reloadData()
 
         (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
-        title = state.title
+
     }
 
     func viewModel(_ viewModel: ConversationGuestOptionsViewModel, didReceiveError error: Error) {

@@ -248,7 +248,6 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     func applyColorScheme(_ variant: ColorSchemeVariant) {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
 
-        guestIndicator.tintColor = SemanticColors.Icon.foregroundDefault
         let labelColor = SemanticColors.Label.textDefault
         [handleLabel, nameLabel, teamNameLabel, remainingTimeLabel].forEach { $0.textColor = labelColor}
         view.backgroundColor = UIColor.clear
