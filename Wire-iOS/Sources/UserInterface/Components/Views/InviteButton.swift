@@ -25,9 +25,15 @@ final class InviteButton: IconButton {
         super.init()
 
         clipsToBounds = true
-        titleLabel?.font = FontSpec(.normal, .semibold).font
+        titleLabel?.font = FontSpec.normalSemiboldFont.font!
         applyStyle(.secondaryTextButtonStyle)
         layer.cornerRadius = 12
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            applyStyle(.secondaryTextButtonStyle)
+        }
     }
 }
