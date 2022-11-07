@@ -88,6 +88,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 
 class ConversationSenderMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationSenderMessageCell
+    typealias ConversationAnnouncement = L10n.Accessibility.ConversationAnnouncement
     let configuration: View.Configuration
 
     var message: ZMConversationMessage?
@@ -102,7 +103,7 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    var accessibilityLabel: String?
 
     init(sender: UserType, message: ZMConversationMessage) {
         self.message = message
@@ -117,7 +118,27 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
         }
 
         self.configuration = View.Configuration(user: sender, message: message, indicatorIcon: icon)
+        setupAccessibility(sender)
         actionController = nil
+    }
+
+    private func setupAccessibility(_ sender: UserType) {
+        guard let message = message, let senderName = sender.name else {
+            accessibilityLabel = nil
+            return
+        }
+        if message.isDeletion {
+            accessibilityLabel = ConversationAnnouncement.DeletedMessage.description(senderName)
+        } else if message.updatedAt != nil {
+            if message.isText, let textMessageData = message.textMessageData {
+                let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated)
+                accessibilityLabel = ConversationAnnouncement.EditedMessage.description(senderName) + messageText.string
+            } else {
+                accessibilityLabel = ConversationAnnouncement.EditedMessage.description(senderName)
+            }
+        } else {
+            accessibilityLabel = nil
+        }
     }
 
 }
