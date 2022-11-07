@@ -21,7 +21,7 @@ import WireCommonComponents
 
 final class LinkButton: DynamicFontButton {
 
-    func setupButtonStyle(title: String) {
+    func setup(title: String) {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: FontSpec.normalRegularFont.font!,
             .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
