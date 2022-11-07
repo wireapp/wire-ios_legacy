@@ -20,7 +20,7 @@ import UIKit
 import WireSyncEngine
 import WireCommonComponents
 
-final class ProfileHeaderViewController: UIViewController, Themeable {
+final class ProfileHeaderViewController: UIViewController {
 
     /**
      * The options to customize the appearance and behavior of the view.
@@ -73,19 +73,14 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
 
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard colorSchemeVariant != oldValue else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-
     var stackView: CustomSpacingStackView!
 
     typealias AccountPageStrings = L10n.Accessibility.AccountPage
+    typealias LabelColors = SemanticColors.Label
 
-    let nameLabel: UILabel = {
-        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont, color: .textForeground)
+    let nameLabel: DynamicFontLabel = {
+        let label = DynamicFontLabel(fontSpec: .largeSemiboldFont,
+                                     color: LabelColors.textDefault)
         label.accessibilityLabel = AccountPageStrings.Name.description
         label.accessibilityIdentifier = "name"
 
@@ -102,15 +97,19 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
 
         return label
     }()
-    let handleLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .textForeground)
-    let teamNameLabel = DynamicFontLabel(fontSpec: .smallRegularFont, color: .textForeground)
+    let handleLabel = DynamicFontLabel(fontSpec: .smallRegularFont,
+                                       color: LabelColors.textDefault)
+    let teamNameLabel = DynamicFontLabel(fontSpec: .smallRegularFont,
+                                         color: LabelColors.textDefault)
+    let remainingTimeLabel = DynamicFontLabel(fontSpec: .mediumSemiboldFont,
+                                              color: LabelColors.textDefault)
     let imageView =  UserImageView(size: .big)
     let availabilityTitleViewController: AvailabilityTitleViewController
 
     let guestIndicatorStack = UIStackView()
-    let guestIndicator = LabelIndicator(context: .guest)
-    let remainingTimeLabel = UILabel()
     let groupRoleIndicator = LabelIndicator(context: .groupRole)
+
+    let guestIndicator = LabelIndicator(context: .guest)
     let externalIndicator = LabelIndicator(context: .external)
     let federatedIndicator = LabelIndicator(context: .federated)
 
@@ -178,7 +177,6 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         nameLabel.accessibilityValue = nameLabel.text
 
         let remainingTimeString = user.expirationDisplayString
-        remainingTimeLabel.font = UIFont.mediumSemiboldFont
         remainingTimeLabel.text = remainingTimeString
         remainingTimeLabel.isHidden = remainingTimeString == nil
 
@@ -217,7 +215,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         stackView.wr_addCustomSpacing(20, after: federatedIndicator)
 
         view.addSubview(stackView)
-        applyColorScheme(colorSchemeVariant)
+
+        guestIndicator.tintColor = SemanticColors.Icon.foregroundDefault
+        view.backgroundColor = UIColor.clear
+
         configureConstraints()
         applyOptions()
 
@@ -242,15 +243,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         NSLayoutConstraint.activate([
             // stackView
             widthImageConstraint, leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
-            ])
-    }
-
-    func applyColorScheme(_ variant: ColorSchemeVariant) {
-        availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
-
-        let labelColor = SemanticColors.Label.textDefault
-        [handleLabel, nameLabel, teamNameLabel, remainingTimeLabel].forEach { $0.textColor = labelColor}
-        view.backgroundColor = UIColor.clear
+        ])
     }
 
     private func updateGuestIndicator() {
