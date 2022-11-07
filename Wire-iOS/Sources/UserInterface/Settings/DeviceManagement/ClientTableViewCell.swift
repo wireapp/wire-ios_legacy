@@ -38,7 +38,7 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
 
     private let activationLabelFont = FontSpec.smallLightFont
     private let activationLabelDateFont = FontSpec.smallSemiboldFont
-    
+
     var showVerified: Bool = false {
         didSet {
             updateVerifiedLabel()
@@ -124,16 +124,16 @@ class ClientTableViewCell: UITableViewCell, DynamicTypeCapable {
         activationLabel.accessibilityIdentifier = "device activation date"
         fingerprintLabel.accessibilityIdentifier = "device fingerprint"
         verifiedLabel.accessibilityIdentifier = "device verification status"
-        
+
         activationLabel.numberOfLines = 0
         activationLabel.textColor = textColor
-        
+
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
         fingerprintTextColor = textColor
 
         backgroundColor = SemanticColors.View.backgroundUserCell
-        
+
         addBorder(for: .bottom)
     }
 
