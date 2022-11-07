@@ -21,16 +21,7 @@ import WireCommonComponents
 
 final class LinkButton: DynamicFontButton {
 
-    init() {
-        super.init()
-
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setUpButtonStyle(title: String) {
+    func setupButtonStyle(title: String) {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: FontSpec.normalRegularFont.font!,
             .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
