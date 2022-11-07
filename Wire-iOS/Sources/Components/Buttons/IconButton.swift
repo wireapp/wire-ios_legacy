@@ -19,6 +19,21 @@
 import UIKit
 import WireCommonComponents
 
+class NonLegacyIconButton: IconButton {
+
+    override var isSelected: Bool {
+        didSet {
+            applyStyle(.iconButtonStyle)
+        }
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            applyStyle(.iconButtonStyle)
+        }
+    }
+}
+
 enum IconButtonStyle {
     case `default`
     case circular
