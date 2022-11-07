@@ -37,7 +37,7 @@ class StylableButton: UIButton, Stylable {
         setBackgroundImageColor(style.normalStateColors.background, for: .normal)
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
         setBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
- 
+
         self.layer.borderWidth = 1
         self.layer.borderColor = isHighlighted ? style.highlightedStateColors.border.cgColor : style.normalStateColors.border.cgColor
         self.layer.borderColor = isSelected ? style.selectedStateColors?.border.cgColor : style.normalStateColors.border.cgColor
