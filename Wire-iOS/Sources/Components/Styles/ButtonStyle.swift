@@ -70,4 +70,14 @@ public struct ButtonStyle {
                                                          title: ButtonColors.textEmptyEnabled,
                                                          border: .clear))
 
+    static let iconButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: ButtonColors.backgroundInputBarItemEnabled,
+                                                         title: ButtonColors.textInputBarItemEnabled,
+                                                         border: ButtonColors.borderInputBarItemEnabled),
+                                                        highlightedStateColors: (
+                                                         background: ButtonColors.backgroundInputBarItemHighlighted,
+                                                         title: ButtonColors.textInputBarItemHighlighted,
+                                                         border: ButtonColors.borderInputBarItemHighlighted))
+
+
 }
