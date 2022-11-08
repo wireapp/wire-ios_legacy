@@ -102,6 +102,7 @@ public enum SemanticColors {
 
     public enum View {
         static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
