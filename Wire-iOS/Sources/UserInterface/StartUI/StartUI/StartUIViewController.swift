@@ -109,8 +109,7 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
 
     func setupViews() {
         configGroupSelector()
-        emptyResultView = EmptySearchResultsView(variant: .dark,
-                                                 isSelfUserAdmin: selfUser.canManageTeam,
+        emptyResultView = EmptySearchResultsView(isSelfUserAdmin: selfUser.canManageTeam,
                                                  isFederationEnabled: isFederationEnabled)
 
         emptyResultView.delegate = self
