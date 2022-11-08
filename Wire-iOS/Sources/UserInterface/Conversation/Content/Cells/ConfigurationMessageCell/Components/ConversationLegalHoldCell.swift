@@ -69,10 +69,11 @@ final class ConversationLegalHoldCellDescription: ConversationMessageCellDescrip
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(systemMessageType: ZMSystemMessageType, conversation: ZMConversation) {
         configuration = ConversationLegalHoldCellDescription.configuration(for: systemMessageType, in: conversation)
+        accessibilityLabel = configuration.attributedText?.string
     }
 
     private static func configuration(for systemMessageType: ZMSystemMessageType, in conversation: ZMConversation) -> View.Configuration {
