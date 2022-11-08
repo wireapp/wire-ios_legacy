@@ -35,10 +35,10 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     weak var delegate: CanvasViewControllerDelegate?
     var canvas = Canvas()
     private lazy var toolbar: SketchToolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
-    let drawButton = IconButton()
-    let emojiButton = IconButton()
+    let drawButton = NonLegacyIconButton()
+    let emojiButton = NonLegacyIconButton()
     let sendButton = IconButton.sendButton()
-    let photoButton = IconButton()
+    let photoButton = NonLegacyIconButton()
     let separatorLine = UIView()
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
@@ -74,20 +74,21 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         super.viewDidLoad()
 
         canvas.delegate = self
-        canvas.backgroundColor = UIColor.white
+        canvas.backgroundColor = SemanticColors.View.backgroundDefaultWhite
         canvas.isAccessibilityElement = true
         canvas.accessibilityIdentifier = "canvas"
 
         emojiKeyboardViewController.delegate = self
 
-        separatorLine.backgroundColor = UIColor.from(scheme: .separator)
-        hintImageView.setIcon(.brush, size: 172, color: UIColor.from(scheme: .placeholderBackground, variant: .light))
-        hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
+        separatorLine.backgroundColor = SemanticColors.View.backgroundSeparatorCell
+        hintImageView.setIcon(.brush, size: 132, color: SemanticColors.Label.textSettingsPasswordPlaceholder)
+        hintImageView.tintColor = SemanticColors.Label.textSettingsPasswordPlaceholder
+        hintLabel.text = L10n.Localizable.Sketchpad.initialHint.capitalized
         hintLabel.numberOfLines = 0
-        hintLabel.font = FontSpec(.small, .regular).font!
+        hintLabel.font = FontSpec.normalRegularFont.font
         hintLabel.textAlignment = .center
-        hintLabel.textColor = UIColor.from(scheme: .textPlaceholder)
-        self.view.backgroundColor = UIColor.from(scheme: .background)
+        hintLabel.textColor = SemanticColors.Label.textSettingsPasswordPlaceholder
+        self.view.backgroundColor = SemanticColors.View.backgroundDefaultWhite
 
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
 
@@ -102,18 +103,20 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         createConstraints()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
     func configureNavigationItems() {
         let undoImage = StyleKitIcon.undo.makeImage(size: .tiny, color: .black)
         let closeImage = StyleKitIcon.cross.makeImage(size: .tiny, color: .black)
 
-        let closeButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(CanvasViewController.close))
+        let closeButtonItem = UIBarButtonItem(image: closeImage,
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(CanvasViewController.close))
         closeButtonItem.accessibilityIdentifier = "closeButton"
 
-        let undoButtonItem = UIBarButtonItem(image: undoImage, style: .plain, target: canvas, action: #selector(Canvas.undo))
+        let undoButtonItem = UIBarButtonItem(image: undoImage,
+                                             style: .plain,
+                                             target: canvas,
+                                             action: #selector(Canvas.undo))
         undoButtonItem.isEnabled = false
         undoButtonItem.accessibilityIdentifier = "undoButton"
 
@@ -122,6 +125,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
     }
 
     func configureButtons() {
+
         let hitAreaPadding = CGSize(width: 16, height: 16)
 
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
@@ -145,9 +149,9 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         emojiButton.accessibilityIdentifier = "emojiButton"
 
         [photoButton, drawButton, emojiButton].forEach { iconButton in
-            iconButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
-            iconButton.setIconColor(UIColor.from(scheme: .iconHighlighted), for: .highlighted)
-            iconButton.setIconColor(UIColor.accent(), for: .selected)
+            iconButton.layer.cornerRadius = 12
+            iconButton.clipsToBounds = true
+            iconButton.applyStyle(.iconButtonStyle)
         }
     }
 
