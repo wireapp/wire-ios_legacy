@@ -23,6 +23,7 @@ import WireSyncEngine
 import WireCommonComponents
 import WireRequestStrategy
 
+
 @available(iOS 15, *)
 final class Job: NSObject, Loggable {
 
@@ -48,6 +49,7 @@ final class Job: NSObject, Loggable {
     private let accessAPIClient: AccessAPIClientProtocol
     private let notificationsAPIClient: NotificationsAPIClientProtocol
     private let notificationContentProvider: NotificationContentProviderProtocol
+    private let callEventHandler: CallEventHandlerProtocol
 
     // MARK: - Life cycle
 
@@ -57,7 +59,8 @@ final class Job: NSObject, Loggable {
         networkSession: NetworkSessionProtocol? = nil,
         accessAPIClient: AccessAPIClientProtocol? = nil,
         notificationsAPIClient: NotificationsAPIClientProtocol? = nil,
-        notificationContentProvider: NotificationContentProviderProtocol
+        notificationContentProvider: NotificationContentProviderProtocol,
+        callEventHandler: CallEventHandlerProtocol
     ) throws {
         self.request = request
         let (userID, eventID) = try Self.pushPayload(from: request)
@@ -70,6 +73,7 @@ final class Job: NSObject, Loggable {
         self.accessAPIClient = accessAPIClient ??  AccessAPIClient(networkSession: session)
         self.notificationsAPIClient = notificationsAPIClient ??  NotificationsAPIClient(networkSession: session)
         self.notificationContentProvider = notificationContentProvider
+        self.callEventHandler = callEventHandler
         super.init()
     }
 
@@ -99,9 +103,14 @@ final class Job: NSObject, Loggable {
 
     private func extractNotificationContent(from event: ZMUpdateEvent) async throws -> UNNotificationContent {
         let updatedEvent =  try await eventDecoder.decryptAndStoreEvent(event)
+        if let accountID = request.content.accountID,
+           callEventHandler.isCorrectCallEvent(updatedEvent, accountIdentifier: accountID) {
+            try callEventHandler.processCallEvent(event: updatedEvent)
+            return .empty
+        }
         return try notificationContentProvider.notificationContent(fromEvent: updatedEvent)
     }
-
+    
     private class func pushPayload(from request: UNNotificationRequest) throws -> PushPayload {
         guard
             let notificationData = request.content.userInfo["data"] as? [String: Any],

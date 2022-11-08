@@ -28,6 +28,7 @@ class JobTests: XCTestCase {
     var mockNetworkSession: MockNetworkSession!
     var mockAccessAPIClient: MockAccessAPIClient!
     var mockNotificationsAPIClient: MockNotificationsAPIClient!
+    var mockCallEventHandler: MockCallEventHandler!
     var sut: Job!
 
     override func setUpWithError() throws {
@@ -36,6 +37,7 @@ class JobTests: XCTestCase {
         mockNetworkSession = MockNetworkSession()
         mockAccessAPIClient = MockAccessAPIClient()
         mockNotificationsAPIClient = MockNotificationsAPIClient()
+        mockCallEventHandler = MockCallEventHandler()
 
         sut = try Job(
             request: notificationRequest,
@@ -43,7 +45,8 @@ class JobTests: XCTestCase {
             networkSession: mockNetworkSession,
             accessAPIClient: mockAccessAPIClient,
             notificationsAPIClient: mockNotificationsAPIClient,
-            notificationContentProvider: notificationContentProviderMock
+            notificationContentProvider: notificationContentProviderMock,
+            callEventHandler: mockCallEventHandler
         )
     }
 
@@ -51,6 +54,7 @@ class JobTests: XCTestCase {
         mockNetworkSession = nil
         mockAccessAPIClient = nil
         mockNotificationsAPIClient = nil
+        mockCallEventHandler = nil
         super.tearDown()
     }
 
@@ -71,25 +75,24 @@ class JobTests: XCTestCase {
             trigger: nil
         )
     }()
+    private static let mockPayload: [String: Any] = [
+        "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
+        "time": "2022-09-21T12:13:32.173Z",
+        "type": "conversation.otr-message-add",
+        "payload": [
+            "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
+            "data": [
+                "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
+            ]
+        ]
+    ]
 
     lazy var eventDecoder: MockEventDecoder = {
         let decoder = MockEventDecoder()
         decoder.mockDecodeEvent = {
-            let payload: [String: Any] = [
-                            "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
-                            "time": "2022-09-21T12:13:32.173Z",
-                            "type": "conversation.otr-message-add",
-                            "payload": [
-                                "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
-                                "data": [
-                                    "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
-                                ]
-                            ]
-                        ]
-
                         return ZMUpdateEvent(
                             uuid: self.eventID,
-                            payload: payload,
+                            payload: JobTests.mockPayload,
                             transient: false,
                             decrypted: true,
                             source: .pushNotification
@@ -152,20 +155,9 @@ class JobTests: XCTestCase {
         mockNotificationsAPIClient.mockFetchEvent = { eventID in
             XCTAssertEqual(eventID, self.eventID)
 
-            let payload: [String: Any] = [
-                "id": "cf51e6b1-39a6-11ed-8005-520924331b82",
-                "time": "2022-09-21T12:13:32.173Z",
-                "type": "conversation.otr-message-add",
-                "payload": [
-                    "conversation": "c06684dd-2865-4ff8-aef5-e0b07ae3a4e0",
-                    "data": [
-                        "text": "CiQxMDU4MDQzYi01YzRkLTQ2MDItODI2ZS04MjI4NjZmZGM2MzISDAoGUVdFUlRZMAA4AQ=="
-                    ]
-                ]
-            ]
             return ZMUpdateEvent(
                 uuid: eventID,
-                payload: payload,
+                payload: JobTests.mockPayload,
                 transient: false,
                 decrypted: false,
                 source: .pushNotification
@@ -177,7 +169,6 @@ class JobTests: XCTestCase {
         let result = try await self.sut.execute()
         // Then
         XCTAssertEqual(result.body, "test123")
-
     }
 
     func test_Execute_NotNewMessageEvent_Content() async throws {
@@ -212,18 +203,64 @@ class JobTests: XCTestCase {
 
         // Then
         XCTAssertEqual(result, .empty)
+        XCTAssertFalse(mockCallEventHandler.didCallProcessCallEvent)
     }
 
+    func test_Execute_EmptyContnentForCallEvent() async throws {
+        // Given
+        mockAccessAPIClient.mockFetchAccessToken = {
+            AccessToken(token: "12345", type: "Bearer", expiresInSeconds: 10)
+        }
+        mockCallEventHandler.returnIsCorrectCallEvent = true
+
+        mockNotificationsAPIClient.mockFetchEvent = { eventID in
+            XCTAssertEqual(eventID, self.eventID)
+
+            return ZMUpdateEvent(
+                uuid: eventID,
+                payload: JobTests.mockPayload,
+                transient: false,
+                decrypted: false,
+                source: .pushNotification
+            )!
+        }
+        notificationContentProviderMock.returnCallEvent = true
+
+        // When
+        let result = try await sut.execute()
+
+        // Then
+        XCTAssertEqual(result, .empty)
+        XCTAssertTrue(mockCallEventHandler.didCallProcessCallEvent)
+    }
+}
+
+class MockCallEventHandler: CallEventHandlerProtocol {
+    var returnIsCorrectCallEvent = false
+    var didCallProcessCallEvent = false
+
+    func isCorrectCallEvent(_ event: ZMUpdateEvent, accountIdentifier: UUID) -> Bool {
+        return returnIsCorrectCallEvent
+    }
+
+    func processCallEvent(event: ZMUpdateEvent) throws {
+        didCallProcessCallEvent = true
+    }
 }
 
 class MockNotificationContentProvider: NotificationContentProviderProtocol {
     var notificationMessage = ""
+    var returnCallEvent = false
 
     func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent {
         let content = UNMutableNotificationContent()
         content.body = notificationMessage
 
         return content
+    }
+
+    func isCorrectCallEvent(_ event: ZMUpdateEvent, accountIdentifier: UUID) -> Bool {
+        return returnCallEvent
     }
 }
 

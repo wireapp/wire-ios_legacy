@@ -26,11 +26,11 @@ import WireSyncEngine
 import UIKit
 import CallKit
 
-public protocol CallEventHandlerProtocol {
+public protocol LegacyCallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
 }
 
-class CallEventHandler: CallEventHandlerProtocol {
+class LegacyCallEventHandler: LegacyCallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
         guard #available(iOS 14.5, *) else { return }
@@ -47,7 +47,7 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
 
     // MARK: - Properties
 
-    public var callEventHandler: CallEventHandlerProtocol = CallEventHandler()
+    public var callEventHandler: LegacyCallEventHandlerProtocol = LegacyCallEventHandler()
 
     private var session: NotificationSession?
     private var contentHandler: ((UNNotificationContent) -> Void)?

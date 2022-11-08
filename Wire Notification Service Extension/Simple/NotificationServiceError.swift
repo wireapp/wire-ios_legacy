@@ -29,5 +29,6 @@ enum NotificationServiceError: Error, Equatable {
     case noDecryptedEvent
     case noGenericMessage
     case missingConversation
+    case incorrectCallPayload
 
 }

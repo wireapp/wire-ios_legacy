@@ -21,7 +21,7 @@ import WireDataModel
 import WireRequestStrategy
 
 protocol NotificationContentProviderProtocol {
-    func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent 
+    func notificationContent(fromEvent event: ZMUpdateEvent) throws -> UNNotificationContent
 }
 
 class NotificationContentProvider: NotificationContentProviderProtocol {
@@ -42,4 +42,5 @@ class NotificationContentProvider: NotificationContentProviderProtocol {
         }
         return notification.content
     }
+
 }
