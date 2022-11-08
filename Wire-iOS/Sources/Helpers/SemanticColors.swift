@@ -147,7 +147,7 @@ public enum SemanticColors {
         static let borderInputBarItemHighlighted = UIColor(light: Asset.blue300Light, dark: Asset.blue700Dark)
         static let textInputBarItemEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textInputBarItemHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.white)
-
+        static let textUnderlineEnabled = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 
