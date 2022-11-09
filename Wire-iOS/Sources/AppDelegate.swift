@@ -20,7 +20,6 @@ import UIKit
 import WireCommonComponents
 import WireSyncEngine
 import avs
-import OSLog
 
 enum ApplicationLaunchType {
     case unknown

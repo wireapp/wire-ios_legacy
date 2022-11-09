@@ -25,7 +25,6 @@ import WireDataModel
 import WireSyncEngine
 import UIKit
 import CallKit
-import OSLog
 
 public protocol CallEventHandlerProtocol {
     func reportIncomingVoIPCall(_ payload: [String: Any])
@@ -34,7 +33,6 @@ public protocol CallEventHandlerProtocol {
 class CallEventHandler: CallEventHandlerProtocol {
 
     func reportIncomingVoIPCall(_ payload: [String: Any]) {
-        os_log("CallKit_Tests - reportIncomingVoIPCall from Main app")
         guard #available(iOS 14.5, *) else { return }
         CXProvider.reportNewIncomingVoIPPushPayload(payload) { error in
             if let error = error {
@@ -74,7 +72,6 @@ public class LegacyNotificationService: UNNotificationServiceExtension, Notifica
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        os_log("CallKit_Tests - didReceive push")
         if DeveloperFlag.nseDebugEntryPoint.isOn {
             contentHandler(request.debugContent)
             return
