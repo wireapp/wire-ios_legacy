@@ -61,11 +61,16 @@ final class ConfirmAssetViewController: UIViewController {
     private var imageToolbarView: ImageToolbarView?
 
     private let topPanel: UIView = UIView()
-    private let titleLabel: UILabel = UILabel()
+    private let titleLabel: DynamicFontLabel = DynamicFontLabel(fontSpec: .headerSemiboldFont,
+                                                                color: SemanticColors.Label.textDefault)
     private let bottomPanel: UIView = UIView()
     private let confirmButtonsStack: UIStackView = UIStackView()
-    private let acceptImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
-    private let rejectImageButton: LegacyButton = LegacyButton(fontSpec: .smallSemiboldFont)
+    private let acceptImageButton: Button = Button(style: .accentColorTextButtonStyle,
+                                                   cornerRadius: 16,
+                                                   fontSpec: .normalSemiboldFont)
+    private let rejectImageButton: Button = Button(style: .secondaryTextButtonStyle,
+                                                   cornerRadius: 16,
+                                                   fontSpec: .normalSemiboldFont)
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
     private let imageToolbarSeparatorView: UIView = UIView()
 
@@ -123,33 +128,11 @@ final class ConfirmAssetViewController: UIViewController {
     }
 
     private func setupStyle() {
-        applyColorScheme(ColorScheme.default.variant)
-
-        titleLabel.font = UIFont.mediumSemiboldFont
+        view.backgroundColor = SemanticColors.View.backgroundDefault
+        imageToolbarSeparatorView.backgroundColor = UIColor.from(scheme: .separator)
+        topPanel.backgroundColor = SemanticColors.View.backgroundDefault
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
-
-        acceptImageButton.layer.cornerRadius = 8
-
-        rejectImageButton.layer.cornerRadius = 8
-    }
-
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        view.backgroundColor = UIColor.from(scheme: .background)
-        imageToolbarSeparatorView.backgroundColor = UIColor.from(scheme: .separator)
-        topPanel.backgroundColor = UIColor.from(scheme: .background)
-
-        titleLabel.textColor = UIColor.from(scheme: .textForeground)
-
-        acceptImageButton.setTitleColor(.white, for: .normal)
-        acceptImageButton.setTitleColor(.whiteAlpha40, for: .highlighted)
-        acceptImageButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
-        acceptImageButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
-
-        rejectImageButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), for: .normal)
-        rejectImageButton.setTitleColor(UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant), for: .highlighted)
-        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction, variant: colorSchemeVariant), for: .normal)
-        rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryActionDimmed, variant: colorSchemeVariant), for: .highlighted)
     }
 
     /// Show editing options only if the image is not animated
@@ -187,9 +170,9 @@ final class ConfirmAssetViewController: UIViewController {
     /// open canvas screen if the image is sketchable(e.g. not an animated GIF)
     private func openSketch(in editMode: CanvasViewControllerEditMode) {
         guard case .image(let mediaAsset) = asset,
-            let image = mediaAsset as? UIImage else {
-            return
-        }
+              let image = mediaAsset as? UIImage else {
+                  return
+              }
 
         let canvasViewController = CanvasViewController()
         canvasViewController.sketchImage = image
@@ -356,38 +339,38 @@ final class ConfirmAssetViewController: UIViewController {
         }
 
         switch asset {
-        // Preview Image
+            // Preview Image
         case .image(let mediaAsset):
             let imageSize: CGSize = mediaAsset.size
 
             if let imagePreviewView = imagePreviewView {
 
-            constraints += [
-                // dimension
-                imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width),
-
-                // centering
-                imagePreviewView.centerXAnchor.constraint(equalTo: contentLayoutGuide.centerXAnchor),
-                imagePreviewView.centerYAnchor.constraint(equalTo: contentLayoutGuide.centerYAnchor),
-
-                // limits
-                imagePreviewView.leadingAnchor.constraint(greaterThanOrEqualTo: contentLayoutGuide.leadingAnchor),
-                imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: contentLayoutGuide.topAnchor, constant: margin),
-                imagePreviewView.trailingAnchor.constraint(lessThanOrEqualTo: contentLayoutGuide.trailingAnchor),
-                imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: contentLayoutGuide.bottomAnchor, constant: -margin)
-            ]
-
-            // Image Toolbar Inside Image
-            if let imageToolbarViewInsideImage = imageToolbarViewInsideImage {
                 constraints += [
-                    imageToolbarViewInsideImage.leadingAnchor.constraint(equalTo: imagePreviewView.leadingAnchor),
-                    imageToolbarViewInsideImage.trailingAnchor.constraint(equalTo: imagePreviewView.trailingAnchor),
-                    imageToolbarViewInsideImage.bottomAnchor.constraint(equalTo: imagePreviewView.bottomAnchor),
-                    imageToolbarViewInsideImage.heightAnchor.constraint(equalToConstant: 48)
+                    // dimension
+                    imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width),
+
+                    // centering
+                    imagePreviewView.centerXAnchor.constraint(equalTo: contentLayoutGuide.centerXAnchor),
+                    imagePreviewView.centerYAnchor.constraint(equalTo: contentLayoutGuide.centerYAnchor),
+
+                    // limits
+                    imagePreviewView.leadingAnchor.constraint(greaterThanOrEqualTo: contentLayoutGuide.leadingAnchor),
+                    imagePreviewView.topAnchor.constraint(greaterThanOrEqualTo: contentLayoutGuide.topAnchor, constant: margin),
+                    imagePreviewView.trailingAnchor.constraint(lessThanOrEqualTo: contentLayoutGuide.trailingAnchor),
+                    imagePreviewView.bottomAnchor.constraint(lessThanOrEqualTo: contentLayoutGuide.bottomAnchor, constant: -margin)
                 ]
+
+                // Image Toolbar Inside Image
+                if let imageToolbarViewInsideImage = imageToolbarViewInsideImage {
+                    constraints += [
+                        imageToolbarViewInsideImage.leadingAnchor.constraint(equalTo: imagePreviewView.leadingAnchor),
+                        imageToolbarViewInsideImage.trailingAnchor.constraint(equalTo: imagePreviewView.trailingAnchor),
+                        imageToolbarViewInsideImage.bottomAnchor.constraint(equalTo: imagePreviewView.bottomAnchor),
+                        imageToolbarViewInsideImage.heightAnchor.constraint(equalToConstant: 48)
+                    ]
+                }
             }
-            }
-        // Player View
+            // Player View
         case .video:
             if let playerView = playerViewController?.view {
                 constraints += [
