@@ -28,6 +28,7 @@ class StylableButton: UIButton, Stylable {
 
         setTitleColor(style.normalStateColors.title, for: .normal)
         setTitleColor(style.highlightedStateColors.title, for: .highlighted)
+        setTitleColor(style.selectedStateColors?.title, for: .selected)
 
         applyStyleToNonDynamicProperties(style: style)
     }
@@ -35,9 +36,11 @@ class StylableButton: UIButton, Stylable {
     private func applyStyleToNonDynamicProperties(style: ButtonStyle) {
         setBackgroundImageColor(style.normalStateColors.background, for: .normal)
         setBackgroundImageColor(style.highlightedStateColors.background, for: .highlighted)
+        setBackgroundImageColor(style.selectedStateColors?.background, for: .selected)
 
         self.layer.borderWidth = 1
-        self.layer.borderColor = isHighlighted ? style.normalStateColors.border.cgColor : style.highlightedStateColors.border.cgColor
+        self.layer.borderColor = isHighlighted ? style.highlightedStateColors.border.cgColor : style.normalStateColors.border.cgColor
+        self.layer.borderColor = isSelected ? style.selectedStateColors?.border.cgColor : style.normalStateColors.border.cgColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

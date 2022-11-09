@@ -822,7 +822,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
         let viewController = CanvasViewController()
         viewController.delegate = self
-        viewController.title = conversation.displayName.uppercased()
+        viewController.navigationItem.setupNavigationBarTitle(title: conversation.displayName.capitalized)
 
         parent?.present(viewController.wrapInNavigationController(setBackgroundColor: true), animated: true)
     }

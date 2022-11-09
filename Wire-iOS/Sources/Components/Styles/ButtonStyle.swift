@@ -24,6 +24,7 @@ public struct ButtonStyle {
 
     private(set) var normalStateColors: (background: UIColor, title: UIColor, border: UIColor)
     private(set) var highlightedStateColors: (background: UIColor, title: UIColor, border: UIColor)
+    private(set) var selectedStateColors: (background: UIColor, title: UIColor, border: UIColor)?
 
     static let secondaryTextButtonStyle = ButtonStyle(normalStateColors: (
                                                         background: ButtonColors.backgroundSecondaryEnabled,
@@ -70,4 +71,16 @@ public struct ButtonStyle {
                                                          title: ButtonColors.textEmptyEnabled,
                                                          border: .clear))
 
+    static let iconButtonStyle = ButtonStyle(normalStateColors: (
+                                                         background: ButtonColors.backgroundInputBarItemEnabled,
+                                                         title: ButtonColors.textInputBarItemEnabled,
+                                                         border: ButtonColors.borderInputBarItemEnabled),
+                                                        highlightedStateColors: (
+                                                         background: ButtonColors.backgroundInputBarItemHighlighted,
+                                                         title: ButtonColors.textInputBarItemHighlighted,
+                                                         border: ButtonColors.borderInputBarItemHighlighted),
+                                                       selectedStateColors: (
+                                                         background: ButtonColors.backgroundInputBarItemHighlighted,
+                                                         title: ButtonColors.textInputBarItemHighlighted,
+                                                         border: ButtonColors.borderInputBarItemHighlighted))
 }
