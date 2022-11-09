@@ -166,7 +166,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                     })
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        confirmImageViewController.previewTitle = conversation.displayName.capitalized
+        confirmImageViewController.previewTitle = conversation.displayName.localizedUppercase
 
         endEditing()
         present(confirmImageViewController, animated: true)

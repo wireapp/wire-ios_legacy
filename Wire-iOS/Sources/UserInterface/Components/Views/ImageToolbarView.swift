@@ -63,10 +63,14 @@ final class ImageToolbarView: UIView {
     }
 
     private func updateButtonStyle() {
+        let normalColor: UIColor = isPlacedOnImage ? .from(scheme: .iconNormal, variant: .dark) : .from(scheme: .iconNormal)
+        let highlightedColor: UIColor = isPlacedOnImage ? .from(scheme: .iconHighlighted, variant: .dark) : .from(scheme: .iconHighlighted)
+        let selectedColor: UIColor = isPlacedOnImage ? .accentDarken : .accent()
+
         [sketchButton, emojiButton, textButton, expandButton].forEach {
-            $0.layer.cornerRadius = 12
-            $0.clipsToBounds = true
-            $0.applyStyle(.iconButtonStyle)
+            $0.setIconColor(normalColor, for: .normal)
+            $0.setIconColor(highlightedColor, for: .highlighted)
+            $0.setIconColor(selectedColor, for: .selected)
         }
     }
 
@@ -145,8 +149,8 @@ final class ImageToolbarView: UIView {
         for button in buttons {
             button.translatesAutoresizingMaskIntoConstraints = false
             constraints.append(contentsOf: [
-                button.widthAnchor.constraint(equalToConstant: 32),
-                button.heightAnchor.constraint(equalToConstant: 32),
+                button.widthAnchor.constraint(equalToConstant: 16),
+                button.heightAnchor.constraint(equalToConstant: 16),
                 button.centerYAnchor.constraint(equalTo: buttonContainer.centerYAnchor)
             ])
         }
