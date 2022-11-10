@@ -152,11 +152,11 @@ extension ConversationViewController {
 
             let barButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
             barButtonView.addSubview(stackView)
-            let item = UIBarButtonItem(customView: barButtonView)
-            return [item]
+            let barButtonItems = UIBarButtonItem(customView: barButtonView)
+            return [barButtonItems]
         } else {
-            let item = UIBarButtonItem(customView: audioCallButton)
-            return [item]
+            let barButtonItem = UIBarButtonItem(customView: audioCallButton)
+            return [barButtonItem]
         }
     }
 
