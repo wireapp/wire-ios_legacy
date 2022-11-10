@@ -90,11 +90,7 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.Self.Settings.TechnicalReportSection.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.Settings.TechnicalReportSection.title.capitalized)
     }
 
     // MARK: - TableView Delegates

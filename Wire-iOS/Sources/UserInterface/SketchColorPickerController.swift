@@ -149,7 +149,7 @@ final class SketchColorPickerController: UIViewController {
 
     private func setUpColorsCollectionView() {
         colorsCollectionView.showsHorizontalScrollIndicator = false
-        colorsCollectionView.backgroundColor = .from(scheme: .background)
+        colorsCollectionView.backgroundColor = SemanticColors.View.backgroundDefaultWhite
         view.addSubview(colorsCollectionView)
 
         SketchColorCollectionViewCell.register(in: colorsCollectionView)
