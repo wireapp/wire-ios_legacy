@@ -77,7 +77,6 @@ extension ConversationViewController {
         return button
     }
 
-
     var joinCallButton: UIBarButtonItem {
         let button = IconButton(fontSpec: .smallSemiboldFont)
         button.adjustsTitleWhenHighlighted = true
