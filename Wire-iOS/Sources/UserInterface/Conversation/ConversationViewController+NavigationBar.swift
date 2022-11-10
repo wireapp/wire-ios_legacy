@@ -142,16 +142,16 @@ extension ConversationViewController {
         } else if conversation.isCallOngoing {
             return []
         } else if conversation.canStartVideoCall {
-            let stackView = UIStackView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
-            stackView.distribution = .fillEqually
-            stackView.spacing = 1
-            stackView.axis = .horizontal
+            let buttonStack = UIStackView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
+            buttonStack.distribution = .fillEqually
+            buttonStack.spacing = 1
+            buttonStack.axis = .horizontal
 
-            stackView.addArrangedSubview(videoCallButton)
-            stackView.addArrangedSubview(audioCallButton)
+            buttonStack.addArrangedSubview(videoCallButton)
+            buttonStack.addArrangedSubview(audioCallButton)
 
             let barButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
-            barButtonView.addSubview(stackView)
+            barButtonView.addSubview(buttonStack)
             let barButtonItems = UIBarButtonItem(customView: barButtonView)
             return [barButtonItems]
         } else {
