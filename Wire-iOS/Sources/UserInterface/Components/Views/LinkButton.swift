@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2022 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,21 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireUtilities
+import WireCommonComponents
 
-class ClearBackgroundNavigationController: NavigationController {
+final class LinkButton: DynamicFontButton {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    func setup(title: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: FontSpec.normalRegularFont.font!,
+            .foregroundColor: SemanticColors.Button.textUnderlineEnabled,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+
+        let attributeString = NSMutableAttributedString(
+            string: title,
+            attributes: attributes
+        )
+
+        setAttributedTitle(attributeString, for: .normal)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .clear
-        navigationBar.tintColor = .white
-    }
-
 }

@@ -95,7 +95,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "participants.title".localized(uppercased: true)
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Participants.title.capitalized)
         view.backgroundColor = SemanticColors.View.backgroundDefault
     }
 
@@ -104,6 +104,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
 
         updateLegalHoldIndicator()
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
+        navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.ConversationDetails.CloseButton.description
         navigationItem.backBarButtonItem?.accessibilityLabel = L10n.Accessibility.Profile.BackButton.description
         collectionViewController.collectionView?.reloadData()
     }

@@ -57,6 +57,12 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "accountSettings.backButton.description")
       }
     }
+    internal enum AddParticipantsConversationSettings {
+      internal enum CloseButton {
+        /// Close add participants option
+        internal static let description = L10n.tr("Accessibility", "addParticipantsConversationSettings.closeButton.description")
+      }
+    }
     internal enum AdvancedSettings {
       internal enum BackButton {
         /// Go back to Advanced
@@ -151,10 +157,86 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
       }
     }
+    internal enum ConversationAnnouncement {
+      internal enum Audio {
+        /// Audio message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.audio.description", String(describing: p1))
+        }
+      }
+      internal enum DeletedMessage {
+        /// %@ deleted a message
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.deletedMessage.description", String(describing: p1))
+        }
+      }
+      internal enum EditedMessage {
+        /// %@ edited a message
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.editedMessage.description", String(describing: p1))
+        }
+      }
+      internal enum File {
+        /// File %@ received from %@
+        internal static func description(_ p1: Any, _ p2: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.file.description", String(describing: p1), String(describing: p2))
+        }
+      }
+      internal enum Location {
+        /// %@ shared location
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.location.description", String(describing: p1))
+        }
+      }
+      internal enum Picture {
+        /// Picture received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.picture.description", String(describing: p1))
+        }
+      }
+      internal enum Ping {
+        /// %@ pinged
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.ping.description", String(describing: p1))
+        }
+      }
+      internal enum Text {
+        /// Text message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.text.description", String(describing: p1))
+        }
+      }
+      internal enum Video {
+        /// Video message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.video.description", String(describing: p1))
+        }
+      }
+    }
     internal enum ConversationDetails {
+      internal enum CloseButton {
+        /// Close conversation details
+        internal static let description = L10n.tr("Accessibility", "conversationDetails.closeButton.description")
+      }
       internal enum MessageTimeoutState {
         /// Selected
         internal static let description = L10n.tr("Accessibility", "conversationDetails.messageTimeoutState.description")
+      }
+      internal enum MoreButton {
+        /// Open conversation options
+        internal static let description = L10n.tr("Accessibility", "conversationDetails.moreButton.description")
+      }
+      internal enum OptionButton {
+        /// Double tap to open settings
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.optionButton.hint")
+      }
+      internal enum ParticipantCell {
+        /// Double tap to open profile
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.participantCell.hint")
+      }
+      internal enum ShowParticipantsButton {
+        /// Double tap to open participant list
+        internal static let hint = L10n.tr("Accessibility", "conversationDetails.showParticipantsButton.hint")
       }
     }
     internal enum ConversationsList {
@@ -203,7 +285,7 @@ internal enum L10n {
       internal enum JoinButton {
         /// Join
         internal static let description = L10n.tr("Accessibility", "conversationsList.joinButton.description")
-        /// Double tab to join the call
+        /// Double tap to join the call
         internal static let hint = L10n.tr("Accessibility", "conversationsList.joinButton.hint")
       }
       internal enum MentionStatus {
@@ -235,6 +317,32 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversationsListHeader.expandedButton.description")
       }
     }
+    internal enum CreateConversation {
+      internal enum BackButton {
+        /// Go back to contact list
+        internal static let description = L10n.tr("Accessibility", "createConversation.backButton.description")
+      }
+      internal enum HideSettings {
+        /// Double tap to hide settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.hideSettings.hint")
+      }
+      internal enum OpenSettings {
+        /// Double tap to open settings
+        internal static let hint = L10n.tr("Accessibility", "createConversation.openSettings.hint")
+      }
+      internal enum SearchView {
+        /// Type group name
+        internal static let description = L10n.tr("Accessibility", "createConversation.searchView.description")
+      }
+      internal enum SelectedUser {
+        /// Double tap to deselect
+        internal static let hint = L10n.tr("Accessibility", "createConversation.selectedUser.hint")
+      }
+      internal enum UnselectedUser {
+        /// Double tap to select
+        internal static let hint = L10n.tr("Accessibility", "createConversation.unselectedUser.hint")
+      }
+    }
     internal enum DeveloperOptionsSettings {
       internal enum BackButton {
         /// Go back to Developer options
@@ -259,6 +367,12 @@ internal enum L10n {
         internal static let hint = L10n.tr("Accessibility", "deviceDetails.whyVerifyFingerprint.hint")
       }
     }
+    internal enum GuestConversationSettings {
+      internal enum CloseButton {
+        /// Close guest settings
+        internal static let description = L10n.tr("Accessibility", "guestConversationSettings.closeButton.description")
+      }
+    }
     internal enum LicenseDetailsSettings {
       internal enum BackButton {
         /// Go back to License details
@@ -269,6 +383,12 @@ internal enum L10n {
       internal enum BackButton {
         /// Go back to License information
         internal static let description = L10n.tr("Accessibility", "licenseInformationSettings.backButton.description")
+      }
+    }
+    internal enum NotificationConversationSettings {
+      internal enum CloseButton {
+        /// Close notification settings
+        internal static let description = L10n.tr("Accessibility", "notificationConversationSettings.closeButton.description")
       }
     }
     internal enum OptionsSettings {
@@ -293,6 +413,18 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "searchView.clearButton.description")
       }
     }
+    internal enum SelfDeletingMessagesConversationSettings {
+      internal enum CloseButton {
+        /// Close settings for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "selfDeletingMessagesConversationSettings.closeButton.description")
+      }
+    }
+    internal enum ServiceConversationSettings {
+      internal enum CloseButton {
+        /// Close service settings
+        internal static let description = L10n.tr("Accessibility", "serviceConversationSettings.closeButton.description")
+      }
+    }
     internal enum ServiceDetails {
       internal enum BackButton {
         /// Go back to services list
@@ -311,7 +443,7 @@ internal enum L10n {
     }
     internal enum Settings {
       internal enum BackButton {
-        /// Go back to Setting
+        /// Go back to Settings
         internal static let description = L10n.tr("Accessibility", "settings.backButton.description")
       }
       internal enum CloseButton {
@@ -3288,7 +3420,7 @@ internal enum L10n {
       internal static let blockButtonTitle = L10n.tr("Localizable", "profile.block_button_title")
       /// Block
       internal static let blockButtonTitleAction = L10n.tr("Localizable", "profile.block_button_title_action")
-      /// CANCEL REQUEST
+      /// Cancel Request
       internal static let cancelConnectionButtonTitle = L10n.tr("Localizable", "profile.cancel_connection_button_title")
       /// Create group
       internal static let createConversationButtonTitle = L10n.tr("Localizable", "profile.create_conversation_button_title")
@@ -3993,9 +4125,9 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "self.settings.account_personal_information_group.title")
         }
         internal enum AccountPictureGroup {
-          /// Color
+          /// Profile color
           internal static let color = L10n.tr("Localizable", "self.settings.account_picture_group.color")
-          /// Picture
+          /// Profile picture
           internal static let picture = L10n.tr("Localizable", "self.settings.account_picture_group.picture")
           /// Theme
           internal static let theme = L10n.tr("Localizable", "self.settings.account_picture_group.theme")
@@ -4014,6 +4146,14 @@ internal enum L10n {
             internal static let turquoise = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.turquoise")
             /// Yellow
             internal static let yellow = L10n.tr("Localizable", "self.settings.account_picture_group.accent_color.yellow")
+          }
+          internal enum Alert {
+            /// Choose from library
+            internal static let choosePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.choose_picture")
+            /// Take photo
+            internal static let takePicture = L10n.tr("Localizable", "self.settings.account_picture_group.alert.take_picture")
+            /// Change your profile picture
+            internal static let title = L10n.tr("Localizable", "self.settings.account_picture_group.alert.title")
           }
         }
         internal enum AccountSection {

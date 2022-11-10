@@ -23,21 +23,28 @@ final class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
 
+    typealias PeoplePicker = L10n.Localizable.Peoplepicker
+    typealias ContactsUI  = L10n.Localizable.ContactsUi
+    typealias LabelColors = SemanticColors.Label
+    typealias ViewColors = SemanticColors.View
+
     let bottomContainerView = UIView()
     let bottomContainerSeparatorView = UIView()
-    let noContactsLabel = UILabel()
-    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+    let noContactsLabel = DynamicFontLabel(text: PeoplePicker.noContactsTitle,
+                                           fontSpec: .headerRegularFont,
+                                           color: LabelColors.textSettingsPasswordPlaceholder)
+    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init())
     let separatorView = UIView()
     let tableView = UITableView()
-    let inviteOthersButton = LegacyButton(legacyStyle: .empty, variant: ColorScheme.default.variant, fontSpec: .smallLightFont)
-    let emptyResultsLabel = UILabel()
+    let inviteOthersButton = Button(style: .accentColorTextButtonStyle,
+                                    cornerRadius: 16,
+                                    fontSpec: .normalSemiboldFont)
+    let emptyResultsLabel = DynamicFontLabel(text: PeoplePicker.noMatchingResultsAfterAddressBookUploadTitle,
+                                             fontSpec: .headerRegularFont,
+                                             color: LabelColors.textSettingsPasswordPlaceholder)
 
     var bottomEdgeConstraint: NSLayoutConstraint?
     var bottomContainerBottomConstraint: NSLayoutConstraint?
-
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 
     // MARK: - Life Cycle
 
@@ -85,7 +92,7 @@ final class ContactsViewController: UIViewController {
     private func setupSearchHeader() {
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
-        searchHeaderViewController.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        searchHeaderViewController.view.backgroundColor = ViewColors.backgroundDefault
         addToSelf(searchHeaderViewController)
     }
 
@@ -105,14 +112,11 @@ final class ContactsViewController: UIViewController {
     }
 
     private func setupEmptyResultsLabel() {
-        emptyResultsLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
         emptyResultsLabel.textAlignment = .center
-        emptyResultsLabel.textColor = .from(scheme: .textForeground, variant: .dark)
         view.addSubview(emptyResultsLabel)
     }
 
     private func setupNoContactsLabel() {
-        noContactsLabel.text = "peoplepicker.no_contacts_title".localized
         view.addSubview(noContactsLabel)
     }
 
@@ -121,24 +125,23 @@ final class ContactsViewController: UIViewController {
         bottomContainerView.addSubview(bottomContainerSeparatorView)
 
         inviteOthersButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
-        inviteOthersButton.setTitle("contacts_ui.invite_others".localized, for: .normal)
+        inviteOthersButton.setTitle(ContactsUI.inviteOthers.capitalized, for: .normal)
         bottomContainerView.addSubview(inviteOthersButton)
+
     }
 
     private func setupStyle() {
-        title = "contacts_ui.title".localized.uppercased()
-        view.backgroundColor = .clear
+        navigationItem.setupNavigationBarTitle(title: ContactsUI.title.capitalized)
 
-        noContactsLabel.font = .normalLightFont
-        noContactsLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        view.backgroundColor = .clear
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionIndexBackgroundColor = .clear
         tableView.sectionIndexColor = .accent()
 
-        bottomContainerSeparatorView.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
-        bottomContainerView.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        bottomContainerSeparatorView.backgroundColor = ViewColors.backgroundSeparatorCell
+        bottomContainerView.backgroundColor = ViewColors.backgroundUserCell
     }
 
     // MARK: - Methods
@@ -187,7 +190,7 @@ final class ContactsViewController: UIViewController {
             let userInfo = notification.userInfo,
             let beginFrame = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect,
             let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-            else { return }
+        else { return }
 
         let willAppear = (beginFrame.minY - endFrame.minY) > 0
         let padding: CGFloat = 12

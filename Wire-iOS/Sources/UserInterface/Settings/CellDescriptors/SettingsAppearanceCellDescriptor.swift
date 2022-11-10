@@ -17,37 +17,21 @@
 //
 
 import UIKit
+import MobileCoreServices
+import WireSyncEngine
 
 class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExternalScreenCellDescriptorType {
     static let cellType: SettingsTableCellProtocol.Type = SettingsAppearanceCell.self
 
     private var text: String
-    private let appearanceType: AppearanceType
+    private let presentationStyle: PresentationStyle
+
     weak var viewController: UIViewController?
     let presentationAction: () -> (UIViewController?)
 
-    init(text: String, appearanceType: AppearanceType, presentationAction: @escaping () -> (UIViewController?)) {
-        self.text = text
-        self.appearanceType = appearanceType
-        self.presentationAction = presentationAction
-    }
-
-    // MARK: - Configuration
-
-    func featureCell(_ cell: SettingsCellType) {
-        if let appearanceCell = cell as? SettingsAppearanceCell {
-            appearanceCell.configure(with: .appearance(title: text), variant: .dark)
-
-            switch appearanceType {
-            case .color:
-                appearanceCell.showDisclosureIndicator()
-            case .photo: break
-            }
-
-        }
-    }
-
-    // MARK: - SettingsCellDescriptorType
+    var identifier: String?
+    weak var group: SettingsGroupCellDescriptorType?
+    var previewGenerator: PreviewGeneratorType?
 
     var visible: Bool {
         return true
@@ -57,23 +41,54 @@ class SettingsAppearanceCellDescriptor: SettingsCellDescriptorType, SettingsExte
         return text
     }
 
-    var identifier: String?
-    weak var group: SettingsGroupCellDescriptorType?
-    var previewGenerator: PreviewGeneratorType?
+    init(text: String,
+         previewGenerator: PreviewGeneratorType? = .none,
+         presentationStyle: PresentationStyle,
+         presentationAction: @escaping () -> (UIViewController?)) {
+        self.text = text
+        self.previewGenerator = previewGenerator
+        self.presentationStyle = presentationStyle
+        self.presentationAction = presentationAction
+    }
+
+    // MARK: - Configuration
+
+    func featureCell(_ cell: SettingsCellType) {
+        if let tableCell = cell as? SettingsAppearanceCell {
+            tableCell.configure(with: .appearance(title: text), variant: .dark)
+
+            if let previewGenerator = self.previewGenerator {
+                tableCell.type = previewGenerator(self)
+            }
+            switch self.presentationStyle {
+            case .modal, .alert:
+                tableCell.isAccessoryIconHidden = false
+                tableCell.hideDisclosureIndicator()
+            case .navigation:
+                tableCell.isAccessoryIconHidden = true
+                tableCell.showDisclosureIndicator()
+            }
+        }
+    }
+
+    // MARK: - SettingsCellDescriptorType
 
     func select(_ value: SettingsPropertyValue?) {
         guard let controllerToShow = self.generateViewController() else {
             return
         }
-        viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
+
+        switch self.presentationStyle {
+        case .alert:
+            viewController?.present(controllerToShow, animated: true)
+        case .navigation:
+            viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
+        case .modal:
+            break
+        }
     }
 
     func generateViewController() -> UIViewController? {
         return self.presentationAction()
     }
-}
-
-enum AppearanceType {
-    case color
-    case photo
 }

@@ -18,7 +18,7 @@
 import Foundation
 import UIKit
 
-private extension UIImage {
+extension UIImage {
 
     /// Fix the pngData method ignores orientation issue
     var flattened: UIImage {

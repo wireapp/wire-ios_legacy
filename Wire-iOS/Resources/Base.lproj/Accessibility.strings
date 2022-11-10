@@ -32,10 +32,28 @@
 "conversation.verifiedIcon.description" = "Verified";
 
 "conversationDetails.messageTimeoutState.description" = "Selected";
+"selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
+"notificationConversationSettings.closeButton.description" = "Close notification settings";
+"serviceConversationSettings.closeButton.description" = "Close service settings";
+"guestConversationSettings.closeButton.description" = "Close guest settings";
+"addParticipantsConversationSettings.closeButton.description" = "Close add participants option";
+
+"conversationDetails.optionButton.hint" = "Double tap to open settings";
+"conversationDetails.closeButton.description" = "Close conversation details";
+"conversationDetails.moreButton.description" = "Open conversation options";
+"conversationDetails.showParticipantsButton.hint" = "Double tap to open participant list";
+"conversationDetails.participantCell.hint" = "Double tap to open profile";
+
+"createConversation.backButton.description" = "Go back to contact list";
+"createConversation.hideSettings.hint" = "Double tap to hide settings";
+"createConversation.openSettings.hint" = "Double tap to open settings";
+"createConversation.searchView.description" = "Type group name";
+"createConversation.selectedUser.hint" = "Double tap to deselect";
+"createConversation.unselectedUser.hint" = "Double tap to select";
 
 "settings.deviceCount.hint" = "%@ devices in use";
 "settings.closeButton.description" = "Close settings";
-"settings.backButton.description" = "Go back to Setting";
+"settings.backButton.description" = "Go back to Settings";
 
 "accountSettings.backButton.description" = "Go back to Account";
 
@@ -110,6 +128,16 @@
 "conversationsList.badgeView.value" = "New messages: %d";
 "conversationsList.itemCell.hint" = "Double tap to open conversation";
 "conversationsList.joinButton.description" = "Join";
-"conversationsList.joinButton.hint" = "Double tab to join the call";
+"conversationsList.joinButton.hint" = "Double tap to join the call";
 "conversationsList.connectionRequest.description" = "Pending approval of connection request";
 "conversationsList.connectionRequest.hint" = "Double tap to open profile";
+
+"conversationAnnouncement.text.description" = "Text message received from %@";
+"conversationAnnouncement.picture.description" = "Picture received from %@";
+"conversationAnnouncement.audio.description" = "Audio message received from %@";
+"conversationAnnouncement.video.description" = "Video message received from %@";
+"conversationAnnouncement.location.description" = "%@ shared location";
+"conversationAnnouncement.ping.description" = "%@ pinged";
+"conversationAnnouncement.file.description" = "File %@ received from %@";
+"conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
+"conversationAnnouncement.editedMessage.description" = "%@ edited a message";

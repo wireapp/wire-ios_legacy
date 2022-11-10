@@ -102,6 +102,7 @@ public enum SemanticColors {
 
     public enum View {
         static let backgroundDefault = UIColor(light: Asset.gray20, dark: Asset.gray100)
+        static let backgroundDefaultWhite = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundConversationView = UIColor(light: Asset.gray10, dark: Asset.gray95)
         static let backgroundUserCell = UIColor(light: Asset.white, dark: Asset.gray95)
         static let backgroundUserCellHightLighted = UIColor(light: Asset.gray40, dark: Asset.gray100)
@@ -112,10 +113,10 @@ public enum SemanticColors {
         static let backgroundConversationListTableViewCellBadge = UIColor(light: Asset.black, dark: Asset.white)
         static let backgroundConversationListTableViewCellBadgeReverted = UIColor(light: Asset.white, dark: Asset.black)
         static let backgroundTeamImageView = UIColor(light: Asset.white, dark: Asset.black)
-        static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
-        static let borderConversationListTableViewCell = UIColor(light: Asset.gray40, dark: Asset.gray90)
-        static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
+        static let backgroundSecurityLevel = UIColor(light: Asset.gray20, dark: Asset.gray95)
         static let backgroundSeparatorConversationView = UIColor(light: Asset.gray70, dark: Asset.gray60)
+        static let borderAvailabilityIcon = UIColor(light: Asset.gray10, dark: Asset.gray90)
+        static let borderConversationListTableViewCellBadgeReverted = UIColor(light: Asset.gray40, dark: Asset.gray70)
         static let borderInputBar = UIColor(light: Asset.gray40, dark: Asset.gray100)
     }
 
@@ -147,7 +148,7 @@ public enum SemanticColors {
         static let borderInputBarItemHighlighted = UIColor(light: Asset.blue300Light, dark: Asset.blue700Dark)
         static let textInputBarItemEnabled = UIColor(light: Asset.black, dark: Asset.white)
         static let textInputBarItemHighlighted = UIColor(light: Asset.blue500Light, dark: Asset.white)
-
+        static let textUnderlineEnabled = UIColor(light: Asset.black, dark: Asset.white)
     }
 }
 
