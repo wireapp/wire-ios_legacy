@@ -18,27 +18,9 @@
 
 import Foundation
 import WireDataModel
-import WireCoreCrypto
+import CoreCrypto
 
-class CoreCryptoCallbacksWrapper: WireCoreCrypto.CoreCryptoCallbacks {
-
-    let callbacks: WireDataModel.CoreCryptoCallbacks
-
-    init(callbacks: WireDataModel.CoreCryptoCallbacks) {
-        self.callbacks = callbacks
-    }
-
-    func authorize(conversationId: [UInt8], clientId: [UInt8]) -> Bool {
-        return callbacks.authorize(conversationId: conversationId, clientId: clientId)
-    }
-
-    func clientIdBelongsToOneOf(clientId: [UInt8], otherClients: [[UInt8]]) -> Bool {
-        return callbacks.clientIdBelongsToOneOf(clientId: clientId, otherClients: otherClients)
-    }
-
-}
-
-extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
+extension CoreCryptoWrapper: WireDataModel.CoreCryptoProtocol {
 
     public func wire_setCallbacks(callbacks: WireDataModel.CoreCryptoCallbacks) throws {
         try setCallbacks(callbacks: CoreCryptoCallbacksWrapper(callbacks: callbacks))
@@ -89,22 +71,6 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
         return .init(result)
     }
 
-    public func wire_finalAddClientsToConversation(conversationId: ConversationId, clients: [WireDataModel.Invitee]) throws -> WireDataModel.TlsCommitBundle {
-        return try finalAddClientsToConversation(conversationId: conversationId, clients: clients.map(Invitee.init))
-    }
-
-    public func wire_finalRemoveClientsFromConversation(conversationId: ConversationId, clients: [ClientId]) throws -> TlsCommitBundle {
-        return try finalRemoveClientsFromConversation(conversationId: conversationId, clients: clients)
-    }
-
-    public func wire_finalUpdateKeyingMaterial(conversationId: ConversationId) throws -> TlsCommitBundle {
-        return try finalUpdateKeyingMaterial(conversationId: conversationId)
-    }
-
-    public func wire_finalCommitPendingProposals(conversationId: ConversationId) throws -> TlsCommitBundle? {
-        return try finalCommitPendingProposals(conversationId: conversationId)
-    }
-
     public func wire_wipeConversation(conversationId: ConversationId) throws {
         try wipeConversation(conversationId: conversationId)
     }
@@ -137,8 +103,8 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
         return try newExternalRemoveProposal(conversationId: conversationId, epoch: epoch, keyPackageRef: keyPackageRef)
     }
 
-    public func wire_joinByExternalCommit(groupState: [UInt8]) throws -> WireDataModel.MlsConversationInitMessage {
-        return try .init(joinByExternalCommit(groupState: groupState))
+    public func wire_joinByExternalCommit(groupState: [UInt8]) throws -> WireDataModel.ConversationInitBundle {
+        return try .init(joinByExternalCommit(publicGroupState: groupState))
     }
 
     public func wire_exportGroupState(conversationId: ConversationId) throws -> [UInt8] {
@@ -147,6 +113,18 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
 
     public func wire_mergePendingGroupFromExternalCommit(conversationId: ConversationId, config: WireDataModel.ConversationConfiguration) throws {
         try mergePendingGroupFromExternalCommit(conversationId: conversationId, config: .init(config: config))
+    }
+
+    public func wire_clearPendingGroupFromExternalCommit(conversationId: ConversationId) throws {
+        try clearPendingGroupFromExternalCommit(conversationId: conversationId)
+    }
+
+    public func wire_exportSecretKey(conversationId: ConversationId, keyLength: UInt32) throws -> [UInt8] {
+        try exportSecretKey(conversationId: conversationId, keyLength: keyLength)
+    }
+
+    public func wire_getClientIds(conversationId: ConversationId) throws -> [ClientId] {
+        try getClientIds(conversationId: conversationId)
     }
 
     public func wire_randomBytes(length: UInt32) throws -> [UInt8] {
@@ -162,19 +140,62 @@ extension CoreCrypto: WireDataModel.CoreCryptoProtocol {
     }
 
     public func wire_clearPendingProposal(conversationId: ConversationId, proposalRef: [UInt8]) throws {
-        try clearPendingProposal(conversationId: conversationId, proposalRef: proposalRef)
+//        try clearPendingProposal(conversationId: conversationId, proposalRef: proposalRef)
     }
 
     public func wire_clearPendingCommit(conversationId: ConversationId) throws {
-        try clearPendingCommit(conversationId: conversationId)
+//        try clearPendingCommit(conversationId: conversationId)
     }
 
+    public func wire_proteusInit() throws {
+        try proteusInit()
+    }
+
+    public func wire_proteusSessionFromPrekey(sessionId: String, prekey: [UInt8]) throws {
+        try proteusSessionFromPrekey(sessionId: sessionId, prekey: prekey)
+    }
+
+    public func wire_proteusSessionFromMessage(sessionId: String, envelope: [UInt8]) throws -> [UInt8] {
+        try proteusSessionFromMessage(sessionId: sessionId, envelope: envelope)
+    }
+
+    public func wire_proteusSessionSave(sessionId: String) throws {
+        try proteusSessionSave(sessionId: sessionId)
+    }
+
+    public func wire_proteusSessionDelete(sessionId: String) throws {
+        try proteusSessionDelete(sessionId: sessionId)
+    }
+
+    public func wire_proteusDecrypt(sessionId: String, ciphertext: [UInt8]) throws -> [UInt8] {
+        try proteusDecrypt(sessionId: sessionId, ciphertext: ciphertext)
+    }
+
+    public func wire_proteusEncrypt(sessionId: String, plaintext: [UInt8]) throws -> [UInt8] {
+        try proteusEncrypt(sessionId: sessionId, plaintext: plaintext)
+    }
+
+    public func wire_proteusEncryptBatched(sessionId: [String], plaintext: [UInt8]) throws -> [String : [UInt8]] {
+        try proteusEncryptBatched(sessions: sessionId, plaintext: plaintext)
+    }
+
+    public func wire_proteusNewPrekey(prekeyId: UInt16) throws -> [UInt8] {
+        try proteusNewPrekey(prekeyId: prekeyId)
+    }
+
+    public func wire_proteusFingerprint() throws -> String {
+        try proteusFingerprint()
+    }
+
+    public func wire_proteusCryptoboxMigrate(path: String) throws {
+        try proteusCryptoboxMigrate(path: path)
+    }
 }
 
-private extension WireCoreCrypto.ConversationConfiguration {
+private extension CoreCrypto.ConversationConfiguration {
 
     init(config: WireDataModel.ConversationConfiguration) {
-        let ciphersuite = config.ciphersuite.map(WireCoreCrypto.CiphersuiteName.init)
+        let ciphersuite = config.ciphersuite.map(CoreCrypto.CiphersuiteName.init)
 
         self.init(
             admins: config.admins,
@@ -186,7 +207,7 @@ private extension WireCoreCrypto.ConversationConfiguration {
 
 }
 
-private extension WireCoreCrypto.Invitee {
+private extension CoreCrypto.Invitee {
 
     init(invitee: WireDataModel.Invitee) {
         self.init(
@@ -197,7 +218,7 @@ private extension WireCoreCrypto.Invitee {
 
 }
 
-private extension WireCoreCrypto.CiphersuiteName {
+private extension CoreCrypto.CiphersuiteName {
 
     init(cipherSuiteName: WireDataModel.CiphersuiteName) {
         switch cipherSuiteName {
@@ -228,11 +249,11 @@ private extension WireCoreCrypto.CiphersuiteName {
 
 private extension WireDataModel.MemberAddedMessages {
 
-    init(_ messages: WireCoreCrypto.MemberAddedMessages) {
+    init(_ messages: CoreCrypto.MemberAddedMessages) {
         self.init(
             commit: messages.commit,
             welcome: messages.welcome,
-            publicGroupState: messages.publicGroupState
+            publicGroupState: .init(messages.publicGroupState)
         )
     }
 
@@ -240,11 +261,11 @@ private extension WireDataModel.MemberAddedMessages {
 
 private extension WireDataModel.CommitBundle {
 
-    init(_ commitBundle: WireCoreCrypto.CommitBundle) {
+    init(_ commitBundle: CoreCrypto.CommitBundle) {
         self.init(
             welcome: commitBundle.welcome,
             commit: commitBundle.commit,
-            publicGroupState: commitBundle.publicGroupState
+            publicGroupState: .init(commitBundle.publicGroupState)
         )
     }
 
@@ -252,7 +273,7 @@ private extension WireDataModel.CommitBundle {
 
 private extension WireDataModel.ProposalBundle {
 
-    init(_ proposalBundle: WireCoreCrypto.ProposalBundle) {
+    init(_ proposalBundle: CoreCrypto.ProposalBundle) {
         self.init(
             proposal: proposalBundle.proposal,
             proposalRef: proposalBundle.proposalRef
@@ -263,7 +284,7 @@ private extension WireDataModel.ProposalBundle {
 
 private extension WireDataModel.DecryptedMessage {
 
-    init(_ decryptedMessage: WireCoreCrypto.DecryptedMessage) {
+    init(_ decryptedMessage: CoreCrypto.DecryptedMessage) {
         self.init(
             message: decryptedMessage.message,
             proposals: decryptedMessage.proposals.map(WireDataModel.ProposalBundle.init),
@@ -275,13 +296,54 @@ private extension WireDataModel.DecryptedMessage {
 
 }
 
-private extension WireDataModel.MlsConversationInitMessage {
+private extension WireDataModel.ConversationInitBundle {
 
-    init(_ message: WireCoreCrypto.MlsConversationInitMessage) {
+    init(_ bundle: CoreCrypto.ConversationInitBundle) {
         self.init(
-            group: message.group,
-            commit: message.commit
+            conversationId: bundle.conversationId,
+            commit: bundle.commit,
+            publicGroupState: .init(bundle.publicGroupState)
         )
+    }
+
+}
+
+private extension WireDataModel.PublicGroupStateBundle {
+
+    init(_ bundle: CoreCrypto.PublicGroupStateBundle) {
+        self.init(
+            encryptionType: .init(bundle.encryptionType),
+            ratchetTreeType: .init(bundle.ratchetTreeType),
+            payload: bundle.payload
+        )
+    }
+
+}
+
+private extension WireDataModel.PublicGroupStateEncryptionType {
+
+    init(_ encryptionType: CoreCrypto.PublicGroupStateEncryptionType) {
+        switch encryptionType {
+        case .JweEncrypted:
+            self = .JweEncrypted
+        case .Plaintext:
+            self = .Plaintext
+        }
+    }
+
+}
+
+private extension WireDataModel.RatchetTreeType {
+
+    init(_ ratchetTreeType: CoreCrypto.RatchetTreeType) {
+        switch ratchetTreeType {
+        case .ByRef:
+            self = .ByRef
+        case .Delta:
+            self = .Delta
+        case .Full:
+            self = .Full
+        }
     }
 
 }

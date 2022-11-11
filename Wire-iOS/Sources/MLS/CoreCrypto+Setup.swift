@@ -17,12 +17,13 @@
 //
 
 import Foundation
-import WireCoreCrypto
 import WireSyncEngine
+import CoreCrypto
+import CoreCryptoSwift
 
-extension CoreCrypto {
-    static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCrypto {
-        let coreCrypto =  try CoreCrypto(
+extension CoreCryptoWrapper {
+    static func setup(with configuration: CoreCryptoConfiguration) throws -> CoreCryptoWrapper {
+        let coreCrypto =  try CoreCryptoWrapper(
             path: configuration.path,
             key: configuration.key,
             clientId: configuration.clientId,
