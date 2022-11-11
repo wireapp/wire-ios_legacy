@@ -99,7 +99,6 @@ final class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profileHeaderViewController.colorSchemeVariant = .dark
         profileHeaderViewController.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
 
         addChild(profileHeaderViewController)
@@ -136,11 +135,7 @@ final class SelfProfileViewController: UIViewController {
         if SessionManager.shared?.accountManager.accounts.count > 1 {
             navigationItem.titleView = accountSelectorController.view
         } else {
-            let titleLabel = DynamicFontLabel(
-                text: L10n.Localizable.Self.account,
-                fontSpec: .headerSemiboldFont,
-                color: SemanticColors.Label.textDefault)
-            navigationItem.titleView = titleLabel
+            navigationItem.setupNavigationBarTitle(title: L10n.Localizable.Self.account.capitalized)
         }
     }
 

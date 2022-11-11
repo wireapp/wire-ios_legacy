@@ -55,11 +55,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titleLabel = DynamicFontLabel(
-            text: L10n.Localizable.GroupDetails.NotificationOptionsCell.title,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: L10n.Localizable.GroupDetails.NotificationOptionsCell.title.capitalized)
         navigationItem.rightBarButtonItem = navigationController?.updatedCloseItem()
         navigationItem.rightBarButtonItem?.accessibilityLabel = L10n.Accessibility.NotificationConversationSettings.CloseButton.description
 

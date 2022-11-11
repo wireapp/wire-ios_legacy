@@ -88,7 +88,7 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     let containsHighlightableContent: Bool = false
 
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    let accessibilityLabel: String?
 
     init(sender: UserType,
          systemMessageType: ZMSystemMessageType) {
@@ -99,6 +99,7 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
         configuration = View.Configuration(icon: viewModel.image(),
                                            attributedText: viewModel.attributedTitle(),
                                            showLine: true)
+        accessibilityLabel = viewModel.attributedTitle()?.string
         actionController = nil
     }
 }

@@ -284,11 +284,7 @@ final class SettingsTableViewController: SettingsBaseTableViewController {
     }
 
     private func setupNavigationTitle() {
-        let titleLabel = DynamicFontLabel(
-            text: group.title.localized,
-            fontSpec: .headerSemiboldFont,
-            color: SemanticColors.Label.textDefault)
-        navigationItem.titleView = titleLabel
+        navigationItem.setupNavigationBarTitle(title: group.title.localized.capitalized)
     }
 
 }

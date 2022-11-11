@@ -69,9 +69,9 @@ struct AddParticipantsViewModel {
         case .create: return nil
         case .add(let conversation):
             if conversation.conversationType == .oneOnOne {
-                return "peoplepicker.button.create_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.createConversation.capitalized
             } else {
-                return "peoplepicker.button.add_to_conversation".localized(uppercased: true)
+                return L10n.Localizable.Peoplepicker.Button.addToConversation.capitalized
             }
         }
     }
@@ -85,7 +85,7 @@ struct AddParticipantsViewModel {
             return item
         case .create(let values):
             let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
-            let item = UIBarButtonItem(title: key.localized(uppercased: true), style: .plain, target: target, action: action)
+            let item = UIBarButtonItem(title: key.localized.capitalized, style: .plain, target: target, action: action)
             item.tintColor = UIColor.accent()
             item.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
             return item
