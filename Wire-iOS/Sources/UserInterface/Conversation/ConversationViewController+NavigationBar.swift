@@ -77,6 +77,21 @@ extension ConversationViewController {
         return button
     }
 
+    private var audioAndVideoCallButtons: UIView {
+            let buttonStack = UIStackView(arrangedSubviews: [videoCallButton, audioCallButton])
+            buttonStack.distribution = .fillEqually
+            buttonStack.spacing = 0
+            buttonStack.axis = .horizontal
+
+            let buttonsView = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 32))
+            buttonsView.addSubview(buttonStack)
+
+            buttonStack.translatesAutoresizingMaskIntoConstraints = false
+            buttonStack.fitIn(view: buttonsView)
+
+            return buttonsView
+        }
+
     var joinCallButton: UIBarButtonItem {
         let button = IconButton(fontSpec: .smallSemiboldFont)
         button.adjustsTitleWhenHighlighted = true
@@ -141,17 +156,7 @@ extension ConversationViewController {
         } else if conversation.isCallOngoing {
             return []
         } else if conversation.canStartVideoCall {
-            let buttonStack = UIStackView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
-            buttonStack.distribution = .fillEqually
-            buttonStack.spacing = 1
-            buttonStack.axis = .horizontal
-
-            buttonStack.addArrangedSubview(videoCallButton)
-            buttonStack.addArrangedSubview(audioCallButton)
-
-            let barButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 85, height: 32))
-            barButtonView.addSubview(buttonStack)
-            let barButtonItems = UIBarButtonItem(customView: barButtonView)
+            let barButtonItems = UIBarButtonItem(customView: audioAndVideoCallButtons)
             return [barButtonItems]
         } else {
             let barButtonItem = UIBarButtonItem(customView: audioCallButton)
