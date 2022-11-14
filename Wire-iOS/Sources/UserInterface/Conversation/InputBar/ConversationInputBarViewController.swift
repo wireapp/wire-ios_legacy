@@ -959,7 +959,6 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         videoButton.accessibilityLabel = Conversation.VideoButton.description
         hourglassButton.accessibilityLabel = Conversation.TimerButton.description
         sendButton.accessibilityLabel = Conversation.SendButton.description
-           // ephemeralIndicatorButton.accessibilityLabel = InputBarAccessibilityStrings.Sketch.button
         }
 
 

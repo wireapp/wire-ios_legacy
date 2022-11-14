@@ -134,17 +134,41 @@ internal enum L10n {
         /// Go back to conversation list
         internal static let description = L10n.tr("Accessibility", "conversation.backButton.description")
       }
+      internal enum BoldButton {
+        /// Use bolded text
+        internal static let description = L10n.tr("Accessibility", "conversation.boldButton.description")
+      }
+      internal enum BulletListButton {
+        /// Use bullet list
+        internal static let description = L10n.tr("Accessibility", "conversation.bulletListButton.description")
+      }
       internal enum CameraButton {
         /// Take or select a photo
         internal static let description = L10n.tr("Accessibility", "conversation.cameraButton.description")
+      }
+      internal enum CodeButton {
+        /// Use code format
+        internal static let description = L10n.tr("Accessibility", "conversation.codeButton.description")
+      }
+      internal enum EmphemeralButton {
+        /// Set a timer for self-deleting messages
+        internal static let description = L10n.tr("Accessibility", "conversation.emphemeralButton.description")
       }
       internal enum GifButton {
         /// Select a GIF
         internal static let description = L10n.tr("Accessibility", "conversation.gifButton.description")
       }
+      internal enum HeaderButton {
+        /// Use a heading
+        internal static let description = L10n.tr("Accessibility", "conversation.headerButton.description")
+      }
       internal enum HideFormattingButton {
         /// Hide formatting options
         internal static let description = L10n.tr("Accessibility", "conversation.hideFormattingButton.description")
+      }
+      internal enum ItalicButton {
+        /// Use italic text
+        internal static let description = L10n.tr("Accessibility", "conversation.italicButton.description")
       }
       internal enum LegalHoldIcon {
         /// Legal hold
@@ -157,6 +181,14 @@ internal enum L10n {
       internal enum MentionButton {
         /// Mention someone
         internal static let description = L10n.tr("Accessibility", "conversation.mentionButton.description")
+      }
+      internal enum MoreButton {
+        /// Open more messaging options
+        internal static let description = L10n.tr("Accessibility", "conversation.moreButton.description")
+      }
+      internal enum NumberListButton {
+        /// Use number list
+        internal static let description = L10n.tr("Accessibility", "conversation.numberListButton.description")
       }
       internal enum OpenFormattingButton {
         /// Open formatting options
@@ -187,6 +219,42 @@ internal enum L10n {
       internal enum TimerButton {
         /// Set a timer for self-deleting messages
         internal static let description = L10n.tr("Accessibility", "conversation.timerButton.description")
+      }
+      internal enum TimerForSelfDeletingMessagesDay {
+        /// %@ day
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesDay.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesHour {
+        /// %@ hour
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesHour.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesMinutes {
+        /// %@ minutes
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesMinutes.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesSeconds {
+        /// %@ seconds
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesSeconds.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesWeek {
+        /// %@ week
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesWeek.value", String(describing: p1))
+        }
+      }
+      internal enum TimerForSelfDeletingMessagesWeeks {
+        /// %@ weeks
+        internal static func value(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversation.timerForSelfDeletingMessagesWeeks.value", String(describing: p1))
+        }
       }
       internal enum TitleViewForGroup {
         /// Double tap to open conversation details
