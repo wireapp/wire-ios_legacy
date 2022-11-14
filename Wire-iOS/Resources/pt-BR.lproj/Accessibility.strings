@@ -26,12 +26,64 @@
 "conversation.searchButton.description" = "Abrir pesquisa";
 "conversation.profileImage.description" = "Foto do perfil";
 "conversation.profileImage.hint" = "Toque duas vezes para abrir o perfil";
+"conversation.titleViewForGroup.hint" = "Toque duas vezes para abrir os detalhes da conversa";
+"conversation.titleViewForOneToOne.hint" = "Toque duas vezes para abrir o perfil";
+"conversation.legalHoldIcon.description" = "Proteção jurídica";
+"conversation.verifiedIcon.description" = "Verificado";
+
+"conversationDetails.messageTimeoutState.description" = "Selecionado";
+"selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
+"notificationConversationSettings.closeButton.description" = "Close notification settings";
+"serviceConversationSettings.closeButton.description" = "Close service settings";
+"guestConversationSettings.closeButton.description" = "Close guest settings";
+"addParticipantsConversationSettings.closeButton.description" = "Close add participants option";
+
+"conversationDetails.optionButton.hint" = "Double tap to open settings";
+"conversationDetails.closeButton.description" = "Close conversation details";
+"conversationDetails.moreButton.description" = "Open conversation options";
+"conversationDetails.showParticipantsButton.hint" = "Double tap to open participant list";
+"conversationDetails.participantCell.hint" = "Toque duas vezes para abrir o perfil";
+
+"createConversation.backButton.description" = "Go back to contact list";
+"createConversation.hideSettings.hint" = "Double tap to hide settings";
+"createConversation.openSettings.hint" = "Double tap to open settings";
+"createConversation.searchView.description" = "Type group name";
+"createConversation.selectedUser.hint" = "Double tap to deselect";
+"createConversation.unselectedUser.hint" = "Double tap to select";
 
 "settings.deviceCount.hint" = "%@ dispositivos em uso";
 "settings.closeButton.description" = "Fechar configurações";
-"settings.backButton.description" = "Voltar para %@";
-"options.soundButton.hint" = "Toque duas vezes para alterar a configuração";
-"clientList.deviceDetails.hint" = "Toque duas vezes para abrir os detalhes do dispositivo";
+"settings.backButton.description" = "Go back to Settings";
+
+"accountSettings.backButton.description" = "Voltar para Conta";
+
+"optionsSettings.backButton.description" = "Voltar para Opções";
+
+"advancedSettings.backButton.description" = "Voltar para Avançado";
+
+"supportSettings.backButton.description" = "Voltar para Suporte";
+
+"aboutSettings.backButton.description" = "Voltar para Sobre";
+"licenseInformationSettings.backButton.description" = "Voltar para Informações de licença";
+"licenseDetailsSettings.backButton.description" = "Voltar para Detalhes de licença";
+
+"developerOptionsSettings.backButton.description" = "Voltar para Opções de desenvolvedor";
+
+"clientsList.deviceDetails.hint" = "Toque duas vezes para abrir os detalhes do dispositivo";
+"clientsList.deviceId.description" = "ID do dispositivo";
+"clientsList.deviceName.description" = "Nome do dispositivo";
+"clientsList.keyFingerprint.description" = "Chave de impressão digital";
+"clientsList.deviceVerified.description" = "Verificado";
+"clientsList.deviceNotVerified.description" = "Não Verificado";
+
+"deviceDetails.whyVerifyFingerprint.hint" = "Toque duas vezes para saber mais sobre verificações";
+"deviceDetails.howToVerifyFingerprint.hint" = "Saiba mais sobre verificação de impressão digital";
+"deviceDetails.verified.description" = "Dispositivo verificado";
+"deviceDetails.backButton.description" = "Voltar para a visão geral do dispositivo";
+
+"profile.backButton.description" = "Voltar para os detalhes da conversa";
+"profile.closeButton.description" = "Fechar perfil";
+
 "accountPage.availabilityStatus.description" = "Status";
 "accountPage.availabilityStatus.hint" = "Toque duas vezes para alterar o status";
 "accountPage.handle.description" = "Nome de usuário";
@@ -39,3 +91,53 @@
 "accountPage.teamName.description" = "Nome da equipe";
 "accountPage.profilePicture.description" = "Foto do perfil";
 "accountPage.profilePicture.hint" = "Toque duas vezes para alterar sua foto";
+"accountPage.closeButton.description" = "Fechar visão geral da conta";
+"accountPage.backButton.description" = "Voltar para a visão geral da conta";
+
+"contactsList.guestIcon.description" = "Convidado";
+"contactsList.externalIcon.description" = "Externo";
+"contactsList.federatedIcon.description" = "Federado";
+"contactsList.memberIcon.description" = "Membro";
+"contactsList.userCell.hint" = "Toque duas vezes para abrir a conversa";
+"contactsList.pendingConnection.hint" = "Toque duas vezes para abrir o perfil";
+"contactsList.closeButton.description" = "Fechar lista de contatos";
+
+"servicesList.serviceCell.hint" = "Toque duas vezes para abrir os detalhes do serviço";
+
+"serviceDetails.closeButton.description" = "Fechar detalhes do serviço";
+"serviceDetails.backButton.description" = "Voltar para a lista de serviços";
+
+"searchView.clearButton.description" = "Limpar";
+
+"conversationsListHeader.collapsedButton.description" = "Retraído";
+"conversationsListHeader.expandedButton.description" = "Expandido";
+
+"conversationsList.accountButton.hint" = "Toque duas vezes para abrir o perfil e as configurações";
+"conversationsList.contactsBottomBar.description" = "Contatos";
+"conversationsList.contactsBottomBar.hint" = "Toque duas vezes para procurar por pessoas e abrir a lista de contatos";
+"conversationsList.recentBottomBar.description" = "Conversas";
+"conversationsList.recentBottomBar.hint" = "Toque duas vezes para abrir a lista de conversas recentes";
+"conversationsList.folderBottomBar.description" = "Pastas";
+"conversationsList.folderBottomBar.hint" = "Toque duas vezes para abrir a lista de conversas organizadas em pastas";
+"conversationsList.archiveBottomBar.description" = "Arquivar";
+"conversationsList.archiveBottomBar.hint" = "Toque duas vezes para abrir a lista de conversas arquivadas";
+"conversationsList.bottomBar.value" = "Selecionado";
+"conversationsList.silencedStatus.value" = "Silenciada";
+"conversationsList.mentionStatus.value" = "Você foi mencionado";
+"conversationsList.replyStatus.value" = "Responder";
+"conversationsList.badgeView.value" = "Novas mensagens: %d";
+"conversationsList.itemCell.hint" = "Toque duas vezes para abrir a conversa";
+"conversationsList.joinButton.description" = "Participe";
+"conversationsList.joinButton.hint" = "Double tap to join the call";
+"conversationsList.connectionRequest.description" = "Aprovação pendente de solicitação de conexão";
+"conversationsList.connectionRequest.hint" = "Toque duas vezes para abrir o perfil";
+
+"conversationAnnouncement.text.description" = "Text message received from %@";
+"conversationAnnouncement.picture.description" = "Picture received from %@";
+"conversationAnnouncement.audio.description" = "Audio message received from %@";
+"conversationAnnouncement.video.description" = "Video message received from %@";
+"conversationAnnouncement.location.description" = "%@ shared location";
+"conversationAnnouncement.ping.description" = "%@ pingou";
+"conversationAnnouncement.file.description" = "File %@ received from %@";
+"conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
+"conversationAnnouncement.editedMessage.description" = "%@ edited a message";

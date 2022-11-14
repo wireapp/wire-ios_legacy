@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "panggilan tidak terjawab";
 "conversation_list.voiceover.status.pause_media" = "jeda media";
 "conversation_list.voiceover.status.play_media" = "media bermain";
-"conversation_list.voiceover.status.silenced" = "dibungkam";
 "conversation_list.voiceover.status.typing" = "mengetik";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
-"conversation_list.voiceover.status.reply" = "reply";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "arsip";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "daftar percakapan yang diarsipkan";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontak";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "cari orang di Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "menyusun";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "tulis pesan dan simpan untuk nanti";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Requests";
 "list.section.favorites" = "Favorites";
 
-"conversation.voiceover.verified" = "diverifikasi";
-"conversation.voiceover.legalhold" = "legal hold";
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Percakapan";
 "compose.message.title" = "Pesan";
-
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "The message is deleted.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Guests";
+"conversation.banner.services" = "Layanan";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Anda menelepon";
 "content.system.ephemeral_time_remaining" = "%@ kiri";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "Kamu";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Pengguna baru bergabung";
 "content.system.verify_devices" = " verifikasi perangkat";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Anda belum pernah menggunakan perangkat ini untuk sementara waktu. Beberapa pesan mungkin tidak muncul di sini.";
 "content.system.missing_messages.subtitle_start" = "Sementara itu,";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Fix future messages";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Blokir";
 "profile.unblock_button_title_action" = "Buka blokir";
 
-"profile.cancel_connection_button_title" = "BATALKAN PERMINTAAN";
+"profile.cancel_connection_button_title" = "Batalkan permintaan";
 "profile.connection_request_state.blocked" = "DIPERLUKAN";
 "profile.create_conversation_button_title" = "Buat grup";
 "profile.open_conversation_button_title" = "Buka Percakapan";
@@ -961,8 +946,6 @@
 "self.about" = "Tentang";
 "self.sign_out" = "Keluar";
 "self.report_abuse" = "Laporkan Penyalahgunaan";
-"self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Buka profil dan pengaturan";
 "self.new-device.voiceover.label" = "Profil, perangkat baru ditambahkan";
 
 "self.add_email_password" = "Tambahkan alamat email dan sandi";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
-"self.settings.account_picture_group.picture" = "Gambar";
-"self.settings.account_picture_group.color" = "Warna";
+"self.settings.account_picture_group.picture" = "Profile picture";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";
