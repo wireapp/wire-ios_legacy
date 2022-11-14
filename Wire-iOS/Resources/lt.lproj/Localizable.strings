@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "praleistas skambutis";
 "conversation_list.voiceover.status.pause_media" = "pristabdyti įrašą";
 "conversation_list.voiceover.status.play_media" = "paleisti įrašą";
-"conversation_list.voiceover.status.silenced" = "nutildytas";
 "conversation_list.voiceover.status.typing" = "rašo";
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
-"conversation_list.voiceover.status.mention" = "jus paminėjo";
-"conversation_list.voiceover.status.reply" = "atsakyti";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "naujausi";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "naujausių susirašinėjimų sąrašas";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "aplankai";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "susirašinėjimų sąrašas aplankuose";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "ieškoti žmonių naudojančių „Wire“";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "sukurti";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "sukurti žinutę ir išsaugoti vėlesniam laikui";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "fotoaparatas";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Prašymai";
 "list.section.favorites" = "Svarbiausi";
 
-"conversation.voiceover.verified" = "patvirtintas";
-"conversation.voiceover.legalhold" = "sulaikyta teisiškai";
 "conversation.voiceover.value.active" = "aktyvus";
 "conversation.voiceover.value.disabled" = "išjungtas";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "Pokalbis";
 "compose.message.title" = "Žinutė";
-
-"conversation_details.open_button.accessibility_hint" = "Spustelėję dukart pamatysite susirašinėjimo duomenis.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "Žinutė ištrinta.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Svečių";
+"conversation.banner.services" = "Paslaugos";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "Skambinote";
 "content.system.ephemeral_time_remaining" = "Liko %@";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "Jūs";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "Prisijungė naujas vartotojas.";
 "content.system.verify_devices" = "Patvirtinkite įrenginius";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "Jūs kurį laiką nenaudojote šio įrenginio. Kai kurios žinutės čia gali neatsirasti.";
 "content.system.missing_messages.subtitle_start" = "Tuo tarpu,";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Fix future messages";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Žinutės negalima parodyti. Gali būti, kad naudojate senesnę „Wire“ versiją.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "Užblokuoti";
 "profile.unblock_button_title_action" = "Atblokuoti";
 
-"profile.cancel_connection_button_title" = "ATŠAUKTI PRAŠYMĄ";
+"profile.cancel_connection_button_title" = "Atšaukti prašymą";
 "profile.connection_request_state.blocked" = "UŽBLOKUOTA";
 "profile.create_conversation_button_title" = "Sukurti grupę";
 "profile.open_conversation_button_title" = "Atverti pokalbį";
@@ -961,8 +946,6 @@
 "self.about" = "Apie";
 "self.sign_out" = "Atsijungti";
 "self.report_abuse" = "Pranešti apie piktnaudžiavimą";
-"self.voiceover.label" = "Profilis";
-"self.voiceover.hint" = "Atverti profilį ir nustatymus";
 "self.new-device.voiceover.label" = "Profilis, pridėtas naujas įrenginys";
 
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Šifruoti neaktyvias žinutes";
 
-"self.settings.account_picture_group.picture" = "Paveikslas";
-"self.settings.account_picture_group.color" = "Spalva";
+"self.settings.account_picture_group.picture" = "Profilio nuotrauka";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";

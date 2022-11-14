@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "未接来电";
 "conversation_list.voiceover.status.pause_media" = "暂停";
 "conversation_list.voiceover.status.play_media" = "播放";
-"conversation_list.voiceover.status.silenced" = "静音";
 "conversation_list.voiceover.status.typing" = "输入中";
 "conversation_list.voiceover.status.ping" = "打招呼";
-"conversation_list.voiceover.status.mention" = "您被提及";
-"conversation_list.voiceover.status.reply" = "回复";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近的聊天列表";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "文件夹";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "文件夹中已组织的对话列表";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "已归档的聊天列表";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "在Wire上找人";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "新建";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "新建消息并保存";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "相机";
@@ -227,8 +216,6 @@
 "list.section.requests" = "请求";
 "list.section.favorites" = "收藏夾";
 
-"conversation.voiceover.verified" = "已验证";
-"conversation.voiceover.legalhold" = "证据保全";
 "conversation.voiceover.value.active" = "活动中";
 "conversation.voiceover.value.disabled" = "已禁用";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "聊天";
 "compose.message.title" = "信息";
-
-"conversation_details.open_button.accessibility_hint" = "双击查看对话详情";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "消息已删除。";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Guests";
+"conversation.banner.services" = "服务";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "您曾打电话";
 "content.system.ephemeral_time_remaining" = "还余%@";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "你";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "新用户加入";
 "content.system.verify_devices" = "验证设备";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "你有一段沒有使用此设备, 一些信息可能不会在这里出现";
 "content.system.missing_messages.subtitle_start" = "同时，";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "修复未来的消息";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "此消息无法显示，您可能在使用旧版本Wire。";
 
@@ -961,8 +946,6 @@
 "self.about" = "关于";
 "self.sign_out" = "登出";
 "self.report_abuse" = "滥用报告";
-"self.voiceover.label" = "用户信息";
-"self.voiceover.hint" = "打开资料及设置";
 "self.new-device.voiceover.label" = "已添加资料及新设备";
 
 "self.add_email_password" = "新增邮箱地址和密码";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
-"self.settings.account_picture_group.picture" = "头像";
-"self.settings.account_picture_group.color" = "主色调";
+"self.settings.account_picture_group.picture" = "个人图像";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";
