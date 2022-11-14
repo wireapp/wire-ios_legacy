@@ -19,6 +19,7 @@
 import UIKit
 import Down
 import WireDataModel
+import WireCommonComponents
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -103,8 +104,11 @@ private struct InputBarConstants {
 
 final class InputBar: UIView {
 
+    typealias ConversationInputBar = L10n.Localizable.Conversation.InputBar
+
     private let inputBarVerticalInset: CGFloat = 34
     static let rightIconSize: CGFloat = 32
+    private let textViewFont = FontSpec.normalRegularFont.font!
 
     let textView = MarkdownTextView(with: DownStyle.compact)
     let leftAccessoryView  = UIView()
@@ -250,10 +254,10 @@ final class InputBar: UIView {
         textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
         textView.keyboardAppearance = .default
-        textView.placeholderTextTransform = .upper
+        textView.placeholderTextTransform = .none
         textView.tintAdjustmentMode = .automatic
-        textView.font = .normalLightFont
-        textView.placeholderFont = .smallSemiboldFont
+        textView.font = textViewFont
+        textView.placeholderFont = textViewFont
         textView.backgroundColor = .clear
 
         markdownView.delegate = textView
@@ -358,12 +362,12 @@ final class InputBar: UIView {
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
 
-        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        var placeholder = NSAttributedString(string: ConversationInputBar.placeholder)
 
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
-            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
+            placeholder  = NSAttributedString(string: ConversationInputBar.placeholderEphemeral) && ephemeralColor
         }
         if state.isEditing {
             return nil
