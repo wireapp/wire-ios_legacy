@@ -51,8 +51,6 @@ class ConversationIconBasedCell: UIView {
     var attributedText: NSAttributedString? {
         didSet {
             textLabel.attributedText = attributedText
-            textLabel.accessibilityTraits = .staticText
-            textLabel.isEditable = false
 
             let font = attributedText?.attributes(at: 0, effectiveRange: nil)[.font] as? UIFont
             if let lineHeight = font?.lineHeight {
@@ -81,7 +79,7 @@ class ConversationIconBasedCell: UIView {
         imageView.contentMode = .center
         imageView.isAccessibilityElement = false
 
-        textLabel.isAccessibilityElement = true
+        textLabel.isAccessibilityElement = false
         textLabel.backgroundColor = .clear
         textLabel.font = labelFont
         textLabel.delegate = self
