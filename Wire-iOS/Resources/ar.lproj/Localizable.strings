@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "مكالمة فائتة";
 "conversation_list.voiceover.status.pause_media" = "إيقاف الوسائط";
 "conversation_list.voiceover.status.play_media" = "تشغيل الوسائط";
-"conversation_list.voiceover.status.silenced" = "صامت";
 "conversation_list.voiceover.status.typing" = "كتابة";
 "conversation_list.voiceover.status.ping" = "بينغ";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
-"conversation_list.voiceover.status.reply" = "رد";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "مؤرشف";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "قائمة المحادثات المؤرشفة";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "جهات اتصال";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "البحث عن أشخاص في Wire";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "إنشاء";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "إنشاء الرسائل وحفظها في وقت لاحق";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "الكاميرا";
@@ -227,8 +216,6 @@
 "list.section.requests" = "Requests";
 "list.section.favorites" = "المفضلة";
 
-"conversation.voiceover.verified" = "موثّق";
-"conversation.voiceover.legalhold" = "legal hold";
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "محادثة";
 "compose.message.title" = "رسالة";
-
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "The message is deleted.";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "Guests";
+"conversation.banner.services" = "الخدمات";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "اتّصلت أنت";
 "content.system.ephemeral_time_remaining" = "غادر %@";
 
-"content.system.self_user_new_client" = "**You** started using [a new device](%@)";
-"content.system.self_user_new_self_client" = "**You** started using [this device](%@)";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "أنت";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "انضمّ مستخدم جديد.";
 "content.system.verify_devices" = "التحقق من الأجهزة";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "لم تستخدم هذا الجهاز لمدة. بعض الرسائل لن تظهر هُنَا.";
 "content.system.missing_messages.subtitle_start" = "في هذه الأثناء،";
 
-"content.system.cannot_decrypt.self" = "A message from **you** could not be decrypted.";
-"content.system.cannot_decrypt.other" = "A message from **%@** could not be decrypted.";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "Fix future messages";
 "content.system.cannot_decrypt.error_details" = "(Fixed error: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, **you need to resend them.**";
-"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from **%1$@**. To recover lost messages, **ask %1$@ to resend them.**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**Your** device identity changed. Undelivered message.";
-"content.system.cannot_decrypt_identity_changed.other" = "**%@’s** device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ was unable to decrypt some of your messages but has solved the issue**. This affected all conversations you share together.";
-"content.system.session_reset.self" = "**You were unable to decrypt some of your messages but you solved the issue**. This affected all conversations.";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "تعذر عرض هذه الرسالة. ربما تستخدم إصدارًا قديمًا من Wire.";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "حظر \n";
 "profile.unblock_button_title_action" = "إلغاء حظر";
 
-"profile.cancel_connection_button_title" = "إلغاء الطلب";
+"profile.cancel_connection_button_title" = "تم إلغاء الطلب";
 "profile.connection_request_state.blocked" = "حظر";
 "profile.create_conversation_button_title" = "إنشاء مجموعة";
 "profile.open_conversation_button_title" = "افتح المحادثة";
@@ -961,8 +946,6 @@
 "self.about" = "عن";
 "self.sign_out" = "تسجيل الخروج";
 "self.report_abuse" = "بلغ عن إساءة الاستخدام";
-"self.voiceover.label" = "الملف الشخصي";
-"self.voiceover.hint" = "فتح الملف والإعدادات";
 "self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "Encrypt messages at rest";
 
-"self.settings.account_picture_group.picture" = "الصورة";
-"self.settings.account_picture_group.color" = "اللون";
+"self.settings.account_picture_group.picture" = "Profile picture";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";

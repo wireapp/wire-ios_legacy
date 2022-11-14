@@ -157,19 +157,8 @@
 "conversation_list.voiceover.status.missed_call" = "不在着信";
 "conversation_list.voiceover.status.pause_media" = "一時停止";
 "conversation_list.voiceover.status.play_media" = "再生";
-"conversation_list.voiceover.status.silenced" = "マナーモード";
 "conversation_list.voiceover.status.typing" = "入力中";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.status.mention" = "あなたがメンションされました";
-"conversation_list.voiceover.status.reply" = "返信";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近の会話一覧";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "フォルダ";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "組織の会話一覧";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "アーカイブ済み";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "アーカイブ済み会話一覧";
-"conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "Wire上で人を検索";
 "conversation_list.voiceover.bottom_bar.compose_button.label" = "作成";
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "メッセージを作成し、後で保存する";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "カメラ";
@@ -227,8 +216,6 @@
 "list.section.requests" = "リクエスト";
 "list.section.favorites" = "お気に入り";
 
-"conversation.voiceover.verified" = "認証済み";
-"conversation.voiceover.legalhold" = "法的文書";
 "conversation.voiceover.value.active" = "アクティブ";
 "conversation.voiceover.value.disabled" = "無効";
 
@@ -276,8 +263,6 @@
 
 "compose.contact.title" = "会話";
 "compose.message.title" = "メッセージ";
-
-"conversation_details.open_button.accessibility_hint" = "会話の詳細を表示するにはダブルタップします。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -342,10 +327,10 @@
 "conversation.alert.message_deleted" = "メッセージは削除されました。";
 
 // Conversation banner
-"conversation.banner.guests" = "**Guests**";
-"conversation.banner.services" = "**Services**";
-"conversation.banner.externals" = "**Externals**";
-"conversation.banner.remotes" = "**Federated users**";
+"conversation.banner.guests" = "ゲスト";
+"conversation.banner.services" = "サービス";
+"conversation.banner.externals" = "Externals";
+"conversation.banner.remotes" = "Federated users";
 "conversation.banner.are_present" = "%@ are present";
 "conversation.banner.are_active" = "%@ are active";
 "conversation.banner.separator" = " and ";
@@ -485,8 +470,8 @@
 "content.system.you_wanted_to_talk" = "あなたの発信";
 "content.system.ephemeral_time_remaining" = "%@が退出しました";
 
-"content.system.self_user_new_client" = "**あなた**は[新しいデバイス](%@) を使い始めました";
-"content.system.self_user_new_self_client" = "**あなた** は [このデバイス](%@ ) を使い始めました";
+"content.system.self_user_new_client" = "You started using [a new device](%@)";
+"content.system.self_user_new_self_client" = "You started using [this device](%@)";
 
 "content.system.you_started" = "あなた";
 
@@ -542,25 +527,25 @@
 "content.system.new_users" = "新しいユーザーが参加しました。";
 "content.system.verify_devices" = "デバイスを認証する";
 
-"content.system.unverified_self_devices" = "**You** unverified one of [your devices](%@)";
-"content.system.unverified_other_devices" = "**You** unverified one of [%1$@’s devices](%2$@)";
+"content.system.unverified_self_devices" = "You unverified one of [your devices](%@)";
+"content.system.unverified_other_devices" = "You unverified one of [%1$@’s devices](%2$@)";
 
 "content.system.missing_messages.title" = "しばらくの間、このデバイスでWireを利用していなかったため、いくつかのメッセージがここに表示されない可能性があります。";
 "content.system.missing_messages.subtitle_start" = "同時に";
 
-"content.system.cannot_decrypt.self" = "**あなた**からのメッセージは復号できませんでした。";
-"content.system.cannot_decrypt.other" = "**%@**からのメッセージは復号できませんでした。";
+"content.system.cannot_decrypt.self" = "A message from you could not be decrypted.";
+"content.system.cannot_decrypt.other" = "A message from %@ could not be decrypted.";
 "content.system.cannot_decrypt.reset_session" = "今後のメッセージを修正する";
 "content.system.cannot_decrypt.error_details" = "(修正エラー: %d ID: %@)";
 
-"content.system.cannot_decrypt_resolved.self" = "あなた自身からのメッセージを復号できるようになりました。紛失したメッセージを復号するには、**メッセージを再送信する必要があります**";
-"content.system.cannot_decrypt_resolved.other" = "**%1$@**からメッセージを復号することができます。紛失したメッセージを復号するには、** %1$@ に再送信を依頼してください。**";
+"content.system.cannot_decrypt_resolved.self" = "You can now decrypt messages from yourself. To recover lost messages, you need to resend them.";
+"content.system.cannot_decrypt_resolved.other" = "You can now decrypt messages from %1$@. To recover lost messages, ask %1$@ to resend them.";
 
-"content.system.cannot_decrypt_identity_changed.self" = "**あなた** のデバイスIDが変更されました。メッセージは配信されません。";
-"content.system.cannot_decrypt_identity_changed.other" = "%@ のデバイスIDが変更されました。メッセージは配信されません。"; // possessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt_identity_changed.self" = "Your device identity changed. Undelivered message.";
+"content.system.cannot_decrypt_identity_changed.other" = "%@’s device identity changed. Undelivered message."; // possessive apostrophe - might differ in different languages
 
-"content.system.session_reset.other" = "**%@ が復号できなかったメッセージがありましたが、問題は解決しました**。これはあなたが共有するすべての会話に影響がありました。";
-"content.system.session_reset.self" = "**あなたが復号できなかったメッセージがありましたが、問題は解決しました**。これはすべての会話に影響がありました。";
+"content.system.session_reset.other" = "%@ was unable to decrypt some of your messages but has solved the issue. This affected all conversations you share together.";
+"content.system.session_reset.self" = "You were unable to decrypt some of your messages but you solved the issue. This affected all conversations.";
 
 "content.system.unknown_message.body" = "Wire の古いバージョンを使っているため、このメッセージを表示できません。";
 
@@ -873,7 +858,7 @@
 "profile.block_button_title_action" = "ブロック";
 "profile.unblock_button_title_action" = "ブロック解除";
 
-"profile.cancel_connection_button_title" = "リクエストをキャンセルします";
+"profile.cancel_connection_button_title" = "リクエストを取り消す";
 "profile.connection_request_state.blocked" = "ブロックしています";
 "profile.create_conversation_button_title" = "グループを作成します";
 "profile.open_conversation_button_title" = "会話を始めます";
@@ -961,8 +946,6 @@
 "self.about" = "概要";
 "self.sign_out" = "ログアウト";
 "self.report_abuse" = "悪用を報告する";
-"self.voiceover.label" = "プロフィール";
-"self.voiceover.hint" = "プロファイルと設定を開く";
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
 "self.add_email_password" = "メールアドレスとパスワードを追加";
@@ -1038,8 +1021,11 @@
 
 "self.settings.encrypt_messages_at_rest.title" = "待機時にメッセージを暗号化する";
 
-"self.settings.account_picture_group.picture" = "写真";
-"self.settings.account_picture_group.color" = "色";
+"self.settings.account_picture_group.picture" = "プロフィール画像";
+"self.settings.account_picture_group.alert.title" = "Change your profile picture";
+"self.settings.account_picture_group.alert.choose_picture" = "Choose from library";
+"self.settings.account_picture_group.alert.take_picture" = "Take photo";
+"self.settings.account_picture_group.color" = "Profile color";
 "self.settings.account_picture_group.accent_color.blue" = "Blue";
 "self.settings.account_picture_group.accent_color.green" = "Green";
 "self.settings.account_picture_group.accent_color.yellow" = "Yellow";

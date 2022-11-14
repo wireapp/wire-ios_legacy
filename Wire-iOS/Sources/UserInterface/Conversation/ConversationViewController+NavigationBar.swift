@@ -25,19 +25,20 @@ extension ConversationViewController {
 
     typealias IconColors = SemanticColors.Icon
     typealias ButtonColors = SemanticColors.Button
+    typealias CallActions = L10n.Localizable.Call.Actions
 
     func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
 
-    var audioCallButton: UIBarButtonItem {
+    var audioCallButton: UIButton {
         let button = IconButton()
         button.setIcon(.phone, size: .tiny, for: .normal)
         button.setIconColor(IconColors.foregroundDefault, for: .normal)
 
         button.accessibilityIdentifier = "audioCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
-        button.accessibilityLabel = "call.actions.label.make_audio_call".localized
+        button.accessibilityLabel = CallActions.Label.makeAudioCall
 
         button.addTarget(self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)), for: .touchUpInside)
 
@@ -50,17 +51,17 @@ extension ConversationViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
 
-        return UIBarButtonItem(customView: button)
+        return button
     }
 
-    var videoCallButton: UIBarButtonItem {
+    var videoCallButton: UIButton {
         let button = IconButton()
         button.setIcon(.camera, size: .tiny, for: .normal)
         button.setIconColor(IconColors.foregroundDefault, for: .normal)
 
         button.accessibilityIdentifier = "videoCallBarButton"
         button.accessibilityTraits.insert(.startsMediaSession)
-        button.accessibilityLabel = "call.actions.label.make_video_call".localized
+        button.accessibilityLabel = CallActions.Label.makeVideoCall
 
         button.addTarget(self, action: #selector(ConversationViewController.videoCallItemTapped(_:)), for: .touchUpInside)
 
@@ -73,8 +74,23 @@ extension ConversationViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 32))
 
-        return UIBarButtonItem(customView: button)
+        return button
     }
+
+    private var audioAndVideoCallButtons: UIView {
+            let buttonStack = UIStackView(arrangedSubviews: [videoCallButton, audioCallButton])
+            buttonStack.distribution = .fillEqually
+            buttonStack.spacing = 0
+            buttonStack.axis = .horizontal
+
+            let buttonsView = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 32))
+            buttonsView.addSubview(buttonStack)
+
+            buttonStack.translatesAutoresizingMaskIntoConstraints = false
+            buttonStack.fitIn(view: buttonsView)
+
+            return buttonsView
+        }
 
     var joinCallButton: UIBarButtonItem {
         let button = IconButton(fontSpec: .smallSemiboldFont)
@@ -140,9 +156,11 @@ extension ConversationViewController {
         } else if conversation.isCallOngoing {
             return []
         } else if conversation.canStartVideoCall {
-            return [audioCallButton, videoCallButton]
+            let barButtonItems = UIBarButtonItem(customView: audioAndVideoCallButtons)
+            return [barButtonItems]
         } else {
-            return [audioCallButton]
+            let barButtonItem = UIBarButtonItem(customView: audioCallButton)
+            return [barButtonItem]
         }
     }
 
