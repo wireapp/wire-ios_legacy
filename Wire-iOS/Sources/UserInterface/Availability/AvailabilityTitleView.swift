@@ -138,7 +138,7 @@ final class AvailabilityTitleView: TitleView, ZMUserObserver {
         if options.contains(.useLargeFont) {
             titleFont = .headerSemiboldFont
         } else {
-            titleFont = .smallRegularFont
+            titleFont = .headerRegularFont
         }
 
         titleColor = SemanticColors.Label.textDefault
