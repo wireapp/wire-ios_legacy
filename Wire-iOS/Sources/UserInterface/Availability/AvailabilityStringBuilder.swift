@@ -72,7 +72,7 @@ final class AvailabilityStringBuilder: NSObject {
         switch size {
         case .small:
             verticalCorrection = -1
-        default:
+        case .medium, .large, .normal, .header, .accountName, .accountTeam:
             verticalCorrection = 0
         }
 
