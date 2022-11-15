@@ -157,6 +157,62 @@ internal enum L10n {
         internal static let description = L10n.tr("Accessibility", "conversation.verifiedIcon.description")
       }
     }
+    internal enum ConversationAnnouncement {
+      internal enum Audio {
+        /// Audio message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.audio.description", String(describing: p1))
+        }
+      }
+      internal enum DeletedMessage {
+        /// %@ deleted a message
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.deletedMessage.description", String(describing: p1))
+        }
+      }
+      internal enum EditedMessage {
+        /// %@ edited a message
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.editedMessage.description", String(describing: p1))
+        }
+      }
+      internal enum File {
+        /// File %@ received from %@
+        internal static func description(_ p1: Any, _ p2: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.file.description", String(describing: p1), String(describing: p2))
+        }
+      }
+      internal enum Location {
+        /// %@ shared location
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.location.description", String(describing: p1))
+        }
+      }
+      internal enum Picture {
+        /// Picture received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.picture.description", String(describing: p1))
+        }
+      }
+      internal enum Ping {
+        /// %@ pinged
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.ping.description", String(describing: p1))
+        }
+      }
+      internal enum Text {
+        /// Text message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.text.description", String(describing: p1))
+        }
+      }
+      internal enum Video {
+        /// Video message received from %@
+        internal static func description(_ p1: Any) -> String {
+          return L10n.tr("Accessibility", "conversationAnnouncement.video.description", String(describing: p1))
+        }
+      }
+    }
     internal enum ConversationDetails {
       internal enum CloseButton {
         /// Close conversation details
@@ -229,7 +285,7 @@ internal enum L10n {
       internal enum JoinButton {
         /// Join
         internal static let description = L10n.tr("Accessibility", "conversationsList.joinButton.description")
-        /// Double tab to join the call
+        /// Double tap to join the call
         internal static let hint = L10n.tr("Accessibility", "conversationsList.joinButton.hint")
       }
       internal enum MentionStatus {
@@ -387,7 +443,7 @@ internal enum L10n {
     }
     internal enum Settings {
       internal enum BackButton {
-        /// Go back to Setting
+        /// Go back to Settings
         internal static let description = L10n.tr("Accessibility", "settings.backButton.description")
       }
       internal enum CloseButton {

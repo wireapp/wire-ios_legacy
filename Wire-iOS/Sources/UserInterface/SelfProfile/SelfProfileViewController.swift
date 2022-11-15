@@ -99,7 +99,6 @@ final class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profileHeaderViewController.colorSchemeVariant = .dark
         profileHeaderViewController.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
 
         addChild(profileHeaderViewController)

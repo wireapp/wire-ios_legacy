@@ -26,12 +26,64 @@
 "conversation.searchButton.description" = "Open search";
 "conversation.profileImage.description" = "Profile picture";
 "conversation.profileImage.hint" = "Double tap to open profile";
+"conversation.titleViewForGroup.hint" = "Double tap to open conversation details";
+"conversation.titleViewForOneToOne.hint" = "Double tap to open profile";
+"conversation.legalHoldIcon.description" = "Legal hold";
+"conversation.verifiedIcon.description" = "যাচাইকৃত";
+
+"conversationDetails.messageTimeoutState.description" = "Selected";
+"selfDeletingMessagesConversationSettings.closeButton.description" = "Close settings for self-deleting messages";
+"notificationConversationSettings.closeButton.description" = "Close notification settings";
+"serviceConversationSettings.closeButton.description" = "Close service settings";
+"guestConversationSettings.closeButton.description" = "Close guest settings";
+"addParticipantsConversationSettings.closeButton.description" = "Close add participants option";
+
+"conversationDetails.optionButton.hint" = "Double tap to open settings";
+"conversationDetails.closeButton.description" = "Close conversation details";
+"conversationDetails.moreButton.description" = "Open conversation options";
+"conversationDetails.showParticipantsButton.hint" = "Double tap to open participant list";
+"conversationDetails.participantCell.hint" = "Double tap to open profile";
+
+"createConversation.backButton.description" = "Go back to contact list";
+"createConversation.hideSettings.hint" = "Double tap to hide settings";
+"createConversation.openSettings.hint" = "Double tap to open settings";
+"createConversation.searchView.description" = "Type group name";
+"createConversation.selectedUser.hint" = "Double tap to deselect";
+"createConversation.unselectedUser.hint" = "Double tap to select";
 
 "settings.deviceCount.hint" = "%@ devices in use";
 "settings.closeButton.description" = "Close settings";
-"settings.backButton.description" = "Go back to %@";
-"options.soundButton.hint" = "Double tap to change setting";
-"clientList.deviceDetails.hint" = "Double tap to open device details";
+"settings.backButton.description" = "Go back to Settings";
+
+"accountSettings.backButton.description" = "Go back to Account";
+
+"optionsSettings.backButton.description" = "Go back to Options";
+
+"advancedSettings.backButton.description" = "Go back to Advanced";
+
+"supportSettings.backButton.description" = "Go back to Support";
+
+"aboutSettings.backButton.description" = "Go back to About";
+"licenseInformationSettings.backButton.description" = "Go back to License information";
+"licenseDetailsSettings.backButton.description" = "Go back to License details";
+
+"developerOptionsSettings.backButton.description" = "Go back to Developer options";
+
+"clientsList.deviceDetails.hint" = "Double tap to open device details";
+"clientsList.deviceId.description" = "Device ID";
+"clientsList.deviceName.description" = "Device name";
+"clientsList.keyFingerprint.description" = "Key fingerprint";
+"clientsList.deviceVerified.description" = "যাচাইকৃত";
+"clientsList.deviceNotVerified.description" = "Not Verified";
+
+"deviceDetails.whyVerifyFingerprint.hint" = "Double tap to learn more about verifications";
+"deviceDetails.howToVerifyFingerprint.hint" = "Learn more about fingerprint verification";
+"deviceDetails.verified.description" = "Device verified";
+"deviceDetails.backButton.description" = "Go back to device overview";
+
+"profile.backButton.description" = "Go back to conversation details";
+"profile.closeButton.description" = "Close profile";
+
 "accountPage.availabilityStatus.description" = "Status";
 "accountPage.availabilityStatus.hint" = "Double tap to change status";
 "accountPage.handle.description" = "Username";
@@ -39,3 +91,53 @@
 "accountPage.teamName.description" = "Team name";
 "accountPage.profilePicture.description" = "Profile picture";
 "accountPage.profilePicture.hint" = "Double tap to change your picture";
+"accountPage.closeButton.description" = "Close account overview";
+"accountPage.backButton.description" = "Go back to account overview";
+
+"contactsList.guestIcon.description" = "Guest";
+"contactsList.externalIcon.description" = "External";
+"contactsList.federatedIcon.description" = "Federated";
+"contactsList.memberIcon.description" = "Member";
+"contactsList.userCell.hint" = "Double tap to open conversation";
+"contactsList.pendingConnection.hint" = "Double tap to open profile";
+"contactsList.closeButton.description" = "Close contact list";
+
+"servicesList.serviceCell.hint" = "Double tap to open service details";
+
+"serviceDetails.closeButton.description" = "Close service details";
+"serviceDetails.backButton.description" = "Go back to services list";
+
+"searchView.clearButton.description" = "Clear";
+
+"conversationsListHeader.collapsedButton.description" = "Collapsed";
+"conversationsListHeader.expandedButton.description" = "Expanded";
+
+"conversationsList.accountButton.hint" = "Double tap to open profile and settings";
+"conversationsList.contactsBottomBar.description" = "কনট্যাক্টস";
+"conversationsList.contactsBottomBar.hint" = "Double tap to search for people and open contact list";
+"conversationsList.recentBottomBar.description" = "Conversations";
+"conversationsList.recentBottomBar.hint" = "Double tap to open list of recent conversations";
+"conversationsList.folderBottomBar.description" = "Folders";
+"conversationsList.folderBottomBar.hint" = "Double tap to open list of conversations organized in folders";
+"conversationsList.archiveBottomBar.description" = "Archive";
+"conversationsList.archiveBottomBar.hint" = "Double tap to open list of archived conversations";
+"conversationsList.bottomBar.value" = "Selected";
+"conversationsList.silencedStatus.value" = "Silenced";
+"conversationsList.mentionStatus.value" = "You are mentioned";
+"conversationsList.replyStatus.value" = "Reply";
+"conversationsList.badgeView.value" = "New messages: %d";
+"conversationsList.itemCell.hint" = "Double tap to open conversation";
+"conversationsList.joinButton.description" = "Join";
+"conversationsList.joinButton.hint" = "Double tap to join the call";
+"conversationsList.connectionRequest.description" = "Pending approval of connection request";
+"conversationsList.connectionRequest.hint" = "Double tap to open profile";
+
+"conversationAnnouncement.text.description" = "Text message received from %@";
+"conversationAnnouncement.picture.description" = "Picture received from %@";
+"conversationAnnouncement.audio.description" = "Audio message received from %@";
+"conversationAnnouncement.video.description" = "Video message received from %@";
+"conversationAnnouncement.location.description" = "%@ shared location";
+"conversationAnnouncement.ping.description" = "%@ pinged";
+"conversationAnnouncement.file.description" = "File %@ received from %@";
+"conversationAnnouncement.deletedMessage.description" = "%@ deleted a message";
+"conversationAnnouncement.editedMessage.description" = "%@ edited a message";
