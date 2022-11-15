@@ -100,10 +100,10 @@ public extension FontSpec {
 
     // Account
     static var accountName: Self {
-        return self.init(.accountName, .semibold)
+        return self.init(.titleThree, .semibold)
     }
     static var accountTeam: Self {
-        return self.init(.accountTeam, .regular)
+        return self.init(.subHeadline, .regular)
     }
 
     // Navigation

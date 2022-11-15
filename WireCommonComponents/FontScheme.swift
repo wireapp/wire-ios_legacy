@@ -30,8 +30,8 @@ public enum FontSize: String {
     case medium
     case small
     case header
-    case accountName
-    case accountTeam
+    case titleThree
+    case subHeadline
 }
 
 public enum FontWeight: String, CaseIterable {
@@ -225,8 +225,8 @@ public enum FontScheme {
         fontsByFontSpec[FontSpec(.header, .semibold, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .semibold)
         fontsByFontSpec[FontSpec(.header, .regular, .none)] = .systemFont(ofSize: 17, contentSizeCategory: contentSizeCategory, weight: .regular)
 
-        fontsByFontSpec[FontSpec(.accountName, .semibold, .none)] = .systemFont(ofSize: 20, contentSizeCategory: contentSizeCategory, weight: .semibold)
-        fontsByFontSpec[FontSpec(.accountTeam, .regular, .none)] = .systemFont(ofSize: 15, contentSizeCategory: contentSizeCategory, weight: .regular)
+        fontsByFontSpec[FontSpec(.titleThree, .semibold, .none)] = .systemFont(ofSize: 20, contentSizeCategory: contentSizeCategory, weight: .semibold)
+        fontsByFontSpec[FontSpec(.subHeadline, .regular, .none)] = .systemFont(ofSize: 15, contentSizeCategory: contentSizeCategory, weight: .regular)
 
     }
 
