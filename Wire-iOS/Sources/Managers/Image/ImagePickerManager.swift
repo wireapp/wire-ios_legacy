@@ -36,7 +36,7 @@ class ImagePickerManager: NSObject {
     private var completion: ((UIImage) -> Void)?
 
     // MARK: - Methods
-    func showActionSheet(on viewController: UIViewController? = UIApplication.shared.topmostViewController(),
+    func showActionSheet(on viewController: UIViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false),
                          completion: @escaping (UIImage) -> Void) -> UIAlertController {
         self.completion = completion
         self.viewController = viewController
